@@ -1,13 +1,10 @@
-<<<<<<< HEAD
-import { HttpStatus, Inject, Injectable } from '@nestjs/common'
-=======
+
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
-import { registerUserRequest } from '@app/common/dto/registerUser.dto'
->>>>>>> 88cba151327f8edbb1cdda62bd2b143a4eadaad4
+
 import * as bcrypt from 'bcrypt'
 import { ClientProxy } from '@nestjs/microservices'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { DeleteResult, Repository } from 'typeorm'
 import { nanoid } from 'nanoid'
 import { lastValueFrom } from 'rxjs'
 
@@ -23,23 +20,13 @@ import {
   ServicePayload,
   verifyPhoneRequest
 } from '@app/common'
-<<<<<<< HEAD
-=======
-import { FitRpcException } from '@app/common/filters/rpc.expection'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository, DeleteResult } from 'typeorm'
-import { nanoid } from 'nanoid'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
->>>>>>> 88cba151327f8edbb1cdda62bd2b143a4eadaad4
-
-import { DeleteUserResponse } from './interface'
 @Injectable()
-<<<<<<< HEAD
+
 export class UsersService {
-=======
-export class UsersServiceService {
-  private readonly logger = new Logger(UsersServiceService.name)
->>>>>>> 88cba151327f8edbb1cdda62bd2b143a4eadaad4
+
+
+  private readonly logger = new Logger(UsersService.name)
+
   constructor (
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
@@ -231,32 +218,16 @@ export class UsersServiceService {
     return query === null ? query : (query.raw[0].id as string)
   }
 
-<<<<<<< HEAD
-  private async deleteEntity (id: string): Promise<any> {
-    return await this.usersRepository
-      .createQueryBuilder()
-      .delete()
-      .from(UserEntity)
-=======
+
   private async deleteUser (id: string): Promise<DeleteResult | null> {
     return await this.usersRepository
       .createQueryBuilder()
       .delete()
->>>>>>> 88cba151327f8edbb1cdda62bd2b143a4eadaad4
+
       .where('id = :id', { id })
       .returning('id')
       .execute()
   }
-<<<<<<< HEAD
 
-  async deleteUser (id: string): Promise<DeleteUserResponse> {
-    const deleted = await this.deleteEntity(id)
 
-    if (deleted === true) {
-      return { status: 1 }
-    }
-    return { status: 0 }
-  }
-=======
->>>>>>> 88cba151327f8edbb1cdda62bd2b143a4eadaad4
 }

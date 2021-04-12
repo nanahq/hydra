@@ -17,7 +17,7 @@ import {
   VendorEntity,
   ServicePayload
 } from '@app/common'
-import { IDeleteResponse, IUpdateStateResponse } from '@app/common'
+import { IUpdateStateResponse } from '@app/common'
 import { VendorsService } from './vendors.service'
 
 @UseFilters(new ExceptionFilterRpc())

@@ -6,13 +6,7 @@ import * as Joi from 'joi'
 
 import { RmqModule, UserEntity, QUEUE_SERVICE } from '@app/common'
 import { UsersServiceController } from './users-service.controller'
-<<<<<<< HEAD
 import { UsersService } from './users-service.service'
-import { UsersRepository } from './users.repository'
-=======
-import { UsersServiceService } from './users-service.service'
-import { TypeOrmModule } from '@nestjs/typeorm'
->>>>>>> 88cba151327f8edbb1cdda62bd2b143a4eadaad4
 
 @Module({
   imports: [
@@ -42,10 +36,8 @@ import { TypeOrmModule } from '@nestjs/typeorm'
     TypeOrmModule.forFeature([UserEntity])
   ],
   controllers: [UsersServiceController],
-<<<<<<< HEAD
-  providers: [UsersService, UsersRepository]
-=======
-  providers: [UsersServiceService]
->>>>>>> 88cba151327f8edbb1cdda62bd2b143a4eadaad4
+
+  providers: [UsersService]
+
 })
 export class UsersServiceModule {}

@@ -18,7 +18,7 @@ import {
   ServicePayload
 } from '@app/common'
 import { UsersService } from './users-service.service'
-import { DeleteUserResponse } from './interface'
+import { IDeleteResponse } from '@app/common'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -94,26 +94,13 @@ export class UsersServiceController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.DELETE_USER)
-  async deleteUser (
-    @Payload() data: string,
-      @Ctx() context: RmqContext
-  ): Promise<DeleteUserResponse> {
-    try {
-      this.rmqService.ack(context)
-      return await this.usersService.deleteUser(data)
-    } catch (error) {
-      throw new RpcException(error)
-    }
-  }
-
   @MessagePattern(QUEUE_MESSAGE.DELETE_USER_PROFILE)
   async deleteUserProfile (
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
   ): Promise<{ status: number }> {
     try {
-      return await this.usersServiceService.deleteUserProfile(userId)
+      return await this.usersService.deleteUserProfile(userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
