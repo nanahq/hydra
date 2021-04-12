@@ -1,8 +1,155 @@
-import { Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { AdminEntity } from '@app/common/database/entities/Admin'
+import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
+import { RegisterAdminDTO } from '@app/common/dto/registerAdminDTO.dto'
+import * as bcrypt from 'bcrypt'
+import { nanoid } from 'nanoid'
+import { FitRpcException } from '@app/common/filters/rpc.expection'
+import { UpdateAdminLevelRequestDto } from '@app/common/dto/updateAdminLevelRequest.dto'
 
 @Injectable()
 export class AdminServiceService {
-  getHello (): string {
-    return 'Hello World!'
+  constructor (
+    @InjectRepository(AdminEntity)
+    private readonly adminRepository: Repository<AdminEntity>
+  ) {}
+
+  public async createAdmin (data: RegisterAdminDTO): Promise<{ status: 1 }> {
+    const payload = {
+      ...data,
+      password: await bcrypt.hash(data.password, 10),
+      id: nanoid()
+    }
+
+    const createAdminRequest = await this.create(payload)
+
+    if (createAdminRequest === null) {
+      throw new FitRpcException(
+        'Failed to create admin. Check submitted values',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return { status: 1 }
+  }
+
+  public async validateAdminWithPassword ({
+    userName,
+    password
+  }: {
+    userName: string
+    password: string
+  }): Promise<AdminEntity> {
+    const adminRequest = await this.getAdminByUserName(userName)
+    if (adminRequest === null) {
+      throw new FitRpcException(
+        'Provided username is not correct',
+        HttpStatus.UNAUTHORIZED
+      )
+    }
+    const isCorrectPassword: boolean = await bcrypt.compare(
+      password,
+      adminRequest.password
+    )
+
+    if (!isCorrectPassword) {
+      throw new FitRpcException(
+        'Provided Password is incorrect',
+        HttpStatus.UNAUTHORIZED
+      )
+    }
+
+    adminRequest.password = ''
+
+    return adminRequest
+  }
+
+  public async validateAdminWithId (id: string): Promise<AdminEntity> {
+    const getAdminByIdRequest = await this.getAdminById(id)
+    if (getAdminByIdRequest === null) {
+      throw new FitRpcException(
+        'Can not find Admin with the provided ID',
+        HttpStatus.UNAUTHORIZED
+      )
+    }
+    getAdminByIdRequest.password = ''
+    return getAdminByIdRequest
+  }
+
+  public async changeAdminAccess (
+    data: UpdateAdminLevelRequestDto
+  ): Promise<{ status: number }> {
+    const changeAdminAccessRequest = await this.updateAdminLevel(data)
+
+    if (changeAdminAccessRequest === null) {
+      throw new FitRpcException(
+        'Failed to update admin level. admin with id not found',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return { status: 1 }
+  }
+
+  public async deleteAdminProfile (id: string): Promise<{ status: 1 }> {
+    const deleteRequest = await this.deleteAdmin(id)
+
+    if (deleteRequest === null) {
+      throw new FitRpcException(
+        'Failed to delete admin. Id is not correct',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return { status: 1 }
+  }
+
+  private async create (
+    data: Partial<AdminEntity>
+  ): Promise<InsertResult | null> {
+    return await this.adminRepository
+      .createQueryBuilder('admin')
+      .insert()
+      .into(AdminEntity)
+      .values({ ...data })
+      .returning('id')
+      .execute()
+  }
+
+  private async getAdminByUserName (
+    userName: string
+  ): Promise<AdminEntity | null> {
+    return await this.adminRepository
+      .createQueryBuilder('admin')
+      .where('admin.userName = :userName', { userName })
+      .getOne()
+  }
+
+  private async getAdminById (id: string): Promise<AdminEntity | null> {
+    return await this.adminRepository
+      .createQueryBuilder('admin')
+      .where('admin.id = :id', { id })
+      .getOne()
+  }
+
+  private async updateAdminLevel (
+    data: UpdateAdminLevelRequestDto
+  ): Promise<UpdateResult | null> {
+    return await this.adminRepository
+      .createQueryBuilder()
+      .update(AdminEntity)
+      .set({
+        ...data
+      })
+      .where('id = :id', { id: data.id })
+      .execute()
+  }
+
+  private async deleteAdmin (id: string): Promise<DeleteResult | null> {
+    return await this.adminRepository
+      .createQueryBuilder()
+      .delete()
+      .where('id = :id', { id })
+      .execute()
   }
 }

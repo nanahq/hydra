@@ -17,7 +17,7 @@ import {
   VendorEntity,
   ServicePayload
 } from '@app/common'
-import { DeleteVendorResponse, UpdateUserStateResponse } from './interface'
+import { IDeleteResponse, IUpdateStateResponse } from '@app/common'
 import { VendorsService } from './vendors.service'
 
 @UseFilters(new ExceptionFilterRpc())
@@ -46,7 +46,7 @@ export class VendorsController {
   async updateVendorStatus (
     @Payload() data: updateVendorStatus,
       @Ctx() ctx: RmqContext
-  ): Promise<UpdateUserStateResponse> {
+  ): Promise<IUpdateStateResponse> {
     this.rmqService.ack(ctx)
     try {
       return await this.vendorsService.updateVendorStatus(data)
@@ -94,16 +94,19 @@ export class VendorsController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.DELETE_VENDOR)
-  async deleteVendor (
-    @Payload() data: string,
+
+  @MessagePattern(QUEUE_MESSAGE.DELETE_VENDOR_PROFILE)
+  async deleteVendorProfile (
+    @Payload() data: ServicePayload<null>,
       @Ctx() context: RmqContext
-  ): Promise<DeleteVendorResponse> {
+  ): Promise<{ status: number }> {
     try {
-      this.rmqService.ack(context)
-      return await this.vendorsService.deleteVendor(data)
+      return await this.vendorsService.deleteVendorProfile(data.userId)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+
     }
   }
 }

@@ -109,6 +109,7 @@ services:
     env_file:
       - ./apps/admin-service/.env
     depends_on:
+      - admin-db
       - admin-gateway
       - rabbitmq
     volumes:
@@ -144,6 +145,18 @@ services:
       - POSTGRESQL_USERNAME=root
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=vendors
+    volumes:
+      - pg_data:/var/lib/postgresql
+    networks:
+      - app-tier
+  admin-db:
+    image: bitnami/postgresql:14
+    ports:
+      - '5432'
+    environment:
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=root@123
+      - POSTGRESQL_DATABASE=admin
     volumes:
       - pg_data:/var/lib/postgresql
     networks:

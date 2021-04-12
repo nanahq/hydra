@@ -1,6 +1,13 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+<<<<<<< HEAD
 import { Repository } from 'typeorm'
+=======
+import { VendorEntity } from '@app/common/database/entities/Vendor'
+import { VendorDto } from '@app/common/database/dto/vendor.dto'
+import { updateVendorStatus } from '@app/common/dto/UpdateVendorStatus.dto'
+import { DeleteResult, Repository } from 'typeorm'
+>>>>>>> 88cba151327f8edbb1cdda62bd2b143a4eadaad4
 import { nanoid } from 'nanoid'
 
 import * as bcrypt from 'bcrypt'
@@ -14,7 +21,7 @@ import {
   updateVendorStatus,
   ServicePayload
 } from '@app/common'
-import { DeleteVendorResponse, UpdateUserStateResponse } from './interface'
+import { IDeleteResponse, IUpdateStateResponse } from '@app/common'
 
 @Injectable()
 export class VendorsService {
@@ -68,7 +75,7 @@ export class VendorsService {
 
   async updateVendorStatus (
     data: updateVendorStatus
-  ): Promise<UpdateUserStateResponse> {
+  ): Promise<IUpdateStateResponse> {
     try {
       await this.updateVendorApprovalStatus(data)
       return { status: 1 }
@@ -82,6 +89,7 @@ export class VendorsService {
 
   async getVendor ({ userId }: TokenPayload): Promise<VendorEntity> {
     const _vendor = await this.getVendorById(userId)
+
     if (_vendor === null) {
       throw new FitRpcException(
         'Provided user id is not found',
@@ -106,6 +114,19 @@ export class VendorsService {
     }
 
     return req
+  }
+
+  async deleteVendorProfile (vendorId: string): Promise<{ status: number }> {
+    const deleteRequest = await this.deleteVendor(vendorId)
+
+    if (deleteRequest === null) {
+      throw new FitRpcException(
+        'Failed to delete vendor. Invalid ID',
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
+    }
+
+    return { status: 1 }
   }
 
   private async checkExistingVendor (phoneNumber: string): Promise<void> {
@@ -175,6 +196,7 @@ export class VendorsService {
     return query === null ? query : (query.raw[0].id as string)
   }
 
+<<<<<<< HEAD
   private async deleteEntity (id: string): Promise<any> {
     return await this.vendorRepository
       .createQueryBuilder()
@@ -185,11 +207,20 @@ export class VendorsService {
       .execute()
   }
 
-  async deleteVendor (id: string): Promise<DeleteVendorResponse> {
+  async deleteVendor (id: string): Promise<IDeleteResponse> {
     const deleted = await this.deleteEntity(id)
     if (deleted === true) {
       return { status: 1 }
     }
     return { status: 0 }
   }
+=======
+  private async deleteVendor (id: string): Promise<DeleteResult | null> {
+    return await this.vendorRepository
+      .createQueryBuilder()
+      .delete()
+      .where('id = :id', { id })
+      .execute()
+  }
+>>>>>>> 88cba151327f8edbb1cdda62bd2b143a4eadaad4
 }

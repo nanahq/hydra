@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   Inject,
@@ -60,6 +61,25 @@ export class VendorController {
     }
     return await lastValueFrom(
       this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('delete-profile')
+  async deleteVendorProfile (
+    @CurrentUser() vendor: VendorEntity
+  ): Promise<{ status: number }> {
+    const payload: ServicePayload<null> = {
+      userId: vendor.id,
+      data: null
+    }
+
+    return await lastValueFrom<{ status: number }>(
+      this.vendorClient.send(QUEUE_MESSAGE.DELETE_VENDOR_PROFILE, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
