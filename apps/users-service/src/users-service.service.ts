@@ -62,7 +62,10 @@ export class UsersServiceService {
     if (user == null) {
       throw new UnauthorizedException('Provided Phone is incorrect')
     }
-    const isCorrectPassword: boolean = await bcrypt.compare(password, user.password)
+    const isCorrectPassword: boolean = await bcrypt.compare(
+      password,
+      user.password
+    )
 
     if (!isCorrectPassword) {
       throw new UnauthorizedException('Provided Password is incorrect')

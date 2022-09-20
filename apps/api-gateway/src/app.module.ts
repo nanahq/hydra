@@ -40,7 +40,9 @@ export class AppModule {
           useFactory: (configService: ConfigService) => ({
             secret: configService.get<string>('JWT_SECRET'),
             signOptions: {
-              expiresIn: `${configService.get<string>('JWT_EXPIRATION') ?? ''}s`
+              expiresIn: `${
+                configService.get<string>('JWT_EXPIRATION') ?? ''
+              }s`
             }
           }),
           inject: [ConfigService]
