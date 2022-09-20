@@ -2,8 +2,8 @@ import {
   CanActivate,
   ExecutionContext,
   Inject,
-  UnauthorizedException
-  , Injectable
+  UnauthorizedException,
+  Injectable
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, Observable, tap } from 'rxjs'

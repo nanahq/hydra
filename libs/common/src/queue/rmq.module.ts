@@ -19,8 +19,8 @@ export class RmqModule {
             useFactory: (configService: ConfigService) => ({
               transport: Transport.RMQ,
               options: {
-                urls: [configService.get<string>('RMQ_URI')],
-                queue: configService.get<string>(`RMQ_${name}_QUEUE`)
+                urls: [configService.get<string>('RMQ_URI') as string],
+                queue: configService.get<string>(`RMQ_${name}_QUEUE`) as string
               }
             }),
             inject: [ConfigService]

@@ -18,15 +18,21 @@ import { lastValueFrom } from 'rxjs'
 @Injectable()
 export class NotificationServiceService {
   constructor (
-    @Inject(QUEUE_SERVICE.USERS_SERVICE) private readonly usersClient: ClientProxy,
+    @Inject(QUEUE_SERVICE.USERS_SERVICE)
+    private readonly usersClient: ClientProxy,
     private readonly twilioService: TwilioService,
     private readonly configService: ConfigService
   ) {}
 
-  async verifyPhone ({ code, phoneNumber }: PhoneVerificationPayload): Promise<any> {
+  async verifyPhone ({
+    code,
+    phoneNumber
+  }: PhoneVerificationPayload): Promise<any> {
     try {
       const res = await this.twilioService.client.verify.v2
-        .services(this.configService.get<string>('TWILIO_SERVICE_NAME') as string)
+        .services(
+          this.configService.get<string>('TWILIO_SERVICE_NAME') as string
+        )
         .verificationChecks.create({ to: phoneNumber, code })
 
       if (res.status === 'approved') {
@@ -46,7 +52,9 @@ export class NotificationServiceService {
   async sendVerification ({ phoneNumber }: verifyPhoneRequest): Promise<any> {
     try {
       return await this.twilioService.client.verify.v2
-        .services(this.configService.get<string>('TWILIO_SERVICE_NAME') as string)
+        .services(
+          this.configService.get<string>('TWILIO_SERVICE_NAME') as string
+        )
         .verifications.create({ to: phoneNumber, channel: 'sms' })
     } catch (error) {
       throw new InternalServerErrorException(error)

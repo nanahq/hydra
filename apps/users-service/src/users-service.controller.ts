@@ -1,7 +1,12 @@
-import { RmqService } from '@app/common'
+import { loginUserRequest, RmqService, TokenPayload } from '@app/common'
 import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
 import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
-import { Controller, UnprocessableEntityException } from '@nestjs/common'
+import {
+  Controller,
+  UnauthorizedException,
+  UnprocessableEntityException
+} from '@nestjs/common'
+import { User } from './schema'
 import {
   Ctx,
   MessagePattern,
@@ -9,7 +14,6 @@ import {
   RmqContext
 } from '@nestjs/microservices'
 import { UpdateUserStateResponse } from './interface'
-import { User } from './schema'
 import { UsersServiceService } from './users-service.service'
 
 @Controller()
@@ -20,7 +24,10 @@ export class UsersServiceController {
   ) {}
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_USER)
-  async registerNewUser (@Payload() data: any, @Ctx() context: RmqContext): Promise<User> {
+  async registerNewUser (
+    @Payload() data: any,
+      @Ctx() context: RmqContext
+  ): Promise<User> {
     try {
       return await this.usersServiceService.register(data)
     } catch (error) {
@@ -37,5 +44,31 @@ export class UsersServiceController {
   ): Promise<UpdateUserStateResponse> {
     this.rmqService.ack(ctx)
     return await this.usersServiceService.updateUserStatus(data)
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_USER_LOCAL)
+  async getUserByPhone (
+    @Payload() data: loginUserRequest,
+      @Ctx() context: RmqContext
+  ): Promise<User> {
+    try {
+      this.rmqService.ack(context)
+      return await this.usersServiceService.validateUser(data)
+    } catch (error) {
+      throw new UnauthorizedException()
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_USER_JWT)
+  async getUserById (
+    @Payload() data: TokenPayload,
+      @Ctx() context: RmqContext
+  ): Promise<User> {
+    try {
+      this.rmqService.ack(context)
+      return await this.usersServiceService.getUser(data)
+    } catch (error) {
+      throw new UnauthorizedException()
+    }
   }
 }
