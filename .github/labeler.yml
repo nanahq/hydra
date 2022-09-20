@@ -1,0 +1,17 @@
+version: v1
+
+labels:
+  - label: area/api-gateway
+    sync: true
+    matcher:
+      files: "apps/api-gateway/**"
+
+  - label: area/users-service
+    sync: true
+    matcher:
+      files: "apps/users-service/**"
+
+  - label: area/notification-service
+    sync: true
+    matcher:
+      files: "apps/notification-service**"
