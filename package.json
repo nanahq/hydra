@@ -35,14 +35,18 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "cookie-parser": "^1.4.6",
+    "i": "^0.3.7",
     "joi": "^17.6.0",
     "mongoose": "^6.6.1",
+    "nestjs-twilio": "^3.0.0",
+    "npm": "^8.19.2",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "twilio": "^3.82.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
@@ -55,6 +59,7 @@
     "@types/passport-jwt": "^3.0.6",
     "@types/passport-local": "^1.0.34",
     "@types/supertest": "^2.0.11",
+    "@types/twilio": "^3.19.3",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",

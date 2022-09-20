@@ -2,11 +2,11 @@ import { RmqModule } from "@app/common";
 import { QUEUE_SERVICE } from "@app/common/typings/QUEUE_MESSAGE";
 import { DynamicModule, ValidationPipe } from "@nestjs/common";
 import { INestApplication, Module } from "@nestjs/common";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigModule } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { AppMetadata } from "app.config";
 import { AuthModule } from "./module.api/auth/auth.module";
-import { UsersModule } from "./module.api/users/user.module";
+import { UsersController } from "./module.api/users/users.controller";
 
 @Module({})
 export class AppModule {
@@ -25,14 +25,13 @@ export class AppModule {
                     isGlobal: true
                 }),
                 RmqModule.register({name: QUEUE_SERVICE.USERS_SERVICE}),
+                RmqModule.register({name: QUEUE_SERVICE.NOTIFICATION_SERVICE}),
                 AppModule,
-                UsersModule,
                 AuthModule
-            ]
+            ],
+            controllers: [UsersController],
         }
     }
-
-
         /**
          *  Set Apps configurations
          * @param app INestApplication

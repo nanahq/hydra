@@ -4,15 +4,16 @@ services:
       context: .
       dockerfile: ./apps/api-gateway/Dockerfile
       target: development
-    command: npm run start:dev api-gateway
+    command: 'npm run start:dev api-gateway'
     env_file:
       - ./apps/api-gateway/.env
-    depends_on: 
+    depends_on:
+      - rabbitmq
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
     volumes:
-      - .:/usr/src/app
+      - '.:/usr/src/app'
       - /usr/src/app/node_modules
     ports:
       - '3000:3000'
@@ -21,26 +22,41 @@ services:
       context: .
       dockerfile: ./apps/users-service/Dockerfile
       target: development
-    command: npm run start:dev users-service
+    command: 'npm run start:dev users-service'
     env_file:
       - ./apps/users-service/.env
-    depends_on: 
+    depends_on:
       - api-gateway
       - rabbitmq
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
     volumes:
-      - .:/usr/src/app
+      - '.:/usr/src/app'
       - /usr/src/app/node_modules
-    networks:
-      - app-tier
+  notification-service:
+    build:
+      context: .
+      dockerfile: ./apps/notification-service/Dockerfile
+      target: development
+    command: 'npm run start:dev notification-service'
+    env_file:
+      - ./apps/notification-service/.env
+    depends_on:
+      - api-gateway
+      - rabbitmq
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
   rabbitmq:
     image: rabbitmq
     ports:
       - '5672:5672'
   mongodb-primary:
-    image: docker.io/bitnami/mongodb:5.0
+    image: 'docker.io/bitnami/mongodb:5.0'
     user: root
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
@@ -52,10 +68,8 @@ services:
       - 'mongodb_master_data:/bitnami/mongodb'
     ports:
       - '27017:27017'
-    networks:
-      - app-tier
   mongodb-secondary:
-    image: docker.io/bitnami/mongodb:5.0
+    image: 'docker.io/bitnami/mongodb:5.0'
     depends_on:
       - mongodb-primary
     environment:
@@ -65,7 +79,7 @@ services:
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
   mongodb-arbiter:
-    image: docker.io/bitnami/mongodb:5.0
+    image: 'docker.io/bitnami/mongodb:5.0'
     depends_on:
       - mongodb-primary
     environment:
@@ -77,6 +91,3 @@ services:
 volumes:
   mongodb_master_data:
     driver: local
-networks: 
-  app-tier:
-    driver: bridge

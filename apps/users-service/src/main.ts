@@ -8,9 +8,5 @@ async function bootstrap() {
   app.connectMicroservice(rmq.getOption(QUEUE_SERVICE.USERS_SERVICE))
   await app.startAllMicroservices()
 }
-(() => {
-  bootstrap()
-  .then(() => console.log('users-service listing'))
-  .catch(() => console.log('users-service failed to start')
-  )
-})();
+
+void bootstrap()

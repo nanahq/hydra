@@ -21,7 +21,7 @@ import { UsersRepository } from './users.repository';
       envFilePath: '.../.env'
     }),
     DatabaseModule,
-    RmqModule,
+    RmqModule.register({name: QUEUE_SERVICE.NOTIFICATION_SERVICE}),
     MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
   ],
   controllers: [UsersServiceController],

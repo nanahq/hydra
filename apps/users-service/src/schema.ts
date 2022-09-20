@@ -1,24 +1,23 @@
-import { AbstractDocument } from "@app/common/database/abstract.schema";
-import { Prop, SchemaFactory } from "@nestjs/mongoose";
+import { AbstractDocument } from "@app/common/database/abstract.schema"
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
+import { SchemaTypes} from "mongoose"
 
+@Schema({ versionKey: false })
 export class User extends AbstractDocument {
-    @Prop({required: true})
-    phoneNumber: string
+    @Prop({required: true, type: SchemaTypes.String})
+    phoneNumber: String
 
-    @Prop({required: true})
+    @Prop({required: true, type: SchemaTypes.String})
     password: string
 
-    @Prop({default: 0})
+    @Prop({type: SchemaTypes.Number})
     status: Number
 
-    @Prop()
+    @Prop({type: SchemaTypes.String})
     name: String
 
-    @Prop()
-    savedDeliveryAddress: [String]
-
-    @Prop()
-    state: string
+    @Prop({type: SchemaTypes.String})
+    state: String
 }
 
 
