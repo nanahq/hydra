@@ -1,0 +1,44 @@
+{
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    "standard-with-typescript",
+    "standard-jsx"
+  ],
+  "ignorePatterns": [
+    "dist",
+    "*.json",
+    "website",
+    "examples"
+  ],
+  "rules": {
+    "curly": [
+      "error",
+      "all"
+    ],
+    "brace-style": [
+      "error",
+      "1tbs"
+    ],
+    "func-style": [
+      2,
+      "declaration"
+    ],
+    "new-cap": "off",
+    "indent": "off",
+    "@typescript-eslint/indent": [
+      "error",
+      2,
+      {
+        "offsetTernaryExpressions": true,
+        "SwitchCase": 1
+      }
+    ],
+    "import/no-default-export": "error",
+    "no-else-return": "error",
+    "prefer-template": "error"
+  }
+}
+
+

@@ -1,3 +1,3 @@
 export interface RmqModuleOptions {
-    name: string
+  name: string
 }

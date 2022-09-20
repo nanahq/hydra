@@ -1,13 +1,19 @@
-import { IsNotEmpty, IsPhoneNumber, IsString, Length, Max, MaxLength, Min, MinLength } from "class-validator";
+import {
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+  MaxLength,
+  MinLength
+} from 'class-validator'
 
 export class registerUserRequest {
-    @IsNotEmpty()
-    @IsPhoneNumber('NG')
+  @IsNotEmpty()
+  @IsPhoneNumber('NG')
     phoneNumber: string
 
-    @IsString()
-    @IsNotEmpty()
-    @MinLength(8)
-    @MaxLength(20)
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(8)
+  @MaxLength(20)
     password: string
 }

@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { NotificationServiceController } from './notification-service.controller';
-import { NotificationServiceService } from './notification-service.service';
+import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { NotificationServiceController } from './notification-service.controller'
+import { NotificationServiceService } from './notification-service.service'
 import * as Joi from 'joi'
-import { RmqModule } from '@app/common';
-import { TwilioModule, TwilioService } from 'nestjs-twilio';
-import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE';
+import { RmqModule } from '@app/common'
+import { TwilioModule } from 'nestjs-twilio'
+import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE';
         RMQ_NOTIFICATION_QUEUE: Joi.string(),
         RMQ_URI: Joi.string(),
         TWILIO_ACCOUNT_SID: Joi.string(),
-        TWILIO_AUTH_TOKEN:  Joi.string(),
+        TWILIO_AUTH_TOKEN: Joi.string(),
         TWILIO_SERVICE_NAME: Joi.string()
       }),
       envFilePath: '.../.env'
@@ -24,14 +24,13 @@ import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         accountSid: configService.get('TWILIO_ACCOUNT_SID'),
-        authToken: configService.get('TWILIO_AUTH_TOKEN'),
+        authToken: configService.get('TWILIO_AUTH_TOKEN')
       }),
-      inject: [ConfigService],
+      inject: [ConfigService]
     }),
-    RmqModule.register({name: QUEUE_SERVICE.USERS_SERVICE}),
-
+    RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE })
   ],
   controllers: [NotificationServiceController],
-  providers: [NotificationServiceService, ConfigService],
+  providers: [NotificationServiceService, ConfigService]
 })
 export class NotificationServiceModule {}
