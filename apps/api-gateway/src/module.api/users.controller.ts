@@ -7,17 +7,23 @@ import {
 import {
   Body,
   Controller,
+  Get,
   Inject,
   Post,
-  UnprocessableEntityException
+  UnprocessableEntityException,
+  UseGuards
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
+import { User } from 'apps/users-service/src/schema'
 import { lastValueFrom } from 'rxjs'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+import { CurrentUser } from './current-user.decorator'
 
 @Controller('/users')
 export class UsersController {
   constructor (
-    @Inject(QUEUE_SERVICE.USERS_SERVICE) private readonly usersClient: ClientProxy,
+    @Inject(QUEUE_SERVICE.USERS_SERVICE)
+    private readonly usersClient: ClientProxy,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy
   ) {}
@@ -45,5 +51,11 @@ export class UsersController {
     } catch (error) {
       throw new UnprocessableEntityException(error)
     }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  async getUserProfile (@CurrentUser() user: User): Promise<User> {
+    return user
   }
 }

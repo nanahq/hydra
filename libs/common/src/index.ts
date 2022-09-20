@@ -1,2 +1,5 @@
 export * from './queue/rmq.module'
 export * from './queue/rmq.service'
+export * from './typings/Global.Interface'
+export * from './typings/QUEUE_MESSAGE'
+export * from './dto/loginUser.dto'

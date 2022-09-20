@@ -1,12 +1,21 @@
 import { RmqModule } from '@app/common'
 import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
-import { DynamicModule, ValidationPipe, INestApplication, Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import {
+  DynamicModule,
+  ValidationPipe,
+  INestApplication,
+  Module
+} from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { AppMetadata } from 'app.config'
-import { AuthModule } from './module.api/auth/auth.module'
 import { UsersController } from './module.api/users.controller'
-
+import * as Joi from 'joi'
+import { JwtModule } from '@nestjs/jwt'
+import { AuthController } from './module.api/auth.controller'
+import { AuthService } from './module.api/auth.service'
+import { LocalStrategy } from './auth/strategy/local.strategy'
+import { JwtStrategy } from './auth/strategy/jwt.strategy'
 @Module({})
 export class AppModule {
   static async create (): Promise<INestApplication> {
@@ -20,14 +29,28 @@ export class AppModule {
       module: AppModule,
       imports: [
         ConfigModule.forRoot({
-          isGlobal: true
+          isGlobal: true,
+          validationSchema: Joi.object({
+            JWT_SECRET: Joi.string().required(),
+            JWT_EXPIRATION: Joi.string().required()
+          }),
+          envFilePath: './apps/api-gateway/.env'
+        }),
+        JwtModule.registerAsync({
+          useFactory: (configService: ConfigService) => ({
+            secret: configService.get<string>('JWT_SECRET'),
+            signOptions: {
+              expiresIn: `${configService.get<string>('JWT_EXPIRATION') ?? ''}s`
+            }
+          }),
+          inject: [ConfigService]
         }),
         RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-        AppModule,
-        AuthModule
+        AppModule
       ],
-      controllers: [UsersController]
+      controllers: [UsersController, AuthController],
+      providers: [AuthService, LocalStrategy, JwtStrategy]
     }
   }
 
@@ -48,7 +71,6 @@ export class AppModule {
     */
 
   // TODO(@siradji) improve versioning
-
   static getVersion (): string {
     const { API_VERSION } = AppMetadata
     return API_VERSION
