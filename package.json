@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
+    "prepare": "husky install",
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
@@ -101,11 +102,5 @@
     "moduleNameMapper": {
       "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1"
     }
-  },
-  "lint-staged": {
-    "*.{ts,js}": [
-      "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-      "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\""
-    ]
   }
 }
