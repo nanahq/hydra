@@ -15,15 +15,17 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate (phoneNumber: string, password: string): Promise<any> {
-      return await lastValueFrom(
-        this.usersClient.send(QUEUE_MESSAGE.GET_USER_LOCAL, {
+    return await lastValueFrom(
+      this.usersClient
+        .send(QUEUE_MESSAGE.GET_USER_LOCAL, {
           phoneNumber,
           password
-        }).pipe(
-            catchError((error) => {
-               throw new UnauthorizedException(error.message)
-            })
+        })
+        .pipe(
+          catchError((error) => {
+            throw new UnauthorizedException(error.message)
+          })
         )
-      )
+    )
   }
 }
