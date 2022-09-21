@@ -7,6 +7,7 @@ import {
   Module
 } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { APP_FILTER, NestFactory } from '@nestjs/core'
 import { APP_GUARD, NestFactory } from '@nestjs/core'
 import { AppMetadata } from 'app.config'
 import { UsersController } from './module.api/users.controller'
@@ -16,6 +17,7 @@ import { AuthController } from './module.api/auth.controller'
 import { AuthService } from './module.api/auth.service'
 import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
+import { FitHttpException } from '@app/common/filters/rpc.expection'
 import helmet from 'helmet'
 import {ThrottlerModule} from '@nestjs/throttler'
 @Module({})
@@ -65,6 +67,9 @@ export class AppModule {
         LocalStrategy, 
         JwtStrategy, 
         {
+          provide: APP_FILTER,
+          useClass: FitHttpException
+        }
           provide: APP_GUARD,
           useClass: ThrottlerModule
         }

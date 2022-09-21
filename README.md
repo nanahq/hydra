@@ -6,6 +6,7 @@
 
 ```shell
   # npm run prepare 
+ 
   # npm install 
 
   # docker compose up --build -V 

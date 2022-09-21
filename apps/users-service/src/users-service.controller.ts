@@ -4,18 +4,22 @@ import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
 import {
   Controller,
   UnauthorizedException,
-  UnprocessableEntityException
+  UnprocessableEntityException,
+  UseFilters
 } from '@nestjs/common'
 import { User } from './schema'
 import {
   Ctx,
   MessagePattern,
   Payload,
-  RmqContext
+  RmqContext,
+  RpcException
 } from '@nestjs/microservices'
 import { UpdateUserStateResponse } from './interface'
 import { UsersServiceService } from './users-service.service'
 
+import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
+@UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class UsersServiceController {
   constructor (
@@ -31,7 +35,7 @@ export class UsersServiceController {
     try {
       return await this.usersServiceService.register(data)
     } catch (error) {
-      throw new UnprocessableEntityException(error)
+      throw new RpcException(error)
     } finally {
       this.rmqService.ack(context)
     }
@@ -43,7 +47,11 @@ export class UsersServiceController {
       @Ctx() ctx: RmqContext
   ): Promise<UpdateUserStateResponse> {
     this.rmqService.ack(ctx)
-    return await this.usersServiceService.updateUserStatus(data)
+    try {
+      return await this.usersServiceService.updateUserStatus(data)
+    } catch (error) {
+        throw new RpcException(error)
+    }
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_USER_LOCAL)
@@ -55,7 +63,7 @@ export class UsersServiceController {
       this.rmqService.ack(context)
       return await this.usersServiceService.validateUser(data)
     } catch (error) {
-      throw new UnauthorizedException()
+      throw new RpcException(error)
     }
   }
 
@@ -68,7 +76,7 @@ export class UsersServiceController {
       this.rmqService.ack(context)
       return await this.usersServiceService.getUser(data)
     } catch (error) {
-      throw new UnauthorizedException()
+      throw new RpcException(error)
     }
   }
 }

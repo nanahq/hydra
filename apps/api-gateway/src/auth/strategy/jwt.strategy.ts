@@ -9,7 +9,7 @@ import { ClientProxy } from '@nestjs/microservices'
 import { PassportStrategy } from '@nestjs/passport'
 import { Types } from 'mongoose'
 import { ExtractJwt, Strategy } from 'passport-jwt'
-import { lastValueFrom } from 'rxjs'
+import { catchError, lastValueFrom } from 'rxjs'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -29,14 +29,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate ({ userId }: TokenPayload): Promise<any> {
-    try {
       return await lastValueFrom(
         this.usersClient.send(QUEUE_MESSAGE.GET_USER_JWT, {
           _id: new Types.ObjectId(userId)
-        })
+        }).pipe(
+          catchError(error => {
+            throw new UnauthorizedException(error.message)
+          })
+        )
       )
-    } catch (error) {
-      throw new UnauthorizedException()
-    }
   }
 }
