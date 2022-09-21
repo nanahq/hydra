@@ -8,14 +8,16 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
   Inject,
   Post,
   UnprocessableEntityException,
+  UseFilters,
   UseGuards
 } from '@nestjs/common'
-import { ClientProxy } from '@nestjs/microservices'
+import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { User } from 'apps/users-service/src/schema'
-import { lastValueFrom } from 'rxjs'
+import { catchError, lastValueFrom } from 'rxjs'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 
@@ -30,27 +32,28 @@ export class UsersController {
 
   @Post('/register')
   async registerNewUser (@Body() request: registerUserRequest): Promise<any> {
-    try {
       const newUser = await lastValueFrom(
         this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request })
+        .pipe(
+          catchError((error) => {
+                throw new HttpException(error.message, error.status)
+          })
+        )
       )
       return newUser
-    } catch (error) {
-      throw new UnprocessableEntityException(error)
-    }
   }
 
   @Post('/verify')
   async verifyUser (@Body() request: PhoneVerificationPayload): Promise<any> {
-    try {
       return await lastValueFrom(
         this.notificationClient.send(QUEUE_MESSAGE.VERIFY_PHONE, {
           ...request
-        })
+        }).pipe(
+          catchError((error) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
       )
-    } catch (error) {
-      throw new UnprocessableEntityException(error)
-    }
   }
 
   @UseGuards(JwtAuthGuard)

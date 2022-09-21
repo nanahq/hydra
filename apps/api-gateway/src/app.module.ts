@@ -7,7 +7,7 @@ import {
   Module
 } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { NestFactory } from '@nestjs/core'
+import { APP_FILTER, NestFactory } from '@nestjs/core'
 import { AppMetadata } from 'app.config'
 import { UsersController } from './module.api/users.controller'
 import * as Joi from 'joi'
@@ -16,6 +16,7 @@ import { AuthController } from './module.api/auth.controller'
 import { AuthService } from './module.api/auth.service'
 import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
+import { FitHttpException } from '@app/common/filters/rpc.expection'
 @Module({})
 export class AppModule {
   static async create (): Promise<INestApplication> {
@@ -52,7 +53,15 @@ export class AppModule {
         AppModule
       ],
       controllers: [UsersController, AuthController],
-      providers: [AuthService, LocalStrategy, JwtStrategy]
+      providers: [
+        AuthService, 
+        LocalStrategy, 
+        JwtStrategy, 
+        {
+          provide: APP_FILTER,
+          useClass: FitHttpException
+        }
+      ]
     }
   }
 

@@ -12,7 +12,7 @@ export class AuthController {
   @Post('login')
   async login (
     @CurrentUser() user: User,
-      @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response
   ): Promise<any> {
     return await this.authService.login(user, response)
   }
