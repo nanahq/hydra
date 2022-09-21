@@ -49,9 +49,10 @@ export class FitHttpException implements ExceptionFilter {
     const { httpAdapter } = this.httpAdapterHost
     const ctx = host.switchToHttp()
 
-    const httpStatus = (exception.status !== undefined)
-      ? exception.status
-      : HttpStatus.INTERNAL_SERVER_ERROR
+    const httpStatus =
+      exception.status !== undefined
+        ? exception.status
+        : HttpStatus.INTERNAL_SERVER_ERROR
 
     const responseBody = {
       statusCode: httpStatus,

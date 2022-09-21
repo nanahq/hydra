@@ -1,10 +1,7 @@
 import { loginUserRequest, RmqService, TokenPayload } from '@app/common'
 import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
 import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
-import {
-  Controller,
-  UseFilters
-} from '@nestjs/common'
+import { Controller, UseFilters } from '@nestjs/common'
 import { User } from './schema'
 import {
   Ctx,
