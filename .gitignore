@@ -33,5 +33,5 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-apps/api-gateway/.env
-apps/api-gateway/.env
+
+*.env

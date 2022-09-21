@@ -1,8 +1,4 @@
-import {
-  HttpStatus,
-  Inject,
-  Injectable,
-} from '@nestjs/common'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { registerUserRequest } from '@app/common/dto/registerUser.dto'
 import { UsersRepository } from './users.repository'
 import * as bcrypt from 'bcrypt'
@@ -29,8 +25,8 @@ export class UsersServiceService {
     phoneNumber,
     password
   }: registerUserRequest): Promise<User> {
-          // Validation gate to check if provided phone number is in db
-          await this.checkExistingUser(phoneNumber)
+    // Validation gate to check if provided phone number is in db
+    await this.checkExistingUser(phoneNumber)
 
     try {
       const payload: Omit<User, '_id'> = {
@@ -49,7 +45,10 @@ export class UsersServiceService {
       )
       return user
     } catch (error) {
-      throw new FitRpcException( 'Something went wrong. Could not register you at the moment', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong. Could not register you at the moment',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -60,7 +59,10 @@ export class UsersServiceService {
     const user = await this.usersRepository.findOne({ phoneNumber })
 
     if (user == null) {
-      throw new FitRpcException( 'Provided phone number is not correct', HttpStatus.UNAUTHORIZED)
+      throw new FitRpcException(
+        'Provided phone number is not correct',
+        HttpStatus.UNAUTHORIZED
+      )
     }
     const isCorrectPassword: boolean = await bcrypt.compare(
       password,
@@ -68,7 +70,10 @@ export class UsersServiceService {
     )
 
     if (!isCorrectPassword) {
-      throw new FitRpcException( 'Provided Password is incorrect',HttpStatus.UNAUTHORIZED)
+      throw new FitRpcException(
+        'Provided Password is incorrect',
+        HttpStatus.UNAUTHORIZED
+      )
     }
     return user
   }
@@ -77,17 +82,26 @@ export class UsersServiceService {
     phoneNumber
   }: verifyPhoneRequest): Promise<UpdateUserStateResponse> {
     try {
-      await this.usersRepository.findOneAndUpdate({ phoneNumber }, { status: 1 })
+      await this.usersRepository.findOneAndUpdate(
+        { phoneNumber },
+        { status: 1 }
+      )
       return { status: 1 }
     } catch (error) {
-        throw new FitRpcException('Something Went Wrong Updating User status', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something Went Wrong Updating User status',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   async getUser ({ userId }: TokenPayload): Promise<User> {
     const user = await this.usersRepository.findOne({ _id: userId })
     if (user === null) {
-      throw new FitRpcException('Provided user id is not found', HttpStatus.UNAUTHORIZED)
+      throw new FitRpcException(
+        'Provided user id is not found',
+        HttpStatus.UNAUTHORIZED
+      )
     }
     return user
   }
@@ -95,7 +109,10 @@ export class UsersServiceService {
   private async checkExistingUser (phoneNumber: string): Promise<void> {
     const user = await this.usersRepository.findOne({ phoneNumber })
     if (user !== null) {
-      throw new FitRpcException('Phone Number is  already registered.', HttpStatus.BAD_GATEWAY)
+      throw new FitRpcException(
+        'Phone Number is  already registered.',
+        HttpStatus.BAD_GATEWAY
+      )
     }
   }
 }

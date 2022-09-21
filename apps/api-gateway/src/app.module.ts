@@ -2,13 +2,12 @@ import { RmqModule } from '@app/common'
 import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
 import {
   DynamicModule,
-  ValidationPipe,
   INestApplication,
-  Module
+  Module,
+  ValidationPipe
 } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { APP_FILTER, NestFactory } from '@nestjs/core'
-import { APP_GUARD, NestFactory } from '@nestjs/core'
+import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
 import { AppMetadata } from 'app.config'
 import { UsersController } from './module.api/users.controller'
 import * as Joi from 'joi'
@@ -19,7 +18,8 @@ import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
 import { FitHttpException } from '@app/common/filters/rpc.expection'
 import helmet from 'helmet'
-import {ThrottlerModule} from '@nestjs/throttler'
+import { ThrottlerModule } from '@nestjs/throttler'
+
 @Module({})
 export class AppModule {
   static async create (): Promise<INestApplication> {
@@ -54,26 +54,26 @@ export class AppModule {
         RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
         ThrottlerModule.forRootAsync({
-        useFactory: () => ({
-          ttl:60,
-          limit: 10
-        })
+          useFactory: () => ({
+            ttl: 60,
+            limit: 10
+          })
         }),
         AppModule
       ],
       controllers: [UsersController, AuthController],
       providers: [
-        AuthService, 
-        LocalStrategy, 
-        JwtStrategy, 
+        AuthService,
+        LocalStrategy,
+        JwtStrategy,
         {
           provide: APP_FILTER,
           useClass: FitHttpException
-        }
+        },
+        {
           provide: APP_GUARD,
           useClass: ThrottlerModule
         }
-      
       ]
     }
   }
@@ -91,9 +91,9 @@ export class AppModule {
   }
 
   /*
-    Get the version info from App meta data  file or enviromental variable
-    @returns string
-    */
+      Get the version info from App meta data  file or enviromental variable
+      @returns string
+      */
 
   // TODO(@siradji) improve versioning
   static getVersion (): string {
