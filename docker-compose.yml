@@ -9,14 +9,13 @@ services:
       - ./apps/api-gateway/.env
     depends_on:
       - rabbitmq
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
     volumes:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
     ports:
       - '3000:3000'
+    networks:
+      - app-tier
   users-service:
     build:
       context: .
@@ -28,12 +27,11 @@ services:
     depends_on:
       - api-gateway
       - rabbitmq
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
     volumes:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
+    networks:
+      - app-tier
   notification-service:
     build:
       context: .
@@ -45,49 +43,17 @@ services:
     depends_on:
       - api-gateway
       - rabbitmq
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
     volumes:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
+    networks:
+      - app-tier
   rabbitmq:
     image: rabbitmq
     ports:
       - '5672:5672'
-  mongodb-primary:
-    image: 'docker.io/bitnami/mongodb:5.0'
-    user: root
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-      - MONGO_INITDB_DATABASE=users
-    volumes:
-      - 'mongodb_master_data:/bitnami/mongodb'
-    ports:
-      - '27017:27017'
-  mongodb-secondary:
-    image: 'docker.io/bitnami/mongodb:5.0'
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
-      - MONGODB_REPLICA_SET_MODE=secondary
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-  mongodb-arbiter:
-    image: 'docker.io/bitnami/mongodb:5.0'
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
-      - MONGODB_REPLICA_SET_MODE=arbiter
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
 volumes:
   mongodb_master_data:
     driver: local
+  app_tier:
+    driver: bridge
