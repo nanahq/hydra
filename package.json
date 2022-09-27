@@ -69,7 +69,7 @@
     "@types/supertest": "^2.0.11",
     "@types/twilio": "^3.19.3",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/parser": "^5.38.1",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard-jsx": "^11.0.0",
