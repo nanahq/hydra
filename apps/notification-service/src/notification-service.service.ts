@@ -4,16 +4,12 @@ import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE
 } from '@app/common/typings/QUEUE_MESSAGE'
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  UnprocessableEntityException
-} from '@nestjs/common'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ClientProxy } from '@nestjs/microservices'
 import { TwilioService } from 'nestjs-twilio'
 import { lastValueFrom } from 'rxjs'
+import { FitRpcException } from '@app/common/filters/rpc.expection'
 
 @Injectable()
 export class NotificationServiceService {
@@ -43,9 +39,12 @@ export class NotificationServiceService {
         )
         return { status: 1 }
       }
-      throw new UnprocessableEntityException('Provided code is not valid')
+      return { status: 0 }
     } catch (error) {
-      throw new UnprocessableEntityException(error)
+      throw new FitRpcException(
+        'Provided code is not valid',
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
     }
   }
 
@@ -57,7 +56,10 @@ export class NotificationServiceService {
         )
         .verifications.create({ to: phoneNumber, channel: 'sms' })
     } catch (error) {
-      throw new InternalServerErrorException(error)
+      throw new FitRpcException(
+        'Failed to send verification code',
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
     }
   }
 }

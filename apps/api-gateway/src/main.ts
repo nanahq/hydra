@@ -7,9 +7,9 @@ import { AppModule } from './app.module'
 async function bootstrap (): Promise<void> {
   const app = await AppModule.create()
   const port = app.get(ConfigService).get<string>('PORT') as string
-  const rmqServie = app.get<RmqService>(RmqService)
+  const rmqService = app.get<RmqService>(RmqService)
   app.connectMicroservice<RmqOptions>(
-    rmqServie.getOption(QUEUE_SERVICE.API_SERVICE, true)
+    rmqService.getOption(QUEUE_SERVICE.API_SERVICE, true)
   )
   await app.startAllMicroservices()
   await app.listen(port)

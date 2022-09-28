@@ -2,12 +2,13 @@ import { RmqService } from '@app/common'
 import { PhoneVerificationPayload } from '@app/common/dto/phoneVerificationPayload.dto'
 import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
 import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
-import { Controller, UnprocessableEntityException } from '@nestjs/common'
+import { Controller } from '@nestjs/common'
 import {
   Ctx,
   MessagePattern,
   Payload,
-  RmqContext
+  RmqContext,
+  RpcException
 } from '@nestjs/microservices'
 import { NotificationServiceService } from './notification-service.service'
 
@@ -27,7 +28,7 @@ export class NotificationServiceController {
       this.rmqService.ack(context)
       return await this.notificationServiceService.verifyPhone(data)
     } catch (error) {
-      throw new UnprocessableEntityException(error)
+      throw new RpcException(error)
     }
   }
 
@@ -40,7 +41,7 @@ export class NotificationServiceController {
       this.rmqService.ack(context)
       return await this.notificationServiceService.sendVerification(data)
     } catch (error) {
-      throw new UnprocessableEntityException(error)
+      throw new RpcException(error)
     }
   }
 }

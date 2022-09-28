@@ -9,14 +9,47 @@ services:
       - ./apps/api-gateway/.env
     depends_on:
       - rabbitmq
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
     volumes:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
     ports:
       - '3000:3000'
+    networks:
+      - app-tier
+  vendors-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/vendor-gateway/Dockerfile
+      target: development
+    command: 'npm run start:dev vendor-gateway'
+    env_file:
+      - ./apps/vendor-gateway/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    ports:
+      - '3001:3001'
+    networks:
+      - app-tier
+  admin-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/admin-gateway/Dockerfile
+      target: development
+    command: 'npm run start:dev admin-gateway'
+    env_file:
+      - ./apps/admin-gateway/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    ports:
+      - '3002:3002'
+    networks:
+      - app-tier
   users-service:
     build:
       context: .
@@ -27,13 +60,13 @@ services:
       - ./apps/users-service/.env
     depends_on:
       - api-gateway
+      - users-db
       - rabbitmq
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
     volumes:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
+    networks:
+      - app-tier
   notification-service:
     build:
       context: .
@@ -45,49 +78,81 @@ services:
     depends_on:
       - api-gateway
       - rabbitmq
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
     volumes:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
+    networks:
+      - app-tier
+  vendors-service:
+    build:
+      context: .
+      dockerfile: ./apps/vendors-service/Dockerfile
+      target: development
+    command: 'npm run start:dev vendors-service'
+    env_file:
+      - ./apps/vendors-service/.env
+    depends_on:
+      - vendors-gateway
+      - vendors-db
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - app-tier
+  admin-service:
+    build:
+      context: .
+      dockerfile: ./apps/admin-service/Dockerfile
+      target: development
+    command: 'npm run start:dev admin-service'
+    env_file:
+      - ./apps/admin-service/.env
+    depends_on:
+      - admin-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - app-tier
   rabbitmq:
     image: rabbitmq
     ports:
       - '5672:5672'
-  mongodb-primary:
-    image: 'docker.io/bitnami/mongodb:5.0'
-    user: root
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-      - MONGO_INITDB_DATABASE=users
     volumes:
-      - 'mongodb_master_data:/bitnami/mongodb'
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - app-tier
+  users-db:
+    image: bitnami/postgresql:14
     ports:
-      - '27017:27017'
-  mongodb-secondary:
-    image: 'docker.io/bitnami/mongodb:5.0'
-    depends_on:
-      - mongodb-primary
+      - '5432'
     environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
-      - MONGODB_REPLICA_SET_MODE=secondary
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-  mongodb-arbiter:
-    image: 'docker.io/bitnami/mongodb:5.0'
-    depends_on:
-      - mongodb-primary
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=root@123
+      - POSTGRESQL_DATABASE=users
+    volumes:
+      - pg_data:/var/lib/postgresql
+    networks:
+      - app-tier
+  vendors-db:
+    image: bitnami/postgresql:14
+    ports:
+      - '5432'
     environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
-      - MONGODB_REPLICA_SET_MODE=arbiter
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=root@123
+      - POSTGRESQL_DATABASE=vendors
+    volumes:
+      - pg_data:/var/lib/postgresql
+    networks:
+      - app-tier
 volumes:
-  mongodb_master_data:
+  rabbitmq_data:
     driver: local
+  pg_data:
+    driver: local
+networks:
+  app-tier:
+    driver: bridge

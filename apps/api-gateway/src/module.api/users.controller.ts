@@ -11,15 +11,17 @@ import {
   HttpException,
   Inject,
   Post,
+  Put,
   UseGuards
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
-import { User } from 'apps/users-service/src/schema'
 import { catchError, lastValueFrom } from 'rxjs'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
+import { UserEntity } from '@app/common'
+import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
 
-@Controller('/users')
+@Controller('users')
 export class UsersController {
   constructor (
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
@@ -28,19 +30,19 @@ export class UsersController {
     private readonly notificationClient: ClientProxy
   ) {}
 
-  @Post('/register')
+  @Post('register')
   async registerNewUser (@Body() request: registerUserRequest): Promise<any> {
-    const newUser = await lastValueFrom(
+    return await lastValueFrom(
       this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
         catchError((error) => {
           throw new HttpException(error.message, error.status)
         })
       )
     )
-    return newUser
+
   }
 
-  @Post('/verify')
+  @Post('verify')
   async verifyUser (@Body() request: PhoneVerificationPayload): Promise<any> {
     return await lastValueFrom(
       this.notificationClient
@@ -57,7 +59,26 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getUserProfile (@CurrentUser() user: User): Promise<User> {
+  async getUserProfile (@CurrentUser() user: UserEntity): Promise<UserEntity> {
     return user
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('update-profile')
+  async updateUserProfile (
+    @Body() data: Partial<UserEntity>,
+      @CurrentUser() user: UserEntity
+  ): Promise<UserEntity> {
+    const payload: ServicePayload<Partial<UserEntity>> = {
+      userId: user.id,
+      data
+    }
+    return await lastValueFrom(
+      this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload).pipe(
+        catchError((error: { status: number, message: string }) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 }

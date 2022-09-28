@@ -7,7 +7,6 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ClientProxy } from '@nestjs/microservices'
 import { PassportStrategy } from '@nestjs/passport'
-import { Types } from 'mongoose'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -21,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: any): string => {
-          return request?.Authentication
+          return request?.cookies?.Authentication
         }
       ]),
       secretOrKey: configService.get<string>('JWT_SECRET') as string
@@ -32,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return await lastValueFrom(
       this.usersClient
         .send(QUEUE_MESSAGE.GET_USER_JWT, {
-          _id: new Types.ObjectId(userId)
+          userId
         })
         .pipe(
           catchError((error) => {

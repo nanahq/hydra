@@ -53,6 +53,42 @@
       "compilerOptions": {
         "tsConfigPath": "apps/notification-service/tsconfig.app.json"
       }
+    },
+    "vendors-service": {
+      "type": "application",
+      "root": "apps/vendors-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/vendors-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/vendors-service/tsconfig.app.json"
+      }
+    },
+    "vendor-gateway": {
+      "type": "application",
+      "root": "apps/vendor-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/vendor-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/vendor-gateway/tsconfig.app.json"
+      }
+    },
+    "admin-gateway": {
+      "type": "application",
+      "root": "apps/admin-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/admin-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/admin-gateway/tsconfig.app.json"
+      }
+    },
+    "admin-service": {
+      "type": "application",
+      "root": "apps/admin-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/admin-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/admin-service/tsconfig.app.json"
+      }
     }
   }
 }
