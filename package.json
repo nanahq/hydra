@@ -32,7 +32,7 @@
     "all:version": "lerna version $1 --yes --no-push --no-git-tag-version --exact"
   },
   "dependencies": {
-    "@nestjs/common": "^9.0.0",
+    "@nestjs/common": "^9.1.2",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^9.0.0",
