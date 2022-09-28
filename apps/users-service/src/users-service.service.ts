@@ -1,8 +1,6 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { registerUserRequest } from '@app/common/dto/registerUser.dto'
-import { UsersRepository } from './users.repository'
 import * as bcrypt from 'bcrypt'
-import { User } from './schema'
 import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE
@@ -10,13 +8,23 @@ import {
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
 import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
-import { UpdateUserStateResponse } from './interface'
-import { loginUserRequest, TokenPayload } from '@app/common'
+import {
+  loginUserRequest,
+  TokenPayload,
+  UserDto,
+  UserEntity
+} from '@app/common'
 import { FitRpcException } from '@app/common/filters/rpc.expection'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { nanoid } from 'nanoid'
+import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
+
 @Injectable()
 export class UsersServiceService {
   constructor (
-    private readonly usersRepository: UsersRepository,
+    @InjectRepository(UserEntity)
+    private readonly usersRepository: Repository<UserEntity>,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy
   ) {}
@@ -24,19 +32,21 @@ export class UsersServiceService {
   async register ({
     phoneNumber,
     password
-  }: registerUserRequest): Promise<User> {
-    // Validation gate to check if provided phone number is in db
+  }: registerUserRequest): Promise<string> {
     await this.checkExistingUser(phoneNumber)
 
     try {
-      const payload: Omit<User, '_id'> = {
+      const payload = {
+        id: nanoid(),
         phoneNumber,
         password: await bcrypt.hash(password, 10),
-        name: '',
+        firstName: '',
+        lastName: '',
         state: '',
-        status: 0
+        status: 0,
+        addresses: ['']
       }
-      const user = await this.usersRepository.create(payload)
+      const user = await this.createUser(payload)
 
       await lastValueFrom(
         this.notificationClient.send(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
@@ -55,8 +65,8 @@ export class UsersServiceService {
   async validateUser ({
     phoneNumber,
     password
-  }: loginUserRequest): Promise<User> {
-    const user = await this.usersRepository.findOne({ phoneNumber })
+  }: loginUserRequest): Promise<UserEntity> {
+    const user = await this.getUserByPhone(phoneNumber)
 
     if (user == null) {
       throw new FitRpcException(
@@ -80,23 +90,34 @@ export class UsersServiceService {
 
   async updateUserStatus ({
     phoneNumber
-  }: verifyPhoneRequest): Promise<UpdateUserStateResponse> {
-    try {
-      await this.usersRepository.findOneAndUpdate(
-        { phoneNumber },
-        { status: 1 }
-      )
-      return { status: 1 }
-    } catch (error) {
+  }: verifyPhoneRequest): Promise<null | number> {
+    const req = await this.updateStatus(phoneNumber)
+    if (req == null) {
       throw new FitRpcException(
-        'Something Went Wrong Updating User status',
-        HttpStatus.INTERNAL_SERVER_ERROR
+        'Failed to update user status',
+        HttpStatus.UNPROCESSABLE_ENTITY
       )
     }
+
+    return req
   }
 
-  async getUser ({ userId }: TokenPayload): Promise<User> {
-    const user = await this.usersRepository.findOne({ _id: userId })
+  async updateUserProfile ({
+    data,
+    userId
+  }: ServicePayload<Partial<UserEntity>>): Promise<string> {
+    const req = await this.updateUser(data, userId)
+    if (req === null) {
+      throw new FitRpcException(
+        'Failed to update user profile',
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
+    }
+    return req
+  }
+
+  async getUser ({ userId }: TokenPayload): Promise<UserEntity> {
+    const user = await this.getUserById(userId)
     if (user === null) {
       throw new FitRpcException(
         'Provided user id is not found',
@@ -107,12 +128,70 @@ export class UsersServiceService {
   }
 
   private async checkExistingUser (phoneNumber: string): Promise<void> {
-    const user = await this.usersRepository.findOne({ phoneNumber })
+    const user = await this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.phoneNumber = :phoneNumber', { phoneNumber })
+      .getOne()
     if (user !== null) {
       throw new FitRpcException(
         'Phone Number is  already registered.',
         HttpStatus.BAD_GATEWAY
       )
     }
+  }
+
+  private async createUser (user: UserDto): Promise<string> {
+    const query = await this.usersRepository
+      .createQueryBuilder('user')
+      .insert()
+      .into(UserEntity)
+      .values({ ...user })
+      .returning('id')
+      .execute()
+    return query.identifiers[0].id as unknown as string
+  }
+
+  private async getUserByPhone (phone: string): Promise<UserEntity | null> {
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.phoneNumber = :phone', { phone })
+      .getOne()
+  }
+
+  private async getUserById (id: string): Promise<UserEntity | null> {
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id })
+      .getOne()
+  }
+
+  private async updateStatus (phoneNumber: string): Promise<null | number> {
+    const query = await this.usersRepository
+      .createQueryBuilder()
+      .update(UserEntity)
+      .set({
+        status: 1
+      })
+      .where('phoneNumber = :phoneNumber', { phoneNumber })
+      .returning('id')
+      .execute()
+
+    return query === null ? query : 1
+  }
+
+  private async updateUser (
+    user: Partial<UserEntity>,
+    id: string
+  ): Promise<string | null> {
+    const query = await this.usersRepository
+      .createQueryBuilder()
+      .update(UserEntity)
+      .set({
+        ...user
+      })
+      .where('id = :id', { id })
+      .returning('id')
+      .execute()
+    return query === null ? query : (query.raw[0].id as string)
   }
 }

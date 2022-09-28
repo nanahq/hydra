@@ -23,7 +23,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         })
         .pipe(
           catchError((error) => {
-            throw new UnauthorizedException(error.message)
+            throw new UnauthorizedException(error)
           })
         )
     )

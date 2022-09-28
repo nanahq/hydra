@@ -1,15 +1,15 @@
-import { AbstractRepository } from '@app/common/database/abstract.repository'
-import { Injectable } from '@nestjs/common'
-import { InjectConnection, InjectModel } from '@nestjs/mongoose'
-import { Connection, Model } from 'mongoose'
-import { User } from './schema'
+import { Repository, EntityRepository } from 'typeorm'
+import { UserDto, UserEntity } from '@app/common'
 
-@Injectable()
-export class UsersRepository extends AbstractRepository<User> {
-  constructor (
-  @InjectModel(User.name) userModel: Model<User>,
-    @InjectConnection() connection: Connection
-  ) {
-    super(userModel, connection)
+@EntityRepository()
+export class UsersRepository extends Repository<UserEntity> {
+  public async createUser (user: UserDto): Promise<string> {
+    const query = await this.createQueryBuilder('user')
+      .insert()
+      .into(UserEntity)
+      .values({ ...user })
+      .returning('id')
+      .execute()
+    return query as unknown as string
   }
 }

@@ -50,7 +50,7 @@ export class FitHttpException implements ExceptionFilter {
     const ctx = host.switchToHttp()
 
     const httpStatus =
-      exception.status !== undefined
+      exception.status !== undefined && typeof exception.status === 'number'
         ? exception.status
         : HttpStatus.INTERNAL_SERVER_ERROR
 

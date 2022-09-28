@@ -16,6 +16,40 @@ services:
       - '3000:3000'
     networks:
       - app-tier
+  vendors-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/vendor-gateway/Dockerfile
+      target: development
+    command: 'npm run start:dev vendor-gateway'
+    env_file:
+      - ./apps/vendor-gateway/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    ports:
+      - '3001:3001'
+    networks:
+      - app-tier
+  admin-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/admin-gateway/Dockerfile
+      target: development
+    command: 'npm run start:dev admin-gateway'
+    env_file:
+      - ./apps/admin-gateway/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    ports:
+      - '3002:3002'
+    networks:
+      - app-tier
   users-service:
     build:
       context: .
@@ -26,6 +60,7 @@ services:
       - ./apps/users-service/.env
     depends_on:
       - api-gateway
+      - users-db
       - rabbitmq
     volumes:
       - '.:/usr/src/app'
@@ -48,12 +83,76 @@ services:
       - /usr/src/app/node_modules
     networks:
       - app-tier
+  vendors-service:
+    build:
+      context: .
+      dockerfile: ./apps/vendors-service/Dockerfile
+      target: development
+    command: 'npm run start:dev vendors-service'
+    env_file:
+      - ./apps/vendors-service/.env
+    depends_on:
+      - vendors-gateway
+      - vendors-db
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - app-tier
+  admin-service:
+    build:
+      context: .
+      dockerfile: ./apps/admin-service/Dockerfile
+      target: development
+    command: 'npm run start:dev admin-service'
+    env_file:
+      - ./apps/admin-service/.env
+    depends_on:
+      - admin-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - app-tier
   rabbitmq:
     image: rabbitmq
     ports:
       - '5672:5672'
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - app-tier
+  users-db:
+    image: bitnami/postgresql:14
+    ports:
+      - '5432'
+    environment:
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=root@123
+      - POSTGRESQL_DATABASE=users
+    volumes:
+      - pg_data:/var/lib/postgresql
+    networks:
+      - app-tier
+  vendors-db:
+    image: bitnami/postgresql:14
+    ports:
+      - '5432'
+    environment:
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=root@123
+      - POSTGRESQL_DATABASE=vendors
+    volumes:
+      - pg_data:/var/lib/postgresql
+    networks:
+      - app-tier
 volumes:
-  mongodb_master_data:
+  rabbitmq_data:
     driver: local
-  app_tier:
+  pg_data:
+    driver: local
+networks:
+  app-tier:
     driver: bridge

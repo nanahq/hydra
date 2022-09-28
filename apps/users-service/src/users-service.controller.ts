@@ -1,8 +1,12 @@
-import { loginUserRequest, RmqService, TokenPayload } from '@app/common'
+import {
+  loginUserRequest,
+  RmqService,
+  TokenPayload,
+  UserEntity
+} from '@app/common'
 import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
 import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
 import { Controller, UseFilters } from '@nestjs/common'
-import { User } from './schema'
 import {
   Ctx,
   MessagePattern,
@@ -10,10 +14,10 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { UpdateUserStateResponse } from './interface'
 import { UsersServiceService } from './users-service.service'
 
 import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
+import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class UsersServiceController {
@@ -26,7 +30,7 @@ export class UsersServiceController {
   async registerNewUser (
     @Payload() data: any,
       @Ctx() context: RmqContext
-  ): Promise<User> {
+  ): Promise<string> {
     try {
       return await this.usersServiceService.register(data)
     } catch (error) {
@@ -40,7 +44,7 @@ export class UsersServiceController {
   async updateUserStatus (
     @Payload() data: verifyPhoneRequest,
       @Ctx() ctx: RmqContext
-  ): Promise<UpdateUserStateResponse> {
+  ): Promise<number | null> {
     this.rmqService.ack(ctx)
     try {
       return await this.usersServiceService.updateUserStatus(data)
@@ -53,7 +57,7 @@ export class UsersServiceController {
   async getUserByPhone (
     @Payload() data: loginUserRequest,
       @Ctx() context: RmqContext
-  ): Promise<User> {
+  ): Promise<UserEntity> {
     try {
       this.rmqService.ack(context)
       return await this.usersServiceService.validateUser(data)
@@ -66,10 +70,23 @@ export class UsersServiceController {
   async getUserById (
     @Payload() data: TokenPayload,
       @Ctx() context: RmqContext
-  ): Promise<User> {
+  ): Promise<UserEntity> {
     try {
       this.rmqService.ack(context)
       return await this.usersServiceService.getUser(data)
+    } catch (error) {
+      throw new RpcException(error)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_PROFILE)
+  async updateUserProfile (
+    @Payload() payload: ServicePayload<Partial<UserEntity>>,
+      @Ctx() context: RmqContext
+  ): Promise<string> {
+    try {
+      this.rmqService.ack(context)
+      return await this.usersServiceService.updateUserProfile(payload)
     } catch (error) {
       throw new RpcException(error)
     }

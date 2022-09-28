@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build api-gateway
+RUN npm run build notification-service
 
 FROM node:alpine as production
 
