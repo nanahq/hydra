@@ -39,7 +39,6 @@ export class UsersController {
         })
       )
     )
-
   }
 
   @Post('verify')
