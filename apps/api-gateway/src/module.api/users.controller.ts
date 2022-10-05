@@ -10,6 +10,7 @@ import {
   Get,
   HttpException,
   Inject,
+  Delete,
   Post,
   Put,
   UseGuards
@@ -20,6 +21,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 import { UserEntity } from '@app/common'
 import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
+import { IRpcException } from '@app/common/filters/rpc.expection'
 
 @Controller('users')
 export class UsersController {
@@ -78,6 +80,25 @@ export class UsersController {
           throw new HttpException(error.message, error.status)
         })
       )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('delete-user')
+  async deleteUser (
+      @CurrentUser() user: UserEntity
+  ): Promise<{status: number}> {
+    const payload: ServicePayload<null>  = {
+      userId: user.id,
+      data: null
+    }
+    return await lastValueFrom(
+        this.usersClient.send(QUEUE_MESSAGE.DELETE_USER_PROFILE, payload)
+            .pipe(
+                catchError((error: IRpcException) => {
+                  throw new HttpException(error.message, error.status)
+                })
+            )
     )
   }
 }
