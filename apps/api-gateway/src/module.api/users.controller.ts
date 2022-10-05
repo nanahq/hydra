@@ -7,6 +7,7 @@ import {
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   Inject,
@@ -20,6 +21,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 import { UserEntity } from '@app/common'
 import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
+import { string } from 'joi'
 
 @Controller('users')
 export class UsersController {
@@ -74,6 +76,18 @@ export class UsersController {
     }
     return await lastValueFrom(
       this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload).pipe(
+        catchError((error: { status: number, message: string }) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Delete('users/:id')
+  async deleteUser (@Body() data: string) {
+    const payload = { data }
+    return await lastValueFrom(
+      this.usersClient.send(QUEUE_MESSAGE.DELETE_USER, payload).pipe(
         catchError((error: { status: number, message: string }) => {
           throw new HttpException(error.message, error.status)
         })

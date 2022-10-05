@@ -1,3 +1,4 @@
+import { DeleteUserResponse } from './interface'
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { registerUserRequest } from '@app/common/dto/registerUser.dto'
 import * as bcrypt from 'bcrypt'
@@ -19,9 +20,10 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { nanoid } from 'nanoid'
 import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
+import { StringSchema } from 'joi'
 
 @Injectable()
-export class UsersServiceService {
+export class UsersService {
   constructor (
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
@@ -193,5 +195,21 @@ export class UsersServiceService {
       .returning('id')
       .execute()
     return query === null ? query : (query.raw[0].id as string)
+  }
+
+  private async deleteEntity (id: string) {
+    this.usersRepository
+      .createQueryBuilder()
+      .delete()
+      .from(UserEntity)
+      .where('id = :id', { id })
+      .returning('id')
+      .execute()
+  }
+
+  async deleteUser (id: string): Promise<DeleteUserResponse> {
+    const deleted = await this.deleteEntity(id)
+
+    return { status: deleted! ? 1 : 0 }
   }
 }

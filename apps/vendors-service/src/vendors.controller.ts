@@ -88,4 +88,17 @@ export class VendorsController {
       throw new RpcException(error)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.DELETE_VENDOR)
+  async deleteVendor (
+    @Payload() data: string,
+      @Ctx() context: RmqContext
+  ): Promise<number> {
+    try {
+      this.rmqService.ack(context)
+      return await this.vendorsService.deleteVendor(data)
+    } catch (error) {
+      throw new RpcException(error)
+    }
+  }
 }

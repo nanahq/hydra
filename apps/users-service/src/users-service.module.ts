@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import * as Joi from 'joi'
 import { UsersServiceController } from './users-service.controller'
-import { UsersServiceService } from './users-service.service'
+import { UsersService } from './users-service.service'
 import { UsersRepository } from './users.repository'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
@@ -36,6 +36,6 @@ import { TypeOrmModule } from '@nestjs/typeorm'
     TypeOrmModule.forFeature([UserEntity])
   ],
   controllers: [UsersServiceController],
-  providers: [UsersServiceService, UsersRepository]
+  providers: [UsersService, UsersRepository]
 })
 export class UsersServiceModule {}

@@ -169,4 +169,14 @@ export class VendorsService {
       .execute()
     return query === null ? query : (query.raw[0].id as string)
   }
+
+  async deleteVendor (id: string): Promise<number> {
+    const deleted = await this.vendorRepository
+      .createQueryBuilder()
+      .delete()
+      .from(VendorEntity)
+      .where('id = :id', { id })
+      .execute()
+    return deleted ? 1 : 0
+  }
 }
