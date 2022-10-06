@@ -1,27 +1,25 @@
-import { DeleteUserResponse } from './interface'
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
-import { registerUserRequest } from '@app/common/dto/registerUser.dto'
 import * as bcrypt from 'bcrypt'
-import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
 import { ClientProxy } from '@nestjs/microservices'
-import { lastValueFrom } from 'rxjs'
-import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
-import {
-  loginUserRequest,
-  TokenPayload,
-  UserDto,
-  UserEntity
-} from '@app/common'
-import { FitRpcException } from '@app/common/filters/rpc.expection'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { nanoid } from 'nanoid'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
-import { StringSchema } from 'joi'
+import { lastValueFrom } from 'rxjs'
 
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  loginUserRequest,
+  TokenPayload,
+  UserDto,
+  UserEntity,
+  registerUserRequest,
+  FitRpcException,
+  ServicePayload,
+  verifyPhoneRequest
+} from '@app/common'
+
+import { DeleteUserResponse } from './interface'
 @Injectable()
 export class UsersService {
   constructor (

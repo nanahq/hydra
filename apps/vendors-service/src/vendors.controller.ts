@@ -1,6 +1,3 @@
-import { loginUserRequest, RmqService, TokenPayload } from '@app/common'
-import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
-import { Controller, UseFilters } from '@nestjs/common'
 import {
   Ctx,
   MessagePattern,
@@ -8,13 +5,21 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
+import { Controller, UseFilters } from '@nestjs/common'
+
+import { 
+  loginUserRequest,
+  RmqService,
+  TokenPayload,
+  QUEUE_MESSAGE,
+  ExceptionFilterRpc,
+  updateVendorStatus,
+  VendorEntity,
+  ServicePayload
+  } from '@app/common'
 import { UpdateUserStateResponse } from './interface'
 import { VendorsService } from './vendors.service'
 
-import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
-import { updateVendorStatus } from '@app/common/dto/UpdateVendorStatus.dto'
-import { VendorEntity } from '@app/common/database/entities/Vendor'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class VendorsController {

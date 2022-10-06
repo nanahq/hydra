@@ -1,7 +1,3 @@
-import { RmqService } from '@app/common'
-import { PhoneVerificationPayload } from '@app/common/dto/phoneVerificationPayload.dto'
-import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
-import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
 import { Controller } from '@nestjs/common'
 import {
   Ctx,
@@ -10,6 +6,8 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
+
+import { RmqService, PhoneVerificationPayload,verifyPhoneRequest, QUEUE_MESSAGE } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
 
 @Controller()

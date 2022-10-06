@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common'
+import { MessagePattern } from '@nestjs/microservices'
 import { Response } from 'express'
+
+import { QUEUE_MESSAGE, VendorEntity } from '@app/common'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { LocalGuard } from '../auth/guards/local.guard'
 import { AuthService } from './auth.service'
 import { CurrentUser } from './current-user.decorator'
-import { VendorEntity } from '@app/common/database/entities/Vendor'
-import { MessagePattern } from '@nestjs/microservices'
-import { QUEUE_MESSAGE } from '@app/common'
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
 @Controller('auth')
 export class AuthController {

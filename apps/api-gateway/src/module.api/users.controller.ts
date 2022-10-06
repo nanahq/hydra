@@ -1,9 +1,3 @@
-import { PhoneVerificationPayload } from '@app/common/dto/phoneVerificationPayload.dto'
-import { registerUserRequest } from '@app/common/dto/registerUser.dto'
-import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
 import {
   Body,
   Controller,
@@ -17,11 +11,17 @@ import {
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
+
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  PhoneVerificationPayload,
+  registerUserRequest,
+  UserEntity,
+  ServicePayload
+} from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
-import { UserEntity } from '@app/common'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
-import { string } from 'joi'
 
 @Controller('users')
 export class UsersController {

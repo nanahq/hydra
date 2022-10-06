@@ -1,8 +1,8 @@
-import { RmqService } from '@app/common'
-import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
 import { ConfigService } from '@nestjs/config'
 import { RmqOptions } from '@nestjs/microservices'
+
 import { AppModule } from './app.module'
+import { RmqService, QUEUE_SERVICE } from '@app/common'
 
 async function bootstrap (): Promise<void> {
   const app = await AppModule.create()

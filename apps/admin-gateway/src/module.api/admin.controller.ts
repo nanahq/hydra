@@ -1,8 +1,4 @@
 import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
-import {
   Body,
   Controller,
   Get,
@@ -13,10 +9,15 @@ import {
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
+
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
-import { RegisterAdminDTODto } from '@app/common/dto/registerAdminDTO.dto'
-import { AdminEntity } from '@app/common/database/entities/Admin'
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  RegisterAdminDTODto,
+  AdminEntity
+} from '@app/common'
 
 @Controller('/admin')
 export class AdminController {

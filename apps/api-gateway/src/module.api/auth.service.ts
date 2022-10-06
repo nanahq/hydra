@@ -1,8 +1,9 @@
-import { TokenPayload, UserEntity } from '@app/common'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
+
+import { TokenPayload, UserEntity } from '@app/common'
 
 @Injectable()
 export class AuthService {

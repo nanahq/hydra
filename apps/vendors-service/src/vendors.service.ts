@@ -1,15 +1,21 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import * as bcrypt from 'bcrypt'
-import { UpdateUserStateResponse } from './interface'
-import { loginUserRequest, TokenPayload } from '@app/common'
-import { FitRpcException } from '@app/common/filters/rpc.expection'
 import { InjectRepository } from '@nestjs/typeorm'
-import { VendorEntity } from '@app/common/database/entities/Vendor'
-import { VendorDto } from '@app/common/database/dto/vendor.dto'
-import { updateVendorStatus } from '@app/common/dto/UpdateVendorStatus.dto'
 import { Repository } from 'typeorm'
 import { nanoid } from 'nanoid'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
+
+import * as bcrypt from 'bcrypt'
+
+import { 
+  loginUserRequest,
+  TokenPayload,
+  FitRpcException,
+  VendorDto,
+  VendorEntity,
+  updateVendorStatus,
+  ServicePayload
+  } from '@app/common'
+import { UpdateUserStateResponse } from './interface'
+
 
 @Injectable()
 export class VendorsService {

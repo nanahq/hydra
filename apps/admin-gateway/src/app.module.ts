@@ -1,24 +1,24 @@
-import { RmqModule } from '@app/common'
-import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
 import {
   DynamicModule,
   INestApplication,
   Module,
   ValidationPipe
 } from '@nestjs/common'
+import { ThrottlerModule } from '@nestjs/throttler'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
+
+import * as Joi from 'joi'
+import helmet from 'helmet'
+
+import { JwtModule } from '@nestjs/jwt'
 import { AppMetadata } from 'app.config'
 import { AdminController } from './module.api/admin.controller'
-import * as Joi from 'joi'
-import { JwtModule } from '@nestjs/jwt'
 import { AuthController } from './module.api/auth.controller'
 import { AuthService } from './module.api/auth.service'
 import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
-import { FitHttpException } from '@app/common/filters/rpc.expection'
-import helmet from 'helmet'
-import { ThrottlerModule } from '@nestjs/throttler'
+import { RmqModule,FitHttpException, QUEUE_SERVICE } from '@app/common'
 
 @Module({})
 export class AppModule {

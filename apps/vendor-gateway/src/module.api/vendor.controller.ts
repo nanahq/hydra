@@ -1,8 +1,4 @@
 import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
-import {
   Body,
   Controller,
   Get,
@@ -12,14 +8,20 @@ import {
   Put,
   UseGuards
 } from '@nestjs/common'
-import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
+import { ClientProxy } from '@nestjs/microservices'
+
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  VendorDto,
+  VendorEntity,
+  ServicePayload,
+  IRpcException
+} from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
-import { VendorDto } from '@app/common/database/dto/vendor.dto'
-import { VendorEntity } from '@app/common/database/entities/Vendor'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
-import { IRpcException } from '@app/common/filters/rpc.expection'
+
 
 @Controller('/vendor')
 export class VendorController {

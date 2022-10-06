@@ -1,24 +1,25 @@
 import {
-  loginUserRequest,
-  RmqService,
-  TokenPayload,
-  UserEntity
-} from '@app/common'
-import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
-import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
-import { Controller, UseFilters } from '@nestjs/common'
-import {
   Ctx,
   MessagePattern,
   Payload,
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { UsersService } from './users-service.service'
+import { Controller, UseFilters } from '@nestjs/common'
 
-import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
+import {
+  loginUserRequest,
+  RmqService,
+  TokenPayload,
+  UserEntity,
+  verifyPhoneRequest,
+  QUEUE_MESSAGE,
+  ExceptionFilterRpc,
+  ServicePayload
+} from '@app/common'
+import { UsersService } from './users-service.service'
 import { DeleteUserResponse } from './interface'
+
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class UsersServiceController {
