@@ -1,32 +1,25 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import { registerUserRequest } from '@app/common/dto/registerUser.dto'
 import * as bcrypt from 'bcrypt'
-import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
+import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
 import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
-import {
-  loginUserRequest,
-  TokenPayload,
-  UserDto,
-  UserEntity
-} from '@app/common'
+import { loginUserRequest, TokenPayload, UserDto, UserEntity } from '@app/common'
 import { FitRpcException } from '@app/common/filters/rpc.expection'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { InjectRepository} from '@nestjs/typeorm'
+import { Repository, DeleteResult } from 'typeorm'
 import { nanoid } from 'nanoid'
 import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
 
 @Injectable()
 export class UsersServiceService {
+  private readonly logger = new Logger(UsersServiceService.name)
   constructor (
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
+    private readonly notificationClient: ClientProxy,
   ) {}
 
   async register ({
@@ -46,6 +39,7 @@ export class UsersServiceService {
         status: 0,
         addresses: ['']
       }
+      this.logger.log('Calling createUser Query')
       const user = await this.createUser(payload)
 
       await lastValueFrom(
@@ -66,6 +60,8 @@ export class UsersServiceService {
     phoneNumber,
     password
   }: loginUserRequest): Promise<UserEntity> {
+    this.logger.log('Calling validateUser Query')
+
     const user = await this.getUserByPhone(phoneNumber)
 
     if (user == null) {
@@ -91,6 +87,7 @@ export class UsersServiceService {
   async updateUserStatus ({
     phoneNumber
   }: verifyPhoneRequest): Promise<null | number> {
+    this.logger.log('Calling UpdateUserStatus Query')
     const req = await this.updateStatus(phoneNumber)
     if (req == null) {
       throw new FitRpcException(
@@ -106,6 +103,7 @@ export class UsersServiceService {
     data,
     userId
   }: ServicePayload<Partial<UserEntity>>): Promise<string> {
+    this.logger.log('Calling UpdateUserProfile Query')
     const req = await this.updateUser(data, userId)
     if (req === null) {
       throw new FitRpcException(
@@ -117,6 +115,7 @@ export class UsersServiceService {
   }
 
   async getUser ({ userId }: TokenPayload): Promise<UserEntity> {
+    this.logger.log('Calling getUser Query')
     const user = await this.getUserById(userId)
     if (user === null) {
       throw new FitRpcException(
@@ -125,6 +124,19 @@ export class UsersServiceService {
       )
     }
     return user
+  }
+
+
+  async deleteUserProfile (userId: string): Promise<{status: number}> {
+    this.logger.log('Calling deleteUserProfile Query')
+    const deleteRequest = await this.deleteUser(userId)
+    if(deleteRequest === null) {
+      throw new FitRpcException(
+          'Can not delete user. User does not exist',
+          HttpStatus.UNPROCESSABLE_ENTITY
+      )
+    }
+    return {status: 1}
   }
 
   private async checkExistingUser (phoneNumber: string): Promise<void> {
@@ -193,5 +205,14 @@ export class UsersServiceService {
       .returning('id')
       .execute()
     return query === null ? query : (query.raw[0].id as string)
+  }
+
+  private async deleteUser (id: string): Promise<DeleteResult | null> {
+    return await this.usersRepository
+        .createQueryBuilder()
+        .delete()
+        .where('id = :id', {id})
+        .returning('id')
+        .execute()
   }
 }
