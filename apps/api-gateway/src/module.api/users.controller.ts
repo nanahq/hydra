@@ -16,7 +16,7 @@ import {
   Post,
   Put,
   UseGuards,
- Logger
+  Logger
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -34,8 +34,7 @@ export class UsersController {
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy,
-
+    private readonly notificationClient: ClientProxy
   ) {}
 
   @Post('register')
@@ -44,7 +43,10 @@ export class UsersController {
     return await lastValueFrom(
       this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
         catchError((error: IRpcException) => {
-          this.logger.log('Failed to register user:', {message: error.message, status: error.status})
+          this.logger.log('Failed to register user:', {
+            message: error.message,
+            status: error.status
+          })
           throw new HttpException(error.message, error.status)
         })
       )
@@ -52,7 +54,9 @@ export class UsersController {
   }
 
   @Post('verify')
-  async verifyUser (@Body() request: PhoneVerificationPayload): Promise<{status: number}> {
+  async verifyUser (
+    @Body() request: PhoneVerificationPayload
+  ): Promise<{ status: number }> {
     this.logger.log('Verifying phone number...')
     return await lastValueFrom(
       this.notificationClient
@@ -61,7 +65,10 @@ export class UsersController {
         })
         .pipe(
           catchError((error: IRpcException) => {
-            this.logger.log('Failed to verify phone:', {message: error.message, status: error.status})
+            this.logger.log('Failed to verify phone:', {
+              message: error.message,
+              status: error.status
+            })
             throw new HttpException(error.message, error.status)
           })
         )
@@ -89,19 +96,21 @@ export class UsersController {
     return await lastValueFrom(
       this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload).pipe(
         catchError((error: { status: number, message: string }) => {
-          this.logger.error('Failed to update user profile: ', {message: error.message, status: error.status})
+          this.logger.error('Failed to update user profile: ', {
+            message: error.message,
+            status: error.status
+          })
           throw new HttpException(error.message, error.status)
         })
       )
     )
   }
 
-
   @UseGuards(JwtAuthGuard)
   @Delete('delete-profile')
   async deleteUser (
-    @CurrentUser() user: UserEntity,
-  ): Promise<{status: number}> {
+    @CurrentUser() user: UserEntity
+  ): Promise<{ status: number }> {
     this.logger.log('deleting user profile....')
 
     const payload: ServicePayload<null> = {
@@ -109,10 +118,13 @@ export class UsersController {
       data: null
     }
 
-    return await lastValueFrom<{status: number}>(
+    return await lastValueFrom<{ status: number }>(
       this.usersClient.send(QUEUE_MESSAGE.DELETE_USER_PROFILE, payload).pipe(
         catchError((error: IRpcException) => {
-          this.logger.error('Failed to delete user profile', {status: error.status, message: error.message})
+          this.logger.error('Failed to delete user profile', {
+            status: error.status,
+            message: error.message
+          })
           throw new HttpException(error.message, error.status)
         })
       )

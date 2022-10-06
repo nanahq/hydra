@@ -1,13 +1,21 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import { registerUserRequest } from '@app/common/dto/registerUser.dto'
 import * as bcrypt from 'bcrypt'
-import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE
+} from '@app/common/typings/QUEUE_MESSAGE'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
 import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
-import { loginUserRequest, TokenPayload, UserDto, UserEntity } from '@app/common'
+import {
+  loginUserRequest,
+  TokenPayload,
+  UserDto,
+  UserEntity
+} from '@app/common'
 import { FitRpcException } from '@app/common/filters/rpc.expection'
-import { InjectRepository} from '@nestjs/typeorm'
+import { InjectRepository } from '@nestjs/typeorm'
 import { Repository, DeleteResult } from 'typeorm'
 import { nanoid } from 'nanoid'
 import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
@@ -19,7 +27,7 @@ export class UsersServiceService {
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy,
+    private readonly notificationClient: ClientProxy
   ) {}
 
   async register ({
@@ -126,17 +134,16 @@ export class UsersServiceService {
     return user
   }
 
-
-  async deleteUserProfile (userId: string): Promise<{status: number}> {
+  async deleteUserProfile (userId: string): Promise<{ status: number }> {
     this.logger.log('Calling deleteUserProfile Query')
     const deleteRequest = await this.deleteUser(userId)
-    if(deleteRequest === null) {
+    if (deleteRequest === null) {
       throw new FitRpcException(
-          'Can not delete user. User does not exist',
-          HttpStatus.UNPROCESSABLE_ENTITY
+        'Can not delete user. User does not exist',
+        HttpStatus.UNPROCESSABLE_ENTITY
       )
     }
-    return {status: 1}
+    return { status: 1 }
   }
 
   private async checkExistingUser (phoneNumber: string): Promise<void> {
@@ -209,10 +216,10 @@ export class UsersServiceService {
 
   private async deleteUser (id: string): Promise<DeleteResult | null> {
     return await this.usersRepository
-        .createQueryBuilder()
-        .delete()
-        .where('id = :id', {id})
-        .returning('id')
-        .execute()
+      .createQueryBuilder()
+      .delete()
+      .where('id = :id', { id })
+      .returning('id')
+      .execute()
   }
 }
