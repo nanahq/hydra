@@ -6,7 +6,7 @@ import {
   MiddlewareConsumer,
   Module,
   NestModule,
-  ValidationPipe,
+  ValidationPipe
 } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'

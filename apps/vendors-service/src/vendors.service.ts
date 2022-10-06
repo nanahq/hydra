@@ -103,18 +103,19 @@ export class VendorsService {
     return req
   }
 
-  async deleteVendorProfile (vendorId: string): Promise<{status: number}> {
+  async deleteVendorProfile (vendorId: string): Promise<{ status: number }> {
     const deleteRequest = await this.deleteVendor(vendorId)
 
-    if(deleteRequest === null) {
+    if (deleteRequest === null) {
       throw new FitRpcException(
-          'Failed to delete vendor. Invalid ID',
-          HttpStatus.UNPROCESSABLE_ENTITY
+        'Failed to delete vendor. Invalid ID',
+        HttpStatus.UNPROCESSABLE_ENTITY
       )
     }
 
-    return {status: 1}
+    return { status: 1 }
   }
+
   private async checkExistingVendor (phoneNumber: string): Promise<void> {
     const vendor = await this.getVendorByPhone(phoneNumber)
     if (vendor !== null) {
@@ -182,11 +183,11 @@ export class VendorsService {
     return query === null ? query : (query.raw[0].id as string)
   }
 
-  private async deleteVendor(id: string): Promise<DeleteResult | null> {
+  private async deleteVendor (id: string): Promise<DeleteResult | null> {
     return await this.vendorRepository
-        .createQueryBuilder()
-        .delete()
-        .where('id = :id', {id})
-        .execute()
+      .createQueryBuilder()
+      .delete()
+      .where('id = :id', { id })
+      .execute()
   }
 }

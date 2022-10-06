@@ -90,13 +90,13 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.DELETE_VENDOR_PROFILE)
-  async deleteVendorProfile(
-      @Payload() data: ServicePayload<null>,
+  async deleteVendorProfile (
+    @Payload() data: ServicePayload<null>,
       @Ctx() context: RmqContext
-  ): Promise<{status: number}> {
-    try{
+  ): Promise<{ status: number }> {
+    try {
       return await this.vendorsService.deleteVendorProfile(data.userId)
-    }catch (error) {
+    } catch (error) {
       throw new RpcException(error)
     } finally {
       this.rmqService.ack(context)
