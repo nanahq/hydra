@@ -2,8 +2,10 @@ import { RmqModule } from '@app/common'
 import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
 import {
   DynamicModule,
-  INestApplication, MiddlewareConsumer,
-  Module, NestModule,
+  INestApplication,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
   ValidationPipe
 } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
@@ -26,6 +28,7 @@ export class AppModule implements NestModule {
   configure (consumer: MiddlewareConsumer): void {
     consumer.apply(cookieParser()).forRoutes('*')
   }
+
   static async create (): Promise<INestApplication> {
     const app = await NestFactory.create(this.forRoot())
     this.configure(app)

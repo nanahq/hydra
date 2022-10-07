@@ -21,10 +21,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       this.adminClient
         .send(QUEUE_MESSAGE.GET_ADMIN_LOCAL, {
           userId: '',
-            data: {
-                userName,
-                password
-            }
+          data: {
+            userName,
+            password
+          }
         })
         .pipe(
           catchError((error: IRpcException) => {

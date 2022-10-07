@@ -32,7 +32,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return await lastValueFrom(
       this.adminClient
         .send(QUEUE_MESSAGE.GET_ADMIN_JWT, {
-           userId,
+          userId,
           data: null
         })
         .pipe(
