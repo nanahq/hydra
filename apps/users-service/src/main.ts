@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core'
 
-import { RmqService,QUEUE_SERVICE } from '@app/common'
+import { RmqService, QUEUE_SERVICE } from '@app/common'
 import { UsersServiceModule } from './users-service.module'
 
 async function bootstrap (): Promise<void> {

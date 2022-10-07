@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
 
-import { TokenPayload,VendorEntity } from '@app/common'
+import { TokenPayload, VendorEntity } from '@app/common'
 
 @Injectable()
 export class AuthService {

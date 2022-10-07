@@ -84,7 +84,7 @@ export class UsersController {
   }
 
   @Delete('users/:id')
-  async deleteUser (@Body() data: string) {
+  async deleteUser (@Body() data: string): Promise<any> {
     const payload = { data }
     return await lastValueFrom(
       this.usersClient.send(QUEUE_MESSAGE.DELETE_USER, payload).pipe(

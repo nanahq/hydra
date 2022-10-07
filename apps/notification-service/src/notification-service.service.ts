@@ -4,13 +4,13 @@ import { ClientProxy } from '@nestjs/microservices'
 import { TwilioService } from 'nestjs-twilio'
 import { lastValueFrom } from 'rxjs'
 
-import { 
+import {
   PhoneVerificationPayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   verifyPhoneRequest,
   FitRpcException
- } from '@app/common'
+} from '@app/common'
 
 @Injectable()
 export class NotificationServiceService {

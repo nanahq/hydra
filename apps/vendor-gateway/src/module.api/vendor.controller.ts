@@ -22,7 +22,6 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 
-
 @Controller('/vendor')
 export class VendorController {
   constructor (

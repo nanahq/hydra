@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { RmqOptions } from '@nestjs/microservices'
 
-import { RmqService ,QUEUE_SERVICE } from '@app/common'
+import { RmqService, QUEUE_SERVICE } from '@app/common'
 import { VendorsModule } from './vendors.module'
 
 async function bootstrap (): Promise<void> {

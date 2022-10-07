@@ -1,9 +1,5 @@
 import { Repository } from 'typeorm'
-import { 
-  VendorDto,
-  VendorEntity,
-  updateVendorStatus
- } from '@app/common'
+import { VendorDto, VendorEntity, updateVendorStatus } from '@app/common'
 
 export class VendorsRepository extends Repository<VendorEntity> {
   public async createVendor (vendor: VendorDto): Promise<string> {

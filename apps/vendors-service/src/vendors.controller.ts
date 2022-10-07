@@ -7,7 +7,7 @@ import {
 } from '@nestjs/microservices'
 import { Controller, UseFilters } from '@nestjs/common'
 
-import { 
+import {
   loginUserRequest,
   RmqService,
   TokenPayload,
@@ -16,8 +16,8 @@ import {
   updateVendorStatus,
   VendorEntity,
   ServicePayload
-  } from '@app/common'
-import { UpdateUserStateResponse } from './interface'
+} from '@app/common'
+import { DeleteVendorResponse, UpdateUserStateResponse } from './interface'
 import { VendorsService } from './vendors.service'
 
 @UseFilters(new ExceptionFilterRpc())
@@ -98,7 +98,7 @@ export class VendorsController {
   async deleteVendor (
     @Payload() data: string,
       @Ctx() context: RmqContext
-  ): Promise<number> {
+  ): Promise<DeleteVendorResponse> {
     try {
       this.rmqService.ack(context)
       return await this.vendorsService.deleteVendor(data)

@@ -18,7 +18,7 @@ import { AuthController } from './module.api/auth.controller'
 import { AuthService } from './module.api/auth.service'
 import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
-import { RmqModule,FitHttpException, QUEUE_SERVICE } from '@app/common'
+import { RmqModule, FitHttpException, QUEUE_SERVICE } from '@app/common'
 
 @Module({})
 export class AppModule {

@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid'
 
 import * as bcrypt from 'bcrypt'
 
-import { 
+import {
   loginUserRequest,
   TokenPayload,
   FitRpcException,
@@ -13,9 +13,8 @@ import {
   VendorEntity,
   updateVendorStatus,
   ServicePayload
-  } from '@app/common'
-import { UpdateUserStateResponse } from './interface'
-
+} from '@app/common'
+import { DeleteVendorResponse, UpdateUserStateResponse } from './interface'
 
 @Injectable()
 export class VendorsService {
@@ -176,13 +175,21 @@ export class VendorsService {
     return query === null ? query : (query.raw[0].id as string)
   }
 
-  async deleteVendor (id: string): Promise<number> {
-    const deleted = await this.vendorRepository
+  private async deleteEntity (id: string): Promise<any> {
+    return await this.vendorRepository
       .createQueryBuilder()
       .delete()
       .from(VendorEntity)
       .where('id = :id', { id })
+      .returning('id')
       .execute()
-    return deleted ? 1 : 0
+  }
+
+  async deleteVendor (id: string): Promise<DeleteVendorResponse> {
+    const deleted = await this.deleteEntity(id)
+    if (deleted === true) {
+      return { status: 1 }
+    }
+    return { status: 0 }
   }
 }

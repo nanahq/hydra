@@ -195,8 +195,8 @@ export class UsersService {
     return query === null ? query : (query.raw[0].id as string)
   }
 
-  private async deleteEntity (id: string) {
-    this.usersRepository
+  private async deleteEntity (id: string): Promise<any> {
+    return await this.usersRepository
       .createQueryBuilder()
       .delete()
       .from(UserEntity)
@@ -208,6 +208,9 @@ export class UsersService {
   async deleteUser (id: string): Promise<DeleteUserResponse> {
     const deleted = await this.deleteEntity(id)
 
-    return { status: deleted! ? 1 : 0 }
+    if (deleted === true) {
+      return { status: 1 }
+    }
+    return { status: 0 }
   }
 }

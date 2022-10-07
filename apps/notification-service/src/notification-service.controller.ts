@@ -7,7 +7,12 @@ import {
   RpcException
 } from '@nestjs/microservices'
 
-import { RmqService, PhoneVerificationPayload,verifyPhoneRequest, QUEUE_MESSAGE } from '@app/common'
+import {
+  RmqService,
+  PhoneVerificationPayload,
+  verifyPhoneRequest,
+  QUEUE_MESSAGE
+} from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
 
 @Controller()
