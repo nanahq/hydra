@@ -22,6 +22,8 @@ export enum QUEUE_MESSAGE {
   UPDATE_VENDOR_PROFILE = 'update_vendor_profile',
   UPDATE_ADMIN_STATUS = ' update_admin_status',
   DELETE_ADMIN = 'delete_admin',
+  DELETE_USER_PROFILE = 'delete_user_profile',
+  DELETE_VENDOR_PROFILE = 'delete_vendor_profile',
 }
 
 export enum QUEUE_SERVICE {

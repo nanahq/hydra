@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { VendorEntity } from '@app/common/database/entities/Vendor'
 import { VendorDto } from '@app/common/database/dto/vendor.dto'
 import { updateVendorStatus } from '@app/common/dto/UpdateVendorStatus.dto'
-import { Repository } from 'typeorm'
+import { DeleteResult, Repository } from 'typeorm'
 import { nanoid } from 'nanoid'
 import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
 
@@ -104,6 +104,19 @@ export class VendorsService {
     return req
   }
 
+  async deleteVendorProfile (vendorId: string): Promise<{ status: number }> {
+    const deleteRequest = await this.deleteVendor(vendorId)
+
+    if (deleteRequest === null) {
+      throw new FitRpcException(
+        'Failed to delete vendor. Invalid ID',
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
+    }
+
+    return { status: 1 }
+  }
+
   private async checkExistingVendor (phoneNumber: string): Promise<void> {
     const vendor = await this.getVendorByPhone(phoneNumber)
     if (vendor !== null) {
@@ -169,5 +182,13 @@ export class VendorsService {
       .returning('id')
       .execute()
     return query === null ? query : (query.raw[0].id as string)
+  }
+
+  private async deleteVendor (id: string): Promise<DeleteResult | null> {
+    return await this.vendorRepository
+      .createQueryBuilder()
+      .delete()
+      .where('id = :id', { id })
+      .execute()
   }
 }

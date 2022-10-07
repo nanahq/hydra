@@ -91,4 +91,18 @@ export class UsersServiceController {
       throw new RpcException(error)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.DELETE_USER_PROFILE)
+  async deleteUserProfile (
+    @Payload() { userId }: ServicePayload<null>,
+      @Ctx() context: RmqContext
+  ): Promise<{ status: number }> {
+    try {
+      return await this.usersServiceService.deleteUserProfile(userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }
