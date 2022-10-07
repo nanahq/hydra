@@ -20,6 +20,8 @@ export enum QUEUE_MESSAGE {
   VALIDATE_ADMIN = 'validate_admin',
   UPDATE_USER_PROFILE = 'update_user_profile',
   UPDATE_VENDOR_PROFILE = 'update_vendor_profile',
+  UPDATE_ADMIN_STATUS =' update_admin_status',
+  DELETE_ADMIN='delete_admin'
 }
 
 export enum QUEUE_SERVICE {

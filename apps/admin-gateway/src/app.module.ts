@@ -2,8 +2,8 @@ import { RmqModule } from '@app/common'
 import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
 import {
   DynamicModule,
-  INestApplication,
-  Module,
+  INestApplication, MiddlewareConsumer,
+  Module, NestModule,
   ValidationPipe
 } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
@@ -19,9 +19,13 @@ import { JwtStrategy } from './auth/strategy/jwt.strategy'
 import { FitHttpException } from '@app/common/filters/rpc.expection'
 import helmet from 'helmet'
 import { ThrottlerModule } from '@nestjs/throttler'
+import * as cookieParser from 'cookie-parser'
 
 @Module({})
-export class AppModule {
+export class AppModule implements NestModule {
+  configure (consumer: MiddlewareConsumer): void {
+    consumer.apply(cookieParser()).forRoutes('*')
+  }
   static async create (): Promise<INestApplication> {
     const app = await NestFactory.create(this.forRoot())
     this.configure(app)

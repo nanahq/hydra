@@ -76,7 +76,9 @@ export class VendorsService {
   }
 
   async getVendor ({ userId }: TokenPayload): Promise<VendorEntity> {
+
     const _vendor = await this.getVendorById(userId)
+
     if (_vendor === null) {
       throw new FitRpcException(
         'Provided user id is not found',

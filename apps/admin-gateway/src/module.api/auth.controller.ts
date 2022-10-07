@@ -13,7 +13,7 @@ export class AuthController {
   async login (
     @CurrentUser() admin: AdminEntity,
       @Res({ passthrough: true }) response: Response
-  ): Promise<any> {
+  ): Promise<void> {
     return await this.authService.login(admin, response)
   }
 
