@@ -27,6 +27,8 @@ export class AuthService {
       httpOnly: true,
       expires
     })
+
+    response.send()
   }
 
   logout (response: Response): void {
@@ -34,5 +36,7 @@ export class AuthService {
       httpOnly: true,
       expires: new Date()
     })
+
+    response.send()
   }
 }

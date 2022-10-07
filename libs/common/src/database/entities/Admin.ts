@@ -4,16 +4,13 @@ import {
   UpdateDateColumn,
   Entity,
   PrimaryColumn,
-  BeforeInsert,
   Column
 } from 'typeorm'
-import { nanoid } from 'nanoid'
-import * as bcrypt from 'bcrypt'
 import { AdminLevel } from '@app/common/typings/AdminLevel.enum'
 
 @Entity('admin')
 export class AdminEntity {
-  @PrimaryColumn({ type: 'uuid' })
+  @PrimaryColumn({ type: 'text' })
   public id: string
 
   @Column()
@@ -29,6 +26,8 @@ export class AdminEntity {
   public lastName: string
 
   @Column({ type: 'enum', enum: AdminLevel, default: AdminLevel.SILVER })
+  public level: AdminLevel
+
   @UpdateDateColumn()
   public updatedAt: Date
 
@@ -37,10 +36,4 @@ export class AdminEntity {
 
   @CreateDateColumn()
   public createdAt: Date
-
-  @BeforeInsert()
-  private async beforeInsert (): Promise<void> {
-    this.id = nanoid()
-    this.password = await bcrypt.hash(this.password, 10)
-  }
 }
