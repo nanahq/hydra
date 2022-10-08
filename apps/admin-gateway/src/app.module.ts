@@ -22,6 +22,7 @@ import { FitHttpException } from '@app/common/filters/rpc.expection'
 import helmet from 'helmet'
 import { ThrottlerModule } from '@nestjs/throttler'
 import * as cookieParser from 'cookie-parser'
+import { VendorController } from './module.api/vendor.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -59,9 +60,10 @@ export class AppModule implements NestModule {
           inject: [ConfigService]
         }),
         RmqModule.register({ name: QUEUE_SERVICE.ADMIN_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
         AppModule
       ],
-      controllers: [AdminController, AuthController],
+      controllers: [AdminController, AuthController, VendorController],
       providers: [
         AuthService,
         LocalStrategy,
