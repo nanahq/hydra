@@ -69,7 +69,6 @@ export class VendorsService {
 
   async updateVendorStatus (
     data: updateVendorStatus
-
   ): Promise<ResponseWithStatus> {
     const updateRequest = await this.updateVendorApprovalStatus(data)
 
@@ -207,8 +206,6 @@ export class VendorsService {
   }
 
   private async getVendors (): Promise<VendorEntity[] | null> {
-    return await this.vendorRepository
-      .createQueryBuilder('vendor')
-      .getMany()
+    return await this.vendorRepository.createQueryBuilder('vendor').getMany()
   }
 }

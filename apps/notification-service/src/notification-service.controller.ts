@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common'
 import {
-  Ctx, EventPattern,
+  Ctx,
+  EventPattern,
   MessagePattern,
   Payload,
   RmqContext,

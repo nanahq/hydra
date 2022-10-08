@@ -15,8 +15,8 @@ import {
   verifyPhoneRequest,
   QUEUE_MESSAGE,
   ExceptionFilterRpc,
-  ServicePayload
-  , ResponseWithStatus
+  ServicePayload,
+  ResponseWithStatus
 } from '@app/common'
 import { UsersService } from './users-service.service'
 

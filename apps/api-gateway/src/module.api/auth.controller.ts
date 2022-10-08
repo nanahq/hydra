@@ -15,12 +15,12 @@ export class AuthController {
   async login (
     @CurrentUser() user: UserEntity,
       @Res({ passthrough: true }) response: Response
-  ): Promise<any> {
+  ): Promise<void> {
     return await this.authService.login(user, response)
   }
 
   @Get('logout')
-  async logout (@Res() response: Response): Promise<any> {
+  async logout (@Res() response: Response): Promise<void> {
     return this.authService.logout(response)
   }
 }

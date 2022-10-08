@@ -23,7 +23,8 @@ import {
   ServicePayload,
   AdminLevel,
   IRpcException,
-  RegisterAdminDTO, ResponseWithStatus
+  RegisterAdminDTO,
+  ResponseWithStatus
 } from '@app/common'
 
 @Controller('admin')
@@ -41,9 +42,9 @@ export class AdminController {
       userId: '',
       data: request
     }
-    return await lastValueFrom(
+    return await lastValueFrom<ResponseWithStatus>(
       this.adminClient
-        .send<ResponseWithStatus>(QUEUE_MESSAGE.CREATE_ADMIN, payload)
+        .send(QUEUE_MESSAGE.CREATE_ADMIN, payload)
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -58,7 +59,6 @@ export class AdminController {
     @Body() { level }: { level: string },
       @CurrentUser() admin: AdminEntity
   ): Promise<ResponseWithStatus> {
-
     const payload: ServicePayload<UpdateAdminLevelRequestDto> = {
       userId: admin.id,
       data: {
@@ -81,7 +81,6 @@ export class AdminController {
   async deleteAdminProfile (
     @CurrentUser() admin: AdminEntity
   ): Promise<ResponseWithStatus> {
-
     const payload: ServicePayload<null> = {
       userId: admin.id,
       data: null

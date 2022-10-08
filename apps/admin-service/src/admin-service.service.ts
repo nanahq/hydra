@@ -122,7 +122,7 @@ export class AdminServiceService {
     return await this.adminRepository
       .createQueryBuilder('admin')
       .where('admin.userName = :userName', { userName })
-       .addSelect('admin.password')
+      .addSelect('admin.password')
       .getOne()
   }
 

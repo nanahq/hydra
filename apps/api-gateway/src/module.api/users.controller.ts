@@ -19,7 +19,8 @@ import {
   registerUserRequest,
   UserEntity,
   ServicePayload,
-  IRpcException, ResponseWithStatus
+  IRpcException,
+  ResponseWithStatus
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
@@ -34,7 +35,9 @@ export class UsersController {
   ) {}
 
   @Post('register')
-  async registerNewUser (@Body() request: registerUserRequest): Promise<ResponseWithStatus> {
+  async registerNewUser (
+    @Body() request: registerUserRequest
+  ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
       this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
         catchError((error: IRpcException) => {
@@ -77,12 +80,14 @@ export class UsersController {
       userId: user.id,
       data
     }
-    return await lastValueFrom(
-      this.usersClient.send<UserEntity>(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload).pipe(
-        catchError((error: { status: number, message: string }) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+    return await lastValueFrom<UserEntity>(
+      this.usersClient
+        .send(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload)
+        .pipe(
+          catchError((error: { status: number, message: string }) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -97,11 +102,13 @@ export class UsersController {
     }
 
     return await lastValueFrom<ResponseWithStatus>(
-      this.usersClient.send<ResponseWithStatus>(QUEUE_MESSAGE.DELETE_USER_PROFILE, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.usersClient
+        .send(QUEUE_MESSAGE.DELETE_USER_PROFILE, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 }

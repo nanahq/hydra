@@ -18,7 +18,8 @@ import {
   VendorDto,
   VendorEntity,
   ServicePayload,
-  IRpcException, ResponseWithStatus
+  IRpcException,
+  ResponseWithStatus
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
@@ -31,13 +32,17 @@ export class VendorController {
   ) {}
 
   @Post('register')
-  async registerNewUser (@Body() request: VendorDto): Promise<ResponseWithStatus> {
-    return await lastValueFrom(
-      this.vendorClient.send<ResponseWithStatus>(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
-        catchError((error) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+  async registerNewUser (
+    @Body() request: VendorDto
+  ): Promise<ResponseWithStatus> {
+    return await lastValueFrom<ResponseWithStatus>(
+      this.vendorClient
+        .send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request })
+        .pipe(
+          catchError((error) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -59,12 +64,14 @@ export class VendorController {
       userId: vendor.id,
       data
     }
-    return await lastValueFrom(
-      this.vendorClient.send<ResponseWithStatus>(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+    return await lastValueFrom<ResponseWithStatus>(
+      this.vendorClient
+        .send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 

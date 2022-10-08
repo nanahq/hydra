@@ -22,7 +22,6 @@ import {
 } from '@app/common'
 
 @Injectable()
-
 export class UsersService {
   constructor (
     @InjectRepository(UserEntity)
@@ -192,7 +191,9 @@ export class UsersService {
       .getOne()
   }
 
-  private async updateStatus (phoneNumber: string): Promise<UpdateResult | null> {
+  private async updateStatus (
+    phoneNumber: string
+  ): Promise<UpdateResult | null> {
     return await this.usersRepository
       .createQueryBuilder()
       .update(UserEntity)
