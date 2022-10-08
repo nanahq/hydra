@@ -81,13 +81,11 @@ export class UsersController {
       data
     }
     return await lastValueFrom<UserEntity>(
-      this.usersClient
-        .send(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload)
-        .pipe(
-          catchError((error: { status: number, message: string }) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload).pipe(
+        catchError((error: { status: number, message: string }) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 
@@ -102,13 +100,11 @@ export class UsersController {
     }
 
     return await lastValueFrom<ResponseWithStatus>(
-      this.usersClient
-        .send(QUEUE_MESSAGE.DELETE_USER_PROFILE, payload)
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.usersClient.send(QUEUE_MESSAGE.DELETE_USER_PROFILE, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 }

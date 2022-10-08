@@ -43,13 +43,11 @@ export class AdminController {
       data: request
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.adminClient
-        .send(QUEUE_MESSAGE.CREATE_ADMIN, payload)
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.adminClient.send(QUEUE_MESSAGE.CREATE_ADMIN, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 

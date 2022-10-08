@@ -36,13 +36,11 @@ export class VendorController {
     @Body() request: VendorDto
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.vendorClient
-        .send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request })
-        .pipe(
-          catchError((error) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 
@@ -65,13 +63,11 @@ export class VendorController {
       data
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.vendorClient
-        .send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload)
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 

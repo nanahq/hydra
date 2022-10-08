@@ -40,13 +40,11 @@ export class VendorController {
   @Get('get-one/:id')
   async getVendor (@Param('id') vendorId: string): Promise<VendorEntity> {
     return await lastValueFrom<VendorEntity>(
-      this.vendorsClient
-        .send(QUEUE_MESSAGE.GET_VENDOR, { vendorId })
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.vendorsClient.send(QUEUE_MESSAGE.GET_VENDOR, { vendorId }).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 
@@ -56,13 +54,11 @@ export class VendorController {
     @Body() data: updateVendorStatus
   ): Promise<{ status: number }> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.vendorsClient
-        .send(QUEUE_MESSAGE.UPDATE_VENDOR_STATUS, data)
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.vendorsClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_STATUS, data).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 
