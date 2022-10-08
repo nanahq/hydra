@@ -208,20 +208,6 @@ export class VendorsService {
   private async getVendors (): Promise<VendorEntity[] | null> {
     return await this.vendorRepository
       .createQueryBuilder('vendor')
-      .select([
-        'vendor.id',
-        'vendor.businessPhoneNumber',
-        'vendor.email',
-        'vendor.settlementBankAccount',
-        'vendor.settlementBankName',
-        'vendor.state',
-        'vendor.approvalStatus',
-        'vendor.address',
-        'vendor.updatedAt',
-        'vendor.firstName',
-        'vendor.lastName',
-        'vendor.businessName'
-      ])
       .getMany()
   }
 }
