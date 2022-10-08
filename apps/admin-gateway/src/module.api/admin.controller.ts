@@ -23,9 +23,8 @@ import {
   ServicePayload,
   AdminLevel,
   IRpcException,
-  RegisterAdminDTO
+  RegisterAdminDTO, ResponseWithStatus
 } from '@app/common'
-
 
 @Controller('admin')
 export class AdminController {
@@ -37,14 +36,14 @@ export class AdminController {
   @Post('register')
   async registerNewUser (
     @Body() request: RegisterAdminDTO
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<RegisterAdminDTO> = {
       userId: '',
       data: request
     }
     return await lastValueFrom(
       this.adminClient
-        .send<{ status: number }>(QUEUE_MESSAGE.CREATE_ADMIN, payload)
+        .send<ResponseWithStatus>(QUEUE_MESSAGE.CREATE_ADMIN, payload)
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -58,7 +57,8 @@ export class AdminController {
   async updateAdminProfile (
     @Body() { level }: { level: string },
       @CurrentUser() admin: AdminEntity
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
+
     const payload: ServicePayload<UpdateAdminLevelRequestDto> = {
       userId: admin.id,
       data: {
@@ -67,7 +67,7 @@ export class AdminController {
       }
     }
 
-    return await lastValueFrom<{ status: number }>(
+    return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.UPDATE_ADMIN_STATUS, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -80,12 +80,14 @@ export class AdminController {
   @Delete('delete-profile')
   async deleteAdminProfile (
     @CurrentUser() admin: AdminEntity
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
+
     const payload: ServicePayload<null> = {
       userId: admin.id,
       data: null
     }
-    return await lastValueFrom<{ status: number }>(
+
+    return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.DELETE_ADMIN, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)

@@ -18,22 +18,22 @@ import {
   VendorDto,
   VendorEntity,
   ServicePayload,
-  IRpcException
+  IRpcException, ResponseWithStatus
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 
-@Controller('/vendor')
+@Controller('vendor')
 export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorClient: ClientProxy
   ) {}
 
-  @Post('/register')
-  async registerNewUser (@Body() request: VendorDto): Promise<any> {
+  @Post('register')
+  async registerNewUser (@Body() request: VendorDto): Promise<ResponseWithStatus> {
     return await lastValueFrom(
-      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
+      this.vendorClient.send<ResponseWithStatus>(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
         catchError((error) => {
           throw new HttpException(error.message, error.status)
         })
@@ -54,13 +54,13 @@ export class VendorController {
   async updateVendorProfile (
     @Body() data: Partial<VendorEntity>,
       @CurrentUser() vendor: VendorEntity
-  ): Promise<string> {
+  ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<Partial<VendorEntity>> = {
       userId: vendor.id,
       data
     }
     return await lastValueFrom(
-      this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
+      this.vendorClient.send<ResponseWithStatus>(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
@@ -72,13 +72,13 @@ export class VendorController {
   @Delete('delete-profile')
   async deleteVendorProfile (
     @CurrentUser() vendor: VendorEntity
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<null> = {
       userId: vendor.id,
       data: null
     }
 
-    return await lastValueFrom<{ status: number }>(
+    return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient.send(QUEUE_MESSAGE.DELETE_VENDOR_PROFILE, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)

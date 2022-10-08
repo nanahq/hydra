@@ -22,9 +22,6 @@ import { AuthService } from './module.api/auth.service'
 import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
 import { RmqModule, FitHttpException, QUEUE_SERVICE } from '@app/common'
-import helmet from 'helmet'
-import { ThrottlerModule } from '@nestjs/throttler'
-import * as cookieParser from 'cookie-parser'
 import { VendorController } from './module.api/vendor.controller'
 
 @Module({})

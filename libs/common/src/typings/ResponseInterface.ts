@@ -1,7 +1,3 @@
-export interface IUpdateStateResponse {
-  status: 0 | 1
-}
-
-export interface IDeleteResponse {
+export interface ResponseWithStatus {
   status: 0 | 1
 }
