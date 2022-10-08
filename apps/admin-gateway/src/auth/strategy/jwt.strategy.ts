@@ -1,15 +1,16 @@
-import { TokenPayload } from '@app/common'
-import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
 import { HttpException, Inject, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ClientProxy } from '@nestjs/microservices'
 import { PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import { catchError, lastValueFrom } from 'rxjs'
-import { IRpcException } from '@app/common/filters/rpc.expection'
+
+import {
+  TokenPayload,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  IRpcException
+} from '@app/common'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

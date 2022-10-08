@@ -16,7 +16,7 @@ export class AdminEntity {
   @Column()
   public userName: string
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', select: false })
   public password: string
 
   @Column({ type: 'text' })

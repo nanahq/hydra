@@ -1,15 +1,16 @@
-import { PhoneVerificationPayload } from '@app/common/dto/phoneVerificationPayload.dto'
-import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
-import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ClientProxy } from '@nestjs/microservices'
 import { TwilioService } from 'nestjs-twilio'
 import { lastValueFrom } from 'rxjs'
-import { FitRpcException } from '@app/common/filters/rpc.expection'
+
+import {
+  PhoneVerificationPayload,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  verifyPhoneRequest,
+  FitRpcException
+} from '@app/common'
 
 @Injectable()
 export class NotificationServiceService {

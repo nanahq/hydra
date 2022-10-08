@@ -16,7 +16,7 @@ export class VendorEntity {
   @PrimaryColumn({ type: 'text' })
   public id: string
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', select: false })
   public password: string
 
   @Column({ type: 'text' })

@@ -1,9 +1,9 @@
-import { TokenPayload } from '@app/common'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
-import { VendorEntity } from '@app/common/database/entities/Vendor'
+
+import { TokenPayload, VendorEntity } from '@app/common'
 
 @Injectable()
 export class AuthService {

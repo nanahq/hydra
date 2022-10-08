@@ -1,11 +1,12 @@
-import { RmqModule, UserEntity } from '@app/common'
-import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
-import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import * as Joi from 'joi'
-import { UsersServiceController } from './users-service.controller'
-import { UsersServiceService } from './users-service.service'
+import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+
+import * as Joi from 'joi'
+
+import { RmqModule, UserEntity, QUEUE_SERVICE } from '@app/common'
+import { UsersServiceController } from './users-service.controller'
+import { UsersService } from './users-service.service'
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
     TypeOrmModule.forFeature([UserEntity])
   ],
   controllers: [UsersServiceController],
-  providers: [UsersServiceService]
+
+  providers: [UsersService]
 })
 export class UsersServiceModule {}

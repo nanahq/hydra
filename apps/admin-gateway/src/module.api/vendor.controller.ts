@@ -9,7 +9,7 @@ import {
   Put,
   UseGuards
 } from '@nestjs/common'
-import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common'
+import { QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { VendorEntity } from '@app/common/database/entities/Vendor'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -39,7 +39,7 @@ export class VendorController {
   @UseGuards(JwtAuthGuard)
   @Get('get-one/:id')
   async getVendor (@Param('id') vendorId: string): Promise<VendorEntity> {
-    return await lastValueFrom(
+    return await lastValueFrom<VendorEntity>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_VENDOR, { vendorId }).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -53,7 +53,7 @@ export class VendorController {
   async updateVendorStatus (
     @Body() data: updateVendorStatus
   ): Promise<{ status: number }> {
-    return await lastValueFrom<{ status: number }>(
+    return await lastValueFrom<ResponseWithStatus>(
       this.vendorsClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_STATUS, data).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -67,8 +67,8 @@ export class VendorController {
   @Delete('delete-profile/:id')
   async deleteVendorProfile (
     @Param('id') userId: string
-  ): Promise<{ status: number }> {
-    return await lastValueFrom<{ status: number }>(
+  ): Promise<ResponseWithStatus> {
+    return await lastValueFrom<ResponseWithStatus>(
       this.vendorsClient
         .send(QUEUE_MESSAGE.DELETE_VENDOR_PROFILE, { userId })
         .pipe(
