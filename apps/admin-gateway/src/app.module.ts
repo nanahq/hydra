@@ -22,6 +22,10 @@ import { AuthService } from './module.api/auth.service'
 import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
 import { RmqModule, FitHttpException, QUEUE_SERVICE } from '@app/common'
+import helmet from 'helmet'
+import { ThrottlerModule } from '@nestjs/throttler'
+import * as cookieParser from 'cookie-parser'
+import { VendorController } from './module.api/vendor.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -59,9 +63,10 @@ export class AppModule implements NestModule {
           inject: [ConfigService]
         }),
         RmqModule.register({ name: QUEUE_SERVICE.ADMIN_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
         AppModule
       ],
-      controllers: [AdminController, AuthController],
+      controllers: [AdminController, AuthController, VendorController],
       providers: [
         AuthService,
         LocalStrategy,
