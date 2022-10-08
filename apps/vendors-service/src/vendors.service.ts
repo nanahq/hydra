@@ -25,14 +25,15 @@ export class VendorsService {
       password: await bcrypt.hash(data.password, 10),
       id: nanoid()
     }
-    try {
-      return await this.createVendor(payload)
-    } catch (error) {
+    const createVendorRequest = await this.createVendor(payload)
+
+    if (createVendorRequest === null) {
       throw new FitRpcException(
         'Something went wrong. Could not register you at the moment',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
+    return createVendorRequest
   }
 
   async validateVendor ({
@@ -64,15 +65,15 @@ export class VendorsService {
   async updateVendorStatus (
     data: updateVendorStatus
   ): Promise<UpdateUserStateResponse> {
-    try {
-      await this.updateVendorApprovalStatus(data)
-      return { status: 1 }
-    } catch (error) {
+    const updateRequest = await this.updateVendorApprovalStatus(data)
+
+    if (updateRequest === null) {
       throw new FitRpcException(
         'Something Went Wrong Updating User status',
-        HttpStatus.INTERNAL_SERVER_ERROR
+        HttpStatus.BAD_REQUEST
       )
     }
+    return { status: 1 }
   }
 
   async getVendor ({ userId }: TokenPayload): Promise<VendorEntity> {
@@ -117,6 +118,18 @@ export class VendorsService {
     return { status: 1 }
   }
 
+  async getAllVendors (): Promise<VendorEntity[]> {
+    const getRequest = await this.getVendors()
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all vendors.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
   private async checkExistingVendor (phoneNumber: string): Promise<void> {
     const vendor = await this.getVendorByPhone(phoneNumber)
     if (vendor !== null) {
@@ -159,7 +172,7 @@ export class VendorsService {
       .createQueryBuilder('vendor')
       .update(VendorEntity)
       .set({
-        approvalStatus: () => payload.status
+        approvalStatus: payload.status
       })
       .where('vendor.id = :id', { id: payload.id })
       .returning('id')
@@ -190,5 +203,25 @@ export class VendorsService {
       .delete()
       .where('id = :id', { id })
       .execute()
+  }
+
+  private async getVendors (): Promise<VendorEntity[] | null> {
+    return await this.vendorRepository
+      .createQueryBuilder('vendor')
+      .select([
+        'vendor.id',
+        'vendor.businessPhoneNumber',
+        'vendor.email',
+        'vendor.settlementBankAccount',
+        'vendor.settlementBankName',
+        'vendor.state',
+        'vendor.approvalStatus',
+        'vendor.address',
+        'vendor.updatedAt',
+        'vendor.firstName',
+        'vendor.lastName',
+        'vendor.businessName'
+      ])
+      .getMany()
   }
 }

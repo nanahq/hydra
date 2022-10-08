@@ -104,12 +104,12 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR)
-  async  getSingleVendor(
-      @Payload() {vendorId}: {vendorId: string},
+  async getSingleVendor (
+    @Payload() { vendorId }: { vendorId: string },
       @Ctx() context: RmqContext
   ): Promise<VendorEntity> {
     try {
-      return await this.vendorsService.getVendor({userId: vendorId})
+      return await this.vendorsService.getVendor({ userId: vendorId })
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -118,9 +118,7 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDORS)
-  async  getAllVendors(
-      @Ctx() context: RmqContext
-  ): Promise<VendorEntity[]> {
+  async getAllVendors (@Ctx() context: RmqContext): Promise<VendorEntity[]> {
     try {
       return await this.vendorsService.getAllVendors()
     } catch (error) {

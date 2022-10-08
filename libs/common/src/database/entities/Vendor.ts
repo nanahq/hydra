@@ -47,11 +47,10 @@ export class VendorEntity {
   public address: string
 
   @Column({
-    type: 'enum',
-    enum: VendorApprovalStatusEnum,
+    type: 'text',
     default: VendorApprovalStatusEnum.PENDING
   })
-  public approvalStatus: VendorApprovalStatusEnum
+  public approvalStatus: string
 
   @UpdateDateColumn()
   public updatedAt: Date

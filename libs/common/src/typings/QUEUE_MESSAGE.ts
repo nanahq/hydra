@@ -24,6 +24,7 @@ export enum QUEUE_MESSAGE {
   DELETE_ADMIN = 'delete_admin',
   DELETE_USER_PROFILE = 'delete_user_profile',
   DELETE_VENDOR_PROFILE = 'delete_vendor_profile',
+  GET_ALL_VENDORS = 'get_all_vendors',
 }
 
 export enum QUEUE_SERVICE {
