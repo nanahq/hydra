@@ -2,8 +2,8 @@
   "name": "eatlater",
   "version": "0.1.1",
   "description": "",
-  "author": "Imagyne Technologies",
-  "private": false,
+  "author": "Imagyne Ventures LRD",
+  "private": true,
   "license": "UNLICENSED",
   "workspace": [
     "apps/*",
