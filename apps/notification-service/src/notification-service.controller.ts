@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common'
 import {
   Ctx,
+  EventPattern,
   MessagePattern,
   Payload,
   RmqContext,
@@ -35,7 +36,7 @@ export class NotificationServiceController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION)
+  @EventPattern(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION)
   async sendVerification (
     @Payload() data: verifyPhoneRequest,
       @Ctx() context: RmqContext

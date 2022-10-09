@@ -4,12 +4,12 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-local'
 import { catchError, lastValueFrom } from 'rxjs'
 
-
-import { 
+import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   IRpcException,
-  AdminEntity  } from '@app/common'
+  AdminEntity
+} from '@app/common'
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {

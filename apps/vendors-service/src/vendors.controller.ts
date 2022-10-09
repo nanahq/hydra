@@ -15,9 +15,9 @@ import {
   ExceptionFilterRpc,
   updateVendorStatus,
   VendorEntity,
-  ServicePayload
+  ServicePayload,
+  ResponseWithStatus
 } from '@app/common'
-import { IUpdateStateResponse } from '@app/common'
 import { VendorsService } from './vendors.service'
 
 @UseFilters(new ExceptionFilterRpc())
@@ -32,7 +32,7 @@ export class VendorsController {
   async registerNewUser (
     @Payload() data: any,
       @Ctx() context: RmqContext
-  ): Promise<string> {
+  ): Promise<ResponseWithStatus> {
     try {
       return await this.vendorsService.register(data)
     } catch (error) {
@@ -46,12 +46,13 @@ export class VendorsController {
   async updateVendorStatus (
     @Payload() data: updateVendorStatus,
       @Ctx() ctx: RmqContext
-  ): Promise<IUpdateStateResponse> {
-    this.rmqService.ack(ctx)
+  ): Promise<ResponseWithStatus> {
     try {
       return await this.vendorsService.updateVendorStatus(data)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(ctx)
     }
   }
 
@@ -61,10 +62,11 @@ export class VendorsController {
       @Ctx() context: RmqContext
   ): Promise<VendorEntity> {
     try {
-      this.rmqService.ack(context)
       return await this.vendorsService.validateVendor(data)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 
@@ -85,15 +87,15 @@ export class VendorsController {
   async updateVendorProfile (
     @Payload() data: ServicePayload<Partial<VendorEntity>>,
       @Ctx() context: RmqContext
-  ): Promise<string> {
+  ): Promise<ResponseWithStatus> {
     try {
-      this.rmqService.ack(context)
       return await this.vendorsService.updateVendorProfile(data)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
-
 
   @MessagePattern(QUEUE_MESSAGE.DELETE_VENDOR_PROFILE)
   async deleteVendorProfile (
@@ -106,7 +108,31 @@ export class VendorsController {
       throw new RpcException(error)
     } finally {
       this.rmqService.ack(context)
+    }
+  }
 
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR)
+  async getSingleVendor (
+    @Payload() { vendorId }: { vendorId: string },
+      @Ctx() context: RmqContext
+  ): Promise<VendorEntity> {
+    try {
+      return await this.vendorsService.getVendor({ userId: vendorId })
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDORS)
+  async getAllVendors (@Ctx() context: RmqContext): Promise<VendorEntity[]> {
+    try {
+      return await this.vendorsService.getAllVendors()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 }
