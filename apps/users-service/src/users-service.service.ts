@@ -1,11 +1,12 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
-
-import * as bcrypt from 'bcrypt'
 import { ClientProxy } from '@nestjs/microservices'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
 import { lastValueFrom } from 'rxjs'
+import { nanoid } from 'nanoid'
+
+import * as bcrypt from 'bcrypt'
 
 import {
   FitRpcException,
@@ -224,6 +225,7 @@ export class UsersService {
     return await this.usersRepository
       .createQueryBuilder()
       .delete()
+
       .where('id = :id', { id })
       .returning('id')
       .execute()

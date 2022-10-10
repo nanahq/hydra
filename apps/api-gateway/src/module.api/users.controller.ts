@@ -1,10 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   Inject,
-  Delete,
   Post,
   Put,
   UseGuards
@@ -18,8 +18,8 @@ import {
   PhoneVerificationPayload,
   registerUserRequest,
   UserEntity,
-  ServicePayload,
   IRpcException,
+  ServicePayload,
   ResponseWithStatus
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'

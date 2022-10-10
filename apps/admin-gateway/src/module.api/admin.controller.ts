@@ -23,8 +23,8 @@ import {
   ServicePayload,
   AdminLevel,
   IRpcException,
-  RegisterAdminDTO,
-  ResponseWithStatus
+  ResponseWithStatus,
+  RegisterAdminDTO
 } from '@app/common'
 
 @Controller('admin')

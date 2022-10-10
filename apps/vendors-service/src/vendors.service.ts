@@ -71,7 +71,6 @@ export class VendorsService {
     data: updateVendorStatus
   ): Promise<ResponseWithStatus> {
     const updateRequest = await this.updateVendorApprovalStatus(data)
-
     if (updateRequest === null) {
       throw new FitRpcException(
         'Failed to update user. Incorrect input',
