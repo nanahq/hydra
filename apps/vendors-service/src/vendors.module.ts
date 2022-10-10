@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+
 import * as Joi from 'joi'
+
+import { VendorEntity, RmqModule } from '@app/common'
 import { VendorsController } from './vendors.controller'
 import { VendorsService } from './vendors.service'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { VendorEntity } from '@app/common/database/entities/Vendor'
-import { RmqModule } from '@app/common'
 
 @Module({
   imports: [

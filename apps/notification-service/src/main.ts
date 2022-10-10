@@ -1,7 +1,7 @@
-import { RmqService } from '@app/common'
-import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
 import { NestFactory } from '@nestjs/core'
 import { NotificationServiceModule } from './notification-service.module'
+
+import { RmqService, QUEUE_SERVICE } from '@app/common'
 
 async function bootstrap (): Promise<void> {
   const app = await NestFactory.create(NotificationServiceModule)

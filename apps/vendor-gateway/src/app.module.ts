@@ -1,5 +1,4 @@
-import { RmqModule } from '@app/common'
-import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
+import { JwtModule } from '@nestjs/jwt'
 import {
   DynamicModule,
   INestApplication,
@@ -10,18 +9,19 @@ import {
 } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
-import { AppMetadata } from 'app.config'
-import { VendorController } from './module.api/vendor.controller'
+import { ThrottlerModule } from '@nestjs/throttler'
+
+import helmet from 'helmet'
+import * as cookieParser from 'cookie-parser'
 import * as Joi from 'joi'
-import { JwtModule } from '@nestjs/jwt'
+
+import { AppMetadata } from 'app.config'
+import { FitHttpException, QUEUE_SERVICE, RmqModule } from '@app/common'
+import { VendorController } from './module.api/vendor.controller'
 import { AuthController } from './module.api/auth.controller'
 import { AuthService } from './module.api/auth.service'
 import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
-import { FitHttpException } from '@app/common/filters/rpc.expection'
-import helmet from 'helmet'
-import { ThrottlerModule } from '@nestjs/throttler'
-import * as cookieParser from 'cookie-parser'
 import { ListingController } from './module.api/listing.controller'
 
 @Module({})

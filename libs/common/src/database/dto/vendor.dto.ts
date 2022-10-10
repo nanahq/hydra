@@ -1,5 +1,6 @@
-import { VendorApprovalStatusEnum } from '@app/common/typings/VendorApprovalStatus.enum'
 import { IsNotEmpty } from 'class-validator'
+
+import { VendorApprovalStatusEnum } from '@app/common'
 
 export class VendorDto {
   @IsNotEmpty()

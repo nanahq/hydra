@@ -1,5 +1,4 @@
 import {
-  BeforeInsert,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -7,8 +6,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn
 } from 'typeorm'
-import { nanoid } from 'nanoid'
-import * as bcrypt from 'bcrypt'
+
 import { VendorApprovalStatusEnum } from '@app/common/typings/VendorApprovalStatus.enum'
 
 @Entity('vendor')
@@ -16,7 +14,7 @@ export class VendorEntity {
   @PrimaryColumn({ type: 'text' })
   public id: string
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', select: false })
   public password: string
 
   @Column({ type: 'text' })
@@ -47,11 +45,10 @@ export class VendorEntity {
   public address: string
 
   @Column({
-    type: 'enum',
-    enum: VendorApprovalStatusEnum,
+    type: 'text',
     default: VendorApprovalStatusEnum.PENDING
   })
-  public approvalStatus: VendorApprovalStatusEnum
+  public approvalStatus: string
 
   @UpdateDateColumn()
   public updatedAt: Date
@@ -61,10 +58,4 @@ export class VendorEntity {
 
   @CreateDateColumn()
   public createdAt: Date
-
-  @BeforeInsert()
-  private async beforeInsert (): Promise<void> {
-    this.id = nanoid()
-    this.password = await bcrypt.hash(this.password, 10)
-  }
 }

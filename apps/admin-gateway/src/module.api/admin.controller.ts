@@ -1,8 +1,4 @@
 import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
-import {
   Body,
   Controller,
   Get,
@@ -15,14 +11,21 @@ import {
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
+
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
-import { RegisterAdminDTO } from '@app/common/dto/registerAdminDTO.dto'
-import { AdminEntity } from '@app/common/database/entities/Admin'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
-import { IRpcException } from '@app/common/filters/rpc.expection'
-import { UpdateAdminLevelRequestDto } from '@app/common/dto/updateAdminLevelRequest.dto'
-import { AdminLevel } from '@app/common/typings/AdminLevel.enum'
+
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  UpdateAdminLevelRequestDto,
+  AdminEntity,
+  ServicePayload,
+  AdminLevel,
+  IRpcException,
+  ResponseWithStatus,
+  RegisterAdminDTO
+} from '@app/common'
 
 @Controller('admin')
 export class AdminController {
@@ -34,19 +37,17 @@ export class AdminController {
   @Post('register')
   async registerNewUser (
     @Body() request: RegisterAdminDTO
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<RegisterAdminDTO> = {
       userId: '',
       data: request
     }
-    return await lastValueFrom(
-      this.adminClient
-        .send<{ status: number }>(QUEUE_MESSAGE.CREATE_ADMIN, payload)
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+    return await lastValueFrom<ResponseWithStatus>(
+      this.adminClient.send(QUEUE_MESSAGE.CREATE_ADMIN, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 
@@ -55,7 +56,7 @@ export class AdminController {
   async updateAdminProfile (
     @Body() { level }: { level: string },
       @CurrentUser() admin: AdminEntity
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateAdminLevelRequestDto> = {
       userId: admin.id,
       data: {
@@ -64,7 +65,7 @@ export class AdminController {
       }
     }
 
-    return await lastValueFrom<{ status: number }>(
+    return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.UPDATE_ADMIN_STATUS, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -77,12 +78,13 @@ export class AdminController {
   @Delete('delete-profile')
   async deleteAdminProfile (
     @CurrentUser() admin: AdminEntity
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<null> = {
       userId: admin.id,
       data: null
     }
-    return await lastValueFrom<{ status: number }>(
+
+    return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.DELETE_ADMIN, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)

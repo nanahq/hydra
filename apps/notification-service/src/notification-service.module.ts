@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TwilioModule } from 'nestjs-twilio'
+
+import * as Joi from 'joi'
+
+import { RmqModule, QUEUE_SERVICE } from '@app/common'
 import { NotificationServiceController } from './notification-service.controller'
 import { NotificationServiceService } from './notification-service.service'
-import * as Joi from 'joi'
-import { RmqModule } from '@app/common'
-import { TwilioModule } from 'nestjs-twilio'
-import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
 
 @Module({
   imports: [

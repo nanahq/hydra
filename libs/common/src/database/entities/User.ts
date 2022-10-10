@@ -4,11 +4,8 @@ import {
   UpdateDateColumn,
   Entity,
   PrimaryColumn,
-  BeforeInsert,
   Column
 } from 'typeorm'
-import { nanoid } from 'nanoid'
-import * as bcrypt from 'bcrypt'
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -18,7 +15,7 @@ export class UserEntity {
   @Column()
   public phoneNumber: string
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', select: false })
   public password: string
 
   @Column({ type: 'text' })
@@ -44,10 +41,4 @@ export class UserEntity {
 
   @CreateDateColumn()
   public createdAt: Date
-
-  @BeforeInsert()
-  private async beforeInsert (): Promise<void> {
-    this.id = nanoid()
-    this.password = await bcrypt.hash(this.password, 10)
-  }
 }

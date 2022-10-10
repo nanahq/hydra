@@ -1,28 +1,30 @@
 import {
-  loginUserRequest,
-  RmqService,
-  TokenPayload,
-  UserEntity
-} from '@app/common'
-import { verifyPhoneRequest } from '@app/common/dto/verifyPhoneRequest.dto'
-import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
-import { Controller, UseFilters } from '@nestjs/common'
-import {
   Ctx,
   MessagePattern,
   Payload,
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { UsersServiceService } from './users-service.service'
+import { Controller, UseFilters } from '@nestjs/common'
 
-import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
+import {
+  loginUserRequest,
+  RmqService,
+  TokenPayload,
+  UserEntity,
+  verifyPhoneRequest,
+  QUEUE_MESSAGE,
+  ExceptionFilterRpc,
+  ServicePayload,
+  ResponseWithStatus
+} from '@app/common'
+import { UsersService } from './users-service.service'
+
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class UsersServiceController {
   constructor (
-    private readonly usersServiceService: UsersServiceService,
+    private readonly usersService: UsersService,
     private readonly rmqService: RmqService
   ) {}
 
@@ -30,9 +32,9 @@ export class UsersServiceController {
   async registerNewUser (
     @Payload() data: any,
       @Ctx() context: RmqContext
-  ): Promise<string> {
+  ): Promise<ResponseWithStatus> {
     try {
-      return await this.usersServiceService.register(data)
+      return await this.usersService.register(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -43,13 +45,14 @@ export class UsersServiceController {
   @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_STATUS)
   async updateUserStatus (
     @Payload() data: verifyPhoneRequest,
-      @Ctx() ctx: RmqContext
-  ): Promise<number | null> {
-    this.rmqService.ack(ctx)
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
     try {
-      return await this.usersServiceService.updateUserStatus(data)
+      return await this.usersService.updateUserStatus(data)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 
@@ -60,9 +63,11 @@ export class UsersServiceController {
   ): Promise<UserEntity> {
     try {
       this.rmqService.ack(context)
-      return await this.usersServiceService.validateUser(data)
+      return await this.usersService.validateUser(data)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 
@@ -73,9 +78,11 @@ export class UsersServiceController {
   ): Promise<UserEntity> {
     try {
       this.rmqService.ack(context)
-      return await this.usersServiceService.getUser(data)
+      return await this.usersService.getUser(data)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 
@@ -83,12 +90,14 @@ export class UsersServiceController {
   async updateUserProfile (
     @Payload() payload: ServicePayload<Partial<UserEntity>>,
       @Ctx() context: RmqContext
-  ): Promise<string> {
+  ): Promise<ResponseWithStatus> {
     try {
       this.rmqService.ack(context)
-      return await this.usersServiceService.updateUserProfile(payload)
+      return await this.usersService.updateUserProfile(payload)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 
@@ -96,9 +105,9 @@ export class UsersServiceController {
   async deleteUserProfile (
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
     try {
-      return await this.usersServiceService.deleteUserProfile(userId)
+      return await this.usersService.deleteUserProfile(userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

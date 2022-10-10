@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { UserEntity } from '@app/common/database/entities/User'
-import { VendorEntity } from '@app/common/database/entities/Vendor'
-import { AdminEntity } from '@app/common/database/entities/Admin'
+
+import { UserEntity, VendorEntity, AdminEntity } from '@app/common'
 
 @Module({
   imports: [

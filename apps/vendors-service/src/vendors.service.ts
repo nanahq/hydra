@@ -1,15 +1,20 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import * as bcrypt from 'bcrypt'
-import { UpdateUserStateResponse } from './interface'
-import { loginUserRequest, TokenPayload } from '@app/common'
-import { FitRpcException } from '@app/common/filters/rpc.expection'
 import { InjectRepository } from '@nestjs/typeorm'
-import { VendorEntity } from '@app/common/database/entities/Vendor'
-import { VendorDto } from '@app/common/database/dto/vendor.dto'
-import { updateVendorStatus } from '@app/common/dto/UpdateVendorStatus.dto'
-import { DeleteResult, Repository } from 'typeorm'
-import { nanoid } from 'nanoid'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
+import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
+
+import { v4 as uuidv4 } from 'uuid'
+import * as bcrypt from 'bcrypt'
+
+import {
+  loginUserRequest,
+  TokenPayload,
+  FitRpcException,
+  VendorDto,
+  VendorEntity,
+  updateVendorStatus,
+  ServicePayload,
+  ResponseWithStatus
+} from '@app/common'
 
 @Injectable()
 export class VendorsService {
@@ -18,21 +23,22 @@ export class VendorsService {
     private readonly vendorRepository: Repository<VendorEntity>
   ) {}
 
-  async register (data: VendorDto): Promise<string> {
+  async register (data: VendorDto): Promise<ResponseWithStatus> {
     await this.checkExistingVendor(data.businessPhoneNumber) // Validation gate to check if vendor with the requet phone is already exist
     const payload = {
       ...data,
       password: await bcrypt.hash(data.password, 10),
-      id: nanoid()
+      id: uuidv4()
     }
-    try {
-      return await this.createVendor(payload)
-    } catch (error) {
+    const createVendorRequest = await this.createVendor(payload)
+
+    if (createVendorRequest === null) {
       throw new FitRpcException(
         'Something went wrong. Could not register you at the moment',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
+    return { status: 1 }
   }
 
   async validateVendor ({
@@ -57,22 +63,21 @@ export class VendorsService {
         HttpStatus.UNAUTHORIZED
       )
     }
-    vendor.password = ''
+
     return vendor
   }
 
   async updateVendorStatus (
     data: updateVendorStatus
-  ): Promise<UpdateUserStateResponse> {
-    try {
-      await this.updateVendorApprovalStatus(data)
-      return { status: 1 }
-    } catch (error) {
+  ): Promise<ResponseWithStatus> {
+    const updateRequest = await this.updateVendorApprovalStatus(data)
+    if (updateRequest === null) {
       throw new FitRpcException(
-        'Something Went Wrong Updating User status',
-        HttpStatus.INTERNAL_SERVER_ERROR
+        'Failed to update user. Incorrect input',
+        HttpStatus.BAD_REQUEST
       )
     }
+    return { status: 1 }
   }
 
   async getVendor ({ userId }: TokenPayload): Promise<VendorEntity> {
@@ -84,7 +89,6 @@ export class VendorsService {
         HttpStatus.UNAUTHORIZED
       )
     }
-    _vendor.password = ''
 
     return _vendor
   }
@@ -92,8 +96,9 @@ export class VendorsService {
   async updateVendorProfile ({
     data,
     userId
-  }: ServicePayload<Partial<VendorEntity>>): Promise<string> {
+  }: ServicePayload<Partial<VendorEntity>>): Promise<ResponseWithStatus> {
     const req = await this.updateProfile(data, userId)
+
     if (req === null) {
       throw new FitRpcException(
         'Failed to update vendor profile',
@@ -101,10 +106,10 @@ export class VendorsService {
       )
     }
 
-    return req
+    return { status: 1 }
   }
 
-  async deleteVendorProfile (vendorId: string): Promise<{ status: number }> {
+  async deleteVendorProfile (vendorId: string): Promise<ResponseWithStatus> {
     const deleteRequest = await this.deleteVendor(vendorId)
 
     if (deleteRequest === null) {
@@ -117,6 +122,18 @@ export class VendorsService {
     return { status: 1 }
   }
 
+  async getAllVendors (): Promise<VendorEntity[]> {
+    const getRequest = await this.getVendors()
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all vendors.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
   private async checkExistingVendor (phoneNumber: string): Promise<void> {
     const vendor = await this.getVendorByPhone(phoneNumber)
     if (vendor !== null) {
@@ -127,15 +144,14 @@ export class VendorsService {
     }
   }
 
-  private async createVendor (vendor: VendorDto): Promise<string> {
-    const query = await this.vendorRepository
+  private async createVendor (vendor: VendorDto): Promise<InsertResult | null> {
+    return await this.vendorRepository
       .createQueryBuilder('vendor')
       .insert()
       .into(VendorEntity)
       .values({ ...vendor })
       .returning('id')
       .execute()
-    return query.identifiers[0].id as unknown as string
   }
 
   private async getVendorByPhone (phone: string): Promise<VendorEntity | null> {
@@ -154,25 +170,22 @@ export class VendorsService {
 
   private async updateVendorApprovalStatus (
     payload: updateVendorStatus
-  ): Promise<string | null> {
-    const query = await this.vendorRepository
+  ): Promise<UpdateResult | null> {
+    return await this.vendorRepository
       .createQueryBuilder('vendor')
       .update(VendorEntity)
       .set({
-        approvalStatus: () => payload.status
+        approvalStatus: payload.status
       })
       .where('vendor.id = :id', { id: payload.id })
-      .returning('id')
       .execute()
-
-    return query.raw[0].id
   }
 
   private async updateProfile (
     data: Partial<VendorEntity>,
     id: string
-  ): Promise<string | null> {
-    const query = await this.vendorRepository
+  ): Promise<UpdateResult | null> {
+    return await this.vendorRepository
       .createQueryBuilder()
       .update(VendorEntity)
       .set({
@@ -181,7 +194,6 @@ export class VendorsService {
       .where('id = :id', { id })
       .returning('id')
       .execute()
-    return query === null ? query : (query.raw[0].id as string)
   }
 
   private async deleteVendor (id: string): Promise<DeleteResult | null> {
@@ -190,5 +202,9 @@ export class VendorsService {
       .delete()
       .where('id = :id', { id })
       .execute()
+  }
+
+  private async getVendors (): Promise<VendorEntity[] | null> {
+    return await this.vendorRepository.createQueryBuilder('vendor').getMany()
   }
 }
