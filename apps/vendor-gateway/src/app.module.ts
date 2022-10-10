@@ -1,13 +1,6 @@
 import { RmqModule } from '@app/common'
 import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
-import {
-  DynamicModule,
-  INestApplication,
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  ValidationPipe
-} from '@nestjs/common'
+import { DynamicModule, INestApplication, MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
 import { AppMetadata } from 'app.config'
@@ -22,6 +15,7 @@ import { FitHttpException } from '@app/common/filters/rpc.expection'
 import helmet from 'helmet'
 import { ThrottlerModule } from '@nestjs/throttler'
 import * as cookieParser from 'cookie-parser'
+import { ListingController } from './module.api/listing.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -67,7 +61,7 @@ export class AppModule implements NestModule {
         }),
         AppModule
       ],
-      controllers: [VendorController, AuthController],
+      controllers: [VendorController, AuthController, ListingController],
       providers: [
         AuthService,
         LocalStrategy,

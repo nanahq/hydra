@@ -89,6 +89,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/admin-service/tsconfig.app.json"
       }
+    },
+    "listing-service": {
+      "type": "application",
+      "root": "apps/listing-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/listing-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/listing-service/tsconfig.app.json"
+      }
     }
   }
 }

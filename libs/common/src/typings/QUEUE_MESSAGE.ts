@@ -24,6 +24,10 @@ export enum QUEUE_MESSAGE {
   DELETE_ADMIN = 'delete_admin',
   DELETE_USER_PROFILE = 'delete_user_profile',
   DELETE_VENDOR_PROFILE = 'delete_vendor_profile',
+
+  // Listing
+  GET_LISTINGS = 'get_listings',
+  CREATE_LISTING = 'create_listing',
 }
 
 export enum QUEUE_SERVICE {
@@ -34,4 +38,5 @@ export enum QUEUE_SERVICE {
   VENDORS_API = 'VENDORS_API',
   ADMIN_API = 'ADMIN_API',
   ADMIN_SERVICE = 'ADMIN',
+  LISTING_SERVICE = 'LISTING',
 }

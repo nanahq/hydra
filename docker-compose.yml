@@ -117,6 +117,23 @@ services:
       - /usr/src/app/node_modules
     networks:
       - app-tier
+  listing-service:
+    build:
+      context: .
+      dockerfile: ./apps/listing-service/Dockerfile
+      target: development
+    command: 'npm run start:dev listing-service'
+    env_file:
+      - ./apps/listing-service/.env
+    depends_on:
+      - listing-db
+      - listing-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - app-tier
   rabbitmq:
     image: rabbitmq
     ports:
@@ -157,6 +174,18 @@ services:
       - POSTGRESQL_USERNAME=root
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=admin
+    volumes:
+      - pg_data:/var/lib/postgresql
+    networks:
+      - app-tier
+  listing-db:
+    image: bitnami/postgresql:14
+    ports:
+      - '5432'
+    environment:
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=root@123
+      - POSTGRESQL_DATABASE=listing
     volumes:
       - pg_data:/var/lib/postgresql
     networks:
