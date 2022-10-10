@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
 
-import { nanoid } from 'nanoid'
+import { v4 as uuidv4 } from 'uuid'
 import * as bcrypt from 'bcrypt'
 
 import {
@@ -28,7 +28,7 @@ export class VendorsService {
     const payload = {
       ...data,
       password: await bcrypt.hash(data.password, 10),
-      id: nanoid()
+      id: uuidv4()
     }
     const createVendorRequest = await this.createVendor(payload)
 
