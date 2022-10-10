@@ -11,8 +11,7 @@ export class ListingServiceService {
   constructor (
     @InjectRepository(ListingEntity)
     private readonly listingRepository: Repository<ListingEntity>
-  ) {
-  }
+  ) {}
 
   async create (data: ListingDto): Promise<string> {
     const payload = {

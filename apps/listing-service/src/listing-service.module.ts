@@ -38,5 +38,4 @@ import { ListingEntity } from '@app/common/database/entities/Listing'
   controllers: [ListingServiceController],
   providers: [ListingServiceService]
 })
-export class ListingServiceModule {
-}
+export class ListingServiceModule {}

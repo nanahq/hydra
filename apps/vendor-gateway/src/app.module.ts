@@ -1,6 +1,13 @@
 import { RmqModule } from '@app/common'
 import { QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
-import { DynamicModule, INestApplication, MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common'
+import {
+  DynamicModule,
+  INestApplication,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  ValidationPipe
+} from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
 import { AppMetadata } from 'app.config'

@@ -1,7 +1,13 @@
 import { RmqService } from '@app/common'
 import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
 import { Controller, UseFilters } from '@nestjs/common'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 import { ListingServiceService } from './listing-service.service'
 
 import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
@@ -12,8 +18,7 @@ export class ListingServiceController {
   constructor (
     private readonly listingService: ListingServiceService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.GET_LISTINGS)
   async getListings (

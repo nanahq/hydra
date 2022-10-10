@@ -5,5 +5,5 @@ export enum AvailableDate {
   THURSDAY = 'THURSDAY',
   FRIDAY = 'FRIDAY',
   SATURDAY = 'SATURDAY',
-  SUNDAY = 'SUNDAY'
+  SUNDAY = 'SUNDAY',
 }
