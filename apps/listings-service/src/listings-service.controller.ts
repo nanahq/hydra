@@ -5,6 +5,7 @@ import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/
 import { ListingsServiceService } from './listings-service.service'
 
 import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
+import { ListingEntity } from '@app/common/database/entities/Listing'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -16,10 +17,9 @@ export class ListingsServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTINGS)
-  async getAllListings (@Ctx() context: RmqContext): Promise<Object> {
+  async getAllListings (@Ctx() context: RmqContext): Promise<ListingEntity[]> {
     try {
-      return { name: 'Ahmad' }
-      // eslint-disable-next-line no-unreachable
+      return await this.listingService.getAllListings()
     } catch (error) {
       throw new RpcException(error)
     } finally {

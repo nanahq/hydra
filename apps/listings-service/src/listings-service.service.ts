@@ -10,8 +10,7 @@ export class ListingsServiceService {
   constructor (
     @InjectRepository(ListingEntity)
     private readonly listingRepository: Repository<ListingEntity>
-  ) {
-  }
+  ) {}
 
   async getAllListings (): Promise<ListingEntity[]> {
     const getRequest = await this.getListings()
@@ -37,7 +36,9 @@ export class ListingsServiceService {
   }
 
   private async getListings (): Promise<ListingEntity[] | null> {
-    return await this.listingRepository.createQueryBuilder('listings').getMany()
+    return await this.listingRepository
+      .createQueryBuilder('listings')
+      .getMany()
   }
 
   private async createListing (listing: ListingDto): Promise<string> {

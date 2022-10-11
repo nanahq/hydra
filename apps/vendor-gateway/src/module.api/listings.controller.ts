@@ -1,5 +1,15 @@
-import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
-import { Body, Controller, Get, HttpException, Inject, Post } from '@nestjs/common'
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE
+} from '@app/common/typings/QUEUE_MESSAGE'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Inject,
+  Post
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { ListingDto } from '@app/common/database/dto/listing.dto'

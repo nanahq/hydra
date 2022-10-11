@@ -1,5 +1,12 @@
 import { JwtModule } from '@nestjs/jwt'
-import { DynamicModule, INestApplication, MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common'
+import {
+  DynamicModule,
+  INestApplication,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  ValidationPipe
+} from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
 import { ThrottlerModule } from '@nestjs/throttler'
