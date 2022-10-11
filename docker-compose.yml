@@ -117,17 +117,17 @@ services:
       - /usr/src/app/node_modules
     networks:
       - app-tier
-  listing-service:
+  listings-service:
     build:
       context: .
-      dockerfile: ./apps/listing-service/Dockerfile
+      dockerfile: apps/listings-service/Dockerfile
       target: development
-    command: 'npm run start:dev listing-service'
+    command: 'npm run start:dev listings-service'
     env_file:
-      - ./apps/listing-service/.env
+      - apps/listings-service/.env
     depends_on:
-      - listing-db
-      - listing-gateway
+      - listings-db
+      - vendors-gateway
       - rabbitmq
     volumes:
       - '.:/usr/src/app'
@@ -178,14 +178,14 @@ services:
       - pg_data:/var/lib/postgresql
     networks:
       - app-tier
-  listing-db:
+  listings-db:
     image: bitnami/postgresql:14
     ports:
       - '5432'
     environment:
       - POSTGRESQL_USERNAME=root
       - POSTGRESQL_PASSWORD=root@123
-      - POSTGRESQL_DATABASE=listing
+      - POSTGRESQL_DATABASE=listings
     volumes:
       - pg_data:/var/lib/postgresql
     networks:

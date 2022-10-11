@@ -1,12 +1,5 @@
 import { JwtModule } from '@nestjs/jwt'
-import {
-  DynamicModule,
-  INestApplication,
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  ValidationPipe
-} from '@nestjs/common'
+import { DynamicModule, INestApplication, MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
 import { ThrottlerModule } from '@nestjs/throttler'
@@ -22,7 +15,7 @@ import { AuthController } from './module.api/auth.controller'
 import { AuthService } from './module.api/auth.service'
 import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
-import { ListingController } from './module.api/listing.controller'
+import { ListingsController } from './module.api/listings.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -60,6 +53,7 @@ export class AppModule implements NestModule {
           inject: [ConfigService]
         }),
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
@@ -68,7 +62,7 @@ export class AppModule implements NestModule {
         }),
         AppModule
       ],
-      controllers: [VendorController, AuthController, ListingController],
+      controllers: [VendorController, AuthController, ListingsController],
       providers: [
         AuthService,
         LocalStrategy,

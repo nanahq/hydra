@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import * as Joi from 'joi'
-import { ListingServiceController } from './listing-service.controller'
-import { ListingServiceService } from './listing-service.service'
+import { ListingsServiceController } from './listings-service.controller'
+import { ListingsServiceService } from './listings-service.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { RmqModule } from '@app/common'
 import { ListingEntity } from '@app/common/database/entities/Listing'
@@ -13,10 +13,10 @@ import { ListingEntity } from '@app/common/database/entities/Listing'
       isGlobal: true,
       validationSchema: Joi.object({
         RMQ_LISTING_QUEUE: Joi.string(),
-        RMQ_LISTING_API_QUEUE: Joi.string(),
+        RMQ_VENDORS_API_QUEUE: Joi.string(),
         RMQ_URI: Joi.string()
       }),
-      envFilePath: './apps/listing-service/.env'
+      envFilePath: './apps/listings-service/.env'
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -35,7 +35,7 @@ import { ListingEntity } from '@app/common/database/entities/Listing'
     TypeOrmModule.forFeature([ListingEntity]),
     RmqModule
   ],
-  controllers: [ListingServiceController],
-  providers: [ListingServiceService]
+  controllers: [ListingsServiceController],
+  providers: [ListingsServiceService]
 })
-export class ListingServiceModule {}
+export class ListingsServiceModule {}

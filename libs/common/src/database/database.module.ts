@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { UserEntity, VendorEntity, AdminEntity } from '@app/common'
+import { AdminEntity, UserEntity, VendorEntity } from '@app/common'
+import { ListingEntity } from '@app/common/database/entities/Listing'
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { UserEntity, VendorEntity, AdminEntity } from '@app/common'
         username: configService.get<string>('DB_USERNAME') as string,
         password: configService.get<string>('DB_PASSWORD') as string,
         database: configService.get<string>('DB_NAME') as string,
-        entities: [UserEntity, VendorEntity],
+        entities: [UserEntity, VendorEntity, ListingEntity],
         synchronize: configService.get<string>('env') === 'development'
       }),
       inject: [ConfigService]

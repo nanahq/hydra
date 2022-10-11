@@ -90,13 +90,13 @@
         "tsConfigPath": "apps/admin-service/tsconfig.app.json"
       }
     },
-    "listing-service": {
+    "listings-service": {
       "type": "application",
-      "root": "apps/listing-service",
+      "root": "apps/listings-service",
       "entryFile": "main",
-      "sourceRoot": "apps/listing-service/src",
+      "sourceRoot": "apps/listings-service/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/listing-service/tsconfig.app.json"
+        "tsConfigPath": "apps/listings-service/tsconfig.app.json"
       }
     }
   }

@@ -27,7 +27,7 @@ export enum QUEUE_MESSAGE {
   GET_ALL_VENDORS = 'get_all_vendors',
 
   // Listing
-  GET_LISTINGS = 'get_listings',
+  GET_ALL_LISTINGS = 'get_listings',
   CREATE_LISTING = 'create_listing',
 }
 
@@ -39,5 +39,5 @@ export enum QUEUE_SERVICE {
   VENDORS_API = 'VENDORS_API',
   ADMIN_API = 'ADMIN_API',
   ADMIN_SERVICE = 'ADMIN',
-  LISTING_SERVICE = 'LISTING',
+  LISTINGS_SERVICE = 'LISTINGS',
 }

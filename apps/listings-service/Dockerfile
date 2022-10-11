@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build vendors-service
+RUN npm run build listings-service
 
 FROM node:alpine as production
 
@@ -25,4 +25,4 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["node", "dist/apps/listing-service/main"]
+CMD ["node", "dist/apps/listings-service/main"]
