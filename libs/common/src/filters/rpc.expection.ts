@@ -1,11 +1,4 @@
-import {
-  ArgumentsHost,
-  Catch,
-  ExceptionFilter,
-  HttpException,
-  HttpStatus,
-  RpcExceptionFilter
-} from '@nestjs/common'
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, RpcExceptionFilter } from '@nestjs/common'
 import { Observable, throwError } from 'rxjs'
 import { RpcException } from '@nestjs/microservices'
 import { HttpAdapterHost } from '@nestjs/core'
@@ -58,12 +51,13 @@ export class FitHttpException implements ExceptionFilter {
     if (
       httpStatus === 400 &&
       // @ts-expect-error
-      exception.response !== undefined &&
-      // @ts-expect-error
       typeof exception.response === 'object'
     ) {
       // @ts-expect-error
-      errorMessage = exception.response.message
+      errorMessage = exception.response?.message
+      if (errorMessage === '' || errorMessage === null) {
+        errorMessage = exception.message
+      }
     }
 
     const responseBody = {
