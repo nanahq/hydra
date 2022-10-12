@@ -10,6 +10,9 @@ export class VendorDto {
   public lastName: string
 
   @IsNotEmpty()
+  public state: string
+
+  @IsNotEmpty()
   public businessPhoneNumber: string
 
   @IsNotEmpty()
