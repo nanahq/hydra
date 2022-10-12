@@ -1,11 +1,12 @@
 import {
+  ClientProxy,
   Ctx,
   MessagePattern,
   Payload,
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { Controller, UseFilters } from '@nestjs/common'
+import { Controller, Inject, UseFilters } from '@nestjs/common'
 
 import {
   loginUserRequest,
@@ -16,25 +17,36 @@ import {
   QUEUE_MESSAGE,
   ExceptionFilterRpc,
   ServicePayload,
-  ResponseWithStatus
+  ResponseWithStatus,
+  registerUserRequest,
+  QUEUE_SERVICE
 } from '@app/common'
 import { UsersService } from './users-service.service'
+import { lastValueFrom } from 'rxjs'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class UsersServiceController {
   constructor (
     private readonly usersService: UsersService,
-    private readonly rmqService: RmqService
+    private readonly rmqService: RmqService,
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy
   ) {}
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_USER)
   async registerNewUser (
-    @Payload() data: any,
+    @Payload() data: registerUserRequest,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.usersService.register(data)
+      const res = await this.usersService.register(data)
+      await lastValueFrom(
+          this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+            phoneNumber: data.phoneNumber
+          })
+      )
+      return res
     } catch (error) {
       throw new RpcException(error)
     } finally {

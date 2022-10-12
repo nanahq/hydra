@@ -1,18 +1,13 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common'
-import { ClientProxy } from '@nestjs/microservices'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
-import { lastValueFrom } from 'rxjs'
-import { nanoid } from 'nanoid'
 
 import * as bcrypt from 'bcrypt'
 
 import {
   FitRpcException,
   loginUserRequest,
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE,
   registerUserRequest,
   ResponseWithStatus,
   ServicePayload,
@@ -26,9 +21,7 @@ import {
 export class UsersService {
   constructor (
     @InjectRepository(UserEntity)
-    private readonly usersRepository: Repository<UserEntity>,
-    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
+    private readonly usersRepository: Repository<UserEntity>
   ) {}
 
   async register ({
@@ -53,19 +46,6 @@ export class UsersService {
       throw new FitRpcException(
         'Failed to create new user. please check your input',
         HttpStatus.BAD_REQUEST
-      )
-    }
-
-    try {
-      await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
-          phoneNumber
-        })
-      )
-    } catch (error) {
-      throw new FitRpcException(
-        'Something went wrong. Could not register you at the moment',
-        HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
 
@@ -139,6 +119,7 @@ export class UsersService {
         HttpStatus.UNAUTHORIZED
       )
     }
+    user.password = ''
     return user
   }
 
@@ -225,7 +206,6 @@ export class UsersService {
     return await this.usersRepository
       .createQueryBuilder()
       .delete()
-
       .where('id = :id', { id })
       .returning('id')
       .execute()
