@@ -42,9 +42,9 @@ export class UsersServiceController {
     try {
       const res = await this.usersService.register(data)
       await lastValueFrom(
-          this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
-            phoneNumber: data.phoneNumber
-          })
+        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+          phoneNumber: data.phoneNumber
+        })
       )
       return res
     } catch (error) {

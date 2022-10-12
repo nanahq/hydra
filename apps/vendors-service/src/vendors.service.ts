@@ -34,8 +34,8 @@ export class VendorsService {
 
     if (createVendorRequest === null) {
       throw new FitRpcException(
-        'Something went wrong. Could not register you at the moment',
-        HttpStatus.INTERNAL_SERVER_ERROR
+        'Failed to register you at this moment. please check your input values',
+        HttpStatus.BAD_REQUEST
       )
     }
     return { status: 1 }
@@ -64,6 +64,7 @@ export class VendorsService {
       )
     }
 
+    vendor.password = ''
     return vendor
   }
 
@@ -85,11 +86,12 @@ export class VendorsService {
 
     if (_vendor === null) {
       throw new FitRpcException(
-        'Provided user id is not found',
+        'Provided vendor id is not found',
         HttpStatus.UNAUTHORIZED
       )
     }
 
+    _vendor.password = ''
     return _vendor
   }
 
@@ -139,7 +141,7 @@ export class VendorsService {
     if (vendor !== null) {
       throw new FitRpcException(
         'Phone Number is  already registered.',
-        HttpStatus.BAD_GATEWAY
+        HttpStatus.BAD_REQUEST
       )
     }
   }
