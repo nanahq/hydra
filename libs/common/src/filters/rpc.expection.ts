@@ -1,10 +1,10 @@
 import {
-  Catch,
-  RpcExceptionFilter,
   ArgumentsHost,
-  HttpStatus,
+  Catch,
   ExceptionFilter,
-  HttpException
+  HttpException,
+  HttpStatus,
+  RpcExceptionFilter
 } from '@nestjs/common'
 import { Observable, throwError } from 'rxjs'
 import { RpcException } from '@nestjs/microservices'
@@ -54,11 +54,17 @@ export class FitHttpException implements ExceptionFilter {
         ? exception.status
         : HttpStatus.INTERNAL_SERVER_ERROR
 
+    let errorMessage = exception.message
+    if (httpStatus === 400) {
+      // @ts-expect-error
+      errorMessage = exception.response.message
+    }
+
     const responseBody = {
       statusCode: httpStatus,
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
-      message: exception.message
+      message: errorMessage
     }
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus)
