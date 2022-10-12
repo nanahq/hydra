@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
 import { lastValueFrom } from 'rxjs'
-import { nanoid } from 'nanoid'
 
 import * as bcrypt from 'bcrypt'
 
