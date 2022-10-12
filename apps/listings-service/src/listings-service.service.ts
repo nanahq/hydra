@@ -11,8 +11,7 @@ export class ListingsServiceService {
   constructor (
     @InjectRepository(ListingEntity)
     private readonly listingRepository: Repository<ListingEntity>
-  ) {
-  }
+  ) {}
 
   async getAllListings (): Promise<ListingEntity[]> {
     const getRequest = await this.getListings()
@@ -97,7 +96,10 @@ export class ListingsServiceService {
       .execute()
   }
 
-  private async createListing (vendorId: string, listing: ListingDto): Promise<string> {
+  private async createListing (
+    vendorId: string,
+    listing: ListingDto
+  ): Promise<string> {
     const query = await this.listingRepository
       .createQueryBuilder('listings')
       .insert()
@@ -111,7 +113,9 @@ export class ListingsServiceService {
     return query.identifiers[0].id as unknown as string
   }
 
-  private async updateListing (data: Partial<ListingEntity>): Promise<UpdateResult | null> {
+  private async updateListing (
+    data: Partial<ListingEntity>
+  ): Promise<UpdateResult | null> {
     const listingId = data.id
     delete data.id // remove ID to avoid changing it
     delete data.vendorId // remove vendor ID to avoid changing vendor

@@ -1,5 +1,18 @@
-import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common/typings/QUEUE_MESSAGE'
-import { Body, Controller, Delete, Get, HttpException, Inject, Param, Post, Put } from '@nestjs/common'
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE
+} from '@app/common/typings/QUEUE_MESSAGE'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  Post,
+  Put
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { ListingDto } from '@app/common/database/dto/listing.dto'
@@ -25,16 +38,16 @@ export class ListingsController {
   }
 
   @Get('get-one/:id')
-  async getVendor (
-    @Param('id') listingId: string
-  ): Promise<ListingEntity> {
+  async getVendor (@Param('id') listingId: string): Promise<ListingEntity> {
     console.log(listingId)
     return await lastValueFrom<ListingEntity>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_LISTING_INFO, { listingId }).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_LISTING_INFO, { listingId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -43,13 +56,11 @@ export class ListingsController {
     @Param('id') listingId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient
-        .send(QUEUE_MESSAGE.DELETE_LISTING, { listingId })
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.listingClient.send(QUEUE_MESSAGE.DELETE_LISTING, { listingId }).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 
