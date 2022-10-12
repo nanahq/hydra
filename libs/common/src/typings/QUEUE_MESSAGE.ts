@@ -28,7 +28,10 @@ export enum QUEUE_MESSAGE {
 
   // Listing
   GET_ALL_LISTINGS = 'get_listings',
+  GET_LISTING_INFO = 'get_listing_info',
+  DELETE_LISTING = 'delete_listing',
   CREATE_LISTING = 'create_listing',
+  UPDATE_LISTING = 'update_listing',
 }
 
 export enum QUEUE_SERVICE {
