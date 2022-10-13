@@ -36,7 +36,9 @@ export class ListingsServiceService {
     }
   }
 
-  async update (data: ServicePayload<Partial<ListingEntity>>): Promise<ResponseWithStatus> {
+  async update (
+    data: ServicePayload<Partial<ListingEntity>>
+  ): Promise<ResponseWithStatus> {
     const req = await this.updateListing(data)
 
     if (req === null) {
@@ -49,7 +51,10 @@ export class ListingsServiceService {
     return { status: 1 }
   }
 
-  async getListing (condition: { listingId: string, vendorId: string }): Promise<ListingEntity> {
+  async getListing (condition: {
+    listingId: string
+    vendorId: string
+  }): Promise<ListingEntity> {
     const _listing = await this.getListingById(condition)
 
     if (_listing === null) {
@@ -62,7 +67,10 @@ export class ListingsServiceService {
     return _listing
   }
 
-  async deleteListing (payload: { listingId: string, vendorId: string }): Promise<ResponseWithStatus> {
+  async deleteListing (payload: {
+    listingId: string
+    vendorId: string
+  }): Promise<ResponseWithStatus> {
     const deleteRequest = await this.deleteListingById(payload)
 
     if (deleteRequest === null) {
@@ -75,7 +83,10 @@ export class ListingsServiceService {
     return { status: 1 }
   }
 
-  private async getListingById (listing: { listingId: string, vendorId: string }): Promise<ListingEntity | null> {
+  private async getListingById (listing: {
+    listingId: string
+    vendorId: string
+  }): Promise<ListingEntity | null> {
     return await this.listingRepository
       .createQueryBuilder('listings')
       .where('listings.id = :id', { id: listing.listingId })
@@ -90,7 +101,10 @@ export class ListingsServiceService {
       .getMany()
   }
 
-  private async deleteListingById (payload: { listingId: string, vendorId: string }): Promise<DeleteResult | null> {
+  private async deleteListingById (payload: {
+    listingId: string
+    vendorId: string
+  }): Promise<DeleteResult | null> {
     return await this.listingRepository
       .createQueryBuilder('listings')
       .delete()
@@ -99,7 +113,9 @@ export class ListingsServiceService {
       .execute()
   }
 
-  private async createListing (payload: ServicePayload<ListingDto>): Promise<string> {
+  private async createListing (
+    payload: ServicePayload<ListingDto>
+  ): Promise<string> {
     const query = await this.listingRepository
       .createQueryBuilder('listings')
       .insert()
