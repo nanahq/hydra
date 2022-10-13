@@ -74,7 +74,6 @@ export class UsersServiceController {
       @Ctx() context: RmqContext
   ): Promise<UserEntity> {
     try {
-      this.rmqService.ack(context)
       return await this.usersService.validateUser(data)
     } catch (error) {
       throw new RpcException(error)
@@ -89,7 +88,6 @@ export class UsersServiceController {
       @Ctx() context: RmqContext
   ): Promise<UserEntity> {
     try {
-      this.rmqService.ack(context)
       return await this.usersService.getUser(data)
     } catch (error) {
       throw new RpcException(error)
@@ -104,7 +102,6 @@ export class UsersServiceController {
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      this.rmqService.ack(context)
       return await this.usersService.updateUserProfile(payload)
     } catch (error) {
       throw new RpcException(error)
