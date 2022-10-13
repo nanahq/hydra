@@ -4,7 +4,7 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm'
 import { ListingEntity } from '@app/common/database/entities/Listing'
 import { FitRpcException } from '@app/common/filters/rpc.expection'
 import { ListingDto } from '@app/common/database/dto/listing.dto'
-import { ResponseWithStatus } from '@app/common'
+import { ResponseWithStatus, ServicePayload } from '@app/common'
 
 @Injectable()
 export class ListingsServiceService {
@@ -13,8 +13,8 @@ export class ListingsServiceService {
     private readonly listingRepository: Repository<ListingEntity>
   ) {}
 
-  async getAllListings (): Promise<ListingEntity[]> {
-    const getRequest = await this.getListings()
+  async getAllListings (vendor: { vendorId: string }): Promise<ListingEntity[]> {
+    const getRequest = await this.getListings(vendor.vendorId)
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -25,9 +25,9 @@ export class ListingsServiceService {
     return getRequest
   }
 
-  async create (vendorId: string, data: ListingDto): Promise<string> {
+  async create (data: ServicePayload<ListingDto>): Promise<string> {
     try {
-      return await this.createListing(vendorId, data)
+      return await this.createListing(data)
     } catch (error) {
       throw new FitRpcException(
         'Something went wrong. Could not add listing at the moment',
@@ -36,7 +36,7 @@ export class ListingsServiceService {
     }
   }
 
-  async update (data: Partial<ListingEntity>): Promise<ResponseWithStatus> {
+  async update (data: ServicePayload<Partial<ListingEntity>>): Promise<ResponseWithStatus> {
     const req = await this.updateListing(data)
 
     if (req === null) {
@@ -49,8 +49,8 @@ export class ListingsServiceService {
     return { status: 1 }
   }
 
-  async getListing (condition: { listingId: string }): Promise<ListingEntity> {
-    const _listing = await this.getListingById(condition.listingId)
+  async getListing (condition: { listingId: string, vendorId: string }): Promise<ListingEntity> {
+    const _listing = await this.getListingById(condition)
 
     if (_listing === null) {
       throw new FitRpcException(
@@ -62,8 +62,8 @@ export class ListingsServiceService {
     return _listing
   }
 
-  async deleteListing (listingId: string): Promise<ResponseWithStatus> {
-    const deleteRequest = await this.deleteListingById(listingId)
+  async deleteListing (payload: { listingId: string, vendorId: string }): Promise<ResponseWithStatus> {
+    const deleteRequest = await this.deleteListingById(payload)
 
     if (deleteRequest === null) {
       throw new FitRpcException(
@@ -75,38 +75,38 @@ export class ListingsServiceService {
     return { status: 1 }
   }
 
-  private async getListingById (id: string): Promise<ListingEntity | null> {
+  private async getListingById (listing: { listingId: string, vendorId: string }): Promise<ListingEntity | null> {
     return await this.listingRepository
-      .createQueryBuilder('listing')
-      .where('id = :id', { id })
+      .createQueryBuilder('listings')
+      .where('listings.id = :id', { id: listing.listingId })
+      .andWhere('listings.vendorId = :vid', { vid: listing.vendorId })
       .getOne()
   }
 
-  private async getListings (): Promise<ListingEntity[] | null> {
+  private async getListings (vendorId: string): Promise<ListingEntity[] | null> {
     return await this.listingRepository
       .createQueryBuilder('listings')
+      .where('listings.vendorId = :id', { id: vendorId })
       .getMany()
   }
 
-  private async deleteListingById (id: string): Promise<DeleteResult | null> {
+  private async deleteListingById (payload: { listingId: string, vendorId: string }): Promise<DeleteResult | null> {
     return await this.listingRepository
-      .createQueryBuilder()
+      .createQueryBuilder('listings')
       .delete()
-      .where('id = :id', { id })
+      .where('id = :id', { id: payload.listingId })
+      .andWhere('vendorId = :vid', { vid: payload.vendorId })
       .execute()
   }
 
-  private async createListing (
-    vendorId: string,
-    listing: ListingDto
-  ): Promise<string> {
+  private async createListing (payload: ServicePayload<ListingDto>): Promise<string> {
     const query = await this.listingRepository
       .createQueryBuilder('listings')
       .insert()
       .into(ListingEntity)
       .values({
-        ...listing,
-        vendorId
+        ...payload.data,
+        vendorId: payload.userId
       })
       .returning('id')
       .execute()
@@ -114,19 +114,18 @@ export class ListingsServiceService {
   }
 
   private async updateListing (
-    data: Partial<ListingEntity>
+    payload: ServicePayload<Partial<ListingEntity>>
   ): Promise<UpdateResult | null> {
-    const listingId = data.id
-    delete data.id // remove ID to avoid changing it
-    delete data.vendorId // remove vendor ID to avoid changing vendor
+    const listingId = payload.data.id
+    delete payload.data.id // remove ID to avoid changing it
+    delete payload.data.vendorId // remove vendor ID to avoid changing vendor
 
     return await this.listingRepository
-      .createQueryBuilder()
+      .createQueryBuilder('listings')
       .update(ListingEntity)
-      .set({
-        ...data
-      })
+      .set({ ...payload.data })
       .where('id = :id', { id: listingId })
+      .andWhere('vendorId = :vid', { vid: payload.userId })
       .returning('id')
       .execute()
   }

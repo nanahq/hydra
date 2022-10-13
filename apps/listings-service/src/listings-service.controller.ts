@@ -1,13 +1,7 @@
-import { ResponseWithStatus, RmqService } from '@app/common'
+import { ResponseWithStatus, RmqService, ServicePayload } from '@app/common'
 import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
 import { Controller, UseFilters } from '@nestjs/common'
-import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException
-} from '@nestjs/microservices'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 import { ListingsServiceService } from './listings-service.service'
 
 import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
@@ -20,12 +14,16 @@ export class ListingsServiceController {
   constructor (
     private readonly listingService: ListingsServiceService,
     private readonly rmqService: RmqService
-  ) {}
+  ) {
+  }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTINGS)
-  async getAllListings (@Ctx() context: RmqContext): Promise<ListingEntity[]> {
+  async getAllListings (
+    @Ctx() context: RmqContext,
+      @Payload() vendorId: { vendorId: string }
+  ): Promise<ListingEntity[]> {
     try {
-      return await this.listingService.getAllListings()
+      return await this.listingService.getAllListings(vendorId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -49,11 +47,11 @@ export class ListingsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.DELETE_LISTING)
   async deleteListing (
-    @Payload() { listingId }: { listingId: string },
+    @Payload() payload: { listingId: string, vendorId: string },
       @Ctx() context: RmqContext
   ): Promise<{ status: number }> {
     try {
-      return await this.listingService.deleteListing(listingId)
+      return await this.listingService.deleteListing(payload)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -63,11 +61,11 @@ export class ListingsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_LISTING)
   async createListing (
-    @Payload() data: ListingDto,
+    @Payload() payload: ServicePayload<ListingDto>,
       @Ctx() context: RmqContext
   ): Promise<string> {
     try {
-      return await this.listingService.create('2', data)
+      return await this.listingService.create(payload)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -77,7 +75,7 @@ export class ListingsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_LISTING)
   async updateListing (
-    @Payload() data: Partial<ListingEntity>,
+    @Payload() data: ServicePayload<Partial<ListingEntity>>,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
