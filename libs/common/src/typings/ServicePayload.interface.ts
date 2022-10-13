@@ -1,4 +1,4 @@
 export interface ServicePayload<T> {
-  userId: string;
-  data: T;
+  userId: string
+  data: T
 }

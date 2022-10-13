@@ -1,9 +1,9 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm';
+import { HttpStatus, Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
 
-import { v4 as uuidv4 } from 'uuid';
-import * as bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid'
+import * as bcrypt from 'bcrypt'
 
 import {
   FitRpcException,
@@ -13,199 +13,199 @@ import {
   TokenPayload,
   updateVendorStatus,
   VendorDto,
-  VendorEntity,
-} from '@app/common';
+  VendorEntity
+} from '@app/common'
 
 @Injectable()
 export class VendorsService {
-  constructor(
+  constructor (
     @InjectRepository(VendorEntity)
-    private readonly vendorRepository: Repository<VendorEntity>,
+    private readonly vendorRepository: Repository<VendorEntity>
   ) {}
 
-  async register(data: VendorDto): Promise<ResponseWithStatus> {
-    await this.checkExistingVendor(data.businessPhoneNumber); // Validation gate to check if vendor with the requet phone is already exist
+  async register (data: VendorDto): Promise<ResponseWithStatus> {
+    await this.checkExistingVendor(data.businessPhoneNumber) // Validation gate to check if vendor with the requet phone is already exist
     const payload = {
       ...data,
       password: await bcrypt.hash(data.password, 10),
-      id: uuidv4(),
-    };
-    const createVendorRequest = await this.createVendor(payload);
+      id: uuidv4()
+    }
+    const createVendorRequest = await this.createVendor(payload)
 
     if (createVendorRequest === null) {
       throw new FitRpcException(
         'Something went wrong. Could not register you at the moment',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
-    return { status: 1 };
+    return { status: 1 }
   }
 
-  async validateVendor({
+  async validateVendor ({
     phoneNumber,
-    password,
+    password
   }: loginUserRequest): Promise<VendorEntity> {
-    const vendor = await this.getVendorByPhone(phoneNumber);
+    const vendor = await this.getVendorByPhone(phoneNumber)
     if (vendor === null) {
       throw new FitRpcException(
         'Provided phone number is not correct',
-        HttpStatus.UNAUTHORIZED,
-      );
+        HttpStatus.UNAUTHORIZED
+      )
     }
     const isCorrectPassword: boolean = await bcrypt.compare(
       password,
-      vendor.password,
-    );
+      vendor.password
+    )
 
     if (!isCorrectPassword) {
       throw new FitRpcException(
         'Provided Password is incorrect',
-        HttpStatus.UNAUTHORIZED,
-      );
+        HttpStatus.UNAUTHORIZED
+      )
     }
 
-    return vendor;
+    return vendor
   }
 
-  async updateVendorStatus(
-    data: updateVendorStatus,
+  async updateVendorStatus (
+    data: updateVendorStatus
   ): Promise<ResponseWithStatus> {
-    const updateRequest = await this.updateVendorApprovalStatus(data);
+    const updateRequest = await this.updateVendorApprovalStatus(data)
     if (updateRequest === null) {
       throw new FitRpcException(
         'Failed to update user. Incorrect input',
-        HttpStatus.BAD_REQUEST,
-      );
+        HttpStatus.BAD_REQUEST
+      )
     }
-    return { status: 1 };
+    return { status: 1 }
   }
 
-  async getVendor({ userId }: TokenPayload): Promise<VendorEntity> {
-    const _vendor = await this.getVendorById(userId);
+  async getVendor ({ userId }: TokenPayload): Promise<VendorEntity> {
+    const _vendor = await this.getVendorById(userId)
 
     if (_vendor === null) {
       throw new FitRpcException(
         'Provided user id is not found',
-        HttpStatus.UNAUTHORIZED,
-      );
+        HttpStatus.UNAUTHORIZED
+      )
     }
 
-    return _vendor;
+    return _vendor
   }
 
-  async updateVendorProfile({
+  async updateVendorProfile ({
     data,
-    userId,
+    userId
   }: ServicePayload<Partial<VendorEntity>>): Promise<ResponseWithStatus> {
-    const req = await this.updateProfile(data, userId);
+    const req = await this.updateProfile(data, userId)
 
     if (req === null) {
       throw new FitRpcException(
         'Failed to update vendor profile',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
     }
 
-    return { status: 1 };
+    return { status: 1 }
   }
 
-  async deleteVendorProfile(vendorId: string): Promise<ResponseWithStatus> {
-    const deleteRequest = await this.deleteVendor(vendorId);
+  async deleteVendorProfile (vendorId: string): Promise<ResponseWithStatus> {
+    const deleteRequest = await this.deleteVendor(vendorId)
 
     if (deleteRequest === null) {
       throw new FitRpcException(
         'Failed to delete vendor. Invalid ID',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
     }
 
-    return { status: 1 };
+    return { status: 1 }
   }
 
-  async getAllVendors(): Promise<VendorEntity[]> {
-    const getRequest = await this.getVendors();
+  async getAllVendors (): Promise<VendorEntity[]> {
+    const getRequest = await this.getVendors()
 
     if (getRequest === null) {
       throw new FitRpcException(
         'Something went wrong fetching all vendors.',
-        HttpStatus.BAD_REQUEST,
-      );
+        HttpStatus.BAD_REQUEST
+      )
     }
-    return getRequest;
+    return getRequest
   }
 
-  private async checkExistingVendor(phoneNumber: string): Promise<void> {
-    const vendor = await this.getVendorByPhone(phoneNumber);
+  private async checkExistingVendor (phoneNumber: string): Promise<void> {
+    const vendor = await this.getVendorByPhone(phoneNumber)
     if (vendor !== null) {
       throw new FitRpcException(
         'Phone Number is  already registered.',
-        HttpStatus.BAD_GATEWAY,
-      );
+        HttpStatus.BAD_GATEWAY
+      )
     }
   }
 
-  private async createVendor(vendor: VendorDto): Promise<InsertResult | null> {
+  private async createVendor (vendor: VendorDto): Promise<InsertResult | null> {
     return await this.vendorRepository
       .createQueryBuilder('vendor')
       .insert()
       .into(VendorEntity)
       .values({ ...vendor })
       .returning('id')
-      .execute();
+      .execute()
   }
 
-  private async getVendorByPhone(phone: string): Promise<VendorEntity | null> {
+  private async getVendorByPhone (phone: string): Promise<VendorEntity | null> {
     return await this.vendorRepository
       .createQueryBuilder('vendor')
       .where('vendor.businessPhoneNumber = :phone', { phone })
       .addSelect('vendor.password')
-      .getOne();
+      .getOne()
   }
 
-  private async getVendorById(id: string): Promise<VendorEntity | null> {
+  private async getVendorById (id: string): Promise<VendorEntity | null> {
     return await this.vendorRepository
       .createQueryBuilder('vendor')
       .where('vendor.id = :id', { id })
-      .getOne();
+      .getOne()
   }
 
-  private async updateVendorApprovalStatus(
-    payload: updateVendorStatus,
+  private async updateVendorApprovalStatus (
+    payload: updateVendorStatus
   ): Promise<UpdateResult | null> {
     return await this.vendorRepository
       .createQueryBuilder('vendor')
       .update(VendorEntity)
       .set({
-        approvalStatus: payload.status,
+        approvalStatus: payload.status
       })
       .where('vendor.id = :id', { id: payload.id })
-      .execute();
+      .execute()
   }
 
-  private async updateProfile(
+  private async updateProfile (
     data: Partial<VendorEntity>,
-    id: string,
+    id: string
   ): Promise<UpdateResult | null> {
     return await this.vendorRepository
       .createQueryBuilder()
       .update(VendorEntity)
       .set({
-        ...data,
+        ...data
       })
       .where('id = :id', { id })
       .returning('id')
-      .execute();
+      .execute()
   }
 
-  private async deleteVendor(id: string): Promise<DeleteResult | null> {
+  private async deleteVendor (id: string): Promise<DeleteResult | null> {
     return await this.vendorRepository
       .createQueryBuilder()
       .delete()
       .where('id = :id', { id })
-      .execute();
+      .execute()
   }
 
-  private async getVendors(): Promise<VendorEntity[] | null> {
-    return await this.vendorRepository.createQueryBuilder('vendor').getMany();
+  private async getVendors (): Promise<VendorEntity[] | null> {
+    return await this.vendorRepository.createQueryBuilder('vendor').getMany()
   }
 }

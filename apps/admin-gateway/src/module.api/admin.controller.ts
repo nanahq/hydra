@@ -7,13 +7,13 @@ import {
   Post,
   UseGuards,
   Put,
-  Delete,
-} from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { catchError, lastValueFrom } from 'rxjs';
+  Delete
+} from '@nestjs/common'
+import { ClientProxy } from '@nestjs/microservices'
+import { catchError, lastValueFrom } from 'rxjs'
 
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { CurrentUser } from './current-user.decorator';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+import { CurrentUser } from './current-user.decorator'
 
 import {
   QUEUE_MESSAGE,
@@ -24,80 +24,80 @@ import {
   AdminLevel,
   IRpcException,
   ResponseWithStatus,
-  RegisterAdminDTO,
-} from '@app/common';
+  RegisterAdminDTO
+} from '@app/common'
 
 @Controller('admin')
 export class AdminController {
-  constructor(
+  constructor (
     @Inject(QUEUE_SERVICE.ADMIN_SERVICE)
-    private readonly adminClient: ClientProxy,
+    private readonly adminClient: ClientProxy
   ) {}
 
   @Post('register')
-  async registerNewUser(
-    @Body() request: RegisterAdminDTO,
+  async registerNewUser (
+    @Body() request: RegisterAdminDTO
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<RegisterAdminDTO> = {
       userId: '',
-      data: request,
-    };
+      data: request
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.CREATE_ADMIN, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Put('update-profile')
-  async updateAdminProfile(
+  async updateAdminProfile (
     @Body() { level }: { level: string },
-    @CurrentUser() admin: AdminEntity,
+      @CurrentUser() admin: AdminEntity
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateAdminLevelRequestDto> = {
       userId: admin.id,
       data: {
         id: admin.id,
-        level: AdminLevel[level],
-      },
-    };
+        level: AdminLevel[level]
+      }
+    }
 
     return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.UPDATE_ADMIN_STATUS, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('delete-profile')
-  async deleteAdminProfile(
-    @CurrentUser() admin: AdminEntity,
+  async deleteAdminProfile (
+    @CurrentUser() admin: AdminEntity
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<null> = {
       userId: admin.id,
-      data: null,
-    };
+      data: null
+    }
 
     return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.DELETE_ADMIN, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getUserProfile(
-    @CurrentUser() admin: AdminEntity,
+  async getUserProfile (
+    @CurrentUser() admin: AdminEntity
   ): Promise<AdminEntity> {
-    return admin;
+    return admin
   }
 }

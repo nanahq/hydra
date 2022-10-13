@@ -1,42 +1,42 @@
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt'
 import {
   DynamicModule,
   INestApplication,
   MiddlewareConsumer,
   Module,
   NestModule,
-  ValidationPipe,
-} from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core';
-import { ThrottlerModule } from '@nestjs/throttler';
+  ValidationPipe
+} from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
+import { ThrottlerModule } from '@nestjs/throttler'
 
-import helmet from 'helmet';
-import * as cookieParser from 'cookie-parser';
-import * as Joi from 'joi';
+import helmet from 'helmet'
+import * as cookieParser from 'cookie-parser'
+import * as Joi from 'joi'
 
-import { AppMetadata } from 'app.config';
-import { FitHttpException, QUEUE_SERVICE, RmqModule } from '@app/common';
-import { VendorController } from './module.api/vendor.controller';
-import { AuthController } from './module.api/auth.controller';
-import { AuthService } from './module.api/auth.service';
-import { LocalStrategy } from './auth/strategy/local.strategy';
-import { JwtStrategy } from './auth/strategy/jwt.strategy';
-import { ListingsController } from './module.api/listings.controller';
+import { AppMetadata } from 'app.config'
+import { FitHttpException, QUEUE_SERVICE, RmqModule } from '@app/common'
+import { VendorController } from './module.api/vendor.controller'
+import { AuthController } from './module.api/auth.controller'
+import { AuthService } from './module.api/auth.service'
+import { LocalStrategy } from './auth/strategy/local.strategy'
+import { JwtStrategy } from './auth/strategy/jwt.strategy'
+import { ListingsController } from './module.api/listings.controller'
 
 @Module({})
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(cookieParser()).forRoutes('*');
+  configure (consumer: MiddlewareConsumer): void {
+    consumer.apply(cookieParser()).forRoutes('*')
   }
 
-  static async create(): Promise<INestApplication> {
-    const app = await NestFactory.create(this.forRoot());
-    this.configure(app);
-    return app;
+  static async create (): Promise<INestApplication> {
+    const app = await NestFactory.create(this.forRoot())
+    this.configure(app)
+    return app
   }
 
-  static forRoot(): DynamicModule {
+  static forRoot (): DynamicModule {
     return {
       module: AppModule,
       imports: [
@@ -44,9 +44,9 @@ export class AppModule implements NestModule {
           isGlobal: true,
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
-            JWT_EXPIRATION: Joi.string().required(),
+            JWT_EXPIRATION: Joi.string().required()
           }),
-          envFilePath: './apps/vendor-gateway/.env',
+          envFilePath: './apps/vendor-gateway/.env'
         }),
         JwtModule.registerAsync({
           useFactory: (configService: ConfigService) => ({
@@ -54,20 +54,20 @@ export class AppModule implements NestModule {
             signOptions: {
               expiresIn: `${
                 configService.get<string>('JWT_EXPIRATION') ?? ''
-              }s`,
-            },
+              }s`
+            }
           }),
-          inject: [ConfigService],
+          inject: [ConfigService]
         }),
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
-            limit: 10,
-          }),
+            limit: 10
+          })
         }),
-        AppModule,
+        AppModule
       ],
       controllers: [VendorController, AuthController, ListingsController],
       providers: [
@@ -76,14 +76,14 @@ export class AppModule implements NestModule {
         JwtStrategy,
         {
           provide: APP_FILTER,
-          useClass: FitHttpException,
+          useClass: FitHttpException
         },
         {
           provide: APP_GUARD,
-          useClass: ThrottlerModule,
-        },
-      ],
-    };
+          useClass: ThrottlerModule
+        }
+      ]
+    }
   }
 
   /**
@@ -91,11 +91,11 @@ export class AppModule implements NestModule {
    * @param app INestApplication
    * @returns  void
    */
-  static configure(app: INestApplication): void {
-    const version = this.getVersion();
-    app.use(helmet());
-    app.useGlobalPipes(new ValidationPipe());
-    app.setGlobalPrefix(`api/${version}`);
+  static configure (app: INestApplication): void {
+    const version = this.getVersion()
+    app.use(helmet())
+    app.useGlobalPipes(new ValidationPipe())
+    app.setGlobalPrefix(`api/${version}`)
   }
 
   /*
@@ -104,8 +104,8 @@ export class AppModule implements NestModule {
       */
 
   // TODO(@siradji) improve versioning
-  static getVersion(): string {
-    const { API_VERSION } = AppMetadata;
-    return API_VERSION;
+  static getVersion (): string {
+    const { API_VERSION } = AppMetadata
+    return API_VERSION
   }
 }

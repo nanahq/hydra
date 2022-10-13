@@ -1,12 +1,12 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
-import { RmqModule, UserEntity, QUEUE_SERVICE } from '@app/common';
-import { UsersServiceController } from './users-service.controller';
-import { UsersService } from './users-service.service';
+import { RmqModule, UserEntity, QUEUE_SERVICE } from '@app/common'
+import { UsersServiceController } from './users-service.controller'
+import { UsersService } from './users-service.service'
 
 @Module({
   imports: [
@@ -14,9 +14,9 @@ import { UsersService } from './users-service.service';
       isGlobal: true,
       validationSchema: Joi.object({
         RMQ_USERS_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string(),
+        RMQ_URI: Joi.string()
       }),
-      envFilePath: './apps/users-service/.env',
+      envFilePath: './apps/users-service/.env'
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -28,15 +28,15 @@ import { UsersService } from './users-service.service';
         password: configService.get<string>('DB_PASSWORD') as string,
         database: configService.get<string>('DB_NAME') as string,
         entities: [UserEntity],
-        synchronize: true,
+        synchronize: true
       }),
-      inject: [ConfigService],
+      inject: [ConfigService]
     }),
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([UserEntity])
   ],
   controllers: [UsersServiceController],
 
-  providers: [UsersService],
+  providers: [UsersService]
 })
 export class UsersServiceModule {}

@@ -3,9 +3,9 @@ import {
   MessagePattern,
   Payload,
   RmqContext,
-  RpcException,
-} from '@nestjs/microservices';
-import { Controller, UseFilters } from '@nestjs/common';
+  RpcException
+} from '@nestjs/microservices'
+import { Controller, UseFilters } from '@nestjs/common'
 
 import {
   loginUserRequest,
@@ -16,99 +16,99 @@ import {
   QUEUE_MESSAGE,
   ExceptionFilterRpc,
   ServicePayload,
-  ResponseWithStatus,
-} from '@app/common';
-import { UsersService } from './users-service.service';
+  ResponseWithStatus
+} from '@app/common'
+import { UsersService } from './users-service.service'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class UsersServiceController {
-  constructor(
+  constructor (
     private readonly usersService: UsersService,
-    private readonly rmqService: RmqService,
+    private readonly rmqService: RmqService
   ) {}
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_USER)
-  async registerNewUser(
+  async registerNewUser (
     @Payload() data: any,
-    @Ctx() context: RmqContext,
+      @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.usersService.register(data);
+      return await this.usersService.register(data)
     } catch (error) {
-      throw new RpcException(error);
+      throw new RpcException(error)
     } finally {
-      this.rmqService.ack(context);
+      this.rmqService.ack(context)
     }
   }
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_STATUS)
-  async updateUserStatus(
+  async updateUserStatus (
     @Payload() data: verifyPhoneRequest,
-    @Ctx() context: RmqContext,
+      @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.usersService.updateUserStatus(data);
+      return await this.usersService.updateUserStatus(data)
     } catch (error) {
-      throw new RpcException(error);
+      throw new RpcException(error)
     } finally {
-      this.rmqService.ack(context);
+      this.rmqService.ack(context)
     }
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_USER_LOCAL)
-  async getUserByPhone(
+  async getUserByPhone (
     @Payload() data: loginUserRequest,
-    @Ctx() context: RmqContext,
+      @Ctx() context: RmqContext
   ): Promise<UserEntity> {
     try {
-      return await this.usersService.validateUser(data);
+      return await this.usersService.validateUser(data)
     } catch (error) {
-      throw new RpcException(error);
+      throw new RpcException(error)
     } finally {
-      this.rmqService.ack(context);
+      this.rmqService.ack(context)
     }
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_USER_JWT)
-  async getUserById(
+  async getUserById (
     @Payload() data: TokenPayload,
-    @Ctx() context: RmqContext,
+      @Ctx() context: RmqContext
   ): Promise<UserEntity> {
     try {
-      return await this.usersService.getUser(data);
+      return await this.usersService.getUser(data)
     } catch (error) {
-      throw new RpcException(error);
+      throw new RpcException(error)
     } finally {
-      this.rmqService.ack(context);
+      this.rmqService.ack(context)
     }
   }
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_PROFILE)
-  async updateUserProfile(
+  async updateUserProfile (
     @Payload() payload: ServicePayload<Partial<UserEntity>>,
-    @Ctx() context: RmqContext,
+      @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.usersService.updateUserProfile(payload);
+      return await this.usersService.updateUserProfile(payload)
     } catch (error) {
-      throw new RpcException(error);
+      throw new RpcException(error)
     } finally {
-      this.rmqService.ack(context);
+      this.rmqService.ack(context)
     }
   }
 
   @MessagePattern(QUEUE_MESSAGE.DELETE_USER_PROFILE)
-  async deleteUserProfile(
+  async deleteUserProfile (
     @Payload() { userId }: ServicePayload<null>,
-    @Ctx() context: RmqContext,
+      @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.usersService.deleteUserProfile(userId);
+      return await this.usersService.deleteUserProfile(userId)
     } catch (error) {
-      throw new RpcException(error);
+      throw new RpcException(error)
     } finally {
-      this.rmqService.ack(context);
+      this.rmqService.ack(context)
     }
   }
 }
