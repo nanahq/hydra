@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as Joi from 'joi';
-import { ListingsServiceController } from './listings-service.controller';
-import { ListingsServiceService } from './listings-service.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { RmqModule } from '@app/common';
-import { ListingEntity } from '@app/common/database/entities/Listing';
+import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import * as Joi from 'joi'
+import { ListingsServiceController } from './listings-service.controller'
+import { ListingsServiceService } from './listings-service.service'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { RmqModule } from '@app/common'
+import { ListingEntity } from '@app/common/database/entities/Listing'
 
 @Module({
   imports: [
@@ -14,9 +14,9 @@ import { ListingEntity } from '@app/common/database/entities/Listing';
       validationSchema: Joi.object({
         RMQ_LISTING_QUEUE: Joi.string(),
         RMQ_VENDORS_API_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string(),
+        RMQ_URI: Joi.string()
       }),
-      envFilePath: './apps/listings-service/.env',
+      envFilePath: './apps/listings-service/.env'
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -28,14 +28,14 @@ import { ListingEntity } from '@app/common/database/entities/Listing';
         password: configService.get<string>('DB_PASSWORD') as string,
         database: configService.get<string>('DB_NAME') as string,
         entities: [ListingEntity],
-        synchronize: true,
+        synchronize: true
       }),
-      inject: [ConfigService],
+      inject: [ConfigService]
     }),
     TypeOrmModule.forFeature([ListingEntity]),
-    RmqModule,
+    RmqModule
   ],
   controllers: [ListingsServiceController],
-  providers: [ListingsServiceService],
+  providers: [ListingsServiceService]
 })
 export class ListingsServiceModule {}
