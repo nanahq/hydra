@@ -4,39 +4,39 @@ import {
   MiddlewareConsumer,
   Module,
   NestModule,
-  ValidationPipe
-} from '@nestjs/common'
-import { ThrottlerModule } from '@nestjs/throttler'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
+  ValidationPipe,
+} from '@nestjs/common';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core';
 
-import * as Joi from 'joi'
-import * as cookieParser from 'cookie-parser'
-import helmet from 'helmet'
+import * as Joi from 'joi';
+import * as cookieParser from 'cookie-parser';
+import helmet from 'helmet';
 
-import { JwtModule } from '@nestjs/jwt'
-import { AppMetadata } from 'app.config'
-import { AdminController } from './module.api/admin.controller'
-import { AuthController } from './module.api/auth.controller'
-import { AuthService } from './module.api/auth.service'
-import { LocalStrategy } from './auth/strategy/local.strategy'
-import { JwtStrategy } from './auth/strategy/jwt.strategy'
-import { RmqModule, FitHttpException, QUEUE_SERVICE } from '@app/common'
-import { VendorController } from './module.api/vendor.controller'
+import { JwtModule } from '@nestjs/jwt';
+import { AppMetadata } from 'app.config';
+import { AdminController } from './module.api/admin.controller';
+import { AuthController } from './module.api/auth.controller';
+import { AuthService } from './module.api/auth.service';
+import { LocalStrategy } from './auth/strategy/local.strategy';
+import { JwtStrategy } from './auth/strategy/jwt.strategy';
+import { RmqModule, FitHttpException, QUEUE_SERVICE } from '@app/common';
+import { VendorController } from './module.api/vendor.controller';
 
 @Module({})
 export class AppModule implements NestModule {
-  configure (consumer: MiddlewareConsumer): void {
-    consumer.apply(cookieParser()).forRoutes('*')
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(cookieParser()).forRoutes('*');
   }
 
-  static async create (): Promise<INestApplication> {
-    const app = await NestFactory.create(this.forRoot())
-    this.configure(app)
-    return app
+  static async create(): Promise<INestApplication> {
+    const app = await NestFactory.create(this.forRoot());
+    this.configure(app);
+    return app;
   }
 
-  static forRoot (): DynamicModule {
+  static forRoot(): DynamicModule {
     return {
       module: AppModule,
       imports: [
@@ -44,9 +44,9 @@ export class AppModule implements NestModule {
           isGlobal: true,
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
-            JWT_EXPIRATION: Joi.string().required()
+            JWT_EXPIRATION: Joi.string().required(),
           }),
-          envFilePath: './apps/admin-gateway/.env'
+          envFilePath: './apps/admin-gateway/.env',
         }),
         JwtModule.registerAsync({
           useFactory: (configService: ConfigService) => ({
@@ -54,14 +54,14 @@ export class AppModule implements NestModule {
             signOptions: {
               expiresIn: `${
                 configService.get<string>('JWT_EXPIRATION') ?? ''
-              }s`
-            }
+              }s`,
+            },
           }),
-          inject: [ConfigService]
+          inject: [ConfigService],
         }),
         RmqModule.register({ name: QUEUE_SERVICE.ADMIN_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
-        AppModule
+        AppModule,
       ],
       controllers: [AdminController, AuthController, VendorController],
       providers: [
@@ -70,14 +70,14 @@ export class AppModule implements NestModule {
         JwtStrategy,
         {
           provide: APP_FILTER,
-          useClass: FitHttpException
+          useClass: FitHttpException,
         },
         {
           provide: APP_GUARD,
-          useClass: ThrottlerModule
-        }
-      ]
-    }
+          useClass: ThrottlerModule,
+        },
+      ],
+    };
   }
 
   /**
@@ -85,11 +85,11 @@ export class AppModule implements NestModule {
    * @param app INestApplication
    * @returns  void
    */
-  static configure (app: INestApplication): void {
-    const version = this.getVersion()
-    app.use(helmet())
-    app.useGlobalPipes(new ValidationPipe())
-    app.setGlobalPrefix(`api/${version}`)
+  static configure(app: INestApplication): void {
+    const version = this.getVersion();
+    app.use(helmet());
+    app.useGlobalPipes(new ValidationPipe());
+    app.setGlobalPrefix(`api/${version}`);
   }
 
   /*
@@ -98,8 +98,8 @@ export class AppModule implements NestModule {
       */
 
   // TODO(@siradji) improve versioning
-  static getVersion (): string {
-    const { API_VERSION } = AppMetadata
-    return API_VERSION
+  static getVersion(): string {
+    const { API_VERSION } = AppMetadata;
+    return API_VERSION;
   }
 }

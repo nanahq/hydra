@@ -1,7 +1,7 @@
 import {
   QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
+  QUEUE_SERVICE,
+} from '@app/common/typings/QUEUE_MESSAGE';
 import {
   Body,
   Controller,
@@ -12,123 +12,125 @@ import {
   Param,
   Post,
   Put,
-  UseGuards
-} from '@nestjs/common'
-import { ClientProxy } from '@nestjs/microservices'
-import { catchError, lastValueFrom } from 'rxjs'
-import { ListingDto } from '@app/common/database/dto/listing.dto'
+  UseGuards,
+} from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { catchError, lastValueFrom } from 'rxjs';
+import { ListingDto } from '@app/common/database/dto/listing.dto';
 import {
   IRpcException,
   ResponseWithStatus,
   ServicePayload,
-  VendorEntity
-} from '@app/common'
-import { ListingEntity } from '@app/common/database/entities/Listing'
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { CurrentUser } from '../../../admin-gateway/src/module.api/current-user.decorator'
+  VendorEntity,
+} from '@app/common';
+import { ListingEntity } from '@app/common/database/entities/Listing';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { CurrentUser } from '../../../admin-gateway/src/module.api/current-user.decorator';
 
-@Controller('/listings')
+@Controller('listings')
 export class ListingsController {
-  constructor (
+  constructor(
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
-    private readonly listingClient: ClientProxy
+    private readonly listingClient: ClientProxy,
   ) {}
 
-  @Get('/')
+  @Get('get-listings')
   @UseGuards(JwtAuthGuard)
-  async getAllListings (@CurrentUser() vendor: VendorEntity): Promise<any> {
-    return await lastValueFrom(
-      this.listingClient
-        .send(QUEUE_MESSAGE.GET_ALL_LISTINGS, { vendorId: vendor.id })
-        .pipe(
-          catchError((error) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
-    )
+  async getAllListings(
+    @CurrentUser() vendor: VendorEntity,
+  ): Promise<ResponseWithStatus> {
+    const payload: ServicePayload<null> = {
+      userId: vendor.id,
+      data: null,
+    };
+    return await lastValueFrom<ResponseWithStatus>(
+      this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTINGS, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 
   @Get('get-one/:id')
   @UseGuards(JwtAuthGuard)
-  async getVendor (
+  async getVendor(
     @Param('id') listingId: string,
-      @CurrentUser() vendor: VendorEntity
+    @CurrentUser() vendor: VendorEntity,
   ): Promise<ListingEntity> {
-    const payload = {
-      listingId,
-      vendorId: vendor.id
-    }
+    const payload: ServicePayload<{ listingId: string }> = {
+      userId: vendor.id,
+      data: { listingId },
+    };
 
     return await lastValueFrom<ListingEntity>(
       this.listingClient.send(QUEUE_MESSAGE.GET_LISTING_INFO, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 
-  @Delete('delete/:id')
+  @Delete('delete-listing/:id')
   @UseGuards(JwtAuthGuard)
-  async deleteVendorProfile (
+  async deleteVendorProfile(
     @Param('id') listingId: string,
-      @CurrentUser() vendor: VendorEntity
+    @CurrentUser() vendor: VendorEntity,
   ): Promise<ResponseWithStatus> {
-    const payload = {
-      listingId,
-      vendorId: vendor.id
-    }
+    const payload: ServicePayload<{ listingId: string }> = {
+      data: { listingId },
+      userId: vendor.id,
+    };
 
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient.send(QUEUE_MESSAGE.DELETE_LISTING, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 
-  @Post('/create')
+  @Post('create')
   @UseGuards(JwtAuthGuard)
-  async createListing (
+  async createListing(
     @Body() request: ListingDto,
-      @CurrentUser() vendor: VendorEntity
-  ): Promise<any> {
+    @CurrentUser() vendor: VendorEntity,
+  ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<ListingDto> = {
       userId: vendor.id,
-      data: request
-    }
+      data: request,
+    };
 
     return await lastValueFrom(
-      this.listingClient
-        .send(QUEUE_MESSAGE.CREATE_LISTING, { ...payload })
-        .pipe(
-          catchError((error) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
-    )
+      this.listingClient.send(QUEUE_MESSAGE.CREATE_LISTING, payload).pipe(
+        catchError((error) => {
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 
-  @Put('update/:id')
+  @Put('update-listing/:id')
   @UseGuards(JwtAuthGuard)
-  async updateVendorProfile (
+  async updateVendorProfile(
     @Param('id') listingId: string,
-      @Body() listing: Partial<ListingEntity>,
-      @CurrentUser() vendor: VendorEntity
+    @Body() listing: Partial<ListingEntity>,
+    @CurrentUser() vendor: VendorEntity,
   ): Promise<ResponseWithStatus> {
-    listing.id = listingId
+    listing.id = listingId;
     const payload: ServicePayload<Partial<ListingEntity>> = {
       userId: vendor.id,
-      data: listing
-    }
+      data: listing,
+    };
 
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient.send(QUEUE_MESSAGE.UPDATE_LISTING, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 }

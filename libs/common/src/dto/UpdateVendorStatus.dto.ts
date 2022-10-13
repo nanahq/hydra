@@ -1,11 +1,11 @@
-import { IsNotEmpty, IsEnum } from 'class-validator'
-import { VendorApprovalStatusEnum } from '@app/common/typings/VendorApprovalStatus.enum'
+import { IsNotEmpty, IsEnum } from 'class-validator';
+import { VendorApprovalStatusEnum } from '@app/common/typings/VendorApprovalStatus.enum';
 
 export class updateVendorStatus {
   @IsNotEmpty()
-    id: string
+  id: string;
 
   @IsEnum(VendorApprovalStatusEnum)
   @IsNotEmpty()
-    status: string
+  status: string;
 }

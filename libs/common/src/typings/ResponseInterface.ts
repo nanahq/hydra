@@ -1,3 +1,3 @@
 export interface ResponseWithStatus {
-  status: 0 | 1
+  status: 0 | 1;
 }

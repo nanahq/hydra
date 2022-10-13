@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { TypeOrmModule } from '@nestjs/typeorm'
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AdminEntity, UserEntity, VendorEntity } from '@app/common'
-import { ListingEntity } from '@app/common/database/entities/Listing'
+import { AdminEntity, UserEntity, VendorEntity } from '@app/common';
+import { ListingEntity } from '@app/common/database/entities/Listing';
 
 @Module({
   imports: [
@@ -17,9 +17,9 @@ import { ListingEntity } from '@app/common/database/entities/Listing'
         password: configService.get<string>('DB_PASSWORD') as string,
         database: configService.get<string>('DB_NAME') as string,
         entities: [UserEntity, VendorEntity, ListingEntity],
-        synchronize: configService.get<string>('env') === 'development'
+        synchronize: configService.get<string>('env') === 'development',
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -31,9 +31,9 @@ import { ListingEntity } from '@app/common/database/entities/Listing'
         password: configService.get<string>('DB_PASSWORD') as string,
         database: configService.get<string>('DB_NAME') as string,
         entities: [UserEntity],
-        synchronize: configService.get<string>('env') === 'development'
+        synchronize: configService.get<string>('env') === 'development',
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -45,10 +45,10 @@ import { ListingEntity } from '@app/common/database/entities/Listing'
         password: configService.get<string>('DB_PASSWORD') as string,
         database: configService.get<string>('DB_NAME') as string,
         entities: [AdminEntity],
-        synchronize: configService.get<string>('env') === 'development'
+        synchronize: configService.get<string>('env') === 'development',
       }),
-      inject: [ConfigService]
-    })
-  ]
+      inject: [ConfigService],
+    }),
+  ],
 })
 export class DatabaseModule {}
