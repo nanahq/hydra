@@ -1,7 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
-import { v4 as uuidv4 } from 'uuid'
 
 import * as bcrypt from 'bcrypt'
 
@@ -31,7 +30,6 @@ export class UsersService {
     await this.checkExistingUser(phoneNumber)
 
     const payload = {
-      id: uuidv4(),
       phoneNumber,
       password: await bcrypt.hash(password, 10),
       firstName: '',

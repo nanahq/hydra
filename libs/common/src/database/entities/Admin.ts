@@ -3,14 +3,14 @@ import {
   DeleteDateColumn,
   UpdateDateColumn,
   Entity,
-  PrimaryColumn,
-  Column
+  Column,
+  PrimaryGeneratedColumn
 } from 'typeorm'
 import { AdminLevel } from '@app/common/typings/AdminLevel.enum'
 
 @Entity('admin')
 export class AdminEntity {
-  @PrimaryColumn({ type: 'text' })
+  @PrimaryGeneratedColumn('uuid')
   public id: string
 
   @Column()

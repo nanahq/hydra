@@ -2,18 +2,17 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
 
-import { v4 as uuidv4 } from 'uuid'
 import * as bcrypt from 'bcrypt'
 
 import {
-  loginUserRequest,
-  TokenPayload,
   FitRpcException,
-  VendorDto,
-  VendorEntity,
-  updateVendorStatus,
+  loginUserRequest,
+  ResponseWithStatus,
   ServicePayload,
-  ResponseWithStatus
+  TokenPayload,
+  updateVendorStatus,
+  VendorDto,
+  VendorEntity
 } from '@app/common'
 
 @Injectable()
@@ -27,8 +26,7 @@ export class VendorsService {
     await this.checkExistingVendor(data.businessPhoneNumber) // Validation gate to check if vendor with the requet phone is already exist
     const payload = {
       ...data,
-      password: await bcrypt.hash(data.password, 10),
-      id: uuidv4()
+      password: await bcrypt.hash(data.password, 10)
     }
     const createVendorRequest = await this.createVendor(payload)
 
@@ -160,6 +158,7 @@ export class VendorsService {
     return await this.vendorRepository
       .createQueryBuilder('vendor')
       .where('vendor.businessPhoneNumber = :phone', { phone })
+      .addSelect('vendor.password')
       .getOne()
   }
 

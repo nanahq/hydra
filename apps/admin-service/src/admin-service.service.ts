@@ -4,7 +4,6 @@ import { AdminEntity } from '@app/common/database/entities/Admin'
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
 import { RegisterAdminDTO } from '@app/common/dto/registerAdminDTO.dto'
 import * as bcrypt from 'bcrypt'
-import { v4 as uuidv4 } from 'uuid'
 import { FitRpcException } from '@app/common/filters/rpc.expection'
 import { UpdateAdminLevelRequestDto } from '@app/common/dto/updateAdminLevelRequest.dto'
 import { ResponseWithStatus } from '@app/common'
@@ -21,8 +20,7 @@ export class AdminServiceService {
   ): Promise<ResponseWithStatus> {
     const payload = {
       ...data,
-      password: await bcrypt.hash(data.password, 10),
-      id: uuidv4()
+      password: await bcrypt.hash(data.password, 10)
     }
 
     const createAdminRequest = await this.create(payload)
