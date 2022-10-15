@@ -1,6 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
-import { CustomOptions } from '@app/common/typings/Custom.Interface'
+import { ListingOptionEntity } from '@app/common/database/entities/ListingOption'
 
 @Entity({ name: 'listings' })
 export class ListingEntity {
@@ -22,8 +22,18 @@ export class ListingEntity {
   @Column({ type: 'enum', enum: AvailableDate })
     listingAvailableDate: AvailableDate
 
-  @Column({ type: 'simple-array', nullable: true })
-    customisableOptions: CustomOptions[]
+  @OneToMany(
+    () => ListingOptionEntity,
+    (ListingOptionEntity) => ListingOptionEntity.listing,
+    {
+      eager: true,
+      nullable: true,
+      cascade: ['insert', 'update'],
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+    }
+  )
+    customisableOptions: ListingOptionEntity[]
 
   @Column({ type: 'boolean', default: false })
     isOnDemand: boolean

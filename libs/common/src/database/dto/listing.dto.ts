@@ -8,6 +8,7 @@ import {
   MinLength
 } from 'class-validator'
 import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
+import { CustomisationOptionTypeEnum } from '@app/common/typings/CustomisationOptionType.enum'
 
 export class ListingDto {
   @IsNotEmpty()
@@ -30,4 +31,22 @@ export class ListingDto {
   @IsOptional()
   @IsArray()
   public listingPhoto: string[]
+
+  @IsArray()
+  @IsOptional()
+  public customisableOptions: ListingOptionEntityDto[]
+}
+
+export class ListingOptionEntityDto {
+  @IsNotEmpty()
+  @IsString()
+  public optionName: string
+
+  @IsNotEmpty()
+  @IsString()
+  public optionCost: string
+
+  @IsNotEmpty()
+  @IsEnum(CustomisationOptionTypeEnum)
+  public optionType: CustomisationOptionTypeEnum
 }
