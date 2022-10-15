@@ -6,6 +6,7 @@ import { RegisterAdminDTO } from '@app/common/dto/registerAdminDTO.dto'
 import * as bcrypt from 'bcrypt'
 import { FitRpcException } from '@app/common/filters/rpc.expection'
 import { UpdateAdminLevelRequestDto } from '@app/common/dto/updateAdminLevelRequest.dto'
+import { ResponseWithStatus } from '@app/common'
 
 @Injectable()
 export class AdminServiceService {
@@ -14,7 +15,9 @@ export class AdminServiceService {
     private readonly adminRepository: Repository<AdminEntity>
   ) {}
 
-  public async createAdmin (data: RegisterAdminDTO): Promise<{ status: 1 }> {
+  public async createAdmin (
+    data: RegisterAdminDTO
+  ): Promise<ResponseWithStatus> {
     const payload = {
       ...data,
       password: await bcrypt.hash(data.password, 10)
@@ -40,9 +43,10 @@ export class AdminServiceService {
     password: string
   }): Promise<AdminEntity> {
     const adminRequest = await this.getAdminByUserName(userName)
+
     if (adminRequest === null) {
       throw new FitRpcException(
-        'Provided username is not correct',
+        'Provided username is incorrect',
         HttpStatus.UNAUTHORIZED
       )
     }
@@ -65,6 +69,7 @@ export class AdminServiceService {
 
   public async validateAdminWithId (id: string): Promise<AdminEntity> {
     const getAdminByIdRequest = await this.getAdminById(id)
+
     if (getAdminByIdRequest === null) {
       throw new FitRpcException(
         'Can not find Admin with the provided ID',
@@ -77,7 +82,7 @@ export class AdminServiceService {
 
   public async changeAdminAccess (
     data: UpdateAdminLevelRequestDto
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
     const changeAdminAccessRequest = await this.updateAdminLevel(data)
 
     if (changeAdminAccessRequest === null) {
@@ -90,7 +95,7 @@ export class AdminServiceService {
     return { status: 1 }
   }
 
-  public async deleteAdminProfile (id: string): Promise<{ status: 1 }> {
+  public async deleteAdminProfile (id: string): Promise<ResponseWithStatus> {
     const deleteRequest = await this.deleteAdmin(id)
 
     if (deleteRequest === null) {
