@@ -24,11 +24,12 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
+    "test:ci": "jest --ci --coverage --forceExit --maxWorkers=4",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/eatlater/test/jest-e2e.json",
-    "all:build": "lerna run build",
+    "all:build": "npm run build users-service && npm run build nofication-service && npm run build vendors-service && npm run build admin-service && npm run build listings-service",
     "all:version": "lerna version $1 --yes --no-push --no-git-tag-version --exact"
   },
   "dependencies": {
@@ -96,5 +97,8 @@
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.1.0",
     "typescript": "^4.3.5"
-  }
+  },
+  "workspaces": [
+    "apps/**"
+  ]
 }
