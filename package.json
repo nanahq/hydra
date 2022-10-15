@@ -24,7 +24,7 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
-    "test:ci": "jest --ci --coverage --forceExit --maxWorkers=4",
+    "ci:test": "jest --ci --coverage --forceExit --maxWorkers=4",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
