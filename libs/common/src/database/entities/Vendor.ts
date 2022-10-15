@@ -3,7 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
 
@@ -11,7 +11,7 @@ import { VendorApprovalStatusEnum } from '@app/common/typings/VendorApprovalStat
 
 @Entity('vendor')
 export class VendorEntity {
-  @PrimaryColumn({ type: 'text' })
+  @PrimaryGeneratedColumn('uuid')
   public id: string
 
   @Column({ type: 'text', select: false })

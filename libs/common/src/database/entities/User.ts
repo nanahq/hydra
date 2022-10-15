@@ -3,13 +3,13 @@ import {
   DeleteDateColumn,
   UpdateDateColumn,
   Entity,
-  PrimaryColumn,
-  Column
+  Column,
+  PrimaryGeneratedColumn
 } from 'typeorm'
 
 @Entity({ name: 'users' })
 export class UserEntity {
-  @PrimaryColumn({ type: 'text' })
+  @PrimaryGeneratedColumn('uuid')
   public id: string
 
   @Column()
