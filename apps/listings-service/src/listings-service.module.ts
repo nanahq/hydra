@@ -6,6 +6,7 @@ import { ListingsServiceService } from './listings-service.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { RmqModule } from '@app/common'
 import { ListingEntity } from '@app/common/database/entities/Listing'
+import { ListingOptionEntity } from '@app/common/database/entities/ListingOption'
 
 @Module({
   imports: [
@@ -27,12 +28,12 @@ import { ListingEntity } from '@app/common/database/entities/Listing'
         username: configService.get<string>('DB_USERNAME') as string,
         password: configService.get<string>('DB_PASSWORD') as string,
         database: configService.get<string>('DB_NAME') as string,
-        entities: [ListingEntity],
+        entities: [ListingEntity, ListingOptionEntity],
         synchronize: true
       }),
       inject: [ConfigService]
     }),
-    TypeOrmModule.forFeature([ListingEntity]),
+    TypeOrmModule.forFeature([ListingEntity, ListingOptionEntity]),
     RmqModule
   ],
   controllers: [ListingsServiceController],

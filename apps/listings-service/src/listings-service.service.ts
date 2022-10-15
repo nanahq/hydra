@@ -1,16 +1,20 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
+import { DeleteResult, Repository } from 'typeorm'
 import { ListingEntity } from '@app/common/database/entities/Listing'
 import { FitRpcException } from '@app/common/filters/rpc.expection'
 import { ListingDto } from '@app/common/database/dto/listing.dto'
 import { ResponseWithStatus, ServicePayload } from '@app/common'
+import { ListingOptionEntity } from '@app/common/database/entities/ListingOption'
+import { RpcException } from '@nestjs/microservices'
 
 @Injectable()
 export class ListingsServiceService {
   constructor (
     @InjectRepository(ListingEntity)
-    private readonly listingRepository: Repository<ListingEntity>
+    private readonly listingRepository: Repository<ListingEntity>,
+    @InjectRepository(ListingOptionEntity)
+    private readonly optionRepo: Repository<ListingOptionEntity>
   ) {}
 
   async getAllListings (vendorId: string): Promise<ListingEntity[]> {
@@ -89,6 +93,7 @@ export class ListingsServiceService {
   }): Promise<ListingEntity | null> {
     return await this.listingRepository
       .createQueryBuilder('listings')
+      .leftJoinAndSelect('listings.customisableOptions', 'customisableOptions')
       .where('listings.id = :id', { id: listing.listingId })
       .andWhere('listings.vendorId = :vid', { vid: listing.vendorId })
       .getOne()
@@ -97,6 +102,7 @@ export class ListingsServiceService {
   private async getListings (vendorId: string): Promise<ListingEntity[] | null> {
     return await this.listingRepository
       .createQueryBuilder('listings')
+      .leftJoinAndSelect('listings.customisableOptions', 'options')
       .where('listings.vendorId = :id', { id: vendorId })
       .getMany()
   }
@@ -113,34 +119,25 @@ export class ListingsServiceService {
   }
 
   private async createListing (
-    payload: ServicePayload<ListingDto>
-  ): Promise<InsertResult | null> {
-    return await this.listingRepository
-      .createQueryBuilder('listings')
-      .insert()
-      .into(ListingEntity)
-      .values({
-        ...payload.data,
-        vendorId: payload.userId
-      })
-      .returning('id')
-      .execute()
+    payload: ServicePayload<any>
+  ): Promise<ListingEntity[] | null> {
+    return await this.listingRepository.save<ListingEntity>({
+      ...payload.data,
+      vendorId: payload.userId
+    })
   }
 
   private async updateListing (
     payload: ServicePayload<Partial<ListingEntity>>
-  ): Promise<UpdateResult | null> {
-    const listingId = payload.data.id
-    delete payload.data.id // remove ID to avoid changing it
+  ): Promise<ListingEntity | null> {
     delete payload.data.vendorId // remove vendor ID to avoid changing vendor
-
-    return await this.listingRepository
-      .createQueryBuilder('listings')
-      .update(ListingEntity)
-      .set({ ...payload.data })
-      .where('id = :id', { id: listingId })
-      .andWhere('vendorId = :vid', { vid: payload.userId })
-      .returning('id')
-      .execute()
+    try {
+      const preLoadedEntity = (await this.listingRepository.preload(
+        payload.data
+      )) as ListingEntity
+      return await this.listingRepository.save<ListingEntity>(preLoadedEntity)
+    } catch (error) {
+      throw new RpcException(error)
+    }
   }
 }
