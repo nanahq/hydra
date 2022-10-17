@@ -60,7 +60,7 @@ jobs:
           cache: 'npm'
 
       - run: npm ci
-      - run: npx --no-install eslint .
+      - run: npx --no-install eslint "{src,apps,libs,test}/**/*.ts"
 
   docker-buildx:
     name: Docker Buildx
@@ -68,7 +68,7 @@ jobs:
     strategy:
       matrix:
         platform: [ linux/amd64 ]
-        app: [ users-service, notification-service, vendors-service, admin-service, listings-service ]
+        app: [ users-service, notification-service, vendors-service, admin-service, listings-service, admin-gateway, api-gateway, vendor-gateway ]
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@e81a89b1732b9c48d79cd809d8d81d79c4647a18
@@ -82,4 +82,4 @@ jobs:
           push: false
           build-args: APP=${{ matrix.app }}
           platforms: ${{ matrix.platform }}
-          tags: ghcr.io/imagyneTech/eatlater/${{ matrix.app }}:latest
+          tags: ghcr.io/imagyne/eatlater-${{ matrix.app }}:latest
