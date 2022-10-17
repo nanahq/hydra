@@ -133,6 +133,18 @@ export class VendorsService {
     }
     return getRequest
   }
+  async getAllVendorsUser (): Promise<VendorEntity[]> {
+    const getRequest = await this.getVendorsUsers()
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all vendors.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return getRequest
+  }
 
   private async checkExistingVendor (phoneNumber: string): Promise<void> {
     const vendor = await this.getVendorByPhone(phoneNumber)
@@ -207,5 +219,11 @@ export class VendorsService {
 
   private async getVendors (): Promise<VendorEntity[] | null> {
     return await this.vendorRepository.createQueryBuilder('vendor').getMany()
+  }
+
+  private async getVendorsUsers (): Promise<VendorEntity[] | null> {
+    return await this.vendorRepository.createQueryBuilder('vendor')
+        .select(['vendor.id', 'vendor.state', 'vendor.businessName'])
+        .getMany()
   }
 }

@@ -9,7 +9,7 @@ import {
   Put,
   UseGuards
 } from '@nestjs/common'
-import { QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus } from '@app/common'
+import { QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus, ServicePayload } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { VendorEntity } from '@app/common/database/entities/Vendor'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -39,8 +39,12 @@ export class VendorController {
   @UseGuards(JwtAuthGuard)
   @Get('get-one/:id')
   async getVendor (@Param('id') vendorId: string): Promise<VendorEntity> {
+    const payload: ServicePayload<string> = {
+      userId: '',
+      data: vendorId
+    }
     return await lastValueFrom<VendorEntity>(
-      this.vendorsClient.send(QUEUE_MESSAGE.GET_VENDOR, { vendorId }).pipe(
+      this.vendorsClient.send(QUEUE_MESSAGE.GET_VENDOR, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

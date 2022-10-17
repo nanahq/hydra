@@ -25,7 +25,8 @@ export enum QUEUE_MESSAGE {
   DELETE_USER_PROFILE = 'delete_user_profile',
   DELETE_VENDOR_PROFILE = 'delete_vendor_profile',
   GET_ALL_VENDORS = 'get_all_vendors',
-
+  GET_VENDOR_WITH_LISTING='get_vendor_with_listing',
+  GET_ALL_VENDORS_USERS = 'get_vendors_user',
   // Listing
   GET_ALL_LISTINGS = 'get_listings',
   GET_LISTING_INFO = 'get_listing_info',
