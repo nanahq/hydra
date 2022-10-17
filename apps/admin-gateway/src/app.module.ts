@@ -23,6 +23,7 @@ import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
 import { RmqModule, FitHttpException, QUEUE_SERVICE } from '@app/common'
 import { VendorController } from './module.api/vendor.controller'
+import { ListingController } from './module.api/listing.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -61,9 +62,10 @@ export class AppModule implements NestModule {
         }),
         RmqModule.register({ name: QUEUE_SERVICE.ADMIN_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         AppModule
       ],
-      controllers: [AdminController, AuthController, VendorController],
+      controllers: [AdminController, AuthController, VendorController, ListingController],
       providers: [
         AuthService,
         LocalStrategy,
