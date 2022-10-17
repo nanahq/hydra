@@ -101,7 +101,7 @@ export class VendorsController {
   async deleteVendorProfile (
     @Payload() data: ServicePayload<null>,
       @Ctx() context: RmqContext
-  ): Promise<{ status: number }> {
+  ): Promise<ResponseWithStatus> {
     try {
       return await this.vendorsService.deleteVendorProfile(data.userId)
     } catch (error) {
@@ -113,11 +113,11 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR)
   async getSingleVendor (
-    @Payload() { vendorId }: { vendorId: string },
+    @Payload() { data }: ServicePayload<string>,
       @Ctx() context: RmqContext
   ): Promise<VendorEntity> {
     try {
-      return await this.vendorsService.getVendor({ userId: vendorId })
+      return await this.vendorsService.getVendor({ userId: data })
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -129,6 +129,17 @@ export class VendorsController {
   async getAllVendors (@Ctx() context: RmqContext): Promise<VendorEntity[]> {
     try {
       return await this.vendorsService.getAllVendors()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDORS_USERS)
+  async getAllVendorsUser (@Ctx() context: RmqContext): Promise<VendorEntity[]> {
+    try {
+      return await this.vendorsService.getAllVendorsUser()
     } catch (error) {
       throw new RpcException(error)
     } finally {
