@@ -16,6 +16,8 @@ jobs:
     if: github.event_name != 'pull_request' || (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]')
     name: Publish
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     strategy:
       matrix:
         app: [notification-service, vendors-service, users-service, admin-service, listings-service, admin-gateway, api-gateway, vendor-gateway ]
