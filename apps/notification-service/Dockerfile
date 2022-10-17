@@ -19,7 +19,9 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install --only=production --force
+RUN apk --no-cache add --virtual builds-deps build-base python3
+RUN npm ci
+
 COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
