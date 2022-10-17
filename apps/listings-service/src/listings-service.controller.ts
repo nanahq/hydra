@@ -36,6 +36,19 @@ export class ListingsServiceController {
     }
   }
 
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_ADMIN)
+  async getAllListingInDB (
+    @Ctx() context: RmqContext
+  ): Promise<ListingEntity[]> {
+    try {
+      return await this.listingService.getAllDbListing()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.GET_LISTING_INFO)
   async getListingInfo (
     @Payload()
@@ -44,7 +57,6 @@ export class ListingsServiceController {
   ): Promise<ListingEntity> {
     try {
       return await this.listingService.getListing({
-        vendorId: userId,
         listingId
       })
     } catch (error) {

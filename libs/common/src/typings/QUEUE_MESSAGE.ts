@@ -33,7 +33,7 @@ export enum QUEUE_MESSAGE {
   CREATE_LISTING = 'create_listing',
   UPDATE_LISTING = 'update_listing',
   GET_ALL_LISTING_ADMIN = 'get_listings_admin',
-  GET_ALL_LISTING_USER = 'get_listings_user'
+  GET_ALL_LISTING_USER = 'get_listings_user',
 }
 
 export enum QUEUE_SERVICE {

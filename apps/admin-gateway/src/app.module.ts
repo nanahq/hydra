@@ -65,7 +65,12 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         AppModule
       ],
-      controllers: [AdminController, AuthController, VendorController, ListingController],
+      controllers: [
+        AdminController,
+        AuthController,
+        VendorController,
+        ListingController
+      ],
       providers: [
         AuthService,
         LocalStrategy,

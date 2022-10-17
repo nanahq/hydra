@@ -29,6 +29,20 @@ export class ListingsServiceService {
     return getRequest
   }
 
+  async getAllDbListing (): Promise<ListingEntity[]> {
+    try {
+      return await this.listingRepository
+        .createQueryBuilder('listings')
+        .leftJoinAndSelect(
+          'listings.customisableOptions',
+          'customisableOptions'
+        )
+        .getMany()
+    } catch (error) {
+      throw new RpcException(error)
+    }
+  }
+
   async create (data: ServicePayload<ListingDto>): Promise<ResponseWithStatus> {
     const createRequest = await this.createListing(data)
     if (createRequest === null) {
@@ -56,11 +70,8 @@ export class ListingsServiceService {
     return { status: 1 }
   }
 
-  async getListing (condition: {
-    listingId: string
-    vendorId: string
-  }): Promise<ListingEntity> {
-    const _listing = await this.getListingById(condition)
+  async getListing (payload: { listingId: string }): Promise<ListingEntity> {
+    const _listing = await this.getListingById(payload)
 
     if (_listing === null) {
       throw new FitRpcException(
@@ -89,13 +100,11 @@ export class ListingsServiceService {
 
   private async getListingById (listing: {
     listingId: string
-    vendorId: string
   }): Promise<ListingEntity | null> {
     return await this.listingRepository
       .createQueryBuilder('listings')
       .leftJoinAndSelect('listings.customisableOptions', 'customisableOptions')
       .where('listings.id = :id', { id: listing.listingId })
-      .andWhere('listings.vendorId = :vid', { vid: listing.vendorId })
       .getOne()
   }
 
