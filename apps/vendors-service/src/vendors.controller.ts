@@ -113,7 +113,7 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR)
   async getSingleVendor (
-    @Payload() { data}: ServicePayload<string>,
+    @Payload() { data }: ServicePayload<string>,
       @Ctx() context: RmqContext
   ): Promise<VendorEntity> {
     try {

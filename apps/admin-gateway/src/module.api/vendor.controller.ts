@@ -9,7 +9,12 @@ import {
   Put,
   UseGuards
 } from '@nestjs/common'
-import { QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus, ServicePayload } from '@app/common'
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus,
+  ServicePayload
+} from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { VendorEntity } from '@app/common/database/entities/Vendor'
 import { catchError, lastValueFrom } from 'rxjs'

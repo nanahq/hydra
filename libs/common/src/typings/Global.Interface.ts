@@ -6,6 +6,6 @@ export interface TokenPayload {
 }
 
 export interface VendorWithListing {
-  vendor: VendorEntity,
+  vendor: VendorEntity
   listing: ListingEntity
 }

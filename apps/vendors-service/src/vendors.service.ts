@@ -133,6 +133,7 @@ export class VendorsService {
     }
     return getRequest
   }
+
   async getAllVendorsUser (): Promise<VendorEntity[]> {
     const getRequest = await this.getVendorsUsers()
 
@@ -222,8 +223,9 @@ export class VendorsService {
   }
 
   private async getVendorsUsers (): Promise<VendorEntity[] | null> {
-    return await this.vendorRepository.createQueryBuilder('vendor')
-        .select(['vendor.id', 'vendor.state', 'vendor.businessName'])
-        .getMany()
+    return await this.vendorRepository
+      .createQueryBuilder('vendor')
+      .select(['vendor.id', 'vendor.state', 'vendor.businessName'])
+      .getMany()
   }
 }

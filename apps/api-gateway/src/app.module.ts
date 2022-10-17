@@ -72,7 +72,12 @@ export class AppModule implements NestModule {
         }),
         AppModule
       ],
-      controllers: [UsersController, AuthController, VendorsController, ListingsController],
+      controllers: [
+        UsersController,
+        AuthController,
+        VendorsController,
+        ListingsController
+      ],
       providers: [
         AuthService,
         LocalStrategy,
