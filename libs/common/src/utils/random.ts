@@ -1,5 +1,5 @@
-export const RandomGen =  {
-   genRandomNum: (rounds: number = 9, length: number = 7): number => {
+export const RandomGen = {
+  genRandomNum: (rounds: number = 9, length: number = 7): number => {
     const gen: number[] = []
     for (let i = 0; i < length; i++) {
       gen.push(Math.floor(Math.random() * rounds))
@@ -7,7 +7,7 @@ export const RandomGen =  {
     const rando = gen.join('')
     return Number(rando)
   },
-   genRandomString: (rounds: number = 100, length: number = 7): string => {
+  genRandomString: (rounds: number = 100, length: number = 7): string => {
     const gen: number[] = []
     for (let i = 0; i < length; i++) {
       gen.push(Math.floor(Math.random() * rounds))
@@ -15,5 +15,3 @@ export const RandomGen =  {
     return gen.join('')
   }
 }
-
-
