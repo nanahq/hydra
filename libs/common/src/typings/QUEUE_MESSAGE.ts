@@ -35,6 +35,15 @@ export enum QUEUE_MESSAGE {
   UPDATE_LISTING = 'update_listing',
   GET_ALL_LISTING_ADMIN = 'get_listings_admin',
   GET_ALL_LISTING_USER = 'get_listings_user',
+
+  //  Orders
+  GET_ALL_ORDERS = 'get_all_orders',
+  GET_SINGLE_ORDER_BY_REFNUM = 'get_single_order_by_refnum',
+  GET_SINGLE_ORDER_BY_ID = 'get_single_order_by_id',
+  GET_USER_ORDERS = 'get_users_order_by_id',
+  GET_VENDORS_ORDERS = 'get_vendors_order_by_id',
+  UPDATE_ORDER_STATUS = 'update_order_status',
+  CREATE_ORDER = 'create_new_order',
 }
 
 export enum QUEUE_SERVICE {
@@ -46,4 +55,5 @@ export enum QUEUE_SERVICE {
   ADMIN_API = 'ADMIN_API',
   ADMIN_SERVICE = 'ADMIN',
   LISTINGS_SERVICE = 'LISTINGS',
+  ORDERS_SERVICE = 'ORDERS',
 }

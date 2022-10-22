@@ -23,6 +23,7 @@ import { AuthService } from './module.api/auth.service'
 import { LocalStrategy } from './auth/strategy/local.strategy'
 import { JwtStrategy } from './auth/strategy/jwt.strategy'
 import { ListingsController } from './module.api/listings.controller'
+import { OrdersController } from './module.api/orders.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -61,6 +62,7 @@ export class AppModule implements NestModule {
         }),
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
@@ -69,7 +71,12 @@ export class AppModule implements NestModule {
         }),
         AppModule
       ],
-      controllers: [VendorController, AuthController, ListingsController],
+      controllers: [
+        VendorController,
+        AuthController,
+        ListingsController,
+        OrdersController
+      ],
       providers: [
         AuthService,
         LocalStrategy,
