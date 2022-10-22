@@ -46,7 +46,6 @@ export class ListingsController {
       userId: vendorId,
       data: null
     }
-    console.log(payload)
     return await lastValueFrom<ListingEntity[]>(
       this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTINGS, payload).pipe(
         catchError((error: IRpcException) => {

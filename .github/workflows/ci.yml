@@ -30,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        instance: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+        instance: [ 0, 1]
     env:
       GH_INSTANCE_TOTAL: 10
     steps:
@@ -69,7 +69,7 @@ jobs:
     strategy:
       matrix:
         platform: [ linux/amd64 ]
-        app: [ users-service, notification-service, vendors-service, admin-service, listings-service, admin-gateway, api-gateway, vendor-gateway ]
+        app: [ users-service, notification-service, vendors-service, admin-service, listings-service, admin-gateway, api-gateway, vendor-gateway, orders-service ]
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@e81a89b1732b9c48d79cd809d8d81d79c4647a18

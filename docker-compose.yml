@@ -134,6 +134,23 @@ services:
       - /usr/src/app/node_modules
     networks:
       - app-tier
+  orders-service:
+    build:
+      context: .
+      dockerfile: apps/orders-service/Dockerfile
+      target: development
+    command: 'npm run start:dev orders-service'
+    env_file:
+      - apps/orders-service/.env
+    depends_on:
+      - orders-db
+      - api-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - app-tier
   rabbitmq:
     image: rabbitmq
     ports:
@@ -186,6 +203,18 @@ services:
       - POSTGRESQL_USERNAME=root
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=listings
+    volumes:
+      - pg_data:/var/lib/postgresql
+    networks:
+      - app-tier
+  orders-db:
+    image: bitnami/postgresql:14
+    ports:
+      - '5432'
+    environment:
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=root@123
+      - POSTGRESQL_DATABASE=orders
     volumes:
       - pg_data:/var/lib/postgresql
     networks:
