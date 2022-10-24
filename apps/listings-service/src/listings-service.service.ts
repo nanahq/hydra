@@ -9,7 +9,7 @@ import { ListingOptionEntity } from '@app/common/database/entities/ListingOption
 import { RpcException } from '@nestjs/microservices'
 
 @Injectable()
-export class ListingsServiceService {
+export class ListingsService {
   constructor (
     @InjectRepository(ListingEntity)
     private readonly listingRepository: Repository<ListingEntity>,

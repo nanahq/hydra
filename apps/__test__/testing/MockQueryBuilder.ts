@@ -9,5 +9,9 @@ export const baseCreateQueryBuilder = {
   returning: () => baseCreateQueryBuilder,
   update: () => baseCreateQueryBuilder,
   set: () => baseCreateQueryBuilder,
-  addSelect: () => baseCreateQueryBuilder
-} as any
+  addSelect: () => baseCreateQueryBuilder,
+  leftJoinAndSelect: () => baseCreateQueryBuilder,
+  getMany: () => baseCreateQueryBuilder,
+  preload: () => baseCreateQueryBuilder,
+  andWhere: () => baseCreateQueryBuilder,
+} as any;

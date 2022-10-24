@@ -8,7 +8,7 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { ListingsServiceService } from './listings-service.service'
+import { ListingsService } from './listings-service.service'
 
 import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
 import { ListingEntity } from '@app/common/database/entities/Listing'
@@ -18,7 +18,7 @@ import { ListingDto } from '@app/common/database/dto/listing.dto'
 @Controller()
 export class ListingsServiceController {
   constructor (
-    private readonly listingService: ListingsServiceService,
+    private readonly listingService: ListingsService,
     private readonly rmqService: RmqService
   ) {}
 
