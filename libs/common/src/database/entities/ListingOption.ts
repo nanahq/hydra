@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { CustomisationOptionTypeEnum } from '@app/common/typings/CustomisationOptionType.enum'
 import { ListingEntity } from '@app/common/database/entities/Listing'
+import { CustomisationOptionTypeEnum } from '@app/common/typings/CustomisationOptionType.enum'
 
 @Entity({ name: 'listingOptions' })
 export class ListingOptionEntity {

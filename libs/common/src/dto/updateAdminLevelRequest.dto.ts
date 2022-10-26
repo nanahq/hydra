@@ -1,4 +1,4 @@
-import { AdminLevel } from '@app/common/typings/AdminLevel.enum'
+import { AdminLevel } from '@app/common'
 import { IsEnum, IsNotEmpty } from 'class-validator'
 
 export class UpdateAdminLevelRequestDto {

@@ -1,12 +1,16 @@
+import { RpcException } from '@nestjs/microservices'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DeleteResult, Repository } from 'typeorm'
-import { ListingEntity } from '@app/common/database/entities/Listing'
-import { FitRpcException } from '@app/common/filters/rpc.expection'
-import { ListingDto } from '@app/common/database/dto/listing.dto'
-import { ResponseWithStatus, ServicePayload } from '@app/common'
-import { ListingOptionEntity } from '@app/common/database/entities/ListingOption'
-import { RpcException } from '@nestjs/microservices'
+
+import {
+  ListingEntity,
+  FitRpcException,
+  ListingDto,
+  ResponseWithStatus,
+  ServicePayload,
+  ListingOptionEntity
+} from '@app/common'
 
 @Injectable()
 export class ListingsService {

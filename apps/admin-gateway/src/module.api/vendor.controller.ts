@@ -9,17 +9,19 @@ import {
   Put,
   UseGuards
 } from '@nestjs/common'
+import { ClientProxy } from '@nestjs/microservices'
+import { catchError, lastValueFrom } from 'rxjs'
+
 import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
-  ServicePayload
+  ServicePayload,
+  updateVendorStatus,
+  IRpcException,
+  VendorEntity
 } from '@app/common'
-import { ClientProxy } from '@nestjs/microservices'
-import { VendorEntity } from '@app/common/database/entities/Vendor'
-import { catchError, lastValueFrom } from 'rxjs'
-import { IRpcException } from '@app/common/filters/rpc.expection'
-import { updateVendorStatus } from '@app/common/dto/UpdateVendorStatus.dto'
+
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
 @Controller('vendors')

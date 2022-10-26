@@ -1,12 +1,15 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { AdminEntity } from '@app/common/database/entities/Admin'
 import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm'
-import { RegisterAdminDTO } from '@app/common/dto/registerAdminDTO.dto'
 import * as bcrypt from 'bcrypt'
-import { FitRpcException } from '@app/common/filters/rpc.expection'
-import { UpdateAdminLevelRequestDto } from '@app/common/dto/updateAdminLevelRequest.dto'
-import { ResponseWithStatus } from '@app/common'
+
+import {
+  ResponseWithStatus,
+  UpdateAdminLevelRequestDto,
+  FitRpcException,
+  RegisterAdminDTO,
+  AdminEntity
+} from '@app/common'
 
 @Injectable()
 export class AdminServiceService {

@@ -2,7 +2,6 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { OrderStatus } from '@app/common/typings/OrderStatus.enum'
 import { OrderDeliveryMode } from '@app/common/typings/OrderDeliveryMode.enum'
 import { OrderBreakDown } from '@app/common/database/dto/order.dto'
-
 @Entity('Order')
 export class OrderEntity {
   @PrimaryGeneratedColumn('uuid')

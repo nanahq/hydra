@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import * as Joi from 'joi'
-import { AdminServiceController } from './admin-service.controller'
-import { AdminServiceService } from './admin-service.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { AdminEntity } from '@app/common/database/entities/Admin'
-import { RmqModule } from '@app/common'
+import * as Joi from 'joi'
+
+import { AdminServiceService } from './admin-service.service'
+import { AdminServiceController } from './admin-service.controller'
+import { RmqModule, AdminEntity } from '@app/common'
 
 @Module({
   imports: [

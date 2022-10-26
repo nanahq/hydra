@@ -1,4 +1,3 @@
-import { OrderDeliveryMode } from '@app/common'
 import {
   IsArray,
   IsBoolean,
@@ -11,6 +10,8 @@ import {
   IsString,
   IsUUID
 } from 'class-validator'
+
+import { OrderDeliveryMode } from '@app/common/typings/OrderDeliveryMode.enum'
 
 export class OrderDto {
   @IsString()
