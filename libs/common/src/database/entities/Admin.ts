@@ -6,6 +6,7 @@ import {
   Column,
   PrimaryGeneratedColumn
 } from 'typeorm'
+
 import { AdminLevel } from '@app/common/typings/AdminLevel.enum'
 
 @Entity('admin')

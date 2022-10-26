@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import * as Joi from 'joi'
-import { ListingsServiceController } from './listings-service.controller'
-import { ListingsServiceService } from './listings-service.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { RmqModule } from '@app/common'
-import { ListingEntity } from '@app/common/database/entities/Listing'
-import { ListingOptionEntity } from '@app/common/database/entities/ListingOption'
+
+import { ListingsServiceController } from './listings-service.controller'
+import { ListingsService } from './listings-service.service'
+import { RmqModule, ListingEntity, ListingOptionEntity } from '@app/common'
 
 @Module({
   imports: [
@@ -37,6 +36,6 @@ import { ListingOptionEntity } from '@app/common/database/entities/ListingOption
     RmqModule
   ],
   controllers: [ListingsServiceController],
-  providers: [ListingsServiceService]
+  providers: [ListingsService]
 })
 export class ListingsServiceModule {}

@@ -29,7 +29,7 @@ export class VendorsController {
   ) {}
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_VENDOR)
-  async registerNewUser (
+  async registerNewVendor (
     @Payload() data: any,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {

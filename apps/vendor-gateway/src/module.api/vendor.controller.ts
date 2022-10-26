@@ -32,7 +32,7 @@ export class VendorController {
   ) {}
 
   @Post('register')
-  async registerNewUser (
+  async registerNewVendor (
     @Body() request: VendorDto
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
