@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { InsertResult, Repository, UpdateResult } from 'typeorm'
 import {
@@ -6,18 +6,23 @@ import {
   OrderDto,
   OrderEntity,
   OrderStatus,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
   RandomGen,
   ResponseWithStatus,
   ServicePayload,
   UpdateOrderStatusRequestDto
 } from '@app/common'
-import { RpcException } from '@nestjs/microservices'
+import { ClientProxy, RpcException } from '@nestjs/microservices'
+import { lastValueFrom } from 'rxjs'
 
 @Injectable()
 export class OrdersServiceService {
   constructor (
     @InjectRepository(OrderEntity)
-    private readonly orderRepository: Repository<OrderEntity>
+    private readonly orderRepository: Repository<OrderEntity>,
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy
   ) {}
 
   public async placeOrder ({
@@ -38,6 +43,19 @@ export class OrdersServiceService {
         'Can not create your order at this time',
         HttpStatus.BAD_REQUEST
       )
+    }
+
+    try {
+      // Send order confirmation message
+      await lastValueFrom(
+        this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
+          phoneNumber: createOrderPayload.primaryContact,
+          status: OrderStatus.PROCESSED,
+          listingId: createOrderPayload.listingId
+        })
+      )
+    } catch (error) {
+      throw new RpcException(error)
     }
 
     return { status: 1 }
@@ -107,9 +125,20 @@ export class OrdersServiceService {
 
   public async updateStatus ({
     status,
-    listingId
+    orderId
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
-    await this.updateOrderStatus(status, listingId)
+    const order = (await this.getSingleOrderById(orderId)) as OrderEntity
+
+    await this.updateOrderStatus(status, orderId)
+
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
+        phoneNumber: order.primaryContact,
+        status,
+        listingId: order.listingId
+      })
+    )
+
     return { status: 1 }
   }
 

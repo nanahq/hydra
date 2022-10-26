@@ -1,22 +1,27 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { ClientProxy } from '@nestjs/microservices'
+import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { TwilioService } from 'nestjs-twilio'
 import { lastValueFrom } from 'rxjs'
 
 import {
+  OrderStatus,
   PhoneVerificationPayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  verifyPhoneRequest,
-  FitRpcException
+  verifyPhoneRequest
 } from '@app/common'
+import { OrderStatusUpdateDto } from '@app/common/dto/OrderStatusUpdate.dto'
+import { OrderStatusMessage } from './templates/OrderStatusMessage'
+import { ListingEntity } from '@app/common/database/entities/Listing'
 
 @Injectable()
 export class NotificationServiceService {
   constructor (
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
+    @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
+    private readonly listingsClient: ClientProxy,
     private readonly twilioService: TwilioService,
     private readonly configService: ConfigService
   ) {}
@@ -42,10 +47,7 @@ export class NotificationServiceService {
       }
       return { status: 0 }
     } catch (error) {
-      throw new FitRpcException(
-        'Provided code is not valid',
-        HttpStatus.UNPROCESSABLE_ENTITY
-      )
+      throw new RpcException(error)
     }
   }
 
@@ -57,10 +59,52 @@ export class NotificationServiceService {
         )
         .verifications.create({ to: phoneNumber, channel: 'sms' })
     } catch (error) {
-      throw new FitRpcException(
-        'Failed to send verification code',
-        HttpStatus.UNPROCESSABLE_ENTITY
-      )
+      throw new RpcException(error)
     }
+  }
+
+  async sendOrderStatusUpdate ({
+    phoneNumber,
+    status,
+    listingId
+  }: OrderStatusUpdateDto): Promise<void> {
+    let message: string
+    const fromPhone = this.configService.get<string>('TWILIO_PHONE') as string
+    try {
+      const listing = await lastValueFrom<ListingEntity>(
+        this.listingsClient.send(QUEUE_MESSAGE.GET_LISTING_INFO, {
+          userId: '',
+          data: { listingId }
+        })
+      )
+
+      switch (status) {
+        case OrderStatus.PROCESSED:
+          message = OrderStatusMessage[status](listing.listingName)
+          break
+        case OrderStatus.COLLECTED:
+          message = OrderStatusMessage[status](listing.listingName)
+          break
+        case OrderStatus.FULFILLED:
+          message = OrderStatusMessage[status](listing.listingName)
+          break
+        case OrderStatus.IN_ROUTE:
+          message = OrderStatusMessage[status]('50:30 pm')
+          break
+        default:
+          message = 'not found'
+      }
+    } catch (error) {
+      throw new RpcException(error)
+    }
+
+    this.twilioService.client.messages.create({
+      from: fromPhone,
+      body: message,
+      to: phoneNumber
+    }).then(msg => msg)
+      .catch(error => {
+        throw new RpcException(error)
+      })
   }
 }

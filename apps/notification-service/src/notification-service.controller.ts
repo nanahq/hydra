@@ -15,6 +15,7 @@ import {
   QUEUE_MESSAGE
 } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
+import { OrderStatusUpdateDto } from '@app/common/dto/OrderStatusUpdate.dto'
 
 @Controller()
 export class NotificationServiceController {
@@ -46,6 +47,20 @@ export class NotificationServiceController {
       return await this.notificationServiceService.sendVerification(data)
     } catch (error) {
       throw new RpcException(error)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.ORDER_STATUS_UPDATE)
+  async sendOrderStatus (
+    @Payload() data: OrderStatusUpdateDto,
+      @Ctx() context: RmqContext
+  ): Promise<any> {
+    try {
+      return await this.notificationServiceService.sendOrderStatusUpdate(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 }

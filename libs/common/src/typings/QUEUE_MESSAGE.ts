@@ -1,6 +1,7 @@
 export enum QUEUE_MESSAGE {
   VALIDATE_USER = 'validate_user',
   GET_USER = 'get_user',
+  GET_USER_BY_PHONE = 'get_user_by_phone',
   CREATE_USER = 'create_user',
   VERIFY_PHONE = 'verify_phone',
   SEND_PHONE_VERIFICATION = 'send_phone_verification',
@@ -44,6 +45,9 @@ export enum QUEUE_MESSAGE {
   GET_VENDORS_ORDERS = 'get_vendors_order_by_id',
   UPDATE_ORDER_STATUS = 'update_order_status',
   CREATE_ORDER = 'create_new_order',
+
+  // Order status
+  ORDER_STATUS_UPDATE = 'order_status_update',
 }
 
 export enum QUEUE_SERVICE {
