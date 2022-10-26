@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
-import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
 import { ListingOptionEntity } from '@app/common/database/entities/ListingOption'
+import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
 
 @Entity({ name: 'listings' })
 export class ListingEntity {

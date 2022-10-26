@@ -6,17 +6,18 @@ import {
   HttpException,
   Param
 } from '@nestjs/common'
+import { ClientProxy } from '@nestjs/microservices'
+import { catchError, lastValueFrom } from 'rxjs'
+
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import {
   QUEUE_SERVICE,
   QUEUE_MESSAGE,
   ServicePayload,
   IRpcException,
-  VendorEntity
+  VendorEntity,
+  ListingEntity
 } from '@app/common'
-import { ClientProxy } from '@nestjs/microservices'
-import { ListingEntity } from '@app/common/database/entities/Listing'
-import { catchError, lastValueFrom } from 'rxjs'
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
 @Controller('listings')
 export class ListingsController {

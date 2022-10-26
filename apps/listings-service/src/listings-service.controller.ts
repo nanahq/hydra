@@ -1,5 +1,3 @@
-import { ResponseWithStatus, RmqService, ServicePayload } from '@app/common'
-import { QUEUE_MESSAGE } from '@app/common/typings/QUEUE_MESSAGE'
 import { Controller, UseFilters } from '@nestjs/common'
 import {
   Ctx,
@@ -8,17 +6,23 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { ListingsServiceService } from './listings-service.service'
 
-import { ExceptionFilterRpc } from '@app/common/filters/rpc.expection'
-import { ListingEntity } from '@app/common/database/entities/Listing'
-import { ListingDto } from '@app/common/database/dto/listing.dto'
+import { ListingsService } from './listings-service.service'
+import {
+  ResponseWithStatus,
+  RmqService,
+  ServicePayload,
+  QUEUE_MESSAGE,
+  ExceptionFilterRpc,
+  ListingEntity,
+  ListingDto
+} from '@app/common'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class ListingsServiceController {
   constructor (
-    private readonly listingService: ListingsServiceService,
+    private readonly listingService: ListingsService,
     private readonly rmqService: RmqService
   ) {}
 

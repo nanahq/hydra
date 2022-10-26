@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsEnum } from 'class-validator'
-import { VendorApprovalStatusEnum } from '@app/common/typings/VendorApprovalStatus.enum'
+import { VendorApprovalStatusEnum } from '@app/common'
 
 export class updateVendorStatus {
   @IsNotEmpty()

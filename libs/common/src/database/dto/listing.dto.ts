@@ -7,8 +7,8 @@ import {
   Min,
   MinLength
 } from 'class-validator'
-import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
-import { CustomisationOptionTypeEnum } from '@app/common/typings/CustomisationOptionType.enum'
+
+import { AvailableDate, CustomisationOptionTypeEnum } from '@app/common'
 
 export class ListingDto {
   @IsNotEmpty()

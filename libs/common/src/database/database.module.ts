@@ -2,8 +2,12 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { AdminEntity, UserEntity, VendorEntity } from '@app/common'
-import { ListingEntity } from '@app/common/database/entities/Listing'
+import {
+  AdminEntity,
+  UserEntity,
+  VendorEntity,
+  ListingEntity
+} from '@app/common'
 
 @Module({
   imports: [

@@ -1,8 +1,4 @@
 import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common/typings/QUEUE_MESSAGE'
-import {
   Body,
   Controller,
   Delete,
@@ -16,14 +12,17 @@ import {
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
-import { ListingDto } from '@app/common/database/dto/listing.dto'
+
 import {
   IRpcException,
   ResponseWithStatus,
   ServicePayload,
-  VendorEntity
+  VendorEntity,
+  ListingEntity,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ListingDto
 } from '@app/common'
-import { ListingEntity } from '@app/common/database/entities/Listing'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from '../../../admin-gateway/src/module.api/current-user.decorator'
 

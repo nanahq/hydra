@@ -1,5 +1,4 @@
 import { Controller } from '@nestjs/common'
-import { AdminServiceService } from './admin-service.service'
 import {
   Ctx,
   MessagePattern,
@@ -7,11 +6,16 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { QUEUE_MESSAGE, RmqService } from '@app/common'
-import { ServicePayload } from '@app/common/typings/ServicePayload.interface'
-import { RegisterAdminDTO } from '@app/common/dto/registerAdminDTO.dto'
-import { AdminEntity } from '@app/common/database/entities/Admin'
-import { UpdateAdminLevelRequestDto } from '@app/common/dto/updateAdminLevelRequest.dto'
+
+import {
+  QUEUE_MESSAGE,
+  RmqService,
+  ServicePayload,
+  RegisterAdminDTO,
+  AdminEntity,
+  UpdateAdminLevelRequestDto
+} from '@app/common'
+import { AdminServiceService } from './admin-service.service'
 
 @Controller()
 export class AdminServiceController {
