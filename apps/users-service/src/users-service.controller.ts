@@ -123,4 +123,18 @@ export class UsersServiceController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_USER_BY_PHONE)
+  async getUserWithPhone (
+    @Payload() { phone }: { phone: string },
+      @Ctx() context: RmqContext
+  ): Promise<UserEntity> {
+    try {
+      return await this.usersService.getUserWithPhone(phone)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

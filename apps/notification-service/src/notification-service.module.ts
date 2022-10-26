@@ -29,7 +29,8 @@ import { NotificationServiceService } from './notification-service.service'
       }),
       inject: [ConfigService]
     }),
-    RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE })
+    RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE })
   ],
   controllers: [NotificationServiceController],
   providers: [NotificationServiceService, ConfigService]

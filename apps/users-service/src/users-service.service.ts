@@ -132,6 +132,19 @@ export class UsersService {
     return { status: 1 }
   }
 
+  public async getUserWithPhone (phone: string): Promise<UserEntity> {
+    const _user = await this.getUserByPhone(phone)
+    if (_user === null) {
+      throw new FitRpcException(
+        'User not with the phone number not found',
+        HttpStatus.NOT_FOUND
+      )
+    }
+
+    _user.password = ''
+    return _user
+  }
+
   private async checkExistingUser (phoneNumber: string): Promise<void> {
     const user = await this.usersRepository
       .createQueryBuilder('user')
