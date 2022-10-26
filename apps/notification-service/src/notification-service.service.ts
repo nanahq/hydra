@@ -98,12 +98,13 @@ export class NotificationServiceService {
       throw new RpcException(error)
     }
 
-
-      this.twilioService.client.messages.create({
-          from: fromPhone,
-          body: message,
-          to: phoneNumber
-      }).then(msg => msg)
-          .catch(error => {throw new RpcException(error)})
+    this.twilioService.client.messages.create({
+      from: fromPhone,
+      body: message,
+      to: phoneNumber
+    }).then(msg => msg)
+      .catch(error => {
+        throw new RpcException(error)
+      })
   }
 }
