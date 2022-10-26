@@ -94,10 +94,16 @@ export class NotificationServiceService {
         default:
           message = 'not found'
       }
-      await this.twilioService.client.messages
-        .create({ from: fromPhone, body: message, to: phoneNumber })
     } catch (error) {
       throw new RpcException(error)
     }
+
+
+      this.twilioService.client.messages.create({
+          from: fromPhone,
+          body: message,
+          to: phoneNumber
+      }).then(msg => msg)
+          .catch(error => {throw new RpcException(error)})
   }
 }
