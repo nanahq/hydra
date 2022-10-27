@@ -83,4 +83,4 @@ jobs:
           push: false
           build-args: APP=${{ matrix.app }}
           platforms: ${{ matrix.platform }}
-          tags: ghcr.io/imagyne/eatlater-${{ matrix.app }}:latest
+          tags: imagynetech/eatlater-${{ matrix.app }}:latest
