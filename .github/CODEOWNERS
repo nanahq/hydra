@@ -1,0 +1,20 @@
+# Define individuals that are responsible for code in a repository.
+# More details are here: https://help.github.com/articles/about-codeowners/
+
+/.github/                                       @siradji
+/.husky/                                        @siradji
+
+/apps/                                          @siradji @alaminyusuf @ahmard
+
+/packages/                                       @siradji
+Dockerfile                                       @siradji
+docker-compose.yml                               @siradji @ahmard @alaminyusuf
+
+/libs/                                           @siradji @ahmard @alaminyusuf
+
+package.json                                     @siradji
+package-lock.json                                @siradji
+tsconfig.json                                    @siradji
+
+README.md                                       @siradji  @ahmard @alaminyusuf
+LICENSE                                         @siradji
