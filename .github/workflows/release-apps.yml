@@ -62,13 +62,13 @@ jobs:
       - name: Build & Publish
         uses: docker/build-push-action@v2
         with:
+          context: .
           push: true
           build-args: APP=${{ matrix.app }}
           platforms: |
             linux/amd64
             linux/arm64
           tags: ${{ steps.tags.outputs.result }}
-          secret: ${{ secrets.GITHUB_TOKEN }}
 
   report:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
