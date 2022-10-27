@@ -3,6 +3,8 @@ name: Release Apps
 on:
   release:
     types: [ published ]
+  push:
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
@@ -69,6 +71,7 @@ jobs:
             linux/amd64
             linux/arm64
           tags: ${{ steps.tags.outputs.result }}
+        run: echo ${{ steps.tags.outputs.result }}
 
   report:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
