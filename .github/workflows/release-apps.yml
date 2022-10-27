@@ -60,7 +60,8 @@ jobs:
         with:
           script: return require('./.github/scripts/release-tags.js')({ context })
           result-encoding: string
-
+      - name: Check tags
+        run: echo ${{ steps.tags.outputs.result }}
       - name: Build & Publish
         uses: docker/build-push-action@v2
         with:
@@ -71,7 +72,6 @@ jobs:
             linux/amd64
             linux/arm64
           tags: ${{ steps.tags.outputs.result }}
-        run: echo ${{ steps.tags.outputs.result }}
 
   report:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
