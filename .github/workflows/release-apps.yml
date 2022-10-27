@@ -68,6 +68,7 @@ jobs:
             linux/amd64
             linux/arm64
           tags: ${{ steps.tags.outputs.result }}
+          secret: ${{ secrets.GITHUB_TOKEN }}
 
   report:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
