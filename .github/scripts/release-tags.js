@@ -60,13 +60,9 @@ function getReleaseTag(domain, app, context) {
     if (semver.match(/^v[0-9]+\.[0-9]+\.[0-9]+$/) === null) {
         throw new Error(`Release Violation: Provided version '${semver}' is not valid semver.`)
     }
-    return `ghcr.io/${domain}/eatlater-${app}:latest,ghcr.io/${domain}/eatlater-${app}:${semver.replace('v','')}`
+    return `${domain}/eatlater-${app}:latest,${domain}/eatlater-${app}:${semver.replace('v','')}`
 }
 
 function getMainTag(domain, app, { sha }) {
-    return `ghcr.io/${domain}/eatlater-${app}:main,ghcr.io/${domain}/eatlater-${app}:${sha}`
-}
-
-function getPullRequestTag(domain, app, { payload: { number }, sha }) {
-    return `ghcr.io/${domain}/${app}:pr-${number},ghcr.io/${domain}/${app}:${sha}`
+    return `${domain}/eatlater-${app}:main,${domain}/eatlater-${app}:${sha}`
 }
