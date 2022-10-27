@@ -60,9 +60,9 @@ function getReleaseTag(domain, app, context) {
     if (semver.match(/^v[0-9]+\.[0-9]+\.[0-9]+$/) === null) {
         throw new Error(`Release Violation: Provided version '${semver}' is not valid semver.`)
     }
-    return `${domain}/eatlater-${app}:latest,${domain}/eatlater-${app}:${semver.replace('v','')}`
+    return `${domain}tech/eatlater-${app}:${semver.replace('v','')}`
 }
 
 function getMainTag(domain, app, { sha }) {
-    return `${domain}/eatlater-${app}:main,${domain}/eatlater-${app}:${sha}`
+    return `${domain}tech/eatlater-${app}:${sha}`
 }
