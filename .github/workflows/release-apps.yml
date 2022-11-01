@@ -63,7 +63,7 @@ jobs:
       - name: Check tags
         run: echo ${{ steps.tags.outputs.result }}
       - name: Build & Publish
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
