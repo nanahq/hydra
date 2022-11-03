@@ -18,6 +18,9 @@ FROM node:alpine as production
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
+ARG APP
+ENV APP ${APP}
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
