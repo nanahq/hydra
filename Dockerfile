@@ -6,7 +6,7 @@ ARG APP
 ENV APP ${APP}
 
 COPY package*.json ./
-RUN apk --no-cache add --virtual builds-deps build-base python3
+RUN apk  add --virtual builds-deps build-base python3
 RUN npm install
 
 COPY . .
@@ -22,7 +22,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN apk --no-cache add --virtual builds-deps build-base python3
+RUN apk  add --virtual builds-deps build-base python3
 RUN npm ci
 
 
