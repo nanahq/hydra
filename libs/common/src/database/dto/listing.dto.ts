@@ -1,14 +1,7 @@
-import {
-  IsArray,
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  Min,
-  MinLength
-} from 'class-validator'
+import { IsArray, IsEnum, IsNotEmpty, IsOptional, IsString, Min, MinLength } from 'class-validator'
 
-import { AvailableDate, CustomisationOptionTypeEnum } from '@app/common'
+import { CustomisationOptionTypeEnum } from '@app/common'
+import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
 
 export class ListingDto {
   @IsNotEmpty()
