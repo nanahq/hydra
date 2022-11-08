@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { OrderStatus } from '@app/common/typings/OrderStatus.enum'
 import { OrderDeliveryMode } from '@app/common/typings/OrderDeliveryMode.enum'
 import { OrderBreakDown } from '@app/common/database/dto/order.dto'
+
 @Entity('Order')
 export class OrderEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -51,4 +52,13 @@ export class OrderEntity {
 
   @Column('int')
   public refId: number
+
+  @UpdateDateColumn()
+  public updatedAt: Date
+
+  @DeleteDateColumn()
+  public deletedAt: Date
+
+  @CreateDateColumn()
+  public createdAt: Date
 }

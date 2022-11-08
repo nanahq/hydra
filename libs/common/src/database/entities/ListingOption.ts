@@ -1,4 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm'
 import { ListingEntity } from '@app/common/database/entities/Listing'
 import { CustomisationOptionTypeEnum } from '@app/common/typings/CustomisationOptionType.enum'
 
@@ -25,4 +33,13 @@ export class ListingOptionEntity {
     }
   )
   public listing: ListingEntity
+
+  @UpdateDateColumn()
+  public updatedAt: Date
+
+  @DeleteDateColumn()
+  public deletedAt: Date
+
+  @CreateDateColumn()
+  public createdAt: Date
 }

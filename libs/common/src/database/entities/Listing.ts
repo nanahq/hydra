@@ -1,4 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm'
 import { ListingOptionEntity } from '@app/common/database/entities/ListingOption'
 import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
 
@@ -19,7 +27,10 @@ export class ListingEntity {
   @Column({ type: 'text' })
     listingDesc: string
 
-  @Column({ type: 'enum', enum: AvailableDate })
+  @Column({
+    type: 'enum',
+    enum: AvailableDate
+  })
     listingAvailableDate: AvailableDate
 
   @OneToMany(
@@ -35,9 +46,24 @@ export class ListingEntity {
   )
     customisableOptions: ListingOptionEntity[]
 
-  @Column({ type: 'boolean', default: false })
+  @Column({
+    type: 'boolean',
+    default: false
+  })
     isOnDemand: boolean
 
-  @Column({ type: 'simple-array', nullable: true })
+  @Column({
+    type: 'simple-array',
+    nullable: true
+  })
     listingPhoto: string[]
+
+  @UpdateDateColumn()
+  public updatedAt: Date
+
+  @DeleteDateColumn()
+  public deletedAt: Date
+
+  @CreateDateColumn()
+  public createdAt: Date
 }
