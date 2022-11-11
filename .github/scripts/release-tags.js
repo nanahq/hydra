@@ -27,14 +27,12 @@ module.exports = ({ context }) => {
     const app = process.env.APP
     const domain = getDomain(context)
     if (isRelease(context) === true) {
-        return getReleaseTag(domain, app, context)
+        return getReleaseTag( app, context)
     }
     if (isStaging(context) === true) {
-        return getMainTag(domain, app, context)
+        return getMainTag(app, context)
     }
-    if (isDev(context) === true) {
-        return getPullRequestTag(domain, app, context)
-    }
+
     throw new Error('Release Violation: Could not determine the required release tags.')
 }
 
@@ -55,14 +53,14 @@ function getDomain(context) {
     return domain.toLowerCase()
 }
 
-function getReleaseTag(domain, app, context) {
+function getReleaseTag( app, context) {
     const semver = context.payload.release.tag_name
     if (semver.match(/^v[0-9]+\.[0-9]+\.[0-9]+$/) === null) {
         throw new Error(`Release Violation: Provided version '${semver}' is not valid semver.`)
     }
-    return `${domain}tech/eatlater-${app}:${semver.replace('v','')}`
+    return `imagynetech/eatlater-${app}:latest,imagynetech/eatlater-${app}:${semver.replace('v','')}`
 }
 
-function getMainTag(domain, app, { sha }) {
-    return `${domain}tech/eatlater-${app}:${sha}`
+function getMainTag( app, { sha }) {
+    return `imagynetech/eatlater-${app}:${sha}`
 }

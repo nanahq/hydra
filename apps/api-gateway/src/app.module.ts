@@ -106,7 +106,7 @@ export class AppModule implements NestModule {
     const version = this.getVersion()
     app.use(helmet())
     app.useGlobalPipes(new ValidationPipe())
-    app.setGlobalPrefix(`api/${version}`)
+    app.setGlobalPrefix(`api-gateway/${version}`)
   }
 
   /*

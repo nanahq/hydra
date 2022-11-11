@@ -1,0 +1,10 @@
+postgresql:
+    auth:
+      username: root
+      password: root@123
+      database: app
+rabbitmq:
+    auth:
+       username: user
+       password: user
+

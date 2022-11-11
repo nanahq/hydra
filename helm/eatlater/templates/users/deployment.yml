@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+        - name: users
+          image: imagynetech/eatlater-users-service:latest
+          env:
+            - name: RMQ_USERS_QUEUE
+              value: USERS
+            - name: RMQ_NOTIFICATION_QUEUE
+              value: NOTIFICATION
+            - name: RMQ_URI
+              value: amqp://user:user@eatlater-app-rabbitmq:5672
+            - name: DB_USERNAME
+              value: root
+            - name: DB_PASSWORD
+              value: root@123
+            - name: DB_NAME
+              value: app
+            - name: DB_HOST
+              value: eatlater-app-postgresql-hl
+
+      imagePullSecrets:
+        - name: regcred

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vendor-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vendor-gateway
+  template:
+    metadata:
+      labels:
+        app: vendor-gateway
+    spec:
+      containers:
+        - name: vendor-gateway
+          image: imagynetech/eatlater-vendor-gateway:latest
+          ports:
+            - containerPort: 3001
+          env:
+            - name: PORT
+              value: '3001'
+            - name: RMQ_URI
+              value: amqp://user:user@eatlater-app-rabbitmq:5672
+            - name: JWT_EXPIRATION
+              value: '360000'
+            - name: JWT_SECRET
+              value: 64a5b5676eb9329c8978d3367fd7e1df5404ff886d16c0bc03edf7cc
+            - name: RMQ_VENDORS_API_QUEUE
+              value: VENDORS_API
+            - name: RMQ_VENDORS_QUEUE
+              value: VENDORS
+            - name: RMQ_LISTINGS_QUEUE
+              value: LISTINGS
+            - name: RMQ_ORDERS_QUEUE
+              value: ORDERS
+
+      imagePullSecrets:
+        - name: regcred

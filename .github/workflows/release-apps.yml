@@ -68,9 +68,7 @@ jobs:
           context: .
           push: true
           build-args: APP=${{ matrix.app }}
-          platforms: |
-            linux/amd64
-            linux/arm64
+          platforms: linux/amd64
           tags: ${{ steps.tags.outputs.result }}
 
   report:
