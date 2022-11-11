@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: eatlater-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+            - path: /api-gateway
+              pathType: Prefix
+              backend:
+                service:
+                  name: api-gateway
+                  port:
+                    number: 3000
+            - path: /vendor-gateway
+              pathType: Prefix
+              backend:
+                service:
+                  name: vendor-gateway
+                  port:
+                    number: 3001
+            - path: /admin-gateway
+              pathType: Prefix
+              backend:
+                service:
+                  name: admin-gateway
+                  port:
+                    number: 3002
+

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: listings
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: listings
+  template:
+    metadata:
+      labels:
+        app: listings
+    spec:
+      containers:
+        - name: listings
+          image: imagynetech/eatlater-listings-service:latest
+          env:
+            - name: RMQ_URI
+              value: amqp://user:user@eatlater-app-rabbitmq:5672
+            - name: RMQ_LISTINGS_QUEUE
+              value: LISTINGS
+            - name: RMQ_ORDERS_QUEUE
+              value: ORDERS
+            - name: DB_USERNAME
+              value: root
+            - name: DB_HOST
+              value: eatlater-app-postgresql-hl
+            - name: DB_PASSWORD
+              value: root@123
+            - name: DB_NAME
+              value: app
+      imagePullSecrets:
+        - name: regcred
