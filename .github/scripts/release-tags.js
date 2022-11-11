@@ -58,7 +58,7 @@ function getReleaseTag( app, context) {
     if (semver.match(/^v[0-9]+\.[0-9]+\.[0-9]+$/) === null) {
         throw new Error(`Release Violation: Provided version '${semver}' is not valid semver.`)
     }
-    return `imagynetech/eatlater-${app}:${semver.replace('v','')}`
+    return `imagynetech/eatlater-${app}:latest,imagynetech/eatlater-${app}:${semver.replace('v','')}`
 }
 
 function getMainTag( app, { sha }) {
