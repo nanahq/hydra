@@ -83,6 +83,25 @@ services:
       - /usr/src/app/node_modules
     networks:
       - app-tier
+  reviews-service:
+    build:
+      context: .
+      dockerfile: ./apps/reviews-service/Dockerfile
+      target: development
+    command: 'npm run start:dev reviews-service'
+    env_file:
+      - ./apps/reviews-service/.env
+    depends_on:
+      - api-gateway
+      - vendors-gateway
+      - admin-gateway
+      - rabbitmq
+      - reviews-db
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - app-tier
   vendors-service:
     build:
       context: .
@@ -151,6 +170,7 @@ services:
       - /usr/src/app/node_modules
     networks:
       - app-tier
+
   rabbitmq:
     image: rabbitmq
     ports:
@@ -208,6 +228,18 @@ services:
     networks:
       - app-tier
   orders-db:
+    image: bitnami/postgresql:14
+    ports:
+      - '5432'
+    environment:
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=root@123
+      - POSTGRESQL_DATABASE=orders
+    volumes:
+      - pg_data:/var/lib/postgresql
+    networks:
+      - app-tier
+  reviews-db:
     image: bitnami/postgresql:14
     ports:
       - '5432'
