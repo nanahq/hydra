@@ -53,15 +53,17 @@ export class UsersService {
   async validateUser ({
     phoneNumber,
     password
-  }: loginUserRequest): Promise<UserEntity> {
+  }: loginUserRequest): Promise<{ status: number, data: UserEntity }> {
     const validateUserRequest = await this.getUserByPhone(phoneNumber)
 
+    // Sign up new user and return a login cookie
     if (validateUserRequest == null) {
-      throw new FitRpcException(
-        'Provided phone number is not correct',
-        HttpStatus.UNAUTHORIZED
-      )
+      await this.register({ phoneNumber, password })
+      const user = await this.getUserByPhone(phoneNumber) as UserEntity
+      user.password = ''
+      return { status: 1, data: user as UserEntity }
     }
+
     const isCorrectPassword: boolean = await bcrypt.compare(
       password,
       validateUserRequest.password
@@ -75,7 +77,7 @@ export class UsersService {
     }
 
     validateUserRequest.password = ''
-    return validateUserRequest
+    return { status: 2, data: validateUserRequest }
   }
 
   async updateUserStatus ({
