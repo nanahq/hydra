@@ -59,9 +59,9 @@ export class UsersService {
     // Sign up new user and return a login cookie
     if (validateUserRequest == null) {
       await this.register({ phoneNumber, password })
-      const user = await this.getUserByPhone(phoneNumber) as UserEntity
+      const user = (await this.getUserByPhone(phoneNumber)) as UserEntity
       user.password = ''
-      return { status: 1, data: user as UserEntity }
+      return { status: 1, data: user }
     }
 
     const isCorrectPassword: boolean = await bcrypt.compare(
