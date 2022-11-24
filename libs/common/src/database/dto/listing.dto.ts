@@ -1,4 +1,12 @@
-import { IsArray, IsEnum, IsNotEmpty, IsOptional, IsString, Min, MinLength } from 'class-validator'
+import {
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Min,
+  MinLength
+} from 'class-validator'
 
 import { CustomisationOptionTypeEnum } from '@app/common'
 import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
