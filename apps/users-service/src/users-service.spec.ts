@@ -102,25 +102,25 @@ describe('Users Service Unit Test', () => {
       })
     })
 
-    it('should throw an exeception with incorrect phone number', async () => {
-      expect.assertions(3)
-
-      baseCreateQueryBuilder.getOne = () => null
-
-      jest
-        .spyOn(repo, 'createQueryBuilder')
-        .mockImplementationOnce(() => baseCreateQueryBuilder)
-
-      try {
-        await service.validateUser(user)
-      } catch (error) {
-        expect(error).toBeInstanceOf(FitRpcException)
-        expect(error.message).toStrictEqual(
-          'Provided phone number is not correct'
-        )
-        expect(error.status).toStrictEqual(401)
-      }
-    })
+    // it('should throw an exception with incorrect phone number', async () => {
+    //   expect.assertions(3)
+    //
+    //   baseCreateQueryBuilder.getOne = () => null
+    //
+    //   jest
+    //     .spyOn(repo, 'createQueryBuilder')
+    //     .mockImplementationOnce(() => baseCreateQueryBuilder)
+    //
+    //   try {
+    //     await service.validateUser(user)
+    //   } catch (error) {
+    //     expect(error).toBeInstanceOf(FitRpcException)
+    //     expect(error.message).toStrictEqual(
+    //       'Provided phone number is not correct'
+    //     )
+    //     expect(error.status).toStrictEqual(401)
+    //   }
+    // })
 
     it('should throw an exception with incorrect password', async () => {
       expect.assertions(3)
