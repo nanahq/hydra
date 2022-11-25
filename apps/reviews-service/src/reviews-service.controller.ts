@@ -1,6 +1,86 @@
-import { Controller } from '@nestjs/common'
+import { Controller, UseFilters } from '@nestjs/common'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 
-@Controller('reviews')
+import { ReviewsService } from './reviews-service.service'
+import { ExceptionFilterRpc, QUEUE_MESSAGE, ReviewEntity, ReviewToken, RmqService } from '@app/common'
+import { ReviewDto } from '@app/common/database/dto/review.dto'
+import { InsertResult } from 'typeorm'
+
+@UseFilters(new ExceptionFilterRpc())
+@Controller()
 export class ReviewsServiceController {
+  constructor (
+    private readonly reviewService: ReviewsService,
+    private readonly rmqService: RmqService
+  ) {
+  }
 
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_ALL)
+  async getListingReviews (
+    @Ctx() context: RmqContext,
+      @Payload() { listingId }: ReviewToken
+  ): Promise<ReviewEntity[]> {
+    try {
+      return await this.reviewService.getListingReviews(listingId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_ADMIN_GET_ALL_IN_DB)
+  async getAllReviewsInDB (
+    @Ctx() context: RmqContext
+  ): Promise<ReviewEntity[]> {
+    try {
+      return await this.reviewService.getAll()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_FIND_ONE)
+  async getReviewInfo (
+    @Payload() { reviewId }: { reviewId: string },
+      @Ctx() context: RmqContext
+  ): Promise<ReviewEntity | null> {
+    try {
+      return await this.reviewService.findOneById(reviewId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_DELETE_ONE)
+  async deleteListing (
+    @Payload() { reviewId }: { reviewId: string },
+      @Ctx() context: RmqContext
+  ): Promise<{ status: number }> {
+    try {
+      return await this.reviewService.deleteReviewById(reviewId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.CREATE_LISTING)
+  async createReview (
+    @Payload() payload: ReviewDto,
+      @Ctx() context: RmqContext
+  ): Promise<InsertResult> {
+    try {
+      return await this.reviewService.create(payload)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

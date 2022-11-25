@@ -1,26 +1,16 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpException,
-  Inject,
-  Post,
-  Put,
-  UseGuards
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpException, Inject, Post, Put, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
+  IRpcException,
+  PhoneVerificationPayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  PhoneVerificationPayload,
   registerUserRequest,
-  UserEntity,
-  IRpcException,
+  ResponseWithStatus,
   ServicePayload,
-  ResponseWithStatus
+  UserEntity
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
