@@ -56,7 +56,7 @@ export enum QUEUE_MESSAGE {
   REVIEW_ADMIN_GET_ALL_IN_DB = 'review_admin_get_all_in_db',
   REVIEW_GET_LISTING_REVIEWS = 'review_get_listing_reviews',
   REVIEW_UPDATE_ONE = 'review_update_one',
-  REVIEW_DELETE_ONE = 'review_delete_one'
+  REVIEW_DELETE_ONE = 'review_delete_one',
 }
 
 export enum QUEUE_SERVICE {
@@ -69,5 +69,5 @@ export enum QUEUE_SERVICE {
   ADMIN_SERVICE = 'ADMIN',
   LISTINGS_SERVICE = 'LISTINGS',
   ORDERS_SERVICE = 'ORDERS',
-  REVIEWS_SERVICE = 'REVIEWS'
+  REVIEWS_SERVICE = 'REVIEWS',
 }

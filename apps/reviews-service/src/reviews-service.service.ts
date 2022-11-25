@@ -9,13 +9,10 @@ export class ReviewsService {
   constructor (
     @InjectRepository(ReviewEntity)
     private readonly reviewRepository: Repository<ReviewEntity>
-  ) {
-  }
+  ) {}
 
   async getAll (): Promise<ReviewEntity[]> {
-    return await this.reviewRepository
-      .createQueryBuilder('reviews')
-      .getMany()
+    return await this.reviewRepository.createQueryBuilder('reviews').getMany()
   }
 
   async getListingReviews (listingId: string): Promise<ReviewEntity[]> {
