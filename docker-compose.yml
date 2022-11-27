@@ -15,7 +15,7 @@ services:
     ports:
       - '3000:3000'
     networks:
-      - app-tier
+      - eatlater-app
   vendors-gateway:
     build:
       context: .
@@ -32,7 +32,7 @@ services:
     ports:
       - '3001:3001'
     networks:
-      - app-tier
+      - eatlater-app
   admin-gateway:
     build:
       context: .
@@ -49,7 +49,7 @@ services:
     ports:
       - '3002:3002'
     networks:
-      - app-tier
+      - eatlater-app
   users-service:
     build:
       context: .
@@ -66,7 +66,7 @@ services:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
     networks:
-      - app-tier
+      - eatlater-app
   notification-service:
     build:
       context: .
@@ -82,7 +82,7 @@ services:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
     networks:
-      - app-tier
+      - eatlater-app
   reviews-service:
     build:
       context: .
@@ -101,7 +101,7 @@ services:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
     networks:
-      - app-tier
+      - eatlater-app
   vendors-service:
     build:
       context: .
@@ -118,7 +118,7 @@ services:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
     networks:
-      - app-tier
+      - eatlater-app
   admin-service:
     build:
       context: .
@@ -135,7 +135,7 @@ services:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
     networks:
-      - app-tier
+      - eatlater-app
   listings-service:
     build:
       context: .
@@ -152,7 +152,7 @@ services:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
     networks:
-      - app-tier
+      - eatlater-app
   orders-service:
     build:
       context: .
@@ -169,16 +169,15 @@ services:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
     networks:
-      - app-tier
-
+      - eatlater-app
   rabbitmq:
     image: rabbitmq
     ports:
       - '5672:5672'
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+      - queue_data:/var/lib/rabbitmq
     networks:
-      - app-tier
+      - eatlater-app
   users-db:
     image: bitnami/postgresql:14
     ports:
@@ -188,9 +187,9 @@ services:
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=users
     volumes:
-      - pg_data:/var/lib/postgresql
+      - db_data:/var/lib/postgresql
     networks:
-      - app-tier
+      - eatlater-app
   vendors-db:
     image: bitnami/postgresql:14
     ports:
@@ -200,9 +199,9 @@ services:
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=vendors
     volumes:
-      - pg_data:/var/lib/postgresql
+      - db_data:/var/lib/postgresql
     networks:
-      - app-tier
+      - eatlater-app
   admin-db:
     image: bitnami/postgresql:14
     ports:
@@ -212,9 +211,9 @@ services:
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=admin
     volumes:
-      - pg_data:/var/lib/postgresql
+      - db_data:/var/lib/postgresql
     networks:
-      - app-tier
+      - eatlater-app
   listings-db:
     image: bitnami/postgresql:14
     ports:
@@ -224,9 +223,9 @@ services:
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=listings
     volumes:
-      - pg_data:/var/lib/postgresql
+      - db_data:/var/lib/postgresql
     networks:
-      - app-tier
+      - eatlater-app
   orders-db:
     image: bitnami/postgresql:14
     ports:
@@ -238,7 +237,7 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql
     networks:
-      - app-tier
+      - eatlater-app
   reviews-db:
     image: bitnami/postgresql:14
     ports:
@@ -248,14 +247,14 @@ services:
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=orders
     volumes:
-      - pg_data:/var/lib/postgresql
+      - db_data:/var/lib/postgresql
     networks:
-      - app-tier
+      - eatlater-app
 volumes:
-  rabbitmq_data:
+  queue_data:
     driver: local
-  pg_data:
+  db_data:
     driver: local
 networks:
-  app-tier:
+  eatlater-app:
     driver: bridge

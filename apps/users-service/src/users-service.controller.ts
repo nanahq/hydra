@@ -74,7 +74,17 @@ export class UsersServiceController {
       @Ctx() context: RmqContext
   ): Promise<UserEntity> {
     try {
-      return await this.usersService.validateUser(data)
+      const res = await this.usersService.validateUser(data)
+
+      // send a verification SMS when user is created
+      if (res.status === 1) {
+        await lastValueFrom(
+          this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+            phoneNumber: data.phoneNumber
+          })
+        )
+      }
+      return res.data
     } catch (error) {
       throw new RpcException(error)
     } finally {
