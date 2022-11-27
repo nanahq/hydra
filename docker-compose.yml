@@ -235,7 +235,7 @@ services:
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=orders
     volumes:
-      - pg_data:/var/lib/postgresql
+      - db_data:/var/lib/postgresql
     networks:
       - eatlater-app
   reviews-db:
