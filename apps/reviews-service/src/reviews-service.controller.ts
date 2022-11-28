@@ -1,20 +1,8 @@
 import { Controller, UseFilters } from '@nestjs/common'
-import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException
-} from '@nestjs/microservices'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 
 import { ReviewsService } from './reviews-service.service'
-import {
-  ExceptionFilterRpc,
-  QUEUE_MESSAGE,
-  ReviewEntity,
-  ReviewToken,
-  RmqService
-} from '@app/common'
+import { ExceptionFilterRpc, QUEUE_MESSAGE, ReviewEntity, ReviewToken, RmqService } from '@app/common'
 import { ReviewDto } from '@app/common/database/dto/review.dto'
 import { InsertResult } from 'typeorm'
 
@@ -67,7 +55,7 @@ export class ReviewsServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_DELETE_ONE)
-  async deleteListing (
+  async deleteReview (
     @Payload() { reviewId }: { reviewId: string },
       @Ctx() context: RmqContext
   ): Promise<{ status: number }> {
@@ -80,11 +68,12 @@ export class ReviewsServiceController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.CREATE_LISTING)
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_CREATE)
   async createReview (
     @Payload() payload: ReviewDto,
       @Ctx() context: RmqContext
   ): Promise<InsertResult> {
+    console.log(payload)
     try {
       return await this.reviewService.create(payload)
     } catch (error) {

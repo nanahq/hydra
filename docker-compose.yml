@@ -93,8 +93,6 @@ services:
       - ./apps/reviews-service/.env
     depends_on:
       - api-gateway
-      - vendors-gateway
-      - admin-gateway
       - rabbitmq
       - reviews-db
     volumes:

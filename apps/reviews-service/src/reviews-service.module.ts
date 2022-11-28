@@ -11,7 +11,7 @@ import { ReviewsService } from './reviews-service.service'
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-        RMQ_REVIEW_QUEUE: Joi.string(),
+        RMQ_REVIEWS_QUEUE: Joi.string(),
         RMQ_VENDORS_API_QUEUE: Joi.string(),
         RMQ_URI: Joi.string()
       }),

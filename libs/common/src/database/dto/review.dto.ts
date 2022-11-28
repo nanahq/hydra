@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator'
+import { IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator'
 
 export class ReviewDto {
   @IsUUID(4)
@@ -17,7 +17,7 @@ export class ReviewDto {
   @IsNotEmpty()
   public vendorId: string
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
   public reviewStars: number
 }
