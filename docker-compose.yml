@@ -243,7 +243,7 @@ services:
     environment:
       - POSTGRESQL_USERNAME=root
       - POSTGRESQL_PASSWORD=root@123
-      - POSTGRESQL_DATABASE=orders
+      - POSTGRESQL_DATABASE=reviews
     volumes:
       - db_data:/var/lib/postgresql
     networks:
