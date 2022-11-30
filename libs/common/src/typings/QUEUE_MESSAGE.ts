@@ -52,7 +52,6 @@ export enum QUEUE_MESSAGE {
   // Reviews
   REVIEW_CREATE = 'review_create',
   REVIEW_FIND_ONE = 'review_find_one',
-  REVIEW_GET_ALL = 'review_get_all',
   REVIEW_ADMIN_GET_ALL_IN_DB = 'review_admin_get_all_in_db',
   REVIEW_GET_LISTING_REVIEWS = 'review_get_listing_reviews',
   REVIEW_UPDATE_ONE = 'review_update_one',

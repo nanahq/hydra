@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { FitRpcException, ReviewEntity } from '@app/common'
+import { FitRpcException, ResponseWithStatus, ReviewEntity } from '@app/common'
 import { InsertResult, Repository } from 'typeorm'
 import { ReviewDto } from '@app/common/database/dto/review.dto'
 
@@ -23,10 +23,19 @@ export class ReviewsService {
   }
 
   async findOneById (id: string): Promise<ReviewEntity | null> {
-    return await this.reviewRepository
+    const review = await this.reviewRepository
       .createQueryBuilder()
       .where('id = :id', { id })
       .getOne()
+
+    if (review === null) {
+      throw new FitRpcException(
+        'Review with id is not found',
+        HttpStatus.NOT_FOUND
+      )
+    }
+
+    return review
   }
 
   async deleteReviewById (reviewId: string): Promise<{ status: number }> {
@@ -46,7 +55,20 @@ export class ReviewsService {
     return { status: 1 }
   }
 
-  async create (data: ReviewDto): Promise<InsertResult> {
+  async create (data: ReviewDto): Promise<ResponseWithStatus> {
+    const createRequest = this.createReview(data)
+
+    if (createRequest === null) {
+      throw new FitRpcException(
+        'Failed to create a new listing. Incorrect input',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return { status: 1 }
+  }
+
+  async createReview (data: ReviewDto): Promise<InsertResult> {
     return await this.reviewRepository
       .createQueryBuilder('reviews')
       .insert()
