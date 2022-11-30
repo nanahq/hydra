@@ -1,8 +1,22 @@
-import { Controller, Delete, Get, HttpException, Inject, Param, UseGuards } from '@nestjs/common'
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
-import { IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus, ReviewEntity } from '@app/common'
+import {
+  IRpcException,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus,
+  ReviewEntity
+} from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
 @Controller('reviews')

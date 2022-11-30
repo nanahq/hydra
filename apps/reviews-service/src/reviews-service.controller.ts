@@ -1,5 +1,11 @@
 import { Controller, UseFilters } from '@nestjs/common'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 
 import { ReviewsService } from './reviews-service.service'
 import {
@@ -18,8 +24,7 @@ export class ReviewsServiceController {
   constructor (
     private readonly reviewService: ReviewsService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_LISTING_REVIEWS)
   async getListingReviews (
