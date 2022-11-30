@@ -15,6 +15,13 @@ export class ReviewsService {
     return await this.reviewRepository.createQueryBuilder('reviews').getMany()
   }
 
+  async getVendorReviews (vendorId: string): Promise<ReviewEntity[]> {
+    return await this.reviewRepository
+      .createQueryBuilder('reviews')
+      .where('reviews.vendorId = :id', { id: vendorId })
+      .getMany()
+  }
+
   async getListingReviews (listingId: string): Promise<ReviewEntity[]> {
     return await this.reviewRepository
       .createQueryBuilder('reviews')
