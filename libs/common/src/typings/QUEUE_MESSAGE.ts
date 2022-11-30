@@ -57,6 +57,8 @@ export enum QUEUE_MESSAGE {
   REVIEW_GET_VENDOR_REVIEWS = 'review_get_vendor_reviews',
   REVIEW_UPDATE_ONE = 'review_update_one',
   REVIEW_DELETE_ONE = 'review_delete_one',
+  REVIEW_STATS_GET_VENDOR_REVIEWS = 'review_stats_get_vendor_reviews',
+  REVIEW_STATS_GET_LISTING_REVIEWS = 'review_stats_get_listing_reviews',
 }
 
 export enum QUEUE_SERVICE {

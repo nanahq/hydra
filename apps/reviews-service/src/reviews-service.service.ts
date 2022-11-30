@@ -84,4 +84,20 @@ export class ReviewsService {
       .returning('id')
       .execute()
   }
+
+  async statGetVendorReviews (vendorId: string): Promise<any> {
+    return await this.reviewRepository
+      .createQueryBuilder('reviews')
+      .select('COUNT(reviews.vendorId)', 'vendor_reviews')
+      .where('reviews.vendorId = :id', { id: vendorId })
+      .getRawOne()
+  }
+
+  async statGetListingReviews (listingId: string): Promise<any> {
+    return await this.reviewRepository
+      .createQueryBuilder('reviews')
+      .select('COUNT(reviews.listingId)', 'listing_reviews')
+      .where('reviews.listingId = :id', { id: listingId })
+      .getRawOne()
+  }
 }

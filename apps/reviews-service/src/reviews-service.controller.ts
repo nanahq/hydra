@@ -1,11 +1,5 @@
 import { Controller, UseFilters } from '@nestjs/common'
-import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException
-} from '@nestjs/microservices'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 
 import { ReviewsService } from './reviews-service.service'
 import {
@@ -100,6 +94,34 @@ export class ReviewsServiceController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.reviewService.create(payload)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS)
+  async statGetVendorReviews (
+    @Ctx() context: RmqContext,
+      @Payload() { vendorId }: { vendorId: string }
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.reviewService.statGetVendorReviews(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_LISTING_REVIEWS)
+  async statGetListingReviews (
+    @Ctx() context: RmqContext,
+      @Payload() { listingId }: { listingId: string }
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.reviewService.statGetListingReviews(listingId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
