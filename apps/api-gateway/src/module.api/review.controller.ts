@@ -1,5 +1,21 @@
-import { Body, Controller, Get, HttpException, Inject, Param, Post, UseGuards } from '@nestjs/common'
-import { IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus, ReviewEntity, UserEntity } from '@app/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  Post,
+  UseGuards
+} from '@nestjs/common'
+import {
+  IRpcException,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus,
+  ReviewEntity,
+  UserEntity
+} from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { CurrentUser } from './current-user.decorator'
@@ -43,13 +59,17 @@ export class ReviewController {
 
   @Get('listing-reviews/:listingId')
   @UseGuards(JwtAuthGuard)
-  async getListingReviews (@Param('listingId') listingId: string): Promise<ReviewEntity> {
+  async getListingReviews (
+    @Param('listingId') listingId: string
+  ): Promise<ReviewEntity> {
     return await lastValueFrom<ReviewEntity>(
-      this.reviewClient.send(QUEUE_MESSAGE.REVIEW_GET_LISTING_REVIEWS, { listingId }).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.reviewClient
+        .send(QUEUE_MESSAGE.REVIEW_GET_LISTING_REVIEWS, { listingId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
