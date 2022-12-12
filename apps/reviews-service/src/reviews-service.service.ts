@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { FitRpcException, ResponseWithStatus, ReviewEntity } from '@app/common'
-import { InsertResult, Repository } from 'typeorm'
+import { DeleteResult, InsertResult, Repository } from 'typeorm'
 import { ReviewDto } from '@app/common/database/dto/review.dto'
 
 @Injectable()
@@ -16,24 +16,33 @@ export class ReviewsService {
   }
 
   async getVendorReviews (vendorId: string): Promise<ReviewEntity[]> {
-    return await this.reviewRepository
-      .createQueryBuilder('reviews')
-      .where('reviews.vendorId = :id', { id: vendorId })
-      .getMany()
+    const reviews = await this.fetchVendorReviews(vendorId)
+
+    if (reviews === null) {
+      throw new FitRpcException(
+        'Failed to fetch reviews for given vendor',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return reviews
   }
 
   async getListingReviews (listingId: string): Promise<ReviewEntity[]> {
-    return await this.reviewRepository
-      .createQueryBuilder('reviews')
-      .where('reviews.listingId = :id', { id: listingId })
-      .getMany()
+    const reviews = await this.fetchListingReviews(listingId)
+
+    if (reviews === null) {
+      throw new FitRpcException(
+        'Failed to fetch reviews for given vendor',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return reviews
   }
 
   async findOneById (id: string): Promise<ReviewEntity | null> {
-    const review = await this.reviewRepository
-      .createQueryBuilder()
-      .where('id = :id', { id })
-      .getOne()
+    const review = await this.getOneById(id)
 
     if (review === null) {
       throw new FitRpcException(
@@ -46,15 +55,11 @@ export class ReviewsService {
   }
 
   async deleteReviewById (reviewId: string): Promise<{ status: number }> {
-    const deleteRequest = await this.reviewRepository
-      .createQueryBuilder('reviews')
-      .delete()
-      .where('id = :id', { id: reviewId })
-      .execute()
+    const deleteRequest = await this.deleteOneReviewById(reviewId)
 
     if (deleteRequest === null) {
       throw new FitRpcException(
-        'Failed to delete listing. Invalid ID',
+        'Failed to delete review.',
         HttpStatus.UNPROCESSABLE_ENTITY
       )
     }
@@ -63,11 +68,11 @@ export class ReviewsService {
   }
 
   async create (data: ReviewDto): Promise<ResponseWithStatus> {
-    const createRequest = this.createReview(data)
+    const createRequest = await this.createReview(data)
 
     if (createRequest === null) {
       throw new FitRpcException(
-        'Failed to create a new listing. Incorrect input',
+        'Failed to create a new review.',
         HttpStatus.BAD_REQUEST
       )
     }
@@ -75,7 +80,62 @@ export class ReviewsService {
     return { status: 1 }
   }
 
-  async createReview (data: ReviewDto): Promise<InsertResult> {
+  async statGetVendorReviews (vendorId: string): Promise<any> {
+    const stats = await this.statFetchVendorReviews(vendorId)
+
+    if (stats === null) {
+      throw new FitRpcException(
+        'Failed to fetch vendor reviews',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return stats
+  }
+
+  async statGetListingReviews (listingId: string): Promise<any> {
+    const stats = await this.statFetchListingReviews(listingId)
+
+    if (stats === null) {
+      throw new FitRpcException(
+        'Failed fetch listing reviews',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return stats
+  }
+
+  private async fetchVendorReviews (vendorId: string): Promise<ReviewEntity[]> {
+    return await this.reviewRepository
+      .createQueryBuilder('reviews')
+      .where('reviews.vendorId = :id', { id: vendorId })
+      .getMany()
+  }
+
+  private async fetchListingReviews (listingId: string): Promise<ReviewEntity[]> {
+    return await this.reviewRepository
+      .createQueryBuilder('reviews')
+      .where('reviews.listingId = :id', { id: listingId })
+      .getMany()
+  }
+
+  private async getOneById (id: string): Promise<ReviewEntity | null> {
+    return await this.reviewRepository
+      .createQueryBuilder()
+      .where('id = :id', { id })
+      .getOne()
+  }
+
+  private async deleteOneReviewById (reviewId: string): Promise<DeleteResult> {
+    return await this.reviewRepository
+      .createQueryBuilder('reviews')
+      .delete()
+      .where('id = :id', { id: reviewId })
+      .execute()
+  }
+
+  private async createReview (data: ReviewDto): Promise<InsertResult> {
     return await this.reviewRepository
       .createQueryBuilder('reviews')
       .insert()
@@ -85,7 +145,7 @@ export class ReviewsService {
       .execute()
   }
 
-  async statGetVendorReviews (vendorId: string): Promise<any> {
+  private async statFetchVendorReviews (vendorId: string): Promise<any> {
     return await this.reviewRepository
       .createQueryBuilder('reviews')
       .select('COUNT(reviews.vendorId)', 'vendor_reviews')
@@ -93,7 +153,7 @@ export class ReviewsService {
       .getRawOne()
   }
 
-  async statGetListingReviews (listingId: string): Promise<any> {
+  private async statFetchListingReviews (listingId: string): Promise<any> {
     return await this.reviewRepository
       .createQueryBuilder('reviews')
       .select('COUNT(reviews.listingId)', 'listing_reviews')
