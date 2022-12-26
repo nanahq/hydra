@@ -9,17 +9,17 @@ import {
 import { Controller, Inject, UseFilters } from '@nestjs/common'
 
 import {
+  ExceptionFilterRpc,
   loginUserRequest,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  registerUserRequest,
+  ResponseWithStatus,
   RmqService,
+  ServicePayload,
   TokenPayload,
   UserEntity,
-  verifyPhoneRequest,
-  QUEUE_MESSAGE,
-  ExceptionFilterRpc,
-  ServicePayload,
-  ResponseWithStatus,
-  registerUserRequest,
-  QUEUE_SERVICE
+  verifyPhoneRequest
 } from '@app/common'
 import { UsersService } from './users-service.service'
 import { lastValueFrom } from 'rxjs'

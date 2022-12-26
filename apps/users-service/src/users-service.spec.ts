@@ -2,9 +2,10 @@ import { getRepositoryToken } from '@nestjs/typeorm'
 import { FitRpcException, ResponseWithStatus, UserEntity } from '@app/common'
 import { Repository } from 'typeorm'
 import { UsersService } from './users-service.service'
-import { TestingModule, Test } from '@nestjs/testing'
+import { Test, TestingModule } from '@nestjs/testing'
 import * as bcrypt from 'bcrypt'
 import { baseCreateQueryBuilder } from '../../__test__/testing/MockQueryBuilder'
+
 describe('Users Service Unit Test', () => {
   const token = getRepositoryToken(UserEntity)
   let repo: Repository<UserEntity>
@@ -90,15 +91,19 @@ describe('Users Service Unit Test', () => {
     it('should validate user', async () => {
       const passwordHash = await bcrypt.hash(user.password, 10)
       baseCreateQueryBuilder.getOne = () => ({
-        phoneNumber: '+2348107641833',
+        phoneNumber: user.phoneNumber,
         password: passwordHash
       })
+
       jest
         .spyOn(repo, 'createQueryBuilder')
         .mockImplementationOnce(() => baseCreateQueryBuilder)
       expect(await service.validateUser(user)).toStrictEqual({
-        password: '',
-        phoneNumber: '+2348107641833'
+        status: 2,
+        data: {
+          password: '',
+          phoneNumber: user.phoneNumber
+        }
       })
     })
 
@@ -127,7 +132,7 @@ describe('Users Service Unit Test', () => {
       const passwordHash = await bcrypt.hash('WRONG_PASSWORD', 10)
 
       baseCreateQueryBuilder.getOne = () => ({
-        phoneNumber: '+2348107641833',
+        phoneNumber: user.phoneNumber,
         password: passwordHash
       })
 
@@ -153,7 +158,7 @@ describe('Users Service Unit Test', () => {
         .mockImplementationOnce(() => baseCreateQueryBuilder)
       expect(await service.getUser({ userId: 'dnivondovifo' })).toStrictEqual({
         password: '',
-        phoneNumber: '+2348107641833'
+        phoneNumber: user.phoneNumber
       })
     })
 

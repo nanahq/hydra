@@ -16,7 +16,7 @@ import * as cookieParser from 'cookie-parser'
 import * as Joi from 'joi'
 import helmet from 'helmet'
 
-import { RmqModule, QUEUE_SERVICE, FitHttpException } from '@app/common'
+import { FitHttpException, QUEUE_SERVICE, RmqModule } from '@app/common'
 import { UsersController } from './module.api/users.controller'
 import { AuthController } from './module.api/auth.controller'
 import { AuthService } from './module.api/auth.service'
@@ -25,6 +25,7 @@ import { JwtStrategy } from './auth/strategy/jwt.strategy'
 import { VendorsController } from './module.api/vendors.controller'
 import { ListingsController } from './module.api/listing.controller'
 import { OrderController } from './module.api/order.controller'
+import { ReviewController } from './module.api/review.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -66,6 +67,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.REVIEWS_SERVICE }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
@@ -79,7 +81,8 @@ export class AppModule implements NestModule {
         AuthController,
         VendorsController,
         ListingsController,
-        OrderController
+        OrderController,
+        ReviewController
       ],
       providers: [
         AuthService,

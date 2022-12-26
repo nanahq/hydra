@@ -83,6 +83,23 @@ services:
       - /usr/src/app/node_modules
     networks:
       - eatlater-app
+  reviews-service:
+    build:
+      context: .
+      dockerfile: ./apps/reviews-service/Dockerfile
+      target: development
+    command: 'npm run start:dev reviews-service'
+    env_file:
+      - ./apps/reviews-service/.env
+    depends_on:
+      - api-gateway
+      - rabbitmq
+      - reviews-db
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - eatlater-app
   vendors-service:
     build:
       context: .
@@ -215,6 +232,18 @@ services:
       - POSTGRESQL_USERNAME=root
       - POSTGRESQL_PASSWORD=root@123
       - POSTGRESQL_DATABASE=orders
+    volumes:
+      - db_data:/var/lib/postgresql
+    networks:
+      - eatlater-app
+  reviews-db:
+    image: bitnami/postgresql:14
+    ports:
+      - '5432'
+    environment:
+      - POSTGRESQL_USERNAME=root
+      - POSTGRESQL_PASSWORD=root@123
+      - POSTGRESQL_DATABASE=reviews
     volumes:
       - db_data:/var/lib/postgresql
     networks:
