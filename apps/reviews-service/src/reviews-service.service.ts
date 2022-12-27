@@ -80,10 +80,10 @@ export class ReviewsService {
     return { status: 1 }
   }
 
-  async statGetVendorReviews (vendorId: string): Promise<any> {
+  async statGetVendorReviews (vendorId: string): Promise<{sum_vendor_reviews: string}> {
     const stats = await this.statFetchVendorReviews(vendorId)
 
-    if (stats === null) {
+    if (stats === undefined) {
       throw new FitRpcException(
         'Failed to fetch vendor reviews',
         HttpStatus.BAD_REQUEST
@@ -93,10 +93,10 @@ export class ReviewsService {
     return stats
   }
 
-  async statGetListingReviews (listingId: string): Promise<any> {
+  async statGetListingReviews (listingId: string): Promise<{sum_listing_reviews: string}> {
     const stats = await this.statFetchListingReviews(listingId)
 
-    if (stats === null) {
+    if (stats === undefined) {
       throw new FitRpcException(
         'Failed fetch listing reviews',
         HttpStatus.BAD_REQUEST
@@ -147,19 +147,20 @@ export class ReviewsService {
       .execute()
   }
 
-  private async statFetchVendorReviews (vendorId: string): Promise<any> {
+  private async statFetchVendorReviews (vendorId: string): Promise<{sum_vendor_reviews: string} | undefined> {
     return await this.reviewRepository
       .createQueryBuilder('reviews')
-      .select('COUNT(reviews.vendorId)', 'vendor_reviews')
-      .where('reviews.vendorId = :id', { id: vendorId })
+        .where('reviews.vendorId = :id', { id: vendorId })
+        .select('COUNT(*)', 'sum_vendor_reviews')
       .getRawOne()
   }
 
-  private async statFetchListingReviews (listingId: string): Promise<any> {
+  private async statFetchListingReviews (listingId: string): Promise<{sum_listing_reviews: string} | undefined> {
     return await this.reviewRepository
       .createQueryBuilder('reviews')
-      .select('COUNT(reviews.listingId)', 'listing_reviews')
-      .where('reviews.listingId = :id', { id: listingId })
-      .getRawOne()
+        .where('reviews.listingId = :id', { id: listingId })
+        .select('COUNT(*)', 'sum_listing_reviews')
+      .getRawOne<{sum_listing_reviews: string}>()
   }
+
 }

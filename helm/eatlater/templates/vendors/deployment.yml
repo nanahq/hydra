@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
         - name: vendors
-          image: imagynetech/eatlater-vendors-service:latest
+          image: imagynetech/eatlater-vendors-service:0.7.15
           env:
             - name: RMQ_URI
-              value: amqp://user:user@eatlater-app-rabbitmq:5672
+              value: amqp://user:user@eatlater-rabbitmq:5672
             - name: JWT_EXPIRATION
               value: '360000'
             - name: JWT_SECRET
@@ -29,7 +29,7 @@ spec:
             - name: DB_USERNAME
               value: root
             - name: DB_HOST
-              value: eatlater-app-postgresql-hl
+              value: eatlater-postgresql-hl
             - name: DB_PASSWORD
               value: root@123
             - name: DB_NAME

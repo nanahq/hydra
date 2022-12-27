@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
         - name: notification
-          image: imagynetech/eatlater-notification-service:latest
+          image: imagynetech/eatlater-notification-service:0.7.15
           env:
             - name: RMQ_URI
-              value: amqp://user:user@eatlater-app-rabbitmq:5672
+              value: amqp://user:user@eatlater-rabbitmq:5672
             - name: RMQ_API_QUEUE
               value: API
             - name: RMQ_NOTIFICATION_QUEUE

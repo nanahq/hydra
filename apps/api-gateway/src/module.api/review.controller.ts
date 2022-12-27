@@ -38,7 +38,6 @@ export class ReviewController {
     return await lastValueFrom<ResponseWithStatus>(
       this.reviewClient.send(QUEUE_MESSAGE.REVIEW_CREATE, data).pipe(
         catchError((error: IRpcException) => {
-          console.log(error)
           throw new HttpException(error.message, error.status)
         })
       )
