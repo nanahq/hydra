@@ -80,7 +80,9 @@ export class ReviewsService {
     return { status: 1 }
   }
 
-  async statGetVendorReviews (vendorId: string): Promise<{sum_vendor_reviews: string}> {
+  async statGetVendorReviews (
+    vendorId: string
+  ): Promise<{ sum_vendor_reviews: string }> {
     const stats = await this.statFetchVendorReviews(vendorId)
 
     if (stats === undefined) {
@@ -93,7 +95,9 @@ export class ReviewsService {
     return stats
   }
 
-  async statGetListingReviews (listingId: string): Promise<{sum_listing_reviews: string}> {
+  async statGetListingReviews (
+    listingId: string
+  ): Promise<{ sum_listing_reviews: string }> {
     const stats = await this.statFetchListingReviews(listingId)
 
     if (stats === undefined) {
@@ -147,20 +151,23 @@ export class ReviewsService {
       .execute()
   }
 
-  private async statFetchVendorReviews (vendorId: string): Promise<{sum_vendor_reviews: string} | undefined> {
+  private async statFetchVendorReviews (
+    vendorId: string
+  ): Promise<{ sum_vendor_reviews: string } | undefined> {
     return await this.reviewRepository
       .createQueryBuilder('reviews')
-        .where('reviews.vendorId = :id', { id: vendorId })
-        .select('COUNT(*)', 'sum_vendor_reviews')
+      .where('reviews.vendorId = :id', { id: vendorId })
+      .select('COUNT(*)', 'sum_vendor_reviews')
       .getRawOne()
   }
 
-  private async statFetchListingReviews (listingId: string): Promise<{sum_listing_reviews: string} | undefined> {
+  private async statFetchListingReviews (
+    listingId: string
+  ): Promise<{ sum_listing_reviews: string } | undefined> {
     return await this.reviewRepository
       .createQueryBuilder('reviews')
-        .where('reviews.listingId = :id', { id: listingId })
-        .select('COUNT(*)', 'sum_listing_reviews')
-      .getRawOne<{sum_listing_reviews: string}>()
+      .where('reviews.listingId = :id', { id: listingId })
+      .select('COUNT(*)', 'sum_listing_reviews')
+      .getRawOne<{ sum_listing_reviews: string }>()
   }
-
 }
