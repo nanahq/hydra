@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
         - name: listings
-          image: imagynetech/eatlater-listings-service:latest
+          image: imagynetech/eatlater-listings-service:0.7.15
           env:
             - name: RMQ_URI
-              value: amqp://user:user@eatlater-app-rabbitmq:5672
+              value: amqp://user:user@eatlater-rabbitmq:5672
             - name: RMQ_LISTINGS_QUEUE
               value: LISTINGS
             - name: RMQ_ORDERS_QUEUE
@@ -25,7 +25,7 @@ spec:
             - name: DB_USERNAME
               value: root
             - name: DB_HOST
-              value: eatlater-app-postgresql-hl
+              value: eatlater-postgresql-hl
             - name: DB_PASSWORD
               value: root@123
             - name: DB_NAME

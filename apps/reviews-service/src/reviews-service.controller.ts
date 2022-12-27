@@ -111,7 +111,7 @@ export class ReviewsServiceController {
   async statGetVendorReviews (
     @Ctx() context: RmqContext,
       @Payload() { vendorId }: { vendorId: string }
-  ): Promise<ResponseWithStatus> {
+  ): Promise<{ sum_vendor_reviews: string }> {
     try {
       return await this.reviewService.statGetVendorReviews(vendorId)
     } catch (error) {
@@ -125,7 +125,7 @@ export class ReviewsServiceController {
   async statGetListingReviews (
     @Ctx() context: RmqContext,
       @Payload() { listingId }: { listingId: string }
-  ): Promise<ResponseWithStatus> {
+  ): Promise<{ sum_listing_reviews: string }> {
     try {
       return await this.reviewService.statGetListingReviews(listingId)
     } catch (error) {

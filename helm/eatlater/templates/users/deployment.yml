@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
         - name: users
-          image: imagynetech/eatlater-users-service:latest
+          image: imagynetech/eatlater-users-service:0.7.15
           env:
             - name: RMQ_USERS_QUEUE
               value: USERS
             - name: RMQ_NOTIFICATION_QUEUE
               value: NOTIFICATION
             - name: RMQ_URI
-              value: amqp://user:user@eatlater-app-rabbitmq:5672
+              value: amqp://user:user@eatlater-rabbitmq:5672
             - name: DB_USERNAME
               value: root
             - name: DB_PASSWORD
@@ -29,7 +29,7 @@ spec:
             - name: DB_NAME
               value: app
             - name: DB_HOST
-              value: eatlater-app-postgresql-hl
+              value: eatlater-postgresql-hl
 
       imagePullSecrets:
         - name: regcred

@@ -1,26 +1,22 @@
 import {
-  Body,
   Controller,
   Get,
   HttpException,
   Inject,
   Param,
-  Post,
   UseGuards
 } from '@nestjs/common'
 import {
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus,
   ReviewEntity,
-  UserEntity
+  VendorEntity
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { CurrentUser } from './current-user.decorator'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { ReviewDto } from '@app/common/database/dto/review.dto'
 
 @Controller('reviews')
 export class ReviewController {
@@ -28,21 +24,6 @@ export class ReviewController {
     @Inject(QUEUE_SERVICE.REVIEWS_SERVICE)
     private readonly reviewClient: ClientProxy
   ) {}
-
-  @Post('')
-  @UseGuards(JwtAuthGuard)
-  async create (
-    @Body() data: ReviewDto,
-      @CurrentUser() user: UserEntity
-  ): Promise<ResponseWithStatus> {
-    return await lastValueFrom<ResponseWithStatus>(
-      this.reviewClient.send(QUEUE_MESSAGE.REVIEW_CREATE, data).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
-  }
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
@@ -72,26 +53,30 @@ export class ReviewController {
     )
   }
 
-  @Get('')
+  @Get('vendor-reviews/:vid')
   @UseGuards(JwtAuthGuard)
-  async getAll (): Promise<ReviewEntity[]> {
+  async getVendorReviews (
+    @CurrentUser() vendor: VendorEntity
+  ): Promise<ReviewEntity[]> {
     return await lastValueFrom<ReviewEntity[]>(
-      this.reviewClient.send(QUEUE_MESSAGE.REVIEW_ADMIN_GET_ALL_IN_DB, {}).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.reviewClient
+        .send(QUEUE_MESSAGE.REVIEW_GET_VENDOR_REVIEWS, { vendorId: vendor.id })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
   @Get('stats/vendor-reviews/:vid')
   @UseGuards(JwtAuthGuard)
   async statGetVendorReviews (
-    @Param('vid') vendorId: string
-  ): Promise<ReviewEntity[]> {
-    return await lastValueFrom<ReviewEntity[]>(
+    @CurrentUser() { id }: VendorEntity
+  ): Promise<{ sum_vendor_reviews: string }> {
+    return await lastValueFrom<{ sum_vendor_reviews: string }>(
       this.reviewClient
-        .send(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS, { vendorId })
+        .send(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS, { vendorId: id })
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
