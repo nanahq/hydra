@@ -1,58 +1,15 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { TypeOrmModule } from '@nestjs/typeorm'
-
-import {
-  AdminEntity,
-  UserEntity,
-  VendorEntity,
-  ListingEntity
-} from '@app/common'
+import { ConfigService } from '@nestjs/config'
+import { MongooseModule } from '@nestjs/mongoose'
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService): any => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST') as string,
-        port: configService.get<string>('DB_PORT') ?? 5432,
-        username: configService.get<string>('DB_USERNAME') as string,
-        password: configService.get<string>('DB_PASSWORD') as string,
-        database: configService.get<string>('DB_NAME') as string,
-        entities: [UserEntity, VendorEntity, ListingEntity],
-        synchronize: configService.get<string>('env') === 'development'
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGODB_URI')
       }),
       inject: [ConfigService]
-    }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService): any => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST') as string,
-        port: configService.get<string>('DB_PORT') ?? 5432,
-        username: configService.get<string>('DB_USERNAME') as string,
-        password: configService.get<string>('DB_PASSWORD') as string,
-        database: configService.get<string>('DB_NAME') as string,
-        entities: [UserEntity],
-        synchronize: configService.get<string>('env') === 'development'
-      }),
-      inject: [ConfigService]
-    }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService): any => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST') as string,
-        port: configService.get<string>('DB_PORT') ?? 5432,
-        username: configService.get<string>('DB_USERNAME') as string,
-        password: configService.get<string>('DB_PASSWORD') as string,
-        database: configService.get<string>('DB_NAME') as string,
-        entities: [AdminEntity],
-        synchronize: configService.get<string>('env') === 'development'
-      }),
-      inject: [ConfigService]
-    })
+    } as any)
   ]
 })
 export class DatabaseModule {}
