@@ -14,4 +14,5 @@ export class ListingCategory extends AbstractDocument {
     isLive: boolean
 }
 
-export const ListingCategorySchema = SchemaFactory.createForClass(ListingCategory)
+export const ListingCategorySchema =
+  SchemaFactory.createForClass(ListingCategory)

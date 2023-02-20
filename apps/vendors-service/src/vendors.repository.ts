@@ -22,7 +22,8 @@ export class VendorSettingsRepository extends AbstractRepository<VendorSettings>
   protected readonly logger = new Logger(VendorSettings.name)
 
   constructor (
-  @InjectModel(VendorSettings.name) vendorSettingsModel: Model<VendorSettings>,
+  @InjectModel(VendorSettings.name)
+    vendorSettingsModel: Model<VendorSettings>,
     @InjectConnection() connection: Connection
   ) {
     super(vendorSettingsModel, connection)

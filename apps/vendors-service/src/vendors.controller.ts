@@ -13,11 +13,16 @@ import {
   QUEUE_MESSAGE,
   ExceptionFilterRpc,
   ServicePayload,
-  ResponseWithStatus, LoginVendorRequest, UpdateVendorStatus
+  ResponseWithStatus,
+  LoginVendorRequest,
+  UpdateVendorStatus
 } from '@app/common'
 import { VendorsService } from './vendors.service'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
-import { UpdateVendorSettingsDto, VendorUserI } from '@app/common/database/dto/vendor.dto'
+import {
+  UpdateVendorSettingsDto,
+  VendorUserI
+} from '@app/common/database/dto/vendor.dto'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 
 @UseFilters(new ExceptionFilterRpc())

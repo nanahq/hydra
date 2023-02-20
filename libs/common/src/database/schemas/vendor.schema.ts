@@ -52,7 +52,6 @@ export class Vendor extends AbstractDocument {
   @Prop({
     type: String
   })
-
     businessAddress: string
 
   @Prop({

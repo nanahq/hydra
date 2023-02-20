@@ -1,7 +1,10 @@
 import { SchemaTypes } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument } from '@app/common'
-import { PaymentInfo, VendorOperationSetting } from '@app/common/database/types/common'
+import {
+  PaymentInfo,
+  VendorOperationSetting
+} from '@app/common/database/types/common'
 import { Vendor } from './vendor.schema'
 @Schema({ versionKey: false })
 export class VendorSettings extends AbstractDocument {
@@ -17,7 +20,6 @@ export class VendorSettings extends AbstractDocument {
     },
     nullable: true
   })
-
     operations: VendorOperationSetting
 
   @Prop({
@@ -31,4 +33,5 @@ export class VendorSettings extends AbstractDocument {
     payment: PaymentInfo
 }
 
-export const VendorSettingsSchema = SchemaFactory.createForClass(VendorSettings)
+export const VendorSettingsSchema =
+  SchemaFactory.createForClass(VendorSettings)

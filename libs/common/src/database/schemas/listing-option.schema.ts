@@ -14,12 +14,15 @@ export class ListingOptionGroup extends AbstractDocument {
     max: number
 
   @Prop({
-    type: [{
-      name: String,
-      price: Number
-    }]
+    type: [
+      {
+        name: String,
+        price: Number
+      }
+    ]
   })
     options: ListingOption[]
 }
 
-export const ListingOptionGroupSchema = SchemaFactory.createForClass(ListingOptionGroup)
+export const ListingOptionGroupSchema =
+  SchemaFactory.createForClass(ListingOptionGroup)

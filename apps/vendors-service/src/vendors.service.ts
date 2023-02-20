@@ -8,8 +8,15 @@ import {
   TokenPayload,
   UpdateVendorStatus
 } from '@app/common'
-import { CreateVendorDto, UpdateVendorSettingsDto, VendorUserI } from '@app/common/database/dto/vendor.dto'
-import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
+import {
+  CreateVendorDto,
+  UpdateVendorSettingsDto,
+  VendorUserI
+} from '@app/common/database/dto/vendor.dto'
+import {
+  VendorRepository,
+  VendorSettingsRepository
+} from './vendors.repository'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 
@@ -22,7 +29,9 @@ export class VendorsService {
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     // Validation gate to check if vendor with the requet phone is already exist
-    const existingUser = await this.vendorRepository.findOne({ businessEmail: data.businessEmail })
+    const existingUser = await this.vendorRepository.findOne({
+      businessEmail: data.businessEmail
+    })
 
     if (existingUser !== null) {
       throw new FitRpcException(
@@ -69,10 +78,14 @@ export class VendorsService {
     return vendor
   }
 
-  async updateVendorStatus (
-    { id, status }: UpdateVendorStatus
-  ): Promise<ResponseWithStatus> {
-    const updateRequest = await this.vendorRepository.findOneAndUpdate({ _id: id }, { status })
+  async updateVendorStatus ({
+    id,
+    status
+  }: UpdateVendorStatus): Promise<ResponseWithStatus> {
+    const updateRequest = await this.vendorRepository.findOneAndUpdate(
+      { _id: id },
+      { status }
+    )
 
     if (updateRequest === null) {
       throw new FitRpcException(
@@ -101,7 +114,10 @@ export class VendorsService {
     data,
     userId
   }: ServicePayload<Partial<Vendor>>): Promise<ResponseWithStatus> {
-    const req = await this.vendorRepository.findOneAndUpdate({ _id: userId }, { ...data })
+    const req = await this.vendorRepository.findOneAndUpdate(
+      { _id: userId },
+      { ...data }
+    )
 
     if (req === null) {
       throw new FitRpcException(
@@ -151,7 +167,10 @@ export class VendorsService {
     return getVendorsMapper(_vendors)
   }
 
-  async updateSettings (data: UpdateVendorSettingsDto, _id: string): Promise<ResponseWithStatus> {
+  async updateSettings (
+    data: UpdateVendorSettingsDto,
+    _id: string
+  ): Promise<ResponseWithStatus> {
     try {
       await this.vendorSettingsRepository.upsert({ vendorId: _id }, { data })
       return { status: 1 }
@@ -171,13 +190,16 @@ export class VendorsService {
       }
       return req
     } catch (e) {
-      throw new FitRpcException('can not fetch vendors settings at this time', HttpStatus.BAD_GATEWAY)
+      throw new FitRpcException(
+        'can not fetch vendors settings at this time',
+        HttpStatus.BAD_GATEWAY
+      )
     }
   }
 }
 
 function getVendorsMapper (vendors: any[]): any[] {
-  const map = vendors.map(vendor => {
+  const map = vendors.map((vendor) => {
     return {
       businessName: vendor.businessName,
       businessAddress: vendor.businessAddress,

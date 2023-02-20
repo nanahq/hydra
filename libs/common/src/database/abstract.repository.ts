@@ -32,7 +32,9 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     ).toJSON() as unknown as TDocument
   }
 
-  async findOne (filterQuery: FilterQuery<TDocument>): Promise<TDocument | null> {
+  async findOne (
+    filterQuery: FilterQuery<TDocument>
+  ): Promise<TDocument | null> {
     return await this.model.findOne(filterQuery, {}, { lean: true })
   }
 

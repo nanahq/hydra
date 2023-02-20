@@ -6,11 +6,20 @@ import * as Joi from 'joi'
 import { RmqModule } from '@app/common'
 import { VendorsController } from './vendors.controller'
 import { VendorsService } from './vendors.service'
-import { Vendor, VendorSchema } from '@app/common/database/schemas/vendor.schema'
+import {
+  Vendor,
+  VendorSchema
+} from '@app/common/database/schemas/vendor.schema'
 import { MongooseModule } from '@nestjs/mongoose'
-import { VendorSettings, VendorSettingsSchema } from '@app/common/database/schemas/vendor-settings.schema'
+import {
+  VendorSettings,
+  VendorSettingsSchema
+} from '@app/common/database/schemas/vendor-settings.schema'
 import { DatabaseModule } from '@app/common/database/database.module'
-import { VendorSettingsRepository, VendorRepository } from './vendors.repository'
+import {
+  VendorSettingsRepository,
+  VendorRepository
+} from './vendors.repository'
 
 @Module({
   imports: [
@@ -23,7 +32,10 @@ import { VendorSettingsRepository, VendorRepository } from './vendors.repository
       }),
       envFilePath: './apps/vendors-service/.env'
     }),
-    MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }, { name: VendorSettings.name, schema: VendorSettingsSchema }]),
+    MongooseModule.forFeature([
+      { name: Vendor.name, schema: VendorSchema },
+      { name: VendorSettings.name, schema: VendorSettingsSchema }
+    ]),
     DatabaseModule,
     RmqModule
   ],

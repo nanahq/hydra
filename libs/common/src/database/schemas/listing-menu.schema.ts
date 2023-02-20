@@ -33,10 +33,12 @@ export class ListingMenu extends AbstractDocument {
   })
     category: any
 
-  @Prop([{
-    type: SchemaTypes.ObjectId,
-    ref: ListingOptionGroup.name
-  }])
+  @Prop([
+    {
+      type: SchemaTypes.ObjectId,
+      ref: ListingOptionGroup.name
+    }
+  ])
     optionGroups: string
 }
 

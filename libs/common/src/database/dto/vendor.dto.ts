@@ -1,5 +1,14 @@
-import { IsNotEmpty, IsObject, IsOptional, IsPhoneNumber } from 'class-validator'
-import { LocationCoordinates, PaymentInfo, VendorOperationSetting } from '@app/common/database/types/common'
+import {
+  IsNotEmpty,
+  IsObject,
+  IsOptional,
+  IsPhoneNumber
+} from 'class-validator'
+import {
+  LocationCoordinates,
+  PaymentInfo,
+  VendorOperationSetting
+} from '@app/common/database/types/common'
 
 export class CreateVendorDto {
   @IsNotEmpty()
