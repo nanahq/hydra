@@ -60,7 +60,9 @@ services:
       - ./apps/users-service/.env
     depends_on:
       - api-gateway
-      - users-db
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
       - rabbitmq
     volumes:
       - '.:/usr/src/app'
@@ -94,7 +96,9 @@ services:
     depends_on:
       - api-gateway
       - rabbitmq
-      - reviews-db
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
     volumes:
       - '.:/usr/src/app'
       - /usr/src/app/node_modules
@@ -110,7 +114,9 @@ services:
       - ./apps/vendors-service/.env
     depends_on:
       - vendors-gateway
-      - vendors-db
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
       - rabbitmq
     volumes:
       - '.:/usr/src/app'
@@ -126,7 +132,9 @@ services:
     env_file:
       - ./apps/admin-service/.env
     depends_on:
-      - admin-db
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
       - admin-gateway
       - rabbitmq
     volumes:
@@ -143,7 +151,9 @@ services:
     env_file:
       - apps/listings-service/.env
     depends_on:
-      - listings-db
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
       - vendors-gateway
       - rabbitmq
     volumes:
@@ -160,7 +170,9 @@ services:
     env_file:
       - apps/orders-service/.env
     depends_on:
-      - orders-db
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
       - api-gateway
       - rabbitmq
     volumes:
@@ -176,78 +188,37 @@ services:
       - queue_data:/var/lib/rabbitmq
     networks:
       - eatlater-app
-  users-db:
-    image: bitnami/postgresql:14
-    ports:
-      - '5432'
-    environment:
-      - POSTGRESQL_USERNAME=root
-      - POSTGRESQL_PASSWORD=root@123
-      - POSTGRESQL_DATABASE=users
-    volumes:
-      - db_data:/var/lib/postgresql
-    networks:
-      - eatlater-app
-  vendors-db:
-    image: bitnami/postgresql:14
-    ports:
-      - '5432'
-    environment:
-      - POSTGRESQL_USERNAME=root
-      - POSTGRESQL_PASSWORD=root@123
-      - POSTGRESQL_DATABASE=vendors
-    volumes:
-      - db_data:/var/lib/postgresql
-    networks:
-      - eatlater-app
-  admin-db:
-    image: bitnami/postgresql:14
-    ports:
-      - '5432'
-    environment:
-      - POSTGRESQL_USERNAME=root
-      - POSTGRESQL_PASSWORD=root@123
-      - POSTGRESQL_DATABASE=admin
-    volumes:
-      - db_data:/var/lib/postgresql
-    networks:
-      - eatlater-app
-  listings-db:
-    image: bitnami/postgresql:14
-    ports:
-      - '5432'
-    environment:
-      - POSTGRESQL_USERNAME=root
-      - POSTGRESQL_PASSWORD=root@123
-      - POSTGRESQL_DATABASE=listings
-    volumes:
-      - db_data:/var/lib/postgresql
-    networks:
-      - eatlater-app
-  orders-db:
-    image: bitnami/postgresql:14
-    ports:
-      - '5432'
-    environment:
-      - POSTGRESQL_USERNAME=root
-      - POSTGRESQL_PASSWORD=root@123
-      - POSTGRESQL_DATABASE=orders
-    volumes:
-      - db_data:/var/lib/postgresql
-    networks:
-      - eatlater-app
-  reviews-db:
-    image: bitnami/postgresql:14
-    ports:
-      - '5432'
-    environment:
-      - POSTGRESQL_USERNAME=root
-      - POSTGRESQL_PASSWORD=root@123
-      - POSTGRESQL_DATABASE=reviews
-    volumes:
-      - db_data:/var/lib/postgresql
-    networks:
-      - eatlater-app
+  mongodb-primary:
+      image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
+      environment:
+          - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
+          - MONGODB_REPLICA_SET_MODE=primary
+          - MONGODB_ROOT_PASSWORD=password123
+          - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      volumes:
+          - 'db_data:/bitnami/mongodb'
+      ports:
+          - '27017:27017'
+  mongodb-secondary:
+      image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
+      depends_on:
+          - mongodb-primary
+      environment:
+          - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
+          - MONGODB_REPLICA_SET_MODE=secondary
+          - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+          - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+          - MONGODB_REPLICA_SET_KEY=replicasetkey123
+  mongodb-arbiter:
+      image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
+      depends_on:
+          - mongodb-primary
+      environment:
+          - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
+          - MONGODB_REPLICA_SET_MODE=arbiter
+          - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+          - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+          - MONGODB_REPLICA_SET_KEY=replicasetkey123
 volumes:
   queue_data:
     driver: local
