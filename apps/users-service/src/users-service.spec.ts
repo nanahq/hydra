@@ -3,7 +3,7 @@ import { FitRpcException, ResponseWithStatus, UserEntity } from '@app/common'
 import { Repository } from 'typeorm'
 import { UsersService } from './users-service.service'
 import { Test, TestingModule } from '@nestjs/testing'
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import { baseCreateQueryBuilder } from '../../__test__/testing/MockQueryBuilder'
 
 describe('Users Service Unit Test', () => {

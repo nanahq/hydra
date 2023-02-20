@@ -9,7 +9,7 @@ import {
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { TestingModule, Test } from '@nestjs/testing'
 import { baseCreateQueryBuilder } from '../../__test__/testing/MockQueryBuilder'
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import { HttpStatus } from '@nestjs/common'
 
 describe('Admin Service Unit Test', () => {

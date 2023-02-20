@@ -3,7 +3,7 @@ import { FitRpcException, ResponseWithStatus, VendorEntity } from '@app/common'
 import { Repository } from 'typeorm'
 import { VendorsService } from './vendors.service'
 import { TestingModule, Test } from '@nestjs/testing'
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 import { baseCreateQueryBuilder } from '../../__test__/testing/MockQueryBuilder'
 import { HttpStatus } from '@nestjs/common'
 

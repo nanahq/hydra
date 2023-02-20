@@ -3,7 +3,6 @@ FROM node:alpine As development
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN apk add --virtual builds-deps build-base python3
 RUN npm install
 
 COPY . .
