@@ -8,17 +8,17 @@ import {
 import { Controller, UseFilters } from '@nestjs/common'
 
 import {
-  loginUserRequest,
   RmqService,
   TokenPayload,
   QUEUE_MESSAGE,
   ExceptionFilterRpc,
-  updateVendorStatus,
-  VendorEntity,
   ServicePayload,
-  ResponseWithStatus
+  ResponseWithStatus, LoginVendorRequest, UpdateVendorStatus
 } from '@app/common'
 import { VendorsService } from './vendors.service'
+import { Vendor } from '@app/common/database/schemas/vendor.schema'
+import { UpdateVendorSettingsDto, VendorUserI } from '@app/common/database/dto/vendor.dto'
+import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -44,7 +44,7 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_VENDOR_STATUS)
   async updateVendorStatus (
-    @Payload() data: updateVendorStatus,
+    @Payload() data: UpdateVendorStatus,
       @Ctx() ctx: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
@@ -58,9 +58,9 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_LOCAL)
   async getUserByPhone (
-    @Payload() data: loginUserRequest,
+    @Payload() data: LoginVendorRequest,
       @Ctx() context: RmqContext
-  ): Promise<VendorEntity> {
+  ): Promise<Vendor> {
     try {
       return await this.vendorsService.validateVendor(data)
     } catch (error) {
@@ -74,7 +74,7 @@ export class VendorsController {
   async getUserById (
     @Payload() data: TokenPayload,
       @Ctx() context: RmqContext
-  ): Promise<VendorEntity> {
+  ): Promise<Vendor> {
     try {
       this.rmqService.ack(context)
       return await this.vendorsService.getVendor(data)
@@ -85,7 +85,7 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE)
   async updateVendorProfile (
-    @Payload() data: ServicePayload<Partial<VendorEntity>>,
+    @Payload() data: ServicePayload<Partial<Vendor>>,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
@@ -115,7 +115,7 @@ export class VendorsController {
   async getSingleVendor (
     @Payload() { data }: ServicePayload<string>,
       @Ctx() context: RmqContext
-  ): Promise<VendorEntity> {
+  ): Promise<Vendor> {
     try {
       return await this.vendorsService.getVendor({ userId: data })
     } catch (error) {
@@ -126,7 +126,7 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDORS)
-  async getAllVendors (@Ctx() context: RmqContext): Promise<VendorEntity[]> {
+  async getAllVendors (@Ctx() context: RmqContext): Promise<Vendor[]> {
     try {
       return await this.vendorsService.getAllVendors()
     } catch (error) {
@@ -137,9 +137,37 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDORS_USERS)
-  async getAllVendorsUser (@Ctx() context: RmqContext): Promise<VendorEntity[]> {
+  async getAllVendorsUser (@Ctx() context: RmqContext): Promise<VendorUserI[]> {
     try {
       return await this.vendorsService.getAllVendorsUser()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.UPDATE_VENDOR_SETTING)
+  async updateVendorSettings (
+    @Payload() data: ServicePayload<UpdateVendorSettingsDto>,
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.vendorsService.updateSettings(data.data, data.userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_SETTINGS)
+  async getVendorSettings (
+    @Payload() data: ServicePayload<null>,
+      @Ctx() context: RmqContext
+  ): Promise<VendorSettings> {
+    try {
+      return await this.vendorsService.getVendorSettings(data.userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

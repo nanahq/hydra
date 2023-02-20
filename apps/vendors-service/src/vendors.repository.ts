@@ -1,41 +1,30 @@
-import { Repository } from 'typeorm'
-import { VendorDto, VendorEntity, updateVendorStatus } from '@app/common'
+import { Injectable, Logger } from '@nestjs/common'
+import { AbstractRepository } from '@app/common'
+import { InjectModel, InjectConnection } from '@nestjs/mongoose'
+import { Model, Connection } from 'mongoose'
+import { Vendor } from '@app/common/database/schemas/vendor.schema'
+import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 
-export class VendorsRepository extends Repository<VendorEntity> {
-  public async createVendor (vendor: VendorDto): Promise<string> {
-    const query = await this.createQueryBuilder('vendor')
-      .insert()
-      .into(VendorEntity)
-      .values({ ...vendor })
-      .returning('id')
-      .execute()
-    return query as unknown as string
+@Injectable()
+export class VendorRepository extends AbstractRepository<Vendor> {
+  protected readonly logger = new Logger(VendorRepository.name)
+
+  constructor (
+  @InjectModel(Vendor.name) vendorModel: Model<Vendor>,
+    @InjectConnection() connection: Connection
+  ) {
+    super(vendorModel, connection)
   }
+}
 
-  public async getVendorByPhone (phone: string): Promise<VendorEntity | null> {
-    return await this.createQueryBuilder('vendor')
-      .where('vendor.businessPhoneNumber = :phone', { phone })
-      .getOne()
-  }
+@Injectable()
+export class VendorSettingsRepository extends AbstractRepository<VendorSettings> {
+  protected readonly logger = new Logger(VendorSettings.name)
 
-  public async getVendorById (id: string): Promise<VendorEntity | null> {
-    return await this.createQueryBuilder('vendor')
-      .where('vendor.id = :id', { id })
-      .getOne()
-  }
-
-  public async updateVendorApprovalStatus (
-    payload: updateVendorStatus
-  ): Promise<string | null> {
-    const query = await this.createQueryBuilder('vendor')
-      .update(VendorEntity)
-      .set({
-        approvalStatus: () => payload.status
-      })
-      .where('vendor.id = :id', { id: payload.id })
-      .returning('id')
-      .execute()
-
-    return query as any
+  constructor (
+  @InjectModel(VendorSettings.name) vendorSettingsModel: Model<VendorSettings>,
+    @InjectConnection() connection: Connection
+  ) {
+    super(vendorSettingsModel, connection)
   }
 }

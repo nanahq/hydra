@@ -1,5 +1,5 @@
 import {
-  IsArray,
+  IsArray, IsBoolean,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -10,6 +10,7 @@ import {
 
 import { CustomisationOptionTypeEnum } from '@app/common'
 import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
+import { ListingOption } from '@app/common/database/types/common'
 
 export class ListingDto {
   @IsNotEmpty()
@@ -50,4 +51,74 @@ export class ListingOptionEntityDto {
   @IsNotEmpty()
   @IsEnum(CustomisationOptionTypeEnum)
   public optionType: CustomisationOptionTypeEnum
+}
+
+export class CreateListingCategoryDto {
+  @IsNotEmpty()
+  public name: string
+
+  @IsArray()
+  @IsNotEmpty()
+  public tags: string[]
+
+  @IsBoolean()
+  @IsNotEmpty()
+    isLive: boolean
+}
+
+export class CreateListingMenuDto {
+  @IsNotEmpty()
+  public name: string
+
+  @IsNotEmpty()
+  public price: string
+
+  @IsNotEmpty()
+  public serving
+
+  @IsNotEmpty()
+  public photo: string
+
+  @IsNotEmpty()
+  @IsBoolean()
+  public isLive: boolean
+
+  @IsNotEmpty()
+  @IsBoolean()
+  public isAvailable: boolean
+
+  @IsNotEmpty()
+  public category: string
+
+  @IsNotEmpty()
+  public optionGroups: string[]
+}
+
+export class CreateOptionGroupDto {
+  @IsNotEmpty()
+  public name: string
+
+  @IsNotEmpty()
+  public min: number
+
+  @IsNotEmpty()
+    max: number
+
+  @IsNotEmpty()
+    options: ListingOption[]
+}
+
+// Interfaces
+
+export interface ListingCategoryI {
+  name: string
+  tags: string[]
+  isLive: boolean
+}
+
+export interface ListingOptionGroupI {
+  name: string
+  min: number
+  max: number
+  options: ListingOption[]
 }

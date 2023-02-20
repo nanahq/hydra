@@ -24,9 +24,6 @@ export class UserEntity {
   @Column({ type: 'text' })
   public lastName: string
 
-  @Column({ type: 'text' })
-  public state: string
-
   @Column({ nullable: true, default: 0, type: 'int' })
   public status: number
 

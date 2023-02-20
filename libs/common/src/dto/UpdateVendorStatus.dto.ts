@@ -1,11 +1,9 @@
-import { IsNotEmpty, IsEnum } from 'class-validator'
-import { VendorApprovalStatusEnum } from '@app/common'
+import { IsNotEmpty } from 'class-validator'
 
-export class updateVendorStatus {
+export class UpdateVendorStatus {
   @IsNotEmpty()
     id: string
 
-  @IsEnum(VendorApprovalStatusEnum)
   @IsNotEmpty()
-    status: string
+    status: 'ONLINE' | 'OFFLINE'
 }

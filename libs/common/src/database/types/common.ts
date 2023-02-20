@@ -1,27 +1,21 @@
-export interface RideHistory {
-  driverId: string
-  pickupLocation: {
-    type: string
-    coordinates: [number]
-  }
-  dropoffLocation: {
-    type: string
-    coordinates: [number]
-  }
-  distance: number
-  duration: number
-  fare: number
-  status: RideStatus
-  driverRating: number
-  createdAt: string
-  updatedAt: string
+export interface ListingOption {
+  name: string
+  price: string
 }
 
-export type RideStatus = 'cancelled' | 'on-trip' | 'completed'
+export interface PaymentInfo {
+  bankName: string
+  bankAccountInfo: string
+  bankAccountNumber: string
+}
 
-export interface vehicle {
-  name: string
-  model: string
-  plateNumber: string
-  color: string
+export interface VendorOperationSetting {
+  startTime?: string
+  cutoffTime?: string
+  placementTime?: string
+  minOrder?: number
+}
+
+export interface LocationCoordinates {
+  coordinates: [string, string]
 }

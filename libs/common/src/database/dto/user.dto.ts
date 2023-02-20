@@ -20,8 +20,6 @@ export class UserDto {
 
   lastName: string
 
-  state: string
-
   @IsInt()
     status: number
 

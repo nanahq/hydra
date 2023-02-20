@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { TypeOrmModule } from '@nestjs/typeorm'
+import { ConfigModule } from '@nestjs/config'
 
 import * as Joi from 'joi'
 
-import { VendorEntity, RmqModule } from '@app/common'
+import { RmqModule } from '@app/common'
 import { VendorsController } from './vendors.controller'
 import { VendorsService } from './vendors.service'
+import { Vendor, VendorSchema } from '@app/common/database/schemas/vendor.schema'
+import { MongooseModule } from '@nestjs/mongoose'
+import { VendorSettings, VendorSettingsSchema } from '@app/common/database/schemas/vendor-settings.schema'
+import { DatabaseModule } from '@app/common/database/database.module'
+import { VendorSettingsRepository, VendorRepository } from './vendors.repository'
 
 @Module({
   imports: [
@@ -19,24 +23,11 @@ import { VendorsService } from './vendors.service'
       }),
       envFilePath: './apps/vendors-service/.env'
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService): any => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST') as string,
-        port: configService.get<string>('DB_PORT') ?? 5432,
-        username: configService.get<string>('DB_USERNAME') as string,
-        password: configService.get<string>('DB_PASSWORD') as string,
-        database: configService.get<string>('DB_NAME') as string,
-        entities: [VendorEntity],
-        synchronize: true
-      }),
-      inject: [ConfigService]
-    }),
-    TypeOrmModule.forFeature([VendorEntity]),
+    MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }, { name: VendorSettings.name, schema: VendorSettingsSchema }]),
+    DatabaseModule,
     RmqModule
   ],
   controllers: [VendorsController],
-  providers: [VendorsService]
+  providers: [VendorsService, VendorRepository, VendorSettingsRepository]
 })
 export class VendorsModule {}
