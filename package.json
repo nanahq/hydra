@@ -41,7 +41,7 @@
     "@nestjs/platform-express": "^9.2.0",
     "@nestjs/throttler": "^3.0.0",
     "@nestjs/typeorm": "^9.0.1",
-    "amqp-connection-manager": "^4.1.6",
+    "amqp-connection-manager": "^4.1.10",
     "amqplib": "^0.10.3",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
