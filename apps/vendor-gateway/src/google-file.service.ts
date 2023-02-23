@@ -3,8 +3,7 @@ import { Storage } from '@google-cloud/storage'
 export class GoogleFileService {
   private readonly BUCKET_NAME: string
   private readonly PROJECT_ID: string
-  constructor (
-  ) {
+  constructor () {
     this.BUCKET_NAME = 'eatlater_vendors_bucket'
     this.PROJECT_ID = 'eatlater-alpha'
   }
@@ -21,7 +20,9 @@ export class GoogleFileService {
       const blob = bucket.file(file.originalname)
       const blobStream = blob.createWriteStream()
       blobStream.on('finish', () => {
-        resolve(`https://storage.googleapis.com/${this.BUCKET_NAME}/${file.originalname}`)
+        resolve(
+          `https://storage.googleapis.com/${this.BUCKET_NAME}/${file.originalname}`
+        )
       })
       blobStream.end(file.buffer)
     })

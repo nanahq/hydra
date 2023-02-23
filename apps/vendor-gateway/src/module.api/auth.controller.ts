@@ -28,9 +28,7 @@ export class AuthController {
 
   @MessagePattern(QUEUE_MESSAGE.VALIDATE_VENDOR)
   @UseGuards(JwtAuthGuard)
-  async getUserProfile (
-    @CurrentUser() vendor: Vendor
-  ): Promise<Vendor> {
+  async getUserProfile (@CurrentUser() vendor: Vendor): Promise<Vendor> {
     return vendor
   }
 }

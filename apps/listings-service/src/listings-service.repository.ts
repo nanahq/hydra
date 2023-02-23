@@ -1,5 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { AbstractRepository, ListingOptionGroup, ListingCategory, ListingMenu } from '@app/common'
+import {
+  AbstractRepository,
+  ListingOptionGroup,
+  ListingCategory,
+  ListingMenu
+} from '@app/common'
 import { InjectModel, InjectConnection } from '@nestjs/mongoose'
 import { Model, Connection } from 'mongoose'
 

@@ -37,7 +37,9 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     populatePath: string
   ): Promise<any> {
     console.log(populatePath)
-    return await this.model.findOne(filterQuery, {}, { lean: true }).populate(populatePath)
+    return await this.model
+      .findOne(filterQuery, {}, { lean: true })
+      .populate(populatePath)
   }
 
   async findOne (

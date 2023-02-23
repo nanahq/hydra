@@ -55,9 +55,7 @@ export class ReviewController {
 
   @Get('vendor-reviews/:vid')
   @UseGuards(JwtAuthGuard)
-  async getVendorReviews (
-    @CurrentUser() vendor: Vendor
-  ): Promise<Review[]> {
+  async getVendorReviews (@CurrentUser() vendor: Vendor): Promise<Review[]> {
     return await lastValueFrom<Review[]>(
       this.reviewClient
         .send(QUEUE_MESSAGE.REVIEW_GET_VENDOR_REVIEWS, { vendorId: vendor._id })

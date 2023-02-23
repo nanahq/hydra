@@ -31,9 +31,7 @@ export class VendorController {
   ) {}
 
   @Post('register')
-  async registerNewVendor (
-    @Body() request: CreateVendorDto
-  ): Promise<any> {
+  async registerNewVendor (@Body() request: CreateVendorDto): Promise<any> {
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
         catchError((error) => {
@@ -45,9 +43,7 @@ export class VendorController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getVendorProfile (
-    @CurrentUser() vendor: Vendor
-  ): Promise<Vendor> {
+  async getVendorProfile (@CurrentUser() vendor: Vendor): Promise<Vendor> {
     return vendor
   }
 

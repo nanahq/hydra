@@ -61,7 +61,10 @@ export class VendorsService {
     businessEmail,
     password
   }: LoginVendorRequest): Promise<Vendor> {
-    const vendor = await this.vendorRepository.findOne({ businessEmail, isDeleted: false })
+    const vendor = await this.vendorRepository.findOne({
+      businessEmail,
+      isDeleted: false
+    })
 
     if (vendor === null) {
       throw new FitRpcException(
@@ -105,7 +108,10 @@ export class VendorsService {
   }
 
   async getVendor ({ userId: _id }: TokenPayload): Promise<Vendor> {
-    const _vendor = await this.vendorRepository.findOne({ _id, isDeleted: false })
+    const _vendor = await this.vendorRepository.findOne({
+      _id,
+      isDeleted: false
+    })
 
     if (_vendor === null) {
       throw new FitRpcException(
@@ -138,7 +144,10 @@ export class VendorsService {
   }
 
   async deleteVendorProfile (vendorId: string): Promise<ResponseWithStatus> {
-    const deleteRequest = await this.vendorRepository.upsert({ _id: vendorId }, { isDeleted: true })
+    const deleteRequest = await this.vendorRepository.upsert(
+      { _id: vendorId },
+      { isDeleted: true }
+    )
 
     if (deleteRequest === null) {
       throw new FitRpcException(
@@ -180,7 +189,10 @@ export class VendorsService {
     _id: string
   ): Promise<ResponseWithStatus> {
     try {
-      await this.vendorSettingsRepository.upsert({ vendorId: _id }, { ...data })
+      await this.vendorSettingsRepository.upsert(
+        { vendorId: _id },
+        { ...data }
+      )
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(

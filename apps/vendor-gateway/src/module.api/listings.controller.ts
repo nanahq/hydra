@@ -26,7 +26,13 @@ import {
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from '../../../admin-gateway/src/module.api/current-user.decorator'
-import { CreateListingCategoryDto, CreateListingMenuDto, CreateOptionGroupDto, UpdateListingCategoryDto, UpdateOptionGroupDto } from '@app/common/database/dto/listing.dto'
+import {
+  CreateListingCategoryDto,
+  CreateListingMenuDto,
+  CreateOptionGroupDto,
+  UpdateListingCategoryDto,
+  UpdateOptionGroupDto
+} from '@app/common/database/dto/listing.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
 import { GoogleFileService } from '../google-file.service'
@@ -49,20 +55,24 @@ export class ListingsController {
       data: null
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.GET__ALL_LISTING_MENU, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET__ALL_LISTING_MENU, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
   // Listings Menu
   @UseGuards(JwtAuthGuard)
   @Post('menu')
-  @UseInterceptors(FileInterceptor('listingImage', {
-    storage: multer.memoryStorage()
-  }))
+  @UseInterceptors(
+    FileInterceptor('listingImage', {
+      storage: multer.memoryStorage()
+    })
+  )
   async createListingMenu (
     @Body() data: CreateListingMenuDto,
       @CurrentUser() { _id }: Vendor,
@@ -81,7 +91,8 @@ export class ListingsController {
       }
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.CREATE_LISTING_MENU, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.CREATE_LISTING_MENU, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -101,7 +112,8 @@ export class ListingsController {
       data: menuId
     }
     return await lastValueFrom<ListingMenu>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_LISTING_MENU, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_LISTING_MENU, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -121,7 +133,8 @@ export class ListingsController {
       userId: _id as any
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.CREATE_LISTING_CAT, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.CREATE_LISTING_CAT, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -141,7 +154,8 @@ export class ListingsController {
       userId: _id as any
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_LISTING_CAT, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_LISTING_CAT, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -160,7 +174,8 @@ export class ListingsController {
       data: null
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_CAT, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_ALL_LISTING_CAT, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -180,7 +195,8 @@ export class ListingsController {
       data
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.UPDATE_LISTING_CAT, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.UPDATE_LISTING_CAT, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -202,7 +218,8 @@ export class ListingsController {
       userId: _id as any
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.CREATE_LISTING_OP, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.CREATE_LISTING_OP, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -222,7 +239,8 @@ export class ListingsController {
       userId: _id as any
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_LISTING_OP, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_LISTING_OP, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -241,7 +259,8 @@ export class ListingsController {
       data: null
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_OP, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_ALL_LISTING_OP, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -261,7 +280,8 @@ export class ListingsController {
       data
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.UPDATE_LISTING_OP, { ...payload })
+      this.listingClient
+        .send(QUEUE_MESSAGE.UPDATE_LISTING_OP, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
