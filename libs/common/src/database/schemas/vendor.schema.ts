@@ -31,12 +31,7 @@ export class Vendor extends AbstractDocument {
   @Prop(SchemaTypes.Date)
     updatedAt: string
 
-  @Prop({
-    type: {
-      String
-    },
-    default: 'ONLINE'
-  })
+  @Prop(String)
     status: 'ONLINE' | 'OFFLINE'
 
   @Prop({
@@ -53,6 +48,9 @@ export class Vendor extends AbstractDocument {
     type: String
   })
     businessAddress: string
+
+  @Prop({ type: Boolean, default: false })
+    isDeleted: boolean
 
   @Prop({
     type: {

@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpException,
   Inject,
@@ -15,14 +14,14 @@ import { ClientProxy } from '@nestjs/microservices'
 import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  VendorDto,
-  VendorEntity,
+  Vendor,
   ServicePayload,
   IRpcException,
   ResponseWithStatus
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
+import { CreateVendorDto } from '@app/common/database/dto/vendor.dto'
 
 @Controller('vendor')
 export class VendorController {
@@ -33,8 +32,8 @@ export class VendorController {
 
   @Post('register')
   async registerNewVendor (
-    @Body() request: VendorDto
-  ): Promise<ResponseWithStatus> {
+    @Body() request: CreateVendorDto
+  ): Promise<any> {
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
         catchError((error) => {
@@ -47,19 +46,19 @@ export class VendorController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async getVendorProfile (
-    @CurrentUser() vendor: VendorEntity
-  ): Promise<VendorEntity> {
+    @CurrentUser() vendor: Vendor
+  ): Promise<Vendor> {
     return vendor
   }
 
   @UseGuards(JwtAuthGuard)
   @Put('update-profile')
   async updateVendorProfile (
-    @Body() data: Partial<VendorEntity>,
-      @CurrentUser() vendor: VendorEntity
+    @Body() data: Partial<Vendor>,
+      @CurrentUser() vendor: Vendor
   ): Promise<ResponseWithStatus> {
-    const payload: ServicePayload<Partial<VendorEntity>> = {
-      userId: vendor.id,
+    const payload: ServicePayload<Partial<Vendor>> = {
+      userId: vendor._id as any,
       data
     }
     return await lastValueFrom<ResponseWithStatus>(
@@ -71,22 +70,22 @@ export class VendorController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Delete('delete-profile')
-  async deleteVendorProfile (
-    @CurrentUser() vendor: VendorEntity
-  ): Promise<ResponseWithStatus> {
-    const payload: ServicePayload<null> = {
-      userId: vendor.id,
-      data: null
-    }
+  // @UseGuards(JwtAuthGuard)
+  // @Delete('delete-profile')
+  // async deleteVendorProfile (
+  //   @CurrentUser() vendor: VendorEntity
+  // ): Promise<ResponseWithStatus> {
+  //   const payload: ServicePayload<null> = {
+  //     userId: vendor.id,
+  //     data: null
+  //   }
 
-    return await lastValueFrom<ResponseWithStatus>(
-      this.vendorClient.send(QUEUE_MESSAGE.DELETE_VENDOR_PROFILE, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
-  }
+  //   return await lastValueFrom<ResponseWithStatus>(
+  //     this.vendorClient.send(QUEUE_MESSAGE.DELETE_VENDOR_PROFILE, payload).pipe(
+  //       catchError((error: IRpcException) => {
+  //         throw new HttpException(error.message, error.status)
+  //       })
+  //     )
+  //   )
+  // }
 }

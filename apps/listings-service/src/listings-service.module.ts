@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
-import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { ListingsServiceController } from './listings-service.controller'
 import { ListingsService } from './listings-service.service'
-import { RmqModule, ListingEntity, ListingOptionEntity } from '@app/common'
+import { RmqModule } from '@app/common'
+import { ListingCategory, ListingCategorySchema } from '@app/common/database/schemas/listings.cat'
+import { ListingMenu, ListingMenuSchema } from '@app/common/database/schemas/listing-menu.schema'
+import { ListingOptionGroup, ListingOptionGroupSchema } from '@app/common/database/schemas/listing-option.schema'
+import { DatabaseModule } from '@app/common/database/database.module'
+import { MongooseModule } from '@nestjs/mongoose'
+import { ListingMenuRepository, ListingCategoryRepository, ListingOptionGroupRepository } from './listings-service.repository'
 
 @Module({
   imports: [
@@ -14,28 +19,20 @@ import { RmqModule, ListingEntity, ListingOptionEntity } from '@app/common'
       validationSchema: Joi.object({
         RMQ_LISTING_QUEUE: Joi.string(),
         RMQ_VENDORS_API_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string()
+        RMQ_URI: Joi.string(),
+        MONGODB_URI: Joi.string().required()
       }),
       envFilePath: './apps/listings-service/.env'
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService): any => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST') as string,
-        port: configService.get<string>('DB_PORT') ?? 5432,
-        username: configService.get<string>('DB_USERNAME') as string,
-        password: configService.get<string>('DB_PASSWORD') as string,
-        database: configService.get<string>('DB_NAME') as string,
-        entities: [ListingEntity, ListingOptionEntity],
-        synchronize: true
-      }),
-      inject: [ConfigService]
-    }),
-    TypeOrmModule.forFeature([ListingEntity, ListingOptionEntity]),
+    MongooseModule.forFeature([
+      { name: ListingCategory.name, schema: ListingCategorySchema },
+      { name: ListingMenu.name, schema: ListingMenuSchema },
+      { name: ListingOptionGroup.name, schema: ListingOptionGroupSchema }
+    ]),
+    DatabaseModule,
     RmqModule
   ],
   controllers: [ListingsServiceController],
-  providers: [ListingsService]
+  providers: [ListingsService, ListingMenuRepository, ListingCategoryRepository, ListingOptionGroupRepository]
 })
 export class ListingsServiceModule {}

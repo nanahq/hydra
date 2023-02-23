@@ -1,25 +1,27 @@
-FROM node:alpine As development
+FROM node:19.6-alpine3.17 As development
 
 WORKDIR /usr/src/app
 
+RUN apk add --no-cache --virtual builds-deps build-base python3
+
 COPY package*.json ./
-RUN npm install
+
+RUN npm install 
 
 COPY . .
-
 RUN npm run build listings-service
 
-FROM node:alpine as production
+FROM node:19.6-alpine3.17 as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+RUN apk add --no-cache --virtual builds-deps build-base python3
 
-RUN apk  add --virtual builds-deps build-base python3
-RUN npm ci
+COPY package*.json ./
+RUN npm ci 
 
 COPY . .
 

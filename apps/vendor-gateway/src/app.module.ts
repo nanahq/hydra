@@ -25,6 +25,7 @@ import { JwtStrategy } from './auth/strategy/jwt.strategy'
 import { ListingsController } from './module.api/listings.controller'
 import { OrdersController } from './module.api/orders.controller'
 import { ReviewController } from './module.api/review.controller'
+import { GoogleFileService } from './google-file.service'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -65,6 +66,9 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.REVIEWS_SERVICE }),
+        // MulterModule.register({
+        //     storage: MulterModule.
+        // }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
@@ -84,6 +88,7 @@ export class AppModule implements NestModule {
         AuthService,
         LocalStrategy,
         JwtStrategy,
+        GoogleFileService,
         {
           provide: APP_FILTER,
           useClass: FitHttpException
@@ -106,6 +111,10 @@ export class AppModule implements NestModule {
     app.use(helmet())
     app.useGlobalPipes(new ValidationPipe())
     app.setGlobalPrefix(`vendor-gateway/${version}`)
+    // app.enableCors({
+    //   allowedHeaders: ['content-type'],
+    //   origin: '*'
+    // })
   }
 
   /*

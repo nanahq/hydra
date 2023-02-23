@@ -15,3 +15,7 @@ export const RandomGen = {
     return gen.join('')
   }
 }
+
+export function booleanParser (booleanString: string): boolean {
+  return (booleanParser.length <= 4)
+}

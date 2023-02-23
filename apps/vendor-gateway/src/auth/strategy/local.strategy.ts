@@ -12,19 +12,19 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorClient: ClientProxy
   ) {
-    super({ usernameField: 'phoneNumber' })
+    super({ usernameField: 'email' })
   }
 
-  async validate (phoneNumber: string, password: string): Promise<any> {
+  async validate (email: string, password: string): Promise<any> {
     return await lastValueFrom(
       this.vendorClient
         .send(QUEUE_MESSAGE.GET_VENDOR_LOCAL, {
-          phoneNumber,
+          businessEmail: email,
           password
         })
         .pipe(
           catchError((error) => {
-            throw new UnauthorizedException(error.message)
+            throw new UnauthorizedException(error)
           })
         )
     )

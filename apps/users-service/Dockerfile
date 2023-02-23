@@ -3,7 +3,7 @@ FROM node:alpine As development
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN apk  add --virtual builds-deps build-base python3
+RUN apk --no-cache --virtual build-dependencies add python3
 RUN npm install
 
 COPY . .
@@ -18,7 +18,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-
+RUN apk --no-cache --virtual build-dependencies add python3
 RUN npm ci
 
 COPY . .

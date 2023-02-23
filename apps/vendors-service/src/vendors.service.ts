@@ -36,11 +36,18 @@ export class VendorsService {
     if (existingUser !== null) {
       throw new FitRpcException(
         'Email already registered. You can reset your password if forgotten',
-        HttpStatus.UNPROCESSABLE_ENTITY
+        HttpStatus.CONFLICT
       )
     }
+
+    const payload: Partial<Vendor> = {
+      ...data,
+      password: await bcrypt.hash(data.password, 10),
+      status: 'ONLINE'
+    }
+
     try {
-      await this.vendorRepository.create(data)
+      await this.vendorRepository.create(payload)
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
@@ -54,12 +61,12 @@ export class VendorsService {
     businessEmail,
     password
   }: LoginVendorRequest): Promise<Vendor> {
-    const vendor = await this.vendorRepository.findOne({ businessEmail })
+    const vendor = await this.vendorRepository.findOne({ businessEmail, isDeleted: false })
 
     if (vendor === null) {
       throw new FitRpcException(
         'Incorrect email address. Please recheck and try again',
-        HttpStatus.UNAUTHORIZED
+        HttpStatus.CONFLICT
       )
     }
     const isCorrectPassword: boolean = await bcrypt.compare(
@@ -75,6 +82,7 @@ export class VendorsService {
     }
 
     vendor.password = ''
+    console.log(vendor)
     return vendor
   }
 
@@ -97,7 +105,7 @@ export class VendorsService {
   }
 
   async getVendor ({ userId: _id }: TokenPayload): Promise<Vendor> {
-    const _vendor = await this.vendorRepository.findOne({ _id })
+    const _vendor = await this.vendorRepository.findOne({ _id, isDeleted: false })
 
     if (_vendor === null) {
       throw new FitRpcException(
@@ -130,7 +138,7 @@ export class VendorsService {
   }
 
   async deleteVendorProfile (vendorId: string): Promise<ResponseWithStatus> {
-    const deleteRequest = await this.vendorRepository.delete(vendorId as any)
+    const deleteRequest = await this.vendorRepository.upsert({ _id: vendorId }, { isDeleted: true })
 
     if (deleteRequest === null) {
       throw new FitRpcException(
@@ -143,7 +151,7 @@ export class VendorsService {
   }
 
   async getAllVendors (): Promise<Vendor[]> {
-    const getRequest = await this.vendorRepository.find({})
+    const getRequest = await this.vendorRepository.find({ isDeleted: false })
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -155,7 +163,7 @@ export class VendorsService {
   }
 
   async getAllVendorsUser (): Promise<VendorUserI[]> {
-    const _vendors = await this.vendorRepository.find({})
+    const _vendors = await this.vendorRepository.find({ isDeleted: false })
 
     if (_vendors === null) {
       throw new FitRpcException(
@@ -172,7 +180,7 @@ export class VendorsService {
     _id: string
   ): Promise<ResponseWithStatus> {
     try {
-      await this.vendorSettingsRepository.upsert({ vendorId: _id }, { data })
+      await this.vendorSettingsRepository.upsert({ vendorId: _id }, { ...data })
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(

@@ -10,8 +10,8 @@ import {
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ReviewEntity,
-  VendorEntity
+  Review,
+  Vendor
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -27,8 +27,8 @@ export class ReviewController {
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  async findOne (@Param('id') reviewId: string): Promise<ReviewEntity> {
-    return await lastValueFrom<ReviewEntity>(
+  async findOne (@Param('id') reviewId: string): Promise<Review> {
+    return await lastValueFrom<Review>(
       this.reviewClient.send(QUEUE_MESSAGE.REVIEW_FIND_ONE, { reviewId }).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -41,8 +41,8 @@ export class ReviewController {
   @UseGuards(JwtAuthGuard)
   async getListingReviews (
     @Param('listingId') listingId: string
-  ): Promise<ReviewEntity> {
-    return await lastValueFrom<ReviewEntity>(
+  ): Promise<Review> {
+    return await lastValueFrom<Review>(
       this.reviewClient
         .send(QUEUE_MESSAGE.REVIEW_GET_LISTING_REVIEWS, { listingId })
         .pipe(
@@ -56,11 +56,11 @@ export class ReviewController {
   @Get('vendor-reviews/:vid')
   @UseGuards(JwtAuthGuard)
   async getVendorReviews (
-    @CurrentUser() vendor: VendorEntity
-  ): Promise<ReviewEntity[]> {
-    return await lastValueFrom<ReviewEntity[]>(
+    @CurrentUser() vendor: Vendor
+  ): Promise<Review[]> {
+    return await lastValueFrom<Review[]>(
       this.reviewClient
-        .send(QUEUE_MESSAGE.REVIEW_GET_VENDOR_REVIEWS, { vendorId: vendor.id })
+        .send(QUEUE_MESSAGE.REVIEW_GET_VENDOR_REVIEWS, { vendorId: vendor._id })
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -72,11 +72,11 @@ export class ReviewController {
   @Get('stats/vendor-reviews/:vid')
   @UseGuards(JwtAuthGuard)
   async statGetVendorReviews (
-    @CurrentUser() { id }: VendorEntity
+    @CurrentUser() { _id }: Vendor
   ): Promise<{ sum_vendor_reviews: string }> {
     return await lastValueFrom<{ sum_vendor_reviews: string }>(
       this.reviewClient
-        .send(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS, { vendorId: id })
+        .send(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS, { vendorId: _id })
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -89,8 +89,8 @@ export class ReviewController {
   @UseGuards(JwtAuthGuard)
   async statGetListingReviews (
     @Param('lid') listingId: string
-  ): Promise<ReviewEntity[]> {
-    return await lastValueFrom<ReviewEntity[]>(
+  ): Promise<Review[]> {
+    return await lastValueFrom<Review[]>(
       this.reviewClient
         .send(QUEUE_MESSAGE.REVIEW_STATS_GET_LISTING_REVIEWS, { listingId })
         .pipe(

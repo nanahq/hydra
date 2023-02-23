@@ -1,26 +1,26 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument } from '@app/common'
 import { ListingOption } from '@app/common/database/types/common'
+import { SchemaTypes } from 'mongoose'
 
 @Schema({ versionKey: false })
 export class ListingOptionGroup extends AbstractDocument {
-  @Prop(String)
+  @Prop(SchemaTypes.ObjectId)
+    vendorId: string
+
+  @Prop({ type: SchemaTypes.String })
     name: string
 
-  @Prop({ type: Number, default: 0 })
+  @Prop({ type: SchemaTypes.Number })
     min: number
 
-  @Prop({ type: Number, default: 0 })
+  @Prop({ type: SchemaTypes.Number })
     max: number
 
-  @Prop({
-    type: [
-      {
-        name: String,
-        price: Number
-      }
-    ]
-  })
+  @Prop({ type: Boolean, default: false })
+    isDeleted: boolean
+
+  @Prop({ type: [{ name: SchemaTypes.String, price: SchemaTypes.Number }] })
     options: ListingOption[]
 }
 

@@ -28,7 +28,8 @@ import {
       validationSchema: Joi.object({
         RMQ_VENDORS_QUEUE: Joi.string(),
         RMQ_VENDORS_API_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string()
+        RMQ_URI: Joi.string(),
+        MONGODB_URI: Joi.string().required()
       }),
       envFilePath: './apps/vendors-service/.env'
     }),

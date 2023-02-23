@@ -1,12 +1,12 @@
-import { ListingEntity, VendorEntity } from '@app/common'
+import { ListingCategory, Vendor } from '@app/common'
 
 export interface TokenPayload {
   userId: string
 }
 
 export interface VendorWithListing {
-  vendor: VendorEntity
-  listing: ListingEntity
+  vendor: Vendor
+  listing: ListingCategory
 }
 
 export interface ReviewToken {

@@ -10,35 +10,35 @@ import {
 } from '@nestjs/common'
 import {
   IRpcException,
-  OrderEntity,
+  Order,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
   ServicePayload,
   UpdateOrderStatusRequestDto,
-  VendorEntity
+  Vendor
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 import { catchError, lastValueFrom } from 'rxjs'
 
-@Controller('orders')
+@Controller('order')
 export class OrdersController {
   constructor (
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly ordersClient: ClientProxy
   ) {}
 
-  @Get('get-all')
+  @Get('orders')
   @UseGuards(JwtAuthGuard)
-  async getOrders (@CurrentUser() vendor: VendorEntity): Promise<OrderEntity[]> {
+  async getOrders (@CurrentUser() vendor: Vendor): Promise<Order[]> {
     const payload: ServicePayload<null> = {
-      userId: vendor.id,
+      userId: vendor._id as any,
       data: null
     }
 
-    return await lastValueFrom<OrderEntity[]>(
+    return await lastValueFrom<Order[]>(
       this.ordersClient.send(QUEUE_MESSAGE.GET_VENDORS_ORDERS, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -47,15 +47,15 @@ export class OrdersController {
     )
   }
 
-  @Get('get-order/:id')
+  @Get('order/:id')
   @UseGuards(JwtAuthGuard)
-  async getOrder (@Param('id') orderId: string): Promise<OrderEntity> {
+  async getOrder (@Param('id') orderId: string): Promise<Order> {
     const payload: ServicePayload<{ orderId: string }> = {
       userId: '',
       data: { orderId }
     }
 
-    return await lastValueFrom<OrderEntity>(
+    return await lastValueFrom<Order>(
       this.ordersClient
         .send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, payload)
         .pipe(
@@ -66,7 +66,7 @@ export class OrdersController {
     )
   }
 
-  @Put('update-status')
+  @Put('order')
   @UseGuards(JwtAuthGuard)
   async updateOrderStatus (
     @Body() data: UpdateOrderStatusRequestDto

@@ -34,7 +34,6 @@ export class ReviewsController {
         .send(QUEUE_MESSAGE.REVIEW_ADMIN_GET_ALL_IN_DB, {})
         .pipe(
           catchError((error: IRpcException) => {
-            console.log(error)
             throw new HttpException(error.message, error.status)
           })
         )

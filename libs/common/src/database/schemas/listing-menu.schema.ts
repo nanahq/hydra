@@ -1,11 +1,13 @@
-import { SchemaTypes } from 'mongoose'
+import { Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument } from '@app/common'
-import { ListingCategory } from '@app/common/database/schemas/listings.cat'
 import { ListingOptionGroup } from '@app/common/database/schemas/listing-option.schema'
 
 @Schema({ versionKey: false })
 export class ListingMenu extends AbstractDocument {
+  @Prop(Types.ObjectId)
+    vendorId: string
+
   @Prop(String)
     name: string
 
@@ -27,19 +29,14 @@ export class ListingMenu extends AbstractDocument {
   @Prop(Boolean)
     isAvailable: boolean
 
-  @Prop({
-    type: SchemaTypes.ObjectId,
-    ref: ListingCategory.name
-  })
-    category: any
+  @Prop({ type: Boolean, default: false })
+    isDeleted: boolean
 
-  @Prop([
-    {
-      type: SchemaTypes.ObjectId,
-      ref: ListingOptionGroup.name
-    }
-  ])
-    optionGroups: string
+  @Prop({
+    type: [Types.ObjectId],
+    ref: ListingOptionGroup.name
+  })
+    optionGroups: string[]
 }
 
 export const ListingMenuSchema = SchemaFactory.createForClass(ListingMenu)

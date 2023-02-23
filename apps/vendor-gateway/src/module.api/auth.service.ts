@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
 
-import { TokenPayload, VendorEntity } from '@app/common'
+import { TokenPayload, Vendor } from '@app/common'
 
 @Injectable()
 export class AuthService {
@@ -12,9 +12,9 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async login (vendor: VendorEntity, response: Response): Promise<void> {
+  async login (vendor: Vendor, response: Response): Promise<void> {
     const payload: TokenPayload = {
-      userId: vendor.id
+      userId: vendor._id as any
     }
 
     const expires = new Date()

@@ -9,10 +9,6 @@
     "apps/*",
     "libs/*"
   ],
-  "engines": {
-    "node": ">=16.16",
-    "npm": ">=8.11"
-  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -32,6 +28,7 @@
     "all:version": "lerna version $1 --yes --no-push --no-git-tag-version --exact"
   },
   "dependencies": {
+    "@google-cloud/storage": "^6.9.3",
     "@nestjs/common": "^9.1.6",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.1.6",
@@ -73,6 +70,7 @@
     "@types/cookie-parser": "^1.4.3",
     "@types/express": "^4.17.13",
     "@types/jest": "28.1.4",
+    "@types/multer": "^1.4.7",
     "@types/node": "^18.8.3",
     "@types/passport-jwt": "^3.0.7",
     "@types/passport-local": "^1.0.34",

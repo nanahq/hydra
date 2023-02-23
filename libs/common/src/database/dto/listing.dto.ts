@@ -4,41 +4,11 @@ import {
   IsEnum,
   IsNotEmpty,
   IsOptional,
-  IsString,
-  Min,
-  MinLength
+  IsString
 } from 'class-validator'
 
-import { CustomisationOptionTypeEnum } from '@app/common'
-import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
+import { CustomisationOptionTypeEnum, ListingMenu } from '@app/common'
 import { ListingOption } from '@app/common/database/types/common'
-
-export class ListingDto {
-  @IsNotEmpty()
-  @MinLength(3)
-  public listingName: string
-
-  @IsNotEmpty()
-  @Min(1)
-  public listingPrice: number
-
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(3)
-  public listingDesc: string
-
-  @IsNotEmpty()
-  @IsEnum(AvailableDate)
-  public listingAvailableDate: AvailableDate
-
-  @IsOptional()
-  @IsArray()
-  public listingPhoto: string[]
-
-  @IsArray()
-  @IsOptional()
-  public customisableOptions: ListingOptionEntityDto[]
-}
 
 export class ListingOptionEntityDto {
   @IsNotEmpty()
@@ -65,6 +35,27 @@ export class CreateListingCategoryDto {
   @IsBoolean()
   @IsNotEmpty()
     isLive: boolean
+
+  @IsOptional()
+  public menu: string
+}
+
+export class UpdateListingCategoryDto {
+  @IsOptional()
+  public name: string
+
+  @IsArray()
+  @IsOptional()
+  public tags: string[]
+
+  @IsOptional()
+    isLive: boolean
+
+  @IsOptional()
+    isDeleted: boolean
+
+  @IsNotEmpty()
+    catId: string
 }
 
 export class CreateListingMenuDto {
@@ -75,24 +66,25 @@ export class CreateListingMenuDto {
   public price: string
 
   @IsNotEmpty()
-  public serving
+  public serving: string
 
   @IsNotEmpty()
+  public desc: string
+
+  @IsOptional()
   public photo: string
 
   @IsNotEmpty()
-  @IsBoolean()
-  public isLive: boolean
+  public isLive: string
 
   @IsNotEmpty()
-  @IsBoolean()
-  public isAvailable: boolean
+  public isAvailable: string
 
   @IsNotEmpty()
-  public category: string
+  public optionGroups: string
 
   @IsNotEmpty()
-  public optionGroups: string[]
+  public categoryId: string
 }
 
 export class CreateOptionGroupDto {
@@ -106,18 +98,39 @@ export class CreateOptionGroupDto {
     max: number
 
   @IsNotEmpty()
+  @IsArray()
     options: ListingOption[]
+}
+
+export class UpdateOptionGroupDto {
+  @IsOptional()
+  public name: string
+
+  @IsOptional()
+  public min: number
+
+  @IsOptional()
+    max: number
+
+  @IsOptional()
+    options: ListingOption[]
+
+  @IsNotEmpty()
+    optionId: string
 }
 
 // Interfaces
 
 export interface ListingCategoryI {
+  vendorId: string
   name: string
   tags: string[]
   isLive: boolean
+  menu: ListingMenu[]
 }
 
 export interface ListingOptionGroupI {
+  vendorId: string
   name: string
   min: number
   max: number

@@ -32,6 +32,14 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     ).toJSON() as unknown as TDocument
   }
 
+  async findOneAndPopulate (
+    filterQuery: FilterQuery<TDocument>,
+    populatePath: string
+  ): Promise<any> {
+    console.log(populatePath)
+    return await this.model.findOne(filterQuery, {}, { lean: true }).populate(populatePath)
+  }
+
   async findOne (
     filterQuery: FilterQuery<TDocument>
   ): Promise<TDocument | null> {
