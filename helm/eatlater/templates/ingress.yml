@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-    - host: "34.118.24.87.nip.io"
+    - host: "api.eatlater.ng"
       http:
         paths:
             - path: /api-gateway

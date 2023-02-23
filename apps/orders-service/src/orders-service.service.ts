@@ -1,6 +1,6 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { InsertResult, Repository, UpdateResult } from 'typeorm'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { InsertResult, Repository, UpdateResult } from 'typeorm';
 import {
   FitRpcException,
   OrderDto,
@@ -11,38 +11,38 @@ import {
   RandomGen,
   ResponseWithStatus,
   ServicePayload,
-  UpdateOrderStatusRequestDto
-} from '@app/common'
-import { ClientProxy, RpcException } from '@nestjs/microservices'
-import { lastValueFrom } from 'rxjs'
+  UpdateOrderStatusRequestDto,
+} from '@app/common';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class OrdersServiceService {
-  constructor (
+  constructor(
     @InjectRepository(OrderEntity)
     private readonly orderRepository: Repository<OrderEntity>,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
+    private readonly notificationClient: ClientProxy,
   ) {}
 
-  public async placeOrder ({
+  public async placeOrder({
     data,
-    userId
+    userId,
   }: ServicePayload<OrderDto>): Promise<ResponseWithStatus> {
     const createOrderPayload: Partial<OrderEntity> = {
       ...data,
       userId,
       refId: RandomGen.genRandomNum(),
-      orderStatus: OrderStatus.PROCESSED
-    }
+      orderStatus: OrderStatus.PROCESSED,
+    };
 
-    const _newOrder = await this.createOrder(createOrderPayload)
+    const _newOrder = await this.createOrder(createOrderPayload);
 
     if (_newOrder === null) {
       throw new FitRpcException(
         'Can not create your order at this time',
-        HttpStatus.BAD_REQUEST
-      )
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     try {
@@ -51,155 +51,155 @@ export class OrdersServiceService {
         this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
           phoneNumber: createOrderPayload.primaryContact,
           status: OrderStatus.PROCESSED,
-          listingId: createOrderPayload.listingId
-        })
-      )
+          listingId: createOrderPayload.listingId,
+        }),
+      );
     } catch (error) {
-      throw new RpcException(error)
+      throw new RpcException(error);
     }
 
-    return { status: 1 }
+    return { status: 1 };
   }
 
-  public async getVendorOrders (vendorId: string): Promise<OrderEntity[]> {
-    const _orders = await this.getOrdersByVendorId(vendorId)
+  public async getVendorOrders(vendorId: string): Promise<OrderEntity[]> {
+    const _orders = await this.getOrdersByVendorId(vendorId);
 
     if (_orders === null) {
       throw new FitRpcException(
         'Can not find orders with that vendor id',
-        HttpStatus.NOT_FOUND
-      )
+        HttpStatus.NOT_FOUND,
+      );
     }
 
-    return _orders
+    return _orders;
   }
 
-  public async getUserOrders (userId: string): Promise<OrderEntity[]> {
-    const _orders = await this.getOrdersByUserId(userId)
+  public async getUserOrders(userId: string): Promise<OrderEntity[]> {
+    const _orders = await this.getOrdersByUserId(userId);
 
     if (_orders === null) {
       throw new FitRpcException(
         'Can not find orders with that user id',
-        HttpStatus.NOT_FOUND
-      )
+        HttpStatus.NOT_FOUND,
+      );
     }
 
-    return _orders
+    return _orders;
   }
 
-  public async getAllOrderInDb (): Promise<OrderEntity[]> {
-    const _order = await this.getAllOrders()
+  public async getAllOrderInDb(): Promise<OrderEntity[]> {
+    const _order = await this.getAllOrders();
 
     if (_order === null) {
-      throw new FitRpcException('Orders are empty', HttpStatus.NOT_FOUND)
+      throw new FitRpcException('Orders are empty', HttpStatus.NOT_FOUND);
     }
 
-    return _order
+    return _order;
   }
 
-  public async getOrderByRefId (refId: number): Promise<OrderEntity> {
-    const _order = await this.getSingleOrderByRefNumber(refId)
+  public async getOrderByRefId(refId: number): Promise<OrderEntity> {
+    const _order = await this.getSingleOrderByRefNumber(refId);
 
     if (_order === null) {
       throw new FitRpcException(
         'Can not find orders with that ref id',
-        HttpStatus.NOT_FOUND
-      )
+        HttpStatus.NOT_FOUND,
+      );
     }
 
-    return _order
+    return _order;
   }
 
-  public async getOrderById (orderId: string): Promise<OrderEntity> {
-    const _order = await this.getSingleOrderById(orderId)
+  public async getOrderById(orderId: string): Promise<OrderEntity> {
+    const _order = await this.getSingleOrderById(orderId);
 
     if (_order === null) {
       throw new FitRpcException(
         'Can not find order with the given id',
-        HttpStatus.NOT_FOUND
-      )
+        HttpStatus.NOT_FOUND,
+      );
     }
 
-    return _order
+    return _order;
   }
 
-  public async updateStatus ({
+  public async updateStatus({
     status,
-    orderId
+    orderId,
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
-    const order = (await this.getSingleOrderById(orderId)) as OrderEntity
+    const order = (await this.getSingleOrderById(orderId)) as OrderEntity;
 
-    await this.updateOrderStatus(status, orderId)
+    await this.updateOrderStatus(status, orderId);
 
     await lastValueFrom(
       this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
         phoneNumber: order.primaryContact,
         status,
-        listingId: order.listingId
-      })
-    )
+        listingId: order.listingId,
+      }),
+    );
 
-    return { status: 1 }
+    return { status: 1 };
   }
 
-  private async updateOrderStatus (
+  private async updateOrderStatus(
     status: OrderStatus,
-    id: string
+    id: string,
   ): Promise<UpdateResult> {
     try {
       return await this.orderRepository
         .createQueryBuilder('order')
         .update(OrderEntity)
         .set({
-          orderStatus: status
+          orderStatus: status,
         })
         .where('id = :id', { id })
-        .execute()
+        .execute();
     } catch (error) {
-      throw new RpcException(error)
+      throw new RpcException(error);
     }
   }
 
-  private async getSingleOrderById (id: string): Promise<OrderEntity | null> {
+  private async getSingleOrderById(id: string): Promise<OrderEntity | null> {
     return await this.orderRepository
       .createQueryBuilder()
       .where('id = :id', { id })
-      .getOne()
+      .getOne();
   }
 
-  private async getSingleOrderByRefNumber (
-    refNumber: number
+  private async getSingleOrderByRefNumber(
+    refNumber: number,
   ): Promise<OrderEntity | null> {
     return await this.orderRepository
       .createQueryBuilder('order')
       .where('order.refId = :id', { id: refNumber })
-      .getOne()
+      .getOne();
   }
 
-  private async getOrdersByVendorId (
-    vendorId: string
+  private async getOrdersByVendorId(
+    vendorId: string,
   ): Promise<OrderEntity[] | null> {
     return await this.orderRepository
       .createQueryBuilder('order')
       .where('order.vendorId = :vendorId', { vendorId })
-      .getMany()
+      .getMany();
   }
 
-  private async getOrdersByUserId (
-    userId: string
+  private async getOrdersByUserId(
+    userId: string,
   ): Promise<OrderEntity[] | null> {
     return await this.orderRepository
       .createQueryBuilder('order')
       .where('order.userId = :userId', { userId })
-      .getMany()
+      .getMany();
   }
 
-  private async getAllOrders (): Promise<OrderEntity[] | null> {
-    return await this.orderRepository.createQueryBuilder().getMany()
+  private async getAllOrders(): Promise<OrderEntity[] | null> {
+    return await this.orderRepository.createQueryBuilder().getMany();
   }
 
-  private async createOrder (
-    data: Partial<OrderEntity>
+  private async createOrder(
+    data: Partial<OrderEntity>,
   ): Promise<InsertResult | null> {
     try {
       return await this.orderRepository
@@ -208,9 +208,9 @@ export class OrdersServiceService {
         .into(OrderEntity)
         .values(data)
         .returning('id')
-        .execute()
+        .execute();
     } catch (error) {
-      throw new RpcException(error)
+      throw new RpcException(error);
     }
   }
 }

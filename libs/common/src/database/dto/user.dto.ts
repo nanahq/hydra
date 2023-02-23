@@ -4,25 +4,25 @@ import {
   IsNotEmpty,
   IsPhoneNumber,
   MaxLength,
-  MinLength
-} from 'class-validator'
+  MinLength,
+} from 'class-validator';
 
 export class UserDto {
   @IsNotEmpty()
   @IsPhoneNumber('NG')
-    phoneNumber: string
+  phoneNumber: string;
 
   @MinLength(8)
   @MaxLength(20)
-    password: string
+  password: string;
 
-  firstName: string
+  firstName: string;
 
-  lastName: string
+  lastName: string;
 
   @IsInt()
-    status: number
+  status: number;
 
   @IsArray()
-    addresses: string[]
+  addresses: string[];
 }

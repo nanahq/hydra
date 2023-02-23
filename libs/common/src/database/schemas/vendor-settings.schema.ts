@@ -1,37 +1,37 @@
-import { SchemaTypes } from 'mongoose'
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument } from '@app/common'
+import { SchemaTypes } from 'mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { AbstractDocument } from '@app/common';
 import {
   PaymentInfo,
-  VendorOperationSetting
-} from '@app/common/database/types/common'
-import { Vendor } from './vendor.schema'
+  VendorOperationSetting,
+} from '@app/common/database/types/common';
+import { Vendor } from './vendor.schema';
 @Schema({ versionKey: false })
 export class VendorSettings extends AbstractDocument {
   @Prop({ type: SchemaTypes.ObjectId, ref: Vendor.name })
-    vendor: string
+  vendor: string;
 
   @Prop({
     type: {
       startTime: String,
       cutoffTime: String,
       placementTime: String,
-      minOrder: Number
+      minOrder: Number,
     },
-    nullable: true
+    nullable: true,
   })
-    operations: VendorOperationSetting
+  operations: VendorOperationSetting;
 
   @Prop({
     type: {
       bankName: String,
       bankAccountName: String,
-      bankAccountNumber: String
+      bankAccountNumber: String,
     },
-    nullable: true
+    nullable: true,
   })
-    payment: PaymentInfo
+  payment: PaymentInfo;
 }
 
 export const VendorSettingsSchema =
-  SchemaFactory.createForClass(VendorSettings)
+  SchemaFactory.createForClass(VendorSettings);

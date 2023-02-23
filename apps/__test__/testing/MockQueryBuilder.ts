@@ -13,5 +13,5 @@ export const baseCreateQueryBuilder = {
   leftJoinAndSelect: () => baseCreateQueryBuilder,
   getMany: () => baseCreateQueryBuilder,
   preload: () => baseCreateQueryBuilder,
-  andWhere: () => baseCreateQueryBuilder
-} as any
+  andWhere: () => baseCreateQueryBuilder,
+} as any;

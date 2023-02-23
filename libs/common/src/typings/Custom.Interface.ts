@@ -1,5 +1,5 @@
 export interface CustomOptions {
-  optionName: string
-  optionPrice: number
-  optionIsFree: boolean
+  optionName: string;
+  optionPrice: number;
+  optionIsFree: boolean;
 }

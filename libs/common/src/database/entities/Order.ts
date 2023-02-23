@@ -4,68 +4,68 @@ import {
   DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from 'typeorm'
-import { OrderStatus } from '@app/common/typings/OrderStatus.enum'
-import { OrderDeliveryMode } from '@app/common/typings/OrderDeliveryMode.enum'
-import { OrderBreakDown } from '@app/common/database/dto/order.dto'
+  UpdateDateColumn,
+} from 'typeorm';
+import { OrderStatus } from '@app/common/typings/OrderStatus.enum';
+import { OrderDeliveryMode } from '@app/common/typings/OrderDeliveryMode.enum';
+import { OrderBreakDown } from '@app/common/database/dto/order.dto';
 
 @Entity('Order')
 export class OrderEntity {
   @PrimaryGeneratedColumn('uuid')
-  public id: string
+  public id: string;
 
   @Column('uuid')
-  public userId: string
+  public userId: string;
 
   @Column('uuid')
-  public listingId: string
+  public listingId: string;
 
   @Column('uuid')
-  public vendorId: string
+  public vendorId: string;
 
   @Column('int')
-  public totalOrderValue: number
+  public totalOrderValue: number;
 
   @Column('int')
-  public orderValueToCharge: number
+  public orderValueToCharge: number;
 
   @Column('text')
-  public orderStatus: OrderStatus
+  public orderStatus: OrderStatus;
 
   @Column('text')
-  public deliveryMode: OrderDeliveryMode
+  public deliveryMode: OrderDeliveryMode;
 
   @Column('text')
-  public deliveryAddress: string
+  public deliveryAddress: string;
 
   @Column({ type: 'boolean', default: false })
-  public isThirdParty: boolean
+  public isThirdParty: boolean;
 
   @Column('text')
-  public primaryContact: string
+  public primaryContact: string;
 
   @Column({ type: 'text', nullable: true })
-  public secondaryContact: string
+  public secondaryContact: string;
 
   @Column({ type: 'text', nullable: true, array: true })
-  public customizableOptions: string[]
+  public customizableOptions: string[];
 
   @Column({ type: 'text', nullable: true, array: true })
-  public addOns: string[]
+  public addOns: string[];
 
   @Column({ type: 'jsonb', nullable: true })
-  public orderBreakDown: OrderBreakDown
+  public orderBreakDown: OrderBreakDown;
 
   @Column('int')
-  public refId: number
+  public refId: number;
 
   @UpdateDateColumn()
-  public updatedAt: Date
+  public updatedAt: Date;
 
   @DeleteDateColumn()
-  public deletedAt: Date
+  public deletedAt: Date;
 
   @CreateDateColumn()
-  public createdAt: Date
+  public createdAt: Date;
 }

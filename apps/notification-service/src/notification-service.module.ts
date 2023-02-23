@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { TwilioModule } from 'nestjs-twilio'
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TwilioModule } from 'nestjs-twilio';
 
-import * as Joi from 'joi'
+import * as Joi from 'joi';
 
-import { RmqModule, QUEUE_SERVICE } from '@app/common'
-import { NotificationServiceController } from './notification-service.controller'
-import { NotificationServiceService } from './notification-service.service'
+import { RmqModule, QUEUE_SERVICE } from '@app/common';
+import { NotificationServiceController } from './notification-service.controller';
+import { NotificationServiceService } from './notification-service.service';
 
 @Module({
   imports: [
@@ -17,22 +17,22 @@ import { NotificationServiceService } from './notification-service.service'
         RMQ_URI: Joi.string(),
         TWILIO_ACCOUNT_SID: Joi.string(),
         TWILIO_AUTH_TOKEN: Joi.string(),
-        TWILIO_SERVICE_NAME: Joi.string()
+        TWILIO_SERVICE_NAME: Joi.string(),
       }),
-      envFilePath: '.../.env'
+      envFilePath: '.../.env',
     }),
     TwilioModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         accountSid: configService.get('TWILIO_ACCOUNT_SID'),
-        authToken: configService.get('TWILIO_AUTH_TOKEN')
+        authToken: configService.get('TWILIO_AUTH_TOKEN'),
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
-    RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE })
+    RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
   ],
   controllers: [NotificationServiceController],
-  providers: [NotificationServiceService, ConfigService]
+  providers: [NotificationServiceService, ConfigService],
 })
 export class NotificationServiceModule {}

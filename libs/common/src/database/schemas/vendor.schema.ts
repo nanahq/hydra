@@ -1,65 +1,65 @@
-import { SchemaTypes } from 'mongoose'
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument } from '@app/common'
+import { SchemaTypes } from 'mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { AbstractDocument } from '@app/common';
 
 @Schema({ versionKey: false })
 export class Vendor extends AbstractDocument {
   @Prop()
-    firstName: string
+  firstName: string;
 
   @Prop()
-    lastName: string
+  lastName: string;
 
   @Prop({ unique: true, sparse: true })
-    email: string
+  email: string;
 
   @Prop({ unique: true, sparse: true })
-    businessEmail: string
+  businessEmail: string;
 
   @Prop()
-    password: string
+  password: string;
 
   @Prop({ unique: true })
-    phone: string
+  phone: string;
 
   @Prop({ default: false })
-    isValidated: boolean
+  isValidated: boolean;
 
   @Prop(SchemaTypes.Date)
-    createdAt: string
+  createdAt: string;
 
   @Prop(SchemaTypes.Date)
-    updatedAt: string
+  updatedAt: string;
 
   @Prop(String)
-    status: 'ONLINE' | 'OFFLINE'
+  status: 'ONLINE' | 'OFFLINE';
 
   @Prop({
-    type: String
+    type: String,
   })
-    businessName: string
+  businessName: string;
 
   @Prop({
-    type: String
+    type: String,
   })
-    businessLogo: string
+  businessLogo: string;
 
   @Prop({
-    type: String
+    type: String,
   })
-    businessAddress: string
+  businessAddress: string;
 
   @Prop({ type: Boolean, default: false })
-    isDeleted: boolean
+  isDeleted: boolean;
 
   @Prop({
     type: {
-      coordinates: [String]
-    }
+      coordinates: [String],
+    },
   })
-    location: {
-    coordinates: [string, string]
-  }
+  location: {
+    coordinates: [string, string];
+  };
 }
 
-export const VendorSchema = SchemaFactory.createForClass(Vendor)
+export const VendorSchema = SchemaFactory.createForClass(Vendor);

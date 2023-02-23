@@ -1,15 +1,15 @@
-import { DynamicModule, Module } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
-import { ClientsModule, Transport } from '@nestjs/microservices'
-import { RmqModuleOptions } from './interface'
-import { RmqService } from './rmq.service'
+import { DynamicModule, Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RmqModuleOptions } from './interface';
+import { RmqService } from './rmq.service';
 
 @Module({
   providers: [RmqService],
-  exports: [RmqService]
+  exports: [RmqService],
 })
 export class RmqModule {
-  static register ({ name }: RmqModuleOptions): DynamicModule {
+  static register({ name }: RmqModuleOptions): DynamicModule {
     return {
       module: RmqModule,
       imports: [
@@ -20,14 +20,14 @@ export class RmqModule {
               transport: Transport.RMQ,
               options: {
                 urls: [configService.get<string>('RMQ_URI') as string],
-                queue: configService.get<string>(`RMQ_${name}_QUEUE`) as string
-              }
+                queue: configService.get<string>(`RMQ_${name}_QUEUE`) as string,
+              },
             }),
-            inject: [ConfigService]
-          }
-        ])
+            inject: [ConfigService],
+          },
+        ]),
       ],
-      exports: [ClientsModule]
-    }
+      exports: [ClientsModule],
+    };
   }
 }

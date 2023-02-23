@@ -1,23 +1,23 @@
-import { IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator'
+import { IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
 
 export class ReviewDto {
   @IsUUID(4)
   @IsNotEmpty()
-  public listingId: string
+  public listingId: string;
 
   @IsUUID(4)
   @IsNotEmpty()
-  public orderId: string
+  public orderId: string;
 
   @IsString()
   @IsNotEmpty()
-  public reviewBody: string
+  public reviewBody: string;
 
   @IsUUID(4)
   @IsNotEmpty()
-  public vendorId: string
+  public vendorId: string;
 
   @IsNumber()
   @IsNotEmpty()
-  public reviewStars: number
+  public reviewStars: number;
 }

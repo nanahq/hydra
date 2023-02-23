@@ -5,10 +5,10 @@ import {
   HttpException,
   Inject,
   Param,
-  UseGuards
-} from '@nestjs/common'
-import { ClientProxy } from '@nestjs/microservices'
-import { catchError, lastValueFrom } from 'rxjs'
+  UseGuards,
+} from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { catchError, lastValueFrom } from 'rxjs';
 
 import {
   QUEUE_MESSAGE,
@@ -16,64 +16,64 @@ import {
   ResponseWithStatus,
   ServicePayload,
   IRpcException,
-  ListingEntity
-} from '@app/common'
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+  ListingEntity,
+} from '@app/common';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @Controller('listings')
 export class ListingController {
-  constructor (
+  constructor(
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
-    private readonly vendorsClient: ClientProxy
+    private readonly vendorsClient: ClientProxy,
   ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('get-all')
-  async getAllVendors (): Promise<ListingEntity[]> {
+  async getAllVendors(): Promise<ListingEntity[]> {
     return await lastValueFrom<ListingEntity[]>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_ADMIN, {}).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('get-one/:id')
-  async getVendor (@Param('id') listingId: string): Promise<ListingEntity> {
+  async getVendor(@Param('id') listingId: string): Promise<ListingEntity> {
     const payload: ServicePayload<{ listingId: string }> = {
       userId: '',
       data: {
-        listingId
-      }
-    }
+        listingId,
+      },
+    };
     return await lastValueFrom<ListingEntity>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_LISTING_INFO, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('delete-listing/:id')
-  async deleteVendorProfile (
-    @Param('id') listingId: string
+  async deleteVendorProfile(
+    @Param('id') listingId: string,
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<{ listingId: string }> = {
       userId: '',
       data: {
-        listingId
-      }
-    }
+        listingId,
+      },
+    };
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorsClient.send(QUEUE_MESSAGE.DELETE_LISTING, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 }

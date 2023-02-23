@@ -4,37 +4,37 @@ import {
   UpdateDateColumn,
   Entity,
   Column,
-  PrimaryGeneratedColumn
-} from 'typeorm'
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-import { AdminLevel } from '@app/common/typings/AdminLevel.enum'
+import { AdminLevel } from '@app/common/typings/AdminLevel.enum';
 
 @Entity('admin')
 export class AdminEntity {
   @PrimaryGeneratedColumn('uuid')
-  public id: string
+  public id: string;
 
   @Column()
-  public userName: string
+  public userName: string;
 
   @Column({ type: 'text', select: false })
-  public password: string
+  public password: string;
 
   @Column({ type: 'text' })
-  public firstName: string
+  public firstName: string;
 
   @Column({ type: 'text' })
-  public lastName: string
+  public lastName: string;
 
   @Column({ type: 'enum', enum: AdminLevel, default: AdminLevel.SILVER })
-  public level: AdminLevel
+  public level: AdminLevel;
 
   @UpdateDateColumn()
-  public updatedAt: Date
+  public updatedAt: Date;
 
   @DeleteDateColumn()
-  public deletedAt: Date
+  public deletedAt: Date;
 
   @CreateDateColumn()
-  public createdAt: Date
+  public createdAt: Date;
 }
