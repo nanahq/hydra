@@ -31,3 +31,7 @@ dependencies:
   - name: rabbitmq
     version: 10.1.8
     repository: https://charts.bitnami.com/bitnami
+
+  - name: mongodb
+    version: 12.1.20
+    repository: https://charts.bitnami.com/bitnami

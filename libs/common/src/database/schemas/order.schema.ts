@@ -1,72 +1,72 @@
-import { SchemaTypes } from 'mongoose'
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, OrderStatus } from '@app/common'
-import { OrderBreakDown } from '@app/common/database/dto/order.dto'
+import { SchemaTypes } from 'mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { AbstractDocument, OrderStatus } from '@app/common';
+import { OrderBreakDown } from '@app/common/database/dto/order.dto';
 
 @Schema({ versionKey: false })
 export class Order extends AbstractDocument {
   @Prop({
-    type: SchemaTypes.ObjectId
+    type: SchemaTypes.ObjectId,
   })
-    userId: string
+  userId: string;
 
   @Prop({
-    type: SchemaTypes.ObjectId
+    type: SchemaTypes.ObjectId,
   })
-    listingsId: string
+  listingsId: string;
 
   @Prop({
-    type: SchemaTypes.ObjectId
+    type: SchemaTypes.ObjectId,
   })
-    vendorId: string
+  vendorId: string;
 
   @Prop({
-    type: Number
+    type: Number,
   })
-    totalOrderValue: number
+  totalOrderValue: number;
 
   @Prop({
-    type: Number
+    type: Number,
   })
-    orderValuePayable: number
+  orderValuePayable: number;
 
   @Prop({
-    type: String
+    type: String,
   })
-    deliveryAddess: string
+  deliveryAddess: string;
 
   @Prop({ type: String })
-    primaryContact: string
+  primaryContact: string;
 
   @Prop({ default: false, type: Boolean })
-    isThirdParty: boolean
+  isThirdParty: boolean;
 
   @Prop(SchemaTypes.Date)
-    createdAt: string
+  createdAt: string;
 
   @Prop(SchemaTypes.Date)
-    updatedAt: string
+  updatedAt: string;
 
   @Prop(Number)
-    refId: number
+  refId: number;
 
   @Prop([String])
-    options: string[]
+  options: string[];
 
   @Prop({
-    type: String
+    type: String,
   })
-    orderStatus: OrderStatus
+  orderStatus: OrderStatus;
 
   @Prop({
     type: {
       orderCost: Number,
       systemFee: Number,
       deliveryFee: Number,
-      vat: Number
-    }
+      vat: Number,
+    },
   })
-    orderBreakDown: OrderBreakDown
+  orderBreakDown: OrderBreakDown;
 }
 
-export const OrderSchema = SchemaFactory.createForClass(Order)
+export const OrderSchema = SchemaFactory.createForClass(Order);

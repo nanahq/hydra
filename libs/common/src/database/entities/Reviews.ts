@@ -4,35 +4,35 @@ import {
   DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from 'typeorm'
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('reviews')
 export class ReviewEntity {
   @PrimaryGeneratedColumn('uuid')
-  public id: string
+  public id: string;
 
   @Column({ type: 'text' })
-  public reviewBody: string
+  public reviewBody: string;
 
   @Column({ type: 'uuid' })
-  public listingId: string
+  public listingId: string;
 
   @Column({ type: 'uuid' })
-  public vendorId: string
+  public vendorId: string;
 
   @Column({ type: 'uuid' })
-  public orderId: string
+  public orderId: string;
 
   @Column({ type: 'int' })
-  public reviewStars: number
+  public reviewStars: number;
 
   @UpdateDateColumn()
-  public updatedAt: Date
+  public updatedAt: Date;
 
   @CreateDateColumn()
-  public createdAt: Date
+  public createdAt: Date;
 
   @DeleteDateColumn()
-  public deletedAt: Date
+  public deletedAt: Date;
 }

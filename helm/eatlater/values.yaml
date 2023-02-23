@@ -8,3 +8,14 @@ rabbitmq:
        username: user
        password: user
 
+mongodb:
+  architecture: replicaset
+  auth:
+    rootPassword: password123
+    replicaSetKey: sg9BlnfzGND2D7SL
+    replicaCount: 3
+  initdbScripts: 
+    setup_replicaset_script.js : |
+      rs.add("eatlater-mongodb-0.eatlater-mongodb-headless.default.svc.cluster.local:27017")
+      rs.add("eatlater-mongodb-1.eatlater-mongodb-headless.default.svc.cluster.local:27017")
+      rs.add("eatlater-mongodb-2.eatlater-mongodb-headless.default.svc.cluster.local:27017")

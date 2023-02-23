@@ -3,17 +3,17 @@ import {
   IsPhoneNumber,
   IsString,
   MaxLength,
-  MinLength
-} from 'class-validator'
+  MinLength,
+} from 'class-validator';
 
 export class registerUserRequest {
   @IsNotEmpty()
   @IsPhoneNumber('NG')
-    phoneNumber: string
+  phoneNumber: string;
 
   @IsString()
   @IsNotEmpty()
   @MinLength(8)
   @MaxLength(20)
-    password: string
+  password: string;
 }

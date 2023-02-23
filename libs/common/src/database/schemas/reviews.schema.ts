@@ -1,29 +1,29 @@
-import { SchemaTypes } from 'mongoose'
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument } from '@app/common'
+import { SchemaTypes } from 'mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { AbstractDocument } from '@app/common';
 
 @Schema({ versionKey: false })
 export class Review extends AbstractDocument {
   @Prop(String)
-    reviewBody: string
+  reviewBody: string;
 
   @Prop(SchemaTypes.ObjectId)
-    listingId: string
+  listingId: string;
 
   @Prop(SchemaTypes.ObjectId)
-    vendorId: string
+  vendorId: string;
 
   @Prop(Number)
-    reviewStars: number
+  reviewStars: number;
 
   @Prop(SchemaTypes.ObjectId)
-    orderId: string
+  orderId: string;
 
   @Prop(String)
-    reviewerName: string
+  reviewerName: string;
 
   @Prop(SchemaTypes.Date)
-    createdAt: string
+  createdAt: string;
 }
 
-export const ReviewSchema = SchemaFactory.createForClass(Review)
+export const ReviewSchema = SchemaFactory.createForClass(Review);

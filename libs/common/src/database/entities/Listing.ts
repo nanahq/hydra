@@ -5,33 +5,33 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from 'typeorm'
-import { ListingOptionEntity } from '@app/common/database/entities/ListingOption'
-import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum'
+  UpdateDateColumn,
+} from 'typeorm';
+import { ListingOptionEntity } from '@app/common/database/entities/ListingOption';
+import { AvailableDate } from '@app/common/typings/AvailableDatesEnum.enum';
 
 @Entity({ name: 'listings' })
 export class ListingEntity {
   @PrimaryGeneratedColumn('uuid')
-    id: string
+  id: string;
 
   @Column({ type: 'text' })
-    listingName: string
+  listingName: string;
 
   @Column({ type: 'int' })
-    listingPrice: number
+  listingPrice: number;
 
   @Column({ type: 'text' })
-    vendorId: string
+  vendorId: string;
 
   @Column({ type: 'text' })
-    listingDesc: string
+  listingDesc: string;
 
   @Column({
     type: 'enum',
-    enum: AvailableDate
+    enum: AvailableDate,
   })
-    listingAvailableDate: AvailableDate
+  listingAvailableDate: AvailableDate;
 
   @OneToMany(
     () => ListingOptionEntity,
@@ -41,29 +41,29 @@ export class ListingEntity {
       nullable: true,
       cascade: ['insert', 'update'],
       onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
-    }
+      onUpdate: 'CASCADE',
+    },
   )
-    customisableOptions: ListingOptionEntity[]
+  customisableOptions: ListingOptionEntity[];
 
   @Column({
     type: 'boolean',
-    default: false
+    default: false,
   })
-    isOnDemand: boolean
+  isOnDemand: boolean;
 
   @Column({
     type: 'simple-array',
-    nullable: true
+    nullable: true,
   })
-    listingPhoto: string[]
+  listingPhoto: string[];
 
   @UpdateDateColumn()
-  public updatedAt: Date
+  public updatedAt: Date;
 
   @DeleteDateColumn()
-  public deletedAt: Date
+  public deletedAt: Date;
 
   @CreateDateColumn()
-  public createdAt: Date
+  public createdAt: Date;
 }

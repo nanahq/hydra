@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import * as Joi from 'joi'
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as Joi from 'joi';
 
-import { AdminServiceService } from './admin-service.service'
-import { AdminServiceController } from './admin-service.controller'
-import { RmqModule, AdminEntity } from '@app/common'
+import { AdminServiceService } from './admin-service.service';
+import { AdminServiceController } from './admin-service.controller';
+import { RmqModule, AdminEntity } from '@app/common';
 
 @Module({
   imports: [
@@ -14,9 +14,9 @@ import { RmqModule, AdminEntity } from '@app/common'
       validationSchema: Joi.object({
         RMQ_VENDORS_QUEUE: Joi.string(),
         RMQ_VENDORS_API_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string()
+        RMQ_URI: Joi.string(),
       }),
-      envFilePath: './apps/admin-service/.env'
+      envFilePath: './apps/admin-service/.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -28,14 +28,14 @@ import { RmqModule, AdminEntity } from '@app/common'
         password: configService.get<string>('DB_PASSWORD') as string,
         database: configService.get<string>('DB_NAME') as string,
         entities: [AdminEntity],
-        synchronize: true
+        synchronize: true,
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([AdminEntity]),
-    RmqModule
+    RmqModule,
   ],
   controllers: [AdminServiceController],
-  providers: [AdminServiceService]
+  providers: [AdminServiceService],
 })
 export class AdminServiceModule {}
