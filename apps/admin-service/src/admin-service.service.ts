@@ -33,7 +33,7 @@ export class AdminServiceService {
     userName: string
     password: string
   }): Promise<Admin> {
-    const admin = await this.adminRepository.findOne({ userName }) as Admin | null
+    const admin = await this.adminRepository.findOne({ userName })
 
     if (admin === null) {
       throw new FitRpcException(
