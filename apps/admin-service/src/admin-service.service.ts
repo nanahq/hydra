@@ -18,13 +18,12 @@ export class AdminServiceService {
       password: await bcrypt.hash(data.password, 10)
     }
 
-      try {
-        await this.adminRepository.create(payload)
-          return { status: 1 }
-    }catch (error) {
-        throw new FitRpcException('Something went wrong.', HttpStatus.INTERNAL_SERVER_ERROR)
+    try {
+      await this.adminRepository.create(payload)
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException('Something went wrong.', HttpStatus.INTERNAL_SERVER_ERROR)
     }
-
   }
 
   public async validateAdminWithPassword ({
@@ -34,7 +33,7 @@ export class AdminServiceService {
     userName: string
     password: string
   }): Promise<Admin> {
-      const admin = await this.adminRepository.findOne({userName}) as Admin | null
+    const admin = await this.adminRepository.findOne({ userName }) as Admin | null
 
     if (admin === null) {
       throw new FitRpcException(
@@ -60,7 +59,7 @@ export class AdminServiceService {
   }
 
   public async validateAdminWithId (_id: string): Promise<Admin> {
-    const getAdminByIdRequest = await this.adminRepository.findOne({_id})
+    const getAdminByIdRequest = await this.adminRepository.findOne({ _id })
 
     if (getAdminByIdRequest === null) {
       throw new FitRpcException(
@@ -69,13 +68,13 @@ export class AdminServiceService {
       )
     }
     getAdminByIdRequest.password = ''
-    return getAdminByIdRequest 
+    return getAdminByIdRequest
   }
 
   public async changeAdminAccess (
     data: UpdateAdminLevelRequestDto
   ): Promise<ResponseWithStatus> {
-    const changeAdminAccessRequest = await this.adminRepository.findOneAndUpdate({_id: data.id}, {level: data.level})
+    const changeAdminAccessRequest = await this.adminRepository.findOneAndUpdate({ _id: data.id }, { level: data.level })
 
     if (changeAdminAccessRequest === null) {
       throw new FitRpcException(

@@ -53,7 +53,7 @@ export class VendorsController {
       )
     )
 
-    const { _id, businessName, businessAddress} = vendor
+    const { _id, businessName, businessAddress } = vendor
 
     return {
       _id,

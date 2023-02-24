@@ -19,7 +19,7 @@ import { OrderRepository } from './order.repository'
       }),
       envFilePath: './apps/orders-service/.env'
     }),
-    MongooseModule.forFeature([{name: Order.name, schema: OrderSchema}]),
+    MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }]),
     DatabaseModule,
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
     RmqModule

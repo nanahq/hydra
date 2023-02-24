@@ -6,12 +6,12 @@ import { Admin } from '@app/common/database/schemas/vendor.schema'
 
 @Injectable()
 export class AdminRepository extends AbstractRepository<Admin> {
-    protected readonly logger = new Logger(AdminRepository.name)
+  protected readonly logger = new Logger(AdminRepository.name)
 
-    constructor (
-            @InjectModel(Admin.name) adminModel: Model<Admin>,
-            @InjectConnection() connection: Connection
-            ) {
-        super(adminModel, connection)
-    }
+  constructor (
+  @InjectModel(Admin.name) adminModel: Model<Admin>,
+    @InjectConnection() connection: Connection
+  ) {
+    super(adminModel, connection)
+  }
 }

@@ -18,7 +18,7 @@ import { OrderRepository } from './order.repository'
 @Injectable()
 export class OrdersServiceService {
   constructor (
-    private readonly orderRepository:OrderRepository,
+    private readonly orderRepository: OrderRepository,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy
   ) {}
@@ -60,24 +60,21 @@ export class OrdersServiceService {
   }
 
   public async getAllVendorOrders (vendorId: string): Promise<Order[]> {
-
     try {
-      const _orders = await this.orderRepository.find({vendorId})
+      const _orders = await this.orderRepository.find({ vendorId })
       return _orders
-      } catch (error) {
-        throw new FitRpcException(
-          'Can not process request. Try again later',
-          HttpStatus.INTERNAL_SERVER_ERROR
-        )
-      }
-   
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not process request. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 
   public async getAllUserOrders (userId: string): Promise<Order[]> {
-
     try {
-    const _orders = await this.orderRepository.find({userId})
-    return _orders
+      const _orders = await this.orderRepository.find({ userId })
+      return _orders
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -90,42 +87,41 @@ export class OrdersServiceService {
     try {
       const _orders = await this.orderRepository.find({})
       return _orders
-      } catch (error) {
-        throw new FitRpcException(
-          'Can not process request. Try again later',
-          HttpStatus.INTERNAL_SERVER_ERROR
-        )
-      }
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not process request. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 
   public async getOrderByRefId (refId: number): Promise<Order | null> {
-
     try {
-    return await this.orderRepository.findOne({refId})
-      } catch (error) {
-        throw new FitRpcException(
-          'Can not process request. Try again later',
-          HttpStatus.INTERNAL_SERVER_ERROR
-        )
-      }
+      return await this.orderRepository.findOne({ refId })
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not process request. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 
   public async getOrderById (_id: any): Promise<Order | null> {
     try {
-      return await this.orderRepository.findOne({_id})
-        } catch (error) {
-          throw new FitRpcException(
-            'Can not process request. Try again later',
-            HttpStatus.INTERNAL_SERVER_ERROR
-          )
-        }
+      return await this.orderRepository.findOne({ _id })
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not process request. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 
   public async updateStatus ({
     status,
     orderId
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
-    const order = (await this.orderRepository.findOneAndUpdate({_id: orderId}, {status})) 
+    const order = (await this.orderRepository.findOneAndUpdate({ _id: orderId }, { status }))
 
     await lastValueFrom(
       this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {

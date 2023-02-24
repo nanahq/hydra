@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { TypeOrmModule } from '@nestjs/typeorm'
+import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
 
 import { AdminServiceService } from './admin-service.service'
@@ -21,7 +20,7 @@ import { DatabaseModule } from '@app/common/database/database.module'
       }),
       envFilePath: './apps/admin-service/.env'
     }),
-    MongooseModule.forFeature([{name: Admin.name, schema: AdminSchema}]),
+    MongooseModule.forFeature([{ name: Admin.name, schema: AdminSchema }]),
     DatabaseModule,
     RmqModule
   ],
