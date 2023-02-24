@@ -1,64 +1,64 @@
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices'
 import {
   Controller,
   Get,
   HttpException,
   Inject,
   Param,
-  UseGuards,
-} from '@nestjs/common';
+  UseGuards
+} from '@nestjs/common'
 import {
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ServicePayload,
-  VendorEntity,
-} from '@app/common';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { catchError, lastValueFrom } from 'rxjs';
+  Vendor
+} from '@app/common'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+import { catchError, lastValueFrom } from 'rxjs'
 
-@Controller('vendors')
+@Controller('vendor')
 export class VendorsController {
-  constructor(
+  constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
-    private readonly vendorsClient: ClientProxy,
+    private readonly vendorsClient: ClientProxy
   ) {}
 
-  @Get('get-all')
+  @Get('vendors')
   @UseGuards(JwtAuthGuard)
-  async getVendors(): Promise<VendorEntity[]> {
-    return await lastValueFrom<VendorEntity[]>(
+  async getVendors (): Promise<Vendor[]> {
+    return await lastValueFrom<Vendor[]>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_ALL_VENDORS_USERS, {}).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
-  @Get('get-one/:vendorId')
+  @Get('/:vendorId')
   @UseGuards(JwtAuthGuard)
-  async getVendor(
-    @Param('vendorId') vendorId: string,
-  ): Promise<Partial<VendorEntity>> {
+  async getVendor (
+    @Param('vendorId') vendorId: string
+  ): Promise<Partial<Vendor>> {
     const payload: ServicePayload<string> = {
       userId: '',
-      data: vendorId,
-    };
-    const vendor = await lastValueFrom<VendorEntity>(
+      data: vendorId
+    }
+    const vendor = await lastValueFrom<Vendor>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_VENDOR, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
 
-    const { id, state, businessName } = vendor;
+    const { _id, businessName, businessAddress } = vendor
 
     return {
-      id,
-      state,
+      _id,
       businessName,
-    };
+      businessAddress
+    }
   }
 }

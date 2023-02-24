@@ -1,162 +1,100 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, InsertResult, Repository, UpdateResult } from 'typeorm';
-import * as bcrypt from 'bcryptjs';
+import { HttpStatus, Injectable } from '@nestjs/common'
+import * as bcrypt from 'bcryptjs'
 
-import {
-  ResponseWithStatus,
-  UpdateAdminLevelRequestDto,
-  FitRpcException,
-  RegisterAdminDTO,
-  AdminEntity,
-} from '@app/common';
+import { Admin, FitRpcException, RegisterAdminDTO, ResponseWithStatus, UpdateAdminLevelRequestDto } from '@app/common'
+import { AdminRepository } from './admin.repository'
 
 @Injectable()
 export class AdminServiceService {
-  constructor(
-    @InjectRepository(AdminEntity)
-    private readonly adminRepository: Repository<AdminEntity>,
+  constructor (
+    private readonly adminRepository: AdminRepository
   ) {}
 
-  public async createAdmin(
-    data: RegisterAdminDTO,
+  public async createAdmin (
+    data: RegisterAdminDTO
   ): Promise<ResponseWithStatus> {
     const payload = {
       ...data,
-      password: await bcrypt.hash(data.password, 10),
-    };
-
-    const createAdminRequest = await this.create(payload);
-
-    if (createAdminRequest === null) {
-      throw new FitRpcException(
-        'Failed to create admin. Check submitted values',
-        HttpStatus.BAD_REQUEST,
-      );
+      password: await bcrypt.hash(data.password, 10)
     }
 
-    return { status: 1 };
+    try {
+      await this.adminRepository.create(payload)
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException('Something went wrong.', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
-  public async validateAdminWithPassword({
+  public async validateAdminWithPassword ({
     userName,
-    password,
+    password
   }: {
-    userName: string;
-    password: string;
-  }): Promise<AdminEntity> {
-    const adminRequest = await this.getAdminByUserName(userName);
+    userName: string
+    password: string
+  }): Promise<Admin> {
+    const admin = await this.adminRepository.findOne({ userName })
 
-    if (adminRequest === null) {
+    if (admin === null) {
       throw new FitRpcException(
         'Provided username is incorrect',
-        HttpStatus.UNAUTHORIZED,
-      );
+        HttpStatus.UNAUTHORIZED
+      )
     }
     const isCorrectPassword: boolean = await bcrypt.compare(
       password,
-      adminRequest.password,
-    );
+      admin.password
+    )
 
     if (!isCorrectPassword) {
       throw new FitRpcException(
         'Provided Password is incorrect',
-        HttpStatus.UNAUTHORIZED,
-      );
+        HttpStatus.UNAUTHORIZED
+      )
     }
 
-    adminRequest.password = '';
+    admin.password = ''
 
-    return adminRequest;
+    return admin as any
   }
 
-  public async validateAdminWithId(id: string): Promise<AdminEntity> {
-    const getAdminByIdRequest = await this.getAdminById(id);
+  public async validateAdminWithId (_id: string): Promise<Admin> {
+    const getAdminByIdRequest = await this.adminRepository.findOne({ _id })
 
     if (getAdminByIdRequest === null) {
       throw new FitRpcException(
         'Can not find Admin with the provided ID',
-        HttpStatus.UNAUTHORIZED,
-      );
+        HttpStatus.UNAUTHORIZED
+      )
     }
-    getAdminByIdRequest.password = '';
-    return getAdminByIdRequest;
+    getAdminByIdRequest.password = ''
+    return getAdminByIdRequest
   }
 
-  public async changeAdminAccess(
-    data: UpdateAdminLevelRequestDto,
+  public async changeAdminAccess (
+    data: UpdateAdminLevelRequestDto
   ): Promise<ResponseWithStatus> {
-    const changeAdminAccessRequest = await this.updateAdminLevel(data);
+    const changeAdminAccessRequest = await this.adminRepository.findOneAndUpdate({ _id: data.id }, { level: data.level })
 
     if (changeAdminAccessRequest === null) {
       throw new FitRpcException(
         'Failed to update admin level. admin with id not found',
-        HttpStatus.BAD_REQUEST,
-      );
+        HttpStatus.BAD_REQUEST
+      )
     }
 
-    return { status: 1 };
+    return { status: 1 }
   }
 
-  public async deleteAdminProfile(id: string): Promise<ResponseWithStatus> {
-    const deleteRequest = await this.deleteAdmin(id);
+  public async deleteAdminProfile (id: any): Promise<ResponseWithStatus> {
+    const deleteRequest = await this.adminRepository.delete(id)
 
     if (deleteRequest === null) {
       throw new FitRpcException(
         'Failed to delete admin. Id is not correct',
-        HttpStatus.BAD_REQUEST,
-      );
+        HttpStatus.BAD_REQUEST
+      )
     }
-    return { status: 1 };
-  }
-
-  private async create(
-    data: Partial<AdminEntity>,
-  ): Promise<InsertResult | null> {
-    return await this.adminRepository
-      .createQueryBuilder('admin')
-      .insert()
-      .into(AdminEntity)
-      .values({ ...data })
-      .returning('id')
-      .execute();
-  }
-
-  private async getAdminByUserName(
-    userName: string,
-  ): Promise<AdminEntity | null> {
-    return await this.adminRepository
-      .createQueryBuilder('admin')
-      .where('admin.userName = :userName', { userName })
-      .addSelect('admin.password')
-      .getOne();
-  }
-
-  private async getAdminById(id: string): Promise<AdminEntity | null> {
-    return await this.adminRepository
-      .createQueryBuilder('admin')
-      .where('admin.id = :id', { id })
-      .getOne();
-  }
-
-  private async updateAdminLevel(
-    data: UpdateAdminLevelRequestDto,
-  ): Promise<UpdateResult | null> {
-    return await this.adminRepository
-      .createQueryBuilder()
-      .update(AdminEntity)
-      .set({
-        ...data,
-      })
-      .where('id = :id', { id: data.id })
-      .execute();
-  }
-
-  private async deleteAdmin(id: string): Promise<DeleteResult | null> {
-    return await this.adminRepository
-      .createQueryBuilder()
-      .delete()
-      .where('id = :id', { id })
-      .execute();
+    return { status: 1 }
   }
 }

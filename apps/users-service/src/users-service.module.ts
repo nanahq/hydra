@@ -1,12 +1,14 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config'
+import { Module } from '@nestjs/common'
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
-import { RmqModule, UserEntity, QUEUE_SERVICE } from '@app/common';
-import { UsersServiceController } from './users-service.controller';
-import { UsersService } from './users-service.service';
+import { RmqModule, User, UserSchema, QUEUE_SERVICE } from '@app/common'
+import { UsersServiceController } from './users-service.controller'
+import { UsersService } from './users-service.service'
+import { DatabaseModule } from '@app/common/database/database.module'
+import { MongooseModule } from '@nestjs/mongoose'
+import { UserRepository } from './users.repository'
 
 @Module({
   imports: [
@@ -14,29 +16,17 @@ import { UsersService } from './users-service.service';
       isGlobal: true,
       validationSchema: Joi.object({
         RMQ_USERS_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string(),
+        RMQ_URI: Joi.string()
       }),
-      envFilePath: './apps/users-service/.env',
+      envFilePath: './apps/users-service/.env'
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService): any => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST') as string,
-        port: configService.get<string>('DB_PORT') ?? 5432,
-        username: configService.get<string>('DB_USERNAME') as string,
-        password: configService.get<string>('DB_PASSWORD') as string,
-        database: configService.get<string>('DB_NAME') as string,
-        entities: [UserEntity],
-        synchronize: true,
-      }),
-      inject: [ConfigService],
-    }),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    DatabaseModule,
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-    TypeOrmModule.forFeature([UserEntity]),
+    RmqModule
   ],
   controllers: [UsersServiceController],
 
-  providers: [UsersService],
+  providers: [UsersService, UserRepository]
 })
 export class UsersServiceModule {}

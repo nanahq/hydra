@@ -1,32 +1,32 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-local';
-import { catchError, lastValueFrom } from 'rxjs';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common'
+import { ClientProxy } from '@nestjs/microservices'
+import { PassportStrategy } from '@nestjs/passport'
+import { Strategy } from 'passport-local'
+import { catchError, lastValueFrom } from 'rxjs'
 
-import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common';
+import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common'
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
-  constructor(
+  constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
-    private readonly vendorClient: ClientProxy,
+    private readonly vendorClient: ClientProxy
   ) {
-    super({ usernameField: 'email' });
+    super({ usernameField: 'email' })
   }
 
-  async validate(email: string, password: string): Promise<any> {
+  async validate (email: string, password: string): Promise<any> {
     return await lastValueFrom(
       this.vendorClient
         .send(QUEUE_MESSAGE.GET_VENDOR_LOCAL, {
           businessEmail: email,
-          password,
+          password
         })
         .pipe(
           catchError((error) => {
-            throw new UnauthorizedException(error);
-          }),
-        ),
-    );
+            throw new UnauthorizedException(error)
+          })
+        )
+    )
   }
 }

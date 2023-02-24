@@ -9,10 +9,10 @@ import {
   Put,
   UploadedFile,
   UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { catchError, lastValueFrom } from 'rxjs';
+  UseInterceptors
+} from '@nestjs/common'
+import { ClientProxy } from '@nestjs/microservices'
+import { catchError, lastValueFrom } from 'rxjs'
 
 import {
   IRpcException,
@@ -22,47 +22,47 @@ import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   booleanParser,
-  ListingMenu,
-} from '@app/common';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { CurrentUser } from '../../../admin-gateway/src/module.api/current-user.decorator';
+  ListingMenu
+} from '@app/common'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+import { CurrentUser } from '../../../admin-gateway/src/module.api/current-user.decorator'
 import {
   CreateListingCategoryDto,
   CreateListingMenuDto,
   CreateOptionGroupDto,
   UpdateListingCategoryDto,
-  UpdateOptionGroupDto,
-} from '@app/common/database/dto/listing.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import * as multer from 'multer';
-import { GoogleFileService } from '../google-file.service';
+  UpdateOptionGroupDto
+} from '@app/common/database/dto/listing.dto'
+import { FileInterceptor } from '@nestjs/platform-express'
+import * as multer from 'multer'
+import { GoogleFileService } from '../google-file.service'
 
 @Controller('listing')
 export class ListingsController {
-  constructor(
+  constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy,
-    private readonly googleService: GoogleFileService,
+    private readonly googleService: GoogleFileService
   ) {}
 
   @Get('menus')
   @UseGuards(JwtAuthGuard)
-  async getAllListings(
-    @CurrentUser() vendor: Vendor,
+  async getAllListings (
+    @CurrentUser() vendor: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<null> = {
       userId: vendor._id as any,
-      data: null,
-    };
+      data: null
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET__ALL_LISTING_MENU, payload)
         .pipe(
           catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   // Listings Menu
@@ -70,16 +70,16 @@ export class ListingsController {
   @Post('menu')
   @UseInterceptors(
     FileInterceptor('listingImage', {
-      storage: multer.memoryStorage(),
-    }),
+      storage: multer.memoryStorage()
+    })
   )
-  async createListingMenu(
+  async createListingMenu (
     @Body() data: CreateListingMenuDto,
-    @CurrentUser() { _id }: Vendor,
-    @UploadedFile() file: Express.Multer.File,
+      @CurrentUser() { _id }: Vendor,
+      @UploadedFile() file: Express.Multer.File
   ): Promise<any> {
-    const photo = await this.googleService.saveToCloud(file);
-    console.log(photo);
+    const photo = await this.googleService.saveToCloud(file)
+    console.log(photo)
     const payload: ServicePayload<any> = {
       userId: _id as any,
       data: {
@@ -87,206 +87,206 @@ export class ListingsController {
         photo,
         isLive: booleanParser(data.isLive),
         isAvailable: booleanParser(data.isAvailable),
-        optionGroups: data.optionGroups.split(','),
-      },
-    };
+        optionGroups: data.optionGroups.split(',')
+      }
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.CREATE_LISTING_MENU, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('menu/:id')
-  async getListingMenu(
+  async getListingMenu (
     @CurrentUser() vendor: Vendor,
-    @Param('id') menuId: string,
+      @Param('id') menuId: string
   ): Promise<ListingMenu> {
     const payload: ServicePayload<string> = {
       userId: vendor._id as any,
-      data: menuId,
-    };
+      data: menuId
+    }
     return await lastValueFrom<ListingMenu>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_LISTING_MENU, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('category')
-  async createListingCategory(
+  async createListingCategory (
     @Body() data: CreateListingCategoryDto,
-    @CurrentUser() { _id }: Vendor,
+      @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<CreateListingCategoryDto> = {
       data,
-      userId: _id as any,
-    };
+      userId: _id as any
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.CREATE_LISTING_CAT, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('category/:id')
-  async getSingleListingCategory(
+  async getSingleListingCategory (
     @Param('id') listingCatId: string,
-    @CurrentUser() { _id }: Vendor,
+      @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<string> = {
       data: listingCatId,
-      userId: _id as any,
-    };
+      userId: _id as any
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_LISTING_CAT, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('categories')
-  async getAllListingCategory(
-    @CurrentUser() { _id }: Vendor,
+  async getAllListingCategory (
+    @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<null> = {
       userId: _id as any,
-      data: null,
-    };
+      data: null
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_ALL_LISTING_CAT, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Put('category')
-  async updateListingCategory(
+  async updateListingCategory (
     @Body() data: UpdateListingCategoryDto,
-    @CurrentUser() { _id }: Vendor,
+      @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateListingCategoryDto> = {
       userId: _id as any,
-      data,
-    };
+      data
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.UPDATE_LISTING_CAT, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   // Listings Options
 
   @UseGuards(JwtAuthGuard)
   @Post('option')
-  async createListingOption(
+  async createListingOption (
     @Body() data: CreateOptionGroupDto,
-    @CurrentUser() { _id }: Vendor,
+      @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<CreateOptionGroupDto> = {
       data,
-      userId: _id as any,
-    };
+      userId: _id as any
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.CREATE_LISTING_OP, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('option/:id')
-  async getSingleListingOption(
+  async getSingleListingOption (
     @Param('id') optionId: string,
-    @CurrentUser() { _id }: Vendor,
+      @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<string> = {
       data: optionId,
-      userId: _id as any,
-    };
+      userId: _id as any
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_LISTING_OP, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('options')
-  async getAllListingOptions(
-    @CurrentUser() { _id }: Vendor,
+  async getAllListingOptions (
+    @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<null> = {
       userId: _id as any,
-      data: null,
-    };
+      data: null
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_ALL_LISTING_OP, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Put('option')
-  async updateListingOptions(
+  async updateListingOptions (
     @Body() data: UpdateOptionGroupDto,
-    @CurrentUser() { _id }: Vendor,
+      @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateOptionGroupDto> = {
       userId: _id as any,
-      data,
-    };
+      data
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.UPDATE_LISTING_OP, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 }

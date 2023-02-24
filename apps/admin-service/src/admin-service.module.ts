@@ -1,11 +1,13 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import * as Joi from 'joi';
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import * as Joi from 'joi'
 
-import { AdminServiceService } from './admin-service.service';
-import { AdminServiceController } from './admin-service.controller';
-import { RmqModule, AdminEntity } from '@app/common';
+import { AdminServiceService } from './admin-service.service'
+import { AdminServiceController } from './admin-service.controller'
+import { RmqModule, Admin, AdminSchema } from '@app/common'
+import { MongooseModule } from '@nestjs/mongoose'
+import { AdminRepository } from './admin.repository'
+import { DatabaseModule } from '@app/common/database/database.module'
 
 @Module({
   imports: [
@@ -14,28 +16,15 @@ import { RmqModule, AdminEntity } from '@app/common';
       validationSchema: Joi.object({
         RMQ_VENDORS_QUEUE: Joi.string(),
         RMQ_VENDORS_API_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string(),
+        RMQ_URI: Joi.string()
       }),
-      envFilePath: './apps/admin-service/.env',
+      envFilePath: './apps/admin-service/.env'
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService): any => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST') as string,
-        port: configService.get<string>('DB_PORT') ?? 5432,
-        username: configService.get<string>('DB_USERNAME') as string,
-        password: configService.get<string>('DB_PASSWORD') as string,
-        database: configService.get<string>('DB_NAME') as string,
-        entities: [AdminEntity],
-        synchronize: true,
-      }),
-      inject: [ConfigService],
-    }),
-    TypeOrmModule.forFeature([AdminEntity]),
-    RmqModule,
+    MongooseModule.forFeature([{ name: Admin.name, schema: AdminSchema }]),
+    DatabaseModule,
+    RmqModule
   ],
   controllers: [AdminServiceController],
-  providers: [AdminServiceService],
+  providers: [AdminServiceService, AdminRepository]
 })
 export class AdminServiceModule {}

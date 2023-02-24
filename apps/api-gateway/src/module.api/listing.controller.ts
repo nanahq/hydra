@@ -4,55 +4,55 @@ import {
   Get,
   UseGuards,
   HttpException,
-  Param,
-} from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { catchError, lastValueFrom } from 'rxjs';
+  Param
+} from '@nestjs/common'
+import { ClientProxy } from '@nestjs/microservices'
+import { catchError, lastValueFrom } from 'rxjs'
 
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import {
   QUEUE_SERVICE,
   QUEUE_MESSAGE,
   ServicePayload,
   IRpcException,
-  VendorEntity,
-  ListingEntity,
-} from '@app/common';
+  Vendor,
+  ListingMenu
+} from '@app/common'
 
-@Controller('listings')
+@Controller('listing')
 export class ListingsController {
-  constructor(
+  constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
-    private readonly listingClient: ClientProxy,
+    private readonly listingClient: ClientProxy
   ) {}
 
-  @Get('get-all')
+  @Get('listings')
   @UseGuards(JwtAuthGuard)
-  async getVendors(): Promise<VendorEntity[]> {
-    return await lastValueFrom<VendorEntity[]>(
+  async getVendors (): Promise<Vendor[]> {
+    return await lastValueFrom<Vendor[]>(
       this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_ADMIN, {}).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
-  @Get('get-listings/:vendorId')
+  @Get('/:vendorId')
   @UseGuards(JwtAuthGuard)
-  async getVendorListings(
-    @Param('vendorId') vendorId: string,
-  ): Promise<ListingEntity[]> {
+  async getVendorListings (
+    @Param('vendorId') vendorId: string
+  ): Promise<ListingMenu[]> {
     const payload: ServicePayload<null> = {
       userId: vendorId,
-      data: null,
-    };
-    return await lastValueFrom<ListingEntity[]>(
+      data: null
+    }
+    return await lastValueFrom<ListingMenu[]>(
       this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTINGS, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 }

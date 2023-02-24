@@ -1,9 +1,9 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator'
 
 export class UpdateVendorStatus {
   @IsNotEmpty()
-  id: string;
+    id: string
 
   @IsNotEmpty()
-  status: 'ONLINE' | 'OFFLINE';
+    status: 'ONLINE' | 'OFFLINE'
 }

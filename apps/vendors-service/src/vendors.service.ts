@@ -1,224 +1,224 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
+import { HttpStatus, Injectable } from '@nestjs/common'
+import * as bcrypt from 'bcryptjs'
 import {
   FitRpcException,
   LoginVendorRequest,
   ResponseWithStatus,
   ServicePayload,
   TokenPayload,
-  UpdateVendorStatus,
-} from '@app/common';
+  UpdateVendorStatus
+} from '@app/common'
 import {
   CreateVendorDto,
   UpdateVendorSettingsDto,
-  VendorUserI,
-} from '@app/common/database/dto/vendor.dto';
+  VendorUserI
+} from '@app/common/database/dto/vendor.dto'
 import {
   VendorRepository,
-  VendorSettingsRepository,
-} from './vendors.repository';
-import { Vendor } from '@app/common/database/schemas/vendor.schema';
-import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema';
+  VendorSettingsRepository
+} from './vendors.repository'
+import { Vendor } from '@app/common/database/schemas/vendor.schema'
+import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 
 @Injectable()
 export class VendorsService {
-  constructor(
+  constructor (
     private readonly vendorRepository: VendorRepository,
-    private readonly vendorSettingsRepository: VendorSettingsRepository,
+    private readonly vendorSettingsRepository: VendorSettingsRepository
   ) {}
 
-  async register(data: CreateVendorDto): Promise<ResponseWithStatus> {
+  async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     // Validation gate to check if vendor with the requet phone is already exist
     const existingUser = await this.vendorRepository.findOne({
-      businessEmail: data.businessEmail,
-    });
+      businessEmail: data.businessEmail
+    })
 
     if (existingUser !== null) {
       throw new FitRpcException(
         'Email already registered. You can reset your password if forgotten',
-        HttpStatus.CONFLICT,
-      );
+        HttpStatus.CONFLICT
+      )
     }
 
     const payload: Partial<Vendor> = {
       ...data,
       password: await bcrypt.hash(data.password, 10),
-      status: 'ONLINE',
-    };
+      status: 'ONLINE'
+    }
 
     try {
-      await this.vendorRepository.create(payload);
-      return { status: 1 };
+      await this.vendorRepository.create(payload)
+      return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
         'Failed to register you at this moment. please check your input values',
-        HttpStatus.BAD_REQUEST,
-      );
+        HttpStatus.BAD_REQUEST
+      )
     }
   }
 
-  async validateVendor({
+  async validateVendor ({
     businessEmail,
-    password,
+    password
   }: LoginVendorRequest): Promise<Vendor> {
     const vendor = await this.vendorRepository.findOne({
       businessEmail,
-      isDeleted: false,
-    });
+      isDeleted: false
+    })
 
     if (vendor === null) {
       throw new FitRpcException(
         'Incorrect email address. Please recheck and try again',
-        HttpStatus.CONFLICT,
-      );
+        HttpStatus.CONFLICT
+      )
     }
     const isCorrectPassword: boolean = await bcrypt.compare(
       password,
-      vendor.password,
-    );
+      vendor.password
+    )
 
     if (!isCorrectPassword) {
       throw new FitRpcException(
         'Incorrect password. Please recheck and try again',
-        HttpStatus.UNAUTHORIZED,
-      );
+        HttpStatus.UNAUTHORIZED
+      )
     }
 
-    vendor.password = '';
-    console.log(vendor);
-    return vendor;
+    vendor.password = ''
+    console.log(vendor)
+    return vendor
   }
 
-  async updateVendorStatus({
+  async updateVendorStatus ({
     id,
-    status,
+    status
   }: UpdateVendorStatus): Promise<ResponseWithStatus> {
     const updateRequest = await this.vendorRepository.findOneAndUpdate(
       { _id: id },
-      { status },
-    );
+      { status }
+    )
 
     if (updateRequest === null) {
       throw new FitRpcException(
         'Failed to update user. Incorrect input',
-        HttpStatus.BAD_REQUEST,
-      );
+        HttpStatus.BAD_REQUEST
+      )
     }
-    return { status: 1 };
+    return { status: 1 }
   }
 
-  async getVendor({ userId: _id }: TokenPayload): Promise<Vendor> {
+  async getVendor ({ userId: _id }: TokenPayload): Promise<Vendor> {
     const _vendor = await this.vendorRepository.findOne({
       _id,
-      isDeleted: false,
-    });
+      isDeleted: false
+    })
 
     if (_vendor === null) {
       throw new FitRpcException(
         'Provided vendor id is not found',
-        HttpStatus.UNAUTHORIZED,
-      );
+        HttpStatus.UNAUTHORIZED
+      )
     }
 
-    _vendor.password = '';
-    return _vendor;
+    _vendor.password = ''
+    return _vendor
   }
 
-  async updateVendorProfile({
+  async updateVendorProfile ({
     data,
-    userId,
+    userId
   }: ServicePayload<Partial<Vendor>>): Promise<ResponseWithStatus> {
     const req = await this.vendorRepository.findOneAndUpdate(
       { _id: userId },
-      { ...data },
-    );
+      { ...data }
+    )
 
     if (req === null) {
       throw new FitRpcException(
         'Failed to update vendor profile',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
     }
 
-    return { status: 1 };
+    return { status: 1 }
   }
 
-  async deleteVendorProfile(vendorId: string): Promise<ResponseWithStatus> {
+  async deleteVendorProfile (vendorId: string): Promise<ResponseWithStatus> {
     const deleteRequest = await this.vendorRepository.upsert(
       { _id: vendorId },
-      { isDeleted: true },
-    );
+      { isDeleted: true }
+    )
 
     if (deleteRequest === null) {
       throw new FitRpcException(
         'Failed to delete vendor. Invalid ID',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
     }
 
-    return { status: 1 };
+    return { status: 1 }
   }
 
-  async getAllVendors(): Promise<Vendor[]> {
-    const getRequest = await this.vendorRepository.find({ isDeleted: false });
+  async getAllVendors (): Promise<Vendor[]> {
+    const getRequest = await this.vendorRepository.find({ isDeleted: false })
 
     if (getRequest === null) {
       throw new FitRpcException(
         'Something went wrong fetching all vendors.',
-        HttpStatus.BAD_REQUEST,
-      );
+        HttpStatus.BAD_REQUEST
+      )
     }
-    return getRequest;
+    return getRequest
   }
 
-  async getAllVendorsUser(): Promise<VendorUserI[]> {
-    const _vendors = await this.vendorRepository.find({ isDeleted: false });
+  async getAllVendorsUser (): Promise<VendorUserI[]> {
+    const _vendors = await this.vendorRepository.find({ isDeleted: false })
 
     if (_vendors === null) {
       throw new FitRpcException(
         'Something went wrong fetching all vendors.',
-        HttpStatus.BAD_REQUEST,
-      );
+        HttpStatus.BAD_REQUEST
+      )
     }
 
-    return getVendorsMapper(_vendors);
+    return getVendorsMapper(_vendors)
   }
 
-  async updateSettings(
+  async updateSettings (
     data: UpdateVendorSettingsDto,
-    _id: string,
+    _id: string
   ): Promise<ResponseWithStatus> {
     try {
       await this.vendorSettingsRepository.upsert(
         { vendorId: _id },
-        { ...data },
-      );
-      return { status: 1 };
+        { ...data }
+      )
+      return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
         'Can not update settings at this time. Something went wrong',
-        HttpStatus.BAD_REQUEST,
-      );
+        HttpStatus.BAD_REQUEST
+      )
     }
   }
 
-  async getVendorSettings(vendorId: string): Promise<VendorSettings> {
+  async getVendorSettings (vendorId: string): Promise<VendorSettings> {
     try {
-      const req = await this.vendorSettingsRepository.findOne({ vendorId });
+      const req = await this.vendorSettingsRepository.findOne({ vendorId })
       if (req === null) {
-        throw new Error();
+        throw new Error()
       }
-      return req;
+      return req
     } catch (e) {
       throw new FitRpcException(
         'can not fetch vendors settings at this time',
-        HttpStatus.BAD_GATEWAY,
-      );
+        HttpStatus.BAD_GATEWAY
+      )
     }
   }
 }
 
-function getVendorsMapper(vendors: any[]): any[] {
+function getVendorsMapper (vendors: any[]): any[] {
   const map = vendors.map((vendor) => {
     return {
       businessName: vendor.businessName,
@@ -226,8 +226,8 @@ function getVendorsMapper(vendors: any[]): any[] {
       businessLogo: vendor.businessLogo,
       isValidated: vendor.isValidated,
       status: vendor.status,
-      location: vendor.location,
-    };
-  });
-  return map;
+      location: vendor.location
+    }
+  })
+  return map
 }

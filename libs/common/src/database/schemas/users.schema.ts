@@ -1,48 +1,48 @@
-import { SchemaTypes } from 'mongoose';
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { AbstractDocument } from '@app/common';
+import { SchemaTypes } from 'mongoose'
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
+import { AbstractDocument } from '@app/common'
+import { UserI } from '../dto/user.dto'
 
 @Schema({ versionKey: false })
-export class User extends AbstractDocument {
+export class User extends AbstractDocument implements UserI {
   @Prop()
-  firstName: string;
+    firstName: string
 
   @Prop()
-  lastName: string;
+    lastName: string
 
   @Prop({ unique: true, sparse: true })
-  email: string;
+    email: string
 
   @Prop()
-  password: string;
+    password: string
 
   @Prop({ unique: true })
-  phone: string;
+    phone: string
 
   @Prop({ default: false })
-  isValidated: boolean;
+    isValidated: boolean
 
   @Prop(SchemaTypes.Date)
-  createdAt: string;
+    createdAt: string
 
   @Prop(SchemaTypes.Date)
-  updatedAt: string;
+    updatedAt: string
+
+  @Prop({ type: String, default: 'ONLINE' })
+    status: 'ONLINE' | 'OFFLINE'
 
   @Prop({
     type: {
-      String,
-    },
+      coordinates: [String]
+    }
   })
-  status: 'ONLINE' | 'OFFLINE';
+    location: {
+    coordinates: [string, string]
+  }
 
-  @Prop({
-    type: {
-      coordinates: [String],
-    },
-  })
-  location: {
-    coordinates: [string, string];
-  };
+  @Prop(Boolean)
+    isDeleted: string
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const UserSchema = SchemaFactory.createForClass(User)

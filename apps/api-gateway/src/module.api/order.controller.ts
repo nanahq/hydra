@@ -6,79 +6,78 @@ import {
   Body,
   UseGuards,
   HttpException,
-  Param,
-} from '@nestjs/common';
+  Param
+} from '@nestjs/common'
 import {
-  OrderDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
   IRpcException,
   ServicePayload,
-  UserEntity,
-  OrderEntity,
-} from '@app/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { catchError, lastValueFrom } from 'rxjs';
-import { CurrentUser } from './current-user.decorator';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+  User,
+  Order
+} from '@app/common'
+import { ClientProxy } from '@nestjs/microservices'
+import { catchError, lastValueFrom } from 'rxjs'
+import { CurrentUser } from './current-user.decorator'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
-@Controller('orders')
+@Controller('order')
 export class OrderController {
-  constructor(
+  constructor (
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
-    private readonly orderClient: ClientProxy,
+    private readonly orderClient: ClientProxy
   ) {}
 
-  @Post('create-order')
+  @Post('create')
   @UseGuards(JwtAuthGuard)
-  async createNewOrder(
-    @Body() data: OrderDto,
-    @CurrentUser() user: UserEntity,
+  async createNewOrder (
+    @Body() data: any,
+      @CurrentUser() user: User
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<any> = {
-      userId: user.id,
-      data,
-    };
+      userId: user._id as any,
+      data
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.orderClient.send(QUEUE_MESSAGE.CREATE_ORDER, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
-  @Get('get-order/:id')
+  @Get('/:id')
   @UseGuards(JwtAuthGuard)
-  async getOrderById(@Param('id') orderId: string): Promise<OrderEntity> {
+  async getOrderById (@Param('id') orderId: string): Promise<Order> {
     const payload: ServicePayload<{ orderId: string }> = {
       userId: '',
-      data: { orderId },
-    };
+      data: { orderId }
+    }
 
-    return await lastValueFrom<OrderEntity>(
+    return await lastValueFrom<Order>(
       this.orderClient.send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
-  @Get('get-all')
+  @Get('orders')
   @UseGuards(JwtAuthGuard)
-  async getAllOrders(@CurrentUser() user: UserEntity): Promise<OrderEntity[]> {
+  async getAllOrders (@CurrentUser() user: User): Promise<Order[]> {
     const payload: ServicePayload<null> = {
-      userId: user.id,
-      data: null,
-    };
-    return await lastValueFrom<OrderEntity[]>(
+      userId: user._id as any,
+      data: null
+    }
+    return await lastValueFrom<Order[]>(
       this.orderClient.send(QUEUE_MESSAGE.GET_USER_ORDERS, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 }

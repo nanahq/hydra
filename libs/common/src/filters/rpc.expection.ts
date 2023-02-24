@@ -4,27 +4,27 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
-  RpcExceptionFilter,
-} from '@nestjs/common';
-import { Observable, throwError } from 'rxjs';
-import { RpcException } from '@nestjs/microservices';
-import { HttpAdapterHost } from '@nestjs/core';
+  RpcExceptionFilter
+} from '@nestjs/common'
+import { Observable, throwError } from 'rxjs'
+import { RpcException } from '@nestjs/microservices'
+import { HttpAdapterHost } from '@nestjs/core'
 
 export interface IRpcException {
-  message: string;
-  status: number;
+  message: string
+  status: number
 }
 
 export class FitRpcException extends RpcException implements IRpcException {
-  constructor(message: string, statusCode: HttpStatus) {
-    super(message);
-    this.initStatusCode(statusCode);
+  constructor (message: string, statusCode: HttpStatus) {
+    super(message)
+    this.initStatusCode(statusCode)
   }
 
-  public status: number;
+  public status: number
 
-  private initStatusCode(statusCode): void {
-    this.status = statusCode;
+  private initStatusCode (statusCode): void {
+    this.status = statusCode
   }
 }
 
@@ -33,8 +33,8 @@ export class FitRpcException extends RpcException implements IRpcException {
  */
 @Catch(RpcException)
 export class ExceptionFilterRpc implements RpcExceptionFilter<RpcException> {
-  catch(exception: RpcException, _host: ArgumentsHost): Observable<any> {
-    return throwError(() => exception.getError());
+  catch (exception: RpcException, _host: ArgumentsHost): Observable<any> {
+    return throwError(() => exception.getError())
   }
 }
 
@@ -43,27 +43,27 @@ export class ExceptionFilterRpc implements RpcExceptionFilter<RpcException> {
  */
 @Catch(HttpException)
 export class FitHttpException implements ExceptionFilter {
-  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
+  constructor (private readonly httpAdapterHost: HttpAdapterHost) {}
 
-  catch(exception: IRpcException, host: ArgumentsHost): void {
-    const { httpAdapter } = this.httpAdapterHost;
-    const ctx = host.switchToHttp();
+  catch (exception: IRpcException, host: ArgumentsHost): void {
+    const { httpAdapter } = this.httpAdapterHost
+    const ctx = host.switchToHttp()
 
     const httpStatus =
       exception.status !== undefined && typeof exception.status === 'number'
         ? exception.status
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+        : HttpStatus.INTERNAL_SERVER_ERROR
 
-    let errorMessage = exception.message;
+    let errorMessage = exception.message
     if (
       httpStatus === 400 &&
       // @ts-expect-error
       typeof exception.response === 'object'
     ) {
       // @ts-expect-error
-      errorMessage = exception.response?.message;
+      errorMessage = exception.response?.message
       if (errorMessage === '' || errorMessage === null) {
-        errorMessage = exception.message;
+        errorMessage = exception.message
       }
     }
 
@@ -71,9 +71,9 @@ export class FitHttpException implements ExceptionFilter {
       statusCode: httpStatus,
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
-      message: errorMessage,
-    };
+      message: errorMessage
+    }
 
-    httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
+    httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus)
   }
 }

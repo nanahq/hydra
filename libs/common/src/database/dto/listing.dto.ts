@@ -4,135 +4,135 @@ import {
   IsEnum,
   IsNotEmpty,
   IsOptional,
-  IsString,
-} from 'class-validator';
+  IsString
+} from 'class-validator'
 
-import { CustomisationOptionTypeEnum, ListingMenu } from '@app/common';
-import { ListingOption } from '@app/common/database/types/common';
+import { CustomisationOptionTypeEnum, ListingMenu } from '@app/common'
+import { ListingOption } from '@app/common/database/types/common'
 
 export class ListingOptionEntityDto {
   @IsNotEmpty()
   @IsString()
-  public optionName: string;
+  public optionName: string
 
   @IsNotEmpty()
   @IsString()
-  public optionCost: string;
+  public optionCost: string
 
   @IsNotEmpty()
   @IsEnum(CustomisationOptionTypeEnum)
-  public optionType: CustomisationOptionTypeEnum;
+  public optionType: CustomisationOptionTypeEnum
 }
 
 export class CreateListingCategoryDto {
   @IsNotEmpty()
-  public name: string;
+  public name: string
 
   @IsArray()
   @IsNotEmpty()
-  public tags: string[];
+  public tags: string[]
 
   @IsBoolean()
   @IsNotEmpty()
-  isLive: boolean;
+    isLive: boolean
 
   @IsOptional()
-  public menu: string;
+  public menu: string
 }
 
 export class UpdateListingCategoryDto {
   @IsOptional()
-  public name: string;
+  public name: string
 
   @IsArray()
   @IsOptional()
-  public tags: string[];
+  public tags: string[]
 
   @IsOptional()
-  isLive: boolean;
+    isLive: boolean
 
   @IsOptional()
-  isDeleted: boolean;
+    isDeleted: boolean
 
   @IsNotEmpty()
-  catId: string;
+    catId: string
 }
 
 export class CreateListingMenuDto {
   @IsNotEmpty()
-  public name: string;
+  public name: string
 
   @IsNotEmpty()
-  public price: string;
+  public price: string
 
   @IsNotEmpty()
-  public serving: string;
+  public serving: string
 
   @IsNotEmpty()
-  public desc: string;
+  public desc: string
 
   @IsOptional()
-  public photo: string;
+  public photo: string
 
   @IsNotEmpty()
-  public isLive: string;
+  public isLive: string
 
   @IsNotEmpty()
-  public isAvailable: string;
+  public isAvailable: string
 
   @IsNotEmpty()
-  public optionGroups: string;
+  public optionGroups: string
 
   @IsNotEmpty()
-  public categoryId: string;
+  public categoryId: string
 }
 
 export class CreateOptionGroupDto {
   @IsNotEmpty()
-  public name: string;
+  public name: string
 
   @IsNotEmpty()
-  public min: number;
+  public min: number
 
   @IsNotEmpty()
-  max: number;
+    max: number
 
   @IsNotEmpty()
   @IsArray()
-  options: ListingOption[];
+    options: ListingOption[]
 }
 
 export class UpdateOptionGroupDto {
   @IsOptional()
-  public name: string;
+  public name: string
 
   @IsOptional()
-  public min: number;
+  public min: number
 
   @IsOptional()
-  max: number;
+    max: number
 
   @IsOptional()
-  options: ListingOption[];
+    options: ListingOption[]
 
   @IsNotEmpty()
-  optionId: string;
+    optionId: string
 }
 
 // Interfaces
 
 export interface ListingCategoryI {
-  vendorId: string;
-  name: string;
-  tags: string[];
-  isLive: boolean;
-  menu: ListingMenu[];
+  vendorId: string
+  name: string
+  tags: string[]
+  isLive: boolean
+  menu: ListingMenu[]
 }
 
 export interface ListingOptionGroupI {
-  vendorId: string;
-  name: string;
-  min: number;
-  max: number;
-  options: ListingOption[];
+  vendorId: string
+  name: string
+  min: number
+  max: number
+  options: ListingOption[]
 }
