@@ -20,12 +20,12 @@ import {
   registerUserRequest,
   ResponseWithStatus,
   ServicePayload,
-  UserEntity
+  User
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 
-@Controller('users')
+@Controller('user')
 export class UsersController {
   constructor (
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
@@ -66,21 +66,21 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getUserProfile (@CurrentUser() user: UserEntity): Promise<UserEntity> {
+  async getUserProfile (@CurrentUser() user: User): Promise<User> {
     return user
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('update-profile')
+  @Put('update')
   async updateUserProfile (
-    @Body() data: Partial<UserEntity>,
-      @CurrentUser() user: UserEntity
-  ): Promise<UserEntity> {
-    const payload: ServicePayload<Partial<UserEntity>> = {
-      userId: user.id,
+    @Body() data: Partial<User>,
+      @CurrentUser() user: User
+  ): Promise<User> {
+    const payload: ServicePayload<Partial<User>> = {
+      userId: user._id as any,
       data
     }
-    return await lastValueFrom<UserEntity>(
+    return await lastValueFrom<User>(
       this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload).pipe(
         catchError((error: { status: number, message: string }) => {
           throw new HttpException(error.message, error.status)
@@ -90,12 +90,12 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('delete-profile')
+  @Delete('delete')
   async deleteUser (
-    @CurrentUser() user: UserEntity
+    @CurrentUser() user: User
   ): Promise<{ status: number }> {
     const payload: ServicePayload<null> = {
-      userId: user.id,
+      userId: user._id as any,
       data: null
     }
 

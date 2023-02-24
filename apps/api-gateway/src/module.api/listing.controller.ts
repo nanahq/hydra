@@ -15,21 +15,21 @@ import {
   QUEUE_MESSAGE,
   ServicePayload,
   IRpcException,
-  VendorEntity,
-  ListingEntity
+  Vendor,
+  ListingMenu
 } from '@app/common'
 
-@Controller('listings')
+@Controller('listing')
 export class ListingsController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy
   ) {}
 
-  @Get('get-all')
+  @Get('listings')
   @UseGuards(JwtAuthGuard)
-  async getVendors (): Promise<VendorEntity[]> {
-    return await lastValueFrom<VendorEntity[]>(
+  async getVendors (): Promise<Vendor[]> {
+    return await lastValueFrom<Vendor[]>(
       this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_ADMIN, {}).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -38,16 +38,16 @@ export class ListingsController {
     )
   }
 
-  @Get('get-listings/:vendorId')
+  @Get('/:vendorId')
   @UseGuards(JwtAuthGuard)
   async getVendorListings (
     @Param('vendorId') vendorId: string
-  ): Promise<ListingEntity[]> {
+  ): Promise<ListingMenu[]> {
     const payload: ServicePayload<null> = {
       userId: vendorId,
       data: null
     }
-    return await lastValueFrom<ListingEntity[]>(
+    return await lastValueFrom<ListingMenu[]>(
       this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTINGS, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)

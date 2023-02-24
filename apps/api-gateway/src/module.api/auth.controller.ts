@@ -4,7 +4,7 @@ import { Response } from 'express'
 import { LocalGuard } from '../auth/guards/local.guard'
 import { AuthService } from './auth.service'
 import { CurrentUser } from './current-user.decorator'
-import { UserEntity } from '@app/common'
+import { User } from '@app/common'
 
 @Controller('auth')
 export class AuthController {
@@ -13,7 +13,7 @@ export class AuthController {
   @UseGuards(LocalGuard)
   @Post('login')
   async login (
-    @CurrentUser() user: UserEntity,
+    @CurrentUser() user: User,
       @Res({ passthrough: true }) response: Response
   ): Promise<void> {
     return await this.authService.login(user, response)

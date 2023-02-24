@@ -12,22 +12,22 @@ import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ServicePayload,
-  VendorEntity
+  Vendor
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { catchError, lastValueFrom } from 'rxjs'
 
-@Controller('vendors')
+@Controller('vendor')
 export class VendorsController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorsClient: ClientProxy
   ) {}
 
-  @Get('get-all')
+  @Get('vendors')
   @UseGuards(JwtAuthGuard)
-  async getVendors (): Promise<VendorEntity[]> {
-    return await lastValueFrom<VendorEntity[]>(
+  async getVendors (): Promise<Vendor[]> {
+    return await lastValueFrom<Vendor[]>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_ALL_VENDORS_USERS, {}).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -36,16 +36,16 @@ export class VendorsController {
     )
   }
 
-  @Get('get-one/:vendorId')
+  @Get('/:vendorId')
   @UseGuards(JwtAuthGuard)
   async getVendor (
     @Param('vendorId') vendorId: string
-  ): Promise<Partial<VendorEntity>> {
+  ): Promise<Partial<Vendor>> {
     const payload: ServicePayload<string> = {
       userId: '',
       data: vendorId
     }
-    const vendor = await lastValueFrom<VendorEntity>(
+    const vendor = await lastValueFrom<Vendor>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_VENDOR, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -53,12 +53,12 @@ export class VendorsController {
       )
     )
 
-    const { id, state, businessName } = vendor
+    const { _id, businessName, businessAddress} = vendor
 
     return {
-      id,
-      state,
-      businessName
+      _id,
+      businessName,
+      businessAddress
     }
   }
 }
