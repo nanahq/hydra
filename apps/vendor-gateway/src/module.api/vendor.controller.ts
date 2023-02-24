@@ -6,10 +6,10 @@ import {
   Inject,
   Post,
   Put,
-  UseGuards,
-} from '@nestjs/common';
-import { catchError, lastValueFrom } from 'rxjs';
-import { ClientProxy } from '@nestjs/microservices';
+  UseGuards
+} from '@nestjs/common'
+import { catchError, lastValueFrom } from 'rxjs'
+import { ClientProxy } from '@nestjs/microservices'
 
 import {
   QUEUE_MESSAGE,
@@ -17,53 +17,53 @@ import {
   Vendor,
   ServicePayload,
   IRpcException,
-  ResponseWithStatus,
-} from '@app/common';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { CurrentUser } from './current-user.decorator';
-import { CreateVendorDto } from '@app/common/database/dto/vendor.dto';
+  ResponseWithStatus
+} from '@app/common'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+import { CurrentUser } from './current-user.decorator'
+import { CreateVendorDto } from '@app/common/database/dto/vendor.dto'
 
 @Controller('vendor')
 export class VendorController {
-  constructor(
+  constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
-    private readonly vendorClient: ClientProxy,
+    private readonly vendorClient: ClientProxy
   ) {}
 
   @Post('register')
-  async registerNewVendor(@Body() request: CreateVendorDto): Promise<any> {
+  async registerNewVendor (@Body() request: CreateVendorDto): Promise<any> {
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
         catchError((error) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getVendorProfile(@CurrentUser() vendor: Vendor): Promise<Vendor> {
-    return vendor;
+  async getVendorProfile (@CurrentUser() vendor: Vendor): Promise<Vendor> {
+    return vendor
   }
 
   @UseGuards(JwtAuthGuard)
   @Put('update-profile')
-  async updateVendorProfile(
+  async updateVendorProfile (
     @Body() data: Partial<Vendor>,
-    @CurrentUser() vendor: Vendor,
+      @CurrentUser() vendor: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<Partial<Vendor>> = {
       userId: vendor._id as any,
-      data,
-    };
+      data
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
         catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
   // @UseGuards(JwtAuthGuard)

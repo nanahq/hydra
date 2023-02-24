@@ -1,27 +1,27 @@
-import { SchemaTypes, Types } from 'mongoose';
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { AbstractDocument, ListingMenu } from '@app/common';
+import { SchemaTypes, Types } from 'mongoose'
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
+import { AbstractDocument, ListingMenu } from '@app/common'
 
 @Schema({ versionKey: false })
 export class ListingCategory extends AbstractDocument {
   @Prop(Types.ObjectId)
-  vendorId: string;
+    vendorId: string
 
   @Prop(String)
-  name: string;
+    name: string
 
   @Prop([String])
-  tags: string[];
+    tags: string[]
 
   @Prop(SchemaTypes.Boolean)
-  isLive: boolean;
+    isLive: boolean
 
   @Prop({ type: [Types.ObjectId], ref: ListingMenu.name })
-  listingsMenu: string[];
+    listingsMenu: string[]
 
   @Prop({ type: Boolean, default: false })
-  isDeleted: boolean;
+    isDeleted: boolean
 }
 
 export const ListingCategorySchema =
-  SchemaFactory.createForClass(ListingCategory);
+  SchemaFactory.createForClass(ListingCategory)
