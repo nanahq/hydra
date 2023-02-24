@@ -11,12 +11,11 @@ import {
   ResponseWithStatus,
   RmqService,
   ServicePayload,
-  OrderDto,
   QUEUE_MESSAGE,
-  OrderEntity,
+  Order,
   UpdateOrderStatusRequestDto
 } from '@app/common'
-@Controller('orders')
+@Controller('order')
 export class OrdersServiceController {
   constructor (
     private readonly ordersServiceService: OrdersServiceService,
@@ -25,7 +24,7 @@ export class OrdersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_ORDER)
   async placeOrder (
-    @Payload() data: ServicePayload<OrderDto>,
+    @Payload() data: ServicePayload<any>,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
@@ -41,9 +40,9 @@ export class OrdersServiceController {
   async getVendorsOrders (
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
-  ): Promise<OrderEntity[]> {
+  ): Promise<Order[]> {
     try {
-      return await this.ordersServiceService.getVendorOrders(userId)
+      return await this.ordersServiceService.getAllVendorOrders(userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -69,9 +68,9 @@ export class OrdersServiceController {
   async getUsersOrders (
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
-  ): Promise<OrderEntity[]> {
+  ): Promise<Order[]> {
     try {
-      return await this.ordersServiceService.getUserOrders(userId)
+      return await this.ordersServiceService.getAllUserOrders(userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -83,7 +82,7 @@ export class OrdersServiceController {
   async getOrderByRefNumber (
     @Payload() { data: { ref } }: ServicePayload<{ ref: number }>,
       @Ctx() context: RmqContext
-  ): Promise<OrderEntity> {
+  ): Promise<Order | null> {
     try {
       return await this.ordersServiceService.getOrderByRefId(ref)
     } catch (error) {
@@ -97,7 +96,7 @@ export class OrdersServiceController {
   async getOrderById (
     @Payload() { data: { orderId } }: ServicePayload<{ orderId: string }>,
       @Ctx() context: RmqContext
-  ): Promise<OrderEntity> {
+  ): Promise<Order | null> {
     try {
       return await this.ordersServiceService.getOrderById(orderId)
     } catch (error) {
@@ -108,7 +107,7 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_ORDERS)
-  async getAllOrders (@Ctx() context: RmqContext): Promise<OrderEntity[]> {
+  async getAllOrders (@Ctx() context: RmqContext): Promise<Order[]> {
     try {
       return await this.ordersServiceService.getAllOrderInDb()
     } catch (error) {
