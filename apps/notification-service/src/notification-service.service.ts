@@ -9,11 +9,11 @@ import {
   PhoneVerificationPayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  verifyPhoneRequest
+  verifyPhoneRequest,
+  ListingMenu
 } from '@app/common'
 import { OrderStatusUpdateDto } from '@app/common/dto/OrderStatusUpdate.dto'
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
-import { ListingEntity } from '@app/common/database/entities/Listing'
 
 @Injectable()
 export class NotificationServiceService {
@@ -28,19 +28,19 @@ export class NotificationServiceService {
 
   async verifyPhone ({
     code,
-    phoneNumber
+    phone
   }: PhoneVerificationPayload): Promise<any> {
     try {
       const res = await this.twilioService.client.verify.v2
         .services(
           this.configService.get<string>('TWILIO_SERVICE_NAME') as string
         )
-        .verificationChecks.create({ to: phoneNumber, code })
+        .verificationChecks.create({ to: phone, code })
 
       if (res.status === 'approved') {
         await lastValueFrom(
           this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
-            phoneNumber
+            phone
           })
         )
         return { status: 1 }
@@ -51,13 +51,13 @@ export class NotificationServiceService {
     }
   }
 
-  async sendVerification ({ phoneNumber }: verifyPhoneRequest): Promise<any> {
+  async sendVerification ({ phone }: verifyPhoneRequest): Promise<any> {
     try {
       return await this.twilioService.client.verify.v2
         .services(
           this.configService.get<string>('TWILIO_SERVICE_NAME') as string
         )
-        .verifications.create({ to: phoneNumber, channel: 'sms' })
+        .verifications.create({ to: phone, channel: 'sms' })
     } catch (error) {
       throw new RpcException(error)
     }
@@ -71,7 +71,7 @@ export class NotificationServiceService {
     let message: string
     const fromPhone = this.configService.get<string>('TWILIO_PHONE') as string
     try {
-      const listing = await lastValueFrom<ListingEntity>(
+      const listing = await lastValueFrom<ListingMenu>(
         this.listingsClient.send(QUEUE_MESSAGE.GET_LISTING_INFO, {
           userId: '',
           data: { listingId }
@@ -80,13 +80,13 @@ export class NotificationServiceService {
 
       switch (status) {
         case OrderStatus.PROCESSED:
-          message = OrderStatusMessage[status](listing.listingName)
+          message = OrderStatusMessage[status](listing.name)
           break
         case OrderStatus.COLLECTED:
-          message = OrderStatusMessage[status](listing.listingName)
+          message = OrderStatusMessage[status](listing.name)
           break
         case OrderStatus.FULFILLED:
-          message = OrderStatusMessage[status](listing.listingName)
+          message = OrderStatusMessage[status](listing.name)
           break
         case OrderStatus.IN_ROUTE:
           message = OrderStatusMessage[status]('50:30 pm')

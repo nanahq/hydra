@@ -8,7 +8,7 @@ import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   IRpcException,
-  AdminEntity
+  Admin
 } from '@app/common'
 
 @Injectable()
@@ -20,7 +20,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super({ usernameField: 'userName' })
   }
 
-  async validate (userName: string, password: string): Promise<AdminEntity> {
+  async validate (userName: string, password: string): Promise<Admin> {
     return await lastValueFrom(
       this.adminClient
         .send(QUEUE_MESSAGE.GET_ADMIN_LOCAL, {
