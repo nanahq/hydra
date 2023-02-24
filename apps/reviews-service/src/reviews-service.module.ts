@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { ReviewEntity, RmqModule } from '@app/common'
+import { Review, ReviewSchema, RmqModule } from '@app/common'
 import { ReviewsServiceController } from './reviews-service.controller'
 import { ReviewsService } from './reviews-service.service'
+import { DatabaseModule } from '@app/common/database/database.module'
+import { MongooseModule } from '@nestjs/mongoose'
+import { ReviewRepository } from './review.repositoty'
 
 @Module({
   imports: [
@@ -17,24 +19,11 @@ import { ReviewsService } from './reviews-service.service'
       }),
       envFilePath: './apps/reviews-service/.env'
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService): any => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST') as string,
-        port: configService.get<string>('DB_PORT') ?? 5432,
-        username: configService.get<string>('DB_USERNAME') as string,
-        password: configService.get<string>('DB_PASSWORD') as string,
-        database: configService.get<string>('DB_NAME') as string,
-        entities: [ReviewEntity],
-        synchronize: true
-      }),
-      inject: [ConfigService]
-    }),
-    TypeOrmModule.forFeature([ReviewEntity]),
+    MongooseModule.forFeature([{ name: Review.name, schema: ReviewSchema }]),
+    DatabaseModule,
     RmqModule
   ],
   controllers: [ReviewsServiceController],
-  providers: [ReviewsService]
+  providers: [ReviewsService, ReviewRepository]
 })
 export class ReviewsServiceModule {}

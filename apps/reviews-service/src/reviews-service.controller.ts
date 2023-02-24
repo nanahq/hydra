@@ -12,7 +12,7 @@ import {
   ExceptionFilterRpc,
   QUEUE_MESSAGE,
   ResponseWithStatus,
-  ReviewEntity,
+  Review,
   ReviewToken,
   RmqService
 } from '@app/common'
@@ -30,7 +30,7 @@ export class ReviewsServiceController {
   async getListingReviews (
     @Ctx() context: RmqContext,
       @Payload() { listingId }: ReviewToken
-  ): Promise<ReviewEntity[]> {
+  ): Promise<Review[]> {
     try {
       return await this.reviewService.getListingReviews(listingId)
     } catch (error) {
@@ -44,7 +44,7 @@ export class ReviewsServiceController {
   async getVendorReviews (
     @Ctx() context: RmqContext,
       @Payload() { vendorId }: { vendorId: string }
-  ): Promise<ReviewEntity[]> {
+  ): Promise<Review[]> {
     try {
       return await this.reviewService.getVendorReviews(vendorId)
     } catch (error) {
@@ -55,9 +55,9 @@ export class ReviewsServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_ADMIN_GET_ALL_IN_DB)
-  async getAllReviewsInDB (@Ctx() context: RmqContext): Promise<ReviewEntity[]> {
+  async getAllReviewsInDB (@Ctx() context: RmqContext): Promise<Review[]> {
     try {
-      return await this.reviewService.getAll()
+      return await this.reviewService.getAllReviews()
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -69,7 +69,7 @@ export class ReviewsServiceController {
   async getReviewInfo (
     @Payload() { reviewId }: { reviewId: string },
       @Ctx() context: RmqContext
-  ): Promise<ReviewEntity | null> {
+  ): Promise<Review | null> {
     try {
       return await this.reviewService.findOneById(reviewId)
     } catch (error) {
@@ -107,31 +107,31 @@ export class ReviewsServiceController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS)
-  async statGetVendorReviews (
-    @Ctx() context: RmqContext,
-      @Payload() { vendorId }: { vendorId: string }
-  ): Promise<{ sum_vendor_reviews: string }> {
-    try {
-      return await this.reviewService.statGetVendorReviews(vendorId)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
+  // @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS)
+  // async statGetVendorReviews (
+  //   @Ctx() context: RmqContext,
+  //     @Payload() { vendorId }: { vendorId: string }
+  // ): Promise<{ sum_vendor_reviews: string }> {
+  //   try {
+  //     return await this.reviewService.statGetVendorReviews(vendorId)
+  //   } catch (error) {
+  //     throw new RpcException(error)
+  //   } finally {
+  //     this.rmqService.ack(context)
+  //   }
+  // }
 
-  @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_LISTING_REVIEWS)
-  async statGetListingReviews (
-    @Ctx() context: RmqContext,
-      @Payload() { listingId }: { listingId: string }
-  ): Promise<{ sum_listing_reviews: string }> {
-    try {
-      return await this.reviewService.statGetListingReviews(listingId)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
+  // @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_LISTING_REVIEWS)
+  // async statGetListingReviews (
+  //   @Ctx() context: RmqContext,
+  //     @Payload() { listingId }: { listingId: string }
+  // ): Promise<{ sum_listing_reviews: string }> {
+  //   try {
+  //     return await this.reviewService.statGetListingReviews(listingId)
+  //   } catch (error) {
+  //     throw new RpcException(error)
+  //   } finally {
+  //     this.rmqService.ack(context)
+  //   }
+  // }
 }
