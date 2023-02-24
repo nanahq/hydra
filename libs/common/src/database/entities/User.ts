@@ -4,38 +4,38 @@ import {
   UpdateDateColumn,
   Entity,
   Column,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+  PrimaryGeneratedColumn
+} from 'typeorm'
 
 @Entity({ name: 'users' })
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
-  public id: string;
+  public id: string
 
   @Column()
-  public phoneNumber: string;
+  public phoneNumber: string
 
   @Column({ type: 'text', select: false })
-  public password: string;
+  public password: string
 
   @Column({ type: 'text' })
-  public firstName: string;
+  public firstName: string
 
   @Column({ type: 'text' })
-  public lastName: string;
+  public lastName: string
 
   @Column({ nullable: true, default: 0, type: 'int' })
-  public status: number;
+  public status: number
 
   @Column({ type: 'text', array: true })
-  public addresses: string[];
+  public addresses: string[]
 
   @UpdateDateColumn()
-  public updatedAt: Date;
+  public updatedAt: Date
 
   @DeleteDateColumn()
-  public deletedAt: Date;
+  public deletedAt: Date
 
   @CreateDateColumn()
-  public createdAt: Date;
+  public createdAt: Date
 }

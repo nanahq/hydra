@@ -1,42 +1,42 @@
-import { Types } from 'mongoose';
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { AbstractDocument } from '@app/common';
-import { ListingOptionGroup } from '@app/common/database/schemas/listing-option.schema';
+import { Types } from 'mongoose'
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
+import { AbstractDocument } from '@app/common'
+import { ListingOptionGroup } from '@app/common/database/schemas/listing-option.schema'
 
 @Schema({ versionKey: false })
 export class ListingMenu extends AbstractDocument {
   @Prop(Types.ObjectId)
-  vendorId: string;
+    vendorId: string
 
   @Prop(String)
-  name: string;
+    name: string
 
   @Prop(String)
-  desc: string;
+    desc: string
 
   @Prop(String)
-  price: string;
+    price: string
 
   @Prop(String)
-  serving: string;
+    serving: string
 
   @Prop(String)
-  photo: string;
+    photo: string
 
   @Prop(Boolean)
-  isLive: boolean;
+    isLive: boolean
 
   @Prop(Boolean)
-  isAvailable: boolean;
+    isAvailable: boolean
 
   @Prop({ type: Boolean, default: false })
-  isDeleted: boolean;
+    isDeleted: boolean
 
   @Prop({
     type: [Types.ObjectId],
-    ref: ListingOptionGroup.name,
+    ref: ListingOptionGroup.name
   })
-  optionGroups: string[];
+    optionGroups: string[]
 }
 
-export const ListingMenuSchema = SchemaFactory.createForClass(ListingMenu);
+export const ListingMenuSchema = SchemaFactory.createForClass(ListingMenu)

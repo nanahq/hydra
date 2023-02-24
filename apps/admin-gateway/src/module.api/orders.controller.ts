@@ -6,74 +6,74 @@ import {
   Inject,
   Param,
   Put,
-  UseGuards,
-} from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+  UseGuards
+} from '@nestjs/common'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import {
   IRpcException,
-  OrderEntity,
+  Order,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
   ServicePayload,
-  UpdateOrderStatusRequestDto,
-} from '@app/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { catchError, lastValueFrom } from 'rxjs';
+  UpdateOrderStatusRequestDto
+} from '@app/common'
+import { ClientProxy } from '@nestjs/microservices'
+import { catchError, lastValueFrom } from 'rxjs'
 
-@Controller('orders')
+@Controller('order')
 export class OrdersController {
-  constructor(
+  constructor (
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
-    private readonly ordersClient: ClientProxy,
+    private readonly ordersClient: ClientProxy
   ) {}
 
-  @Get('get-all')
+  @Get('orders')
   @UseGuards(JwtAuthGuard)
-  async getAllOrders(): Promise<OrderEntity[]> {
+  async getAllOrders (): Promise<Order[]> {
     return await lastValueFrom(
       this.ordersClient.send(QUEUE_MESSAGE.GET_ALL_ORDERS, {}).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
-  @Get('get-order/:id')
+  @Get('/:id')
   @UseGuards(JwtAuthGuard)
-  async getOrder(@Param('id') orderId: string): Promise<OrderEntity> {
+  async getOrder (@Param('id') orderId: string): Promise<Order> {
     const payload: ServicePayload<{ orderId: string }> = {
       userId: '',
-      data: { orderId },
-    };
+      data: { orderId }
+    }
 
-    return await lastValueFrom<OrderEntity>(
+    return await lastValueFrom<Order>(
       this.ordersClient
         .send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, payload)
         .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status);
-          }),
-        ),
-    );
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
   }
 
-  @Put('update-status')
+  @Put('status')
   @UseGuards(JwtAuthGuard)
-  async updateOrderStatus(
-    @Body() data: UpdateOrderStatusRequestDto,
+  async updateOrderStatus (
+    @Body() data: UpdateOrderStatusRequestDto
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateOrderStatusRequestDto> = {
       userId: '',
-      data,
-    };
+      data
+    }
     return await lastValueFrom<ResponseWithStatus>(
       this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status);
-        }),
-      ),
-    );
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 }

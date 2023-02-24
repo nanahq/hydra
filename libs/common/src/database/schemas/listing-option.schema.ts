@@ -1,28 +1,28 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { AbstractDocument } from '@app/common';
-import { ListingOption } from '@app/common/database/types/common';
-import { SchemaTypes } from 'mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
+import { AbstractDocument } from '@app/common'
+import { ListingOption } from '@app/common/database/types/common'
+import { SchemaTypes } from 'mongoose'
 
 @Schema({ versionKey: false })
 export class ListingOptionGroup extends AbstractDocument {
   @Prop(SchemaTypes.ObjectId)
-  vendorId: string;
+    vendorId: string
 
   @Prop({ type: SchemaTypes.String })
-  name: string;
+    name: string
 
   @Prop({ type: SchemaTypes.Number })
-  min: number;
+    min: number
 
   @Prop({ type: SchemaTypes.Number })
-  max: number;
+    max: number
 
   @Prop({ type: Boolean, default: false })
-  isDeleted: boolean;
+    isDeleted: boolean
 
   @Prop({ type: [{ name: SchemaTypes.String, price: SchemaTypes.Number }] })
-  options: ListingOption[];
+    options: ListingOption[]
 }
 
 export const ListingOptionGroupSchema =
-  SchemaFactory.createForClass(ListingOptionGroup);
+  SchemaFactory.createForClass(ListingOptionGroup)

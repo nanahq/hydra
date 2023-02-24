@@ -1,15 +1,15 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator'
 
 export class RegisterAdminDTO {
   @IsNotEmpty()
-  public userName: string;
+  public userName: string
 
   @IsNotEmpty()
-  public password: string;
+  public password: string
 
   @IsNotEmpty()
-  public firstName: string;
+  public firstName: string
 
   @IsNotEmpty()
-  public lastName: string;
+  public lastName: string
 }
