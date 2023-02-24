@@ -66,7 +66,7 @@ export class VendorController {
   ): Promise<{ status: number }> {
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorsClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_STATUS, data).pipe(
-        catchError<any any>((error: IRpcException) => {
+        catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
       )

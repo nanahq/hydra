@@ -58,7 +58,7 @@ export class AdminController {
       @CurrentUser() admin: Admin
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateAdminLevelRequestDto> = {
-      userId: admin._id any,
+      userId: admin._id as any,
       data: {
         id: admin._id as any,
         level: AdminLevel[level]
@@ -95,9 +95,7 @@ export class AdminController {
 
   @UseGuards(JwtAuthGuard)
   @Get('admin')
-  async getUserProfile (
-    @CurrentUser() admin: Admin
-  ): Promise<Admin> {
+  async getUserProfile (@CurrentUser() admin: Admin): Promise<Admin> {
     return admin
   }
 }

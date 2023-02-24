@@ -16,7 +16,7 @@ import {
   ResponseWithStatus,
   ServicePayload,
   IRpcException,
- ListingCategory
+  ListingCategory
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
@@ -30,7 +30,7 @@ export class ListingController {
   @UseGuards(JwtAuthGuard)
   @Get('listings')
   async getAllVendors (): Promise<ListingCategory[]> {
-      return await lastValueFrom<ListingCategory[]>(
+    return await lastValueFrom<ListingCategory[]>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_ADMIN, {}).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -48,7 +48,7 @@ export class ListingController {
         listingId
       }
     }
-      return await lastValueFrom<ListingCategory>(
+    return await lastValueFrom<ListingCategory>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_LISTING_INFO, payload).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)

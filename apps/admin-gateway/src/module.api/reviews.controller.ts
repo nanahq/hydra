@@ -29,7 +29,7 @@ export class ReviewsController {
   @UseGuards(JwtAuthGuard)
   @Get('reviews')
   async getAllReviews (): Promise<Review[]> {
-      return await lastValueFrom<Review[]>(
+    return await lastValueFrom<Review[]>(
       this.reviewsClient
         .send(QUEUE_MESSAGE.REVIEW_ADMIN_GET_ALL_IN_DB, {})
         .pipe(
@@ -43,7 +43,7 @@ export class ReviewsController {
   @UseGuards(JwtAuthGuard)
   @Get('/:id')
   async getReview (@Param('id') reviewId: string): Promise<Review> {
-      return await lastValueFrom<Review>(
+    return await lastValueFrom<Review>(
       this.reviewsClient.send(QUEUE_MESSAGE.REVIEW_FIND_ONE, { reviewId }).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
@@ -56,8 +56,8 @@ export class ReviewsController {
   @UseGuards(JwtAuthGuard)
   async getVendorReviews (
     @Param('vendorId') vendorId: string
-    ): Promise<Review[]> {
-      return await lastValueFrom<Review[]>(
+  ): Promise<Review[]> {
+    return await lastValueFrom<Review[]>(
       this.reviewsClient
         .send(QUEUE_MESSAGE.REVIEW_GET_VENDOR_REVIEWS, { vendorId })
         .pipe(
@@ -72,8 +72,8 @@ export class ReviewsController {
   @UseGuards(JwtAuthGuard)
   async getListingReviews (
     @Param('listingId') listingId: string
-    ): Promise<Review[]> {
-      return await lastValueFrom<Review[]>(
+  ): Promise<Review[]> {
+    return await lastValueFrom<Review[]>(
       this.reviewsClient
         .send(QUEUE_MESSAGE.REVIEW_GET_LISTING_REVIEWS, { listingId })
         .pipe(

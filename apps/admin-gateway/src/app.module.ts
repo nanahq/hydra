@@ -48,7 +48,7 @@ export class AppModule implements NestModule {
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
             JWT_EXPIRATION: Joi.string().required(),
-              PORT: Joi.string().required()
+            PORT: Joi.string().required()
           }),
           envFilePath: './apps/admin-gateway/.env'
         }),
