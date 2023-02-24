@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: vendor-gateway
-          image: imagynetech/eatlater-vendor-gateway:1.7.15
+          image: imagynetech/eatlater-vendor-gateway:1.7.16
           ports:
             - containerPort: 3001
           env:
