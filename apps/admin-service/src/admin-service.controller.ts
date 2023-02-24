@@ -12,7 +12,7 @@ import {
   RmqService,
   ServicePayload,
   RegisterAdminDTO,
-  AdminEntity,
+  Admin,
   UpdateAdminLevelRequestDto
 } from '@app/common'
 import { AdminServiceService } from './admin-service.service'
@@ -42,7 +42,7 @@ export class AdminServiceController {
   async getAdminWithPassword (
     @Payload() { data }: ServicePayload<{ userName: string, password: string }>,
       @Ctx() context: RmqContext
-  ): Promise<Partial<AdminEntity>> {
+  ): Promise<Partial<Admin>> {
     try {
       return await this.adminServiceService.validateAdminWithPassword(data)
     } catch (error) {
@@ -56,7 +56,7 @@ export class AdminServiceController {
   async getAdminWithId (
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
-  ): Promise<AdminEntity> {
+  ): Promise<Admin> {
     try {
       return await this.adminServiceService.validateAdminWithId(userId)
     } catch (error) {
