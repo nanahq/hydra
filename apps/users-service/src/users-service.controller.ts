@@ -18,11 +18,12 @@ import {
   RmqService,
   ServicePayload,
   TokenPayload,
-  UserEntity,
+  User,
   verifyPhoneRequest
 } from '@app/common'
 import { UsersService } from './users-service.service'
 import { lastValueFrom } from 'rxjs'
+import { UpdateUserDto } from '@app/common/database/dto/user.dto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -43,7 +44,7 @@ export class UsersServiceController {
       const res = await this.usersService.register(data)
       await lastValueFrom(
         this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
-          phoneNumber: data.phoneNumber
+          phoneNumber: data.phone
         })
       )
       return res
@@ -72,7 +73,7 @@ export class UsersServiceController {
   async getUserByPhone (
     @Payload() data: loginUserRequest,
       @Ctx() context: RmqContext
-  ): Promise<UserEntity> {
+  ): Promise<User> {
     try {
       const res = await this.usersService.validateUser(data)
 
@@ -80,7 +81,7 @@ export class UsersServiceController {
       if (res.status === 1) {
         await lastValueFrom(
           this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
-            phoneNumber: data.phoneNumber
+            phoneNumber: data.phone
           })
         )
       }
@@ -96,7 +97,7 @@ export class UsersServiceController {
   async getUserById (
     @Payload() data: TokenPayload,
       @Ctx() context: RmqContext
-  ): Promise<UserEntity> {
+  ): Promise<User> {
     try {
       return await this.usersService.getUser(data)
     } catch (error) {
@@ -108,7 +109,7 @@ export class UsersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_PROFILE)
   async updateUserProfile (
-    @Payload() payload: ServicePayload<Partial<UserEntity>>,
+    @Payload() payload: ServicePayload<UpdateUserDto>,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
@@ -138,7 +139,7 @@ export class UsersServiceController {
   async getUserWithPhone (
     @Payload() { phone }: { phone: string },
       @Ctx() context: RmqContext
-  ): Promise<UserEntity> {
+  ): Promise<User> {
     try {
       return await this.usersService.getUserWithPhone(phone)
     } catch (error) {

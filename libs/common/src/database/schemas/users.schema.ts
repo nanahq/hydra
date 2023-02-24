@@ -1,9 +1,10 @@
 import { SchemaTypes } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument } from '@app/common'
+import { UserI } from '../dto/user.dto'
 
 @Schema({ versionKey: false })
-export class User extends AbstractDocument {
+export class User extends AbstractDocument implements UserI {
   @Prop()
     firstName: string
 
@@ -28,11 +29,7 @@ export class User extends AbstractDocument {
   @Prop(SchemaTypes.Date)
     updatedAt: string
 
-  @Prop({
-    type: {
-      String
-    }
-  })
+  @Prop({ type: String, default: 'ONLINE' })
     status: 'ONLINE' | 'OFFLINE'
 
   @Prop({
@@ -43,6 +40,9 @@ export class User extends AbstractDocument {
     location: {
     coordinates: [string, string]
   }
+
+  @Prop(Boolean)
+    isDeleted: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
