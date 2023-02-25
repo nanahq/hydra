@@ -62,7 +62,7 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_LOCAL)
-  async getUserByPhone (
+  async getVendorByEmail (
     @Payload() data: LoginVendorRequest,
       @Ctx() context: RmqContext
   ): Promise<Vendor> {
@@ -76,7 +76,7 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_JWT)
-  async getUserById (
+  async getVendorById (
     @Payload() data: TokenPayload,
       @Ctx() context: RmqContext
   ): Promise<Vendor> {

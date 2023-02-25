@@ -8,9 +8,8 @@ import {
 import { Vendor } from './vendor.schema'
 @Schema({ versionKey: false, timestamps: true })
 export class VendorSettings extends AbstractDocument {
-  @Prop({ type: Types.ObjectId, ref: Vendor.name })
+  @Prop({ type: Types.ObjectId, ref: "Vendor" })
     vendorId: string
-
   @Prop({
     type: {
       startTime: String,

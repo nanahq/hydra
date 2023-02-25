@@ -16,7 +16,7 @@ export class ListingCategory extends AbstractDocument {
   @Prop(SchemaTypes.Boolean)
     isLive: boolean
 
-  @Prop({ type: [Types.ObjectId], ref: ListingMenu.name })
+  @Prop({ type: [Types.ObjectId], ref: "ListingMenu" })
     listingsMenu: any[]
 
   @Prop({ type: Boolean, default: false })

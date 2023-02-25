@@ -61,7 +61,7 @@ export class Vendor extends AbstractDocument {
     coordinates: [string, string]
   }
 
-  @Prop({ type: Types.ObjectId, ref: VendorSettings.name })
+  @Prop({ type: Types.ObjectId, ref: "VendorSettings" })
     settings: any
 }
 

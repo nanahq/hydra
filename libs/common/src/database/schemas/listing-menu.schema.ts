@@ -34,7 +34,7 @@ export class ListingMenu extends AbstractDocument {
 
   @Prop({
     type: [Types.ObjectId],
-    ref: ListingOptionGroup.name
+    ref: "ListingOptionGroup"
   })
     optionGroups: any
 

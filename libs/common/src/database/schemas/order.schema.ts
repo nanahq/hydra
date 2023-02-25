@@ -6,17 +6,19 @@ import { AbstractDocument, OrderStatus, User, OrderBreakDown } from '@app/common
 export class Order extends AbstractDocument {
   @Prop({
     type: Types.ObjectId,
-    ref: User.name
+    ref: "User"
   })
     userId: string
 
   @Prop({
-    type: SchemaTypes.ObjectId
+    type: Types.ObjectId,
+    ref: "ListingMenu"
   })
     listingsId: string
 
   @Prop({
-    type: SchemaTypes.ObjectId
+    type: Types.ObjectId,
+    ref: "Vendor"
   })
     vendorId: string
 

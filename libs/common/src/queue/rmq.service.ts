@@ -24,3 +24,4 @@ export class RmqService {
     channel.ack(originalMessage)
   }
 }
+

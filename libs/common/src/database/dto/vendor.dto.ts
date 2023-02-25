@@ -75,8 +75,10 @@ export class UpdateVendorProfileDto {
 
 export class UpdateVendorSettingsDto {
   @IsObject()
-    operation: VendorOperationSetting
+  @IsOptional()
+    operation?: VendorOperationSetting
 
   @IsObject()
-    payment: PaymentInfo
+  @IsOptional()
+  payment?: PaymentInfo
 }
