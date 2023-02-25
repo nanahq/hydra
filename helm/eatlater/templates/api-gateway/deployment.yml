@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: imagynetech/eatlater-api-gateway:0.7.15
+          image: imagynetech/eatlater-api-gateway:1.8.16
           ports:
             - containerPort: 3000
           env:
