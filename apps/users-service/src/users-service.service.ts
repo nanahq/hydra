@@ -12,8 +12,7 @@ import {
   verifyPhoneRequest
 } from '@app/common'
 import { UserRepository } from './users.repository'
-import { UpdateUserDto } from '@app/common/database/dto/user.dto'
-
+import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
 @Injectable()
 export class UsersService {
   constructor (

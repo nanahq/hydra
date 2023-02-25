@@ -6,13 +6,14 @@ import {
   ResponseWithStatus,
   ServicePayload,
   TokenPayload,
-  UpdateVendorStatus
+  UpdateVendorStatus,
+  VendorUserI
 } from '@app/common'
 import {
   CreateVendorDto,
-  UpdateVendorSettingsDto,
-  VendorUserI
+  UpdateVendorSettingsDto
 } from '@app/common/database/dto/vendor.dto'
+
 import {
   VendorRepository,
   VendorSettingsRepository
@@ -218,7 +219,7 @@ export class VendorsService {
   }
 }
 
-function getVendorsMapper (vendors: any[]): any[] {
+function getVendorsMapper (vendors: any[]): VendorUserI[] {
   const map = vendors.map((vendor) => {
     return {
       businessName: vendor.businessName,

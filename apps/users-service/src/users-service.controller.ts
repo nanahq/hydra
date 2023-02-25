@@ -23,7 +23,7 @@ import {
 } from '@app/common'
 import { UsersService } from './users-service.service'
 import { lastValueFrom } from 'rxjs'
-import { UpdateUserDto } from '@app/common/database/dto/user.dto'
+import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
