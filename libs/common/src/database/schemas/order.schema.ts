@@ -3,7 +3,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument, OrderStatus, User, OrderBreakDown } from '@app/common'
 
 @Schema({ versionKey: false })
-export class Order extends AbstractDocument implements OrderI {
+export class Order extends AbstractDocument {
   @Prop({
     type: Types.ObjectId,
     ref: User.name

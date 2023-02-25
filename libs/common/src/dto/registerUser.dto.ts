@@ -9,7 +9,7 @@ import {
 export class registerUserRequest {
   @IsNotEmpty()
   @IsPhoneNumber('NG')
-    phoneNumber: string
+    phone: string
 
   @IsString()
   @IsNotEmpty()

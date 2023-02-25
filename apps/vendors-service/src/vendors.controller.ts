@@ -15,13 +15,13 @@ import {
   ServicePayload,
   ResponseWithStatus,
   LoginVendorRequest,
-  UpdateVendorStatus
+  UpdateVendorStatus,
+  VendorUserI
 } from '@app/common'
 import { VendorsService } from './vendors.service'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import {
-  UpdateVendorSettingsDto,
-  VendorUserI
+  UpdateVendorSettingsDto
 } from '@app/common/database/dto/vendor.dto'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 
