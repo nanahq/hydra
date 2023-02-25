@@ -1,22 +1,22 @@
 import { SchemaTypes } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument } from '@app/common'
+import { AbstractDocument, LocationCoordinates } from '@app/common'
 
 @Schema({ versionKey: false })
 export class User extends AbstractDocument {
-  @Prop()
+  @Prop(String)
     firstName: string
 
-  @Prop()
+  @Prop(String)
     lastName: string
 
-  @Prop({ unique: true, sparse: true })
+  @Prop({ type: String, unique: true, sparse: true })
     email: string
 
-  @Prop()
+  @Prop(String)
     password: string
 
-  @Prop({ unique: true })
+  @Prop({ type: String, unique: true })
     phone: string
 
   @Prop({ default: false })
@@ -28,11 +28,7 @@ export class User extends AbstractDocument {
   @Prop(SchemaTypes.Date)
     updatedAt: string
 
-  @Prop({
-    type: {
-      String
-    }
-  })
+  @Prop({ type: String, default: 'ONLINE' })
     status: 'ONLINE' | 'OFFLINE'
 
   @Prop({
@@ -40,9 +36,7 @@ export class User extends AbstractDocument {
       coordinates: [String]
     }
   })
-    location: {
-    coordinates: [string, string]
-  }
+    location: LocationCoordinates
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

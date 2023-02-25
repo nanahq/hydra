@@ -7,7 +7,7 @@ import {
   IsString
 } from 'class-validator'
 
-import { CustomisationOptionTypeEnum, ListingMenu } from '@app/common'
+import { CustomisationOptionTypeEnum } from '@app/common'
 import { ListingOption } from '@app/common/database/types/common'
 
 export class ListingOptionEntityDto {
@@ -120,19 +120,3 @@ export class UpdateOptionGroupDto {
 }
 
 // Interfaces
-
-export interface ListingCategoryI {
-  vendorId: string
-  name: string
-  tags: string[]
-  isLive: boolean
-  menu: ListingMenu[]
-}
-
-export interface ListingOptionGroupI {
-  vendorId: string
-  name: string
-  min: number
-  max: number
-  options: ListingOption[]
-}
