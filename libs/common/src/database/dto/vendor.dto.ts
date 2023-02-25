@@ -80,37 +80,3 @@ export class UpdateVendorSettingsDto {
   @IsObject()
     payment: PaymentInfo
 }
-
-export interface VendorI {
-  firstName: string
-  lastName: string
-  email: string
-  businessEmail: string
-  password: string
-  phone: string
-  isValidated: boolean
-  status: 'ONLINE' | 'OFFLINE'
-  businessName: string
-  businessLogo: string
-  businessAddress: string
-  location: {
-    coordinates: [string, string]
-  }
-}
-
-export interface VendorSettingsI {
-  vendor: string
-  operations: VendorOperationSetting
-  payment?: PaymentInfo
-}
-
-export interface VendorUserI {
-  isValidated: boolean
-  status: 'ONLINE' | 'OFFLINE'
-  businessName: string
-  businessLogo: string
-  businessAddress: string
-  location: {
-    coordinates: [string, string]
-  }
-}

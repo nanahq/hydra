@@ -1,0 +1,41 @@
+import {
+  CreateDateColumn,
+  DeleteDateColumn,
+  UpdateDateColumn,
+  Entity,
+  Column,
+  PrimaryGeneratedColumn
+} from 'typeorm'
+
+@Entity({ name: 'users' })
+export class UserEntity {
+  @PrimaryGeneratedColumn('uuid')
+  public id: string
+
+  @Column()
+  public phoneNumber: string
+
+  @Column({ type: 'text', select: false })
+  public password: string
+
+  @Column({ type: 'text' })
+  public firstName: string
+
+  @Column({ type: 'text' })
+  public lastName: string
+
+  @Column({ nullable: true, default: 0, type: 'int' })
+  public status: number
+
+  @Column({ type: 'text', array: true })
+  public addresses: string[]
+
+  @UpdateDateColumn()
+  public updatedAt: Date
+
+  @DeleteDateColumn()
+  public deletedAt: Date
+
+  @CreateDateColumn()
+  public createdAt: Date
+}

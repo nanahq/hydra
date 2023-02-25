@@ -1,4 +1,4 @@
-import { SchemaTypes } from 'mongoose'
+import { Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument } from '@app/common'
 import {
@@ -6,10 +6,10 @@ import {
   VendorOperationSetting
 } from '@app/common/database/types/common'
 import { Vendor } from './vendor.schema'
-@Schema({ versionKey: false })
+@Schema({ versionKey: false, timestamps: true })
 export class VendorSettings extends AbstractDocument {
-  @Prop({ type: SchemaTypes.ObjectId, ref: Vendor.name })
-    vendor: string
+  @Prop({ type: Types.ObjectId, ref: Vendor.name })
+    vendorId: string
 
   @Prop({
     type: {

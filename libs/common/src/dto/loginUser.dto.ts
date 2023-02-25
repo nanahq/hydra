@@ -9,7 +9,7 @@ import {
 export class loginUserRequest {
   @IsNotEmpty()
   @IsPhoneNumber('NG')
-    phone: string
+    phoneNumber: string
 
   @IsNotEmpty()
   @MinLength(8)

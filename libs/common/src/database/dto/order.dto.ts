@@ -12,6 +12,7 @@ import {
 } from 'class-validator'
 
 import { OrderDeliveryMode } from '@app/common/typings/OrderDeliveryMode.enum'
+import { OrderBreakDown } from '../types/common'
 
 export class OrderDto {
   @IsString()
@@ -60,11 +61,4 @@ export class OrderDto {
   @IsOptional()
   @IsArray()
   public addOns: string[]
-}
-
-export interface OrderBreakDown {
-  orderCost: number
-  systemFee: number
-  deliveryFee: number
-  vat: number
 }

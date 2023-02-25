@@ -1,12 +1,12 @@
-import { SchemaTypes } from 'mongoose'
+import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, OrderStatus } from '@app/common'
-import { OrderBreakDown } from '@app/common/database/dto/order.dto'
+import { AbstractDocument, OrderStatus, User, OrderBreakDown } from '@app/common'
 
 @Schema({ versionKey: false })
-export class Order extends AbstractDocument {
+export class Order extends AbstractDocument implements OrderI {
   @Prop({
-    type: SchemaTypes.ObjectId
+    type: Types.ObjectId,
+    ref: User.name
   })
     userId: string
 

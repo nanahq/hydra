@@ -1,8 +1,8 @@
-import { SchemaTypes } from 'mongoose'
+import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument } from '@app/common'
+import { AbstractDocument, VendorSettings } from '@app/common'
 
-@Schema({ versionKey: false })
+@Schema({ versionKey: false, timestamps: true })
 export class Vendor extends AbstractDocument {
   @Prop()
     firstName: string
@@ -60,6 +60,9 @@ export class Vendor extends AbstractDocument {
     location: {
     coordinates: [string, string]
   }
+
+  @Prop({ type: Types.ObjectId, ref: VendorSettings.name })
+    settings: any
 }
 
 export const VendorSchema = SchemaFactory.createForClass(Vendor)
