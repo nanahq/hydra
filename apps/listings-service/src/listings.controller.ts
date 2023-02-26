@@ -7,7 +7,7 @@ import {
   RpcException
 } from '@nestjs/microservices'
 
-import { ListingsService } from './listings-service.service'
+import { ListingsService } from './listings.service'
 import {
   ResponseWithStatus,
   RmqService,
@@ -20,7 +20,6 @@ import {
 } from '@app/common'
 import {
   CreateListingCategoryDto,
-  CreateListingMenuDto,
   CreateOptionGroupDto,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
@@ -28,7 +27,7 @@ import {
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
-export class ListingsServiceController {
+export class ListingsController {
   constructor (
     private readonly listingService: ListingsService,
     private readonly rmqService: RmqService
@@ -36,25 +35,11 @@ export class ListingsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.GET__ALL_LISTING_MENU)
   async getAllListings (
-    @Ctx() context: RmqContext,
-      @Payload() { userId }: ServicePayload<null>
+    @Payload() { userId }: ServicePayload<null>,
+      @Ctx() context: RmqContext
   ): Promise<ListingMenu[]> {
     try {
       return await this.listingService.getAllListingMenu(userId)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
-
-  @MessagePattern(QUEUE_MESSAGE.CREATE_LISTING)
-  async createListing (
-    @Payload() payload: ServicePayload<CreateListingMenuDto>,
-      @Ctx() context: RmqContext
-  ): Promise<ResponseWithStatus> {
-    try {
-      return await this.listingService.createListingMenu(payload)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -194,7 +179,6 @@ export class ListingsServiceController {
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      console.log('Hello world')
       return await this.listingService.createListingMenu(data)
     } catch (error) {
       throw new RpcException(error)

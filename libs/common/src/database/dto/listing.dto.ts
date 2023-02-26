@@ -37,25 +37,25 @@ export class CreateListingCategoryDto {
     isLive: boolean
 
   @IsOptional()
-  public menu: string
+  public menu?: string
 }
 
 export class UpdateListingCategoryDto {
   @IsOptional()
-  public name: string
+  public name?: string
 
   @IsArray()
   @IsOptional()
-  public tags: string[]
+  public tags?: string[]
 
   @IsOptional()
-    isLive: boolean
+    isLive?: boolean
 
   @IsOptional()
-    isDeleted: boolean
+    isDeleted?: boolean
 
   @IsNotEmpty()
-    catId: string
+    catId?: string
 }
 
 export class CreateListingMenuDto {
@@ -104,19 +104,19 @@ export class CreateOptionGroupDto {
 
 export class UpdateOptionGroupDto {
   @IsOptional()
-  public name: string
+  public name?: string
 
   @IsOptional()
-  public min: number
+  public min?: number
 
   @IsOptional()
-    max: number
+    max?: number
 
   @IsOptional()
-    options: ListingOption[]
+    options?: ListingOption[]
 
   @IsNotEmpty()
-    optionId: string
+    optionId?: string
 }
 
 // Interfaces

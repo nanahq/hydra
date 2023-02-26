@@ -1,6 +1,6 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, ListingMenu } from '@app/common'
+import { AbstractDocument } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
 export class ListingCategory extends AbstractDocument {
@@ -16,7 +16,7 @@ export class ListingCategory extends AbstractDocument {
   @Prop(SchemaTypes.Boolean)
     isLive: boolean
 
-  @Prop({ type: [Types.ObjectId], ref: ListingMenu.name })
+  @Prop({ type: [Types.ObjectId], ref: 'ListingMenu' })
     listingsMenu: any[]
 
   @Prop({ type: Boolean, default: false })

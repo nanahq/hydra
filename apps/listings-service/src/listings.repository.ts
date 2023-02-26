@@ -5,18 +5,17 @@ import {
   ListingCategory,
   ListingMenu
 } from '@app/common'
-import { InjectModel, InjectConnection } from '@nestjs/mongoose'
-import { Model, Connection } from 'mongoose'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
 
 @Injectable()
 export class ListingMenuRepository extends AbstractRepository<ListingMenu> {
   protected readonly logger = new Logger(ListingMenuRepository.name)
 
   constructor (
-  @InjectModel(ListingMenu.name) listingMenuModel: Model<ListingMenu>,
-    @InjectConnection() connection: Connection
+  @InjectModel(ListingMenu.name) listingMenuModel: Model<ListingMenu>
   ) {
-    super(listingMenuModel, connection)
+    super(listingMenuModel)
   }
 }
 
@@ -26,10 +25,9 @@ export class ListingOptionGroupRepository extends AbstractRepository<ListingOpti
 
   constructor (
   @InjectModel(ListingOptionGroup.name)
-    listingOptionGroupModel: Model<ListingOptionGroup>,
-    @InjectConnection() connection: Connection
+    listingOptionGroupModel: Model<ListingOptionGroup>
   ) {
-    super(listingOptionGroupModel, connection)
+    super(listingOptionGroupModel)
   }
 }
 
@@ -39,9 +37,8 @@ export class ListingCategoryRepository extends AbstractRepository<ListingCategor
 
   constructor (
   @InjectModel(ListingCategory.name)
-    listingCategoryModel: Model<ListingCategory>,
-    @InjectConnection() connection: Connection
+    listingCategoryModel: Model<ListingCategory>
   ) {
-    super(listingCategoryModel, connection)
+    super(listingCategoryModel)
   }
 }

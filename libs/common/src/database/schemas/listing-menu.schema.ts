@@ -1,7 +1,6 @@
 import { Types, SchemaTypes } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument } from '@app/common'
-import { ListingOptionGroup } from '@app/common/database/schemas/listing-option.schema'
 
 @Schema({ versionKey: false })
 export class ListingMenu extends AbstractDocument {
@@ -34,7 +33,7 @@ export class ListingMenu extends AbstractDocument {
 
   @Prop({
     type: [Types.ObjectId],
-    ref: ListingOptionGroup.name
+    ref: 'ListingOptionGroup'
   })
     optionGroups: any
 

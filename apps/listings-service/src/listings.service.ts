@@ -12,7 +12,7 @@ import {
   ListingCategoryRepository,
   ListingMenuRepository,
   ListingOptionGroupRepository
-} from './listings-service.repository'
+} from './listings.repository'
 import {
   CreateListingCategoryDto,
   CreateOptionGroupDto,
@@ -121,8 +121,6 @@ export class ListingsService {
         { _id, vendorId },
         'listingMenu'
       )
-
-      console.log(cat)
       if (cat === null) {
         throw new FitRpcException('Category not found', HttpStatus.NOT_FOUND)
       }
@@ -242,67 +240,4 @@ export class ListingsService {
       )
     }
   }
-  // async create (data: ServicePayload<CreateListingMenuDto>): Promise<ResponseWithStatus> {
-  //   const createRequest = await this.createListing(data)
-  //   if (createRequest === null) {
-  //     throw new FitRpcException(
-  //       'Failed to create a new listing. Incorrect input',
-  //       HttpStatus.BAD_REQUEST
-  //     )
-  //   }
-
-  //   return { status: 1 }
-  // }
-
-  // async createListingMenu (data: CreateListingMenuDto): Promise<ResponseWithStatus> {
-  //   try {
-  //     await this.listingMenuRepository.create(data)
-  //     return {status: 1}
-  //   } catch (error) {
-  //     throw new FitRpcException('', HttpStatus.BAD_REQUEST)
-  //   }
-  // }
-
-  // async update (
-  //   data: ServicePayload<Partial<ListingEntity>>
-  // ): Promise<ResponseWithStatus> {
-  //   const req = await this.updateListing(data)
-
-  //   if (req === null) {
-  //     throw new FitRpcException(
-  //       'Failed to update listing. Incorrect input',
-  //       HttpStatus.BAD_REQUEST
-  //     )
-  //   }
-
-  //   return { status: 1 }
-  // }
-
-  // async getListing (payload: { listingId: string }): Promise<ListingEntity> {
-  //   const _listing = await this.getListingById(payload)
-
-  //   if (_listing === null) {
-  //     throw new FitRpcException(
-  //       'Listing with id is not found',
-  //       HttpStatus.NOT_FOUND
-  //     )
-  //   }
-
-  //   return _listing
-  // }
-
-  // async deleteListing (
-  //   payload: ServicePayload<{ listingId: string }>
-  // ): Promise<ResponseWithStatus> {
-  //   const deleteRequest = await this.deleteListingById(payload)
-
-  //   if (deleteRequest === null) {
-  //     throw new FitRpcException(
-  //       'Failed to delete listing. Invalid ID',
-  //       HttpStatus.UNPROCESSABLE_ENTITY
-  //     )
-  //   }
-
-  //   return { status: 1 }
-  // }
 }

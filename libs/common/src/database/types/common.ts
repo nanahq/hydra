@@ -84,7 +84,7 @@ export interface VendorI {
 
 export interface VendorSettingsI {
   vendorId: string
-  operations: VendorOperationSetting
+  operations?: VendorOperationSetting
   payment?: PaymentInfo
 }
 

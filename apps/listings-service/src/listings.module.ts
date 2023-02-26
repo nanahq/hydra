@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
 
-import { ListingsServiceController } from './listings-service.controller'
-import { ListingsService } from './listings-service.service'
+import { ListingsController } from './listings.controller'
+import { ListingsService } from './listings.service'
 import { RmqModule } from '@app/common'
 import {
   ListingCategory,
@@ -23,7 +23,7 @@ import {
   ListingMenuRepository,
   ListingCategoryRepository,
   ListingOptionGroupRepository
-} from './listings-service.repository'
+} from './listings.repository'
 
 @Module({
   imports: [
@@ -45,7 +45,7 @@ import {
     DatabaseModule,
     RmqModule
   ],
-  controllers: [ListingsServiceController],
+  controllers: [ListingsController],
   providers: [
     ListingsService,
     ListingMenuRepository,
@@ -53,4 +53,4 @@ import {
     ListingOptionGroupRepository
   ]
 })
-export class ListingsServiceModule {}
+export class ListingsModule {}
