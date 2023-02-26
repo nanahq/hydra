@@ -44,9 +44,6 @@ describe('VendorsRepository', () => {
                     vendor = await vendorRepository.findOne(userFilterQuery);
                 })
 
-                // test('then it should call the vendorModel', () => {
-                //     expect(vendorModel.findOne).toHaveBeenCalledWith(userFilterQuery);
-                // })
 
                 test('then it should return a vendor', () => {
                     expect(vendor).toEqual(VendorStub());
@@ -196,35 +193,35 @@ describe('VendorsSettingsRepository', () => {
         })
     })
 
-    describe('create operations', () => {
-        let vendorSettingsModel: VendorSettingsModel
-        let vendorSettingsRepository: VendorSettingsRepository
-        beforeEach(async () => {
-            const moduleRef = await Test.createTestingModule({
-                providers: [
-                    VendorSettingsRepository,
-                    {
-                        provide: getModelToken(VendorSettings.name),
-                        useValue: VendorSettingsModel,
-                    }
-                ],
-            })
-                .compile();
-            vendorSettingsModel = moduleRef.get<VendorSettingsModel>(getModelToken(VendorSettings.name));
-            vendorSettingsRepository = moduleRef.get<VendorSettingsRepository>(VendorSettingsRepository);
-        });
-
-        // describe('create', () => {
-        //     describe('when create is called', () => {
-        //         let vendorSettings: VendorSettings;
-        //         beforeEach(async () => {
-        //             jest.spyOn(VendorSettingsModel.prototype, 'create')
-        //             vendorSettings = await vendorSettingsRepository.create(VendorSettingStub());
-        //         })
-        //         test('then it should return a user', () => {
-        //             expect(vendorSettings).toEqual(VendorStub());
-        //         })
-        //     })
-        // })
-    })
+    // describe('create operations', () => {
+    //     let vendorSettingsModel: VendorSettingsModel
+    //     let vendorSettingsRepository: VendorSettingsRepository
+    //     beforeEach(async () => {
+    //         const moduleRef = await Test.createTestingModule({
+    //             providers: [
+    //                 VendorSettingsRepository,
+    //                 {
+    //                     provide: getModelToken(VendorSettings.name),
+    //                     useValue: VendorSettingsModel,
+    //                 }
+    //             ],
+    //         })
+    //             .compile();
+    //         vendorSettingsModel = moduleRef.get<VendorSettingsModel>(getModelToken(VendorSettings.name));
+    //         vendorSettingsRepository = moduleRef.get<VendorSettingsRepository>(VendorSettingsRepository);
+    //     });
+    //
+    //     describe('create', () => {
+    //         describe('when create is called', () => {
+    //             let vendorSettings: VendorSettings;
+    //             beforeEach(async () => {
+    //                 jest.spyOn(VendorSettingsModel.prototype, 'create')
+    //                 vendorSettings = await vendorSettingsRepository.create(VendorSettingStub());
+    //             })
+    //             test('then it should return a user', () => {
+    //                 expect(vendorSettings).toEqual(VendorStub());
+    //             })
+    //         })
+    //     })
+    // })
 })
