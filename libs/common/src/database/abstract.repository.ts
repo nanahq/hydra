@@ -16,7 +16,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   constructor (
     protected readonly model: Model<TDocument>,
-    private readonly connection: Connection
+    private readonly connection?: Connection
   ) {}
 
   async create (
@@ -92,9 +92,11 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     )
   }
 
-  async startTransaction (): Promise<ClientSession> {
-    const session = await this.connection.startSession()
-    session.startTransaction()
-    return session
+  async startTransaction (): Promise<ClientSession | void> {
+    if(this.connection !== undefined) {
+      const session = await this.connection.startSession()
+      session.startTransaction()
+      return session
+    }
   }
 }
