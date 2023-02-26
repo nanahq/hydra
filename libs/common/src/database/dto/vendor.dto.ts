@@ -80,5 +80,5 @@ export class UpdateVendorSettingsDto {
 
   @IsObject()
   @IsOptional()
-  payment?: PaymentInfo
+    payment?: PaymentInfo
 }

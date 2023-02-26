@@ -1,3 +1,5 @@
-import { ResponseWithStatus } from "@app/common";
+import { ResponseWithStatus } from '@app/common'
 
-export const resStub = ():ResponseWithStatus => ({status: 1})
+export function resStub (): ResponseWithStatus {
+  return { status: 1 }
+}

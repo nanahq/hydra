@@ -5,11 +5,11 @@ import {
   PaymentInfo,
   VendorOperationSetting
 } from '@app/common/database/types/common'
-import { Vendor } from './vendor.schema'
 @Schema({ versionKey: false, timestamps: true })
 export class VendorSettings extends AbstractDocument {
-  @Prop({ type: Types.ObjectId, ref: "Vendor" })
+  @Prop({ type: Types.ObjectId, ref: 'Vendor' })
     vendorId: string
+
   @Prop({
     type: {
       startTime: String,

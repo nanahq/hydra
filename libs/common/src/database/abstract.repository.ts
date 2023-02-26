@@ -92,8 +92,8 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     )
   }
 
-  async startTransaction (): Promise<ClientSession | void> {
-    if(this.connection !== undefined) {
+  async startTransaction (): Promise<ClientSession | any> {
+    if (this.connection !== undefined) {
       const session = await this.connection.startSession()
       session.startTransaction()
       return session

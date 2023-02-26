@@ -10,7 +10,7 @@ export class VendorRepository extends AbstractRepository<Vendor> {
   protected readonly logger = new Logger(VendorRepository.name)
 
   constructor (
-  @InjectModel(Vendor.name) vendorModel: Model<Vendor>,
+  @InjectModel(Vendor.name) vendorModel: Model<Vendor>
   ) {
     super(vendorModel)
   }
@@ -22,7 +22,7 @@ export class VendorSettingsRepository extends AbstractRepository<VendorSettings>
 
   constructor (
   @InjectModel(VendorSettings.name)
-    vendorSettingsModel: Model<VendorSettings>,
+    vendorSettingsModel: Model<VendorSettings>
   ) {
     super(vendorSettingsModel)
   }
