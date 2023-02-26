@@ -26,9 +26,12 @@ import { ListingsController } from './module.api/listings.controller'
 import { OrdersController } from './module.api/orders.controller'
 import { ReviewController } from './module.api/review.controller'
 import { GoogleFileService } from './google-file.service'
+import { LoggerConfig } from '@app/common/logger/logger.option'
+import { WinstonModule } from 'nest-winston'
 
 @Module({})
 export class AppModule implements NestModule {
+
   configure (consumer: MiddlewareConsumer): void {
     consumer.apply(cookieParser()).forRoutes('*')
   }
@@ -66,16 +69,14 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.REVIEWS_SERVICE }),
-        // MulterModule.register({
-        //     storage: MulterModule.
-        // }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
             limit: 10
           })
         }),
-        AppModule
+        AppModule,
+        WinstonModule.forRoot((new LoggerConfig()).console())
       ],
       controllers: [
         VendorController,

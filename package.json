@@ -50,6 +50,7 @@
     "joi": "^17.6.2",
     "mongoose": "^6.9.2",
     "nanoid": "^4.0.0",
+    "nest-winston": "^1.8.0",
     "nestjs-twilio": "^3.2.0",
     "npm": "^8.19.2",
     "passport": "^0.6.0",
@@ -60,7 +61,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "twilio": "^3.83.3",
-    "typeorm": "^0.3.10"
+    "typeorm": "^0.3.10",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.2.0",

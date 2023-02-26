@@ -5,6 +5,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    prometheus.io/port: "10254"
+    prometheus.io/scrape: "true"
 spec:
   rules:
     - host: "api.eatlater.ng"
@@ -31,4 +33,3 @@ spec:
                   name: admin-gateway
                   port:
                     number: 3002
-

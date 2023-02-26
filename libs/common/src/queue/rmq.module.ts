@@ -1,6 +1,6 @@
 import { DynamicModule, Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { ClientsModule, Transport } from '@nestjs/microservices'
+import { ClientsModule, Transport, RmqOptions } from '@nestjs/microservices'
 import { RmqModuleOptions } from './interface'
 import { RmqService } from './rmq.service'
 
@@ -16,7 +16,7 @@ export class RmqModule {
         ClientsModule.registerAsync([
           {
             name,
-            useFactory: (configService: ConfigService) => ({
+            useFactory: (configService: ConfigService): RmqOptions => ({
               transport: Transport.RMQ,
               options: {
                 urls: [configService.get<string>('RMQ_URI') as string],
