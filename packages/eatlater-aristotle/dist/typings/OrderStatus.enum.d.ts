@@ -1,0 +1,6 @@
+export declare enum OrderStatus {
+    PROCESSED = "ORDER_PLACED",
+    COLLECTED = "COLLECTED_FROM_VENDOR",
+    IN_ROUTE = "OUT_FOR_DELIVERY",
+    FULFILLED = "DELIVERED_TO_CUSTOMER"
+}
