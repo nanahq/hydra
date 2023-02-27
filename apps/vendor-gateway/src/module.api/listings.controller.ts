@@ -58,7 +58,7 @@ export class ListingsController {
       userId: vendor._id as any,
       data: null
     }
-    this.logger.debug( 'Getting all listing menus')
+    this.logger.debug('Getting all listing menus')
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET__ALL_LISTING_MENU, payload)
@@ -95,7 +95,7 @@ export class ListingsController {
         optionGroups: data.optionGroups.split(',')
       }
     }
-    this.logger.debug( 'Creating new listing menu')
+    this.logger.debug('Creating new listing menu')
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.CREATE_LISTING_MENU, { ...payload })
@@ -118,7 +118,7 @@ export class ListingsController {
       userId: vendor._id as any,
       data: menuId
     }
-    this.logger.debug( 'Getting a menu')
+    this.logger.debug('Getting a menu')
     return await lastValueFrom<ListingMenu>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_LISTING_MENU, { ...payload })

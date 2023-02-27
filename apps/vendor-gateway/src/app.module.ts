@@ -31,7 +31,6 @@ import { WinstonModule } from 'nest-winston'
 
 @Module({})
 export class AppModule implements NestModule {
-
   configure (consumer: MiddlewareConsumer): void {
     consumer.apply(cookieParser()).forRoutes('*')
   }

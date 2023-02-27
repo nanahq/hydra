@@ -30,17 +30,17 @@ export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorClient: ClientProxy,
-  @Inject(WINSTON_MODULE_PROVIDER)
-  private readonly logger: Logger
+    @Inject(WINSTON_MODULE_PROVIDER)
+    private readonly logger: Logger
 
   ) {}
 
   @Post('register')
   async registerNewVendor (@Body() request: CreateVendorDto): Promise<any> {
-    this.logger.debug( 'Registering a new vendor')
+    this.logger.debug('Registering a new vendor')
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
-        catchError((error) => {
+        catchError((error: IRpcException) => {
           this.logger.error(`Failed to register a new vendor. Reason: ${error.message}`)
           throw new HttpException(error.message, error.status)
         })
