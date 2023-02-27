@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: admin-gateway
-          image: imagynetech/eatlater-admin-gateway:1.8.16
+          image: imagynetech/eatlater-admin-gateway:1.8.17
           ports:
             - containerPort: 3002
           env:
