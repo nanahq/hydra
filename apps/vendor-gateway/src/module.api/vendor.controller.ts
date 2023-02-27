@@ -22,19 +22,26 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 import { CreateVendorDto } from '@app/common/database/dto/vendor.dto'
+import { Logger } from 'winston'
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston'
 
 @Controller('vendor')
 export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
-    private readonly vendorClient: ClientProxy
+    private readonly vendorClient: ClientProxy,
+    @Inject(WINSTON_MODULE_PROVIDER)
+    private readonly logger: Logger
+
   ) {}
 
   @Post('register')
   async registerNewVendor (@Body() request: CreateVendorDto): Promise<any> {
+    this.logger.debug('Registering a new vendor')
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
-        catchError((error) => {
+        catchError((error: IRpcException) => {
+          this.logger.error(`Failed to register a new vendor. Reason: ${error.message}`)
           throw new HttpException(error.message, error.status)
         })
       )
@@ -57,9 +64,11 @@ export class VendorController {
       userId: vendor._id as any,
       data
     }
+    this.logger.debug('Updating vendor profile')
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
         catchError((error: IRpcException) => {
+          this.logger.error(`Failed to update vendor profile. Reason: ${error.message}`)
           throw new HttpException(error.message, error.status)
         })
       )

@@ -36,13 +36,17 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
 import { GoogleFileService } from '../google-file.service'
+import { Logger } from 'winston'
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston'
 
 @Controller('listing')
 export class ListingsController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy,
-    private readonly googleService: GoogleFileService
+    private readonly googleService: GoogleFileService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: Logger
   ) {}
 
   @Get('menus')
@@ -54,11 +58,13 @@ export class ListingsController {
       userId: vendor._id as any,
       data: null
     }
+    this.logger.debug('Getting all listing menus')
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET__ALL_LISTING_MENU, payload)
         .pipe(
           catchError((error: IRpcException) => {
+            this.logger.error(`Failed to fetch listing menus. Reason: ${error.message}`)
             throw new HttpException(error.message, error.status)
           })
         )
@@ -79,7 +85,6 @@ export class ListingsController {
       @UploadedFile() file: Express.Multer.File
   ): Promise<any> {
     const photo = await this.googleService.saveToCloud(file)
-    console.log(photo)
     const payload: ServicePayload<any> = {
       userId: _id as any,
       data: {
@@ -90,11 +95,13 @@ export class ListingsController {
         optionGroups: data.optionGroups.split(',')
       }
     }
+    this.logger.debug('Creating new listing menu')
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.CREATE_LISTING_MENU, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
+            this.logger.error(`Failed to create new listing menu. Reason: ${error.message}`)
             throw new HttpException(error.message, error.status)
           })
         )
@@ -111,11 +118,13 @@ export class ListingsController {
       userId: vendor._id as any,
       data: menuId
     }
+    this.logger.debug('Getting a menu')
     return await lastValueFrom<ListingMenu>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_LISTING_MENU, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
+            this.logger.error(`Failed to get listing menu. Reason: ${error.message}`)
             throw new HttpException(error.message, error.status)
           })
         )
