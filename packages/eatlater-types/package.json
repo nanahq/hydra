@@ -1,0 +1,17 @@
+{
+  "name": "@imagyne/eatlater-types",
+  "version": "0.1.2",
+  "description": "Type declarations and collection of tools for EatLater ",
+  "scripts": {
+    "prepublish": "tsc",
+    "postpublish": "rm -rf ./dist",
+    "build": "tsc"
+  },
+  "author": "EatLater Engineering",
+  "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}
