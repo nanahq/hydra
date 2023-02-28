@@ -24,6 +24,7 @@ export interface LocationCoordinates {
     coordinates: [string, string];
 }
 export interface ListingCategoryI {
+    _id: string;
     vendorId: string;
     name: string;
     tags: string[];
@@ -33,6 +34,7 @@ export interface ListingCategoryI {
     updatedAt: string;
 }
 export interface ListingOptionGroupI {
+    _id: string;
     vendorId: string;
     name: string;
     min: number;
@@ -40,6 +42,7 @@ export interface ListingOptionGroupI {
     options: ListingOption[];
 }
 export interface ListingMenuI {
+    _id: string;
     vendorId: string;
     name: string;
     desc: string;
@@ -60,6 +63,7 @@ export interface OrderBreakDown {
     vat: number;
 }
 export interface VendorI {
+    _id: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -69,21 +73,23 @@ export interface VendorI {
     isValidated: boolean;
     status: 'ONLINE' | 'OFFLINE';
     businessName: string;
-    businessLogo: string;
+    businessLogo?: string;
     businessAddress: string;
-    settings: VendorSettingsI;
-    location: {
+    settings?: VendorSettingsI;
+    location?: {
         coordinates: [string, string];
     };
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 }
 export interface VendorSettingsI {
+    _id: string;
     vendorId: string;
     operations?: VendorOperationSetting;
     payment?: PaymentInfo;
 }
 export interface VendorUserI {
+    _id: string;
     isValidated: boolean;
     status: 'ONLINE' | 'OFFLINE';
     businessName: string;
@@ -94,6 +100,7 @@ export interface VendorUserI {
     };
 }
 export interface UserI {
+    _id: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -106,6 +113,7 @@ export interface UserI {
     location: LocationCoordinates;
 }
 export interface ReviewI {
+    _id: string;
     reviewBody: string;
     listingId: ListingMenuI;
     vendorId: VendorI;
@@ -116,6 +124,7 @@ export interface ReviewI {
     updatedAt: string;
 }
 export interface OrderI {
+    _id: string;
     userId: UserI;
     listingsId: ListingMenuI;
     vendorId: VendorI;
