@@ -4,6 +4,7 @@
   "description": "Type declarations and collection of tools for EatLater ",
   "scripts": {
     "prepublish": "tsc",
+    "postpublish": "rm -rf ./dist",
     "build": "tsc"
   },
   "author": "EatLater Engineering",
