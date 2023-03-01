@@ -8,11 +8,7 @@ import {
   ResponseWithStatus,
   ServicePayload
 } from '@app/common'
-import {
-  ListingCategoryRepository,
-  ListingMenuRepository,
-  ListingOptionGroupRepository
-} from './listings.repository'
+import { ListingCategoryRepository, ListingMenuRepository, ListingOptionGroupRepository } from './listings.repository'
 import {
   CreateListingCategoryDto,
   CreateOptionGroupDto,
@@ -56,6 +52,14 @@ export class ListingsService {
     }
   }
 
+  async updateListingMenu ({data : {menuId, ...rest}, userId}: ServicePayload<any>): Promise<ResponseWithStatus> {
+    try {
+      await this.listingMenuRepository.findOneAndUpdate({_id: menuId, vendorId: userId }, {...rest})
+      return {status: 1}
+    } catch(e) {
+      throw new FitRpcException('Failed to update listings', HttpStatus.UNPROCESSABLE_ENTITY)
+    }
+  }
   async getAllListingMenu (vendorId: string): Promise<ListingMenu[]> {
     const getRequest = await this.listingMenuRepository.find({
       vendorId,

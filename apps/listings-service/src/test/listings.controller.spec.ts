@@ -328,4 +328,30 @@ describe('listingsController', () => {
       })
     })
   })
+
+  describe('updateListingMenu', () => {
+    describe('When  updating a listing menu', () => {
+      let response: ResponseWithStatus
+      let context: RmqContext
+      let payload: ServicePayload<any>
+
+      beforeEach(async () => {
+        payload = {
+          userId: '',
+          data: {
+            menuId: ListingMenuStub()._id as any,
+            isLive: false
+          }
+        }
+        response = await listingsController.updateListingMenu(payload, context)
+      })
+      test('then it should call listingsService.updateListingMenu', () => {
+        expect(listingsService.updateListingMenu).toHaveBeenCalledWith(payload)
+      })
+
+      test('then it should return a success status', () => {
+        expect(response).toStrictEqual(resStub())
+      })
+    })
+  })
 })
