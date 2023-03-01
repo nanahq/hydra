@@ -136,7 +136,7 @@ export class ListingsService {
 
   async getAllCatVendor (vendorId: string): Promise<ListingCategory[]> {
     try {
-      return await this.listingCategoryRepository.findOneAndPopulate(
+      return await this.listingCategoryRepository.findAndPopulate<ListingCategory>(
         { vendorId, isDeleted: false },
         'listingsMenu'
       )
