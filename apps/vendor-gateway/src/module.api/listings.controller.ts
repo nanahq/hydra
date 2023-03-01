@@ -1,8 +1,8 @@
 import {
   Body,
   Controller,
-  Get,
-  HttpException,
+  Get, HttpCode,
+  HttpException, HttpStatus,
   Inject,
   Param,
   Post,
@@ -128,6 +128,27 @@ export class ListingsController {
             throw new HttpException(error.message, error.status)
           })
         )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Put('menu')
+  async updateMenu (
+      @Body() data: {isLive: boolean, isAvailable: boolean, menuId: string},
+      @CurrentUser() vendor: Vendor
+  ): Promise<ResponseWithStatus> {
+    const payload: ServicePayload<{isLive: boolean, isAvailable: boolean, menuId: string}> =  {
+      userId: vendor._id as any,
+      data
+    }
+    return await lastValueFrom<ResponseWithStatus>(
+        this.listingClient.send(QUEUE_MESSAGE.UPDATE_LISTING_MENU, payload )
+            .pipe(
+                catchError<any, any>((error: IRpcException) => {
+                  throw new HttpException(error.message, error.status)
+                })
+            )
     )
   }
 
