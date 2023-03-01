@@ -62,10 +62,10 @@ export class VendorsService {
     businessEmail,
     password
   }: LoginVendorRequest): Promise<Vendor> {
-    const vendor = await this.vendorRepository.findOne({
+    const vendor = await this.vendorRepository.findOneAndPopulate({
       businessEmail,
       isDeleted: false
-    })
+    }, "settings")
 
     if (vendor === null) {
       throw new FitRpcException(
@@ -109,10 +109,10 @@ export class VendorsService {
   }
 
   async getVendor ({ userId: _id }: TokenPayload): Promise<Vendor> {
-    const _vendor = await this.vendorRepository.findOne({
+    const _vendor = await this.vendorRepository.findOneAndPopulate({
       _id,
       isDeleted: false
-    })
+    }, "settings")
 
     if (_vendor === null) {
       throw new FitRpcException(
@@ -120,11 +120,9 @@ export class VendorsService {
         HttpStatus.UNAUTHORIZED
       )
     }
-
     _vendor.password = ''
     return _vendor
   }
-
   async updateVendorProfile ({
     data,
     userId
@@ -220,7 +218,7 @@ export class VendorsService {
 }
 
 function getVendorsMapper (vendors: any[]): VendorUserI[] {
-  const map = vendors.map((vendor) => {
+  return vendors.map((vendor) => {
     return {
       businessName: vendor.businessName,
       businessAddress: vendor.businessAddress,
@@ -230,5 +228,4 @@ function getVendorsMapper (vendors: any[]): VendorUserI[] {
       location: vendor.location
     }
   })
-  return map
 }
