@@ -188,7 +188,7 @@ export class VendorsService {
     _id: string
   ): Promise<ResponseWithStatus> {
     try {
-      await this.vendorSettingsRepository.upsert(
+      await this.vendorSettingsRepository.findOneAndUpdate(
         { vendorId: _id },
         { ...data }
       )
@@ -215,7 +215,21 @@ export class VendorsService {
       )
     }
   }
+
+  async createVendorSettings (data: any, vendorId: string): Promise<ResponseWithStatus> {
+    try {
+      const newSettings =  await this.vendorSettingsRepository.create({...data, vendorId })
+       await this.vendorRepository.findOneAndUpdate({_id: newSettings.vendorId}, {settings: newSettings._id})
+      return {status: 1}
+    } catch (e) {
+      throw new FitRpcException(
+        'Failed to create  settings',
+        HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
 }
+
 
 function getVendorsMapper (vendors: any[]): VendorUserI[] {
   return vendors.map((vendor) => {

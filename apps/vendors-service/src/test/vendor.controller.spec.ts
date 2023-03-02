@@ -336,4 +336,27 @@ describe('vendorsController', () => {
       })
     })
   })
+
+  describe('createVendorSettings', () => {
+    describe('When creating vendor settings', () => {
+      let response: ResponseWithStatus
+      let data: ServicePayload<UpdateVendorSettingsDto>
+      let context: RmqContext
+
+      beforeEach(async () => {
+        data = {
+          userId: VendorSettingStub().vendorId as any,
+          data: {payment: {bankAccountInfo: 'GOOD VENDOR', bankAccountNumber: '000000000', bankName: 'MY BANK'}}
+        }
+        response = await vendorsController.createVendorSettings(data, context)
+      })
+      test('then it should call updateVendorSettings', () => {
+        expect(vendorsService.createVendorSettings).toHaveBeenCalledWith(data.data, data.userId)
+      })
+
+      test('then it should return a vendor settings', () => {
+        expect(response).toStrictEqual({status: 1})
+      })
+    })
+  })
 })

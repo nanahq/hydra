@@ -179,4 +179,18 @@ export class VendorsController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.CREATE_VENDOR_SETTINGS)
+  async createVendorSettings (
+    @Payload() data: ServicePayload<UpdateVendorSettingsDto>,
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.vendorsService.createVendorSettings(data.data, data.userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }
