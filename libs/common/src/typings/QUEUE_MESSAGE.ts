@@ -13,6 +13,7 @@ export enum QUEUE_MESSAGE {
   GET_ADMIN = 'get_admin',
   GET_VENDOR = 'get_vendor',
   GET_VENDOR_SETTINGS = 'get_vendor_settings',
+  CREATE_VENDOR_SETTINGS = 'create_vendor_settings',
   GET_VENDOR_LOCAL = 'get_vendor_with_email_password',
   GET_VENDOR_JWT = 'get_vendor_with_id',
   CREATE_ADMIN = 'create_admin',
