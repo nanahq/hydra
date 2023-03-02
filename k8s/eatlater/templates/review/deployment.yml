@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: review
-          image: imagynetech/eatlater-orders-service:1.9.0
+          image: imagynetech/eatlater-orders-service:1.10.0
           env:
             - name: RMQ_URI
               value: amqp://user:user@eatlater-rabbitmq:5672

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: imagynetech/eatlater-api-gateway:1.9.0
+          image: imagynetech/eatlater-api-gateway:1.10.0
           ports:
             - containerPort: 3000
           env:
@@ -40,4 +40,3 @@ spec:
               value: ORDERS
       imagePullSecrets:
         - name: regcred
-
