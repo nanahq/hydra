@@ -65,7 +65,7 @@ export class VendorsService {
     const vendor = await this.vendorRepository.findOneAndPopulate({
       businessEmail,
       isDeleted: false
-    }, "settings")
+    }, 'settings')
 
     if (vendor === null) {
       throw new FitRpcException(
@@ -112,7 +112,7 @@ export class VendorsService {
     const _vendor = await this.vendorRepository.findOneAndPopulate({
       _id,
       isDeleted: false
-    }, "settings")
+    }, 'settings')
 
     if (_vendor === null) {
       throw new FitRpcException(
@@ -123,6 +123,7 @@ export class VendorsService {
     _vendor.password = ''
     return _vendor
   }
+
   async updateVendorProfile ({
     data,
     userId
@@ -188,7 +189,7 @@ export class VendorsService {
     _id: string
   ): Promise<ResponseWithStatus> {
     try {
-      await this.vendorSettingsRepository.upsert(
+      await this.vendorSettingsRepository.findOneAndUpdate(
         { vendorId: _id },
         { ...data }
       )
@@ -211,6 +212,30 @@ export class VendorsService {
     } catch (e) {
       throw new FitRpcException(
         'can not fetch vendors settings at this time',
+        HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
+
+  async createVendorSettings (data: any, vendorId: string): Promise<ResponseWithStatus> {
+    try {
+      const newSettings = await this.vendorSettingsRepository.create({ ...data, vendorId })
+      await this.vendorRepository.findOneAndUpdate({ _id: newSettings.vendorId }, { settings: newSettings._id })
+      return { status: 1 }
+    } catch (e) {
+      throw new FitRpcException(
+        'Failed to create  settings',
+        HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
+
+  async updateVendorLogo (data: any, _id: string): Promise<void> {
+    try {
+      await this.vendorRepository.findOneAndUpdate({ _id }, { businessLogo: data })
+    } catch (e) {
+      throw new FitRpcException(
+        'Failed to create  settings',
         HttpStatus.BAD_GATEWAY
       )
     }

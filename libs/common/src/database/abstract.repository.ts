@@ -48,8 +48,8 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   }
 
   async findAndPopulate<T> (
-      filterQuery: FilterQuery<TDocument>,
-      populatePath: string
+    filterQuery: FilterQuery<TDocument>,
+    populatePath: string
   ): Promise<T[]> {
     return await this.model.find(filterQuery).populate(populatePath)
   }

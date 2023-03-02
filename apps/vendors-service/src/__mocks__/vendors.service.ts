@@ -12,5 +12,7 @@ export const VendorsService = jest.fn().mockReturnValue({
   getAllVendors: jest.fn().mockResolvedValue([VendorStub()]),
   getVendorSettings: jest.fn().mockResolvedValue(VendorSettingStub()),
   getAllVendorsUser: jest.fn().mockResolvedValue([VendorStub()]),
-  updateSettings: jest.fn().mockResolvedValue(resStub())
+  updateSettings: jest.fn().mockResolvedValue(resStub()),
+  createVendorSettings: jest.fn().mockResolvedValue(resStub()),
+  updateVendorLogo: jest.fn()
 })
