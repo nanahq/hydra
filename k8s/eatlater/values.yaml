@@ -10,6 +10,8 @@ mongodb:
     rootPassword: password123
     replicaSetKey: sg9BlnfzGND2D7SL
     replicaCount: 3
+  persistence:
+    resourcePolicy: keep
   initdbScripts: 
     setup_replicaset_script.js : |
       rs.add("eatlater-mongodb-0.eatlater-mongodb-headless.default.svc.cluster.local:27017")

@@ -28,7 +28,7 @@ import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/d
 import { Logger } from 'winston'
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston'
 import { FileInterceptor } from '@nestjs/platform-express'
-import multer from 'multer'
+import * as multer from 'multer'
 import { GoogleFileService } from '../google-file.service'
 @Controller('vendor')
 export class VendorController {
