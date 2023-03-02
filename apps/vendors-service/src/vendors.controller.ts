@@ -200,7 +200,7 @@ export class VendorsController {
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {
-       await this.vendorsService.updateVendorLogo(data.data, data.userId)
+      await this.vendorsService.updateVendorLogo(data.data, data.userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

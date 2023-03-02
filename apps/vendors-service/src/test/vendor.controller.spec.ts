@@ -346,7 +346,7 @@ describe('vendorsController', () => {
       beforeEach(async () => {
         data = {
           userId: VendorSettingStub().vendorId as any,
-          data: {payment: {bankAccountInfo: 'GOOD VENDOR', bankAccountNumber: '000000000', bankName: 'MY BANK'}}
+          data: { payment: { bankAccountInfo: 'GOOD VENDOR', bankAccountNumber: '000000000', bankName: 'MY BANK' } }
         }
         response = await vendorsController.createVendorSettings(data, context)
       })
@@ -355,7 +355,7 @@ describe('vendorsController', () => {
       })
 
       test('then it should return a vendor settings', () => {
-        expect(response).toStrictEqual({status: 1})
+        expect(response).toStrictEqual({ status: 1 })
       })
     })
   })
@@ -370,7 +370,7 @@ describe('vendorsController', () => {
           userId: VendorSettingStub().vendorId as any,
           data: 'https://mygoogle.com/logo.png'
         }
-      await vendorsController.updateVendorLogo(data, context)
+        await vendorsController.updateVendorLogo(data, context)
       })
       test('then it should call updateVendorSettings', () => {
         expect(vendorsService.updateVendorLogo).toHaveBeenCalledWith(data.data, data.userId)

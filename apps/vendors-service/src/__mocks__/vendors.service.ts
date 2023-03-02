@@ -1,4 +1,3 @@
-import { isValidObjectId } from 'mongoose'
 import { resStub } from '../test/stubs/res.stub'
 import { VendorStub } from '../test/stubs/vendor.stub'
 import { VendorSettingStub } from '../test/stubs/VendorSettings.stub'

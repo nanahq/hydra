@@ -1,4 +1,4 @@
-import { Controller, HttpException, UseFilters } from '@nestjs/common'
+import { Controller, UseFilters } from '@nestjs/common'
 import {
   Ctx,
   MessagePattern,
@@ -49,13 +49,13 @@ export class ListingsController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_LISTING_MENU)
   async updateListingMenu (
-      @Payload() data: ServicePayload<any>,
+    @Payload() data: ServicePayload<any>,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return this.listingService.updateListingMenu(data)
+      return await this.listingService.updateListingMenu(data)
     } catch (e) {
-        throw new RpcException(e)
+      throw new RpcException(e)
     } finally {
       this.rmqService.ack(context)
     }
