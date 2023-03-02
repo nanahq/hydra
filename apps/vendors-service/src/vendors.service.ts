@@ -228,8 +228,18 @@ export class VendorsService {
       )
     }
   }
-}
 
+  async updateVendorLogo (data: any, _id: string): Promise<void> {
+    try {
+      await this.vendorRepository.findOneAndUpdate({_id}, {businessLogo: data})
+    } catch (e) {
+      throw new FitRpcException(
+        'Failed to create  settings',
+        HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
+}
 
 function getVendorsMapper (vendors: any[]): VendorUserI[] {
   return vendors.map((vendor) => {

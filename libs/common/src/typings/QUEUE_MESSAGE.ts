@@ -23,7 +23,7 @@ export enum QUEUE_MESSAGE {
   VALIDATE_ADMIN = 'validate_admin',
   UPDATE_USER_PROFILE = 'update_user_profile',
   UPDATE_VENDOR_SETTING = 'update_vendor_settings',
-
+UPDATE_VENDOR_LOGO  = 'update_vendor_logo',
   UPDATE_VENDOR_PROFILE = 'update_vendor_profile',
   UPDATE_ADMIN_STATUS = ' update_admin_status',
   DELETE_ADMIN = 'delete_admin',

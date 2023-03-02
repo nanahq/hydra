@@ -359,4 +359,22 @@ describe('vendorsController', () => {
       })
     })
   })
+
+  describe('updateVendorLogo', () => {
+    describe('When updating vendor logo', () => {
+      let data: ServicePayload<string>
+      let context: RmqContext
+
+      beforeEach(async () => {
+        data = {
+          userId: VendorSettingStub().vendorId as any,
+          data: 'https://mygoogle.com/logo.png'
+        }
+      await vendorsController.updateVendorLogo(data, context)
+      })
+      test('then it should call updateVendorSettings', () => {
+        expect(vendorsService.updateVendorLogo).toHaveBeenCalledWith(data.data, data.userId)
+      })
+    })
+  })
 })

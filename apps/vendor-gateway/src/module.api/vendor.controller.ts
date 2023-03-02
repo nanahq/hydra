@@ -7,7 +7,9 @@ import {
   Param,
   Post,
   Put,
-  UseGuards
+  UploadedFile,
+  UseGuards,
+  UseInterceptors
 } from '@nestjs/common'
 import { catchError, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
@@ -25,14 +27,17 @@ import { CurrentUser } from './current-user.decorator'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 import { Logger } from 'winston'
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston'
-
+import { FileInterceptor } from '@nestjs/platform-express'
+import multer from 'multer'
+import {GoogleFileService} from '../google-file.service'
 @Controller('vendor')
 export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorClient: ClientProxy,
     @Inject(WINSTON_MODULE_PROVIDER)
-    private readonly logger: Logger
+    private readonly logger: Logger,
+    private readonly googleService: GoogleFileService
 
   ) {}
 
@@ -55,8 +60,32 @@ export class VendorController {
     return vendor
   }
 
+
   @UseGuards(JwtAuthGuard)
-  @Put('update-profile')
+  @UseInterceptors(
+    FileInterceptor('logo', {
+      storage: multer.memoryStorage()
+    })
+  )
+  @Get('logo')
+  async updateVendorLogo (
+    @CurrentUser() vendor: Vendor,
+    @UploadedFile() file: Express.Multer.File
+  ): Promise<string> {
+    const photo = await this.googleService.saveToCloud(file)
+    const payload: ServicePayload<string> = {
+      userId: vendor._id as any, 
+      data: photo
+    }
+    await lastValueFrom(
+      this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_LOGO,  payload)
+    )
+    return photo
+  }
+
+
+  @UseGuards(JwtAuthGuard)
+  @Put('profile')
   async updateVendorProfile (
     @Body() data: Partial<Vendor>,
       @CurrentUser() vendor: Vendor
