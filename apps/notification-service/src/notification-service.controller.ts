@@ -30,10 +30,11 @@ export class NotificationServiceController {
       @Ctx() context: RmqContext
   ): Promise<any> {
     try {
-      this.rmqService.ack(context)
       return await this.notificationServiceService.verifyPhone(data)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 
@@ -43,10 +44,11 @@ export class NotificationServiceController {
       @Ctx() context: RmqContext
   ): Promise<any> {
     try {
-      this.rmqService.ack(context)
       return await this.notificationServiceService.sendVerification(data)
     } catch (error) {
       throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 

@@ -346,7 +346,7 @@ describe('vendorsController', () => {
       beforeEach(async () => {
         data = {
           userId: VendorSettingStub().vendorId as any,
-          data: { payment: { bankAccountInfo: 'GOOD VENDOR', bankAccountNumber: '000000000', bankName: 'MY BANK' } }
+          data: { payment: { bankAccountName: 'GOOD VENDOR', bankAccountNumber: '000000000', bankName: 'MY BANK' } }
         }
         response = await vendorsController.createVendorSettings(data, context)
       })
