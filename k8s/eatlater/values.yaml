@@ -3,13 +3,14 @@ rabbitmq:
     auth:
        username: user
        password: user
+    replicaCount: 3
 
 mongodb:
   architecture: replicaset
   auth:
     rootPassword: password123
     replicaSetKey: sg9BlnfzGND2D7SL
-    replicaCount: 3
+  replicaCount: 3
   persistence:
     resourcePolicy: keep
   initdbScripts: 
