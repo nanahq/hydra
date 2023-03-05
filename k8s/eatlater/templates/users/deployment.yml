@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: users
-          image: imagynetech/eatlater-users-service:1.10.1
+          image: imagynetech/eatlater-users-service:1.11.0
           env:
             - name: RMQ_USERS_QUEUE
               value: USERS
