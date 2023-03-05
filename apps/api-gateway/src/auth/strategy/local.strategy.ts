@@ -12,14 +12,14 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy
   ) {
-    super({ usernameField: 'phoneNumber' })
+    super({ usernameField: 'phone' })
   }
 
-  async validate (phoneNumber: string, password: string): Promise<any> {
+  async validate (phone: string, password: string): Promise<any> {
     return await lastValueFrom(
       this.usersClient
         .send(QUEUE_MESSAGE.GET_USER_LOCAL, {
-          phoneNumber,
+          phone,
           password
         })
         .pipe(

@@ -74,7 +74,7 @@ export class UsersService {
     phone
   }: verifyPhoneRequest): Promise<ResponseWithStatus> {
     try {
-      await this.usersRepository.findOneAndUpdate({ phone }, { isVerified: true })
+      await this.usersRepository.findOneAndUpdate({ phone }, { isValidated: true })
       return { status: 1 }
     } catch {
       throw new FitRpcException(
@@ -87,9 +87,9 @@ export class UsersService {
   async updateUserProfile ({
     data,
     userId
-  }: ServicePayload<UpdateUserDto>): Promise<ResponseWithStatus> {
+  }: ServicePayload<Partial<UpdateUserDto>>): Promise<ResponseWithStatus> {
     try {
-      await this.usersRepository.findOneAndUpdate({ _id: userId }, { data })
+      await this.usersRepository.findOneAndUpdate({ _id: userId }, { ...data })
       return { status: 1 }
     } catch {
       throw new FitRpcException(

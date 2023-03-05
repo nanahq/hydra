@@ -100,6 +100,7 @@ export interface VendorUserI {
 }
 
 export interface UserI {
+  _id: string
   firstName: string
   lastName: string
   email: string
@@ -109,7 +110,10 @@ export interface UserI {
   createdAt: string
   updatedAt: string
   status: 'ONLINE' | 'OFFLINE'
+  isDeleted: boolean
+  orders: OrderI[]
   location: LocationCoordinates
+
 }
 
 export interface ReviewI {

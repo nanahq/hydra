@@ -65,7 +65,7 @@ export class ListingsService {
     const getRequest = await this.listingMenuRepository.findAndPopulate({
       vendorId,
       isDeleted: false
-    }, "optionGroups") as ListingMenu[]
+    }, 'optionGroups')
 
     if (getRequest === null) {
       throw new FitRpcException(

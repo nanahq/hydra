@@ -39,7 +39,7 @@ export class NotificationServiceService {
 
       if (res.status === 'approved') {
         await lastValueFrom(
-          this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
+          this.usersClient.emit(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
             phone
           })
         )
@@ -59,6 +59,7 @@ export class NotificationServiceService {
         )
         .verifications.create({ to: phone, channel: 'sms' })
     } catch (error) {
+      console.log(error)
       throw new RpcException(error)
     }
   }

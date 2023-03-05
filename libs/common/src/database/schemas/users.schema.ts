@@ -1,22 +1,22 @@
-import { SchemaTypes } from 'mongoose'
+import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, LocationCoordinates } from '@app/common'
+import { AbstractDocument, LocationCoordinates, Order } from '@app/common'
 
-@Schema({ versionKey: false })
+@Schema({ versionKey: false, timestamps: true })
 export class User extends AbstractDocument {
-  @Prop(String)
+  @Prop()
     firstName: string
 
-  @Prop(String)
+  @Prop()
     lastName: string
 
-  @Prop({ type: String, unique: true, sparse: true })
+  @Prop()
     email: string
 
   @Prop(String)
     password: string
 
-  @Prop({ type: String, unique: true })
+  @Prop()
     phone: string
 
   @Prop({ default: false })
@@ -37,6 +37,12 @@ export class User extends AbstractDocument {
     }
   })
     location: LocationCoordinates
+
+  @Prop({ type: [Types.ObjectId], ref: 'Order' })
+    orders: Order[]
+
+  @Prop({ type: Boolean, default: false })
+    isDeleted: false
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
