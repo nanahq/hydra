@@ -66,7 +66,7 @@ export class VendorController {
       storage: multer.memoryStorage()
     })
   )
-  @Get('logo')
+  @Put('logo')
   async updateVendorLogo (
     @CurrentUser() vendor: Vendor,
       @UploadedFile() file: Express.Multer.File
