@@ -7,7 +7,7 @@ export interface ListingOption {
 
 export interface PaymentInfo {
   bankName: string
-  bankAccountInfo: string
+  bankAccountName: string
   bankAccountNumber: string
 }
 
