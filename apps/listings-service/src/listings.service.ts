@@ -62,10 +62,11 @@ export class ListingsService {
   }
 
   async getAllListingMenu (vendorId: string): Promise<ListingMenu[]> {
-    const getRequest = await this.listingMenuRepository.find({
+    const getRequest = await this.listingMenuRepository.findAndPopulate({
       vendorId,
       isDeleted: false
-    })
+    }, "optionGroups") as ListingMenu[]
+
     if (getRequest === null) {
       throw new FitRpcException(
         'Something went wrong fetching all listings.',
@@ -124,7 +125,7 @@ export class ListingsService {
     try {
       const cat = await this.listingCategoryRepository.findOneAndPopulate(
         { _id, vendorId },
-        'listingMenu'
+        'listingsMenu'
       )
       if (cat === null) {
         throw new FitRpcException('Category not found', HttpStatus.NOT_FOUND)
