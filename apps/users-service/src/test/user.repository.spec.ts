@@ -3,8 +3,8 @@ import { getModelToken } from '@nestjs/mongoose'
 import { Test } from '@nestjs/testing'
 import { FilterQuery } from 'mongoose'
 import { UserRepository } from '../users.repository'
-import { UserModel} from './support/user.model'
-import { UserProfileStub} from './stubs/user.stub'
+import { UserModel } from './support/user.model'
+import { UserProfileStub } from './stubs/user.stub'
 import { User } from '@app/common'
 
 describe('User', () => {

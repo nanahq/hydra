@@ -1,4 +1,4 @@
-import {  UserProfileStub, resStub, } from '../test/stubs/user.stub'
+import { UserProfileStub, resStub } from '../test/stubs/user.stub'
 
 export const ListingsService = jest.fn().mockReturnValue({
   register: jest.fn().mockResolvedValue(resStub()),
@@ -7,5 +7,5 @@ export const ListingsService = jest.fn().mockReturnValue({
   validateUser: jest.fn().mockResolvedValue(UserProfileStub()),
   updateUserStatus: jest.fn().mockResolvedValue(resStub()),
   getUserWithPhone: jest.fn().mockResolvedValue(UserProfileStub()),
-  deleteUserProfile: jest.fn().mockResolvedValue(resStub()),
+  deleteUserProfile: jest.fn().mockResolvedValue(resStub())
 })

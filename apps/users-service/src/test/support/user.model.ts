@@ -5,4 +5,3 @@ import { UserProfileStub } from '../stubs/user.stub'
 export class UserModel extends MockModel<User> {
   protected entityStub = UserProfileStub()
 }
-

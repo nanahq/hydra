@@ -6,7 +6,7 @@ import {
   ResponseWithStatus,
   ServicePayload,
   RmqService,
- registerUserRequest, verifyPhoneRequest, User, loginUserRequest, TokenPayload
+  registerUserRequest, verifyPhoneRequest, User, loginUserRequest, TokenPayload
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
 import { UserProfileStub, resStub } from './stubs/user.stub'
@@ -33,20 +33,20 @@ describe('usersServiceController', () => {
       .useValue(RmqServiceMock)
       .compile()
 
-      usersController = moduleRef.get<UsersServiceController>(UsersServiceController)
-      usersService = moduleRef.get<UsersService>(UsersService)
+    usersController = moduleRef.get<UsersServiceController>(UsersServiceController)
+    usersService = moduleRef.get<UsersService>(UsersService)
     jest.clearAllMocks()
   })
 
   describe('register', () => {
     describe('When registering a new  user', () => {
       let response: ResponseWithStatus
-      let payload:registerUserRequest
+      let payload: registerUserRequest
       let context: RmqContext
       beforeEach(async () => {
         payload = {
-            password: '1234567',
-            phone: 'SURAJ@GMAIL.COM'
+          password: '1234567',
+          phone: 'SURAJ@GMAIL.COM'
         }
 
         response = await usersController.registerNewUser(payload, context)
@@ -69,7 +69,7 @@ describe('usersServiceController', () => {
 
       beforeEach(async () => {
         data = {
-          phone: '0810009900',
+          phone: '0810009900'
         }
         response = await usersController.updateUserStatus(data, context)
       })
@@ -90,10 +90,10 @@ describe('usersServiceController', () => {
       let context: RmqContext
 
       beforeEach(async () => {
-      payload = {
-        password: '12345678',
-        phone: "09100998899"
-      }
+        payload = {
+          password: '12345678',
+          phone: '09100998899'
+        }
 
         response = await usersController.getUserByPhone(payload, context)
       })
@@ -114,10 +114,9 @@ describe('usersServiceController', () => {
       let context: RmqContext
 
       beforeEach(async () => {
-
         payload = {
-          userId: UserProfileStub()._id as any,
-          }
+          userId: UserProfileStub()._id as any
+        }
 
         response = await usersController.getUserById(payload, context)
       })
@@ -134,7 +133,7 @@ describe('usersServiceController', () => {
   describe('updateUserProfile', () => {
     describe('When updatting a user profile', () => {
       let response: ResponseWithStatus
-      let payload: ServicePayload<Partial<UpdateUserDto>> 
+      let payload: ServicePayload<Partial<UpdateUserDto>>
       let context: RmqContext
 
       beforeEach(async () => {
@@ -143,7 +142,7 @@ describe('usersServiceController', () => {
           data: {
             email: 'suraj@gmail.com'
           }
-        } 
+        }
         response = await usersController.updateUserProfile(payload as any, context)
       })
       test('then it should call listingService.updateUserProfile', () => {
@@ -182,7 +181,7 @@ describe('usersServiceController', () => {
   describe('getUserWithPhone', () => {
     describe('When getting user with phone', () => {
       let response: User
-      let data: {phone: string}
+      let data: { phone: string }
       let context: RmqContext
 
       beforeEach(async () => {
