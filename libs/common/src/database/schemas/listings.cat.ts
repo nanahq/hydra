@@ -4,8 +4,8 @@ import { AbstractDocument } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
 export class ListingCategory extends AbstractDocument {
-  @Prop(Types.ObjectId)
-    vendorId: string
+  @Prop({ type: Types.ObjectId, ref: 'Vendor' })
+    vendor: string
 
   @Prop(String)
     name: string

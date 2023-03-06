@@ -53,12 +53,14 @@ export class VendorsController {
       )
     )
 
-    const { _id, businessName, businessAddress } = vendor
+    const { _id, businessName, businessAddress, businessLogo, phone } = vendor
 
     return {
       _id,
       businessName,
-      businessAddress
+      businessAddress,
+      businessLogo,
+      phone
     }
   }
 }

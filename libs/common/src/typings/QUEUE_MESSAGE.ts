@@ -32,6 +32,7 @@ export enum QUEUE_MESSAGE {
   GET_ALL_VENDORS = 'get_all_vendors',
   GET_VENDOR_WITH_LISTING = 'get_vendor_with_listing',
   GET_ALL_VENDORS_USERS = 'get_vendors_user',
+  UPDATE_USER_ORDER_COUNT = 'UPDATE_USER_ORDER_COUNT',
   // Listing
   GET_ALL_LISTINGS = 'get_listings',
   GET_LISTING_INFO = 'get_listing_info',
@@ -55,6 +56,11 @@ export enum QUEUE_MESSAGE {
   DELETE_LISTING_MENU = 'delete_listing_menu',
   DELETE_LISTING_CAT = 'delete_listing_cat',
   DELETE_LISTING_OP = 'delete_listing_op',
+
+  GET_SINGLE_LISTING_MENU_USER = 'GET_SINGLE_LISTING_MENU_USER',
+  GET_SINGLE_LISTING_CAT_USER = 'GET_SINGLE_LISTING_CAT_USER',
+  GET_ALL_LISTING_CAT_USER = 'GET_ALL_LISTING_CAT_USER',
+  GET_ALL_LISTING_MENU_USER = 'GET_ALL_LISTING_MENU_USER',
   //  Orders
   GET_ALL_ORDERS = 'get_all_orders',
   GET_SINGLE_ORDER_BY_REFNUM = 'get_single_order_by_refnum',

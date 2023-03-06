@@ -47,7 +47,25 @@ export class OrdersController {
     )
   }
 
-  @Get('order/:id')
+  @Put('update')
+  @UseGuards(JwtAuthGuard)
+  async updateOrderStatus (
+    @Body() data: UpdateOrderStatusRequestDto
+  ): Promise<ResponseWithStatus> {
+    const payload: ServicePayload<UpdateOrderStatusRequestDto> = {
+      userId: '',
+      data
+    }
+    return await lastValueFrom<ResponseWithStatus>(
+      this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get('/:id')
   @UseGuards(JwtAuthGuard)
   async getOrder (@Param('id') orderId: string): Promise<Order> {
     const payload: ServicePayload<{ orderId: string }> = {
@@ -63,24 +81,6 @@ export class OrdersController {
             throw new HttpException(error.message, error.status)
           })
         )
-    )
-  }
-
-  @Put('order')
-  @UseGuards(JwtAuthGuard)
-  async updateOrderStatus (
-    @Body() data: UpdateOrderStatusRequestDto
-  ): Promise<ResponseWithStatus> {
-    const payload: ServicePayload<UpdateOrderStatusRequestDto> = {
-      userId: '',
-      data
-    }
-    return await lastValueFrom<ResponseWithStatus>(
-      this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
     )
   }
 }

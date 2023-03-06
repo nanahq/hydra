@@ -69,6 +69,7 @@ export class OrdersServiceController {
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
   ): Promise<Order[]> {
+    console.log(userId)
     try {
       return await this.ordersServiceService.getAllUserOrders(userId)
     } catch (error) {

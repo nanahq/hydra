@@ -9,7 +9,6 @@ import { Controller, UseFilters } from '@nestjs/common'
 
 import {
   RmqService,
-  TokenPayload,
   QUEUE_MESSAGE,
   ExceptionFilterRpc,
   ServicePayload,
@@ -77,7 +76,7 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_JWT)
   async getVendorById (
-    @Payload() data: TokenPayload,
+    @Payload() data: string,
       @Ctx() context: RmqContext
   ): Promise<Vendor> {
     try {
@@ -122,7 +121,7 @@ export class VendorsController {
       @Ctx() context: RmqContext
   ): Promise<Vendor> {
     try {
-      return await this.vendorsService.getVendor({ userId: data })
+      return await this.vendorsService.getVendor(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {
