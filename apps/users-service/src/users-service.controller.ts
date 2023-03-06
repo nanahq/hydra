@@ -147,12 +147,11 @@ export class UsersServiceController {
     }
   }
 
-
   @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT)
   async updateUserOrderCount (
     @Payload() { orderId, userId }: { orderId: string, userId: string },
       @Ctx() context: RmqContext
-  ): Promise<User> {
+  ): Promise<ResponseWithStatus> {
     try {
       return await this.usersService.updateUserOrderCount(orderId, userId)
     } catch (error) {

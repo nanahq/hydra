@@ -17,23 +17,23 @@ services:
     networks:
       - eatlater-app
   
-  # vendor-gateway:
-  #   build:
-  #     context: .
-  #     dockerfile: ./apps/vendor-gateway/Dockerfile
-  #     target: development
-  #   command: 'npm run start:dev vendor-gateway'
-  #   env_file:
-  #     - ./apps/vendor-gateway/.env
-  #   depends_on:
-  #     - rabbitmq
-  #   volumes:
-  #     - '.:/usr/src/app'
-  #     - /usr/src/app/node_modules
-  #   ports:
-  #     - '3001:3001'
-  #   networks:
-  #     - eatlater-app
+  vendor-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/vendor-gateway/Dockerfile
+      target: development
+    command: 'npm run start:dev vendor-gateway'
+    env_file:
+      - ./apps/vendor-gateway/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    ports:
+      - '3001:3001'
+    networks:
+      - eatlater-app
   
   users-service:
     build:
@@ -55,25 +55,25 @@ services:
     networks:
       - eatlater-app
 
-  # vendors-service:
-    # build:
-    #   context: .
-    #   dockerfile: ./apps/vendors-service/Dockerfile
-    #   target: development
-    # command: 'npm run start:dev vendors-service'
-    # env_file:
-    #   - ./apps/vendors-service/.env
-    # depends_on:
-    #   - vendor-gateway
-    #   - mongodb-primary
-    #   - mongodb-secondary
-    #   - mongodb-arbiter
-    #   - rabbitmq
-    # volumes:
-    #   - '.:/usr/src/app'
-    #   - /usr/src/app/node_modules
-    # networks:
-    #   - eatlater-app
+  vendors-service:
+    build:
+      context: .
+      dockerfile: ./apps/vendors-service/Dockerfile
+      target: development
+    command: 'npm run start:dev vendors-service'
+    env_file:
+      - ./apps/vendors-service/.env
+    depends_on:
+      - vendor-gateway
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - eatlater-app
   notification-service:
     build:
       context: .

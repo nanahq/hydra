@@ -135,9 +135,9 @@ export class UsersService {
   }
 
   public async updateUserOrderCount (orderId: string, userId: string): Promise<ResponseWithStatus> {
-    const user = await this.usersRepository.findOne({_id: userId}) as User
-    await this.usersRepository.findOneAndUpdate({_id: user?._id } , {orders: [...user?.orders, orderId]})
-    return {status: 1}
+    const user = await this.usersRepository.findOne({ _id: userId }) as User
+    await this.usersRepository.findOneAndUpdate({ _id: user?._id }, { orders: [...user?.orders, orderId] })
+    return { status: 1 }
   }
 
   private async checkExistingUser (phone: string): Promise<void> {

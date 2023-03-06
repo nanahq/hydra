@@ -56,7 +56,7 @@ export class OrdersServiceService {
       )
 
       await lastValueFrom(
-        this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, {orderId: _newOrder._id, userId})
+        this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: _newOrder._id, userId })
       )
     } catch (error) {
       throw new RpcException(error)
@@ -67,7 +67,7 @@ export class OrdersServiceService {
 
   public async getAllVendorOrders (vendor: string): Promise<Order[]> {
     try {
-      const _orders = await this.orderRepository.findAndPopulate({ vendor }, 'user listing vendor') as any
+      const _orders = await this.orderRepository.findAndPopulate({ vendor }, 'listing vendor') as any
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -79,7 +79,7 @@ export class OrdersServiceService {
 
   public async getAllUserOrders (user: string): Promise<Order[]> {
     try {
-      return  await this.orderRepository.findAndPopulate({ user }, 'user listing vendor')
+      return await this.orderRepository.findAndPopulate({ user }, 'user listing vendor')
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -90,7 +90,7 @@ export class OrdersServiceService {
 
   public async getAllOrderInDb (): Promise<Order[]> {
     try {
-      const _orders = await this.orderRepository.findAndPopulate({}, 'user listing vendor') as  any
+      const _orders = await this.orderRepository.findAndPopulate({}, 'user listing vendor') as any
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -126,16 +126,7 @@ export class OrdersServiceService {
     status,
     orderId
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
-    const order = (await this.orderRepository.findOneAndUpdate({ _id: orderId }, { status }))
-
-    await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
-        phoneNumber: order.primaryContact,
-        status,
-        listingId: order.listing
-      })
-    )
-
+  await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: status })
     return { status: 1 }
   }
 }
