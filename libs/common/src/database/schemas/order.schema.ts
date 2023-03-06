@@ -1,6 +1,6 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, OrderStatus, OrderBreakDown } from '@app/common'
+import { AbstractDocument, OrderStatus, OrderBreakDown, OrderType } from '@app/common'
 
 @Schema({ versionKey: false })
 export class Order extends AbstractDocument {
@@ -8,19 +8,19 @@ export class Order extends AbstractDocument {
     type: Types.ObjectId,
     ref: 'User'
   })
-    userId: string
+    user: string
 
   @Prop({
     type: Types.ObjectId,
     ref: 'ListingMenu'
   })
-    listingsId: string
+    listing: string
 
   @Prop({
     type: Types.ObjectId,
     ref: 'Vendor'
   })
-    vendorId: string
+    vendor: string
 
   @Prop({
     type: Number
@@ -55,10 +55,25 @@ export class Order extends AbstractDocument {
   @Prop([String])
     options: string[]
 
+  @Prop(String)
+    orderType: OrderType
+
+  @Prop({
+    type: {
+      coordinates: [String]
+    }
+  })
+    preciseLocation: {
+    coordinates: [string, string]
+  }
+
   @Prop({
     type: String
   })
     orderStatus: OrderStatus
+
+  @Prop(String)
+    orderDeliveryScheduledTime: string
 
   @Prop({
     type: {

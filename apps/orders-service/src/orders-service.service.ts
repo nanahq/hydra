@@ -26,10 +26,10 @@ export class OrdersServiceService {
   public async placeOrder ({
     data,
     userId
-  }: ServicePayload<any>): Promise<ResponseWithStatus> {
+  }: ServicePayload<Order>): Promise<ResponseWithStatus> {
     const createOrderPayload: Partial<Order> = {
       ...data,
-      userId,
+      user: userId,
       refId: RandomGen.genRandomNum(),
       orderStatus: OrderStatus.PROCESSED
     }
@@ -47,9 +47,8 @@ export class OrdersServiceService {
       // Send order confirmation message
       await lastValueFrom(
         this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
-          phoneNumber: createOrderPayload.primaryContact,
-          status: OrderStatus.PROCESSED,
-          listingId: createOrderPayload.listingsId
+          phoneNumber: _newOrder.primaryContact,
+          status: OrderStatus.PROCESSED
         })
       )
     } catch (error) {
@@ -127,7 +126,7 @@ export class OrdersServiceService {
       this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
         phoneNumber: order.primaryContact,
         status,
-        listingId: order.listingsId
+        listingId: order.listing
       })
     )
 

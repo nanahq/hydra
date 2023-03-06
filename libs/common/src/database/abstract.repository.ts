@@ -34,7 +34,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   async findOneAndPopulate (
     filterQuery: FilterQuery<TDocument>,
-    populatePath: keyof TDocument | [keyof TDocument]
+    populatePath: string | string[]
   ): Promise<any> {
     return await this.model
       .findOne(filterQuery, {}, { lean: true })
@@ -49,7 +49,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   async findAndPopulate<T> (
     filterQuery: FilterQuery<TDocument>,
-    populatePath: keyof TDocument | [keyof TDocument]
+    populatePath: string | string[]
   ): Promise<T[]> {
     return await this.model.find(filterQuery).populate(populatePath as any)
   }

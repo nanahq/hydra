@@ -1,5 +1,5 @@
 import { OrderStatus } from '@app/common'
-import { IsEnum, IsNotEmpty, IsPhoneNumber, IsUUID } from 'class-validator'
+import { IsEnum, IsNotEmpty, IsPhoneNumber } from 'class-validator'
 
 export class OrderStatusUpdateDto {
   @IsNotEmpty()
@@ -9,8 +9,4 @@ export class OrderStatusUpdateDto {
   @IsEnum(OrderStatus)
   @IsNotEmpty()
     status: OrderStatus
-
-  @IsUUID(4)
-  @IsNotEmpty()
-    listingId: string
 }

@@ -1,3 +1,4 @@
+import { OrderType } from '@app/common/typings/Global.Interface'
 import { OrderStatus } from '@app/common/typings/OrderStatus.enum'
 
 export interface ListingOption {
@@ -23,7 +24,7 @@ export interface LocationCoordinates {
 }
 
 export interface ListingCategoryI {
-  vendorId: string
+  vendor: VendorI
   name: string
   tags: string[]
   isLive: boolean
@@ -142,4 +143,7 @@ export interface OrderI {
   options: string[]
   orderStatus: OrderStatus
   orderBreakDown: OrderBreakDown
+  orderType: OrderType
+  orderDeliveryScheduledTime: string
+  preciseLocation: LocationCoordinates
 }

@@ -200,4 +200,60 @@ export class ListingsController {
       this.rmqService.ack(context)
     }
   }
+
+  // User and Admin query
+
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER)
+  async getAllMenuUser (
+    @Ctx() context: RmqContext
+  ): Promise<ListingMenu[]> {
+    try {
+      return await this.listingService.getAllMenuUser()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_CAT_USER)
+  async getAllCategoriesUser (
+    @Ctx() context: RmqContext
+  ): Promise<ListingCategory[]> {
+    try {
+      return await this.listingService.getAllCategoriesUsers()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_SINGLE_LISTING_CAT_USER)
+  async getSingleCategoriesUser (
+    @Payload() catId: string,
+      @Ctx() context: RmqContext
+  ): Promise<ListingCategory> {
+    try {
+      return await this.listingService.getSingleUserCategory(catId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER)
+  async getSingleMenuUser (
+    @Payload() mid: string,
+      @Ctx() context: RmqContext
+  ): Promise<ListingMenu> {
+    try {
+      return await this.listingService.getSingleUserMenu(mid)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

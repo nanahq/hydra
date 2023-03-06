@@ -27,7 +27,7 @@ export function ListingCategoryStub (): ListingCategory {
 
   return {
     _id: objectId,
-    vendorId: '63f7f2d0a0f1d5158f43cb7b',
+    vendor: '63f7f2d0a0f1d5158f43cb7b',
     name: 'Japanese Food',
     createdAt: '',
     updatedAt: '',

@@ -5,7 +5,6 @@ import {
   LoginVendorRequest,
   ResponseWithStatus,
   ServicePayload,
-  TokenPayload,
   UpdateVendorStatus,
   VendorUserI
 } from '@app/common'
@@ -86,7 +85,6 @@ export class VendorsService {
     }
 
     vendor.password = ''
-    console.log(vendor)
     return vendor
   }
 
@@ -108,7 +106,7 @@ export class VendorsService {
     return { status: 1 }
   }
 
-  async getVendor ({ userId: _id }: TokenPayload): Promise<Vendor> {
+  async getVendor (_id: string): Promise<Vendor> {
     const _vendor = await this.vendorRepository.findOneAndPopulate({
       _id,
       isDeleted: false

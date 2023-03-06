@@ -12,3 +12,5 @@ export interface VendorWithListing {
 export interface ReviewToken {
   listingId: string
 }
+
+export type OrderType = 'PRE_ORDER' | 'ON_DEMAND'

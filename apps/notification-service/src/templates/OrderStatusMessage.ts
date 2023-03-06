@@ -10,14 +10,14 @@ export const OrderStatusMessage: Record<
 OrderStatus,
 (...args: string[]) => string
 > = {
-  ORDER_PLACED: (listingName: string) => {
-    return `Order Processed: Dear customer, your order (${listingName}) has been placed successfully. Thank you for using EatLater`
+  ORDER_PLACED: () => {
+    return 'Order Processed: Dear customer, your order has been placed successfully. You can use the mobile app to track your order live. Thank you for using EatLater'
   },
   COLLECTED_FROM_VENDOR: () => {
     return ''
   },
-  OUT_FOR_DELIVERY: (orderEta: string) => {
-    return `Order update: Your food is on the way. Will be delivered today by ${orderEta}`
+  OUT_FOR_DELIVERY: () => {
+    return 'Order update: Your will be delivered in one minute. You need your phone with you to be able to collect your order. Thank you'
   },
   DELIVERED_TO_CUSTOMER: () => {
     return 'Order delivered: Hurray! Your food has been delivered. If you enjoy your meal, Do not forget to leave a review. Thanks for using EatLater '
