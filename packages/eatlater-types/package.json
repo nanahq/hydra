@@ -1,6 +1,6 @@
 {
   "name": "@imagyne/eatlater-types",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Type declarations and collection of tools for EatLater ",
   "scripts": {
     "prepublish": "tsc",
