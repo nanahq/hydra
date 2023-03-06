@@ -1,5 +1,5 @@
 import { OrderStatus } from '@app/common'
-import {  IsNotEmpty } from 'class-validator'
+import { IsNotEmpty } from 'class-validator'
 
 export class UpdateOrderStatusRequestDto {
   @IsNotEmpty()

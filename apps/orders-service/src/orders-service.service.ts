@@ -126,7 +126,7 @@ export class OrdersServiceService {
     status,
     orderId
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
-  await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: status })
+    await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: status })
     return { status: 1 }
   }
 }
