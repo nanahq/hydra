@@ -23,6 +23,7 @@ import { OrderRepository } from './order.repository'
     MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }, { name: User.name, schema: UserSchema }, { name: ListingMenu.name, schema: ListingMenuSchema }]),
     DatabaseModule,
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
     RmqModule
   ],
   controllers: [OrdersServiceController],

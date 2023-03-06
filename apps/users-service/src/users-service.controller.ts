@@ -146,4 +146,19 @@ export class UsersServiceController {
       this.rmqService.ack(context)
     }
   }
+
+
+  @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT)
+  async updateUserOrderCount (
+    @Payload() { orderId, userId }: { orderId: string, userId: string },
+      @Ctx() context: RmqContext
+  ): Promise<User> {
+    try {
+      return await this.usersService.updateUserOrderCount(orderId, userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

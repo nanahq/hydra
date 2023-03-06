@@ -20,7 +20,10 @@ export class OrdersServiceService {
   constructor (
     private readonly orderRepository: OrderRepository,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
+    private readonly notificationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.USERS_SERVICE)
+    private readonly userClient: ClientProxy
   ) {}
 
   public async placeOrder ({
@@ -51,6 +54,10 @@ export class OrdersServiceService {
           status: OrderStatus.PROCESSED
         })
       )
+
+      await lastValueFrom(
+        this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, {orderId: _newOrder._id, userId})
+      )
     } catch (error) {
       throw new RpcException(error)
     }
@@ -58,9 +65,9 @@ export class OrdersServiceService {
     return { status: 1 }
   }
 
-  public async getAllVendorOrders (vendorId: string): Promise<Order[]> {
+  public async getAllVendorOrders (vendor: string): Promise<Order[]> {
     try {
-      const _orders = await this.orderRepository.find({ vendorId })
+      const _orders = await this.orderRepository.findAndPopulate({ vendor }, 'user listing vendor') as any
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -70,10 +77,9 @@ export class OrdersServiceService {
     }
   }
 
-  public async getAllUserOrders (userId: string): Promise<Order[]> {
+  public async getAllUserOrders (user: string): Promise<Order[]> {
     try {
-      const _orders = await this.orderRepository.find({ userId })
-      return _orders
+      return  await this.orderRepository.findAndPopulate({ user }, 'user listing vendor')
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -84,7 +90,7 @@ export class OrdersServiceService {
 
   public async getAllOrderInDb (): Promise<Order[]> {
     try {
-      const _orders = await this.orderRepository.find({})
+      const _orders = await this.orderRepository.findAndPopulate({}, 'user listing vendor') as  any
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -96,7 +102,7 @@ export class OrdersServiceService {
 
   public async getOrderByRefId (refId: number): Promise<Order | null> {
     try {
-      return await this.orderRepository.findOne({ refId })
+      return await this.orderRepository.findOneAndPopulate({ refId }, 'user listing vendor')
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -107,7 +113,7 @@ export class OrdersServiceService {
 
   public async getOrderById (_id: any): Promise<Order | null> {
     try {
-      return await this.orderRepository.findOne({ _id })
+      return await this.orderRepository.findOneAndPopulate({ _id }, 'user listing vendor')
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
