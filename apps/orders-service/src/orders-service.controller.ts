@@ -117,4 +117,18 @@ export class OrdersServiceController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER)
+  async vendorAcceptOrder (
+    @Payload() data: {orderId: string, phone: string},
+    @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.ordersServiceService.vendorAcceptOrder(data.orderId, data.phone)
+    } catch (error) {
+        throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

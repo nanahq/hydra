@@ -12,7 +12,7 @@ import {
   UpdateOrderStatusRequestDto
 } from '@app/common'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
-import { lastValueFrom } from 'rxjs'
+import { catchError, lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
 
 @Injectable()
@@ -128,5 +128,21 @@ export class OrdersServiceService {
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
     await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: status })
     return { status: 1 }
+  }
+
+  public async vendorAcceptOrder (orderId: string, phone: string): Promise<void> {
+    try {
+      await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: OrderStatus.ACCEPTED })
+      await lastValueFrom(
+        this.notificationClient.emit(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER, { phone })
+          .pipe(
+            catchError((error) => {
+              throw error
+            })
+          )
+      )
+    } catch (error) {
+      throw new FitRpcException('failed to process order', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 }

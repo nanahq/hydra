@@ -21,5 +21,8 @@ OrderStatus,
   },
   DELIVERED_TO_CUSTOMER: () => {
     return 'Order delivered: Hurray! Your food has been delivered. If you enjoy your meal, Do not forget to leave a review. Thanks for using EatLater '
+  },
+  ORDER_ACCEPTED: () => {
+    return 'Great news! Your order has been accepted by the vendor! Track your order live on the EatLater app for a seamless experience. Thank you for choosing EatLater! 🚀'
   }
 }

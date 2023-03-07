@@ -16,12 +16,15 @@ import { OrderStatusMessage } from './templates/OrderStatusMessage'
 
 @Injectable()
 export class NotificationServiceService {
+  private readonly fromPhone: string
   constructor (
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     private readonly twilioService: TwilioService,
     private readonly configService: ConfigService
-  ) {}
+  ) {
+    this.fromPhone = this.configService.get<string>('TWILIO_PHONE') as string
+  }
 
   async verifyPhone ({
     code,
@@ -66,7 +69,6 @@ export class NotificationServiceService {
     status
   }: OrderStatusUpdateDto): Promise<void> {
     let message: string
-    const fromPhone = this.configService.get<string>('TWILIO_PHONE') as string
     switch (status) {
       case OrderStatus.PROCESSED:
         message = OrderStatusMessage[status]()
@@ -86,9 +88,23 @@ export class NotificationServiceService {
 
     this.twilioService.client.messages
       .create({
-        from: fromPhone,
+        from: this.fromPhone,
         body: message,
         to: phoneNumber
+      })
+      .then((msg) => msg)
+      .catch((error) => {
+        throw new RpcException(error)
+      })
+  }
+
+  public async vendorAcceptOrder (phone: string): Promise<void> {
+    const message = OrderStatusMessage[OrderStatus.ACCEPTED]()
+    this.twilioService.client.messages
+      .create({
+        from: this.fromPhone,
+        body: message,
+        to: phone
       })
       .then((msg) => msg)
       .catch((error) => {
