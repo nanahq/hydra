@@ -49,6 +49,9 @@ export class Vendor extends AbstractDocument {
   })
     businessAddress: string
 
+  @Prop(String)
+    restaurantImage: string
+
   @Prop({ type: Boolean, default: false })
     isDeleted: boolean
 

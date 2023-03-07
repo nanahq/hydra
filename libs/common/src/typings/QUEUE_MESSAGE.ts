@@ -33,6 +33,7 @@ export enum QUEUE_MESSAGE {
   GET_VENDOR_WITH_LISTING = 'get_vendor_with_listing',
   GET_ALL_VENDORS_USERS = 'get_vendors_user',
   UPDATE_USER_ORDER_COUNT = 'UPDATE_USER_ORDER_COUNT',
+  UPDATE_VENDOR_IMAGE = 'UPDATE_VENDOR_IMAGE',
   // Listing
   GET_ALL_LISTINGS = 'get_listings',
   GET_LISTING_INFO = 'get_listing_info',

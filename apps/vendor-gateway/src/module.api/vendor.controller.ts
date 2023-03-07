@@ -82,6 +82,22 @@ export class VendorController {
     return photo
   }
 
+  @Put('image')
+  async updateVendorRestaurantImage (
+    @CurrentUser() vendor: Vendor,
+      @UploadedFile() file: Express.Multer.File
+  ): Promise<string> {
+    const photo = await this.googleService.saveToCloud(file)
+    const payload: ServicePayload<string> = {
+      userId: vendor._id as any,
+      data: photo
+    }
+    await lastValueFrom(
+      this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_IMAGE, payload)
+    )
+    return photo
+  }
+
   @UseGuards(JwtAuthGuard)
   @Put('profile')
   async updateVendorProfile (

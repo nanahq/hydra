@@ -238,6 +238,17 @@ export class VendorsService {
       )
     }
   }
+
+  async updateVendorImage (data: any, _id: string): Promise<void> {
+    try {
+      await this.vendorRepository.findOneAndUpdate({ _id }, { restaurantImage: data })
+    } catch (e) {
+      throw new FitRpcException(
+        'Failed to create  settings',
+        HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
 }
 
 function getVendorsMapper (vendors: any[]): VendorUserI[] {
