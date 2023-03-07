@@ -56,6 +56,7 @@ export class OrdersServiceController {
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
+      console.log(data)
       return await this.ordersServiceService.updateStatus(data)
     } catch (error) {
       throw new RpcException(error)
