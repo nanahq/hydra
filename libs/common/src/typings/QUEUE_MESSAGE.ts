@@ -69,6 +69,7 @@ export enum QUEUE_MESSAGE {
   GET_VENDORS_ORDERS = 'get_vendors_order_by_id',
   UPDATE_ORDER_STATUS = 'update_order_status',
   CREATE_ORDER = 'create_new_order',
+  VENDOR_ACCEPT_ORDER = 'VENDOR_ACCEPT_ORDER',
 
   // Order status
   ORDER_STATUS_UPDATE = 'order_status_update',

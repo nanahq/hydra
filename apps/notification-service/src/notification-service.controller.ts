@@ -65,4 +65,18 @@ export class NotificationServiceController {
       this.rmqService.ack(context)
     }
   }
+
+  @EventPattern(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER)
+  async vendorAcceptOrder (
+    @Payload() { phone }: { phone: string },
+      @Ctx() context: RmqContext
+  ): Promise<any> {
+    try {
+      return await this.notificationServiceService.vendorAcceptOrder(phone)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }
