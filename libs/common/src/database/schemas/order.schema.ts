@@ -68,11 +68,11 @@ export class Order extends AbstractDocument {
   }
 
   @Prop(String)
-  quantity: string
+    quantity: string
 
   @Prop(String)
-  specialNote: string
-  
+    specialNote: string
+
   @Prop({
     type: String
   })
