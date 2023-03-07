@@ -17,6 +17,8 @@ export interface VendorOperationSetting {
   cutoffTime?: string
   placementTime?: string
   minOrder?: number
+  preparationTime?: number
+  deliveryType: OrderType
 }
 
 export interface LocationCoordinates {
