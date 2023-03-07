@@ -146,4 +146,6 @@ export interface OrderI {
   orderType: OrderType
   orderDeliveryScheduledTime: string
   preciseLocation: LocationCoordinates
+  quantity: string
+  specialNote?: string
 }
