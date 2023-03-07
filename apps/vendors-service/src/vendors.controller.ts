@@ -206,4 +206,18 @@ export class VendorsController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.UPDATE_VENDOR_IMAGE)
+  async updateVendorImage (
+    @Payload() data: ServicePayload<string>,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      await this.vendorsService.updateVendorImage(data.data, data.userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }
