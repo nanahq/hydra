@@ -67,6 +67,12 @@ export class Order extends AbstractDocument {
     coordinates: [string, string]
   }
 
+  @Prop(String)
+    quantity: string
+
+  @Prop(String)
+    specialNote: string
+
   @Prop({
     type: String
   })
