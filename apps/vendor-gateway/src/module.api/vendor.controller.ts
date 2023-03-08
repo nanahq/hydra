@@ -45,10 +45,10 @@ export class VendorController {
 
   @Post('register')
   async registerNewVendor (@Body() request: CreateVendorDto): Promise<any> {
-    const {businessEmail, email, ...rest} = request
+    const { businessEmail, email, ...rest } = request
     this.logger.debug('Registering a new vendor')
     return await lastValueFrom<ResponseWithStatus>(
-      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, {businessEmail: businessEmail.toLowerCase(), email: email.toLowerCase(), ...rest }).pipe(
+      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { businessEmail: businessEmail.toLowerCase(), email: email.toLowerCase(), ...rest }).pipe(
         catchError((error: IRpcException) => {
           this.logger.error(`Failed to register a new vendor. Reason: ${error.message}`)
           throw new HttpException(error.message, error.status)
@@ -69,7 +69,6 @@ export class VendorController {
       storage: multer.memoryStorage()
     })
   )
-
 
   @Put('logo')
   async updateVendorLogo (
@@ -106,7 +105,7 @@ export class VendorController {
   @UseGuards(JwtAuthGuard)
   @Put('profile')
   async updateVendorProfile (
-      @Body() data: Partial<Vendor>,
+    @Body() data: Partial<Vendor>,
       @CurrentUser() vendor: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<Partial<Vendor>> = {
