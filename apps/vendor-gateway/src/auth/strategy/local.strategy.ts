@@ -19,7 +19,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     return await lastValueFrom(
       this.vendorClient
         .send(QUEUE_MESSAGE.GET_VENDOR_LOCAL, {
-          businessEmail: email,
+          businessEmail: email.toLowerCase(),
           password
         })
         .pipe(
