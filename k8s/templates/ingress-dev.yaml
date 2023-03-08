@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-development
+  namespace: development
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    prometheus.io/port: "10254"
+    prometheus.io/scrape: "true"
+spec:
+  rules:
+    - host: "dev.eatlater.ng"
+      http:
+        paths:
+            - path: /api-gateway
+              pathType: Prefix
+              backend:
+                service:
+                  name: api-gateway
+                  port:
+                    number: 3000
+            - path: /vendor-gateway
+              pathType: Prefix
+              backend:
+                service:
+                  name: vendor-gateway
+                  port:
+                    number: 3001
+            - path: /admin-gateway
+              pathType: Prefix
+              backend:
+                service:
+                  name: admin-gateway
+                  port:
+                    number: 3002

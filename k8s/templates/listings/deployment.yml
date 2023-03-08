@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users
+  name: listings
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: listings
   template:
     metadata:
       labels:
-        app: users
+        app: listings
     spec:
       containers:
-        - name: users
-          image: imagynetech/eatlater-users-service:latest
+        - name: listings
+          image: imagynetech/eatlater-listings-service:latest
           env:
-            - name: RMQ_USERS_QUEUE
-              value: USERS
-            - name: RMQ_NOTIFICATION_QUEUE
-              value: NOTIFICATION
             - name: RMQ_URI
               value: amqp://user:user@eatlater-rabbitmq:5672
+            - name: RMQ_LISTINGS_QUEUE
+              value: LISTINGS
+            - name: RMQ_ORDERS_QUEUE
+              value: ORDERS
             - name: MONGODB_URI
               value: mongodb://root:password123@eatlater-mongodb-headless:27017/
       imagePullSecrets:

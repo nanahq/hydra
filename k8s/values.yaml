@@ -3,7 +3,7 @@ rabbitmq:
     auth:
        username: user
        password: user
-    replicaCount: 3
+    replicaCount: 1
 
 mongodb:
   architecture: replicaset
