@@ -151,3 +151,15 @@ export interface OrderI {
   quantity: string
   specialNote?: string
 }
+
+export interface VendorReviewOverview {
+  rating: string
+  numberOfReviews: number
+  riskFactor: 'HIGH' | 'MEDIUM' | 'LOW'
+}
+
+export interface ListingMenuReview {
+  rating: string
+  numberOfReviews: number
+  reviews: ReviewI[]
+}

@@ -18,26 +18,14 @@ import { catchError, lastValueFrom } from 'rxjs'
 import { CurrentUser } from './current-user.decorator'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
-@Controller('reviews')
+@Controller('review')
 export class ReviewController {
   constructor (
     @Inject(QUEUE_SERVICE.REVIEWS_SERVICE)
     private readonly reviewClient: ClientProxy
   ) {}
 
-  @Get(':id')
-  @UseGuards(JwtAuthGuard)
-  async findOne (@Param('id') reviewId: string): Promise<Review> {
-    return await lastValueFrom<Review>(
-      this.reviewClient.send(QUEUE_MESSAGE.REVIEW_FIND_ONE, { reviewId }).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
-  }
-
-  @Get('listing-reviews/:listingId')
+  @Get('listing/:listingId')
   @UseGuards(JwtAuthGuard)
   async getListingReviews (
     @Param('listingId') listingId: string
@@ -53,7 +41,7 @@ export class ReviewController {
     )
   }
 
-  @Get('vendor-reviews/:vid')
+  @Get('vendor/:vid')
   @UseGuards(JwtAuthGuard)
   async getVendorReviews (@CurrentUser() vendor: Vendor): Promise<Review[]> {
     return await lastValueFrom<Review[]>(
@@ -67,14 +55,14 @@ export class ReviewController {
     )
   }
 
-  @Get('stats/vendor-reviews/:vid')
+  @Get('stats/vendor/:vid')
   @UseGuards(JwtAuthGuard)
   async statGetVendorReviews (
-    @CurrentUser() { _id }: Vendor
-  ): Promise<{ sum_vendor_reviews: string }> {
-    return await lastValueFrom<{ sum_vendor_reviews: string }>(
+    @Param('vid') vendorId: string
+  ): Promise<any> {
+    return await lastValueFrom<any>(
       this.reviewClient
-        .send(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS, { vendorId: _id })
+        .send(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS, { vendorId })
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -83,7 +71,7 @@ export class ReviewController {
     )
   }
 
-  @Get('stats/listing-reviews/:lid')
+  @Get('stats/listing/:lid')
   @UseGuards(JwtAuthGuard)
   async statGetListingReviews (
     @Param('lid') listingId: string
@@ -96,6 +84,18 @@ export class ReviewController {
             throw new HttpException(error.message, error.status)
           })
         )
+    )
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  async findOne (@Param('id') reviewId: string): Promise<Review> {
+    return await lastValueFrom<Review>(
+      this.reviewClient.send(QUEUE_MESSAGE.REVIEW_FIND_ONE, { reviewId }).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 }
