@@ -14,3 +14,4 @@ export interface ReviewToken {
 }
 
 export type OrderType = 'PRE_ORDER' | 'ON_DEMAND'
+export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'
