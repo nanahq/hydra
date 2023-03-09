@@ -15,7 +15,9 @@ export class VendorSettings extends AbstractDocument {
       startTime: String,
       cutoffTime: String,
       placementTime: String,
-      minOrder: Number
+      minOrder: Number,
+      preparationTime: Number,
+      deliveryType: String
     },
     nullable: true
   })
