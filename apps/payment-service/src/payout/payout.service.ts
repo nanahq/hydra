@@ -1,6 +1,6 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import { VendorPayoutRepository } from './payout.repository'
-import { FitRpcException, IRpcException, Order, OrderI, QUEUE_MESSAGE, QUEUE_SERVICE, RandomGen, ResponseWithStatus, SendPayoutEmail, VendorPayout } from '@app/common'
+import { FitRpcException, IRpcException, Order, OrderI, PayoutOverview, QUEUE_MESSAGE, QUEUE_SERVICE, RandomGen, ResponseWithStatus, SendPayoutEmail, VendorPayout } from '@app/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -48,6 +48,55 @@ export class VendorPayoutService {
 
   async getVendorPayout (vendor: string): Promise<VendorPayout[]> {
     return await this.payoutRepository.find({ vendor })
+  }
+
+  async payoutOverview (vendor: string): Promise<PayoutOverview> {
+    const today = new Date()
+    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
+    const week = new Date(today.getTime() - 168 * 60 * 60 * 1000)
+    const month = new Date(today.getTime() - 1020 * 60 * 60 * 1000)
+
+    const yesterdayPayout = await this.payoutRepository.find({
+      createdAt: {
+        $gte: yesterday.setHours(0, 0, 0, 0),
+        $lt: yesterday.setHours(23, 59, 59, 999)
+      },
+      vendor
+    }) as VendorPayout[]
+
+    const weekPayout = await this.payoutRepository.find({
+      createdAt: {
+        $gte: week.setHours(0, 0, 0, 0),
+        $lt: today
+      },
+      vendor
+    }) as VendorPayout[]
+
+    const monthPayout = await this.payoutRepository.find({
+      createdAt: {
+        $gte: month.setHours(0, 0, 0, 0),
+        $lt: today
+      },
+      vendor
+    }) as VendorPayout[]
+
+    const monthEarning = monthPayout.reduce((acc, obj) => {
+      return acc + obj.earnings
+    }, 0)
+
+    const yesterdayEarning = yesterdayPayout.reduce((acc, obj) => {
+      return acc + obj.earnings
+    }, 0)
+
+    const weekEarning = weekPayout.reduce((acc, obj) => {
+      return acc + obj.earnings
+    }, 0)
+    return {
+      '24_hours': yesterdayEarning,
+      '7_days': weekEarning,
+      '30_days': monthEarning
+
+    }
   }
 
   @Cron(CronExpression.EVERY_DAY_AT_5AM, {
@@ -99,7 +148,7 @@ export class VendorPayoutService {
     await this.payoutRepository.insertMany(payoutsToMake)
   }
 
-  @Cron(CronExpression.EVERY_MINUTE, {
+  @Cron(CronExpression.EVERY_DAY_AT_NOON, {
     timeZone: 'Africa/Lagos'
   })
   async sendPayoutEmails (): Promise<void> {

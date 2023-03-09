@@ -27,3 +27,10 @@ export interface SendVendorSignUpEmail {
   vendorName: string
   vendorEmail: string
 }
+
+export interface PayoutOverview {
+  '24_hours': number
+  '7_days': number
+  '30_days': number
+
+}

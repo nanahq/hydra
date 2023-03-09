@@ -28,6 +28,7 @@ import { ReviewController } from './module.api/review.controller'
 import { GoogleFileService } from './google-file.service'
 import { LoggerConfig } from '@app/common/logger/logger.option'
 import { WinstonModule } from 'nest-winston'
+import { WalletController } from './module.api/wallet.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -68,6 +69,8 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.REVIEWS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
+
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
@@ -82,7 +85,8 @@ export class AppModule implements NestModule {
         AuthController,
         ListingsController,
         OrdersController,
-        ReviewController
+        ReviewController,
+        WalletController
       ],
       providers: [
         AuthService,

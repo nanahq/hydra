@@ -1,4 +1,4 @@
-import { QUEUE_MESSAGE, ResponseWithStatus, RmqService, ServicePayload, VendorPayout } from '@app/common'
+import { PayoutOverview, QUEUE_MESSAGE, ResponseWithStatus, RmqService, ServicePayload, VendorPayout } from '@app/common'
 import { Controller } from '@nestjs/common'
 import { VendorPayoutService } from './payout.service'
 import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
@@ -63,6 +63,20 @@ export class VendorPayoutController {
     }
     try {
       return await this.payoutService.createPayout(payload)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.WALLET_PAYOUT_OVERVIEW)
+  async payoutOverview (
+    @Payload() { vendorId }: { vendorId: string },
+      @Ctx() context: RmqContext
+  ): Promise<PayoutOverview> {
+    try {
+      return await this.payoutService.payoutOverview(vendorId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
