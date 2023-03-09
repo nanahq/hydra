@@ -15,6 +15,7 @@ export function ListingMenuStub (): ListingMenu {
     isAvailable: true,
     isDeleted: false,
     createdAt: '',
+    reviews: '',
     updatedAt: '',
     optionGroups: [
       '63f93c3a248f6c43d0b764f7'

@@ -157,9 +157,6 @@ export interface OrderI {
   specialNote?: string
 }
 
-
-export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'
-
 export interface ListingMenuReview {
   rating: string
   numberOfReviews: number
