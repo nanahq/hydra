@@ -38,7 +38,7 @@ export class VendorPayoutController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.WALLET_GET_PAYOUT_ALL)
+  @MessagePattern(QUEUE_MESSAGE.WALLET_UPDATE_PAYOUT)
   async updatePayoutStatus (
     @Payload() { refId }: { refId: number },
       @Ctx() context: RmqContext

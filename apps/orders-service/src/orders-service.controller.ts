@@ -57,7 +57,6 @@ export class OrdersServiceController {
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      console.log(data)
       return await this.ordersServiceService.updateStatus(data)
     } catch (error) {
       throw new RpcException(error)
@@ -71,7 +70,6 @@ export class OrdersServiceController {
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
   ): Promise<Order[]> {
-    console.log(userId)
     try {
       return await this.ordersServiceService.getAllUserOrders(userId)
     } catch (error) {
@@ -113,7 +111,6 @@ export class OrdersServiceController {
   async getAllOrders (@Payload() filterQuery: FilterQuery<Order>,
     @Ctx() context: RmqContext): Promise<Order[]> {
     try {
-      console.log(filterQuery)
       return await this.ordersServiceService.getAllOrderInDb(filterQuery)
     } catch (error) {
       throw new RpcException(error)

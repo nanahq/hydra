@@ -74,22 +74,22 @@ services:
       - /usr/src/app/node_modules
     networks:
       - eatlater-app
-  # notification-service:
-  #   build:
-  #     context: .
-  #     dockerfile: ./apps/notification-service/Dockerfile
-  #     target: development
-  #   command: 'npm run start:dev notification-service'
-  #   env_file:
-  #     - ./apps/notification-service/.env
-  #   depends_on:
-  #     - api-gateway
-  #     - rabbitmq
-  #   volumes:
-  #     - '.:/usr/src/app'
-  #     - /usr/src/app/node_modules
-  #   networks:
-  #     - eatlater-app
+  notification-service:
+    build:
+      context: .
+      dockerfile: ./apps/notification-service/Dockerfile
+      target: development
+    command: 'npm run start:dev notification-service'
+    env_file:
+      - ./apps/notification-service/.env
+    depends_on:
+      # - api-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - eatlater-app
   orders-service:
     build:
       context: .

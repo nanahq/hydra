@@ -1,8 +1,8 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import { VendorPayoutRepository } from './payout.repository'
-import { FitRpcException, IRpcException, Order, OrderI, QUEUE_MESSAGE, QUEUE_SERVICE, RandomGen, ResponseWithStatus, VendorPayout } from '@app/common'
+import { FitRpcException, IRpcException, Order, OrderI, QUEUE_MESSAGE, QUEUE_SERVICE, RandomGen, ResponseWithStatus, SendPayoutEmail, VendorPayout } from '@app/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import { ClientProxy } from '@nestjs/microservices'
+import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { FilterQuery } from 'mongoose'
 
@@ -12,7 +12,10 @@ export class VendorPayoutService {
   constructor (
     private readonly payoutRepository: VendorPayoutRepository,
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
-    private readonly ordersClient: ClientProxy
+    private readonly ordersClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy
   ) {}
 
   async createPayout (data: Partial<VendorPayout>): Promise<ResponseWithStatus> {
@@ -47,7 +50,7 @@ export class VendorPayoutService {
     return await this.payoutRepository.find({ vendor })
   }
 
-  @Cron(CronExpression.EVERY_MINUTE, {
+  @Cron(CronExpression.EVERY_DAY_AT_5AM, {
     timeZone: 'Africa/Lagos'
   })
   async handlePayoutComputation (): Promise<void> {
@@ -95,4 +98,48 @@ export class VendorPayoutService {
 
     await this.payoutRepository.insertMany(payoutsToMake)
   }
+
+  @Cron(CronExpression.EVERY_MINUTE, {
+    timeZone: 'Africa/Lagos'
+  })
+  async sendPayoutEmails (): Promise<void> {
+    const today = new Date()
+    const start = today.setHours(0, 0, 0, 0)
+    const end = today.setHours(23, 59, 59, 999)
+
+    const filter: FilterQuery<VendorPayout> = {
+      createdAt: {
+        $gte: start,
+        $lt: end
+      },
+      paid: true
+    }
+
+    const todayPayouts = await this.payoutRepository.findAndPopulate(filter, 'vendor') as any
+
+    if (todayPayouts.length < 1) {
+      return
+    }
+
+    const transactionalEmailPayload = payoutMapper(todayPayouts)
+
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS, transactionalEmailPayload)
+        .pipe(
+          catchError(error => {
+            throw new RpcException(error)
+          })
+        )
+    )
+  }
+}
+
+function payoutMapper (payouts: any[]): SendPayoutEmail[] {
+  return payouts.map((payout) => ({
+    payoutAmount: payout.earnings,
+    payoutDate: payout.createdAt,
+    vendorId: payout.vendor._id,
+    vendorEmail: payout.vendor.businessEmail,
+    vendorName: payout.vendor.businessName
+  }))
 }

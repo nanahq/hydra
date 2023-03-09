@@ -5,7 +5,7 @@ import { VendorPayoutController } from './payout/payout.controller'
 import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
 import { MongooseModule } from '@nestjs/mongoose'
-import { QUEUE_SERVICE, RmqModule, VendorPayout, VendorPayoutSchema } from '@app/common'
+import { QUEUE_SERVICE, RmqModule, Vendor, VendorPayout, VendorPayoutSchema, VendorSchema } from '@app/common'
 import { DatabaseModule } from '@app/common/database/database.module'
 import { ScheduleModule } from '@nestjs/schedule'
 
@@ -23,6 +23,7 @@ import { ScheduleModule } from '@nestjs/schedule'
       envFilePath: './apps/payment-service/.env'
     }),
     MongooseModule.forFeature([{ name: VendorPayout.name, schema: VendorPayoutSchema }]),
+    MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),

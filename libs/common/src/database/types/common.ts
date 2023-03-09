@@ -1,7 +1,6 @@
 import { OrderType } from '@app/common/typings/Global.Interface'
 import { OrderStatus } from '@app/common/typings/OrderStatus.enum'
 
-
 export interface ListingOption {
   name: string
   price: string
