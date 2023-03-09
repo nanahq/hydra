@@ -45,7 +45,6 @@ export class ListingsService {
       )
       return { status: 1 }
     } catch (error) {
-      console.error(error)
       throw new FitRpcException(
         'Can not process your request. Try again later',
         HttpStatus.UNPROCESSABLE_ENTITY

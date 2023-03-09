@@ -86,6 +86,13 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     )
   }
 
+  async insertMany (
+    documents: Array<Omit<TDocument, '_id'>> | Array<Partial<TDocument>>,
+    options?: SaveOptions
+  ): Promise<TDocument[]> {
+    return await this.model.insertMany(documents)
+  }
+
   async find (filterQuery: FilterQuery<TDocument>): Promise<any> {
     return await new Promise((resolve) =>
       resolve(this.model.find(filterQuery, {}, { lean: true }).sort({ createdAt: 'desc' }))
