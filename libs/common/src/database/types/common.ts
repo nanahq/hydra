@@ -1,4 +1,4 @@
-import { OrderType } from '@app/common/typings/Global.Interface'
+import { OrderType, VendorOperationType } from '@app/common/typings/Global.Interface'
 import { OrderStatus } from '@app/common/typings/OrderStatus.enum'
 
 export interface ListingOption {
@@ -18,7 +18,7 @@ export interface VendorOperationSetting {
   placementTime?: string
   minOrder?: number
   preparationTime?: number
-  deliveryType: VendorOperationType
+  deliveryType?: VendorOperationType
 }
 
 export interface LocationCoordinates {

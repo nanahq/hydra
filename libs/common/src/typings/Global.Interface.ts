@@ -34,3 +34,4 @@ export interface PayoutOverview {
   '30_days': number
 
 }
+export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'
