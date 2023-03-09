@@ -11,6 +11,7 @@ import {
   UseGuards,
   UseInterceptors
 } from '@nestjs/common'
+
 import { catchError, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
 
@@ -22,6 +23,7 @@ import {
   IRpcException,
   ResponseWithStatus
 } from '@app/common'
+
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
@@ -43,9 +45,10 @@ export class VendorController {
 
   @Post('register')
   async registerNewVendor (@Body() request: CreateVendorDto): Promise<any> {
+    const { businessEmail, email, ...rest } = request
     this.logger.debug('Registering a new vendor')
     return await lastValueFrom<ResponseWithStatus>(
-      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { ...request }).pipe(
+      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { businessEmail: businessEmail.toLowerCase(), email: email.toLowerCase(), ...rest }).pipe(
         catchError((error: IRpcException) => {
           this.logger.error(`Failed to register a new vendor. Reason: ${error.message}`)
           throw new HttpException(error.message, error.status)
@@ -66,6 +69,7 @@ export class VendorController {
       storage: multer.memoryStorage()
     })
   )
+
   @Put('logo')
   async updateVendorLogo (
     @CurrentUser() vendor: Vendor,
