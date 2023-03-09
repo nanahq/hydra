@@ -15,6 +15,7 @@ import {
   Order,
   UpdateOrderStatusRequestDto
 } from '@app/common'
+import { FilterQuery } from 'mongoose'
 @Controller('order')
 export class OrdersServiceController {
   constructor (
@@ -56,7 +57,6 @@ export class OrdersServiceController {
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      console.log(data)
       return await this.ordersServiceService.updateStatus(data)
     } catch (error) {
       throw new RpcException(error)
@@ -70,7 +70,6 @@ export class OrdersServiceController {
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
   ): Promise<Order[]> {
-    console.log(userId)
     try {
       return await this.ordersServiceService.getAllUserOrders(userId)
     } catch (error) {
@@ -109,9 +108,10 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_ORDERS)
-  async getAllOrders (@Ctx() context: RmqContext): Promise<Order[]> {
+  async getAllOrders (@Payload() filterQuery: FilterQuery<Order>,
+    @Ctx() context: RmqContext): Promise<Order[]> {
     try {
-      return await this.ordersServiceService.getAllOrderInDb()
+      return await this.ordersServiceService.getAllOrderInDb(filterQuery)
     } catch (error) {
       throw new RpcException(error)
     } finally {

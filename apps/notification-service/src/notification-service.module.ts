@@ -7,6 +7,7 @@ import * as Joi from 'joi'
 import { RmqModule, QUEUE_SERVICE } from '@app/common'
 import { NotificationServiceController } from './notification-service.controller'
 import { NotificationServiceService } from './notification-service.service'
+import { TransactionEmails } from './email/transactional.service'
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { NotificationServiceService } from './notification-service.service'
         RMQ_URI: Joi.string(),
         TWILIO_ACCOUNT_SID: Joi.string(),
         TWILIO_AUTH_TOKEN: Joi.string(),
-        TWILIO_SERVICE_NAME: Joi.string()
+        TWILIO_SERVICE_NAME: Joi.string(),
+        SEND_IN_BLUE_API: Joi.string().required()
       }),
       envFilePath: '.../.env'
     }),
@@ -30,9 +32,10 @@ import { NotificationServiceService } from './notification-service.service'
       inject: [ConfigService]
     }),
     RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE })
   ],
   controllers: [NotificationServiceController],
-  providers: [NotificationServiceService, ConfigService]
+  providers: [NotificationServiceService, ConfigService, TransactionEmails]
 })
 export class NotificationServiceModule {}

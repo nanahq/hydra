@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  APPS: 'notification-service,vendors-service,users-service,admin-service,listings-service,admin-gateway,api-gateway,vendor-gateway,orders-service,review-service'
+  APPS: 'notification-service,vendors-service,users-service,admin-service,listings-service,admin-gateway,api-gateway,vendor-gateway,orders-service,review-service, payment-service'
 
 jobs:
   build:
@@ -30,7 +30,8 @@ jobs:
           api-gateway,
           vendor-gateway,
           orders-service,
-          review-service
+          review-service,
+          payment-service
         ]
     steps:
       - uses: actions/checkout@v3

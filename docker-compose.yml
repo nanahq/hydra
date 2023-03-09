@@ -1,59 +1,59 @@
 services:
-  api-gateway:
-    build:
-      context: .
-      dockerfile: ./apps/api-gateway/Dockerfile
-      target: development
-    command: 'npm run start:dev api-gateway'
-    env_file:
-      - ./apps/api-gateway/.env
-    depends_on:
-      - rabbitmq
-    volumes:
-      - '.:/usr/src/app'
-      - /usr/src/app/node_modules
-    ports:
-      - '3000:3000'
-    networks:
-      - eatlater-app
+  # api-gateway:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/api-gateway/Dockerfile
+  #     target: development
+  #   command: 'npm run start:dev api-gateway'
+  #   env_file:
+  #     - ./apps/api-gateway/.env
+  #   depends_on:
+  #     - rabbitmq
+  #   volumes:
+  #     - '.:/usr/src/app'
+  #     - /usr/src/app/node_modules
+  #   ports:
+  #     - '3000:3000'
+  #   networks:
+  #     - eatlater-app
   
-  vendor-gateway:
-    build:
-      context: .
-      dockerfile: ./apps/vendor-gateway/Dockerfile
-      target: development
-    command: 'npm run start:dev vendor-gateway'
-    env_file:
-      - ./apps/vendor-gateway/.env
-    depends_on:
-      - rabbitmq
-    volumes:
-      - '.:/usr/src/app'
-      - /usr/src/app/node_modules
-    ports:
-      - '3001:3001'
-    networks:
-      - eatlater-app
+  # vendor-gateway:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/vendor-gateway/Dockerfile
+  #     target: development
+  #   command: 'npm run start:dev vendor-gateway'
+  #   env_file:
+  #     - ./apps/vendor-gateway/.env
+  #   depends_on:
+  #     - rabbitmq
+  #   volumes:
+  #     - '.:/usr/src/app'
+  #     - /usr/src/app/node_modules
+  #   ports:
+  #     - '3001:3001'
+  #   networks:
+  #     - eatlater-app
   
-  users-service:
-    build:
-      context: .
-      dockerfile: ./apps/users-service/Dockerfile
-      target: development
-    command: 'npm run start:dev users-service'
-    env_file:
-      - ./apps/users-service/.env
-    depends_on:
-      - api-gateway
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
-      - rabbitmq
-    volumes:
-      - '.:/usr/src/app'
-      - /usr/src/app/node_modules
-    networks:
-      - eatlater-app
+  # users-service:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/users-service/Dockerfile
+  #     target: development
+  #   command: 'npm run start:dev users-service'
+  #   env_file:
+  #     - ./apps/users-service/.env
+  #   depends_on:
+  #     - api-gateway
+  #     - mongodb-primary
+  #     - mongodb-secondary
+  #     - mongodb-arbiter
+  #     - rabbitmq
+  #   volumes:
+  #     - '.:/usr/src/app'
+  #     - /usr/src/app/node_modules
+  #   networks:
+  #     - eatlater-app
 
   vendors-service:
     build:
@@ -64,7 +64,7 @@ services:
     env_file:
       - ./apps/vendors-service/.env
     depends_on:
-      - vendor-gateway
+      # - vendor-gateway
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
@@ -83,7 +83,7 @@ services:
     env_file:
       - ./apps/notification-service/.env
     depends_on:
-      - api-gateway
+      # - api-gateway
       - rabbitmq
     volumes:
       - '.:/usr/src/app'
@@ -102,7 +102,7 @@ services:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
-      - api-gateway
+      # - api-gateway
       - rabbitmq
     volumes:
       - '.:/usr/src/app'
@@ -129,6 +129,27 @@ services:
     #   - /usr/src/app/node_modules
     # networks:
     #   - eatlater-app
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: apps/payment-service/Dockerfile
+      target: development
+    command: 'npm run start:dev payment-service'
+    env_file:
+      - apps/payment-service/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      # - api-gateway
+      # - vendor-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - eatlater-app
   rabbitmq:
     image: rabbitmq
     ports:

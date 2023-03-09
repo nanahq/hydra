@@ -14,4 +14,24 @@ export interface ReviewToken {
 }
 
 export type OrderType = 'PRE_ORDER' | 'ON_DEMAND'
+
+export interface SendPayoutEmail {
+  vendorName: string
+  vendorId: string
+  vendorEmail: string
+  payoutDate: string
+  payoutAmount: string
+}
+
+export interface SendVendorSignUpEmail {
+  vendorName: string
+  vendorEmail: string
+}
+
+export interface PayoutOverview {
+  '24_hours': number
+  '7_days': number
+  '30_days': number
+
+}
 export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'

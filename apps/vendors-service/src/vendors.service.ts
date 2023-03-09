@@ -251,9 +251,10 @@ export class VendorsService {
   }
 }
 
-function getVendorsMapper (vendors: any[]): VendorUserI[] {
+function getVendorsMapper (vendors: Vendor[]): VendorUserI[] {
   return vendors.map((vendor) => {
     return {
+      _id: vendor._id as any,
       businessName: vendor.businessName,
       businessAddress: vendor.businessAddress,
       businessLogo: vendor.businessLogo,

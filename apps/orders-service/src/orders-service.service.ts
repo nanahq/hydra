@@ -14,6 +14,7 @@ import {
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
+import { FilterQuery } from 'mongoose'
 
 @Injectable()
 export class OrdersServiceService {
@@ -88,9 +89,9 @@ export class OrdersServiceService {
     }
   }
 
-  public async getAllOrderInDb (): Promise<Order[]> {
+  public async getAllOrderInDb (filterQuery: FilterQuery<Order>): Promise<Order[]> {
     try {
-      const _orders = await this.orderRepository.findAndPopulate({}, 'user listing vendor') as any
+      const _orders = await this.orderRepository.findAndPopulate(filterQuery, 'vendor') as any
       return _orders
     } catch (error) {
       throw new FitRpcException(

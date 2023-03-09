@@ -12,15 +12,18 @@ import {
   RmqService,
   PhoneVerificationPayload,
   verifyPhoneRequest,
-  QUEUE_MESSAGE
+  QUEUE_MESSAGE,
+  SendPayoutEmail
 } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
 import { OrderStatusUpdateDto } from '@app/common/dto/OrderStatusUpdate.dto'
+import { TransactionEmails } from './email/transactional.service'
 
 @Controller()
 export class NotificationServiceController {
   constructor (
     private readonly notificationServiceService: NotificationServiceService,
+    private readonly transctionalEmail: TransactionEmails,
     private readonly rmqService: RmqService
   ) {}
 
@@ -73,6 +76,20 @@ export class NotificationServiceController {
   ): Promise<any> {
     try {
       return await this.notificationServiceService.vendorAcceptOrder(phone)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS)
+  async sendPayoutEmails (
+    @Payload() data: SendPayoutEmail[],
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      await this.transctionalEmail.sendVendorPayoutEmail(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

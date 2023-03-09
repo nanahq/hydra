@@ -59,7 +59,6 @@ export class NotificationServiceService {
         )
         .verifications.create({ to: phone, channel: 'sms' })
     } catch (error) {
-      console.log(error)
       throw new RpcException(error)
     }
   }
