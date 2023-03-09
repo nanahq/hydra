@@ -14,7 +14,8 @@ import {
   ResponseWithStatus,
   Review,
   ReviewToken,
-  RmqService
+  RmqService,
+  VendorReviewOverview
 } from '@app/common'
 import { ReviewDto } from '@app/common/database/dto/review.dto'
 
@@ -107,31 +108,31 @@ export class ReviewsServiceController {
     }
   }
 
-  // @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS)
-  // async statGetVendorReviews (
-  //   @Ctx() context: RmqContext,
-  //     @Payload() { vendorId }: { vendorId: string }
-  // ): Promise<{ sum_vendor_reviews: string }> {
-  //   try {
-  //     return await this.reviewService.statGetVendorReviews(vendorId)
-  //   } catch (error) {
-  //     throw new RpcException(error)
-  //   } finally {
-  //     this.rmqService.ack(context)
-  //   }
-  // }
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_LISTING_REVIEWS)
+  async statGetListingReviews (
+    @Ctx() context: RmqContext,
+      @Payload() { listingId }: { listingId: string }
+  ): Promise<{ sum_listing_reviews: string }> {
+    try {
+      return await this.reviewService.statGetListingReviews(listingId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 
-  // @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_LISTING_REVIEWS)
-  // async statGetListingReviews (
-  //   @Ctx() context: RmqContext,
-  //     @Payload() { listingId }: { listingId: string }
-  // ): Promise<{ sum_listing_reviews: string }> {
-  //   try {
-  //     return await this.reviewService.statGetListingReviews(listingId)
-  //   } catch (error) {
-  //     throw new RpcException(error)
-  //   } finally {
-  //     this.rmqService.ack(context)
-  //   }
-  // }
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS)
+  async getVendorReviewOverview (
+    @Payload() { vendorId }: { vendorId: string },
+      @Ctx() context: RmqContext
+  ): Promise<VendorReviewOverview> {
+    try {
+      return await this.reviewService.getVendorReviewOverview(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

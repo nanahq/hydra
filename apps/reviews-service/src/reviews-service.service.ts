@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { FitRpcException, ResponseWithStatus, Review } from '@app/common'
+import { FitRpcException, ResponseWithStatus, Review, VendorReviewOverview } from '@app/common'
 import { ReviewDto } from '@app/common/database/dto/review.dto'
 import { ReviewRepository } from './review.repositoty'
 
@@ -74,33 +74,48 @@ export class ReviewsService {
     }
   }
 
-  // async statGetVendorReviews (
-  //   vendorId: string
-  // ): Promise<{ sum_vendor_reviews: string }> {
-  //   const stats = await this.statFetchVendorReviews(vendorId)
+  async getVendorReviewOverview (vendorId: string): Promise<VendorReviewOverview> {
+    const vendorReviews = await this.reviewRepository.find({ vendorId }) as Review[]
 
-  //   if (stats === undefined) {
-  //     throw new FitRpcException(
-  //       'Failed to fetch vendor reviews',
-  //       HttpStatus.BAD_REQUEST
-  //     )
-  //   }
+    let aggregateRating: number = 0
+    let riskFactor: 'HIGH' | 'LOW' | 'MEDIUM' = 'MEDIUM'
+    for (const review of vendorReviews) {
+      aggregateRating += review.reviewStars
+    }
+    aggregateRating = aggregateRating / vendorReviews.length
 
-  //   return stats
-  // }
+    if (vendorReviews.length >= 5) {
+      if (aggregateRating >= 4) {
+        riskFactor = 'LOW'
+      } else if (aggregateRating < 4 && aggregateRating > 2.5) {
+        riskFactor = 'MEDIUM'
+      } else {
+        riskFactor = 'HIGH'
+      }
+    }
 
-  // async statGetListingReviews (
-  //   listingId: string
-  // ): Promise<{ sum_listing_reviews: string }> {
-  //   const stats = await this.statFetchListingReviews(listingId)
+    return {
+      riskFactor,
+      rating: parseFloat(aggregateRating.toString()).toFixed(2),
+      numberOfReviews: vendorReviews.length
+    }
+  }
 
-  //   if (stats === undefined) {
-  //     throw new FitRpcException(
-  //       'Failed fetch listing reviews',
-  //       HttpStatus.BAD_REQUEST
-  //     )
-  //   }
+  async statGetListingReviews (
+    listingId: string
+  ): Promise<any> {
+    const listingReview = await this.reviewRepository.find({ listingId }) as Review[]
 
-  //   return stats
-  // }
+    let aggregateRating: number = 0
+    for (const review of listingReview) {
+      aggregateRating += review.reviewStars
+    }
+    aggregateRating = aggregateRating / listingReview.length
+
+    return {
+      rating: parseFloat(aggregateRating.toString()).toFixed(2),
+      numberOfReviews: listingReview.length,
+      reviews: listingReview
+    }
+  }
 }

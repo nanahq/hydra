@@ -4,7 +4,7 @@ import * as Joi from 'joi'
 
 import { ListingsController } from './listings.controller'
 import { ListingsService } from './listings.service'
-import { RmqModule, Vendor, VendorSchema } from '@app/common'
+import { Review, ReviewSchema, RmqModule, Vendor, VendorSchema } from '@app/common'
 import {
   ListingCategory,
   ListingCategorySchema
@@ -43,6 +43,8 @@ import {
       { name: ListingOptionGroup.name, schema: ListingOptionGroupSchema }
     ]),
     MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
+    MongooseModule.forFeature([{ name: Review.name, schema: ReviewSchema }]),
+
     DatabaseModule,
     RmqModule
   ],

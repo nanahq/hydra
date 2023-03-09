@@ -32,6 +32,13 @@ export class ListingMenu extends AbstractDocument {
     isDeleted: boolean
 
   @Prop({
+    type: Types.ObjectId,
+    ref: 'Review'
+  })
+
+    reviews: string
+
+  @Prop({
     type: [Types.ObjectId],
     ref: 'ListingOptionGroup'
   })
