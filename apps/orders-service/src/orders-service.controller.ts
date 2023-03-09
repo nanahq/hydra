@@ -15,6 +15,7 @@ import {
   Order,
   UpdateOrderStatusRequestDto
 } from '@app/common'
+import { FilterQuery } from 'mongoose'
 @Controller('order')
 export class OrdersServiceController {
   constructor (
@@ -109,9 +110,11 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_ORDERS)
-  async getAllOrders (@Ctx() context: RmqContext): Promise<Order[]> {
+  async getAllOrders (@Payload() filterQuery: FilterQuery<Order>,
+    @Ctx() context: RmqContext): Promise<Order[]> {
     try {
-      return await this.ordersServiceService.getAllOrderInDb()
+      console.log(filterQuery)
+      return await this.ordersServiceService.getAllOrderInDb(filterQuery)
     } catch (error) {
       throw new RpcException(error)
     } finally {

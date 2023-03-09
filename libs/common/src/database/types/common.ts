@@ -1,6 +1,7 @@
 import { OrderType } from '@app/common/typings/Global.Interface'
 import { OrderStatus } from '@app/common/typings/OrderStatus.enum'
 
+
 export interface ListingOption {
   name: string
   price: string
@@ -18,7 +19,7 @@ export interface VendorOperationSetting {
   placementTime?: string
   minOrder?: number
   preparationTime?: number
-  deliveryType: OrderType
+  deliveryType: VendorOperationType
 }
 
 export interface LocationCoordinates {
@@ -26,6 +27,7 @@ export interface LocationCoordinates {
 }
 
 export interface ListingCategoryI {
+  _id: string
   vendor: VendorI
   name: string
   tags: string[]
@@ -36,6 +38,7 @@ export interface ListingCategoryI {
 }
 
 export interface ListingOptionGroupI {
+  _id: string
   vendorId: string
   name: string
   min: number
@@ -44,6 +47,7 @@ export interface ListingOptionGroupI {
 }
 
 export interface ListingMenuI {
+  _id: string
   vendorId: string
   name: string
   desc: string
@@ -66,6 +70,7 @@ export interface OrderBreakDown {
 }
 
 export interface VendorI {
+  _id: string
   firstName: string
   lastName: string
   email: string
@@ -75,31 +80,31 @@ export interface VendorI {
   isValidated: boolean
   status: 'ONLINE' | 'OFFLINE'
   businessName: string
-  businessLogo: string
+  businessLogo?: string
   businessAddress: string
-  settings: VendorSettingsI
-  location: {
+  settings?: VendorSettingsI
+  location?: {
     coordinates: [string, string]
   }
-  createdAt: string
-  updatedAt: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 export interface VendorSettingsI {
+  _id: string
   vendorId: string
   operations?: VendorOperationSetting
   payment?: PaymentInfo
 }
 
 export interface VendorUserI {
+  _id: string
   isValidated: boolean
   status: 'ONLINE' | 'OFFLINE'
   businessName: string
   businessLogo: string
   businessAddress: string
-  location: {
-    coordinates: [string, string]
-  }
+  location: LocationCoordinates
 }
 
 export interface UserI {
@@ -120,6 +125,7 @@ export interface UserI {
 }
 
 export interface ReviewI {
+  _id: string
   reviewBody: string
   listingId: ListingMenuI
   vendorId: VendorI
@@ -129,11 +135,11 @@ export interface ReviewI {
   createdAt: string
   updatedAt: string
 }
-
 export interface OrderI {
-  userId: UserI
-  listingsId: ListingMenuI
-  vendorId: VendorI
+  _id: string
+  user: UserI
+  listing: ListingMenuI
+  vendor: VendorI
   totalOrderValue: number
   orderValuePayable: number
   deliveryAddess: string
@@ -150,4 +156,18 @@ export interface OrderI {
   preciseLocation: LocationCoordinates
   quantity: string
   specialNote?: string
+}
+
+export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'
+
+export interface ListingMenuReview {
+  rating: string
+  numberOfReviews: number
+  reviews: ReviewI[]
+}
+
+export interface VendorReviewOverview {
+  rating: string
+  numberOfReviews: number
+  riskFactor: 'HIGH' | 'MEDIUM' | 'LOW'
 }

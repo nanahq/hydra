@@ -24,7 +24,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/eatlater/test/jest-e2e.json",
-    "all:build": "npm run build users-service && npm run build nofication-service && npm run build vendors-service && npm run build admin-service && npm run build listings-service",
+    "all:build": "npm run build users-service && npm run build nofication-service && npm run build vendors-service && npm run build admin-service && npm run build listings-service && npm run build payment-service",
     "all:version": "lerna version $1 --yes --no-push --no-git-tag-version --exact"
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "@nestjs/mongoose": "^9.2.1",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.2.0",
+    "@nestjs/schedule": "^2.2.0",
     "@nestjs/throttler": "^4.0.0",
     "@nestjs/typeorm": "^9.0.1",
     "amqp-connection-manager": "^4.1.10",
@@ -70,6 +71,7 @@
     "@nestjs/testing": "^9.1.6",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.3",
+    "@types/cron": "^2.0.0",
     "@types/express": "^4.17.13",
     "@types/jest": "28.1.4",
     "@types/multer": "^1.4.7",
