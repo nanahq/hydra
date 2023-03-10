@@ -1,0 +1,1090 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>EatLater Docs</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">EatLater Docs</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content controller">
+                   <div class="content-data">
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Controllers</li>
+  <li >VendorController</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>apps/vendor-gateway/src/module.api/vendor.controller.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Prefix</h3>
+            </p>
+            <p class="comment">
+                <code>vendor</code>
+            </p>
+
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createSettings" >createSettings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getSetting" >getSetting</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getVendorProfile" >getVendorProfile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#registerNewVendor" >registerNewVendor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#update" >update</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateVendorLogo" >updateVendorLogo</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateVendorProfile" >updateVendorProfile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateVendorRestaurantImage" >updateVendorRestaurantImage</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createSettings"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>createSettings</b></span>
+                        <a href="#createSettings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createSettings(data: <a href="../classes/UpdateVendorSettingsDto.html" target="_self">UpdateVendorSettingsDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Post(&#x27;settings&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:144</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../classes/UpdateVendorSettingsDto.html" target="_self" >UpdateVendorSettingsDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSetting"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getSetting</b></span>
+                        <a href="#getSetting"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getSetting(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;settings/:id&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="128"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:128</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getVendorProfile"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getVendorProfile</b></span>
+                        <a href="#getVendorProfile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getVendorProfile(vendor: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;profile&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Vendor.html" target="_self" >Promise&lt;Vendor&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerNewVendor"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>registerNewVendor</b></span>
+                        <a href="#registerNewVendor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>registerNewVendor(request: <a href="../classes/CreateVendorDto.html" target="_self">CreateVendorDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;register&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="47"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:47</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>request</td>
+                                    <td>
+                                                <code><a href="../classes/CreateVendorDto.html" target="_self" >CreateVendorDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>update(data: <a href="../classes/UpdateVendorSettingsDto.html" target="_self">UpdateVendorSettingsDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Put(&#x27;settings&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="164"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:164</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../classes/UpdateVendorSettingsDto.html" target="_self" >UpdateVendorSettingsDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateVendorLogo"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>updateVendorLogo</b></span>
+                        <a href="#updateVendorLogo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateVendorLogo(vendor: <a href="../classes/Vendor.html" target="_self">Vendor</a>, file: Express.Multer.File)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@UseInterceptors(undefined)<br />@Put(&#x27;logo&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>file</td>
+                                    <td>
+                                            <code>Express.Multer.File</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateVendorProfile"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>updateVendorProfile</b></span>
+                        <a href="#updateVendorProfile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateVendorProfile(data: <a href="../classes/Vendor.html" target="_self">Partial&lt;Vendor&gt;</a>, vendor: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Put(&#x27;profile&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="107"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:107</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Partial&lt;Vendor&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateVendorRestaurantImage"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>updateVendorRestaurantImage</b></span>
+                        <a href="#updateVendorRestaurantImage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateVendorRestaurantImage(vendor: <a href="../classes/Vendor.html" target="_self">Vendor</a>, file: Express.Multer.File)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Put(&#x27;image&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="90"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:90</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>file</td>
+                                    <td>
+                                            <code>Express.Multer.File</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  Post,
+  Put,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors
+} from &#x27;@nestjs/common&#x27;
+
+import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
+import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
+
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  Vendor,
+  ServicePayload,
+  IRpcException,
+  ResponseWithStatus
+} from &#x27;@app/common&#x27;
+
+import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
+import { CurrentUser } from &#x27;./current-user.decorator&#x27;
+import { CreateVendorDto, UpdateVendorSettingsDto } from &#x27;@app/common/database/dto/vendor.dto&#x27;
+import { Logger } from &#x27;winston&#x27;
+import { WINSTON_MODULE_PROVIDER } from &#x27;nest-winston&#x27;
+import { FileInterceptor } from &#x27;@nestjs/platform-express&#x27;
+import * as multer from &#x27;multer&#x27;
+import { GoogleFileService } from &#x27;../google-file.service&#x27;
+@Controller(&#x27;vendor&#x27;)
+export class VendorController {
+  constructor (
+    @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
+    private readonly vendorClient: ClientProxy,
+    @Inject(WINSTON_MODULE_PROVIDER)
+    private readonly logger: Logger,
+    private readonly googleService: GoogleFileService
+
+  ) {}
+
+  @Post(&#x27;register&#x27;)
+  async registerNewVendor (@Body() request: CreateVendorDto): Promise&lt;any&gt; {
+    const { businessEmail, email, ...rest } &#x3D; request
+    this.logger.debug(&#x27;Registering a new vendor&#x27;)
+    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { businessEmail: businessEmail.toLowerCase(), email: email.toLowerCase(), ...rest }).pipe(
+        catchError((error: IRpcException) &#x3D;&gt; {
+          this.logger.error(&#x60;Failed to register a new vendor. Reason: ${error.message}&#x60;)
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(&#x27;profile&#x27;)
+  async getVendorProfile (@CurrentUser() vendor: Vendor): Promise&lt;Vendor&gt; {
+    return vendor
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor(&#x27;logo&#x27;, {
+      storage: multer.memoryStorage()
+    })
+  )
+
+  @Put(&#x27;logo&#x27;)
+  async updateVendorLogo (
+    @CurrentUser() vendor: Vendor,
+      @UploadedFile() file: Express.Multer.File
+  ): Promise&lt;string&gt; {
+    const photo &#x3D; await this.googleService.saveToCloud(file)
+    const payload: ServicePayload&lt;string&gt; &#x3D; {
+      userId: vendor._id as any,
+      data: photo
+    }
+    await lastValueFrom(
+      this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_LOGO, payload)
+    )
+    return photo
+  }
+
+  @Put(&#x27;image&#x27;)
+  async updateVendorRestaurantImage (
+    @CurrentUser() vendor: Vendor,
+      @UploadedFile() file: Express.Multer.File
+  ): Promise&lt;string&gt; {
+    const photo &#x3D; await this.googleService.saveToCloud(file)
+    const payload: ServicePayload&lt;string&gt; &#x3D; {
+      userId: vendor._id as any,
+      data: photo
+    }
+    await lastValueFrom(
+      this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_IMAGE, payload)
+    )
+    return photo
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(&#x27;profile&#x27;)
+  async updateVendorProfile (
+    @Body() data: Partial&lt;Vendor&gt;,
+      @CurrentUser() vendor: Vendor
+  ): Promise&lt;ResponseWithStatus&gt; {
+    const payload: ServicePayload&lt;Partial&lt;Vendor&gt;&gt; &#x3D; {
+      userId: vendor._id as any,
+      data
+    }
+    this.logger.debug(&#x27;Updating vendor profile&#x27;)
+    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+      this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
+        catchError((error: IRpcException) &#x3D;&gt; {
+          this.logger.error(&#x60;Failed to update vendor profile. Reason: ${error.message}&#x60;)
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(&#x27;settings/:id&#x27;)
+  async getSetting (
+    @Param(&#x27;id&#x27;) id: string,
+      @CurrentUser() { _id }: Vendor
+  ): Promise&lt;ResponseWithStatus&gt; {
+    return await lastValueFrom(
+      this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_SETTINGS, { vid: _id, settingId: id })
+        .pipe(
+          catchError((error: IRpcException) &#x3D;&gt; {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(&#x27;settings&#x27;)
+  async createSettings (
+    @Body() data: UpdateVendorSettingsDto,
+      @CurrentUser() { _id }: Vendor
+  ): Promise&lt;ResponseWithStatus&gt; {
+    const payload: ServicePayload&lt;UpdateVendorSettingsDto&gt; &#x3D; {
+      userId: _id as any,
+      data
+    }
+    return await lastValueFrom(
+      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR_SETTINGS, payload)
+        .pipe(
+          catchError((error: IRpcException) &#x3D;&gt; {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(&#x27;settings&#x27;)
+  async update (
+    @Body() data: UpdateVendorSettingsDto,
+      @CurrentUser() { _id }: Vendor
+  ): Promise&lt;ResponseWithStatus&gt; {
+    const payload: ServicePayload&lt;UpdateVendorSettingsDto&gt; &#x3D; {
+      userId: _id as any,
+      data
+    }
+    return await lastValueFrom(
+      this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_SETTING, payload)
+        .pipe(
+          catchError((error: IRpcException) &#x3D;&gt; {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'controller';
+            var COMPODOC_CURRENT_PAGE_URL = 'VendorController-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

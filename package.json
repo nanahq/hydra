@@ -25,7 +25,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/eatlater/test/jest-e2e.json",
     "all:build": "npm run build users-service && npm run build nofication-service && npm run build vendors-service && npm run build admin-service && npm run build listings-service && npm run build payment-service",
-    "all:version": "lerna version $1 --yes --no-push --no-git-tag-version --exact"
+    "all:version": "lerna version $1 --yes --no-push --no-git-tag-version --exact",
+    "doc": "npx compodoc -p tsconfig.json -n \"EatLater Docs\""
   },
   "dependencies": {
     "@google-cloud/storage": "^6.9.3",
@@ -67,6 +68,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.19",
     "@nestjs/cli": "^9.2.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.1.6",
