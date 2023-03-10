@@ -1,0 +1,836 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>EatLater Docs</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">EatLater Docs</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Miscellaneous</li>
+  <li>Variables</li>
+</ol>
+
+<section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#AdminSchema" title="libs/common/src/database/schemas/admin.schema.ts" ><b>AdminSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../admin.schema.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#AppMetadata" title="app.config.ts" ><b>AppMetadata</b>&nbsp;&nbsp;&nbsp;(app.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#CurrentUser" title="apps/api-gateway/src/module.api/current-user.decorator.ts" ><b>CurrentUser</b>&nbsp;&nbsp;&nbsp;(apps/.../current-user.decorator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#CurrentUser" title="apps/admin-gateway/src/module.api/current-user.decorator.ts" ><b>CurrentUser</b>&nbsp;&nbsp;&nbsp;(apps/.../current-user.decorator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#CurrentUser" title="apps/vendor-gateway/src/module.api/current-user.decorator.ts" ><b>CurrentUser</b>&nbsp;&nbsp;&nbsp;(apps/.../current-user.decorator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ListingCategorySchema" title="libs/common/src/database/schemas/listings.cat.ts" ><b>ListingCategorySchema</b>&nbsp;&nbsp;&nbsp;(libs/.../listings.cat.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ListingMenuSchema" title="libs/common/src/database/schemas/listing-menu.schema.ts" ><b>ListingMenuSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../listing-menu.schema.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ListingOptionGroupSchema" title="libs/common/src/database/schemas/listing-option.schema.ts" ><b>ListingOptionGroupSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../listing-option.schema.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ListingsService" title="apps/listings-service/src/__mocks__/listings.service.ts" ><b>ListingsService</b>&nbsp;&nbsp;&nbsp;(apps/.../listings.service.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ListingsService" title="apps/users-service/src/__mocks__/users-service.service.ts" ><b>ListingsService</b>&nbsp;&nbsp;&nbsp;(apps/.../users-service.service.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#logLevels" title="libs/common/src/logger/logger.option.ts" ><b>logLevels</b>&nbsp;&nbsp;&nbsp;(libs/.../logger.option.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#OrderSchema" title="libs/common/src/database/schemas/order.schema.ts" ><b>OrderSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../order.schema.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#OrderStatusMessage" title="apps/notification-service/src/templates/OrderStatusMessage.ts" ><b>OrderStatusMessage</b>&nbsp;&nbsp;&nbsp;(apps/.../OrderStatusMessage.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RandomGen" title="libs/common/src/utils/random.ts" ><b>RandomGen</b>&nbsp;&nbsp;&nbsp;(libs/.../random.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RandomGen" title="packages/eatlater-types/libs/utils/random.ts" ><b>RandomGen</b>&nbsp;&nbsp;&nbsp;(packages/.../random.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ReviewSchema" title="libs/common/src/database/schemas/reviews.schema.ts" ><b>ReviewSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../reviews.schema.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UserSchema" title="libs/common/src/database/schemas/users.schema.ts" ><b>UserSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../users.schema.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#VendorPayoutSchema" title="libs/common/src/database/schemas/vendor-payout.ts" ><b>VendorPayoutSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../vendor-payout.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#VendorSchema" title="libs/common/src/database/schemas/vendor.schema.ts" ><b>VendorSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../vendor.schema.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#VendorSettingsSchema" title="libs/common/src/database/schemas/vendor-settings.schema.ts" ><b>VendorSettingsSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../vendor-settings.schema.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#VendorsService" title="apps/vendors-service/src/__mocks__/vendors.service.ts" ><b>VendorsService</b>&nbsp;&nbsp;&nbsp;(apps/.../vendors.service.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#VendorWalletSchema" title="libs/common/src/database/schemas/user-wallet.schema.ts" ><b>VendorWalletSchema</b>&nbsp;&nbsp;&nbsp;(libs/.../user-wallet.schema.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>libs/common/src/database/schemas/admin.schema.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="AdminSchema"></a>
+                    <span class="name">
+                        <span ><b>AdminSchema</b></span>
+                        <a href="#AdminSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(Admin)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>app.config.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="AppMetadata"></a>
+                    <span class="name">
+                        <span ><b>AppMetadata</b></span>
+                        <a href="#AppMetadata"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    API_VERSION: &#x27;v1&#x27;,
+    ADMIN_VERSION: &#x27;v1&#x27;,
+    APP_NAME: &#x27;EatLater_Aristotle&#x27;,
+    APP_VERSION: &#x27;1.12.0&#x27;
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/api-gateway/src/module.api/current-user.decorator.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CurrentUser"></a>
+                    <span class="name">
+                        <span ><b>CurrentUser</b></span>
+                        <a href="#CurrentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createParamDecorator(
+  (_data: unknown, context: ExecutionContext) &#x3D;&gt;
+    getCurrentUserByContext(context)
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/admin-gateway/src/module.api/current-user.decorator.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CurrentUser"></a>
+                    <span class="name">
+                        <span ><b>CurrentUser</b></span>
+                        <a href="#CurrentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createParamDecorator(
+  (_data: unknown, context: ExecutionContext) &#x3D;&gt;
+    getCurrentUserByContext(context)
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/vendor-gateway/src/module.api/current-user.decorator.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CurrentUser"></a>
+                    <span class="name">
+                        <span ><b>CurrentUser</b></span>
+                        <a href="#CurrentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>createParamDecorator(
+  (_data: unknown, context: ExecutionContext) &#x3D;&gt;
+    getCurrentUserByContext(context)
+)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/listings.cat.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ListingCategorySchema"></a>
+                    <span class="name">
+                        <span ><b>ListingCategorySchema</b></span>
+                        <a href="#ListingCategorySchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(ListingCategory)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/listing-menu.schema.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ListingMenuSchema"></a>
+                    <span class="name">
+                        <span ><b>ListingMenuSchema</b></span>
+                        <a href="#ListingMenuSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(ListingMenu)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/listing-option.schema.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ListingOptionGroupSchema"></a>
+                    <span class="name">
+                        <span ><b>ListingOptionGroupSchema</b></span>
+                        <a href="#ListingOptionGroupSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(ListingOptionGroup)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/listings-service/src/__mocks__/listings.service.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ListingsService"></a>
+                    <span class="name">
+                        <span ><b>ListingsService</b></span>
+                        <a href="#ListingsService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>jest.fn().mockReturnValue({
+  createListingMenu: jest.fn().mockResolvedValue(resStub()),
+  getAllListingMenu: jest.fn().mockResolvedValue([ListingMenuStub()]),
+  getSingleListingMenu: jest.fn().mockResolvedValue(ListingMenuStub()),
+  createListingCategory: jest.fn().mockResolvedValue(resStub()),
+  getSingleListingCat: jest.fn().mockResolvedValue(ListingCategoryStub()),
+  getAllCatVendor: jest.fn().mockResolvedValue([ListingCategoryStub()]),
+  updateListingCat: jest.fn().mockResolvedValue(resStub()),
+  createListingOptionGroup: jest.fn().mockResolvedValue(resStub()),
+  getSingleListingOption: jest.fn().mockResolvedValue(ListingOptionStub()),
+  updateListingOption: jest.fn().mockResolvedValue(resStub()),
+  getAllListingOptionsVendor: jest.fn().mockResolvedValue([ListingOptionStub()]),
+  updateListingMenu: jest.fn().mockResolvedValue(resStub())
+})</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/users-service/src/__mocks__/users-service.service.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ListingsService"></a>
+                    <span class="name">
+                        <span ><b>ListingsService</b></span>
+                        <a href="#ListingsService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>jest.fn().mockReturnValue({
+  register: jest.fn().mockResolvedValue(resStub()),
+  updateUserProfile: jest.fn().mockResolvedValue(resStub()),
+  getUser: jest.fn().mockResolvedValue(UserProfileStub()),
+  validateUser: jest.fn().mockResolvedValue(UserProfileStub()),
+  updateUserStatus: jest.fn().mockResolvedValue(resStub()),
+  getUserWithPhone: jest.fn().mockResolvedValue(UserProfileStub()),
+  deleteUserProfile: jest.fn().mockResolvedValue(resStub())
+})</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/logger/logger.option.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logLevels"></a>
+                    <span class="name">
+                        <span ><b>logLevels</b></span>
+                        <a href="#logLevels"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  fatal: 0,
+  error: 1,
+  warn: 2,
+  info: 3,
+  debug: 4,
+  trace: 5
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/order.schema.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="OrderSchema"></a>
+                    <span class="name">
+                        <span ><b>OrderSchema</b></span>
+                        <a href="#OrderSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(Order)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/notification-service/src/templates/OrderStatusMessage.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="OrderStatusMessage"></a>
+                    <span class="name">
+                        <span ><b>OrderStatusMessage</b></span>
+                        <a href="#OrderStatusMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Order.html" target="_self" >Record&lt;OrderStatus, string&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  ORDER_PLACED: () &#x3D;&gt; {
+    return &#x27;Order Processed: Dear customer, your order has been placed successfully. You can use the mobile app to track your order live. Thank you for using EatLater&#x27;
+  },
+  COLLECTED_FROM_VENDOR: () &#x3D;&gt; {
+    return &#x27;&#x27;
+  },
+  OUT_FOR_DELIVERY: () &#x3D;&gt; {
+    return &#x27;Order update: Your will be delivered in one minute. You need your phone with you to be able to collect your order. Thank you&#x27;
+  },
+  DELIVERED_TO_CUSTOMER: () &#x3D;&gt; {
+    return &#x27;Order delivered: Hurray! Your food has been delivered. If you enjoy your meal, Do not forget to leave a review. Thanks for using EatLater &#x27;
+  },
+  ORDER_ACCEPTED: () &#x3D;&gt; {
+    return &#x27;Great news! Your order has been accepted by the vendor! Track your order live on the EatLater app for a seamless experience. Thank you for choosing EatLater! 🚀&#x27;
+  }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/utils/random.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RandomGen"></a>
+                    <span class="name">
+                        <span ><b>RandomGen</b></span>
+                        <a href="#RandomGen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  genRandomNum: (rounds: number &#x3D; 9, length: number &#x3D; 7): number &#x3D;&gt; {
+    const gen: number[] &#x3D; []
+    for (let i &#x3D; 0; i &lt; length; i++) {
+      gen.push(Math.floor(Math.random() * rounds))
+    }
+    const rando &#x3D; gen.join(&#x27;&#x27;)
+    return Number(rando)
+  },
+  genRandomString: (rounds: number &#x3D; 100, length: number &#x3D; 7): string &#x3D;&gt; {
+    const gen: number[] &#x3D; []
+    for (let i &#x3D; 0; i &lt; length; i++) {
+      gen.push(Math.floor(Math.random() * rounds))
+    }
+    return gen.join(&#x27;&#x27;)
+  }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>packages/eatlater-types/libs/utils/random.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RandomGen"></a>
+                    <span class="name">
+                        <span ><b>RandomGen</b></span>
+                        <a href="#RandomGen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  genRandomNum: (rounds: number &#x3D; 9, length: number &#x3D; 7): number &#x3D;&gt; {
+    const gen: number[] &#x3D; []
+    for (let i &#x3D; 0; i &lt; length; i++) {
+      gen.push(Math.floor(Math.random() * rounds))
+    }
+    const rando &#x3D; gen.join(&#x27;&#x27;)
+    return Number(rando)
+  },
+  genRandomString: (rounds: number &#x3D; 100, length: number &#x3D; 7): string &#x3D;&gt; {
+    const gen: number[] &#x3D; []
+    for (let i &#x3D; 0; i &lt; length; i++) {
+      gen.push(Math.floor(Math.random() * rounds))
+    }
+    return gen.join(&#x27;&#x27;)
+  }
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/reviews.schema.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ReviewSchema"></a>
+                    <span class="name">
+                        <span ><b>ReviewSchema</b></span>
+                        <a href="#ReviewSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(Review)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/users.schema.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UserSchema"></a>
+                    <span class="name">
+                        <span ><b>UserSchema</b></span>
+                        <a href="#UserSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(User)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/vendor-payout.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VendorPayoutSchema"></a>
+                    <span class="name">
+                        <span ><b>VendorPayoutSchema</b></span>
+                        <a href="#VendorPayoutSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(VendorPayout)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/vendor.schema.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VendorSchema"></a>
+                    <span class="name">
+                        <span ><b>VendorSchema</b></span>
+                        <a href="#VendorSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(Vendor)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/vendor-settings.schema.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VendorSettingsSchema"></a>
+                    <span class="name">
+                        <span ><b>VendorSettingsSchema</b></span>
+                        <a href="#VendorSettingsSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(VendorSettings)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>apps/vendors-service/src/__mocks__/vendors.service.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VendorsService"></a>
+                    <span class="name">
+                        <span ><b>VendorsService</b></span>
+                        <a href="#VendorsService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>jest.fn().mockReturnValue({
+  register: jest.fn().mockResolvedValue(resStub()),
+  validateVendor: jest.fn().mockResolvedValue(VendorStub()),
+  updateVendorStatus: jest.fn().mockResolvedValue(resStub()),
+  getVendor: jest.fn().mockResolvedValue(VendorStub()),
+  updateVendorProfile: jest.fn().mockResolvedValue(resStub()),
+  deleteVendorProfile: jest.fn().mockResolvedValue(resStub()),
+  getAllVendors: jest.fn().mockResolvedValue([VendorStub()]),
+  getVendorSettings: jest.fn().mockResolvedValue(VendorSettingStub()),
+  getAllVendorsUser: jest.fn().mockResolvedValue([VendorStub()]),
+  updateSettings: jest.fn().mockResolvedValue(resStub()),
+  createVendorSettings: jest.fn().mockResolvedValue(resStub()),
+  updateVendorLogo: jest.fn()
+})</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>libs/common/src/database/schemas/user-wallet.schema.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VendorWalletSchema"></a>
+                    <span class="name">
+                        <span ><b>VendorWalletSchema</b></span>
+                        <a href="#VendorWalletSchema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>SchemaFactory.createForClass(UserWallet)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
