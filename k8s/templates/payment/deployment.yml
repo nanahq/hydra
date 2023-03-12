@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users
+  name: payment
 spec:
   replicas: 1
   selector:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: payment
-          image: imagynetech/eatlater-payment-service1.13.1
+          image: imagynetech/eatlater-payment-service:1.13.1
           env:
             - name: RMQ_USERS_QUEUE
               value: USERS
