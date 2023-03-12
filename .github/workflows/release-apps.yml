@@ -30,7 +30,7 @@ jobs:
           api-gateway,
           vendor-gateway,
           orders-service,
-          review-service,
+          reviews-service,
           payment-service
         ]
     steps:
