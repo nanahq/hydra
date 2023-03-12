@@ -9,7 +9,8 @@ import {
   Put,
   UploadedFile,
   UseGuards,
-  UseInterceptors
+  UseInterceptors,
+  Logger
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -28,7 +29,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from '../../../admin-gateway/src/module.api/current-user.decorator'
 import {
   CreateListingCategoryDto,
-  CreateListingMenuDto,
   CreateOptionGroupDto,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
@@ -36,17 +36,14 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
 import { GoogleFileService } from '../google-file.service'
-import { Logger } from 'winston'
-import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston'
 
 @Controller('listing')
 export class ListingsController {
+  private readonly logger = new Logger(ListingsController.name)
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy,
-    private readonly googleService: GoogleFileService,
-    @Inject(WINSTON_MODULE_NEST_PROVIDER)
-    private readonly logger: Logger
+    private readonly googleService: GoogleFileService
   ) {}
 
   @Get('menus')
@@ -80,7 +77,7 @@ export class ListingsController {
     })
   )
   async createListingMenu (
-    @Body() data: CreateListingMenuDto,
+    @Body() data: any,
       @CurrentUser() { _id }: Vendor,
       @UploadedFile() file: Express.Multer.File
   ): Promise<any> {
@@ -95,7 +92,7 @@ export class ListingsController {
         optionGroups: data.optionGroups.split(',')
       }
     }
-    this.logger.debug('Creating new listing menu')
+    this.logger.log('Creating new listing menu')
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.CREATE_LISTING_MENU, { ...payload })

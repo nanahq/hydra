@@ -8,7 +8,7 @@ async function bootstrap (): Promise<void> {
   const rmq = app.get<RmqService>(RmqService)
 
   app.connectMicroservice<RmqOptions>(
-    rmq.getOption(QUEUE_SERVICE.REVIEWS_SERVICE)
+    rmq.getOption(QUEUE_SERVICE.REVIEW_SERVICE)
   )
 
   await app.startAllMicroservices()

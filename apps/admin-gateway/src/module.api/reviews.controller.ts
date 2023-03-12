@@ -22,7 +22,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 @Controller('review')
 export class ReviewsController {
   constructor (
-    @Inject(QUEUE_SERVICE.REVIEWS_SERVICE)
+    @Inject(QUEUE_SERVICE.REVIEW_SERVICE)
     private readonly reviewsClient: ClientProxy
   ) {}
 

@@ -26,8 +26,6 @@ import { ListingsController } from './module.api/listings.controller'
 import { OrdersController } from './module.api/orders.controller'
 import { ReviewController } from './module.api/review.controller'
 import { GoogleFileService } from './google-file.service'
-import { LoggerConfig } from '@app/common/logger/logger.option'
-import { WinstonModule } from 'nest-winston'
 import { WalletController } from './module.api/wallet.controller'
 
 @Module({})
@@ -68,7 +66,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.REVIEWS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
 
         ThrottlerModule.forRootAsync({
@@ -77,8 +75,7 @@ export class AppModule implements NestModule {
             limit: 10
           })
         }),
-        AppModule,
-        WinstonModule.forRoot((new LoggerConfig()).console())
+        AppModule
       ],
       controllers: [
         VendorController,

@@ -78,13 +78,16 @@ export class ReviewsService {
     const vendorReviews = await this.reviewRepository.find({ vendorId }) as Review[]
 
     let aggregateRating: number = 0
+
     let riskFactor: 'HIGH' | 'LOW' | 'MEDIUM' = 'MEDIUM'
-    for (const review of vendorReviews) {
-      aggregateRating += review.reviewStars
-    }
-    aggregateRating = aggregateRating / vendorReviews.length
 
     if (vendorReviews.length >= 5) {
+      for (const review of vendorReviews) {
+        aggregateRating += review.reviewStars
+      }
+
+      aggregateRating = aggregateRating / vendorReviews.length
+
       if (aggregateRating >= 4) {
         riskFactor = 'LOW'
       } else if (aggregateRating < 4 && aggregateRating > 2.5) {

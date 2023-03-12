@@ -25,7 +25,7 @@ import { ReviewDto } from '@app/common/database/dto/review.dto'
 @Controller('review')
 export class ReviewController {
   constructor (
-    @Inject(QUEUE_SERVICE.REVIEWS_SERVICE)
+    @Inject(QUEUE_SERVICE.REVIEW_SERVICE)
     private readonly reviewClient: ClientProxy
   ) {}
 

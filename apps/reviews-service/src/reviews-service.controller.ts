@@ -127,6 +127,7 @@ export class ReviewsServiceController {
     @Payload() { vendorId }: { vendorId: string },
       @Ctx() context: RmqContext
   ): Promise<VendorReviewOverview> {
+    console.log('Hello world')
     try {
       return await this.reviewService.getVendorReviewOverview(vendorId)
     } catch (error) {
