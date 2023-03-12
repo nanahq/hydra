@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  APPS: 'notification-service,vendors-service,users-service,admin-service,listings-service,admin-gateway,api-gateway,vendor-gateway,orders-service,review-service, payment-service'
+  APPS: 'notification-service,vendors-service,users-service,admin-service,listings-service,admin-gateway,api-gateway,vendor-gateway,orders-service,reviews-service, payment-service'
 
 jobs:
   build:
