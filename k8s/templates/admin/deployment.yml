@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
         - name: admin
-          image: imagynetech/eatlater-admin-service:latest
+          image: imagynetech/eatlater-admin-service1.13.1
           env:
             - name: RMQ_URI
               value: amqp://user:user@eatlater-rabbitmq:5672
             - name: JWT_EXPIRATION
-              value: '360000'
+              value: 500000
             - name: JWT_SECRET
               value: 64a5b5676eb9329c8978d3367fd7e1df5404ff886d16c0bc03edf7cc
             - name: RMQ_ADMIN_API_QUEUE

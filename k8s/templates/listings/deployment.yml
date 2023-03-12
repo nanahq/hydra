@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: listings
-          image: imagynetech/eatlater-listings-service:latest
+          image: imagynetech/eatlater-listings-service1.13.1
           env:
             - name: RMQ_URI
               value: amqp://user:user@eatlater-rabbitmq:5672

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: notification
-          image: imagynetech/eatlater-notification-service:latest
+          image: imagynetech/eatlater-notification-service1.13.1
           env:
             - name: RMQ_URI
               value: amqp://user:user@eatlater-rabbitmq:5672
@@ -34,5 +34,9 @@ spec:
               value: VA42a1682c2eb59aa5af5ee339dad5eb8c
             - name: TWILIO_PHONE
               value: EatLater
+            - name: RMQ_PAYMENT_QUEUE
+              value: PAYMENT
+            - name: SEND_IN_BLUE_API
+              value: keysib-7867d5608c468224a263b3f4adca73dbadf869210d20c0d6a3c3d40bc3d643fd-4wtgmNhcgD1JPhKU
       imagePullSecrets:
         - name: regcred

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: vendor-gateway
-          image: imagynetech/eatlater-vendor-gateway:latest
+          image: imagynetech/eatlater-vendor-gateway1.13.1
           ports:
             - containerPort: 3001
           env:
@@ -23,7 +23,7 @@ spec:
             - name: RMQ_URI
               value: amqp://user:user@eatlater-rabbitmq:5672
             - name: JWT_EXPIRATION
-              value: '360000'
+              value: '500000'
             - name: JWT_SECRET
               value: 64a5b5676eb9329c8978d3367fd7e1df5404ff886d16c0bc03edf7cc
             - name: RMQ_VENDORS_API_QUEUE
@@ -34,6 +34,10 @@ spec:
               value: LISTINGS
             - name: RMQ_ORDERS_QUEUE
               value: ORDERS
+            - name: RMQ_REVIEW_QUEUE
+              value: REVIEW
+            - name: RMQ_PAYMENT_QUEUE
+              value: PAYMENT
 
       imagePullSecrets:
         - name: regcred
