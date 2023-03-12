@@ -9,7 +9,8 @@ import {
   Put,
   UploadedFile,
   UseGuards,
-  UseInterceptors
+  UseInterceptors,
+  Logger
 } from '@nestjs/common'
 
 import { catchError, lastValueFrom } from 'rxjs'
@@ -27,18 +28,15 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
-import { Logger } from 'winston'
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston'
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
 import { GoogleFileService } from '../google-file.service'
 @Controller('vendor')
 export class VendorController {
+  private readonly logger = new Logger(VendorController.name)
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorClient: ClientProxy,
-    @Inject(WINSTON_MODULE_PROVIDER)
-    private readonly logger: Logger,
     private readonly googleService: GoogleFileService
 
   ) {}
@@ -86,6 +84,12 @@ export class VendorController {
     return photo
   }
 
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: multer.memoryStorage()
+    })
+  )
   @Put('image')
   async updateVendorRestaurantImage (
     @CurrentUser() vendor: Vendor,

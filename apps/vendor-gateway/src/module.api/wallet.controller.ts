@@ -29,6 +29,7 @@ export class WalletController {
   @UseGuards(JwtAuthGuard)
   @Get('overview')
   async getPayoutOverview (@CurrentUser() vendor: Vendor): Promise<VendorPayout[]> {
+    this.logger.log(`Fetching wallet overview for ${vendor._id as unknown as string}`)
     return await lastValueFrom<VendorPayout[]>(
       this.paymentClient.send(QUEUE_MESSAGE.WALLET_PAYOUT_OVERVIEW, { vendorId: vendor._id })
         .pipe(
