@@ -20,7 +20,7 @@ export class AuthController {
   }
 
   @Get('logout')
-  async logout (@Res() response: Response): Promise<void> {
+  async logout (@Res({passthrough: true}) response: Response): Promise<void> {
     return this.authService.logout(response)
   }
 }
