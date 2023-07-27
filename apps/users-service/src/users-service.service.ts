@@ -23,7 +23,11 @@ export class UsersService {
     phone,
     password
   }: registerUserRequest): Promise<ResponseWithStatus> {
-    await this.checkExistingUser(phone) // Gate to check if phone has already been registered
+    const user = await this.checkExistingUser(phone) // Gate to check if phone has already been registered
+
+    if (user?.isDeleted) {
+      return { status: 1 }
+    }
 
     const payload: Partial<User> = {
       phone,
@@ -101,7 +105,7 @@ export class UsersService {
 
   async getUser ({ userId }: TokenPayload): Promise<User> {
     try {
-      const user = await this.usersRepository.findOne({ _id: userId })
+      const user = await this.usersRepository.findOne({ _id: userId, isDeleted: false })
       if (user === null) {
         throw new Error()
       }
@@ -121,7 +125,7 @@ export class UsersService {
   }
 
   public async getUserWithPhone (phone: string): Promise<User> {
-    const _user = await this.usersRepository.findOne({ phone })
+    const _user = await this.usersRepository.findOne({ phone, isDeleted: false })
 
     if (_user === null) {
       throw new FitRpcException(
@@ -140,13 +144,14 @@ export class UsersService {
     return { status: 1 }
   }
 
-  private async checkExistingUser (phone: string): Promise<void> {
+  private async checkExistingUser (phone: string): Promise<User> {
     const user = await this.usersRepository.findOne({ phone })
-    if (user !== null) {
+    if (user !== null && !user.isDeleted) {
       throw new FitRpcException(
         'Phone Number is  already registered.',
         HttpStatus.CONFLICT
       )
     }
+    return user as User
   }
 }
