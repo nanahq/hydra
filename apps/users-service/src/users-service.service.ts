@@ -23,9 +23,9 @@ export class UsersService {
     phone,
     password
   }: registerUserRequest): Promise<ResponseWithStatus> {
-   const user =  await this.checkExistingUser(phone) // Gate to check if phone has already been registered
+    const user = await this.checkExistingUser(phone) // Gate to check if phone has already been registered
 
-    if (user.isDeleted) {
+    if (user?.isDeleted) {
       return { status: 1 }
     }
 
@@ -152,6 +152,6 @@ export class UsersService {
         HttpStatus.CONFLICT
       )
     }
-    return user
+    return user as User
   }
 }
