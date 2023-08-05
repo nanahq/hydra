@@ -80,7 +80,7 @@ jobs:
       - uses: actions/checkout@96f53100ba2a5449eb71d2e6604bbcd94b9449b5
 
       - name: Create Report
-        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
+        uses: actions/github-script@6f00a0b667f9463337970371ccda9072ee86fb27
         id: report
         with:
           script: return require('./.github/scripts/release-report.js')({ context })
