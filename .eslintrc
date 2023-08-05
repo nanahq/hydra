@@ -27,6 +27,7 @@
     ],
     "new-cap": "off",
     "indent": "off",
+    "@typescript-eslint/return-await": "off",
     "@typescript-eslint/indent": [
       "error",
       2,
