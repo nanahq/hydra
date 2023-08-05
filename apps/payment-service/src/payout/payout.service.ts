@@ -131,7 +131,7 @@ export class VendorPayoutService {
     orders.forEach((order) => {
       const vendorId = order.vendor._id.toString()
       const earnings = vendorEarnings.get(vendorId) ?? 0
-      vendorEarnings.set(vendorId, earnings + order.orderBreakDown.orderCost)
+      vendorEarnings.set(vendorId, earnings + Number(order.orderBreakDown.orderCost))
     })
 
     const payoutsToMake: Array<Partial<VendorPayout>> = []
