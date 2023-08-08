@@ -1,27 +1,27 @@
-FROM node:19.6-alpine3.17 As development
-
+# Development stage
+FROM node:alpine AS development
 
 WORKDIR /usr/src/app
-RUN apk add --no-cache --virtual builds-deps build-base python3
 
 COPY package*.json ./
-RUN npm install
-
+RUN apk add --virtual builds-deps build-base python3
+RUN yarn install
 
 COPY . .
 
-RUN npm run build orders-service
+RUN yarn build orders-service
 
-FROM node:19.6-alpine3.17 as production
+# Production stage
+FROM node:alpine AS production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app
-RUN apk add --no-cache --virtual builds-deps build-base python3
 
 COPY package*.json ./
-RUN npm ci
+
+RUN yarn install --frozen-lockfile
 
 COPY . .
 

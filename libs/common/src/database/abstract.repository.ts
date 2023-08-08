@@ -89,7 +89,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   async insertMany (
     documents: Array<Omit<TDocument, '_id'>> | Array<Partial<TDocument>>,
     options?: SaveOptions
-  ): Promise<TDocument[]> {
+  ): Promise<any> {
     return await this.model.insertMany(documents)
   }
 
