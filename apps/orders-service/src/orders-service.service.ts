@@ -46,22 +46,22 @@ export class OrdersServiceService {
         HttpStatus.BAD_REQUEST
       )
     }
-
-    try {
-      // Send order confirmation message
-      await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
-          phoneNumber: _newOrder.primaryContact,
-          status: OrderStatus.PROCESSED
-        })
-      )
-
-      await lastValueFrom(
-        this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: _newOrder._id, userId })
-      )
-    } catch (error) {
-      throw new RpcException(error)
-    }
+    //
+    // try {
+    //   // Send order confirmation message
+    //   await lastValueFrom(
+    //     this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
+    //       phoneNumber: _newOrder.primaryContact,
+    //       status: OrderStatus.PROCESSED
+    //     })
+    //   )
+    //
+    //   await lastValueFrom(
+    //     this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: _newOrder._id, userId })
+    //   )
+    // } catch (error) {
+    //   throw new RpcException(error)
+    // }
 
     return { status: 1 }
   }

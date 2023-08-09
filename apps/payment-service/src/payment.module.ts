@@ -5,9 +5,25 @@ import { VendorPayoutController } from './payout/payout.controller'
 import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
 import { MongooseModule } from '@nestjs/mongoose'
-import { QUEUE_SERVICE, RmqModule, Vendor, VendorPayout, VendorPayoutSchema, VendorSchema } from '@app/common'
+import {
+  Order,
+  OrderSchema,
+  QUEUE_SERVICE,
+  RmqModule,
+  User,
+  UserSchema,
+  Vendor,
+  VendorPayout,
+  VendorPayoutSchema,
+  VendorSchema,
+  Payment, PaymentHistorySchema
+} from '@app/common'
 import { DatabaseModule } from '@app/common/database/database.module'
 import { ScheduleModule } from '@nestjs/schedule'
+import { PaymentRepository } from './charge/charge.repository'
+import { PaymentService } from './charge/charge.service'
+import { HttpModule } from '@nestjs/axios'
+import { FlutterwaveService } from './providers/flutterwave'
 
 @Module({
   imports: [
@@ -24,13 +40,17 @@ import { ScheduleModule } from '@nestjs/schedule'
     }),
     MongooseModule.forFeature([{ name: VendorPayout.name, schema: VendorPayoutSchema }]),
     MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }]),
+    MongooseModule.forFeature([{ name: Payment.name, schema: PaymentHistorySchema }]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.ADMIN_API }),
-    DatabaseModule
+    DatabaseModule,
+    HttpModule
   ],
   controllers: [VendorPayoutController],
-  providers: [VendorPayoutService, VendorPayoutRepository]
+  providers: [VendorPayoutService, VendorPayoutRepository, PaymentRepository, PaymentService, FlutterwaveService]
 })
 export class PaymentServiceModule {}

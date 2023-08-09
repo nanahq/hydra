@@ -1,8 +1,6 @@
-import { AdminLevel } from '@app/common'
-import { IsEnum, IsNotEmpty } from 'class-validator'
+import { IsNotEmpty } from 'class-validator'
 
 export class UpdateAdminLevelRequestDto {
-  @IsEnum(AdminLevel)
   @IsNotEmpty()
     level: any
 

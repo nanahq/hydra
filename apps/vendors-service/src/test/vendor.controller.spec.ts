@@ -149,7 +149,7 @@ describe('vendorsController', () => {
         token = {
           userId: VendorStub()._id as any
         }
-        response = await vendorsController.getVendorById(token, context)
+        response = await vendorsController.getVendorById(token as any, context)
       })
       test('then it should call validateVendor', () => {
         expect(vendorsService.getVendor).toHaveBeenCalledWith(token)
@@ -161,7 +161,7 @@ describe('vendorsController', () => {
 
       test('then it should fail when called with a wrong ID', async () => {
         const fakeId: any = 'FAKE_ID'
-        response = await vendorsController.getVendorById({ userId: fakeId }, context)
+        response = await vendorsController.getVendorById({ userId: fakeId } as any, context)
         expect(response._id === fakeId).toBeFalsy()
       })
     })

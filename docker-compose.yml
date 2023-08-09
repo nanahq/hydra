@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: ./apps/api-gateway/Dockerfile
       target: development
-    command: 'npm run start:dev api-gateway'
+    command: 'yarn start:dev api-gateway'
     env_file:
       - ./apps/api-gateway/.env
     depends_on:
@@ -22,7 +22,7 @@ services:
       context: .
       dockerfile: ./apps/vendor-gateway/Dockerfile
       target: development
-    command: 'npm run start:dev vendor-gateway'
+    command: 'yarn start:dev vendor-gateway'
     env_file:
       - ./apps/vendor-gateway/.env
     depends_on:
@@ -40,7 +40,7 @@ services:
       context: .
       dockerfile: ./apps/users-service/Dockerfile
       target: development
-    command: 'npm run start:dev users-service'
+    command: 'yarn start:dev users-service'
     env_file:
       - ./apps/users-service/.env
     depends_on:
@@ -60,7 +60,7 @@ services:
       context: .
       dockerfile: ./apps/vendors-service/Dockerfile
       target: development
-    command: 'npm run start:dev vendors-service'
+    command: 'yarn start:dev vendors-service'
     env_file:
       - ./apps/vendors-service/.env
     depends_on:
@@ -79,7 +79,7 @@ services:
       context: .
       dockerfile: ./apps/notification-service/Dockerfile
       target: development
-    command: 'npm run start:dev notification-service'
+    command: 'yarn start:dev notification-service'
     env_file:
       - ./apps/notification-service/.env
     depends_on:
@@ -95,7 +95,7 @@ services:
       context: .
       dockerfile: apps/orders-service/Dockerfile
       target: development
-    command: 'npm run start:dev orders-service'
+    command: 'yarn start:dev orders-service'
     env_file:
       - apps/orders-service/.env
     depends_on:
@@ -114,7 +114,7 @@ services:
       context: .
       dockerfile: apps/listings-service/Dockerfile
       target: development
-    command: 'npm run start:dev listings-service'
+    command: 'yarn start:dev listings-service'
     env_file:
       - apps/listings-service/.env
     depends_on:
@@ -135,7 +135,7 @@ services:
       context: .
       dockerfile: apps/payment-service/Dockerfile
       target: development
-    command: 'npm run start:dev payment-service'
+    command: 'yarn start:dev payment-service'
     env_file:
       - apps/payment-service/.env
     depends_on:
@@ -155,7 +155,7 @@ services:
       context: .
       dockerfile: apps/reviews-service/Dockerfile
       target: development
-    command: 'npm run start:dev reviews-service'
+    command: 'yarn start:dev reviews-service'
     env_file:
       - apps/reviews-service/.env
     depends_on:
