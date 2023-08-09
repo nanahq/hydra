@@ -201,6 +201,8 @@ services:
           - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
           - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
           - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      networks:
+        - nana-app
   mongodb-arbiter:
       image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
       depends_on:
@@ -211,6 +213,8 @@ services:
           - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
           - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
           - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      networks:
+        - nana-app
 volumes:
   queue_data:
     driver: local
