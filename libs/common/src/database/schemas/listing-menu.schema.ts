@@ -4,8 +4,11 @@ import { AbstractDocument } from '@app/common'
 
 @Schema({ versionKey: false })
 export class ListingMenu extends AbstractDocument {
-  @Prop(Types.ObjectId)
-    vendorId: string
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'Vendor'
+  })
+    vendor: string
 
   @Prop(String)
     name: string

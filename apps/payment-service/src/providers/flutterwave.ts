@@ -1,6 +1,8 @@
 import { ConfigService } from '@nestjs/config'
-import Flutterwave from 'flutterwave-node-v3'
+import * as  Flutterwave from 'flutterwave-node-v3'
 import { BankTransferCharge, isProductionEnv } from '@app/common'
+import { Injectable } from '@nestjs/common'
+@Injectable()
 export class FlutterwaveService {
   private readonly flw: any
   constructor (

@@ -35,7 +35,7 @@ export class OrdersServiceService {
       ...data,
       user: userId,
       refId: RandomGen.genRandomNum(),
-      orderStatus: OrderStatus.PROCESSED
+      orderStatus: OrderStatus.PAYMENT_PENDING
     }
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
@@ -46,8 +46,9 @@ export class OrdersServiceService {
         HttpStatus.BAD_REQUEST
       )
     }
-    //
+
     // try {
+    //
     //   // Send order confirmation message
     //   await lastValueFrom(
     //     this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {

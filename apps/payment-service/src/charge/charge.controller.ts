@@ -1,15 +1,16 @@
 import {
   BankTransferAccountDetails,
   BankTransferRequest,
-  CreditChargeRequest,
+  CreditChargeRequest, ExceptionFilterRpc,
   QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
 } from '@app/common'
-import { Controller } from '@nestjs/common'
+import { Controller, UseFilters } from '@nestjs/common'
 import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 import { PaymentService } from './charge.service'
 
+@UseFilters(new ExceptionFilterRpc())
 @Controller('charge')
 export class PaymentController {
   constructor (
@@ -36,7 +37,7 @@ export class PaymentController {
   async chargeWithBankTransfer (
       @Payload() payload: BankTransferRequest,
       @Ctx() context: RmqContext
-  ): Promise<BankTransferAccountDetails> {
+  ): Promise<any> {
     try {
       return await this.paymentService.chargeWithBankTransfer(payload)
     } catch (error) {

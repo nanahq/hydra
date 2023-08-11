@@ -1,4 +1,4 @@
-import { Controller, UseFilters } from '@nestjs/common'
+import { Controller, Logger, UseFilters } from '@nestjs/common'
 import {
   Ctx,
   MessagePattern,
@@ -30,6 +30,7 @@ import {
 export class ListingsController {
   constructor (
     private readonly listingService: ListingsService,
+
     private readonly rmqService: RmqService
   ) {}
 

@@ -47,4 +47,6 @@ export interface BankTransferAccountDetails {
   transfer_account: string
   transfer_bank: string
   transfer_amount: number
+  transfer_reference: string,
+  account_expiration: number,
 }

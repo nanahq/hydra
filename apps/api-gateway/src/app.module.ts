@@ -26,6 +26,7 @@ import { VendorsController } from './module.api/vendors.controller'
 import { ListingsController } from './module.api/listing.controller'
 import { OrderController } from './module.api/order.controller'
 import { ReviewController } from './module.api/review.controller'
+import { PaymentController } from './module.api/payment.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -68,6 +69,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
@@ -82,7 +84,8 @@ export class AppModule implements NestModule {
         VendorsController,
         ListingsController,
         OrderController,
-        ReviewController
+        ReviewController,
+        PaymentController
       ],
       providers: [
         AuthService,

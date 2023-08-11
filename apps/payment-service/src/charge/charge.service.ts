@@ -54,10 +54,29 @@ export class PaymentService {
         email: order.user.email,
         currency: 'NGN'
       }
+      const response  = await this.flutterwave.bankTransfer(chargePayload)
 
-      return await this.flutterwave.bankTransfer(chargePayload)
+      if(response.status === 'success') {
+        const a =  bankchargeMapper(response.meta.authorization)
+        return a
+      } else {
+        throw  new Error('Failed')
+      }
+
     } catch (e) {
+      this.logger.log('[PIM] Failed to create bank transfer charged -', e)
       throw new FitRpcException('Can not place charge at this moment. Try again later', HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+}
+
+
+function bankchargeMapper ( authorization : any): BankTransferAccountDetails {
+  return {
+    transfer_amount: authorization.transfer_amount,
+    transfer_bank: authorization.transfer_bank,
+    account_expiration: authorization.account_expiration,
+    transfer_reference: authorization.transfer_reference,
+    transfer_account: authorization.transfer_account
   }
 }

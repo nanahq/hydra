@@ -39,11 +39,11 @@ export class OrdersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDORS_ORDERS)
   async getVendorsOrders (
-    @Payload() { userId }: ServicePayload<null>,
+    @Payload() { data: vendorId }: ServicePayload<string>,
       @Ctx() context: RmqContext
   ): Promise<Order[]> {
     try {
-      return await this.ordersServiceService.getAllVendorOrders(userId)
+      return await this.ordersServiceService.getAllVendorOrders(vendorId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common'
 import { VendorPayoutService } from './payout/payout.service'
 import { VendorPayoutRepository } from './payout/payout.repository'
 import { VendorPayoutController } from './payout/payout.controller'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import * as Joi from 'joi'
 import { MongooseModule } from '@nestjs/mongoose'
 import {
@@ -24,6 +24,7 @@ import { PaymentRepository } from './charge/charge.repository'
 import { PaymentService } from './charge/charge.service'
 import { HttpModule } from '@nestjs/axios'
 import { FlutterwaveService } from './providers/flutterwave'
+import { PaymentController } from './charge/charge.controller'
 
 @Module({
   imports: [
@@ -46,11 +47,12 @@ import { FlutterwaveService } from './providers/flutterwave'
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.ADMIN_API }),
     DatabaseModule,
     HttpModule
   ],
-  controllers: [VendorPayoutController],
-  providers: [VendorPayoutService, VendorPayoutRepository, PaymentRepository, PaymentService, FlutterwaveService]
+  controllers: [VendorPayoutController, PaymentController],
+  providers: [VendorPayoutService, VendorPayoutRepository, ConfigService, PaymentRepository, PaymentService, FlutterwaveService]
 })
 export class PaymentServiceModule {}
