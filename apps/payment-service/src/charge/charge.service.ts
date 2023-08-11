@@ -1,14 +1,14 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import {
-  BankTransferAccountDetails, BankTransferCharge,
+  BankTransferAccountDetails,
+  BaseChargeRequest,
   BankTransferRequest,
-  CreditChargeRequest,
   FitRpcException,
   OrderI,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
-   ServicePayload
+  ServicePayload, UssdRequest, UssdCharge
 } from '@app/common'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -30,8 +30,42 @@ export class PaymentService {
     private readonly flutterwave: FlutterwaveService
   ) {}
 
-  async chargeWithCreditCard (payload: CreditChargeRequest): Promise<any> {
-    return 'a'
+  async chargeWithUssd (payload: UssdRequest): Promise<any> {
+    try {
+      const orderQueryPayload: ServicePayload<{ orderId: string }> = {
+        userId: payload.userId,
+        data: { orderId: payload.orderId }
+      }
+      const order = await lastValueFrom<OrderI>(
+          this.ordersClient.send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, orderQueryPayload).pipe(
+              catchError((error) => {
+                throw new RpcException(error)
+              })
+          )
+      )
+
+      const chargePayload: UssdCharge = {
+        tx_ref: `NANA-${RandomGen.genRandomNum()}`,
+        amount: String(order.totalOrderValue),
+        email: order.user.email,
+        currency: 'NGN',
+        account_bank: payload.account_bank,
+        account_number: payload.account_number
+      }
+      const response  = await this.flutterwave.ussd(chargePayload)
+
+      if(response.status === 'success') {
+        return   {
+          code: response?.meta?.authorization?.note
+        }
+      } else {
+        throw new Error('Failed')
+      }
+
+    } catch (e) {
+      this.logger.error('[PIM] Failed to create ussd charge -', e)
+      throw new FitRpcException('Can not place charge at this moment. Try again later', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
   async chargeWithBankTransfer (payload: BankTransferRequest): Promise<BankTransferAccountDetails> {
@@ -48,7 +82,7 @@ export class PaymentService {
         )
       )
 
-      const chargePayload: BankTransferCharge = {
+      const chargePayload: BaseChargeRequest = {
         tx_ref: `NANA-${RandomGen.genRandomNum()}`,
         amount: String(order.totalOrderValue),
         email: order.user.email,
@@ -57,10 +91,9 @@ export class PaymentService {
       const response  = await this.flutterwave.bankTransfer(chargePayload)
 
       if(response.status === 'success') {
-        const a =  bankchargeMapper(response.meta.authorization)
-        return a
+        return   bankchargeMapper(response.meta.authorization)
       } else {
-        throw  new Error('Failed')
+        throw new Error('Failed')
       }
 
     } catch (e) {

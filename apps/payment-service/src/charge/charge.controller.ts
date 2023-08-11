@@ -1,10 +1,8 @@
 import {
-  BankTransferAccountDetails,
   BankTransferRequest,
-  CreditChargeRequest, ExceptionFilterRpc,
+  ExceptionFilterRpc,
   QUEUE_MESSAGE,
-  ResponseWithStatus,
-  RmqService,
+  RmqService, UssdRequest,
 } from '@app/common'
 import { Controller, UseFilters } from '@nestjs/common'
 import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
@@ -19,20 +17,6 @@ export class PaymentController {
 
   ) {}
 
-  @MessagePattern(QUEUE_MESSAGE.CHARGE_CREDIT_CARD)
-  async chargeWithCreditCard (
-    @Payload() payload: CreditChargeRequest,
-      @Ctx() context: RmqContext
-  ): Promise<void> {
-    try {
-      return await this.paymentService.chargeWithCreditCard(payload)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
-
   @MessagePattern(QUEUE_MESSAGE.CHARGE_BANK_TRANSFER)
   async chargeWithBankTransfer (
       @Payload() payload: BankTransferRequest,
@@ -41,6 +25,20 @@ export class PaymentController {
     try {
       return await this.paymentService.chargeWithBankTransfer(payload)
     } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.CHARGE_USSD)
+  async chargeWithUssd (
+      @Payload() payload: UssdRequest,
+      @Ctx() context: RmqContext
+  ): Promise<any> {
+    try {
+      return await this.paymentService.chargeWithUssd(payload)
+    } catch(error) {
       throw new RpcException(error)
     } finally {
       this.rmqService.ack(context)

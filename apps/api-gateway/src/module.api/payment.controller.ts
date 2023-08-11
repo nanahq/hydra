@@ -2,7 +2,7 @@ import { Body, Controller, HttpException, Inject, Post, UseGuards } from '@nestj
 import { ClientProxy } from '@nestjs/microservices'
 import { BankTransferAccountDetails, IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, User } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { ChargeWithBankTransferDto } from '@app/common/database/dto/payment.dto'
+import { ChargeWithBankTransferDto, ChargeWithUssdDto } from '@app/common/database/dto/payment.dto'
 import { catchError, lastValueFrom } from 'rxjs'
 import { CurrentUser } from './current-user.decorator'
 
@@ -22,6 +22,21 @@ export class PaymentController {
     ) {
         return await lastValueFrom<BankTransferAccountDetails>(
             this.paymentClient.send(QUEUE_MESSAGE.CHARGE_BANK_TRANSFER, {...data, userId: user._id}).pipe(
+                catchError((error: IRpcException) => {
+                    throw new HttpException(error.message, error.status)
+                })
+            )
+        )
+    }
+
+    @Post("charge/ussd")
+    @UseGuards(JwtAuthGuard)
+    async chargeWithUssd (
+        @Body() data: ChargeWithUssdDto,
+        @CurrentUser() user: User
+    ): Promise<{code: string}> {
+        return await lastValueFrom<{code: string}>(
+            this.paymentClient.send(QUEUE_MESSAGE.CHARGE_USSD, {...data, userId: user._id}).pipe(
                 catchError((error: IRpcException) => {
                     throw new HttpException(error.message, error.status)
                 })
