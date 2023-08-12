@@ -4,7 +4,7 @@ import {
   BankTransferRequest,
   BaseChargeRequest,
   FitRpcException,
-  OrderI,
+  OrderI, OrderStatus,
   Payment,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -18,7 +18,6 @@ import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { PaymentRepository } from './charge.repository'
 import { FlutterwaveService } from '../providers/flutterwave'
-import { OrderStatus } from '../../../../packages/eatlater-types/libs'
 
 @Injectable()
 export class PaymentService {
