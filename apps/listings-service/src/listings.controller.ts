@@ -1,4 +1,4 @@
-import { Controller, Logger, UseFilters } from '@nestjs/common'
+import { Controller, UseFilters } from '@nestjs/common'
 import {
   Ctx,
   MessagePattern,

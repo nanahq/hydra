@@ -71,22 +71,22 @@ export class ListingsController {
   // Listings Menu
   @UseGuards(JwtAuthGuard)
   @Post('menu')
-  // @UseInterceptors(
-  //   FileInterceptor('listingImage', {
-  //     storage: multer.memoryStorage()
-  //   })
-  // )
+  @UseInterceptors(
+    FileInterceptor('listingImage', {
+      storage: multer.memoryStorage()
+    })
+  )
   async createListingMenu (
     @Body() data: any,
       @CurrentUser() { _id }: Vendor,
-      // @UploadedFile() file: Express.Multer.File
+      @UploadedFile() file: Express.Multer.File
   ): Promise<any> {
-    // const photo = await this.googleService.saveToCloud(file)
+    const photo = await this.googleService.saveToCloud(file)
     const payload: ServicePayload<any> = {
       userId: _id as any,
       data: {
         ...data,
-        photo: "https://linkedin.com",
+        photo,
         isLive: booleanParser(data.isLive),
         isAvailable: booleanParser(data.isAvailable),
         optionGroups: data.optionGroups.split(',')

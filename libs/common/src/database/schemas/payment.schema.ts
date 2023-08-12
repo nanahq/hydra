@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument } from '../abstract.schema'
 import { Types } from 'mongoose'
-import { PaymentDetails } from '@app/common'
-
 @Schema({ versionKey: false, timestamps: true })
 export class Payment extends AbstractDocument {
   @Prop({
@@ -18,13 +16,13 @@ export class Payment extends AbstractDocument {
   public order: string
 
   @Prop(String)
-  type: PaymentDetails
+    type: string
 
   @Prop(String)
-  accountNumber: string
+    status: string
 
-  @Prop(Number)
-    chargedAmount: number
+  @Prop(String)
+    chargedAmount: string
 
   @Prop(Date)
     updatedAt: string
@@ -32,8 +30,11 @@ export class Payment extends AbstractDocument {
   @Prop(Date)
     createdAt: string
 
-  @Prop(Number)
-    refId: number
+  @Prop(String)
+    refId: string
+
+  @Prop(String)
+    paymentId: string
 }
 
 export const PaymentHistorySchema = SchemaFactory.createForClass(Payment)

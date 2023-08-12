@@ -11,7 +11,7 @@ OrderStatus,
 (...args: string[]) => string
 > = {
   ORDER_PLACED: () => {
-    return 'Order Processed: Dear customer, your order has been placed successfully. You can use the mobile app to track your order live. Thank you for using EatLater'
+    return 'Order Processed: Dear customer, your order has been placed successfully. You can use the mobile app to track your order live. Thank you for using Nana'
   },
   COLLECTED_FROM_VENDOR: () => {
     return ''

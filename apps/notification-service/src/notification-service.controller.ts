@@ -69,6 +69,20 @@ export class NotificationServiceController {
     }
   }
 
+  @EventPattern(QUEUE_MESSAGE.PROCESS_PAID_ORDER)
+  async processPaidOrder (
+    @Payload() data: OrderStatusUpdateDto,
+      @Ctx() context: RmqContext
+  ): Promise<any> {
+    try {
+      return await this.notificationServiceService.processPaidOrder(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @EventPattern(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER)
   async vendorAcceptOrder (
     @Payload() { phone }: { phone: string },

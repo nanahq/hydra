@@ -63,6 +63,23 @@ export class NotificationServiceService {
     }
   }
 
+  public async processPaidOrder ({
+    phoneNumber,
+    status
+  }: OrderStatusUpdateDto): Promise<void> {
+    const message = OrderStatusMessage[status]()
+    this.twilioService.client.messages
+      .create({
+        from: this.fromPhone,
+        body: message,
+        to: phoneNumber
+      })
+      .then((msg) => msg)
+      .catch((error) => {
+        throw new RpcException(error)
+      })
+  }
+
   async sendOrderStatusUpdate ({
     phoneNumber,
     status

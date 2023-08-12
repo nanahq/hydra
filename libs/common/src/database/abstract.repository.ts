@@ -99,6 +99,12 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     )
   }
 
+  async update (filterQuery: FilterQuery<TDocument>, update: Partial<TDocument>): Promise<any> {
+    return await new Promise((resolve) =>
+      resolve(this.model.updateOne(filterQuery, update))
+    )
+  }
+
   async delete (id: Types.ObjectId): Promise<any> {
     return await new Promise((resolve) =>
       resolve(this.model.findByIdAndDelete(id))

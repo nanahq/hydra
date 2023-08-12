@@ -2,10 +2,10 @@ import {
   BankTransferRequest,
   ExceptionFilterRpc,
   QUEUE_MESSAGE,
-  RmqService, UssdRequest,
+  RmqService, UssdRequest
 } from '@app/common'
 import { Controller, UseFilters } from '@nestjs/common'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import { Ctx, EventPattern, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 import { PaymentService } from './charge.service'
 
 @UseFilters(new ExceptionFilterRpc())
@@ -19,7 +19,7 @@ export class PaymentController {
 
   @MessagePattern(QUEUE_MESSAGE.CHARGE_BANK_TRANSFER)
   async chargeWithBankTransfer (
-      @Payload() payload: BankTransferRequest,
+    @Payload() payload: BankTransferRequest,
       @Ctx() context: RmqContext
   ): Promise<any> {
     try {
@@ -33,12 +33,26 @@ export class PaymentController {
 
   @MessagePattern(QUEUE_MESSAGE.CHARGE_USSD)
   async chargeWithUssd (
-      @Payload() payload: UssdRequest,
+    @Payload() payload: UssdRequest,
       @Ctx() context: RmqContext
   ): Promise<any> {
     try {
       return await this.paymentService.chargeWithUssd(payload)
-    } catch(error) {
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.VERIFY_PAYMENT)
+  async verifyPayment (
+    @Payload() { txId, refId }: { txId: string, refId: string },
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      await this.paymentService.verifyPayment(txId, refId)
+    } catch (error) {
       throw new RpcException(error)
     } finally {
       this.rmqService.ack(context)

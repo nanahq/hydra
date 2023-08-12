@@ -13,7 +13,7 @@ import {
   ServicePayload,
   QUEUE_MESSAGE,
   Order,
-  UpdateOrderStatusRequestDto
+  UpdateOrderStatusRequestDto, UpdateOrderStatusPaidRequestDto
 } from '@app/common'
 import { FilterQuery } from 'mongoose'
 @Controller('order')
@@ -58,6 +58,20 @@ export class OrdersServiceController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.ordersServiceService.updateStatus(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID)
+  async updateOrderStatusWhenPaid (
+    @Payload() { data }: ServicePayload<UpdateOrderStatusPaidRequestDto>,
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.ordersServiceService.updateStatusPaid(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

@@ -21,7 +21,7 @@ export class ListingsService {
   constructor (
     private readonly listingMenuRepository: ListingMenuRepository,
     private readonly listingOptionGroupRepository: ListingOptionGroupRepository,
-    private readonly listingCategoryRepository: ListingCategoryRepository,
+    private readonly listingCategoryRepository: ListingCategoryRepository
   ) {}
 
   async createListingMenu ({
@@ -104,7 +104,6 @@ export class ListingsService {
     userId
   }: ServicePayload<CreateListingCategoryDto>): Promise<ResponseWithStatus> {
     try {
-
       await this.listingCategoryRepository.create({
         ...data,
         vendor: userId
