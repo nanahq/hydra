@@ -57,7 +57,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   async findOneAndUpdate (
     filterQuery: FilterQuery<TDocument>,
     update: UpdateQuery<TDocument>
-  ): Promise<HydratedDocument<TDocument>> {
+  ): Promise<any> {
     const document = await this.model.findOneAndUpdate(filterQuery, update, {
       lean: true,
       new: true
