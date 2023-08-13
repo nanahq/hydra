@@ -30,6 +30,7 @@ import {
 export class ListingsController {
   constructor (
     private readonly listingService: ListingsService,
+
     private readonly rmqService: RmqService
   ) {}
 

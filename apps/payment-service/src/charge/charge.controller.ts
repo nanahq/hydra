@@ -1,15 +1,14 @@
 import {
-  BankTransferAccountDetails,
   BankTransferRequest,
-  CreditChargeRequest,
+  ExceptionFilterRpc,
   QUEUE_MESSAGE,
-  ResponseWithStatus,
-  RmqService,
+  RmqService, UssdRequest
 } from '@app/common'
-import { Controller } from '@nestjs/common'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import { Controller, UseFilters } from '@nestjs/common'
+import { Ctx, EventPattern, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 import { PaymentService } from './charge.service'
 
+@UseFilters(new ExceptionFilterRpc())
 @Controller('charge')
 export class PaymentController {
   constructor (
@@ -18,13 +17,13 @@ export class PaymentController {
 
   ) {}
 
-  @MessagePattern(QUEUE_MESSAGE.CHARGE_CREDIT_CARD)
-  async chargeWithCreditCard (
-    @Payload() payload: CreditChargeRequest,
+  @MessagePattern(QUEUE_MESSAGE.CHARGE_BANK_TRANSFER)
+  async chargeWithBankTransfer (
+    @Payload() payload: BankTransferRequest,
       @Ctx() context: RmqContext
-  ): Promise<void> {
+  ): Promise<any> {
     try {
-      return await this.paymentService.chargeWithCreditCard(payload)
+      return await this.paymentService.chargeWithBankTransfer(payload)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -32,13 +31,27 @@ export class PaymentController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.CHARGE_BANK_TRANSFER)
-  async chargeWithBankTransfer (
-      @Payload() payload: BankTransferRequest,
+  @MessagePattern(QUEUE_MESSAGE.CHARGE_USSD)
+  async chargeWithUssd (
+    @Payload() payload: UssdRequest,
       @Ctx() context: RmqContext
-  ): Promise<BankTransferAccountDetails> {
+  ): Promise<any> {
     try {
-      return await this.paymentService.chargeWithBankTransfer(payload)
+      return await this.paymentService.chargeWithUssd(payload)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.VERIFY_PAYMENT)
+  async verifyPayment (
+    @Payload() { txId, refId }: { txId: string, refId: string },
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      await this.paymentService.verifyPayment(txId, refId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

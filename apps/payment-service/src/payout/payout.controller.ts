@@ -15,7 +15,7 @@ export class VendorPayoutController {
   async getVendorPayout (
     @Payload() { vendorId }: { vendorId: string },
       @Ctx() context: RmqContext
-  ): Promise<VendorPayout[]> {
+  ): Promise<any> {
     try {
       return await this.payoutService.getVendorPayout(vendorId)
     } catch (error) {

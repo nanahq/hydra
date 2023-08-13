@@ -37,7 +37,7 @@ export class ListingsService {
 
       const newListings = await this.listingMenuRepository.create({
         ...rest,
-        vendorId
+        vendor: vendorId
       })
       await this.listingCategoryRepository.findOneAndUpdate(
         { _id },
@@ -54,16 +54,16 @@ export class ListingsService {
 
   async updateListingMenu ({ data: { menuId, ...rest }, userId }: ServicePayload<any>): Promise<ResponseWithStatus> {
     try {
-      await this.listingMenuRepository.findOneAndUpdate({ _id: menuId, vendorId: userId }, { ...rest })
+      await this.listingMenuRepository.findOneAndUpdate({ _id: menuId, vendor: userId }, { ...rest })
       return { status: 1 }
     } catch (e) {
       throw new FitRpcException('Failed to update listings', HttpStatus.UNPROCESSABLE_ENTITY)
     }
   }
 
-  async getAllListingMenu (vendorId: string): Promise<ListingMenu[]> {
+  async getAllListingMenu (vendor: string): Promise<ListingMenu[]> {
     const getRequest = await this.listingMenuRepository.findAndPopulate({
-      vendorId,
+      vendor,
       isDeleted: false
     }, 'optionGroups') as any
 
@@ -139,11 +139,11 @@ export class ListingsService {
     }
   }
 
-  async getAllCatVendor (vendorId: string): Promise<ListingCategory[]> {
+  async getAllCatVendor (vendor: string): Promise<ListingCategory[]> {
     try {
       return await this.listingCategoryRepository.findAndPopulate<ListingCategory>(
-        { vendorId, isDeleted: false },
-        'listingsMenu vendor'
+        { vendor, isDeleted: false },
+        ['listingsMenu', 'vendor']
       )
     } catch (error) {
       throw new FitRpcException(
@@ -249,7 +249,7 @@ export class ListingsService {
   // Users Vendor Methods
   async getAllMenuUser (): Promise<ListingMenu[]> {
     try {
-      return await this.listingMenuRepository.findAndPopulate({ isDeleted: false }, 'optionGroups')
+      return await this.listingMenuRepository.findAndPopulate({ isDeleted: false }, ['optionGroups', 'vendor'])
     } catch (error) {
       throw new FitRpcException('Can not fetch menu at thi time.', HttpStatus.INTERNAL_SERVER_ERROR)
     }

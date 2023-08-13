@@ -155,6 +155,7 @@ export interface OrderI {
   preciseLocation: LocationCoordinates
   quantity: string
   specialNote?: string
+  txRefId?: string
 }
 
 export interface ListingMenuReview {

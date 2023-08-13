@@ -90,6 +90,9 @@ export class Order extends AbstractDocument {
     }
   })
     orderBreakDown: OrderBreakDown
+
+  @Prop(String)
+    txRefId: string
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order)

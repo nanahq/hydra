@@ -1,6 +1,8 @@
 import { ConfigService } from '@nestjs/config'
-import Flutterwave from 'flutterwave-node-v3'
-import { BankTransferCharge, isProductionEnv } from '@app/common'
+import * as Flutterwave from 'flutterwave-node-v3'
+import { BaseChargeRequest, isProductionEnv, UssdCharge } from '@app/common'
+import { Injectable } from '@nestjs/common'
+@Injectable()
 export class FlutterwaveService {
   private readonly flw: any
   constructor (
@@ -18,8 +20,18 @@ export class FlutterwaveService {
     this.flw = new Flutterwave(publicKey, secretKey)
   }
 
-  async bankTransfer (details: BankTransferCharge): Promise<any> {
+  async bankTransfer (details: BaseChargeRequest): Promise<any> {
     const results = await this.flw.Charge.bank_transfer(details)
+    return results
+  }
+
+  async ussd (details: UssdCharge): Promise<any> {
+    const results = await this.flw.Charge.ussd(details)
+    return results
+  }
+
+  async verify (tid: string): Promise<any> {
+    const results = await this.flw.Transaction.verify({ id: tid })
     return results
   }
 }

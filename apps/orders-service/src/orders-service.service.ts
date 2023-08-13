@@ -1,4 +1,4 @@
-import { HttpStatus, Inject, Injectable } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 
 import {
   FitRpcException,
@@ -8,16 +8,17 @@ import {
   QUEUE_SERVICE,
   RandomGen,
   ResponseWithStatus,
-  ServicePayload,
+  ServicePayload, UpdateOrderStatusPaidRequestDto,
   UpdateOrderStatusRequestDto
 } from '@app/common'
-import { ClientProxy, RpcException } from '@nestjs/microservices'
+import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
 import { FilterQuery } from 'mongoose'
 
 @Injectable()
 export class OrdersServiceService {
+  private readonly logger = new Logger(OrdersServiceService.name)
   constructor (
     private readonly orderRepository: OrderRepository,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
@@ -35,7 +36,7 @@ export class OrdersServiceService {
       ...data,
       user: userId,
       refId: RandomGen.genRandomNum(),
-      orderStatus: OrderStatus.PROCESSED
+      orderStatus: OrderStatus.PAYMENT_PENDING
     }
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
@@ -46,22 +47,6 @@ export class OrdersServiceService {
         HttpStatus.BAD_REQUEST
       )
     }
-    //
-    // try {
-    //   // Send order confirmation message
-    //   await lastValueFrom(
-    //     this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
-    //       phoneNumber: _newOrder.primaryContact,
-    //       status: OrderStatus.PROCESSED
-    //     })
-    //   )
-    //
-    //   await lastValueFrom(
-    //     this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: _newOrder._id, userId })
-    //   )
-    // } catch (error) {
-    //   throw new RpcException(error)
-    // }
 
     return { status: 1 }
   }
@@ -127,8 +112,57 @@ export class OrdersServiceService {
     status,
     orderId
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
-    await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: status })
-    return { status: 1 }
+    try {
+      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: status })
+
+      this.logger.log(`[PIM] - order status updated for order: ${orderId} status: ${status}`)
+
+      await lastValueFrom<any>(
+        this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
+          phoneNumber: order.primaryContact,
+          status
+        })
+          .pipe(
+            catchError((error) => {
+              throw error
+            })
+          )
+      )
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException('failed to updated order', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async updateStatusPaid ({ status, orderId, txRefId }: UpdateOrderStatusPaidRequestDto): Promise<ResponseWithStatus> {
+    try {
+      this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
+
+      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, { txRefId, orderStatus: status })
+
+      this.logger.log(`[PIM] - order status updated for paid order: ${orderId}`)
+
+      await lastValueFrom<any>(
+        this.notificationClient.emit(QUEUE_MESSAGE.PROCESS_PAID_ORDER, {
+          phoneNumber: order.primaryContact,
+          status
+        })
+          .pipe(
+            catchError((error) => {
+              throw error
+            })
+          )
+      )
+
+      await lastValueFrom(
+        this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: order._id, userId: order.user })
+      )
+
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error(`[PIM] - Failed to process paid order ${orderId} `)
+      throw new FitRpcException('failed to process paid order', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
   public async vendorAcceptOrder (orderId: string, phone: string): Promise<void> {

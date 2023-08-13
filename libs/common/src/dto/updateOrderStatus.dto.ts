@@ -8,3 +8,14 @@ export class UpdateOrderStatusRequestDto {
   @IsNotEmpty()
     orderId: string
 }
+
+export class UpdateOrderStatusPaidRequestDto {
+  @IsNotEmpty()
+    status: OrderStatus
+
+  @IsNotEmpty()
+    orderId: string
+
+  @IsNotEmpty()
+    txRefId: string
+}
