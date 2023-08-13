@@ -17,10 +17,10 @@ jobs:
       - uses: actions/setup-node@d82f92a0eb28e5699f87460c19fc2c674da76d01
         with:
           node-version: '16'
-          cache: 'npm'
+          cache: 'yarn'
 
-      - run: npm ci
-      - run: npm run all:build
+      - run: yarn install --frozen-lockfile
+      - run: yarn all:build
 
   test:
     name: Test
@@ -36,10 +36,10 @@ jobs:
       - uses: actions/setup-node@d82f92a0eb28e5699f87460c19fc2c674da76d01
         with:
           node-version: '16'
-          cache: 'npm'
+          cache: 'yarn'
 
-      - run: npm ci
-      - run: npm run ci:test
+      - run: yarn install --frozen-lockfile
+      - run: yarn ci:test
         env:
           GH_INSTANCE_INDEX: ${{ matrix.instance }}
 
@@ -55,9 +55,9 @@ jobs:
       - uses: actions/setup-node@d82f92a0eb28e5699f87460c19fc2c674da76d01
         with:
           node-version: '16'
-          cache: 'npm'
+          cache: 'yarn'
 
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
       - run: npx --no-install eslint "{src,apps,libs,test}/**/*.ts"
 
   docker-buildx:
