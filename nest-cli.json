@@ -125,6 +125,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/payment-service/tsconfig.app.json"
       }
+    },
+    "drivers-service": {
+      "type": "application",
+      "root": "apps/drivers-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/drivers-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/drivers-service/tsconfig.app.json"
+      }
+    },
+    "location-service": {
+      "type": "application",
+      "root": "apps/location-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/location-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/location-service/tsconfig.app.json"
+      }
     }
   }
 }

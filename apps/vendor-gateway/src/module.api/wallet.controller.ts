@@ -1,8 +1,7 @@
-import { IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, Vendor, VendorPayout } from '@app/common'
+import { IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, Vendor, VendorPayout, CurrentUser } from '@app/common'
 import { Controller, Get, HttpException, Inject, Logger, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { CurrentUser } from './current-user.decorator'
 import { catchError, lastValueFrom } from 'rxjs'
 
 @Controller('wallet')

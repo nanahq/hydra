@@ -55,7 +55,7 @@ export class AdminServiceService {
 
     admin.password = ''
 
-    return admin as any
+    return admin
   }
 
   public async validateAdminWithId (_id: string): Promise<Admin> {

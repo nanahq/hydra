@@ -3,7 +3,7 @@ import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import {
   FitRpcException,
   Order,
-  OrderStatus,
+  OrderStatus, OrderTypes,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
@@ -25,7 +25,10 @@ export class OrdersServiceService {
     private readonly notificationClient: ClientProxy,
 
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
-    private readonly userClient: ClientProxy
+    private readonly userClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
+    private readonly driverClient: ClientProxy
   ) {}
 
   public async placeOrder ({
@@ -158,6 +161,10 @@ export class OrdersServiceService {
         this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: order._id, userId: order.user })
       )
 
+      await lastValueFrom<any>(
+        this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
+      )
+
       return { status: 1 }
     } catch (error) {
       this.logger.error(`[PIM] - Failed to process paid order ${orderId} `)
@@ -178,6 +185,19 @@ export class OrdersServiceService {
       )
     } catch (error) {
       throw new FitRpcException('failed to process order', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async odsaGetPreOrders (): Promise<Order[] | null> {
+    try {
+      this.logger.log('PIM -> Getting pre orders for ODSA daily cron')
+      return await this.orderRepository.findAndPopulate({ orderStatus: 'ORDER_PLACED', orderType: OrderTypes.PRE }, ['listing', 'user', 'vendor'])
+    } catch (error) {
+      this.logger.error({
+        message: 'PIM -> failed to get pre orders for ODSA daily cron',
+        error
+      })
+      throw new FitRpcException('failed to fetched ODSA pre orders', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }

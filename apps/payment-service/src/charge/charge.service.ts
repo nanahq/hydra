@@ -107,7 +107,7 @@ export class PaymentService {
       // Prepare charge payload
       const chargePayload: BaseChargeRequest = {
         tx_ref: `NANA-${RandomGen.genRandomNum()}`,
-        amount: String(order.totalOrderValue),
+        amount: String(order.orderValuePayable),
         email: order.user.email,
         currency: 'NGN'
       }

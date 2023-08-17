@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { TwilioService } from 'nestjs-twilio'
@@ -17,13 +17,14 @@ import { OrderStatusMessage } from './templates/OrderStatusMessage'
 @Injectable()
 export class NotificationServiceService {
   private readonly fromPhone: string
+  private readonly logger = new Logger(NotificationServiceService.name)
   constructor (
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     private readonly twilioService: TwilioService,
     private readonly configService: ConfigService
   ) {
-    this.fromPhone = this.configService.get<string>('TWILIO_PHONE') as string
+    this.fromPhone = 'EatLater'
   }
 
   async verifyPhone ({
@@ -68,14 +69,22 @@ export class NotificationServiceService {
     status
   }: OrderStatusUpdateDto): Promise<void> {
     const message = OrderStatusMessage[status]()
+    this.logger.log(`Sending paid order status update for ${phoneNumber}`)
     this.twilioService.client.messages
       .create({
         from: this.fromPhone,
         body: message,
         to: phoneNumber
       })
-      .then((msg) => msg)
+      .then((msg) => {
+        this.logger.log(`Sent paid order status update for ${phoneNumber}`)
+        return msg
+      })
       .catch((error) => {
+        this.logger.error({
+          error,
+          message: 'failed to send paid order status sms'
+        })
         throw new RpcException(error)
       })
   }

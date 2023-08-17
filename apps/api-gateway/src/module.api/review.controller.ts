@@ -14,11 +14,11 @@ import {
   QUEUE_SERVICE,
   ResponseWithStatus,
   Review,
-  User
+  User,
+  CurrentUser
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
-import { CurrentUser } from './current-user.decorator'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { ReviewDto } from '@app/common/database/dto/review.dto'
 
