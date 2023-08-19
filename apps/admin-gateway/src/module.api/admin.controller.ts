@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  Inject,
-  Post,
-  UseGuards,
-  Put,
-  Delete
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpException, Inject, Post, Put, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -16,15 +6,15 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './current-user.decorator'
 
 import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE,
-  UpdateAdminLevelRequestDto,
   Admin,
-  ServicePayload,
   AdminLevel,
   IRpcException,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  RegisterAdminDTO,
   ResponseWithStatus,
-  RegisterAdminDTO
+  ServicePayload,
+  UpdateAdminLevelRequestDto
 } from '@app/common'
 
 @Controller('admin')
@@ -32,7 +22,8 @@ export class AdminController {
   constructor (
     @Inject(QUEUE_SERVICE.ADMIN_SERVICE)
     private readonly adminClient: ClientProxy
-  ) {}
+  ) {
+  }
 
   @Post('register')
   async registerNewUser (
@@ -86,6 +77,18 @@ export class AdminController {
 
     return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.DELETE_ADMIN, payload).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('dashboard')
+  async dashboard (): Promise<ResponseWithStatus> {
+    return await lastValueFrom<ResponseWithStatus>(
+      this.adminClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD, {}).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

@@ -17,6 +17,24 @@ services:
     networks:
       - nana-app
 
+  admin-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/admin-gateway/Dockerfile
+      target: development
+    command: 'yarn start:dev admin-gateway'
+    env_file:
+      - ./apps/admin-gateway/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    ports:
+      - '3002:3002'
+    networks:
+      - nana-app
+
   vendor-gateway:
     build:
       context: .
@@ -150,6 +168,7 @@ services:
       - /usr/src/app/node_modules
     networks:
       - nana-app
+
   reviews-service:
     build:
       context: .
@@ -170,6 +189,7 @@ services:
       - /usr/src/app/node_modules
     networks:
       - nana-app
+
   rabbitmq:
     image: rabbitmq
     ports:
@@ -178,6 +198,7 @@ services:
       - queue_data:/var/lib/rabbitmq
     networks:
       - nana-app
+
   mongodb-primary:
       image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
       environment:
@@ -191,6 +212,7 @@ services:
           - '27017:27017'
       networks:
         - nana-app
+
   mongodb-secondary:
       image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
       depends_on:
@@ -203,6 +225,7 @@ services:
           - MONGODB_REPLICA_SET_KEY=replicasetkey123
       networks:
         - nana-app
+
   mongodb-arbiter:
       image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
       depends_on:
