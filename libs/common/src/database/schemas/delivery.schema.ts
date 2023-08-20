@@ -50,6 +50,9 @@ export class Delivery extends AbstractDocument {
 
   @Prop({ type: Number })
     deliveryTime: number
+
+  @Prop({ type: Boolean, default: false })
+    assignedToDriver: boolean
 }
 
 export const DeliverySchema = SchemaFactory.createForClass(Delivery)

@@ -214,17 +214,6 @@ services:
       - queue_data:/var/lib/rabbitmq
     networks:
       - nana-app
-  cassandra-db:
-    image: bitnami/cassandra
-    environment:
-      - CASSANDRA_USER=nana-cs-db
-      - CASSANDRA_PASSWORD=nana-cs-db
-      - CASSANDRA_DATACENTER=nigeria-1
-      - CASSANDRA_RACK=kano
-    volumes:
-      - 'cs_data:/bitnami/cassandra'
-    networks:
-      - nana-app
   mongodb-primary:
       image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
       environment:

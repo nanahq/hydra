@@ -3,7 +3,7 @@ import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import {
-  Delivery,
+  Delivery, Driver, DriverWithLocation,
   FitRpcException,
   Order,
   OrderStatus,
@@ -28,6 +28,8 @@ export class ODSA {
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly orderClient: ClientProxy,
 
+    @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
+    private readonly locationClient: ClientProxy,
     private readonly driversRepository: DriverRepository,
 
     private readonly odsaRepository: OdsaRepository
@@ -81,12 +83,85 @@ export class ODSA {
     }
   }
 
-  public async handleAssignOrder (): Promise<void> {}
-  public async handleProcessOrder (orderId: string): Promise<void> {
-    this.logger.log(orderId)
+  public async handleProcessOrder (orderId: string, existingDeliver?: boolean): Promise<void> {
+    this.logger.log(`PIM -> started processing instant order: ${orderId}`)
+    try {
+      const order = await lastValueFrom<any>(
+        this.orderClient.send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, { userId: '', data: { orderId } })
+          .pipe(catchError(error => {
+            this.logger.error(error)
+            throw new RpcException(error)
+          }))
+      )
+
+      const collectionLocation = order?.vendor?.location?.coordinates // address for the vendor/restaurant
+      const driverToBeAssigned = await this.handleFindNearestDeliveryDriver(collectionLocation)
+
+      if (driverToBeAssigned === null) {
+        await this.odsaRepository.create({
+          listing: order.listing._id,
+          order: order._id,
+          vendor: order.vendor?._id,
+          user: order.user._id,
+          deliveryTime: parseInt(order.orderDeliveryScheduledTime),
+          dropOffLocation: order.preciseLocation,
+          pickupLocation: order.vendor.location,
+          assignedToDriver: false
+        })
+      }
+
+      if (existingDeliver !== undefined && existingDeliver) {
+        await this.odsaRepository.findOneAndUpdate({ order: orderId }, {
+          driver: driverToBeAssigned?.driverId,
+          assignedToDriver: true
+        })
+      } else {
+        await this.odsaRepository.create({
+          driver: driverToBeAssigned?.driverId,
+          listing: order.listing._id,
+          order: order._id,
+          vendor: order.vendor?._id,
+          user: order.user._id,
+          deliveryTime: parseInt(order.orderDeliveryScheduledTime),
+          dropOffLocation: order.preciseLocation,
+          pickupLocation: order.vendor.location,
+          assignedToDriver: true
+        })
+      }
+
+      await this.driversRepository.findOneAndUpdate({ _id: driverToBeAssigned?.driverId }, { available: false })
+    } catch (error) {
+      this.logger.error({
+        error,
+        message: `Something went wrong processing order ${orderId}`
+      })
+      throw new FitRpcException('Can not process order right now', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
   @Cron(CronExpression.EVERY_MINUTE, {
+    timeZone: 'Africa/Lagos'
+  })
+  private async assignDemandOrders (): Promise<void> {
+    const unassignedDeliveries = await this.odsaRepository.find({ assignedToDriver: false }) as Delivery[]
+    // @Todo(siradji) improve code and add additional check to make sure only on demand orders get assigned
+    try {
+      for (const delivery of unassignedDeliveries) {
+        await this.handleProcessOrder(delivery.order, true)
+      }
+    } catch (error) {
+      this.logger.error({
+        error,
+        message: 'failed to assign failed orders'
+      })
+    }
+  }
+
+  /**
+   * Odsa Cron for pre-order. Runs daily @ 8AM WAT to assign orders to drivers
+   * @private
+   */
+  @Cron(CronExpression.EVERY_DAY_AT_8AM, {
     timeZone: 'Africa/Lagos'
   })
   private async sortAndAssignPreOrders (): Promise<void> {
@@ -133,7 +208,8 @@ export class ODSA {
             driver: driver._id,
             deliveryTime: parseInt(order.orderDeliveryScheduledTime),
             dropOffLocation: order.preciseLocation,
-            pickupLocation: order.vendor.location
+            pickupLocation: order.vendor.location,
+            assignedToDriver: true
           })
         })
       })
@@ -142,6 +218,36 @@ export class ODSA {
     await this.odsaRepository.insertMany(newDeliveries)
 
     this.logger.log(`PIM -> Success: Assigned ${groupedOrders.length} grouped orders to ${drivers.length} drivers`)
+  }
+
+  private async handleFindNearestDeliveryDriver (targetCoord: string[]): Promise<DriverWithLocation | null> {
+    this.logger.log('PIM -> Assign order to the nearest delivery person')
+
+    const availableOnDemandDrivers = await this.driversRepository.find({
+      type: 'DELIVER_ON_DEMAND',
+      status: 'ONLINE',
+      isValidated: true,
+      isDeleted: false,
+      available: true
+    }) as Driver[]
+
+    this.logger.log(`PIM -> ${availableOnDemandDrivers.length} drivers are open to taking the delivery`)
+
+    if (availableOnDemandDrivers.length === 0) {
+      return null
+    }
+    const driversCoordinates: DriverWithLocation[] = availableOnDemandDrivers.map(driver => {
+      return {
+        driverId: driver._id,
+        coordinates: driver.location.coordinates
+      }
+    })
+
+    this.logger.log('PIM -> finding the ideal  driver for this order')
+
+    return await lastValueFrom<DriverWithLocation>(
+      this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_NEAREST_COORD, { target: targetCoord, coordinates: driversCoordinates })
+    )
   }
 }
 

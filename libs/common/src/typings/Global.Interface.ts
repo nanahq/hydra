@@ -47,3 +47,7 @@ export interface OrderGroup {
   orders: Order[]
   maxDeliveryTime: number
 }
+export interface DriverWithLocation {
+  driverId: string | any
+  coordinates: string[]
+}

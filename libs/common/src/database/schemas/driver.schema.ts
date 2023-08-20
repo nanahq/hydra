@@ -47,6 +47,9 @@ export class Driver extends AbstractDocument {
   @Prop(String)
     state: string
 
+  @Prop({ type: Boolean, default: true })
+    available: boolean
+
   @Prop(String)
     type: DriverType
 }

@@ -100,10 +100,15 @@ export class OrdersServiceService {
     }
   }
 
-  public async getOrderById (_id: any): Promise<Order | null> {
+  public async getOrderById (_id: string): Promise<Order | null> {
     try {
-      return await this.orderRepository.findOneAndPopulate({ _id }, 'user listing vendor')
+      this.logger.log(`PIM -> fetching single order with id: ${_id}`)
+      return await this.orderRepository.findOneAndPopulate({ _id }, ['user', 'listing', 'vendor'])
     } catch (error) {
+      this.logger.error({
+        error,
+        message: 'failed to fetch order'
+      })
       throw new FitRpcException(
         'Can not process request. Try again later',
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -141,7 +146,7 @@ export class OrdersServiceService {
     try {
       this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
 
-      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, { txRefId, orderStatus: status })
+      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, { txRefId, orderStatus: status }) as Order
 
       this.logger.log(`[PIM] - order status updated for paid order: ${orderId}`)
 
@@ -161,9 +166,11 @@ export class OrdersServiceService {
         this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: order._id, userId: order.user })
       )
 
-      await lastValueFrom<any>(
-        this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
-      )
+      if (order.orderType === OrderTypes.INSTANT) { // Start ODSA on instant order
+        await lastValueFrom<any>(
+          this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
+        )
+      }
 
       return { status: 1 }
     } catch (error) {

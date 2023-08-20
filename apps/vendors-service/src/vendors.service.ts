@@ -203,16 +203,13 @@ export class VendorsService {
   }
 
   async getVendorSettings (vendorId: string): Promise<VendorSettings> {
+    this.logger.log('PIM -> Fetching vendors settings')
     try {
-      const req = await this.vendorSettingsRepository.findOne({ vendorId })
-      if (req === null) {
-        throw new Error()
-      }
-      return req
+      return await this.vendorSettingsRepository.findOne({ vendor: vendorId })
     } catch (e) {
       throw new FitRpcException(
         'can not fetch vendors settings at this time',
-        HttpStatus.BAD_GATEWAY
+        HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
   }
@@ -220,7 +217,7 @@ export class VendorsService {
   async createVendorSettings (data: any, vendorId: string): Promise<ResponseWithStatus> {
     try {
       const newSettings = await this.vendorSettingsRepository.create({ ...data, vendorId })
-      await this.vendorRepository.findOneAndUpdate({ _id: newSettings.vendorId }, { settings: newSettings._id })
+      await this.vendorRepository.findOneAndUpdate({ _id: newSettings.vendor }, { settings: newSettings._id })
       return { status: 1 }
     } catch (e) {
       throw new FitRpcException(

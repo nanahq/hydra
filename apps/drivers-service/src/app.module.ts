@@ -33,6 +33,7 @@ import { ODSA } from './ODSA/odsa.service'
 import { OdsaController } from './ODSA/odsa.controller'
 import { ScheduleModule } from '@nestjs/schedule'
 import { OdsaRepository } from './ODSA/odsa.repository'
+import { EventsGateway } from './websockets/events.gateway'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -78,6 +79,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
         RmqModule,
         AppModule
       ],
@@ -94,6 +96,7 @@ export class AppModule implements NestModule {
         AuthService,
         ODSA,
         OdsaRepository,
+        EventsGateway,
         {
           provide: APP_FILTER,
           useClass: FitHttpException
