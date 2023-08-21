@@ -2,14 +2,15 @@ import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common'
 import { MessagePattern } from '@nestjs/microservices'
 import { Response } from 'express'
 
-import { QUEUE_MESSAGE, CurrentUser, Driver } from '@app/common'
+import { CurrentUser, Driver, QUEUE_MESSAGE } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { LocalGuard } from './auth/guards/local.guard'
 import { AuthService } from './auth.service'
 
 @Controller('auth')
 export class DriversAuthController {
-  constructor (private readonly authService: AuthService) {}
+  constructor (private readonly authService: AuthService) {
+  }
 
   @UseGuards(LocalGuard)
   @Post('login')
@@ -27,7 +28,7 @@ export class DriversAuthController {
 
   @MessagePattern(QUEUE_MESSAGE.VALIDATE_DRIVER)
   @UseGuards(JwtAuthGuard)
-  async getUserProfile (@CurrentUser()driver: Driver): Promise<Driver> {
+  async getUserProfile (@CurrentUser() driver: Driver): Promise<Driver> {
     return driver
   }
 }

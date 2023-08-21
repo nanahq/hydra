@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config'
 import { RmqOptions } from '@nestjs/microservices'
 
-import { RmqService, QUEUE_SERVICE } from '@app/common'
+import { QUEUE_SERVICE, RmqService } from '@app/common'
 import { AppModule } from './app.module'
 
 async function bootstrap (): Promise<void> {
@@ -14,4 +14,5 @@ async function bootstrap (): Promise<void> {
   await app.startAllMicroservices()
   await app.listen(port)
 }
+
 void bootstrap()

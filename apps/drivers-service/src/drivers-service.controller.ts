@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, Get, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, HttpException, Post, UseGuards } from '@nestjs/common'
 import { DriversServiceService } from './drivers-service.service'
 import { CurrentUser, Delivery, Driver, OrderStatus, ResponseWithStatus } from '@app/common'
 import { RegisterDriverDto } from '@app/common/dto/registerDriver.dto'
@@ -10,7 +10,8 @@ export class DriversServiceController {
   constructor (
     private readonly driversServiceService: DriversServiceService,
     private readonly odsaService: ODSA
-  ) {}
+  ) {
+  }
 
   @Post('register')
   async registerDriver (
@@ -38,7 +39,10 @@ export class DriversServiceController {
       @CurrentUser() driver: Driver
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.odsaService.handleUpdateDeliveryStatus({ ...data, driverId: driver._id as unknown as string })
+      return await this.odsaService.handleUpdateDeliveryStatus({
+        ...data,
+        driverId: driver._id as unknown as string
+      })
     } catch (error) {
       throw new HttpException(error, 500)
     }

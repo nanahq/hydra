@@ -11,4 +11,5 @@ async function bootstrap (): Promise<void> {
   )
   await app.startAllMicroservices()
 }
+
 void bootstrap()

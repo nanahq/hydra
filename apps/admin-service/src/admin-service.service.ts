@@ -7,7 +7,7 @@ import { AdminRepository } from './admin.repository'
 @Injectable()
 export class AdminServiceService {
   constructor (
-    public readonly adminRepository: AdminRepository
+    private readonly adminRepository: AdminRepository
   ) {}
 
   public async createAdmin (

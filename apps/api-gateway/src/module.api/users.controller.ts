@@ -1,18 +1,9 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpException,
-  Inject,
-  Post,
-  Put,
-  UseGuards
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpException, Inject, Post, Put, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
+  CurrentUser,
   IRpcException,
   PhoneVerificationPayload,
   QUEUE_MESSAGE,
@@ -20,8 +11,7 @@ import {
   registerUserRequest,
   ResponseWithStatus,
   ServicePayload,
-  User,
-  CurrentUser
+  User
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
@@ -32,7 +22,8 @@ export class UsersController {
     private readonly usersClient: ClientProxy,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy
-  ) {}
+  ) {
+  }
 
   @Post('register')
   async registerNewUser (

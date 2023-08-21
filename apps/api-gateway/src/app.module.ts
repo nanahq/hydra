@@ -1,11 +1,4 @@
-import {
-  DynamicModule,
-  INestApplication,
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  ValidationPipe
-} from '@nestjs/common'
+import { DynamicModule, INestApplication, MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
 import { AppMetadata } from 'app.config'
@@ -30,10 +23,6 @@ import { PaymentController } from './module.api/payment.controller'
 
 @Module({})
 export class AppModule implements NestModule {
-  configure (consumer: MiddlewareConsumer): void {
-    consumer.apply(cookieParser()).forRoutes('*')
-  }
-
   static async create (): Promise<INestApplication> {
     const app = await NestFactory.create(this.forRoot())
     this.configure(app)
@@ -104,10 +93,10 @@ export class AppModule implements NestModule {
   }
 
   /**
-   *  Set Apps configurations
-   * @param app INestApplication
-   * @returns  void
-   */
+     *  Set Apps configurations
+     * @param app INestApplication
+     * @returns  void
+     */
   static configure (app: INestApplication): void {
     const version = this.getVersion()
     app.use(helmet())
@@ -115,14 +104,18 @@ export class AppModule implements NestModule {
     app.setGlobalPrefix(`api-gateway/${version}`)
   }
 
-  /*
-      Get the version info from App meta data  file or enviromental variable
-      @returns string
-      */
-
   // TODO(@siradji) improve versioning
   static getVersion (): string {
     const { API_VERSION } = AppMetadata
     return API_VERSION
+  }
+
+  /*
+        Get the version info from App meta data  file or enviromental variable
+        @returns string
+        */
+
+  configure (consumer: MiddlewareConsumer): void {
+    consumer.apply(cookieParser()).forRoutes('*')
   }
 }

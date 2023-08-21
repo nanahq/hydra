@@ -13,9 +13,9 @@ export class OdsaController {
   constructor (
     private readonly driversService: DriversServiceService,
     private readonly odsa: ODSA,
-
     private readonly rmqService: RmqService
-  ) {}
+  ) {
+  }
 
   @MessagePattern(QUEUE_MESSAGE.ODSA_PROCESS_ORDER)
   async processIncomingOrder (

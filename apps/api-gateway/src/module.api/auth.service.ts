@@ -10,7 +10,8 @@ export class AuthService {
   constructor (
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService
-  ) {}
+  ) {
+  }
 
   async login (user: User, response: Response): Promise<void> {
     const payload: TokenPayload = {

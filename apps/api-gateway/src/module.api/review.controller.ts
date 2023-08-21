@@ -1,22 +1,5 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  Inject,
-  Param,
-  Post,
-  UseGuards
-} from '@nestjs/common'
-import {
-  IRpcException,
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE,
-  ResponseWithStatus,
-  Review,
-  User,
-  CurrentUser
-} from '@app/common'
+import { Body, Controller, Get, HttpException, Inject, Param, Post, UseGuards } from '@nestjs/common'
+import { CurrentUser, IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus, Review, User } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -27,7 +10,8 @@ export class ReviewController {
   constructor (
     @Inject(QUEUE_SERVICE.REVIEW_SERVICE)
     private readonly reviewClient: ClientProxy
-  ) {}
+  ) {
+  }
 
   @Post('create')
   @UseGuards(JwtAuthGuard)

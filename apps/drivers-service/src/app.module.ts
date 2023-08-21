@@ -4,13 +4,16 @@ import { DriversServiceService } from './drivers-service.service'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import {
-  Delivery, DeliverySchema,
-  Driver, DriverSchema,
+  Delivery,
+  DeliverySchema,
+  Driver,
+  DriverSchema,
   FitHttpException,
   ListingMenu,
   ListingMenuSchema,
   Order,
-  OrderSchema, QUEUE_SERVICE,
+  OrderSchema,
+  QUEUE_SERVICE,
   RmqModule,
   User,
   UserSchema,
@@ -37,10 +40,6 @@ import { EventsGateway } from './websockets/events.gateway'
 
 @Module({})
 export class AppModule implements NestModule {
-  configure (consumer: MiddlewareConsumer): void {
-    consumer.apply(cookieParser() as any).forRoutes('*')
-  }
-
   static async create (): Promise<INestApplication> {
     const app = await NestFactory.create(this.forRoot())
     this.configure(app)
@@ -68,12 +67,30 @@ export class AppModule implements NestModule {
           inject: [ConfigService]
         }),
         MongooseModule.forFeature([
-          { name: Vendor.name, schema: VendorSchema },
-          { name: User.name, schema: UserSchema },
-          { name: ListingMenu.name, schema: ListingMenuSchema },
-          { name: Driver.name, schema: DriverSchema },
-          { name: Order.name, schema: OrderSchema },
-          { name: Delivery.name, schema: DeliverySchema }
+          {
+            name: Vendor.name,
+            schema: VendorSchema
+          },
+          {
+            name: User.name,
+            schema: UserSchema
+          },
+          {
+            name: ListingMenu.name,
+            schema: ListingMenuSchema
+          },
+          {
+            name: Driver.name,
+            schema: DriverSchema
+          },
+          {
+            name: Order.name,
+            schema: OrderSchema
+          },
+          {
+            name: Delivery.name,
+            schema: DeliverySchema
+          }
         ]),
         DatabaseModule,
         RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
@@ -121,14 +138,18 @@ export class AppModule implements NestModule {
     app.setGlobalPrefix(`driver-gateway/${version}`)
   }
 
+  // TODO(@siradji) improve versioning
+  static getVersion (): string {
+    const { API_VERSION } = AppMetadata
+    return API_VERSION
+  }
+
   /*
       Get the version info from App meta data  file or environmental variable
       @returns string
       */
 
-  // TODO(@siradji) improve versioning
-  static getVersion (): string {
-    const { API_VERSION } = AppMetadata
-    return API_VERSION
+  configure (consumer: MiddlewareConsumer): void {
+    consumer.apply(cookieParser() as any).forRoutes('*')
   }
 }

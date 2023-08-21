@@ -1,18 +1,12 @@
 import { Controller } from '@nestjs/common'
-import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException
-} from '@nestjs/microservices'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 
 import {
+  Admin,
   QUEUE_MESSAGE,
+  RegisterAdminDTO,
   RmqService,
   ServicePayload,
-  RegisterAdminDTO,
-  Admin,
   UpdateAdminLevelRequestDto
 } from '@app/common'
 import { AdminServiceService } from './admin-service.service'
@@ -22,7 +16,8 @@ export class AdminServiceController {
   constructor (
     private readonly adminServiceService: AdminServiceService,
     private readonly rmqService: RmqService
-  ) {}
+  ) {
+  }
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_ADMIN)
   async createAdmin (
