@@ -1,9 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
-import {
-  AbstractRepository, Delivery
-} from '@app/common'
-import { InjectModel, InjectConnection } from '@nestjs/mongoose'
-import { Model, Connection } from 'mongoose'
+import { AbstractRepository, Delivery } from '@app/common'
+import { InjectConnection, InjectModel } from '@nestjs/mongoose'
+import { Connection, Model } from 'mongoose'
 
 @Injectable()
 export class OdsaRepository extends AbstractRepository<Delivery> {

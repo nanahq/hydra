@@ -1,30 +1,17 @@
-import {
-  Controller,
-  Inject,
-  Get,
-  UseGuards,
-  HttpException,
-  Param
-} from '@nestjs/common'
+import { Controller, Get, HttpException, Inject, Param, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import {
-  QUEUE_SERVICE,
-  QUEUE_MESSAGE,
-  IRpcException,
-  ListingMenu,
-  ListingCategory
-} from '@app/common'
+import { IRpcException, ListingCategory, ListingMenu, QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common'
 
 @Controller('listing')
 export class ListingsController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy
-
-  ) {}
+  ) {
+  }
 
   @Get('menus')
   @UseGuards(JwtAuthGuard)
@@ -40,8 +27,7 @@ export class ListingsController {
 
   @Get('categories')
   @UseGuards(JwtAuthGuard)
-  async getCategories (
-  ): Promise<ListingCategory[]> {
+  async getCategories (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
       this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_CAT_USER, {}).pipe(
         catchError((error: IRpcException) => {

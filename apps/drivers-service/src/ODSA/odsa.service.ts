@@ -3,7 +3,9 @@ import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import {
-  Delivery, Driver, DriverWithLocation,
+  Delivery,
+  Driver,
+  DriverWithLocation,
   FitRpcException,
   Order,
   OrderStatus,
@@ -24,16 +26,16 @@ const PendingDeliveryStatuses: OrderStatus[] = [
 @Injectable()
 export class ODSA {
   private readonly logger = new Logger(ODSA.name)
+
   constructor (
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly orderClient: ClientProxy,
-
     @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
     private readonly locationClient: ClientProxy,
     private readonly driversRepository: DriverRepository,
-
     private readonly odsaRepository: OdsaRepository
-  ) {}
+  ) {
+  }
 
   public async queryPendingDeliveries (driverId: string): Promise<Delivery[] | undefined> {
     try {
@@ -61,13 +63,23 @@ export class ODSA {
     }
   }
 
-  public async handleUpdateDeliveryStatus (data: { status: OrderStatus, driverId: string, deliveryId: string }): Promise<ResponseWithStatus> {
+  public async handleUpdateDeliveryStatus (data: {
+    status: OrderStatus
+    driverId: string
+    deliveryId: string
+  }): Promise<ResponseWithStatus> {
     try {
       this.logger.log('PIM -> Updating delivery status')
 
-      const delivery = await this.odsaRepository.findOne({ driver: data.driverId, _id: data.deliveryId })
+      const delivery = await this.odsaRepository.findOne({
+        driver: data.driverId,
+        _id: data.deliveryId
+      })
 
-      await this.orderClient.emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, { orderId: delivery.order, status: data.status })
+      await this.orderClient.emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
+        orderId: delivery.order,
+        status: data.status
+      })
 
       await this.odsaRepository.findOneAndUpdate({ _id: delivery._id }, { status: data.status })
 
@@ -87,7 +99,10 @@ export class ODSA {
     this.logger.log(`PIM -> started processing instant order: ${orderId}`)
     try {
       const order = await lastValueFrom<any>(
-        this.orderClient.send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, { userId: '', data: { orderId } })
+        this.orderClient.send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, {
+          userId: '',
+          data: { orderId }
+        })
           .pipe(catchError(error => {
             this.logger.error(error)
             throw new RpcException(error)
@@ -174,7 +189,10 @@ export class ODSA {
           throw new RpcException(error)
         }))
     )
-    const drivers = await this.driversRepository.find({ isValidated: true, type: 'DELIVER_PRE_ORDER' })
+    const drivers = await this.driversRepository.find({
+      isValidated: true,
+      type: 'DELIVER_PRE_ORDER'
+    })
 
     const ordersForToday = filterOrdersForDay(orders)
 
@@ -246,7 +264,10 @@ export class ODSA {
     this.logger.log('PIM -> finding the ideal  driver for this order')
 
     return await lastValueFrom<DriverWithLocation>(
-      this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_NEAREST_COORD, { target: targetCoord, coordinates: driversCoordinates })
+      this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_NEAREST_COORD, {
+        target: targetCoord,
+        coordinates: driversCoordinates
+      })
     )
   }
 }
