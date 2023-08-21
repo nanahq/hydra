@@ -3,11 +3,12 @@ import { Response } from 'express'
 
 import { LocalGuard } from '../auth/guards/local.guard'
 import { AuthService } from './auth.service'
-import { User, CurrentUser } from '@app/common'
+import { CurrentUser, User } from '@app/common'
 
 @Controller('auth')
 export class AuthController {
-  constructor (private readonly authService: AuthService) {}
+  constructor (private readonly authService: AuthService) {
+  }
 
   @UseGuards(LocalGuard)
   @Post('login')

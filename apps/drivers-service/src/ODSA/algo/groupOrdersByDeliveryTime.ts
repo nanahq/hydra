@@ -26,8 +26,8 @@ export function groupOrdersByDeliveryTime (
 
       if (
         timeDiffMinutes < 45 && timeDiffMinutes > 20 &&
-          currentGroup.orders.length < 10 &&
-          currentDriverCount < numberOfAvailableDrivers
+        currentGroup.orders.length < 10 &&
+        currentDriverCount < numberOfAvailableDrivers
       ) {
         currentGroup.orders.push(order)
         currentGroup.maxDeliveryTime = Math.max(

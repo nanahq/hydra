@@ -8,7 +8,8 @@ import { AdminRepository } from './admin.repository'
 export class AdminServiceService {
   constructor (
     private readonly adminRepository: AdminRepository
-  ) {}
+  ) {
+  }
 
   public async createAdmin (
     data: RegisterAdminDTO

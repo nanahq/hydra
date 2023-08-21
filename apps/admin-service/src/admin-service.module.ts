@@ -4,7 +4,7 @@ import * as Joi from 'joi'
 
 import { AdminServiceService } from './admin-service.service'
 import { AdminServiceController } from './admin-service.controller'
-import { RmqModule, Admin, AdminSchema } from '@app/common'
+import { Admin, AdminSchema, RmqModule } from '@app/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { AdminRepository } from './admin.repository'
 import { DatabaseModule } from '@app/common/database/database.module'
@@ -20,11 +20,15 @@ import { DatabaseModule } from '@app/common/database/database.module'
       }),
       envFilePath: './apps/admin-service/.env'
     }),
-    MongooseModule.forFeature([{ name: Admin.name, schema: AdminSchema }]),
+    MongooseModule.forFeature([{
+      name: Admin.name,
+      schema: AdminSchema
+    }]),
     DatabaseModule,
     RmqModule
   ],
   controllers: [AdminServiceController],
   providers: [AdminServiceService, AdminRepository]
 })
-export class AdminServiceModule {}
+export class AdminServiceModule {
+}

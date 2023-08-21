@@ -7,9 +7,11 @@ import * as bcrypt from 'bcryptjs'
 @Injectable()
 export class DriversServiceService {
   private readonly logger = new Logger(DriversServiceService.name)
+
   constructor (
     private readonly driverRepository: DriverRepository
-  ) {}
+  ) {
+  }
 
   public async register (payload: RegisterDriverDto): Promise<ResponseWithStatus> {
     const existingDriver = await this.driverRepository.findOne({ phone: payload.phone })

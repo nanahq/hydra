@@ -1,9 +1,4 @@
-import {
-  MessageBody,
-  SubscribeMessage,
-  WebSocketGateway,
-  WebSocketServer
-} from '@nestjs/websockets'
+import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets'
 import { Server } from 'socket.io'
 import { LocationCoordinates, SOCKET_MESSAGE } from '@app/common'
 import { Logger } from '@nestjs/common'
@@ -15,17 +10,21 @@ import { DriverRepository } from '../drivers-service.repository'
   }
 })
 export class EventsGateway {
-  private readonly logger = new Logger(EventsGateway.name)
-  constructor (
-    private readonly driverRepository: DriverRepository,
-  ) {
-  }
-
   @WebSocketServer()
     server: Server
 
+  private readonly logger = new Logger(EventsGateway.name)
+
+  constructor (
+    private readonly driverRepository: DriverRepository
+  ) {
+  }
+
   @SubscribeMessage(SOCKET_MESSAGE.UPDATE_DRIVER_LOCATION)
-  async updateDriversLocation (@MessageBody() data: { driverId: string, location: LocationCoordinates }): Promise<void> {
+  async updateDriversLocation (@MessageBody() data: {
+    driverId: string
+    location: LocationCoordinates
+  }): Promise<void> {
     try {
       await this.driverRepository.findOneAndUpdate({ _id: data.driverId }, { location: data.location })
     } catch (error) {
