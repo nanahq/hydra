@@ -35,7 +35,7 @@ export class Order extends AbstractDocument {
   @Prop({
     type: String
   })
-    deliveryAddess: string
+    deliveryAddress: string
 
   @Prop({ type: String })
     primaryContact: string

@@ -22,6 +22,7 @@ export class PaymentController {
     @Payload() payload: BankTransferRequest,
       @Ctx() context: RmqContext
   ): Promise<any> {
+    console.log('payload', payload)
     try {
       return await this.paymentService.chargeWithBankTransfer(payload)
     } catch (error) {

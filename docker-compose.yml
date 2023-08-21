@@ -168,7 +168,6 @@ services:
       - /usr/src/app/node_modules
     networks:
       - nana-app
-
   reviews-service:
     build:
       context: .
@@ -190,6 +189,43 @@ services:
     networks:
       - nana-app
 
+  drivers-service:
+    build:
+      context: .
+      dockerfile: apps/drivers-service/Dockerfile
+      target: development
+    command: 'yarn start:dev drivers-service'
+    env_file:
+      - apps/drivers-service/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - cassandra-db
+      - rabbitmq
+    ports:
+      - '3003:3003'
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
+
+  location-service:
+    build:
+      context: .
+      dockerfile: apps/location-service/Dockerfile
+      target: development
+    command: 'yarn start:dev location-service'
+    env_file:
+      - apps/location-service/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
   rabbitmq:
     image: rabbitmq
     ports:
@@ -198,7 +234,6 @@ services:
       - queue_data:/var/lib/rabbitmq
     networks:
       - nana-app
-
   mongodb-primary:
       image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
       environment:
@@ -212,7 +247,6 @@ services:
           - '27017:27017'
       networks:
         - nana-app
-
   mongodb-secondary:
       image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
       depends_on:
@@ -225,7 +259,6 @@ services:
           - MONGODB_REPLICA_SET_KEY=replicasetkey123
       networks:
         - nana-app
-
   mongodb-arbiter:
       image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
       depends_on:
@@ -242,6 +275,8 @@ volumes:
   queue_data:
     driver: local
   db_data:
+    driver: local
+  cs_data:
     driver: local
 networks:
   nana-app:

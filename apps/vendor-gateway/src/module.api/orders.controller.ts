@@ -16,11 +16,11 @@ import {
   ResponseWithStatus,
   ServicePayload,
   UpdateOrderStatusRequestDto,
-  Vendor
+  Vendor,
+  CurrentUser
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { CurrentUser } from './current-user.decorator'
 import { catchError, lastValueFrom } from 'rxjs'
 
 @Controller('order')

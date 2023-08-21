@@ -1,4 +1,4 @@
-import { ListingCategory, Vendor } from '@app/common'
+import { ListingCategory, Order, Vendor } from '@app/common'
 
 export interface TokenPayload {
   userId: string
@@ -15,6 +15,10 @@ export interface ReviewToken {
 
 export type OrderType = 'PRE_ORDER' | 'ON_DEMAND'
 
+export enum OrderTypes {
+  PRE = 'PRE_ORDER',
+  INSTANT = 'ON_DEMAND'
+}
 export interface SendPayoutEmail {
   vendorName: string
   vendorId: string
@@ -35,3 +39,15 @@ export interface PayoutOverview {
 
 }
 export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'
+
+export type DriverType = 'DELIVER_PRE_ORDER' | 'DELIVER_ON_DEMAND'
+
+export interface OrderGroup {
+  groupId: number
+  orders: Order[]
+  maxDeliveryTime: number
+}
+export interface DriverWithLocation {
+  driverId: string | any
+  coordinates: string[]
+}

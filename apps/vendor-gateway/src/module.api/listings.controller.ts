@@ -9,8 +9,8 @@ import {
   Put,
   UploadedFile,
   UseGuards,
-  UseInterceptors,
-  Logger
+  UseInterceptors
+  , Logger
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -23,10 +23,10 @@ import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   booleanParser,
-  ListingMenu
+  ListingMenu,
+  CurrentUser
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { CurrentUser } from '../../../admin-gateway/src/module.api/current-user.decorator'
 import {
   CreateListingCategoryDto,
   CreateOptionGroupDto,

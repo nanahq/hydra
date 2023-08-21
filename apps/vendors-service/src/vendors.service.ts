@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 import {
   FitRpcException,
@@ -22,13 +22,14 @@ import { VendorSettings } from '@app/common/database/schemas/vendor-settings.sch
 
 @Injectable()
 export class VendorsService {
+  private readonly logger = new Logger(VendorsService.name)
   constructor (
     private readonly vendorRepository: VendorRepository,
     private readonly vendorSettingsRepository: VendorSettingsRepository
   ) {}
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
-    // Validation gate to check if vendor with the requet phone is already exist
+    // Validation gate to check if vendor with the request phone is already exist
     const existingUser = await this.vendorRepository.findOne({
       businessEmail: data.businessEmail
     })
@@ -50,6 +51,7 @@ export class VendorsService {
       await this.vendorRepository.create(payload)
       return { status: 1 }
     } catch (error) {
+      this.logger.error({ message: 'Failed to register you at this moment', error })
       throw new FitRpcException(
         'Failed to register you at this moment. please check your input values',
         HttpStatus.BAD_REQUEST
@@ -201,16 +203,13 @@ export class VendorsService {
   }
 
   async getVendorSettings (vendorId: string): Promise<VendorSettings> {
+    this.logger.log('PIM -> Fetching vendors settings')
     try {
-      const req = await this.vendorSettingsRepository.findOne({ vendorId })
-      if (req === null) {
-        throw new Error()
-      }
-      return req
+      return await this.vendorSettingsRepository.findOne({ vendor: vendorId })
     } catch (e) {
       throw new FitRpcException(
         'can not fetch vendors settings at this time',
-        HttpStatus.BAD_GATEWAY
+        HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
   }
@@ -218,7 +217,7 @@ export class VendorsService {
   async createVendorSettings (data: any, vendorId: string): Promise<ResponseWithStatus> {
     try {
       const newSettings = await this.vendorSettingsRepository.create({ ...data, vendorId })
-      await this.vendorRepository.findOneAndUpdate({ _id: newSettings.vendorId }, { settings: newSettings._id })
+      await this.vendorRepository.findOneAndUpdate({ _id: newSettings.vendor }, { settings: newSettings._id })
       return { status: 1 }
     } catch (e) {
       throw new FitRpcException(

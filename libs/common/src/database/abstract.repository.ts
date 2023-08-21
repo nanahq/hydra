@@ -14,7 +14,7 @@ import { type AbstractDocument } from './abstract.schema'
 export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   protected abstract readonly logger: Logger
 
-  constructor (
+  protected constructor (
     protected readonly model: Model<TDocument>,
     private readonly connection?: Connection
   ) {}
@@ -43,7 +43,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   async findOne (
     filterQuery: FilterQuery<TDocument>
-  ): Promise<TDocument | null> {
+  ): Promise<any> {
     return await this.model.findOne(filterQuery, {}, { lean: true }).sort({ createdAt: 'desc' })
   }
 

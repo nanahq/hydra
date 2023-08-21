@@ -20,10 +20,10 @@ import {
   registerUserRequest,
   ResponseWithStatus,
   ServicePayload,
-  User
+  User,
+  CurrentUser
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { CurrentUser } from './current-user.decorator'
 
 @Controller('user')
 export class UsersController {

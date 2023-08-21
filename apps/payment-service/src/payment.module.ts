@@ -49,6 +49,7 @@ import { PaymentController } from './charge/charge.controller'
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.ADMIN_API }),
+    RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE }),
     DatabaseModule,
     HttpModule
   ],

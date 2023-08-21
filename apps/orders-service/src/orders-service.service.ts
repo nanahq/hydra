@@ -3,7 +3,7 @@ import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import {
   FitRpcException,
   Order,
-  OrderStatus,
+  OrderStatus, OrderTypes,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
@@ -25,7 +25,10 @@ export class OrdersServiceService {
     private readonly notificationClient: ClientProxy,
 
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
-    private readonly userClient: ClientProxy
+    private readonly userClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
+    private readonly driverClient: ClientProxy
   ) {}
 
   public async placeOrder ({
@@ -97,10 +100,15 @@ export class OrdersServiceService {
     }
   }
 
-  public async getOrderById (_id: any): Promise<Order | null> {
+  public async getOrderById (_id: string): Promise<Order | null> {
     try {
-      return await this.orderRepository.findOneAndPopulate({ _id }, 'user listing vendor')
+      this.logger.log(`PIM -> fetching single order with id: ${_id}`)
+      return await this.orderRepository.findOneAndPopulate({ _id }, ['user', 'listing', 'vendor'])
     } catch (error) {
+      this.logger.error({
+        error,
+        message: 'failed to fetch order'
+      })
       throw new FitRpcException(
         'Can not process request. Try again later',
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -138,7 +146,7 @@ export class OrdersServiceService {
     try {
       this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
 
-      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, { txRefId, orderStatus: status })
+      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, { txRefId, orderStatus: status }) as Order
 
       this.logger.log(`[PIM] - order status updated for paid order: ${orderId}`)
 
@@ -157,6 +165,12 @@ export class OrdersServiceService {
       await lastValueFrom(
         this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: order._id, userId: order.user })
       )
+
+      if (order.orderType === OrderTypes.INSTANT) { // Start ODSA on instant order
+        await lastValueFrom<any>(
+          this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
+        )
+      }
 
       return { status: 1 }
     } catch (error) {
@@ -178,6 +192,19 @@ export class OrdersServiceService {
       )
     } catch (error) {
       throw new FitRpcException('failed to process order', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async odsaGetPreOrders (): Promise<Order[] | null> {
+    try {
+      this.logger.log('PIM -> Getting pre orders for ODSA daily cron')
+      return await this.orderRepository.findAndPopulate({ orderStatus: 'ORDER_PLACED', orderType: OrderTypes.PRE }, ['listing', 'user', 'vendor'])
+    } catch (error) {
+      this.logger.error({
+        message: 'PIM -> failed to get pre orders for ODSA daily cron',
+        error
+      })
+      throw new FitRpcException('failed to fetched ODSA pre orders', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }
