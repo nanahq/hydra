@@ -11,11 +11,11 @@ import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   Review,
-  Vendor
+  Vendor,
+  CurrentUser
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
-import { CurrentUser } from './current-user.decorator'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
 @Controller('review')

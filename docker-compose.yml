@@ -170,6 +170,42 @@ services:
       - /usr/src/app/node_modules
     networks:
       - nana-app
+  drivers-service:
+    build:
+      context: .
+      dockerfile: apps/drivers-service/Dockerfile
+      target: development
+    command: 'yarn start:dev drivers-service'
+    env_file:
+      - apps/drivers-service/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - cassandra-db
+      - rabbitmq
+    ports:
+      - '3003:3003'
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
+  location-service:
+    build:
+      context: .
+      dockerfile: apps/location-service/Dockerfile
+      target: development
+    command: 'yarn start:dev location-service'
+    env_file:
+      - apps/location-service/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
   rabbitmq:
     image: rabbitmq
     ports:
@@ -219,6 +255,8 @@ volumes:
   queue_data:
     driver: local
   db_data:
+    driver: local
+  cs_data:
     driver: local
 networks:
   nana-app:

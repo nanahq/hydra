@@ -145,8 +145,8 @@ export class UsersService {
   }
 
   private async checkExistingUser (phone: string): Promise<User> {
-    const user = await this.usersRepository.findOne({ phone })
-    if (user !== null && !user.isDeleted) {
+    const user: User | null = await this.usersRepository.findOne({ phone })
+    if (user !== null && !(user.isDeleted)) {
       throw new FitRpcException(
         'Phone Number is  already registered.',
         HttpStatus.CONFLICT

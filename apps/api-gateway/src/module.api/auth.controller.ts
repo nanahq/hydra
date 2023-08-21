@@ -3,8 +3,7 @@ import { Response } from 'express'
 
 import { LocalGuard } from '../auth/guards/local.guard'
 import { AuthService } from './auth.service'
-import { CurrentUser } from './current-user.decorator'
-import { User } from '@app/common'
+import { User, CurrentUser } from '@app/common'
 
 @Controller('auth')
 export class AuthController {

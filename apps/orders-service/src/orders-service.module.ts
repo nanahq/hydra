@@ -24,6 +24,7 @@ import { OrderRepository } from './order.repository'
     DatabaseModule,
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE }),
     RmqModule
   ],
   controllers: [OrdersServiceController],

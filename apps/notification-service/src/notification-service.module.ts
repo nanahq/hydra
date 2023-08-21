@@ -26,7 +26,7 @@ import { TransactionEmails } from './email/transactional.service'
     TwilioModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        accountSid: configService.get('TWILIO_ACCOUNT_SID'),
+        accountSid: 'ACec965067efbc4019dd61a5aaf0c42369',
         authToken: configService.get('TWILIO_AUTH_TOKEN')
       }),
       inject: [ConfigService]

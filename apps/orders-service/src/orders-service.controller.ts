@@ -39,11 +39,11 @@ export class OrdersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDORS_ORDERS)
   async getVendorsOrders (
-    @Payload() { data: vendorId }: ServicePayload<string>,
+    @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
   ): Promise<Order[]> {
     try {
-      return await this.ordersServiceService.getAllVendorOrders(vendorId)
+      return await this.ordersServiceService.getAllVendorOrders(userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -140,6 +140,19 @@ export class OrdersServiceController {
   ): Promise<void> {
     try {
       return await this.ordersServiceService.vendorAcceptOrder(data.orderId, data.phone)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ODSA_GET_ORDERS_PRE)
+  async getOdsaPreOrders (
+    @Ctx() context: RmqContext
+  ): Promise<Order[] | null> {
+    try {
+      return await this.ordersServiceService.odsaGetPreOrders()
     } catch (error) {
       throw new RpcException(error)
     } finally {

@@ -22,11 +22,11 @@ import {
   Vendor,
   ServicePayload,
   IRpcException,
-  ResponseWithStatus
+  ResponseWithStatus,
+  CurrentUser
 } from '@app/common'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { CurrentUser } from './current-user.decorator'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'

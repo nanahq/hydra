@@ -31,6 +31,9 @@ export class PaymentService {
     private readonly listingClient: ClientProxy,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
+    private readonly odsaClient: ClientProxy,
     private readonly flutterwave: FlutterwaveService
   ) {}
 
@@ -107,7 +110,7 @@ export class PaymentService {
       // Prepare charge payload
       const chargePayload: BaseChargeRequest = {
         tx_ref: `NANA-${RandomGen.genRandomNum()}`,
-        amount: String(order.totalOrderValue),
+        amount: String(order.orderValuePayable),
         email: order.user.email,
         currency: 'NGN'
       }
