@@ -9,7 +9,7 @@ async function bootstrap (): Promise<void> {
   const port = app.get(ConfigService).get<string>('PORT') as string
   const rmq = app.get<RmqService>(RmqService)
   app.connectMicroservice<RmqOptions>(
-    rmq.getOption(QUEUE_SERVICE.ADMIN_SERVICE)
+    rmq.getOption(QUEUE_SERVICE.ADMINS_SERVICE)
   )
   await app.startAllMicroservices()
   await app.listen(port)

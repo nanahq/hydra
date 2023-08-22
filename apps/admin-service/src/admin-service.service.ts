@@ -98,4 +98,18 @@ export class AdminServiceService {
     }
     return { status: 1 }
   }
+
+  async getAllAdmins (): Promise<Admin[]> {
+    const getRequest = await this.adminRepository.find({
+      deletedAt: null
+    })
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all admins.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
 }

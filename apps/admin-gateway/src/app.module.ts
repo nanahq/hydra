@@ -1,11 +1,4 @@
-import {
-  DynamicModule,
-  INestApplication,
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  ValidationPipe
-} from '@nestjs/common'
+import { DynamicModule, INestApplication, MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
@@ -48,7 +41,8 @@ export class AppModule implements NestModule {
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
             JWT_EXPIRATION: Joi.string().required(),
-            PORT: Joi.string().required()
+            PORT: Joi.string().required(),
+            RMQ_ADMIN_API_QUEUE: Joi.string().required()
           }),
           envFilePath: './apps/admin-gateway/.env'
         }),
@@ -63,7 +57,7 @@ export class AppModule implements NestModule {
           }),
           inject: [ConfigService]
         }),
-        RmqModule.register({ name: QUEUE_SERVICE.ADMIN_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.ADMINS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),

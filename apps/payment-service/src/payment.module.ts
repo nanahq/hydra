@@ -8,6 +8,8 @@ import { MongooseModule } from '@nestjs/mongoose'
 import {
   Order,
   OrderSchema,
+  Payment,
+  PaymentHistorySchema,
   QUEUE_SERVICE,
   RmqModule,
   User,
@@ -15,8 +17,7 @@ import {
   Vendor,
   VendorPayout,
   VendorPayoutSchema,
-  VendorSchema,
-  Payment, PaymentHistorySchema
+  VendorSchema
 } from '@app/common'
 import { DatabaseModule } from '@app/common/database/database.module'
 import { ScheduleModule } from '@nestjs/schedule'
@@ -39,16 +40,31 @@ import { PaymentController } from './charge/charge.controller'
       }),
       envFilePath: './apps/payment-service/.env'
     }),
-    MongooseModule.forFeature([{ name: VendorPayout.name, schema: VendorPayoutSchema }]),
-    MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }]),
-    MongooseModule.forFeature([{ name: Payment.name, schema: PaymentHistorySchema }]),
+    MongooseModule.forFeature([{
+      name: VendorPayout.name,
+      schema: VendorPayoutSchema
+    }]),
+    MongooseModule.forFeature([{
+      name: Vendor.name,
+      schema: VendorSchema
+    }]),
+    MongooseModule.forFeature([{
+      name: User.name,
+      schema: UserSchema
+    }]),
+    MongooseModule.forFeature([{
+      name: Order.name,
+      schema: OrderSchema
+    }]),
+    MongooseModule.forFeature([{
+      name: Payment.name,
+      schema: PaymentHistorySchema
+    }]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
-    RmqModule.register({ name: QUEUE_SERVICE.ADMIN_API }),
+    RmqModule.register({ name: QUEUE_SERVICE.ADMINS_API }),
     RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE }),
     DatabaseModule,
     HttpModule
@@ -56,4 +72,5 @@ import { PaymentController } from './charge/charge.controller'
   controllers: [VendorPayoutController, PaymentController],
   providers: [VendorPayoutService, VendorPayoutRepository, ConfigService, PaymentRepository, PaymentService, FlutterwaveService]
 })
-export class PaymentServiceModule {}
+export class PaymentServiceModule {
+}

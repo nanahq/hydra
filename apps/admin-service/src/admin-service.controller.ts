@@ -19,6 +19,17 @@ export class AdminServiceController {
   ) {
   }
 
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_ADMIN)
+  async listAdmins (@Ctx() context: RmqContext): Promise<Admin[]> {
+    try {
+      return await this.adminServiceService.getAllAdmins()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.CREATE_ADMIN)
   async createAdmin (
     @Payload() { data }: ServicePayload<RegisterAdminDTO>,
