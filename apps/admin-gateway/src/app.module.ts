@@ -19,6 +19,7 @@ import { VendorController } from './module.api/vendor.controller'
 import { ListingController } from './module.api/listing.controller'
 import { OrdersController } from './module.api/orders.controller'
 import { ReviewsController } from './module.api/reviews.controller'
+import { DashboardController } from './module.api/dashboard.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -42,7 +43,8 @@ export class AppModule implements NestModule {
             JWT_SECRET: Joi.string().required(),
             JWT_EXPIRATION: Joi.string().required(),
             PORT: Joi.string().required(),
-            RMQ_ADMIN_API_QUEUE: Joi.string().required()
+            RMQ_ADMINS_QUEUE: Joi.string().required(),
+            RMQ_ADMINS_API_QUEUE: Joi.string().required()
           }),
           envFilePath: './apps/admin-gateway/.env'
         }),
@@ -65,8 +67,9 @@ export class AppModule implements NestModule {
         AppModule
       ],
       controllers: [
-        AdminController,
         AuthController,
+        AdminController,
+        DashboardController,
         VendorController,
         ListingController,
         OrdersController,

@@ -3,33 +3,35 @@ import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import {
   FitRpcException,
   Order,
-  OrderStatus, OrderTypes,
+  OrderStatus,
+  OrderTypes,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
   ResponseWithStatus,
-  ServicePayload, UpdateOrderStatusPaidRequestDto,
+  ServicePayload,
+  UpdateOrderStatusPaidRequestDto,
   UpdateOrderStatusRequestDto
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
-import { FilterQuery } from 'mongoose'
+import { Aggregate, FilterQuery } from 'mongoose'
 
 @Injectable()
 export class OrdersServiceService {
   private readonly logger = new Logger(OrdersServiceService.name)
+
   constructor (
     private readonly orderRepository: OrderRepository,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
-
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly userClient: ClientProxy,
-
     @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
     private readonly driverClient: ClientProxy
-  ) {}
+  ) {
+  }
 
   public async placeOrder ({
     data,
@@ -142,11 +144,18 @@ export class OrdersServiceService {
     }
   }
 
-  public async updateStatusPaid ({ status, orderId, txRefId }: UpdateOrderStatusPaidRequestDto): Promise<ResponseWithStatus> {
+  public async updateStatusPaid ({
+    status,
+    orderId,
+    txRefId
+  }: UpdateOrderStatusPaidRequestDto): Promise<ResponseWithStatus> {
     try {
       this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
 
-      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, { txRefId, orderStatus: status }) as Order
+      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, {
+        txRefId,
+        orderStatus: status
+      }) as Order
 
       this.logger.log(`[PIM] - order status updated for paid order: ${orderId}`)
 
@@ -163,7 +172,10 @@ export class OrdersServiceService {
       )
 
       await lastValueFrom(
-        this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: order._id, userId: order.user })
+        this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, {
+          orderId: order._id,
+          userId: order.user
+        })
       )
 
       if (order.orderType === OrderTypes.INSTANT) { // Start ODSA on instant order
@@ -198,7 +210,10 @@ export class OrdersServiceService {
   public async odsaGetPreOrders (): Promise<Order[] | null> {
     try {
       this.logger.log('PIM -> Getting pre orders for ODSA daily cron')
-      return await this.orderRepository.findAndPopulate({ orderStatus: 'ORDER_PLACED', orderType: OrderTypes.PRE }, ['listing', 'user', 'vendor'])
+      return await this.orderRepository.findAndPopulate({
+        orderStatus: 'ORDER_PLACED',
+        orderType: OrderTypes.PRE
+      }, ['listing', 'user', 'vendor'])
     } catch (error) {
       this.logger.error({
         message: 'PIM -> failed to get pre orders for ODSA daily cron',
@@ -206,5 +221,9 @@ export class OrdersServiceService {
       })
       throw new FitRpcException('failed to fetched ODSA pre orders', HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+
+  async adminMetrics (): Promise<Aggregate<any>> {
+    return await this.orderRepository.find({})
   }
 }

@@ -14,8 +14,8 @@ import { DatabaseModule } from '@app/common/database/database.module'
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-        RMQ_ADMIN_QUEUE: Joi.string(),
-        RMQ_ADMIN_API_QUEUE: Joi.string(),
+        RMQ_ADMINS_QUEUE: Joi.string().required(),
+        RMQ_ADMINS_API_QUEUE: Joi.string().required(),
         RMQ_URI: Joi.string()
       }),
       envFilePath: './apps/admin-service/.env'

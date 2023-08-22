@@ -18,7 +18,8 @@ export enum QUEUE_MESSAGE {
   UPDATE_ADMIN_STATUS = ' update_admin_status',
   DELETE_ADMIN = 'delete_admin',
   CREATE_ADMIN = 'create_admin',
-  ADMIN_DASHBOARD = 'admin_dashboard',
+
+  ADMIN_DASHBOARD_ORDER_METRICS = 'admin_dashboard_order_metrics',
 
   GET_VENDOR = 'get_vendor',
   GET_VENDOR_SETTINGS = 'get_vendor_settings',

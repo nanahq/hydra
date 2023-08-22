@@ -99,18 +99,4 @@ export class AdminServiceController {
       this.rmqService.ack(context)
     }
   }
-
-  @MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD)
-  async dashboard (
-    @Payload() { userId }: ServicePayload<null>,
-      @Ctx() context: RmqContext
-  ): Promise<{ status: number }> {
-    try {
-      return this.adminServiceService.adminRepository.adminDashboard()
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
 }

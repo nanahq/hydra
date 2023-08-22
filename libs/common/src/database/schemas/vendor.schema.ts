@@ -1,8 +1,12 @@
 import { SchemaTypes, Types } from 'mongoose'
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument } from '@app/common'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { AbstractDocument, VendorApprovalStatusEnum } from '@app/common'
+import { Column } from 'typeorm'
 
-@Schema({ versionKey: false, timestamps: true })
+@Schema({
+  versionKey: false,
+  timestamps: true
+})
 export class Vendor extends AbstractDocument {
   @Prop()
     firstName: string
@@ -10,10 +14,16 @@ export class Vendor extends AbstractDocument {
   @Prop()
     lastName: string
 
-  @Prop({ unique: true, sparse: true })
+  @Prop({
+    unique: true,
+    sparse: true
+  })
     email: string
 
-  @Prop({ unique: true, sparse: true })
+  @Prop({
+    unique: true,
+    sparse: true
+  })
     businessEmail: string
 
   @Prop()
@@ -34,6 +44,12 @@ export class Vendor extends AbstractDocument {
   @Prop(String)
     status: 'ONLINE' | 'OFFLINE'
 
+  @Column({
+    type: 'enum',
+    enum: VendorApprovalStatusEnum
+  })
+    acc_status: VendorApprovalStatusEnum
+
   @Prop({
     type: String
   })
@@ -52,7 +68,10 @@ export class Vendor extends AbstractDocument {
   @Prop(String)
     restaurantImage: string
 
-  @Prop({ type: Boolean, default: false })
+  @Prop({
+    type: Boolean,
+    default: false
+  })
     isDeleted: boolean
 
   @Prop({
@@ -64,7 +83,10 @@ export class Vendor extends AbstractDocument {
     coordinates: [string, string]
   }
 
-  @Prop({ type: Types.ObjectId, ref: 'VendorSettings' })
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'VendorSettings'
+  })
     settings: any
 
   @Prop({ type: String })

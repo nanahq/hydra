@@ -27,6 +27,7 @@ export class AdminController {
   ) {
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('list')
   async getAll (): Promise<ResponseWithStatus> {
     const payload: {} = {}
@@ -97,18 +98,6 @@ export class AdminController {
 
     return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.DELETE_ADMIN, payload).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('dashboard')
-  async dashboard (): Promise<ResponseWithStatus> {
-    return await lastValueFrom<ResponseWithStatus>(
-      this.adminClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD, {}).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

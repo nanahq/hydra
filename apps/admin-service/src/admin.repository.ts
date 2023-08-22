@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { AbstractRepository } from '@app/common'
-import { InjectModel, InjectConnection } from '@nestjs/mongoose'
-import { Model, Connection, Aggregate } from 'mongoose'
+import { InjectConnection, InjectModel } from '@nestjs/mongoose'
+import { Connection, Model } from 'mongoose'
 import { Admin } from '@app/common/database/schemas/admin.schema'
 
 @Injectable()
@@ -13,18 +13,5 @@ export class AdminRepository extends AbstractRepository<Admin> {
     @InjectConnection() connection: Connection
   ) {
     super(adminModel, connection)
-  }
-
-  adminDashboard (): Aggregate<any> {
-    return this.model.aggregate([
-      {
-        $group: {
-          _id: '$orders',
-          total: {
-            $count: '$id'
-          }
-        }
-      }
-    ])
   }
 }

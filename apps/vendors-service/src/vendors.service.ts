@@ -6,27 +6,24 @@ import {
   ResponseWithStatus,
   ServicePayload,
   UpdateVendorStatus,
+  VendorApprovalStatusEnum,
   VendorUserI
 } from '@app/common'
-import {
-  CreateVendorDto,
-  UpdateVendorSettingsDto
-} from '@app/common/database/dto/vendor.dto'
+import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 
-import {
-  VendorRepository,
-  VendorSettingsRepository
-} from './vendors.repository'
+import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 
 @Injectable()
 export class VendorsService {
   private readonly logger = new Logger(VendorsService.name)
+
   constructor (
     private readonly vendorRepository: VendorRepository,
     private readonly vendorSettingsRepository: VendorSettingsRepository
-  ) {}
+  ) {
+  }
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     // Validation gate to check if vendor with the request phone is already exist
@@ -44,14 +41,18 @@ export class VendorsService {
     const payload: Partial<Vendor> = {
       ...data,
       password: await bcrypt.hash(data.password, 10),
-      status: 'ONLINE'
+      status: 'ONLINE',
+      acc_status: VendorApprovalStatusEnum.PENDING
     }
 
     try {
       await this.vendorRepository.create(payload)
       return { status: 1 }
     } catch (error) {
-      this.logger.error({ message: 'Failed to register you at this moment', error })
+      this.logger.error({
+        message: 'Failed to register you at this moment',
+        error
+      })
       throw new FitRpcException(
         'Failed to register you at this moment. please check your input values',
         HttpStatus.BAD_REQUEST
@@ -216,7 +217,10 @@ export class VendorsService {
 
   async createVendorSettings (data: any, vendorId: string): Promise<ResponseWithStatus> {
     try {
-      const newSettings = await this.vendorSettingsRepository.create({ ...data, vendorId })
+      const newSettings = await this.vendorSettingsRepository.create({
+        ...data,
+        vendorId
+      })
       await this.vendorRepository.findOneAndUpdate({ _id: newSettings.vendor }, { settings: newSettings._id })
       return { status: 1 }
     } catch (e) {
@@ -259,6 +263,7 @@ function getVendorsMapper (vendors: Vendor[]): VendorUserI[] {
       businessLogo: vendor.businessLogo,
       isValidated: vendor.isValidated,
       status: vendor.status,
+      acc_status: vendor.acc_status,
       location: vendor.location
     }
   })
