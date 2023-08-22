@@ -17,7 +17,6 @@ export class AuthController {
     @CurrentUser() admin: Admin,
       @Res({ passthrough: true }) response: Response
   ): Promise<void> {
-    console.log(admin)
     return await this.authService.login(admin, response)
   }
 
