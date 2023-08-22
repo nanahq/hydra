@@ -53,6 +53,26 @@ services:
     networks:
       - nana-app
 
+  admin-service:
+    build:
+      context: .
+      dockerfile: ./apps/admin-service/Dockerfile
+      target: development
+    command: 'yarn start:dev admin-service'
+    env_file:
+      - ./apps/admin-service/.env
+    depends_on:
+      - api-gateway
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
+
   users-service:
     build:
       context: .
@@ -92,6 +112,7 @@ services:
       - /usr/src/app/node_modules
     networks:
       - nana-app
+
   notification-service:
     build:
       context: .
@@ -108,6 +129,7 @@ services:
       - /usr/src/app/node_modules
     networks:
       - nana-app
+
   orders-service:
     build:
       context: .
@@ -127,6 +149,7 @@ services:
       - /usr/src/app/node_modules
     networks:
       - nana-app
+
   listings-service:
     build:
       context: .
@@ -168,6 +191,7 @@ services:
       - /usr/src/app/node_modules
     networks:
       - nana-app
+
   reviews-service:
     build:
       context: .
@@ -234,43 +258,46 @@ services:
       - queue_data:/var/lib/rabbitmq
     networks:
       - nana-app
+
   mongodb-primary:
-      image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
-      environment:
-          - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
-          - MONGODB_REPLICA_SET_MODE=primary
-          - MONGODB_ROOT_PASSWORD=password123
-          - MONGODB_REPLICA_SET_KEY=replicasetkey123
-      volumes:
-          - 'db_data:/bitnami/mongodb'
-      ports:
-          - '27017:27017'
-      networks:
-        - nana-app
+    image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+    volumes:
+      - 'db_data:/bitnami/mongodb'
+    ports:
+      - '27017:27017'
+    networks:
+      - nana-app
+
   mongodb-secondary:
-      image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
-      depends_on:
-          - mongodb-primary
-      environment:
-          - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
-          - MONGODB_REPLICA_SET_MODE=secondary
-          - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-          - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-          - MONGODB_REPLICA_SET_KEY=replicasetkey123
-      networks:
-        - nana-app
+    image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
+    depends_on:
+      - mongodb-primary
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
+      - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+    networks:
+      - nana-app
+
   mongodb-arbiter:
-      image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
-      depends_on:
-          - mongodb-primary
-      environment:
-          - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
-          - MONGODB_REPLICA_SET_MODE=arbiter
-          - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-          - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-          - MONGODB_REPLICA_SET_KEY=replicasetkey123
-      networks:
-        - nana-app
+    image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
+    depends_on:
+      - mongodb-primary
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
+      - MONGODB_REPLICA_SET_MODE=arbiter
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+    networks:
+      - nana-app
 volumes:
   queue_data:
     driver: local

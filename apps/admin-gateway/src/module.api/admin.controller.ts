@@ -33,6 +33,7 @@ export class AdminController {
       userId: '',
       data: request
     }
+
     return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.CREATE_ADMIN, payload).pipe(
         catchError<any, any>((error: IRpcException) => {
