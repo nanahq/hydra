@@ -3,6 +3,7 @@ import { RegisterDriverDto } from '@app/common/dto/registerDriver.dto'
 import { Driver, FitRpcException, ResponseWithStatus } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
+import { internationalisePhoneNumber } from '@app/common/helpers/phone.number'
 
 @Injectable()
 export class DriversServiceService {
@@ -14,6 +15,7 @@ export class DriversServiceService {
   }
 
   public async register (payload: RegisterDriverDto): Promise<ResponseWithStatus> {
+    payload.phone = internationalisePhoneNumber(payload.phone)
     const existingDriver = await this.driverRepository.findOne({ phone: payload.phone })
 
     if (existingDriver !== null) {
