@@ -8,37 +8,42 @@ import {
   UpdateVendorStatus,
   VendorUserI
 } from '@app/common'
-import {
-  CreateVendorDto,
-  UpdateVendorSettingsDto
-} from '@app/common/database/dto/vendor.dto'
+import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 
-import {
-  VendorRepository,
-  VendorSettingsRepository
-} from './vendors.repository'
+import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 
 @Injectable()
 export class VendorsService {
   private readonly logger = new Logger(VendorsService.name)
+
   constructor (
     private readonly vendorRepository: VendorRepository,
     private readonly vendorSettingsRepository: VendorSettingsRepository
-  ) {}
+  ) {
+  }
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     // Validation gate to check if vendor with the request phone is already exist
-    const existingUser = await this.vendorRepository.findOne({
-      businessEmail: data.businessEmail
+    const existingUser: Vendor = await this.vendorRepository.findOne({
+      $or: [{ phone: data.phone }, { businessEmail: data.businessEmail }]
     })
 
     if (existingUser !== null) {
-      throw new FitRpcException(
-        'Email already registered. You can reset your password if forgotten',
-        HttpStatus.CONFLICT
-      )
+      if (existingUser.email.toLowerCase() === data.email.toLowerCase()) {
+        throw new FitRpcException(
+          'Email already registered. You can reset your password if forgotten',
+          HttpStatus.CONFLICT
+        )
+      }
+
+      if (existingUser.phone === data.phone) {
+        throw new FitRpcException(
+          'Phone number already registered. You can reset your password if forgotten',
+          HttpStatus.CONFLICT
+        )
+      }
     }
 
     const payload: Partial<Vendor> = {
@@ -51,7 +56,10 @@ export class VendorsService {
       await this.vendorRepository.create(payload)
       return { status: 1 }
     } catch (error) {
-      this.logger.error({ message: 'Failed to register you at this moment', error })
+      this.logger.error({
+        message: 'Failed to register you at this moment',
+        error
+      })
       throw new FitRpcException(
         'Failed to register you at this moment. please check your input values',
         HttpStatus.BAD_REQUEST
@@ -216,7 +224,10 @@ export class VendorsService {
 
   async createVendorSettings (data: any, vendorId: string): Promise<ResponseWithStatus> {
     try {
-      const newSettings = await this.vendorSettingsRepository.create({ ...data, vendorId })
+      const newSettings = await this.vendorSettingsRepository.create({
+        ...data,
+        vendorId
+      })
       await this.vendorRepository.findOneAndUpdate({ _id: newSettings.vendor }, { settings: newSettings._id })
       return { status: 1 }
     } catch (e) {
