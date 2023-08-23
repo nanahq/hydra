@@ -1,24 +1,14 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpException,
-  Inject,
-  Param,
-  Put,
-  UseGuards
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpException, Inject, Param, Put, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
+  IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
   ServicePayload,
   UpdateVendorStatus,
-  IRpcException,
   Vendor
 } from '@app/common'
 
@@ -29,7 +19,8 @@ export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorsClient: ClientProxy
-  ) {}
+  ) {
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get('vendors')
@@ -60,7 +51,7 @@ export class VendorController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('tatus')
+  @Put('status')
   async updateVendorStatus (
     @Body() data: UpdateVendorStatus
   ): Promise<{ status: number }> {
