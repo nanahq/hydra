@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, Inject, Param, Put, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpException, Inject, Param, Patch, Put, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -13,6 +13,7 @@ import {
 } from '@app/common'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+import { ReasonDto } from '@app/common/database/dto/reason.dto'
 
 @Controller('vendor')
 export class VendorController {
@@ -73,6 +74,44 @@ export class VendorController {
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorsClient
         .send(QUEUE_MESSAGE.DELETE_VENDOR_PROFILE, { userId })
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
+  @Patch('/:id/approve')
+  async approve (
+    @Param('id') userId: string
+  ): Promise<ResponseWithStatus> {
+    return await lastValueFrom<ResponseWithStatus>(
+      this.vendorsClient
+        .send(QUEUE_MESSAGE.VENDOR_APPROVE, { userId })
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
+  @Patch('/:id/disapprove')
+  async disapprove (
+    @Param('id') userId: string,
+      @Body() req: ReasonDto
+  ): Promise<ResponseWithStatus> {
+    return await lastValueFrom<ResponseWithStatus>(
+      this.vendorsClient
+        .send(QUEUE_MESSAGE.VENDOR_DISAPPROVE, {
+          userId,
+          data: req
+        })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

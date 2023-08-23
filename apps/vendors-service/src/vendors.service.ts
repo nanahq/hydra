@@ -6,7 +6,7 @@ import {
   ResponseWithStatus,
   ServicePayload,
   UpdateVendorStatus,
-  VendorApprovalStatusEnum,
+  VendorApprovalStatus,
   VendorUserI
 } from '@app/common'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
@@ -42,7 +42,7 @@ export class VendorsService {
       ...data,
       password: await bcrypt.hash(data.password, 10),
       status: 'ONLINE',
-      acc_status: VendorApprovalStatusEnum.PENDING
+      acc_status: VendorApprovalStatus.PENDING
     }
 
     try {
@@ -103,6 +103,39 @@ export class VendorsService {
     if (updateRequest === null) {
       throw new FitRpcException(
         'Failed to update user. Incorrect input',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return { status: 1 }
+  }
+
+  async approve (id: string): Promise<ResponseWithStatus> {
+    const updateRequest = await this.vendorRepository.findOneAndUpdate(
+      { _id: id },
+      { acc_status: VendorApprovalStatus.APPROVED }
+    )
+
+    if (updateRequest === null) {
+      throw new FitRpcException(
+        'Failed to approve vendor',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return { status: 1 }
+  }
+
+  async disapprove (id: string, reason: string): Promise<ResponseWithStatus> {
+    const updateRequest = await this.vendorRepository.findOneAndUpdate(
+      { _id: id },
+      {
+        rejection_reason: reason,
+        acc_status: VendorApprovalStatus.DISAPPROVED
+      }
+    )
+
+    if (updateRequest === null) {
+      throw new FitRpcException(
+        'Failed to approve vendor',
         HttpStatus.BAD_REQUEST
       )
     }

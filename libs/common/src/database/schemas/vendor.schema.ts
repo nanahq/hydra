@@ -1,7 +1,6 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, VendorApprovalStatusEnum } from '@app/common'
-import { Column } from 'typeorm'
+import { AbstractDocument, VendorApprovalStatus } from '@app/common'
 
 @Schema({
   versionKey: false,
@@ -44,16 +43,19 @@ export class Vendor extends AbstractDocument {
   @Prop(String)
     status: 'ONLINE' | 'OFFLINE'
 
-  @Column({
-    type: 'enum',
-    enum: VendorApprovalStatusEnum
-  })
-    acc_status: VendorApprovalStatusEnum
+  @Prop(String)
+    acc_status: VendorApprovalStatus
+
+  @Prop({ type: String })
+    rejection_reason: string
+
+  @Prop({ type: String })
+    businessName: string
 
   @Prop({
     type: String
   })
-    businessName: string
+    hello: string
 
   @Prop({
     type: String

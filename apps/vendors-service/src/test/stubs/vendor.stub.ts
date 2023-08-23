@@ -1,4 +1,4 @@
-import { Vendor, VendorApprovalStatusEnum } from '@app/common'
+import { Vendor, VendorApprovalStatus } from '@app/common'
 import { Types } from 'mongoose'
 
 export function VendorStub (): Partial<Vendor> | Vendor {
@@ -13,7 +13,7 @@ export function VendorStub (): Partial<Vendor> | Vendor {
     phone: '+2348107641933',
     isValidated: false,
     status: 'ONLINE',
-    acc_status: VendorApprovalStatusEnum.PENDING,
+    acc_status: VendorApprovalStatus.PENDING,
     businessName: 'Jay\'s Pizza',
     businessAddress: 'Tsamiyar boka',
     isDeleted: false
