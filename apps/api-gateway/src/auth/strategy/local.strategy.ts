@@ -5,6 +5,7 @@ import { Strategy } from 'passport-local'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common'
+import { internationalisePhoneNumber } from '@app/common/helpers/phone.number'
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -19,7 +20,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     return await lastValueFrom(
       this.usersClient
         .send(QUEUE_MESSAGE.GET_USER_LOCAL, {
-          phone,
+          phone: internationalisePhoneNumber(phone),
           password
         })
         .pipe(

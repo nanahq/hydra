@@ -14,6 +14,7 @@ import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/d
 import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
+import { internationalisePhoneNumber } from '@app/common/helpers/phone.number'
 
 @Injectable()
 export class VendorsService {
@@ -26,16 +27,26 @@ export class VendorsService {
   }
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
+    data.phone = internationalisePhoneNumber(data.phone)
     // Validation gate to check if vendor with the request phone is already exist
-    const existingUser = await this.vendorRepository.findOne({
-      businessEmail: data.businessEmail
+    const existingUser: Vendor = await this.vendorRepository.findOne({
+      $or: [{ phone: data.phone }, { businessEmail: data.businessEmail }]
     })
 
     if (existingUser !== null) {
-      throw new FitRpcException(
-        'Email already registered. You can reset your password if forgotten',
-        HttpStatus.CONFLICT
-      )
+      if (existingUser.email.toLowerCase() === data.email.toLowerCase()) {
+        throw new FitRpcException(
+          'Email already registered. You can reset your password if forgotten',
+          HttpStatus.CONFLICT
+        )
+      }
+
+      if (existingUser.phone === data.phone) {
+        throw new FitRpcException(
+          'Phone number already registered. You can reset your password if forgotten',
+          HttpStatus.CONFLICT
+        )
+      }
     }
 
     const payload: Partial<Vendor> = {
