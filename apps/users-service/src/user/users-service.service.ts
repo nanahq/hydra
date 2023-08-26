@@ -13,11 +13,13 @@ import {
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
+
 @Injectable()
 export class UsersService {
   constructor (
     private readonly usersRepository: UserRepository
-  ) {}
+  ) {
+  }
 
   async register ({
     phone,
@@ -53,9 +55,15 @@ export class UsersService {
     const validateUserRequest = await this.usersRepository.findOne({ phone })
 
     if (validateUserRequest === null) {
-      await this.register({ password, phone })
+      await this.register({
+        password,
+        phone
+      })
       const data = await this.usersRepository.findOne({ phone }) as User
-      return { status: 1, data }
+      return {
+        status: 1,
+        data
+      }
     }
 
     const isCorrectPassword: boolean = await bcrypt.compare(
@@ -71,7 +79,10 @@ export class UsersService {
     }
 
     validateUserRequest.password = ''
-    return { status: 2, data: validateUserRequest }
+    return {
+      status: 2,
+      data: validateUserRequest
+    }
   }
 
   async updateUserStatus ({
@@ -105,7 +116,10 @@ export class UsersService {
 
   async getUser ({ userId }: TokenPayload): Promise<User> {
     try {
-      const user = await this.usersRepository.findOne({ _id: userId, isDeleted: false })
+      const user = await this.usersRepository.findOne({
+        _id: userId,
+        isDeleted: false
+      })
       if (user === null) {
         throw new Error()
       }
@@ -125,7 +139,10 @@ export class UsersService {
   }
 
   public async getUserWithPhone (phone: string): Promise<User> {
-    const _user = await this.usersRepository.findOne({ phone, isDeleted: false })
+    const _user = await this.usersRepository.findOne({
+      phone,
+      isDeleted: false
+    })
 
     if (_user === null) {
       throw new FitRpcException(

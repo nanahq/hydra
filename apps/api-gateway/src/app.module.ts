@@ -20,6 +20,7 @@ import { ListingsController } from './module.api/listing.controller'
 import { OrderController } from './module.api/order.controller'
 import { ReviewController } from './module.api/review.controller'
 import { PaymentController } from './module.api/payment.controller'
+import { AddressBookController } from './module.api/address-book.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -52,6 +53,7 @@ export class AppModule implements NestModule {
           }),
           inject: [ConfigService]
         }),
+        RmqModule.register({ name: QUEUE_SERVICE.ADMINS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
@@ -74,7 +76,8 @@ export class AppModule implements NestModule {
         ListingsController,
         OrderController,
         ReviewController,
-        PaymentController
+        PaymentController,
+        AddressBookController
       ],
       providers: [
         AuthService,
@@ -93,10 +96,10 @@ export class AppModule implements NestModule {
   }
 
   /**
-     *  Set Apps configurations
-     * @param app INestApplication
-     * @returns  void
-     */
+   *  Set Apps configurations
+   * @param app INestApplication
+   * @returns  void
+   */
   static configure (app: INestApplication): void {
     const version = this.getVersion()
     app.use(helmet())

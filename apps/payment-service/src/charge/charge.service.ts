@@ -4,7 +4,8 @@ import {
   BankTransferRequest,
   BaseChargeRequest,
   FitRpcException,
-  OrderI, OrderStatus,
+  OrderI,
+  OrderStatus,
   Payment,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -31,11 +32,11 @@ export class PaymentService {
     private readonly listingClient: ClientProxy,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
-
     @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
     private readonly odsaClient: ClientProxy,
     private readonly flutterwave: FlutterwaveService
-  ) {}
+  ) {
+  }
 
   async chargeWithUssd (payload: UssdRequest): Promise<any> {
     try {

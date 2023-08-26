@@ -1,27 +1,24 @@
 import { Controller } from '@nestjs/common'
 import { OrdersServiceService } from './orders-service.service'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 import {
-  MessagePattern,
-  Payload,
-  RpcException,
-  Ctx,
-  RmqContext
-} from '@nestjs/microservices'
-import {
+  Order,
+  QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
   ServicePayload,
-  QUEUE_MESSAGE,
-  Order,
-  UpdateOrderStatusRequestDto, UpdateOrderStatusPaidRequestDto
+  UpdateOrderStatusPaidRequestDto,
+  UpdateOrderStatusRequestDto
 } from '@app/common'
 import { FilterQuery } from 'mongoose'
+
 @Controller('order')
 export class OrdersServiceController {
   constructor (
     private readonly ordersServiceService: OrdersServiceService,
     private readonly rmqService: RmqService
-  ) {}
+  ) {
+  }
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_ORDER)
   async placeOrder (

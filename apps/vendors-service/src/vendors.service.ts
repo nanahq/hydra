@@ -13,7 +13,7 @@ import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/d
 import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
-import { internationalisePhoneNumber } from '@app/common/helpers/phone.number'
+import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
 
 @Injectable()
 export class VendorsService {

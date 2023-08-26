@@ -1,14 +1,6 @@
+import { Body, Controller, Get, HttpException, Inject, Param, Put, UseGuards } from '@nestjs/common'
 import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  Inject,
-  Param,
-  Put,
-  UseGuards
-} from '@nestjs/common'
-import {
+  CurrentUser,
   IRpcException,
   Order,
   QUEUE_MESSAGE,
@@ -16,8 +8,7 @@ import {
   ResponseWithStatus,
   ServicePayload,
   UpdateOrderStatusRequestDto,
-  Vendor,
-  CurrentUser
+  Vendor
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -28,7 +19,8 @@ export class OrdersController {
   constructor (
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly ordersClient: ClientProxy
-  ) {}
+  ) {
+  }
 
   @Get('orders')
   @UseGuards(JwtAuthGuard)

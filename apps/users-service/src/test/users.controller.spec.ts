@@ -1,16 +1,18 @@
-
 import { Test } from '@nestjs/testing'
-import { UsersService } from '../users-service.service'
-import { UsersServiceController } from '../users-service.controller'
+import { UsersService } from '../user/users-service.service'
+import { UsersServiceController } from '../user/users-service.controller'
 import {
+  loginUserRequest,
+  registerUserRequest,
   ResponseWithStatus,
-  ServicePayload,
   RmqService,
-  registerUserRequest, verifyPhoneRequest, User, loginUserRequest, TokenPayload
+  ServicePayload,
+  TokenPayload,
+  User,
+  verifyPhoneRequest
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
-import { UserProfileStub, resStub } from './stubs/user.stub'
-import {} from '@app/common/database/dto/listing.dto'
+import { resStub, UserProfileStub } from './stubs/user.stub'
 import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
 
 export const RmqServiceMock = {
