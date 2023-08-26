@@ -25,7 +25,6 @@ export class AddressBookLabelServiceController {
   @MessagePattern(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_LIST)
   async list (@Ctx() context: RmqContext): Promise<AddressBookLabel[]> {
     try {
-      console.log('Hello')
       return await this.service.list()
     } catch (error) {
       throw new RpcException(error)
