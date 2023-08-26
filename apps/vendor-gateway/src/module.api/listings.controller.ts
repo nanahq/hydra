@@ -1,30 +1,32 @@
 import {
   Body,
   Controller,
-  Get, HttpCode,
-  HttpException, HttpStatus,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
   Inject,
+  Logger,
   Param,
   Post,
   Put,
   UploadedFile,
   UseGuards,
   UseInterceptors
-  , Logger
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
+  booleanParser,
+  CurrentUser,
   IRpcException,
-  ResponseWithStatus,
-  ServicePayload,
-  Vendor,
+  ListingMenu,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  booleanParser,
-  ListingMenu,
-  CurrentUser
+  ResponseWithStatus,
+  ServicePayload,
+  Vendor
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import {
@@ -40,11 +42,13 @@ import { GoogleFileService } from '../google-file.service'
 @Controller('listing')
 export class ListingsController {
   private readonly logger = new Logger(ListingsController.name)
+
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy,
     private readonly googleService: GoogleFileService
-  ) {}
+  ) {
+  }
 
   @Get('menus')
   @UseGuards(JwtAuthGuard)

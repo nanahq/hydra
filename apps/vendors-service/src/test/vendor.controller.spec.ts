@@ -1,15 +1,15 @@
-
 import { Test } from '@nestjs/testing'
 import { VendorsService } from '../vendors.service'
 import { VendorsController } from '../vendors.controller'
 import {
-  ResponseWithStatus,
-  Vendor,
-  ServicePayload,
-  RmqService,
-  UpdateVendorStatus,
   LoginVendorRequest,
-  TokenPayload, VendorSettings
+  ResponseWithStatus,
+  RmqService,
+  ServicePayload,
+  TokenPayload,
+  UpdateVendorStatus,
+  Vendor,
+  VendorSettings
 } from '@app/common'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 import { RmqContext } from '@nestjs/microservices'
@@ -50,7 +50,7 @@ describe('vendorsController', () => {
         vendor = {
           firstName: 'Suraj',
           lastName: 'Auwal',
-          businessName: "Jay's Pizza",
+          businessName: 'Jay\'s Pizza',
           businessEmail: 'suraj@gmail.com',
           businessAddress: 'Tsamiyar boka',
           phone: '+2348107641933',
@@ -346,7 +346,13 @@ describe('vendorsController', () => {
       beforeEach(async () => {
         data = {
           userId: VendorSettingStub().vendorId as any,
-          data: { payment: { bankAccountName: 'GOOD VENDOR', bankAccountNumber: '000000000', bankName: 'MY BANK' } }
+          data: {
+            payment: {
+              bankAccountName: 'GOOD VENDOR',
+              bankAccountNumber: '000000000',
+              bankName: 'MY BANK'
+            }
+          }
         }
         response = await vendorsController.createVendorSettings(data, context)
       })

@@ -20,6 +20,7 @@ import { ListingController } from './module.api/listing.controller'
 import { OrdersController } from './module.api/orders.controller'
 import { ReviewsController } from './module.api/reviews.controller'
 import { DashboardController } from './module.api/dashboard.controller'
+import { AddressBookLabelController } from './module.api/address-book-label.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -64,6 +65,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
         AppModule
       ],
       controllers: [
@@ -73,7 +75,8 @@ export class AppModule implements NestModule {
         VendorController,
         ListingController,
         OrdersController,
-        ReviewsController
+        ReviewsController,
+        AddressBookLabelController
       ],
       providers: [
         AuthService,
@@ -104,7 +107,7 @@ export class AppModule implements NestModule {
   }
 
   /*
-      Get the version info from App meta data  file or enviromental variable
+      Get the version info from App meta data  file or environmental variable
       @returns string
       */
 

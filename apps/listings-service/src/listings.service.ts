@@ -22,15 +22,22 @@ export class ListingsService {
     private readonly listingMenuRepository: ListingMenuRepository,
     private readonly listingOptionGroupRepository: ListingOptionGroupRepository,
     private readonly listingCategoryRepository: ListingCategoryRepository
-  ) {}
+  ) {
+  }
 
   async createListingMenu ({
     data,
     userId: vendorId
   }: ServicePayload<any>): Promise<ResponseWithStatus> {
-    const { categoryId, ...rest } = data
+    const {
+      categoryId,
+      ...rest
+    } = data
     try {
-      const { _id, listingsMenu } =
+      const {
+        _id,
+        listingsMenu
+      } =
         (await this.listingCategoryRepository.findOne({
           _id: categoryId
         })) as ListingCategory
@@ -52,9 +59,18 @@ export class ListingsService {
     }
   }
 
-  async updateListingMenu ({ data: { menuId, ...rest }, userId }: ServicePayload<any>): Promise<ResponseWithStatus> {
+  async updateListingMenu ({
+    data: {
+      menuId,
+      ...rest
+    },
+    userId
+  }: ServicePayload<any>): Promise<ResponseWithStatus> {
     try {
-      await this.listingMenuRepository.findOneAndUpdate({ _id: menuId, vendor: userId }, { ...rest })
+      await this.listingMenuRepository.findOneAndUpdate({
+        _id: menuId,
+        vendor: userId
+      }, { ...rest })
       return { status: 1 }
     } catch (e) {
       throw new FitRpcException('Failed to update listings', HttpStatus.UNPROCESSABLE_ENTITY)
@@ -123,7 +139,10 @@ export class ListingsService {
   }: ServicePayload<string>): Promise<ListingCategory> {
     try {
       const cat = await this.listingCategoryRepository.findOneAndPopulate(
-        { _id, vendorId },
+        {
+          _id,
+          vendorId
+        },
         ['listingsMenu', 'vendor']
       )
       if (cat === null) {
@@ -142,7 +161,10 @@ export class ListingsService {
   async getAllCatVendor (vendor: string): Promise<ListingCategory[]> {
     try {
       return await this.listingCategoryRepository.findAndPopulate<ListingCategory>(
-        { vendor, isDeleted: false },
+        {
+          vendor,
+          isDeleted: false
+        },
         ['listingsMenu', 'vendor']
       )
     } catch (error) {

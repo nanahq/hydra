@@ -5,7 +5,7 @@ import { Strategy } from 'passport-local'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common'
-import { internationalisePhoneNumber } from '@app/common/helpers/phone.number'
+import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
