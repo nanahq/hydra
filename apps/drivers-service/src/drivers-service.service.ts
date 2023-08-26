@@ -3,7 +3,7 @@ import { RegisterDriverDto } from '@app/common/dto/registerDriver.dto'
 import { Driver, FitRpcException, ResponseWithStatus } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
-import { internationalisePhoneNumber } from '@app/common/helpers/phone.number'
+import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
 
 @Injectable()
 export class DriversServiceService {

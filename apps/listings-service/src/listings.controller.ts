@@ -1,22 +1,16 @@
 import { Controller, UseFilters } from '@nestjs/common'
-import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException
-} from '@nestjs/microservices'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 
 import { ListingsService } from './listings.service'
 import {
+  ExceptionFilterRpc,
+  ListingCategory,
+  ListingMenu,
+  ListingOptionGroup,
+  QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
-  ServicePayload,
-  QUEUE_MESSAGE,
-  ExceptionFilterRpc,
-  ListingMenu,
-  ListingCategory,
-  ListingOptionGroup
+  ServicePayload
 } from '@app/common'
 import {
   CreateListingCategoryDto,
@@ -30,9 +24,9 @@ import {
 export class ListingsController {
   constructor (
     private readonly listingService: ListingsService,
-
     private readonly rmqService: RmqService
-  ) {}
+  ) {
+  }
 
   @MessagePattern(QUEUE_MESSAGE.GET__ALL_LISTING_MENU)
   async getAllListings (

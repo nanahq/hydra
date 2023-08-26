@@ -1,5 +1,9 @@
 import { ListingCategory, Order, Vendor } from '@app/common'
 
+export interface IdPayload {
+  id: string
+}
+
 export interface TokenPayload {
   userId: string
 }
@@ -19,6 +23,7 @@ export enum OrderTypes {
   PRE = 'PRE_ORDER',
   INSTANT = 'ON_DEMAND'
 }
+
 export interface SendPayoutEmail {
   vendorName: string
   vendorId: string
@@ -38,6 +43,7 @@ export interface PayoutOverview {
   '30_days': number
 
 }
+
 export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'
 
 export type DriverType = 'DELIVER_PRE_ORDER' | 'DELIVER_ON_DEMAND'
@@ -47,6 +53,7 @@ export interface OrderGroup {
   orders: Order[]
   maxDeliveryTime: number
 }
+
 export interface DriverWithLocation {
   driverId: string | any
   coordinates: string[]

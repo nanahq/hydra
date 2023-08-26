@@ -5,18 +5,13 @@ import { PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import { catchError, lastValueFrom } from 'rxjs'
 
-import {
-  TokenPayload,
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE,
-  IRpcException
-} from '@app/common'
+import { IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, TokenPayload } from '@app/common'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor (
     configService: ConfigService,
-    @Inject(QUEUE_SERVICE.ADMIN_SERVICE)
+    @Inject(QUEUE_SERVICE.ADMINS_SERVICE)
     private readonly adminClient: ClientProxy
   ) {
     super({

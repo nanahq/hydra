@@ -1,22 +1,14 @@
-import {
-  Controller,
-  Delete,
-  Get,
-  HttpException,
-  Inject,
-  Param,
-  UseGuards
-} from '@nestjs/common'
+import { Controller, Delete, Get, HttpException, Inject, Param, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
+  IRpcException,
+  ListingCategory,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
-  ServicePayload,
-  IRpcException,
-  ListingCategory
+  ServicePayload
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
@@ -25,7 +17,8 @@ export class ListingController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly vendorsClient: ClientProxy
-  ) {}
+  ) {
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get('listings')

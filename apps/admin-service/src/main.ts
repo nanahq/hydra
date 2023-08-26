@@ -7,7 +7,7 @@ async function bootstrap (): Promise<void> {
   const app = await NestFactory.create(AdminServiceModule)
   const rmq = app.get<RmqService>(RmqService)
   app.connectMicroservice<RmqOptions>(
-    rmq.getOption(QUEUE_SERVICE.ADMIN_SERVICE)
+    rmq.getOption(QUEUE_SERVICE.ADMINS_SERVICE)
   )
   await app.startAllMicroservices()
 }

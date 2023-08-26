@@ -1,5 +1,5 @@
 import { SchemaTypes } from 'mongoose'
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument, AdminLevel } from '@app/common'
 
 @Schema({ versionKey: false })
@@ -16,6 +16,9 @@ export class Admin extends AbstractDocument {
   @Prop(String)
     password: string
 
+  @Prop()
+    phone: string
+
   @Prop(Number)
     reviewStars: number
 
@@ -30,6 +33,9 @@ export class Admin extends AbstractDocument {
 
   @Prop(SchemaTypes.Date)
     updatedAt: string
+
+  @Prop(SchemaTypes.Date)
+    deletedAt: string
 }
 
 export const AdminSchema = SchemaFactory.createForClass(Admin)

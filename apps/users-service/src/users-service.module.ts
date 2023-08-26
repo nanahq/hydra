@@ -3,12 +3,16 @@ import { Module } from '@nestjs/common'
 
 import * as Joi from 'joi'
 
-import { RmqModule, User, UserSchema, QUEUE_SERVICE } from '@app/common'
-import { UsersServiceController } from './users-service.controller'
-import { UsersService } from './users-service.service'
+import { QUEUE_SERVICE, RmqModule, User, UserSchema } from '@app/common'
+import { UsersServiceController } from './user/users-service.controller'
+import { UsersService } from './user/users-service.service'
 import { DatabaseModule } from '@app/common/database/database.module'
 import { MongooseModule } from '@nestjs/mongoose'
-import { UserRepository } from './users.repository'
+import { UserRepository } from './user/users.repository'
+import { AddressBookServiceController } from './address-book/address-book-service.controller'
+import { AddressBook, AddressBookSchema } from '@app/common/database/schemas/address.book.schema'
+import { AddressBookRepository } from './address-book/address.book.repository'
+import { AddressBookService } from './address-book/address-book-service.service'
 
 @Module({
   imports: [
@@ -20,13 +24,23 @@ import { UserRepository } from './users.repository'
       }),
       envFilePath: './apps/users-service/.env'
     }),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      {
+        name: User.name,
+        schema: UserSchema
+      },
+      {
+        name: AddressBook.name,
+        schema: AddressBookSchema
+      }
+    ]),
     DatabaseModule,
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
     RmqModule
   ],
-  controllers: [UsersServiceController],
+  controllers: [UsersServiceController, AddressBookServiceController],
 
-  providers: [UsersService, UserRepository]
+  providers: [UsersService, UserRepository, AddressBookRepository, AddressBookService]
 })
-export class UsersServiceModule {}
+export class UsersServiceModule {
+}

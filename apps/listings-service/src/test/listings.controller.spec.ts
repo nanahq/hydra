@@ -1,19 +1,22 @@
-
 import { Test } from '@nestjs/testing'
 import { ListingsService } from '../listings.service'
 import { ListingsController } from '../listings.controller'
 import {
+  ListingCategory,
+  ListingMenu,
+  ListingOptionGroup,
   ResponseWithStatus,
-  ServicePayload,
   RmqService,
-  ListingMenu, ListingCategory, ListingOptionGroup
+  ServicePayload
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
-import { ListingOptionStub, ListingCategoryStub, ListingMenuStub, resStub } from './stubs/Listings.stub'
+import { ListingCategoryStub, ListingMenuStub, ListingOptionStub, resStub } from './stubs/Listings.stub'
 import {
   CreateListingCategoryDto,
-  CreateListingMenuDto, CreateOptionGroupDto,
-  UpdateListingCategoryDto, UpdateOptionGroupDto
+  CreateListingMenuDto,
+  CreateOptionGroupDto,
+  UpdateListingCategoryDto,
+  UpdateOptionGroupDto
 } from '@app/common/database/dto/listing.dto'
 import { VendorStub } from '../../../vendors-service/src/test/stubs/vendor.stub'
 
