@@ -10,7 +10,12 @@ import {
   ServicePayload
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
-import { ListingCategoryStub, ListingMenuStub, ListingOptionStub, resStub } from './stubs/Listings.stub'
+import {
+  ListingCategoryStub,
+  ListingMenuStub,
+  ListingOptionStub,
+  resStub
+} from './stubs/Listings.stub'
 import {
   CreateListingCategoryDto,
   CreateListingMenuDto,
@@ -59,7 +64,9 @@ describe('listingsController', () => {
         response = await listingsController.getAllListings(payload, context)
       })
       test('then it should call listingsService.getAllListingMenu', () => {
-        expect(listingsService.getAllListingMenu).toBeCalledWith(payload.userId)
+        expect(listingsService.getAllListingMenu).toBeCalledWith(
+          payload.userId
+        )
       })
 
       test('then is should return all listings related to vendor', () => {
@@ -83,7 +90,8 @@ describe('listingsController', () => {
             desc: 'A chicken cooked in marinated soy sauce',
             price: '2500',
             serving: 'per plate',
-            photo: 'https://storage.googleapis.com/eatlater_vendors_bucket/a.png',
+            photo:
+              'https://storage.googleapis.com/eatlater_vendors_bucket/a.png',
             isLive: 'true',
             isAvailable: 'true',
             optionGroups: '63f93c3a248f6c43d0b764f7'
@@ -116,7 +124,9 @@ describe('listingsController', () => {
         response = await listingsController.getListingMenu(payload, context)
       })
       test('then it should call ListingsService.getSingleListingMenu', () => {
-        expect(listingsService.getSingleListingMenu).toHaveBeenCalledWith(payload)
+        expect(listingsService.getSingleListingMenu).toHaveBeenCalledWith(
+          payload
+        )
       })
 
       test('then it should return a single menu', () => {
@@ -139,12 +149,16 @@ describe('listingsController', () => {
             tags: ['african', 'lunch'],
             isLive: true
           }
-
         }
-        response = await listingsController.createListingCategory(payload, context)
+        response = await listingsController.createListingCategory(
+          payload,
+          context
+        )
       })
       test('then it should call listingService.createListingCategory', () => {
-        expect(listingsService.createListingCategory).toHaveBeenCalledWith(payload)
+        expect(listingsService.createListingCategory).toHaveBeenCalledWith(
+          payload
+        )
       })
 
       test('then it should return a success status', () => {
@@ -190,7 +204,9 @@ describe('listingsController', () => {
         response = await listingsController.getAllCatVendor(data, context)
       })
       test('then it should call listingService.getAllCatVendor', () => {
-        expect(listingsService.getAllCatVendor).toHaveBeenCalledWith(data.userId)
+        expect(listingsService.getAllCatVendor).toHaveBeenCalledWith(
+          data.userId
+        )
       })
 
       test('then it should return all category', () => {
@@ -212,10 +228,15 @@ describe('listingsController', () => {
             catId: ListingMenuStub().vendorId
           }
         }
-        response = await listingsController.updateListingCategory(data, context)
+        response = await listingsController.updateListingCategory(
+          data,
+          context
+        )
       })
       test('then it should call listingService.updateListingCat', () => {
-        expect(listingsService.updateListingCat).toHaveBeenCalledWith(data.data)
+        expect(listingsService.updateListingCat).toHaveBeenCalledWith(
+          data.data
+        )
       })
 
       test('then it should return a success response', () => {
@@ -252,7 +273,9 @@ describe('listingsController', () => {
         response = await listingsController.createListingOption(data, context)
       })
       test('then it should call getVendor', () => {
-        expect(listingsService.createListingOptionGroup).toHaveBeenCalledWith(data)
+        expect(listingsService.createListingOptionGroup).toHaveBeenCalledWith(
+          data
+        )
       })
 
       test('then it should return a success status', () => {
@@ -272,10 +295,15 @@ describe('listingsController', () => {
           userId: '',
           data: ListingOptionStub()._id as any
         }
-        response = await listingsController.getSingleListingOption(data, context)
+        response = await listingsController.getSingleListingOption(
+          data,
+          context
+        )
       })
       test('then it should call listingService.getSingleListingOption', () => {
-        expect(listingsService.getSingleListingOption).toHaveBeenCalledWith(data)
+        expect(listingsService.getSingleListingOption).toHaveBeenCalledWith(
+          data
+        )
       })
 
       test('then it should return a listing option', () => {
@@ -298,7 +326,9 @@ describe('listingsController', () => {
         response = await listingsController.getAllOptionVendor(data, context)
       })
       test('then it should call listingService.getAllListingOptionsVendor', () => {
-        expect(listingsService.getAllListingOptionsVendor).toHaveBeenCalledWith(data.userId)
+        expect(listingsService.getAllListingOptionsVendor).toHaveBeenCalledWith(
+          data.userId
+        )
       })
 
       test('then it should return a list of all options', () => {
@@ -320,10 +350,15 @@ describe('listingsController', () => {
             optionId: ListingOptionStub()._id as any
           }
         }
-        response = await listingsController.updateListingOption(payload, context)
+        response = await listingsController.updateListingOption(
+          payload,
+          context
+        )
       })
       test('then it should call listingsService.updateListingOption', () => {
-        expect(listingsService.updateListingOption).toHaveBeenCalledWith(payload.data)
+        expect(listingsService.updateListingOption).toHaveBeenCalledWith(
+          payload.data
+        )
       })
 
       test('then it should return a success status', () => {

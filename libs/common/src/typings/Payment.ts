@@ -37,7 +37,6 @@ export interface UssdCharge extends BaseChargeRequest {
 export interface UssdRequest extends BankTransferRequest {
   account_bank: SupportedBanks
   account_number: string
-
 }
 
 export interface BankTransferRequest {
@@ -75,5 +74,5 @@ export enum SupportedBanks {
   UBA = '033',
   UNITY_BANK = '215',
   WEMA_BANK = '035',
-  ZENITH_BANK = '057'
+  ZENITH_BANK = '057',
 }

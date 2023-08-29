@@ -8,7 +8,7 @@ import {
   LocationCoordinates,
   PaymentInfo,
   VendorOperationSetting
-} from '@app/common/database/types/common'
+} from '@app/common'
 
 export class CreateVendorDto {
   @IsNotEmpty()

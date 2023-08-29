@@ -1,6 +1,11 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, DriverType, LocationCoordinates, Order } from '@app/common'
+import {
+  AbstractDocument,
+  DriverType,
+  LocationCoordinates,
+  Order
+} from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
 export class Driver extends AbstractDocument {

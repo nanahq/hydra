@@ -1,5 +1,11 @@
 import { Controller, UseFilters } from '@nestjs/common'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 
 import { ListingsService } from './listings.service'
 import {
@@ -10,14 +16,12 @@ import {
   QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
-  ServicePayload
-} from '@app/common'
-import {
+  ServicePayload,
   CreateListingCategoryDto,
   CreateOptionGroupDto,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
-} from '@app/common/database/dto/listing.dto'
+} from '@app/common'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -25,8 +29,7 @@ export class ListingsController {
   constructor (
     private readonly listingService: ListingsService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.GET__ALL_LISTING_MENU)
   async getAllListings (
@@ -199,9 +202,7 @@ export class ListingsController {
   // User and Admin query
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER)
-  async getAllMenuUser (
-    @Ctx() context: RmqContext
-  ): Promise<ListingMenu[]> {
+  async getAllMenuUser (@Ctx() context: RmqContext): Promise<ListingMenu[]> {
     try {
       return await this.listingService.getAllMenuUser()
     } catch (error) {

@@ -4,8 +4,11 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-local'
 import { catchError, lastValueFrom } from 'rxjs'
 
-import { QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common'
-import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
+import {
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  internationalisePhoneNumber
+} from '@app/common'
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {

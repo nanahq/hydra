@@ -35,8 +35,7 @@ export class PaymentService {
     @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
     private readonly odsaClient: ClientProxy,
     private readonly flutterwave: FlutterwaveService
-  ) {
-  }
+  ) {}
 
   async chargeWithUssd (payload: UssdRequest): Promise<any> {
     try {
@@ -46,14 +45,18 @@ export class PaymentService {
         data: { orderId: payload.orderId }
       }
       const order = await lastValueFrom<OrderI>(
-        this.ordersClient.send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, orderQueryPayload).pipe(
-          catchError((error) => {
-            throw new RpcException(error)
-          })
-        )
+        this.ordersClient
+          .send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, orderQueryPayload)
+          .pipe(
+            catchError((error) => {
+              throw new RpcException(error)
+            })
+          )
       )
 
-      this.logger.log(`[PIM] - Initiating a ussd charge for user_id: ${order.user._id} order_refId: ${order.refId}`)
+      this.logger.log(
+        `[PIM] - Initiating a ussd charge for user_id: ${order.user._id} order_refId: ${order.refId}`
+      )
 
       // Prepare charge payload
       const chargePayload: UssdCharge = {
@@ -78,7 +81,9 @@ export class PaymentService {
           status: 'PENDING'
         })
 
-        this.logger.log(`[PIM] - Bank USSD charge initiated  for user_id: ${order.user._id} order_refId: ${order.refId}`)
+        this.logger.log(
+          `[PIM] - Bank USSD charge initiated  for user_id: ${order.user._id} order_refId: ${order.refId}`
+        )
 
         return {
           code: response?.meta?.authorization?.note
@@ -87,11 +92,16 @@ export class PaymentService {
       throw new Error('Failed')
     } catch (e) {
       this.logger.error('[PIM] Failed to create ussd charge -', e)
-      throw new FitRpcException('Can not place charge at this moment. Try again later', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not place charge at this moment. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  async chargeWithBankTransfer (payload: BankTransferRequest): Promise<BankTransferAccountDetails> {
+  async chargeWithBankTransfer (
+    payload: BankTransferRequest
+  ): Promise<BankTransferAccountDetails> {
     try {
       // Fetch order information
       const orderQueryPayload: ServicePayload<{ orderId: string }> = {
@@ -99,14 +109,18 @@ export class PaymentService {
         data: { orderId: payload.orderId }
       }
       const order = await lastValueFrom<OrderI>(
-        this.ordersClient.send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, orderQueryPayload).pipe(
-          catchError((error) => {
-            throw new RpcException(error)
-          })
-        )
+        this.ordersClient
+          .send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, orderQueryPayload)
+          .pipe(
+            catchError((error) => {
+              throw new RpcException(error)
+            })
+          )
       )
 
-      this.logger.log(`[PIM] - Initiating a bank transfer charge for user_id: ${order.user._id} order_refId: ${order.refId}`)
+      this.logger.log(
+        `[PIM] - Initiating a bank transfer charge for user_id: ${order.user._id} order_refId: ${order.refId}`
+      )
 
       // Prepare charge payload
       const chargePayload: BaseChargeRequest = {
@@ -130,28 +144,43 @@ export class PaymentService {
           status: 'PENDING'
         })
 
-        this.logger.log(`[PIM] - Bank transfer charge initiated  for user_id: ${order.user._id} order_refId: ${order.refId}`)
+        this.logger.log(
+          `[PIM] - Bank transfer charge initiated  for user_id: ${order.user._id} order_refId: ${order.refId}`
+        )
         return bankChargeMapper(response.meta.authorization)
       }
       throw new Error('Failed')
     } catch (e) {
       this.logger.log('[PIM] Failed to create bank transfer charged -', e)
-      throw new FitRpcException('Can not place charge at this moment. Try again later', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not place charge at this moment. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   async verifyPayment (txId: string, refId: string): Promise<void> {
-    this.logger.log(`[PIM] - Verifying order payment ref: ${refId} txId: ${txId}`)
+    this.logger.log(
+      `[PIM] - Verifying order payment ref: ${refId} txId: ${txId}`
+    )
     try {
-      const payment = await this.paymentRepository.findOne({ refId }) as Payment
+      const payment = (await this.paymentRepository.findOne({
+        refId
+      })) as Payment
 
       if (payment.status !== 'PENDING') {
         return
       }
 
-      const checkIfPaymentIsCollected = await this.flutterwave.verify(String(txId))
+      const checkIfPaymentIsCollected = await this.flutterwave.verify(
+        String(txId)
+      )
 
-      if (checkIfPaymentIsCollected?.data?.status !== 'successful' || Number(checkIfPaymentIsCollected?.data?.charged_amount) !== Number(payment.chargedAmount)) {
+      if (
+        checkIfPaymentIsCollected?.data?.status !== 'successful' ||
+        Number(checkIfPaymentIsCollected?.data?.charged_amount) !==
+          Number(payment.chargedAmount)
+      ) {
         throw new Error('Payment not successful')
       }
 
@@ -165,20 +194,27 @@ export class PaymentService {
         }
       }
 
-      this.logger.log(`[PIM] - Updating order status after payment order_id: ${payment.order}`)
+      this.logger.log(
+        `[PIM] - Updating order status after payment order_id: ${payment.order}`
+      )
 
       await lastValueFrom<any>(
-        this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID, payload).pipe(
-          catchError((error) => {
-            throw new RpcException(error)
-          })
-        )
+        this.ordersClient
+          .send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID, payload)
+          .pipe(
+            catchError((error) => {
+              throw new RpcException(error)
+            })
+          )
       )
 
       await this.paymentRepository.update({ refId }, { status: 'SUCCESS' })
     } catch (error) {
       this.logger.error('[PIM] - Failed pending payment verification', error)
-      throw new FitRpcException('Can not place charge at this moment. Try again later', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not place charge at this moment. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 }
@@ -188,9 +224,7 @@ function bankChargeMapper (authorization: any): BankTransferAccountDetails {
     transfer_amount: authorization.transfer_amount,
     transfer_bank: authorization.transfer_bank,
     account_expiration: authorization.account_expiration,
-    transfer_reference: authorization
-
-      .transfer_reference,
+    transfer_reference: authorization.transfer_reference,
     transfer_account: authorization.transfer_account
   }
 }

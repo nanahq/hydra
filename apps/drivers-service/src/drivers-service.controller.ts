@@ -1,7 +1,20 @@
-import { Body, Controller, Get, HttpException, Post, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Post,
+  UseGuards
+} from '@nestjs/common'
 import { DriversServiceService } from './drivers-service.service'
-import { CurrentUser, Delivery, Driver, OrderStatus, ResponseWithStatus } from '@app/common'
-import { RegisterDriverDto } from '@app/common/dto/registerDriver.dto'
+import {
+  CurrentUser,
+  Delivery,
+  Driver,
+  OrderStatus,
+  ResponseWithStatus,
+  RegisterDriverDto
+} from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { ODSA } from './ODSA/odsa.service'
 
@@ -10,8 +23,7 @@ export class DriversServiceController {
   constructor (
     private readonly driversServiceService: DriversServiceService,
     private readonly odsaService: ODSA
-  ) {
-  }
+  ) {}
 
   @Post('register')
   async registerDriver (
@@ -26,9 +38,7 @@ export class DriversServiceController {
 
   @Get('profile')
   @UseGuards(JwtAuthGuard)
-  async getProfile (
-    @CurrentUser() driver: Driver
-  ): Promise<Driver> {
+  async getProfile (@CurrentUser() driver: Driver): Promise<Driver> {
     return driver
   }
 
@@ -54,7 +64,9 @@ export class DriversServiceController {
     @CurrentUser() driver: Driver
   ): Promise<Delivery[] | undefined> {
     try {
-      return await this.odsaService.queryPendingDeliveries(driver._id as unknown as string)
+      return await this.odsaService.queryPendingDeliveries(
+        driver._id as unknown as string
+      )
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
@@ -66,7 +78,9 @@ export class DriversServiceController {
     @CurrentUser() driver: Driver
   ): Promise<Delivery[] | undefined> {
     try {
-      return await this.odsaService.queryFulfilledDeliveries(driver._id as unknown as string)
+      return await this.odsaService.queryFulfilledDeliveries(
+        driver._id as unknown as string
+      )
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }

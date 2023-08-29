@@ -1,19 +1,25 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
-import { FitRpcException, ResponseWithStatus, Review, VendorReviewOverview } from '@app/common'
-import { ReviewDto } from '@app/common/database/dto/review.dto'
+import {
+  FitRpcException,
+  ResponseWithStatus,
+  Review,
+  VendorReviewOverview,
+  ReviewDto
+} from '@app/common'
 import { ReviewRepository } from './review.repositoty'
 
 @Injectable()
 export class ReviewsService {
-  constructor (
-    private readonly reviewRepository: ReviewRepository
-  ) {}
+  constructor (private readonly reviewRepository: ReviewRepository) {}
 
   async getAllReviews (): Promise<Review[]> {
     try {
       return await this.reviewRepository.find({})
     } catch (error) {
-      throw new FitRpcException('Can not process request, Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not process request, Something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -74,8 +80,12 @@ export class ReviewsService {
     }
   }
 
-  async getVendorReviewOverview (vendorId: string): Promise<VendorReviewOverview> {
-    const vendorReviews = await this.reviewRepository.find({ vendorId }) as Review[]
+  async getVendorReviewOverview (
+    vendorId: string
+  ): Promise<VendorReviewOverview> {
+    const vendorReviews = (await this.reviewRepository.find({
+      vendorId
+    })) as Review[]
 
     let aggregateRating: number = 0
 
@@ -104,10 +114,10 @@ export class ReviewsService {
     }
   }
 
-  async statGetListingReviews (
-    listingId: string
-  ): Promise<any> {
-    const listingReview = await this.reviewRepository.find({ listingId }) as Review[]
+  async statGetListingReviews (listingId: string): Promise<any> {
+    const listingReview = (await this.reviewRepository.find({
+      listingId
+    })) as Review[]
 
     let aggregateRating: number = 0
     for (const review of listingReview) {

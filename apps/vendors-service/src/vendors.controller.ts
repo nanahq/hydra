@@ -1,4 +1,10 @@
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 import { Controller, UseFilters } from '@nestjs/common'
 
 import {
@@ -9,12 +15,12 @@ import {
   RmqService,
   ServicePayload,
   UpdateVendorStatus,
-  VendorUserI
+  VendorUserI,
+  VendorSettings,
+  Vendor,
+  UpdateVendorSettingsDto
 } from '@app/common'
 import { VendorsService } from './vendors.service'
-import { Vendor } from '@app/common/database/schemas/vendor.schema'
-import { UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
-import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -22,8 +28,7 @@ export class VendorsController {
   constructor (
     private readonly vendorsService: VendorsService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_VENDOR)
   async registerNewVendor (
@@ -178,7 +183,10 @@ export class VendorsController {
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.vendorsService.createVendorSettings(data.data, data.userId)
+      return await this.vendorsService.createVendorSettings(
+        data.data,
+        data.userId
+      )
     } catch (error) {
       throw new RpcException(error)
     } finally {

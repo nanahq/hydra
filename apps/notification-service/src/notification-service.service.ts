@@ -9,9 +9,10 @@ import {
   PhoneVerificationPayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  verifyPhoneRequest
+  verifyPhoneRequest,
+  OrderStatusUpdateDto
 } from '@app/common'
-import { OrderStatusUpdateDto } from '@app/common/dto/OrderStatusUpdate.dto'
+
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
 
 @Injectable()
@@ -27,10 +28,7 @@ export class NotificationServiceService {
     this.fromPhone = 'EatLater'
   }
 
-  async verifyPhone ({
-    code,
-    phone
-  }: PhoneVerificationPayload): Promise<any> {
+  async verifyPhone ({ code, phone }: PhoneVerificationPayload): Promise<any> {
     try {
       const res = await this.twilioService.client.verify.v2
         .services(

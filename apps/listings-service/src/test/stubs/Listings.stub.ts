@@ -1,4 +1,9 @@
-import { ListingCategory, ListingMenu, ListingOptionGroup, ResponseWithStatus } from '@app/common'
+import {
+  ListingCategory,
+  ListingMenu,
+  ListingOptionGroup,
+  ResponseWithStatus
+} from '@app/common'
 import { type Types } from 'mongoose'
 
 export function ListingMenuStub (): ListingMenu {
@@ -17,9 +22,7 @@ export function ListingMenuStub (): ListingMenu {
     createdAt: '',
     reviews: '',
     updatedAt: '',
-    optionGroups: [
-      '63f93c3a248f6c43d0b764f7'
-    ]
+    optionGroups: ['63f93c3a248f6c43d0b764f7']
   }
 }
 
@@ -32,10 +35,7 @@ export function ListingCategoryStub (): ListingCategory {
     name: 'Japanese Food',
     createdAt: '',
     updatedAt: '',
-    tags: [
-      'african',
-      'lunch'
-    ],
+    tags: ['african', 'lunch'],
     isLive: true,
     listingsMenu: [],
     isDeleted: false

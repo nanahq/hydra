@@ -11,7 +11,10 @@ import {
   Vendor,
   VendorSettings
 } from '@app/common'
-import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
+import {
+  CreateVendorDto,
+  UpdateVendorSettingsDto
+} from '@app/common/database/dto/vendor.dto'
 import { RmqContext } from '@nestjs/microservices'
 import { VendorStub } from './stubs/vendor.stub'
 import { VendorSettingStub } from './stubs/VendorSettings.stub'
@@ -50,13 +53,12 @@ describe('vendorsController', () => {
         vendor = {
           firstName: 'Suraj',
           lastName: 'Auwal',
-          businessName: 'Jay\'s Pizza',
+          businessName: "Jay's Pizza",
           businessEmail: 'suraj@gmail.com',
           businessAddress: 'Tsamiyar boka',
           phone: '+2348107641933',
           password: '12345678',
           email: 'siradjiawoual@gmail.com'
-
         }
 
         response = await vendorsController.registerNewVendor(vendor, context)
@@ -161,7 +163,10 @@ describe('vendorsController', () => {
 
       test('then it should fail when called with a wrong ID', async () => {
         const fakeId: any = 'FAKE_ID'
-        response = await vendorsController.getVendorById({ userId: fakeId } as any, context)
+        response = await vendorsController.getVendorById(
+          { userId: fakeId } as any,
+          context
+        )
         expect(response._id === fakeId).toBeFalsy()
       })
     })
@@ -204,7 +209,9 @@ describe('vendorsController', () => {
         response = await vendorsController.deleteVendorProfile(data, context)
       })
       test('then it should call deleteVendorProfile', () => {
-        expect(vendorsService.deleteVendorProfile).toHaveBeenCalledWith(data.userId)
+        expect(vendorsService.deleteVendorProfile).toHaveBeenCalledWith(
+          data.userId
+        )
       })
 
       test('then it should return a success response', () => {
@@ -227,7 +234,9 @@ describe('vendorsController', () => {
         response = await vendorsController.getSingleVendor(data, context)
       })
       test('then it should call getVendor', () => {
-        expect(vendorsService.getVendor).toHaveBeenCalledWith({ userId: data.data })
+        expect(vendorsService.getVendor).toHaveBeenCalledWith({
+          userId: data.data
+        })
       })
 
       test('then it should return a vendor', () => {
@@ -306,7 +315,10 @@ describe('vendorsController', () => {
         response = await vendorsController.updateVendorSettings(data, context)
       })
       test('then it should call updateVendorSettings', () => {
-        expect(vendorsService.updateSettings).toHaveBeenCalledWith(data.data, data.userId)
+        expect(vendorsService.updateSettings).toHaveBeenCalledWith(
+          data.data,
+          data.userId
+        )
       })
 
       test('then it should return a success response', () => {
@@ -328,7 +340,9 @@ describe('vendorsController', () => {
         response = await vendorsController.getVendorSettings(data, context)
       })
       test('then it should call updateVendorSettings', () => {
-        expect(vendorsService.getVendorSettings).toHaveBeenCalledWith(data.userId)
+        expect(vendorsService.getVendorSettings).toHaveBeenCalledWith(
+          data.userId
+        )
       })
 
       test('then it should return a vendor settings', () => {
@@ -357,7 +371,10 @@ describe('vendorsController', () => {
         response = await vendorsController.createVendorSettings(data, context)
       })
       test('then it should call updateVendorSettings', () => {
-        expect(vendorsService.createVendorSettings).toHaveBeenCalledWith(data.data, data.userId)
+        expect(vendorsService.createVendorSettings).toHaveBeenCalledWith(
+          data.data,
+          data.userId
+        )
       })
 
       test('then it should return a vendor settings', () => {
@@ -379,7 +396,10 @@ describe('vendorsController', () => {
         await vendorsController.updateVendorLogo(data, context)
       })
       test('then it should call updateVendorSettings', () => {
-        expect(vendorsService.updateVendorLogo).toHaveBeenCalledWith(data.data, data.userId)
+        expect(vendorsService.updateVendorLogo).toHaveBeenCalledWith(
+          data.data,
+          data.userId
+        )
       })
     })
   })

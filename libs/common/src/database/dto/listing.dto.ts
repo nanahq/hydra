@@ -7,8 +7,7 @@ import {
   IsString
 } from 'class-validator'
 
-import { CustomisationOptionTypeEnum } from '@app/common'
-import { ListingOption } from '@app/common/database/types/common'
+import { CustomisationOptionTypeEnum, ListingOption } from '@app/common'
 
 export class ListingOptionEntityDto {
   @IsNotEmpty()

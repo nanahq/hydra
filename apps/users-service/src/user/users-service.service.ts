@@ -16,10 +16,7 @@ import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
 
 @Injectable()
 export class UsersService {
-  constructor (
-    private readonly usersRepository: UserRepository
-  ) {
-  }
+  constructor (private readonly usersRepository: UserRepository) {}
 
   async register ({
     phone,
@@ -59,7 +56,7 @@ export class UsersService {
         password,
         phone
       })
-      const data = await this.usersRepository.findOne({ phone }) as User
+      const data = (await this.usersRepository.findOne({ phone })) as User
       return {
         status: 1,
         data
@@ -89,7 +86,10 @@ export class UsersService {
     phone
   }: verifyPhoneRequest): Promise<ResponseWithStatus> {
     try {
-      await this.usersRepository.findOneAndUpdate({ phone }, { isValidated: true })
+      await this.usersRepository.findOneAndUpdate(
+        { phone },
+        { isValidated: true }
+      )
       return { status: 1 }
     } catch {
       throw new FitRpcException(
@@ -134,7 +134,10 @@ export class UsersService {
   }
 
   async deleteUserProfile (userId: string): Promise<ResponseWithStatus> {
-    await this.usersRepository.findOneAndUpdate({ _id: userId }, { isDeleted: true })
+    await this.usersRepository.findOneAndUpdate(
+      { _id: userId },
+      { isDeleted: true }
+    )
     return { status: 1 }
   }
 
@@ -155,15 +158,21 @@ export class UsersService {
     return _user
   }
 
-  public async updateUserOrderCount (orderId: string, userId: string): Promise<ResponseWithStatus> {
-    const user = await this.usersRepository.findOne({ _id: userId }) as User
-    await this.usersRepository.findOneAndUpdate({ _id: user?._id }, { orders: [...user?.orders, orderId] })
+  public async updateUserOrderCount (
+    orderId: string,
+    userId: string
+  ): Promise<ResponseWithStatus> {
+    const user = (await this.usersRepository.findOne({ _id: userId })) as User
+    await this.usersRepository.findOneAndUpdate(
+      { _id: user?._id },
+      { orders: [...user?.orders, orderId] }
+    )
     return { status: 1 }
   }
 
   private async checkExistingUser (phone: string): Promise<User> {
     const user: User | null = await this.usersRepository.findOne({ phone })
-    if (user !== null && !(user.isDeleted)) {
+    if (user !== null && !user.isDeleted) {
       throw new FitRpcException(
         'Phone Number is  already registered.',
         HttpStatus.CONFLICT

@@ -1,4 +1,9 @@
-import { ListingMenuStub, resStub, ListingCategoryStub, ListingOptionStub } from '../test/stubs/Listings.stub'
+import {
+  ListingMenuStub,
+  resStub,
+  ListingCategoryStub,
+  ListingOptionStub
+} from '../test/stubs/Listings.stub'
 
 export const ListingsService = jest.fn().mockReturnValue({
   createListingMenu: jest.fn().mockResolvedValue(resStub()),
@@ -11,6 +16,8 @@ export const ListingsService = jest.fn().mockReturnValue({
   createListingOptionGroup: jest.fn().mockResolvedValue(resStub()),
   getSingleListingOption: jest.fn().mockResolvedValue(ListingOptionStub()),
   updateListingOption: jest.fn().mockResolvedValue(resStub()),
-  getAllListingOptionsVendor: jest.fn().mockResolvedValue([ListingOptionStub()]),
+  getAllListingOptionsVendor: jest
+    .fn()
+    .mockResolvedValue([ListingOptionStub()]),
   updateListingMenu: jest.fn().mockResolvedValue(resStub())
 })

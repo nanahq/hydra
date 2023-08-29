@@ -1,16 +1,17 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 
-import { FitRpcException, ResponseWithStatus, ServicePayload } from '@app/common'
+import {
+  FitRpcException,
+  ResponseWithStatus,
+  ServicePayload
+} from '@app/common'
 import { AddressBookLabelRepository } from './address.book.label.repository'
 import { AddressBookLabel } from '@app/common/database/schemas/address.book.label.schema'
 import { AddressBookLabelDto } from '@app/common/database/dto/address.book.label.dto'
 
 @Injectable()
 export class AddressBookLabelService {
-  constructor (
-    private readonly repository: AddressBookLabelRepository
-  ) {
-  }
+  constructor (private readonly repository: AddressBookLabelRepository) {}
 
   async list (): Promise<AddressBookLabel[]> {
     const getRequest = await this.repository.find({ isDeleted: false })
@@ -24,7 +25,10 @@ export class AddressBookLabelService {
     return getRequest
   }
 
-  async create (createdBy: string, dto: AddressBookLabelDto): Promise<ResponseWithStatus> {
+  async create (
+    createdBy: string,
+    dto: AddressBookLabelDto
+  ): Promise<ResponseWithStatus> {
     try {
       const data = {
         ...dto,
@@ -44,7 +48,9 @@ export class AddressBookLabelService {
   async update ({
     data,
     userId
-  }: ServicePayload<Partial<AddressBookLabelDto>>): Promise<ResponseWithStatus> {
+  }: ServicePayload<
+  Partial<AddressBookLabelDto>
+  >): Promise<ResponseWithStatus> {
     try {
       await this.repository.findOneAndUpdate({ _id: userId }, { ...data })
       return { status: 1 }

@@ -1,7 +1,13 @@
 import { Controller } from '@nestjs/common'
 import { DriversServiceService } from '../drivers-service.service'
 import { ODSA } from './odsa.service'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 import { QUEUE_MESSAGE, RmqService } from '@app/common'
 
 /**
@@ -14,8 +20,7 @@ export class OdsaController {
     private readonly driversService: DriversServiceService,
     private readonly odsa: ODSA,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.ODSA_PROCESS_ORDER)
   async processIncomingOrder (

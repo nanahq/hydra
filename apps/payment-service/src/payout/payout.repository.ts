@@ -1,8 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common'
-import {
-  AbstractRepository,
-  VendorPayout
-} from '@app/common'
+import { AbstractRepository, VendorPayout } from '@app/common'
 import { InjectModel, InjectConnection } from '@nestjs/mongoose'
 import { Model, Connection } from 'mongoose'
 

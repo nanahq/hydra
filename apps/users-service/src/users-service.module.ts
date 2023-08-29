@@ -3,14 +3,20 @@ import { Module } from '@nestjs/common'
 
 import * as Joi from 'joi'
 
-import { QUEUE_SERVICE, RmqModule, User, UserSchema } from '@app/common'
+import {
+  QUEUE_SERVICE,
+  RmqModule,
+  User,
+  UserSchema,
+  DatabaseModule,
+  AddressBook,
+  AddressBookSchema
+} from '@app/common'
 import { UsersServiceController } from './user/users-service.controller'
 import { UsersService } from './user/users-service.service'
-import { DatabaseModule } from '@app/common/database/database.module'
 import { MongooseModule } from '@nestjs/mongoose'
 import { UserRepository } from './user/users.repository'
 import { AddressBookServiceController } from './address-book/address-book-service.controller'
-import { AddressBook, AddressBookSchema } from '@app/common/database/schemas/address.book.schema'
 import { AddressBookRepository } from './address-book/address.book.repository'
 import { AddressBookService } from './address-book/address-book-service.service'
 
@@ -40,7 +46,11 @@ import { AddressBookService } from './address-book/address-book-service.service'
   ],
   controllers: [UsersServiceController, AddressBookServiceController],
 
-  providers: [UsersService, UserRepository, AddressBookRepository, AddressBookService]
+  providers: [
+    UsersService,
+    UserRepository,
+    AddressBookRepository,
+    AddressBookService
+  ]
 })
-export class UsersServiceModule {
-}
+export class UsersServiceModule {}

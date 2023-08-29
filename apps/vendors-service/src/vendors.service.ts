@@ -6,14 +6,18 @@ import {
   ResponseWithStatus,
   ServicePayload,
   UpdateVendorStatus,
-  VendorUserI
+  VendorUserI,
+  internationalisePhoneNumber,
+  VendorSettings,
+  Vendor,
+  CreateVendorDto,
+  UpdateVendorSettingsDto
 } from '@app/common'
-import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 
-import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
-import { Vendor } from '@app/common/database/schemas/vendor.schema'
-import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
-import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
+import {
+  VendorRepository,
+  VendorSettingsRepository
+} from './vendors.repository'
 
 @Injectable()
 export class VendorsService {
@@ -22,8 +26,7 @@ export class VendorsService {
   constructor (
     private readonly vendorRepository: VendorRepository,
     private readonly vendorSettingsRepository: VendorSettingsRepository
-  ) {
-  }
+  ) {}
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     data.phone = internationalisePhoneNumber(data.phone)
@@ -73,10 +76,13 @@ export class VendorsService {
     businessEmail,
     password
   }: LoginVendorRequest): Promise<Vendor> {
-    const vendor = await this.vendorRepository.findOneAndPopulate({
-      businessEmail,
-      isDeleted: false
-    }, 'settings')
+    const vendor = await this.vendorRepository.findOneAndPopulate(
+      {
+        businessEmail,
+        isDeleted: false
+      },
+      'settings'
+    )
 
     if (vendor === null) {
       throw new FitRpcException(
@@ -119,10 +125,13 @@ export class VendorsService {
   }
 
   async getVendor (_id: string): Promise<Vendor> {
-    const _vendor = await this.vendorRepository.findOneAndPopulate({
-      _id,
-      isDeleted: false
-    }, 'settings')
+    const _vendor = await this.vendorRepository.findOneAndPopulate(
+      {
+        _id,
+        isDeleted: false
+      },
+      'settings'
+    )
 
     if (_vendor === null) {
       throw new FitRpcException(
@@ -224,13 +233,19 @@ export class VendorsService {
     }
   }
 
-  async createVendorSettings (data: any, vendorId: string): Promise<ResponseWithStatus> {
+  async createVendorSettings (
+    data: any,
+    vendorId: string
+  ): Promise<ResponseWithStatus> {
     try {
       const newSettings = await this.vendorSettingsRepository.create({
         ...data,
         vendorId
       })
-      await this.vendorRepository.findOneAndUpdate({ _id: newSettings.vendor }, { settings: newSettings._id })
+      await this.vendorRepository.findOneAndUpdate(
+        { _id: newSettings.vendor },
+        { settings: newSettings._id }
+      )
       return { status: 1 }
     } catch (e) {
       throw new FitRpcException(
@@ -242,7 +257,10 @@ export class VendorsService {
 
   async updateVendorLogo (data: any, _id: string): Promise<void> {
     try {
-      await this.vendorRepository.findOneAndUpdate({ _id }, { businessLogo: data })
+      await this.vendorRepository.findOneAndUpdate(
+        { _id },
+        { businessLogo: data }
+      )
     } catch (e) {
       throw new FitRpcException(
         'Failed to create  settings',
@@ -253,7 +271,10 @@ export class VendorsService {
 
   async updateVendorImage (data: any, _id: string): Promise<void> {
     try {
-      await this.vendorRepository.findOneAndUpdate({ _id }, { restaurantImage: data })
+      await this.vendorRepository.findOneAndUpdate(
+        { _id },
+        { restaurantImage: data }
+      )
     } catch (e) {
       throw new FitRpcException(
         'Failed to create  settings',

@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpException, Inject, Param, Post, Put, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  Post,
+  Put,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -10,28 +21,29 @@ import {
   QUEUE_SERVICE,
   ResponseWithStatus,
   ServicePayload,
-  User
+  User,
+  AddressBookLabelDto,
+  AddressBookLabel
 } from '@app/common'
-import { AddressBookLabelDto } from '@app/common/database/dto/address.book.label.dto'
-import { AddressBookLabel } from '@app/common/database/schemas/address.book.label.schema'
 
 @Controller('address-book-labels')
 export class AddressBookLabelController {
   constructor (
     @Inject(QUEUE_SERVICE.ADMINS_SERVICE)
     private readonly addressBookLabelClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @Get('')
   @UseGuards(JwtAuthGuard)
   async list (): Promise<AddressBookLabel[]> {
     return await lastValueFrom<AddressBookLabel[]>(
-      this.addressBookLabelClient.send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_LIST, {}).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.addressBookLabelClient
+        .send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_LIST, {})
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -46,21 +58,22 @@ export class AddressBookLabelController {
       data
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.addressBookLabelClient.send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_CREATE, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.addressBookLabelClient
+        .send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_CREATE, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  async getById (
-    @Param('id') id: string
-  ): Promise<AddressBookLabel | null> {
+  async getById (@Param('id') id: string): Promise<AddressBookLabel | null> {
     return await lastValueFrom<AddressBookLabel | null>(
-      this.addressBookLabelClient.send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_READ, { id })
+      this.addressBookLabelClient
+        .send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_READ, { id })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -81,7 +94,8 @@ export class AddressBookLabelController {
     }
 
     return await lastValueFrom<AddressBookLabel | null>(
-      this.addressBookLabelClient.send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_UPDATE, payload)
+      this.addressBookLabelClient
+        .send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_UPDATE, payload)
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -94,11 +108,13 @@ export class AddressBookLabelController {
   @Delete('/:id')
   async delete (@Param('id') id: string): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.addressBookLabelClient.send(QUEUE_MESSAGE.ADDRESS_BOOK_DELETE_BY_USER, { id }).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.addressBookLabelClient
+        .send(QUEUE_MESSAGE.ADDRESS_BOOK_DELETE_BY_USER, { id })
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 }

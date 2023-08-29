@@ -26,15 +26,14 @@ import {
   QUEUE_SERVICE,
   ResponseWithStatus,
   ServicePayload,
-  Vendor
-} from '@app/common'
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import {
+  Vendor,
   CreateListingCategoryDto,
   CreateOptionGroupDto,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
-} from '@app/common/database/dto/listing.dto'
+} from '@app/common'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
 import { GoogleFileService } from '../google-file.service'
@@ -47,8 +46,7 @@ export class ListingsController {
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy,
     private readonly googleService: GoogleFileService
-  ) {
-  }
+  ) {}
 
   @Get('menus')
   @UseGuards(JwtAuthGuard)
@@ -65,7 +63,9 @@ export class ListingsController {
         .send(QUEUE_MESSAGE.GET__ALL_LISTING_MENU, payload)
         .pipe(
           catchError((error: IRpcException) => {
-            this.logger.error(`Failed to fetch listing menus. Reason: ${error.message}`)
+            this.logger.error(
+              `Failed to fetch listing menus. Reason: ${error.message}`
+            )
             throw new HttpException(error.message, error.status)
           })
         )
@@ -102,7 +102,9 @@ export class ListingsController {
         .send(QUEUE_MESSAGE.CREATE_LISTING_MENU, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            this.logger.error(`Failed to create new listing menu. Reason: ${error.message}`)
+            this.logger.error(
+              `Failed to create new listing menu. Reason: ${error.message}`
+            )
             throw new HttpException(error.message, error.status)
           })
         )
@@ -125,7 +127,9 @@ export class ListingsController {
         .send(QUEUE_MESSAGE.GET_LISTING_MENU, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
-            this.logger.error(`Failed to get listing menu. Reason: ${error.message}`)
+            this.logger.error(
+              `Failed to get listing menu. Reason: ${error.message}`
+            )
             throw new HttpException(error.message, error.status)
           })
         )
@@ -139,17 +143,20 @@ export class ListingsController {
     @Body() data: { isLive: boolean, isAvailable: boolean, menuId: string },
       @CurrentUser() vendor: Vendor
   ): Promise<ResponseWithStatus> {
-    const payload: ServicePayload<{ isLive: boolean, isAvailable: boolean, menuId: string }> = {
+    const payload: ServicePayload<{
+      isLive: boolean
+      isAvailable: boolean
+      menuId: string
+    }> = {
       userId: vendor._id as any,
       data
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingClient.send(QUEUE_MESSAGE.UPDATE_LISTING_MENU, payload)
-        .pipe(
-          catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.listingClient.send(QUEUE_MESSAGE.UPDATE_LISTING_MENU, payload).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 
