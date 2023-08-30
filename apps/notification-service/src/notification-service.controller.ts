@@ -13,10 +13,10 @@ import {
   PhoneVerificationPayload,
   verifyPhoneRequest,
   QUEUE_MESSAGE,
-  SendPayoutEmail
+  SendPayoutEmail,
+  OrderStatusUpdateDto
 } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
-import { OrderStatusUpdateDto } from '@app/common/dto/OrderStatusUpdate.dto'
 import { TransactionEmails } from './email/transactional.service'
 
 @Controller()

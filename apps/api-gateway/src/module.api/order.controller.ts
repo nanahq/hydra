@@ -1,4 +1,13 @@
-import { Body, Controller, Get, HttpException, Inject, Param, Post, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  Post,
+  UseGuards
+} from '@nestjs/common'
 import {
   CurrentUser,
   IRpcException,
@@ -18,8 +27,7 @@ export class OrderController {
   constructor (
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly orderClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @Post('create')
   @UseGuards(JwtAuthGuard)

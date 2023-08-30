@@ -11,8 +11,7 @@ import {
   IsUUID
 } from 'class-validator'
 
-import { OrderDeliveryMode } from '@app/common/typings/OrderDeliveryMode.enum'
-import { OrderBreakDown } from '../types/common'
+import { OrderBreakDown, OrderDeliveryMode } from '@app/common'
 
 export class OrderDto {
   @IsString()

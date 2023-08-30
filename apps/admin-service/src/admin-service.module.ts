@@ -4,13 +4,18 @@ import * as Joi from 'joi'
 
 import { AdminServiceService } from './admin-service.service'
 import { AdminServiceController } from './admin-service.controller'
-import { Admin, AdminSchema, RmqModule } from '@app/common'
+import {
+  Admin,
+  AdminSchema,
+  RmqModule,
+  AddressBookLabel,
+  AddressBookLabelSchema,
+  DatabaseModule
+} from '@app/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { AdminRepository } from './admin.repository'
-import { DatabaseModule } from '@app/common/database/database.module'
 import { AddressBookLabelService } from './address-book-label/address-book-label-service.service'
 import { AddressBookLabelRepository } from './address-book-label/address.book.label.repository'
-import { AddressBookLabel, AddressBookLabelSchema } from '@app/common/database/schemas/address.book.label.schema'
 import { AddressBookLabelServiceController } from './address-book-label/address-book-label-service.controller'
 
 @Module({
@@ -38,7 +43,11 @@ import { AddressBookLabelServiceController } from './address-book-label/address-
     RmqModule
   ],
   controllers: [AdminServiceController, AddressBookLabelServiceController],
-  providers: [AdminServiceService, AdminRepository, AddressBookLabelService, AddressBookLabelRepository]
+  providers: [
+    AdminServiceService,
+    AdminRepository,
+    AddressBookLabelService,
+    AddressBookLabelRepository
+  ]
 })
-export class AdminServiceModule {
-}
+export class AdminServiceModule {}

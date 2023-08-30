@@ -8,15 +8,20 @@ import {
 } from '@app/common'
 import { Controller } from '@nestjs/common'
 import { VendorPayoutService } from './payout.service'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 
 @Controller('wallet/vendor')
 export class VendorPayoutController {
   constructor (
     private readonly payoutService: VendorPayoutService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.WALLET_GET_PAYOUT_VENDOR)
   async getVendorPayout (
@@ -33,9 +38,7 @@ export class VendorPayoutController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.WALLET_GET_PAYOUT_ALL)
-  async getAllPayout (
-    @Ctx() context: RmqContext
-  ): Promise<VendorPayout[]> {
+  async getAllPayout (@Ctx() context: RmqContext): Promise<VendorPayout[]> {
     try {
       return await this.payoutService.getAllPayout()
     } catch (error) {
@@ -61,11 +64,8 @@ export class VendorPayoutController {
 
   @MessagePattern(QUEUE_MESSAGE.WALLET_CREATE_PAYOUT)
   async createPayout (
-    @Payload() {
-      userId,
-      data
-    }: ServicePayload<Partial<VendorPayout>>,
-    @Ctx() context: RmqContext
+    @Payload() { userId, data }: ServicePayload<Partial<VendorPayout>>,
+      @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     const payload = {
       ...data,

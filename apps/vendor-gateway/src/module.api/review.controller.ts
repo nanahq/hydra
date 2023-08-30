@@ -57,9 +57,7 @@ export class ReviewController {
 
   @Get('stats/vendor/:vid')
   @UseGuards(JwtAuthGuard)
-  async statGetVendorReviews (
-    @Param('vid') vendorId: string
-  ): Promise<any> {
+  async statGetVendorReviews (@Param('vid') vendorId: string): Promise<any> {
     return await lastValueFrom<any>(
       this.reviewClient
         .send(QUEUE_MESSAGE.REVIEW_STATS_GET_VENDOR_REVIEWS, { vendorId })

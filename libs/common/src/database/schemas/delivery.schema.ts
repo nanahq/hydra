@@ -1,6 +1,10 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, LocationCoordinates, OrderStatus } from '@app/common'
+import {
+  AbstractDocument,
+  LocationCoordinates,
+  OrderStatus
+} from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
 export class Delivery extends AbstractDocument {

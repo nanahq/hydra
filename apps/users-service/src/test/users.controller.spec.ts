@@ -35,7 +35,9 @@ describe('usersServiceController', () => {
       .useValue(RmqServiceMock)
       .compile()
 
-    usersController = moduleRef.get<UsersServiceController>(UsersServiceController)
+    usersController = moduleRef.get<UsersServiceController>(
+      UsersServiceController
+    )
     usersService = moduleRef.get<UsersService>(UsersService)
     jest.clearAllMocks()
   })
@@ -145,7 +147,10 @@ describe('usersServiceController', () => {
             email: 'suraj@gmail.com'
           }
         }
-        response = await usersController.updateUserProfile(payload as any, context)
+        response = await usersController.updateUserProfile(
+          payload as any,
+          context
+        )
       })
       test('then it should call listingService.updateUserProfile', () => {
         expect(usersService.updateUserProfile).toHaveBeenCalledWith(payload)
@@ -171,7 +176,9 @@ describe('usersServiceController', () => {
         response = await usersController.deleteUserProfile(data, context)
       })
       test('then it should call listingService.deleteUserProfile', () => {
-        expect(usersService.deleteUserProfile).toHaveBeenCalledWith(data.userId)
+        expect(usersService.deleteUserProfile).toHaveBeenCalledWith(
+          data.userId
+        )
       })
 
       test('then it should return all category', () => {

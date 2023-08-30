@@ -69,7 +69,9 @@ describe('User', () => {
 
         beforeEach(async () => {
           jest.spyOn(userModel, 'findOne')
-          user = await userRepository.findOneAndUpdate(userFilterQuery, { ...UserProfileStub() })
+          user = await userRepository.findOneAndUpdate(userFilterQuery, {
+            ...UserProfileStub()
+          })
         })
 
         test('then it should return a user Menu', () => {

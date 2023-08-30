@@ -1,8 +1,10 @@
-
 import { getModelToken } from '@nestjs/mongoose'
 import { Test } from '@nestjs/testing'
 import { FilterQuery } from 'mongoose'
-import { VendorRepository, VendorSettingsRepository } from '../vendors.repository'
+import {
+  VendorRepository,
+  VendorSettingsRepository
+} from '../vendors.repository'
 import { Vendor, VendorSettings } from '@app/common'
 import { VendorModel, VendorSettingsModel } from './support/Vendor.model'
 import { VendorStub } from './stubs/vendor.stub'
@@ -71,7 +73,10 @@ describe('VendorsRepository', () => {
 
         beforeEach(async () => {
           jest.spyOn(vendorModel, 'findOneAndUpdate')
-          vendor = await vendorRepository.findOneAndUpdate(userFilterQuery, VendorStub())
+          vendor = await vendorRepository.findOneAndUpdate(
+            userFilterQuery,
+            VendorStub()
+          )
         })
 
         test('then it should return a vendor', () => {
@@ -134,8 +139,12 @@ describe('VendorsSettingsRepository', () => {
         ]
       }).compile()
 
-      vendorSettingsRepository = moduleRef.get<VendorSettingsRepository>(VendorSettingsRepository)
-      vendorSettingsModel = moduleRef.get<VendorSettingsModel>(getModelToken(VendorSettings.name))
+      vendorSettingsRepository = moduleRef.get<VendorSettingsRepository>(
+        VendorSettingsRepository
+      )
+      vendorSettingsModel = moduleRef.get<VendorSettingsModel>(
+        getModelToken(VendorSettings.name)
+      )
 
       userFilterQuery = {
         vendorId: VendorSettingStub().vendorId
@@ -150,7 +159,9 @@ describe('VendorsSettingsRepository', () => {
 
         beforeEach(async () => {
           jest.spyOn(vendorSettingsModel, 'findOne')
-          vendorSettings = await vendorSettingsRepository.findOne(userFilterQuery)
+          vendorSettings = await vendorSettingsRepository.findOne(
+            userFilterQuery
+          )
         })
 
         test('then it should return a vendor', () => {
@@ -180,7 +191,10 @@ describe('VendorsSettingsRepository', () => {
 
         beforeEach(async () => {
           jest.spyOn(vendorSettingsModel, 'findOneAndUpdate')
-          vendorSettings = await vendorSettingsRepository.findOneAndUpdate(userFilterQuery, VendorStub())
+          vendorSettings = await vendorSettingsRepository.findOneAndUpdate(
+            userFilterQuery,
+            VendorStub()
+          )
         })
 
         test('then it should return a vendor', () => {

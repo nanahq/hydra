@@ -9,7 +9,8 @@ export class AddressBookLabelRepository extends AbstractRepository<AddressBookLa
   protected readonly logger = new Logger(AddressBookLabelRepository.name)
 
   constructor (
-  @InjectModel(AddressBookLabel.name) AddressBookLabelModel: Model<AddressBookLabel>,
+  @InjectModel(AddressBookLabel.name)
+    AddressBookLabelModel: Model<AddressBookLabel>,
     @InjectConnection() connection: Connection
   ) {
     super(AddressBookLabelModel, connection)

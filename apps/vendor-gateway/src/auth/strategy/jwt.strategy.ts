@@ -26,13 +26,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate ({ userId }: TokenPayload): Promise<any> {
     return await lastValueFrom(
-      this.vendorClient
-        .send(QUEUE_MESSAGE.GET_VENDOR_JWT, userId)
-        .pipe(
-          catchError((error) => {
-            throw new UnauthorizedException(error.message)
-          })
-        )
+      this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_JWT, userId).pipe(
+        catchError((error) => {
+          throw new UnauthorizedException(error.message)
+        })
+      )
     )
   }
 }

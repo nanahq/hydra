@@ -1,4 +1,10 @@
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 import { Controller, UseFilters } from '@nestjs/common'
 
 import {
@@ -20,8 +26,7 @@ export class AddressBookServiceController {
   constructor (
     private readonly service: AddressBookService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.ADDRESS_BOOK_LIST)
   async list (@Ctx() context: RmqContext): Promise<AddressBook[]> {
@@ -106,11 +111,8 @@ export class AddressBookServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.ADDRESS_BOOK_DELETE_BY_USER)
   async deleteByUser (
-    @Payload() {
-      userId,
-      data
-    }: ServicePayload<TokenPayload>,
-    @Ctx() context: RmqContext
+    @Payload() { userId, data }: ServicePayload<TokenPayload>,
+      @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
       return await this.service.delete(userId)

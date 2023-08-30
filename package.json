@@ -24,7 +24,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/eatlater/test/jest-e2e.json",
-    "all:build": "yarn build users-service && yarn build nofication-service && yarn build vendors-service && yarn build admin-service && yarn build listings-service && yarn build payment-service",
+    "all:build": "yarn build users-service && yarn build nofication-service && yarn build vendors-service && yarn build admin-service && yarn build listings-service && yarn build payment-service && yarn && yarn build reviews-service build vendors-gateway && yarn build admin-gateway && yarn build api-gateway && yarn build orders-service && yarn build drivers-service && yarn build location-service",
     "all:version": "lerna version $1 --yes --no-push --no-git-tag-version --exact",
     "doc": "npx compodoc -p tsconfig.json -n \"EatLater Docs\""
   },

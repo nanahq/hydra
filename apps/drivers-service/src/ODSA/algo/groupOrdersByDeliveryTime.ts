@@ -21,11 +21,16 @@ export function groupOrdersByDeliveryTime (
     } else {
       const lastOrder = currentGroup.orders[currentGroup.orders.length - 1]
       const timeDiffMinutes = moment
-        .duration(moment(parseInt(order.orderDeliveryScheduledTime)).diff(moment(parseInt(lastOrder.orderDeliveryScheduledTime))))
+        .duration(
+          moment(parseInt(order.orderDeliveryScheduledTime)).diff(
+            moment(parseInt(lastOrder.orderDeliveryScheduledTime))
+          )
+        )
         .asMinutes()
 
       if (
-        timeDiffMinutes < 45 && timeDiffMinutes > 20 &&
+        timeDiffMinutes < 45 &&
+        timeDiffMinutes > 20 &&
         currentGroup.orders.length < 10 &&
         currentDriverCount < numberOfAvailableDrivers
       ) {

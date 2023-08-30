@@ -1,4 +1,3 @@
-
 export abstract class MockModel<T> {
   protected abstract entityStub: T
 
@@ -9,7 +8,7 @@ export abstract class MockModel<T> {
   constructorSpy (_createEntityData: T): void {}
 
   async findOne (): Promise<T> {
-    return await new Promise(resolve => resolve(this.entityStub))
+    return await new Promise((resolve) => resolve(this.entityStub))
   }
 
   async find (): Promise<T[]> {

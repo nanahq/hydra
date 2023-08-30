@@ -1,22 +1,27 @@
 import { HttpStatus, Injectable, Logger } from '@nestjs/common'
-import { RegisterDriverDto } from '@app/common/dto/registerDriver.dto'
-import { Driver, FitRpcException, ResponseWithStatus } from '@app/common'
+import {
+  Driver,
+  FitRpcException,
+  ResponseWithStatus,
+  RegisterDriverDto,
+  internationalisePhoneNumber
+} from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
-import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
 
 @Injectable()
 export class DriversServiceService {
   private readonly logger = new Logger(DriversServiceService.name)
 
-  constructor (
-    private readonly driverRepository: DriverRepository
-  ) {
-  }
+  constructor (private readonly driverRepository: DriverRepository) {}
 
-  public async register (payload: RegisterDriverDto): Promise<ResponseWithStatus> {
+  public async register (
+    payload: RegisterDriverDto
+  ): Promise<ResponseWithStatus> {
     payload.phone = internationalisePhoneNumber(payload.phone)
-    const existingDriver = await this.driverRepository.findOne({ phone: payload.phone })
+    const existingDriver = await this.driverRepository.findOne({
+      phone: payload.phone
+    })
 
     if (existingDriver !== null) {
       throw new FitRpcException(
@@ -42,7 +47,10 @@ export class DriversServiceService {
         message: `Failed to register driver ${payload.email} `,
         error
       })
-      throw new FitRpcException('Can not register a new driver at the moment. Something went wrong.', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not register a new driver at the moment. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -67,7 +75,10 @@ export class DriversServiceService {
 
   public async deleteDriver (id: string): Promise<ResponseWithStatus> {
     try {
-      await this.driverRepository.findOneAndUpdate({ _id: id }, { isDeleted: true })
+      await this.driverRepository.findOneAndUpdate(
+        { _id: id },
+        { isDeleted: true }
+      )
       return { status: 1 }
     } catch (error) {
       this.logger.error({
@@ -79,8 +90,13 @@ export class DriversServiceService {
     }
   }
 
-  public async validateDriver (phone: string, password: string): Promise<Driver> {
-    const driver = await this.driverRepository.findOne({ phone }) as Driver | null
+  public async validateDriver (
+    phone: string,
+    password: string
+  ): Promise<Driver> {
+    const driver = (await this.driverRepository.findOne({
+      phone
+    })) as Driver | null
 
     if (driver === null) {
       this.logger.error({
@@ -90,10 +106,7 @@ export class DriversServiceService {
       throw new FitRpcException('Incorrect phone number', HttpStatus.NOT_FOUND)
     }
 
-    const isCorrectPassword = await bcrypt.compare(
-      password,
-      driver.password
-    )
+    const isCorrectPassword = await bcrypt.compare(password, driver.password)
 
     if (!isCorrectPassword) {
       this.logger.error({

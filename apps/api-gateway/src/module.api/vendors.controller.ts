@@ -1,6 +1,19 @@
 import { ClientProxy } from '@nestjs/microservices'
-import { Controller, Get, HttpException, Inject, Param, UseGuards } from '@nestjs/common'
-import { IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, ServicePayload, Vendor } from '@app/common'
+import {
+  Controller,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  UseGuards
+} from '@nestjs/common'
+import {
+  IRpcException,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ServicePayload,
+  Vendor
+} from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -9,8 +22,7 @@ export class VendorsController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorsClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @Get('vendors')
   @UseGuards(JwtAuthGuard)
@@ -41,13 +53,7 @@ export class VendorsController {
       )
     )
 
-    const {
-      _id,
-      businessName,
-      businessAddress,
-      businessLogo,
-      phone
-    } = vendor
+    const { _id, businessName, businessAddress, businessLogo, phone } = vendor
 
     return {
       _id,

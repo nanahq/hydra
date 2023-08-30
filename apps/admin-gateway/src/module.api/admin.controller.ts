@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, HttpException, Inject, Post, Put, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Post,
+  Put,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -22,8 +32,7 @@ export class AdminController {
   constructor (
     @Inject(QUEUE_SERVICE.ADMINS_SERVICE)
     private readonly adminClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @Post('register')
   async registerNewUser (

@@ -32,4 +32,5 @@ export class AddressBookLabel extends AbstractDocument {
     updatedAt: string
 }
 
-export const AddressBookLabelSchema = SchemaFactory.createForClass(AddressBookLabel)
+export const AddressBookLabelSchema =
+  SchemaFactory.createForClass(AddressBookLabel)
