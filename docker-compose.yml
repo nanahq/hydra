@@ -225,7 +225,6 @@ services:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
-      - cassandra-db
       - rabbitmq
     ports:
       - '3003:3003'
