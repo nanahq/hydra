@@ -1,14 +1,15 @@
 {
-  "name": "@imagyne/eatlater-types",
-  "version": "0.1.8",
-  "description": "Type declarations and collection of tools for EatLater ",
+  "name": "@nanahq/sticky",
+  "version": "0.1.0",
+  "description": "Types declarations, components and collection of tools for Nana",
   "scripts": {
     "prepublish": "tsc",
     "postpublish": "rm -rf ./dist",
     "build": "tsc"
   },
-  "author": "EatLater Engineering",
+  "author": "Nana Engineering",
   "license": "UNLICENSED",
+  "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "devDependencies": {
