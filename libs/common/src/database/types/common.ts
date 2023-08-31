@@ -21,7 +21,8 @@ export interface VendorOperationSetting {
 }
 
 export interface LocationCoordinates {
-  coordinates: [string, string]
+  type: 'Point'
+  coordinates: [number, number]
 }
 
 export interface ListingCategoryI {

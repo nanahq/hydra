@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 
 import {
@@ -16,6 +16,7 @@ import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
 
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger()
   constructor (private readonly usersRepository: UserRepository) {}
 
   async register ({
@@ -106,9 +107,13 @@ export class UsersService {
     try {
       await this.usersRepository.findOneAndUpdate({ _id: userId }, { ...data })
       return { status: 1 }
-    } catch {
+    } catch (error) {
+      this.logger.log({
+        error,
+        message: `PIM -> failed to update user ${userId}`
+      })
       throw new FitRpcException(
-        'Failed to update user status',
+        'Failed to update user profile',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }

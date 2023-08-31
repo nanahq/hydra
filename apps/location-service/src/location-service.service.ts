@@ -34,7 +34,7 @@ export class LocationService {
   }
 
   public async getTravelDistance (
-    origin: string[],
+    origin: number[],
     destination: string[]
   ): Promise<number> {
     try {

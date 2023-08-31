@@ -149,7 +149,7 @@ export class VendorsService {
   }: ServicePayload<Partial<Vendor>>): Promise<ResponseWithStatus> {
     const req = await this.vendorRepository.findOneAndUpdate(
       { _id: userId },
-      { ...data }
+      data
     )
 
     if (req === null) {

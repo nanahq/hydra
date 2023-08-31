@@ -55,5 +55,5 @@ export interface OrderGroup {
 
 export interface DriverWithLocation {
   driverId: string | any
-  coordinates: string[]
+  coordinates: number[]
 }
