@@ -27,5 +27,9 @@ OrderStatus,
   },
   PAYMENT_PENDING: () => {
     return 'Great news! Your order has been accepted by the vendor! Track your order live on the EatLater app for a seamless experience. Thank you for choosing EatLater! 🚀'
+  },
+
+  COURIER_PICKUP: () => {
+    return ''
   }
 }

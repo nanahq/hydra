@@ -31,7 +31,7 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
-import { GoogleFileService } from '../google-file.service'
+import { AwsService } from '../aws.service'
 
 @Controller('vendor')
 export class VendorController {
@@ -40,7 +40,7 @@ export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorClient: ClientProxy,
-    private readonly googleService: GoogleFileService
+    private readonly awsService: AwsService
   ) {}
 
   @Post('register')
@@ -77,13 +77,13 @@ export class VendorController {
       storage: multer.memoryStorage()
     })
   )
-  @Put('logo')
+  @Put('image')
   async updateVendorLogo (
     @CurrentUser() vendor: Vendor,
       @UploadedFile() file: Express.Multer.File
-  ): Promise<string> {
-    const photo = await this.googleService.saveToCloud(file)
-    const payload: ServicePayload<string> = {
+  ): Promise<string | undefined> {
+    const photo = await this.awsService.upload(file)
+    const payload: ServicePayload<undefined | string> = {
       userId: vendor._id as any,
       data: photo
     }
@@ -103,9 +103,9 @@ export class VendorController {
   async updateVendorRestaurantImage (
     @CurrentUser() vendor: Vendor,
       @UploadedFile() file: Express.Multer.File
-  ): Promise<string> {
-    const photo = await this.googleService.saveToCloud(file)
-    const payload: ServicePayload<string> = {
+  ): Promise<string | undefined> {
+    const photo = await this.awsService.upload(file)
+    const payload: ServicePayload<string | undefined> = {
       userId: vendor._id as any,
       data: photo
     }
