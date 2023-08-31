@@ -36,7 +36,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
-import { GoogleFileService } from '../google-file.service'
+import { AwsService } from '../aws.service'
 
 @Controller('listing')
 export class ListingsController {
@@ -45,7 +45,7 @@ export class ListingsController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy,
-    private readonly googleService: GoogleFileService
+    private readonly awsService: AwsService
   ) {}
 
   @Get('menus')
@@ -76,7 +76,7 @@ export class ListingsController {
   @UseGuards(JwtAuthGuard)
   @Post('menu')
   @UseInterceptors(
-    FileInterceptor('listingImage', {
+    FileInterceptor('image', {
       storage: multer.memoryStorage()
     })
   )
@@ -85,7 +85,7 @@ export class ListingsController {
       @CurrentUser() { _id }: Vendor,
       @UploadedFile() file: Express.Multer.File
   ): Promise<any> {
-    const photo = await this.googleService.saveToCloud(file)
+    const photo = await this.awsService.upload(file)
     const payload: ServicePayload<any> = {
       userId: _id as any,
       data: {
