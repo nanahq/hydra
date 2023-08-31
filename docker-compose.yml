@@ -1,39 +1,39 @@
 services:
-#  api-gateway:
-#    build:
-#      context: .
-#      dockerfile: ./apps/api-gateway/Dockerfile
-#      target: development
-#    command: 'yarn start:dev api-gateway'
-#    env_file:
-#      - ./apps/api-gateway/.env
-#    depends_on:
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    ports:
-#      - '3000:3000'
-#    networks:
-#      - nana-app
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+      target: development
+    command: 'yarn start:dev api-gateway'
+    env_file:
+      - ./apps/api-gateway/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+    networks:
+      - nana-app
 
-#  admin-gateway:
-#    build:
-#      context: .
-#      dockerfile: ./apps/admin-gateway/Dockerfile
-#      target: development
-#    command: 'yarn start:dev admin-gateway'
-#    env_file:
-#      - ./apps/admin-gateway/.env
-#    depends_on:
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    ports:
-#      - '3002:3002'
-#    networks:
-#      - nana-app
+  admin-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/admin-gateway/Dockerfile
+      target: development
+    command: 'yarn start:dev admin-gateway'
+    env_file:
+      - ./apps/admin-gateway/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    ports:
+      - '3002:3002'
+    networks:
+      - nana-app
 
   vendor-gateway:
     build:
@@ -53,45 +53,45 @@ services:
     networks:
       - nana-app
 
-#  admin-service:
-#    build:
-#      context: .
-#      dockerfile: ./apps/admin-service/Dockerfile
-#      target: development
-#    command: 'yarn start:dev admin-service'
-#    env_file:
-#      - ./apps/admin-service/.env
-#    depends_on:
-#      - api-gateway
-#      - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    networks:
-#      - nana-app
+  admin-service:
+    build:
+      context: .
+      dockerfile: ./apps/admin-service/Dockerfile
+      target: development
+    command: 'yarn start:dev admin-service'
+    env_file:
+      - ./apps/admin-service/.env
+    depends_on:
+      - api-gateway
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
 
-#  users-service:
-#    build:
-#      context: .
-#      dockerfile: ./apps/users-service/Dockerfile
-#      target: development
-#    command: 'yarn start:dev users-service'
-#    env_file:
-#      - ./apps/users-service/.env
-#    depends_on:
-#      - api-gateway
-#      - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    networks:
-#      - nana-app
+  users-service:
+    build:
+      context: .
+      dockerfile: ./apps/users-service/Dockerfile
+      target: development
+    command: 'yarn start:dev users-service'
+    env_file:
+      - ./apps/users-service/.env
+    depends_on:
+      - api-gateway
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
 
   vendors-service:
     build:
@@ -113,42 +113,42 @@ services:
     networks:
       - nana-app
 
-#  notification-service:
-#    build:
-#      context: .
-#      dockerfile: ./apps/notification-service/Dockerfile
-#      target: development
-#    command: 'yarn start:dev notification-service'
-#    env_file:
-#      - ./apps/notification-service/.env
-#    depends_on:
-#      - api-gateway
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    networks:
-#      - nana-app
+  notification-service:
+    build:
+      context: .
+      dockerfile: ./apps/notification-service/Dockerfile
+      target: development
+    command: 'yarn start:dev notification-service'
+    env_file:
+      - ./apps/notification-service/.env
+    depends_on:
+      - api-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
 
-#  orders-service:
-#    build:
-#      context: .
-#      dockerfile: apps/orders-service/Dockerfile
-#      target: development
-#    command: 'yarn start:dev orders-service'
-#    env_file:
-#      - apps/orders-service/.env
-#    depends_on:
-#      - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
-#      - api-gateway
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    networks:
-#      - nana-app
+  orders-service:
+    build:
+      context: .
+      dockerfile: apps/orders-service/Dockerfile
+      target: development
+    command: 'yarn start:dev orders-service'
+    env_file:
+      - apps/orders-service/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - api-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
 
   listings-service:
     build:
@@ -171,84 +171,84 @@ services:
     networks:
       - nana-app
 
-#  payment-service:
-#    build:
-#      context: .
-#      dockerfile: apps/payment-service/Dockerfile
-#      target: development
-#    command: 'yarn start:dev payment-service'
-#    env_file:
-#      - apps/payment-service/.env
-#    depends_on:
-#      - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
-#      - api-gateway
-#      - vendor-gateway
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    networks:
-#      - nana-app
+  payment-service:
+    build:
+      context: .
+      dockerfile: apps/payment-service/Dockerfile
+      target: development
+    command: 'yarn start:dev payment-service'
+    env_file:
+      - apps/payment-service/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - api-gateway
+      - vendor-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
 
-#  reviews-service:
-#    build:
-#      context: .
-#      dockerfile: apps/reviews-service/Dockerfile
-#      target: development
-#    command: 'yarn start:dev reviews-service'
-#    env_file:
-#      - apps/reviews-service/.env
-#    depends_on:
-#      - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
-#      - api-gateway
-#      - vendor-gateway
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    networks:
-#      - nana-app
+  reviews-service:
+    build:
+      context: .
+      dockerfile: apps/reviews-service/Dockerfile
+      target: development
+    command: 'yarn start:dev reviews-service'
+    env_file:
+      - apps/reviews-service/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - api-gateway
+      - vendor-gateway
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
 
-#  drivers-service:
-#    build:
-#      context: .
-#      dockerfile: apps/drivers-service/Dockerfile
-#      target: development
-#    command: 'yarn start:dev drivers-service'
-#    env_file:
-#      - apps/drivers-service/.env
-#    depends_on:
-#      - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
-#      - rabbitmq
-#    ports:
-#      - '3003:3003'
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    networks:
-#      - nana-app
+  drivers-service:
+    build:
+      context: .
+      dockerfile: apps/drivers-service/Dockerfile
+      target: development
+    command: 'yarn start:dev drivers-service'
+    env_file:
+      - apps/drivers-service/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    ports:
+      - '3003:3003'
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
 
-#  location-service:
-#    build:
-#      context: .
-#      dockerfile: apps/location-service/Dockerfile
-#      target: development
-#    command: 'yarn start:dev location-service'
-#    env_file:
-#      - apps/location-service/.env
-#    depends_on:
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    networks:
-#      - nana-app
+  location-service:
+    build:
+      context: .
+      dockerfile: apps/location-service/Dockerfile
+      target: development
+    command: 'yarn start:dev location-service'
+    env_file:
+      - apps/location-service/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
   rabbitmq:
     image: rabbitmq
     ports:
