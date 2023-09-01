@@ -7,7 +7,6 @@ import {
   Order
 } from '@app/common'
 
-
 @Schema({ versionKey: false, timestamps: true })
 export class Driver extends AbstractDocument {
   @Prop()

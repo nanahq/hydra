@@ -59,8 +59,8 @@ export interface DriverWithLocation {
 }
 
 export interface TravelDistanceResult {
-  vendor: Vendor
-  distance: number
+  distance?: number // in meters
 
-  travelTime: string
+  duration?: number // in minutes
+  eta?: string
 }

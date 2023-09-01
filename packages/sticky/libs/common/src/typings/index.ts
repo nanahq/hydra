@@ -519,7 +519,6 @@ export interface UserDto {
 }
 
 export interface TravelDistanceResult {
-  vendor: VendorI
   distance: number
 
   travelTime: string

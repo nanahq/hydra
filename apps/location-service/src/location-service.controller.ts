@@ -7,7 +7,7 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { RmqService, QUEUE_MESSAGE, DriverWithLocation } from '@app/common'
+import { RmqService, QUEUE_MESSAGE, DriverWithLocation, TravelDistanceResult } from '@app/common'
 @Controller()
 export class LocationController {
   constructor (
@@ -21,13 +21,34 @@ export class LocationController {
       {
         target,
         coordinates
-      }: { target: string[], coordinates: DriverWithLocation[] },
+      }: { target: number[], coordinates: DriverWithLocation[] },
       @Ctx() context: RmqContext
   ): Promise<DriverWithLocation | null> {
     try {
       return await this.locationService.getNearestCoordinate(
         target,
         coordinates
+      )
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LOCATION_GET_ETA)
+  async getTravelDistance (
+    @Payload()
+      {
+        userCoords,
+        vendorCoords
+      }: { userCoords: number[], vendorCoords: number[] },
+      @Ctx() context: RmqContext
+  ): Promise<TravelDistanceResult | null> {
+    try {
+      return await this.locationService.getTravelDistance(
+        userCoords,
+        vendorCoords
       )
     } catch (error) {
       throw new RpcException(error)

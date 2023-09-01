@@ -5,14 +5,15 @@ import {
   HttpException,
   Inject,
   Param,
-  UseGuards
+  UseGuards,
+  Post, Body
 } from '@nestjs/common'
 import {
   CurrentUser,
   IRpcException, LocationCoordinates,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ServicePayload,
+  ServicePayload, TravelDistanceResult,
   User,
   Vendor
 } from '@app/common'
@@ -23,7 +24,10 @@ import { catchError, lastValueFrom } from 'rxjs'
 export class VendorsController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
-    private readonly vendorsClient: ClientProxy
+    private readonly vendorsClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
+    private readonly locationClient: ClientProxy
   ) {}
 
   @Get('vendors')
@@ -87,6 +91,20 @@ export class VendorsController {
           throw new HttpException(error.message, error.status)
         })
       )
+    )
+  }
+
+  @Post('/travel-distance')
+  @UseGuards(JwtAuthGuard)
+  async getTravelDistance (
+    @Body() data: Omit<LocationCoordinates, 'type'>,
+      @CurrentUser() user: User
+  ): Promise<TravelDistanceResult> {
+    return await lastValueFrom<TravelDistanceResult>(
+      this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: user.location.coordinates, vendorCoords: data.coordinates })
+        .pipe(catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        }))
     )
   }
 }

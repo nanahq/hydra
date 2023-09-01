@@ -68,6 +68,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
