@@ -57,3 +57,10 @@ export interface DriverWithLocation {
   driverId: string | any
   coordinates: number[]
 }
+
+export interface TravelDistanceResult {
+  vendor: Vendor
+  distance: number
+
+  travelTime: string
+}

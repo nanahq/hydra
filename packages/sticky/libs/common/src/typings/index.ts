@@ -110,9 +110,9 @@ export interface VendorOperationSetting {
 }
 
 export interface LocationCoordinates {
-  coordinates: [string, string]
+  type: 'Point'
+  coordinates: [number, number]
 }
-
 export interface ListingMenuReview {
   rating: string
   numberOfReviews: number
@@ -516,4 +516,11 @@ export interface UserDto {
   status: number
 
   addresses: string[]
+}
+
+export interface TravelDistanceResult {
+  vendor: VendorI
+  distance: number
+
+  travelTime: string
 }
