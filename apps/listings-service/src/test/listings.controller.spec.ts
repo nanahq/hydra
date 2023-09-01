@@ -220,7 +220,7 @@ describe('listingsController', () => {
         data = {
           userId: VendorStub()._id as any,
           data: {
-            catId: ListingMenuStub().vendorId
+            // catId: ListingMenuStub().vendorId
           }
         }
         response = await listingsController.updateListingCategory(
