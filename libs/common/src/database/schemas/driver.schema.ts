@@ -38,7 +38,12 @@ export class Driver extends AbstractDocument {
 
   @Prop({
     type: {
-      coordinates: [String]
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0] // Default coordinates here
     }
   })
     location: LocationCoordinates
@@ -60,3 +65,4 @@ export class Driver extends AbstractDocument {
 }
 
 export const DriverSchema = SchemaFactory.createForClass(Driver)
+DriverSchema.index({ location: '2dsphere' })

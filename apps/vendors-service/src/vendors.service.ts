@@ -11,7 +11,7 @@ import {
   VendorSettings,
   Vendor,
   CreateVendorDto,
-  UpdateVendorSettingsDto
+  UpdateVendorSettingsDto, LocationCoordinates
 } from '@app/common'
 
 import {
@@ -149,7 +149,7 @@ export class VendorsService {
   }: ServicePayload<Partial<Vendor>>): Promise<ResponseWithStatus> {
     const req = await this.vendorRepository.findOneAndUpdate(
       { _id: userId },
-      { ...data }
+      data
     )
 
     if (req === null) {
@@ -276,6 +276,32 @@ export class VendorsService {
         { restaurantImage: data }
       )
     } catch (e) {
+      throw new FitRpcException(
+        'Failed to create  settings',
+        HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
+
+  async getNearestVendors ({ type, coordinates }: LocationCoordinates, userId: string): Promise<Vendor[]> {
+    try {
+      const vendors = this.vendorRepository.find({
+        location: {
+          $near:
+      {
+        $geometry: { type, coordinates },
+        $minDistance: 200,
+        $maxDistance: 5000
+      }
+        }
+      })
+      this.logger.log('PIM -> fetching nearest vendors')
+      return vendors
+    } catch (error) {
+      this.logger.log({
+        error,
+        message: 'Failed to fetch nearest location for user'
+      })
       throw new FitRpcException(
         'Failed to create  settings',
         HttpStatus.BAD_GATEWAY

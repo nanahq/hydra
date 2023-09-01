@@ -55,5 +55,12 @@ export interface OrderGroup {
 
 export interface DriverWithLocation {
   driverId: string | any
-  coordinates: string[]
+  coordinates: number[]
+}
+
+export interface TravelDistanceResult {
+  distance?: number // in meters
+
+  duration?: number // in minutes
+  eta?: string
 }

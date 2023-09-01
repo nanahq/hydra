@@ -4,7 +4,7 @@ import {
   AbstractDocument,
   OrderStatus,
   OrderBreakDown,
-  OrderType
+  OrderType, LocationCoordinates
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -65,12 +65,15 @@ export class Order extends AbstractDocument {
 
   @Prop({
     type: {
-      coordinates: [String]
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0] // Default coordinates here
     }
   })
-    preciseLocation: {
-    coordinates: [string, string]
-  }
+    preciseLocation: LocationCoordinates
 
   @Prop(String)
     quantity: string

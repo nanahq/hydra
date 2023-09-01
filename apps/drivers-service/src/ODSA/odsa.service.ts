@@ -194,9 +194,9 @@ export class ODSA {
     }
   }
 
-  @Cron(CronExpression.EVERY_MINUTE, {
-    timeZone: 'Africa/Lagos'
-  })
+  // @Cron(CronExpression.EVERY_MINUTE, {
+  //   timeZone: 'Africa/Lagos'
+  // })
   private async assignDemandOrders (): Promise<void> {
     const unassignedDeliveries = (await this.odsaRepository.find({
       assignedToDriver: false

@@ -23,7 +23,8 @@ export class ListingsController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy
-  ) {}
+  ) {
+  }
 
   @Get('menus')
   @UseGuards(JwtAuthGuard)
