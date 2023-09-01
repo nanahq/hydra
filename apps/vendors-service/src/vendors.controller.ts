@@ -18,7 +18,7 @@ import {
   VendorUserI,
   VendorSettings,
   Vendor,
-  UpdateVendorSettingsDto
+  UpdateVendorSettingsDto, LocationCoordinates
 } from '@app/common'
 import { VendorsService } from './vendors.service'
 
@@ -215,6 +215,20 @@ export class VendorsController {
   ): Promise<void> {
     try {
       await this.vendorsService.updateVendorImage(data.data, data.userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_NEAREST_VENDORS)
+  async getNearestVendors (
+    @Payload() { data: { userLocation }, userId }: ServicePayload<{ userLocation: LocationCoordinates }>,
+      @Ctx() context: RmqContext
+  ): Promise<Vendor[]> {
+    try {
+      return await this.vendorsService.getNearestVendors(userLocation, userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

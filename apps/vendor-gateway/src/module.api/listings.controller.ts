@@ -93,7 +93,7 @@ export class ListingsController {
         photo,
         isLive: booleanParser(data.isLive),
         isAvailable: booleanParser(data.isAvailable),
-        optionGroups: data.optionGroups.split(',')
+        optionGroups: data?.optionGroups?.split(',') ?? []
       }
     }
     this.logger.log('Creating new listing menu')

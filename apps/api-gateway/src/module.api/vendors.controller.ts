@@ -8,10 +8,12 @@ import {
   UseGuards
 } from '@nestjs/common'
 import {
-  IRpcException,
+  CurrentUser,
+  IRpcException, LocationCoordinates,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ServicePayload,
+  User,
   Vendor
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -62,5 +64,29 @@ export class VendorsController {
       businessLogo,
       phone
     }
+  }
+  //   Homepage/landing page endpoints
+
+  /**
+   * Get restaurants closest to the user
+   */
+  @Get('/home/nearest')
+  @UseGuards(JwtAuthGuard)
+  async nearestToYou (
+    @CurrentUser() user: User
+  ): Promise<Vendor[]> {
+    const payload: ServicePayload<{ userLocation: LocationCoordinates }> = {
+      userId: user._id as any,
+      data: {
+        userLocation: user.location
+      }
+    }
+    return await lastValueFrom<Vendor[]>(
+      this.vendorsClient.send(QUEUE_MESSAGE.GET_NEAREST_VENDORS, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 }

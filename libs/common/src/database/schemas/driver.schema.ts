@@ -47,7 +47,7 @@ export class Driver extends AbstractDocument {
       default: [0, 0] // Default coordinates here
     }
   })
-  location: LocationCoordinates;
+    location: LocationCoordinates
 
   @Prop({ type: [Types.ObjectId], ref: 'Order' })
     trips: Order[]
