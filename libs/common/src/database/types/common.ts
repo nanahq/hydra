@@ -1,5 +1,4 @@
-import { OrderType, VendorOperationType } from '@app/common/typings/Global.Interface'
-import { OrderStatus } from '@app/common/typings/OrderStatus.enum'
+import { OrderType, VendorOperationType, OrderStatus } from '@app/common'
 
 export interface ListingOption {
   name: string
@@ -22,7 +21,8 @@ export interface VendorOperationSetting {
 }
 
 export interface LocationCoordinates {
-  coordinates: [string, string]
+  type: 'Point'
+  coordinates: [number, number]
 }
 
 export interface ListingCategoryI {
@@ -120,7 +120,6 @@ export interface UserI {
   isDeleted: boolean
   orders: OrderI[]
   location: LocationCoordinates
-
 }
 
 export interface ReviewI {

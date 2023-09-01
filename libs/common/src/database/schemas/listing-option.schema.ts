@@ -1,6 +1,5 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument } from '@app/common'
-import { ListingOption } from '@app/common/database/types/common'
+import { AbstractDocument, ListingOption } from '@app/common'
 import { SchemaTypes } from 'mongoose'
 
 @Schema({ versionKey: false })

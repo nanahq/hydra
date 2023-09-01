@@ -1,4 +1,11 @@
-import { DynamicModule, INestApplication, MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common'
+import {
+  DynamicModule,
+  INestApplication,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  ValidationPipe
+} from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
 import { AppMetadata } from 'app.config'
@@ -61,6 +68,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,

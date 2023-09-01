@@ -30,8 +30,7 @@ export class OrdersServiceService {
     private readonly userClient: ClientProxy,
     @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
     private readonly driverClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   public async placeOrder ({
     data,
@@ -58,7 +57,10 @@ export class OrdersServiceService {
 
   public async getAllVendorOrders (vendor: string): Promise<Order[]> {
     try {
-      const _orders = await this.orderRepository.findAndPopulate({ vendor }, 'listing vendor') as any
+      const _orders = (await this.orderRepository.findAndPopulate(
+        { vendor },
+        'listing vendor'
+      )) as any
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -70,7 +72,10 @@ export class OrdersServiceService {
 
   public async getAllUserOrders (user: string): Promise<Order[]> {
     try {
-      return await this.orderRepository.findAndPopulate({ user }, 'user listing vendor')
+      return await this.orderRepository.findAndPopulate(
+        { user },
+        'user listing vendor'
+      )
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -79,9 +84,14 @@ export class OrdersServiceService {
     }
   }
 
-  public async getAllOrderInDb (filterQuery: FilterQuery<Order>): Promise<Order[]> {
+  public async getAllOrderInDb (
+    filterQuery: FilterQuery<Order>
+  ): Promise<Order[]> {
     try {
-      const _orders = await this.orderRepository.findAndPopulate(filterQuery, 'vendor') as any
+      const _orders = (await this.orderRepository.findAndPopulate(
+        filterQuery,
+        'vendor'
+      )) as any
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -93,7 +103,10 @@ export class OrdersServiceService {
 
   public async getOrderByRefId (refId: number): Promise<Order | null> {
     try {
-      return await this.orderRepository.findOneAndPopulate({ refId }, 'user listing vendor')
+      return await this.orderRepository.findOneAndPopulate(
+        { refId },
+        'user listing vendor'
+      )
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -105,7 +118,11 @@ export class OrdersServiceService {
   public async getOrderById (_id: string): Promise<Order | null> {
     try {
       this.logger.log(`PIM -> fetching single order with id: ${_id}`)
-      return await this.orderRepository.findOneAndPopulate({ _id }, ['user', 'listing', 'vendor'])
+      return await this.orderRepository.findOneAndPopulate({ _id }, [
+        'user',
+        'listing',
+        'vendor'
+      ])
     } catch (error) {
       this.logger.error({
         error,
@@ -123,15 +140,21 @@ export class OrdersServiceService {
     orderId
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
     try {
-      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: status })
+      const order = await this.orderRepository.findOneAndUpdate(
+        { _id: orderId },
+        { orderStatus: status }
+      )
 
-      this.logger.log(`[PIM] - order status updated for order: ${orderId} status: ${status}`)
+      this.logger.log(
+        `[PIM] - order status updated for order: ${orderId} status: ${status}`
+      )
 
       await lastValueFrom<any>(
-        this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
-          phoneNumber: order.primaryContact,
-          status
-        })
+        this.notificationClient
+          .emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
+            phoneNumber: order.primaryContact,
+            status
+          })
           .pipe(
             catchError((error) => {
               throw error
@@ -140,7 +163,10 @@ export class OrdersServiceService {
       )
       return { status: 1 }
     } catch (error) {
-      throw new FitRpcException('failed to updated order', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'failed to updated order',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -152,18 +178,24 @@ export class OrdersServiceService {
     try {
       this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
 
-      const order = await this.orderRepository.findOneAndUpdate({ _id: orderId }, {
-        txRefId,
-        orderStatus: status
-      }) as Order
+      const order = (await this.orderRepository.findOneAndUpdate(
+        { _id: orderId },
+        {
+          txRefId,
+          orderStatus: status
+        }
+      )) as Order
 
-      this.logger.log(`[PIM] - order status updated for paid order: ${orderId}`)
+      this.logger.log(
+        `[PIM] - order status updated for paid order: ${orderId}`
+      )
 
       await lastValueFrom<any>(
-        this.notificationClient.emit(QUEUE_MESSAGE.PROCESS_PAID_ORDER, {
-          phoneNumber: order.primaryContact,
-          status
-        })
+        this.notificationClient
+          .emit(QUEUE_MESSAGE.PROCESS_PAID_ORDER, {
+            phoneNumber: order.primaryContact,
+            status
+          })
           .pipe(
             catchError((error) => {
               throw error
@@ -178,7 +210,8 @@ export class OrdersServiceService {
         })
       )
 
-      if (order.orderType === OrderTypes.INSTANT) { // Start ODSA on instant order
+      if (order.orderType === OrderTypes.INSTANT) {
+        // Start ODSA on instant order
         await lastValueFrom<any>(
           this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
         )
@@ -187,15 +220,25 @@ export class OrdersServiceService {
       return { status: 1 }
     } catch (error) {
       this.logger.error(`[PIM] - Failed to process paid order ${orderId} `)
-      throw new FitRpcException('failed to process paid order', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'failed to process paid order',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  public async vendorAcceptOrder (orderId: string, phone: string): Promise<void> {
+  public async vendorAcceptOrder (
+    orderId: string,
+    phone: string
+  ): Promise<void> {
     try {
-      await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: OrderStatus.ACCEPTED })
+      await this.orderRepository.findOneAndUpdate(
+        { _id: orderId },
+        { orderStatus: OrderStatus.ACCEPTED }
+      )
       await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER, { phone })
+        this.notificationClient
+          .emit(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER, { phone })
           .pipe(
             catchError((error) => {
               throw error
@@ -203,23 +246,32 @@ export class OrdersServiceService {
           )
       )
     } catch (error) {
-      throw new FitRpcException('failed to process order', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'failed to process order',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   public async odsaGetPreOrders (): Promise<Order[] | null> {
     try {
       this.logger.log('PIM -> Getting pre orders for ODSA daily cron')
-      return await this.orderRepository.findAndPopulate({
-        orderStatus: 'ORDER_PLACED',
-        orderType: OrderTypes.PRE
-      }, ['listing', 'user', 'vendor'])
+      return await this.orderRepository.findAndPopulate(
+        {
+          orderStatus: 'ORDER_PLACED',
+          orderType: OrderTypes.PRE
+        },
+        ['listing', 'user', 'vendor']
+      )
     } catch (error) {
       this.logger.error({
         message: 'PIM -> failed to get pre orders for ODSA daily cron',
         error
       })
-      throw new FitRpcException('failed to fetched ODSA pre orders', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'failed to fetched ODSA pre orders',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 

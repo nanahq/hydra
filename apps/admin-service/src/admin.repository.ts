@@ -1,8 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { AbstractRepository } from '@app/common'
+import { AbstractRepository, Admin } from '@app/common'
 import { InjectConnection, InjectModel } from '@nestjs/mongoose'
 import { Connection, Model } from 'mongoose'
-import { Admin } from '@app/common/database/schemas/admin.schema'
 
 @Injectable()
 export class AdminRepository extends AbstractRepository<Admin> {

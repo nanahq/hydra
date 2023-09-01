@@ -1,6 +1,18 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import { VendorPayoutRepository } from './payout.repository'
-import { FitRpcException, IRpcException, Order, OrderI, PayoutOverview, QUEUE_MESSAGE, QUEUE_SERVICE, RandomGen, ResponseWithStatus, SendPayoutEmail, VendorPayout } from '@app/common'
+import {
+  FitRpcException,
+  IRpcException,
+  Order,
+  OrderI,
+  PayoutOverview,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  RandomGen,
+  ResponseWithStatus,
+  SendPayoutEmail,
+  VendorPayout
+} from '@app/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -29,7 +41,10 @@ export class VendorPayoutService {
 
       return { status: 1 }
     } catch (error) {
-      throw new FitRpcException('Can not created payout at this time', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not created payout at this time',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -38,7 +53,10 @@ export class VendorPayoutService {
       await this.payoutRepository.findOneAndUpdate({ refId }, { paid: true })
       return { status: 1 }
     } catch (error) {
-      throw new FitRpcException('Can not update payout', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not update payout',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -56,29 +74,29 @@ export class VendorPayoutService {
     const week = new Date(today.getTime() - 168 * 60 * 60 * 1000)
     const month = new Date(today.getTime() - 1020 * 60 * 60 * 1000)
 
-    const yesterdayPayout = await this.payoutRepository.find({
+    const yesterdayPayout = (await this.payoutRepository.find({
       createdAt: {
         $gte: yesterday.setHours(0, 0, 0, 0),
         $lt: yesterday.setHours(23, 59, 59, 999)
       },
       vendor
-    }) as VendorPayout[]
+    })) as VendorPayout[]
 
-    const weekPayout = await this.payoutRepository.find({
+    const weekPayout = (await this.payoutRepository.find({
       createdAt: {
         $gte: week.setHours(0, 0, 0, 0),
         $lt: today
       },
       vendor
-    }) as VendorPayout[]
+    })) as VendorPayout[]
 
-    const monthPayout = await this.payoutRepository.find({
+    const monthPayout = (await this.payoutRepository.find({
       createdAt: {
         $gte: month.setHours(0, 0, 0, 0),
         $lt: today
       },
       vendor
-    }) as VendorPayout[]
+    })) as VendorPayout[]
 
     const monthEarning = monthPayout.reduce((acc, obj) => {
       return acc + obj.earnings
@@ -95,7 +113,6 @@ export class VendorPayoutService {
       '24_hours': yesterdayEarning,
       '7_days': weekEarning,
       '30_days': monthEarning
-
     }
   }
 
@@ -117,12 +134,11 @@ export class VendorPayoutService {
       orderStatus: 'DELIVERED_TO_CUSTOMER'
     }
     const orders = await lastValueFrom<OrderI[]>(
-      this.ordersClient.send(QUEUE_MESSAGE.GET_ALL_ORDERS, filter)
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new FitRpcException(error.message, error.status)
-          })
-        )
+      this.ordersClient.send(QUEUE_MESSAGE.GET_ALL_ORDERS, filter).pipe(
+        catchError((error: IRpcException) => {
+          throw new FitRpcException(error.message, error.status)
+        })
+      )
     )
 
     // Compute earnings for each vendor
@@ -131,7 +147,10 @@ export class VendorPayoutService {
     orders.forEach((order) => {
       const vendorId = order.vendor._id.toString()
       const earnings = vendorEarnings.get(vendorId) ?? 0
-      vendorEarnings.set(vendorId, earnings + Number(order.orderBreakDown.orderCost))
+      vendorEarnings.set(
+        vendorId,
+        earnings + Number(order.orderBreakDown.orderCost)
+      )
     })
 
     const payoutsToMake: Array<Partial<VendorPayout>> = []
@@ -164,7 +183,10 @@ export class VendorPayoutService {
       paid: true
     }
 
-    const todayPayouts = await this.payoutRepository.findAndPopulate(filter, 'vendor') as any
+    const todayPayouts = (await this.payoutRepository.findAndPopulate(
+      filter,
+      'vendor'
+    )) as any
 
     if (todayPayouts.length < 1) {
       return
@@ -173,9 +195,10 @@ export class VendorPayoutService {
     const transactionalEmailPayload = payoutMapper(todayPayouts)
 
     await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS, transactionalEmailPayload)
+      this.notificationClient
+        .emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS, transactionalEmailPayload)
         .pipe(
-          catchError(error => {
+          catchError((error) => {
             throw new RpcException(error)
           })
         )

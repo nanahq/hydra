@@ -1,4 +1,11 @@
-import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator'
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+  MaxLength,
+  MinLength
+} from 'class-validator'
 
 export class RegisterDriverDto {
   @IsNotEmpty()

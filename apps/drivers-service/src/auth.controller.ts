@@ -9,8 +9,7 @@ import { AuthService } from './auth.service'
 
 @Controller('auth')
 export class DriversAuthController {
-  constructor (private readonly authService: AuthService) {
-  }
+  constructor (private readonly authService: AuthService) {}
 
   @UseGuards(LocalGuard)
   @Post('login')

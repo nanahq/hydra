@@ -1,9 +1,22 @@
-import { Controller, Get, HttpException, Inject, Param, UseGuards } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { IRpcException, ListingCategory, ListingMenu, QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common'
+import {
+  IRpcException,
+  ListingCategory,
+  ListingMenu,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE
+} from '@app/common'
 
 @Controller('listing')
 export class ListingsController {
@@ -39,11 +52,10 @@ export class ListingsController {
 
   @Get('menu/:mid')
   @UseGuards(JwtAuthGuard)
-  async getSingleMenu (
-    @Param('mid') mid: string
-  ): Promise<ListingMenu | null> {
+  async getSingleMenu (@Param('mid') mid: string): Promise<ListingMenu | null> {
     return await lastValueFrom<ListingMenu | null>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER, mid)
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER, mid)
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -58,7 +70,8 @@ export class ListingsController {
     @Param('catid') catid: string
   ): Promise<ListingMenu | null> {
     return await lastValueFrom<ListingMenu | null>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_SINGLE_LISTING_CAT_USER, catid)
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_SINGLE_LISTING_CAT_USER, catid)
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

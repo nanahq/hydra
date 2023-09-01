@@ -25,8 +25,8 @@ import { JwtStrategy } from './auth/strategy/jwt.strategy'
 import { ListingsController } from './module.api/listings.controller'
 import { OrdersController } from './module.api/orders.controller'
 import { ReviewController } from './module.api/review.controller'
-import { GoogleFileService } from './google-file.service'
 import { WalletController } from './module.api/wallet.controller'
+import { AwsService } from './aws.service'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -89,7 +89,7 @@ export class AppModule implements NestModule {
         AuthService,
         LocalStrategy,
         JwtStrategy,
-        GoogleFileService,
+        AwsService,
         {
           provide: APP_FILTER,
           useClass: FitHttpException
@@ -112,10 +112,10 @@ export class AppModule implements NestModule {
     app.use(helmet())
     app.useGlobalPipes(new ValidationPipe())
     app.setGlobalPrefix(`vendor-gateway/${version}`)
-    // app.enableCors({
-    //   allowedHeaders: ['content-type'],
-    //   origin: '*'
-    // })
+    app.enableCors({
+      allowedHeaders: ['content-type'],
+      origin: '*'
+    })
   }
 
   /*

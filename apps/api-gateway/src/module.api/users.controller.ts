@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, HttpException, Inject, Post, Put, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Post,
+  Put,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -22,8 +32,7 @@ export class UsersController {
     private readonly usersClient: ClientProxy,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @Post('register')
   async registerNewUser (
@@ -82,9 +91,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('delete')
-  async deleteUser (
-    @CurrentUser() user: User
-  ): Promise<{ status: number }> {
+  async deleteUser (@CurrentUser() user: User): Promise<{ status: number }> {
     const payload: ServicePayload<null> = {
       userId: user._id as any,
       data: null

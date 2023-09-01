@@ -1,4 +1,10 @@
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 import { Controller, UseFilters } from '@nestjs/common'
 
 import {
@@ -19,8 +25,7 @@ export class AddressBookLabelServiceController {
   constructor (
     private readonly service: AddressBookLabelService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_LIST)
   async list (@Ctx() context: RmqContext): Promise<AddressBookLabel[]> {

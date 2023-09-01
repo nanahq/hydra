@@ -1,11 +1,22 @@
-
 import { getModelToken } from '@nestjs/mongoose'
 import { Test } from '@nestjs/testing'
 import { FilterQuery } from 'mongoose'
-import { ListingCategoryRepository, ListingMenuRepository, ListingOptionGroupRepository } from '../listings.repository'
+import {
+  ListingCategoryRepository,
+  ListingMenuRepository,
+  ListingOptionGroupRepository
+} from '../listings.repository'
 import { ListingOptionGroup, ListingCategory, ListingMenu } from '@app/common'
-import { ListingGroupOptionModel, ListingMenuModel, ListingCategoryModel } from './support/Listing.model'
-import { ListingOptionStub, ListingCategoryStub, ListingMenuStub } from './stubs/Listings.stub'
+import {
+  ListingGroupOptionModel,
+  ListingMenuModel,
+  ListingCategoryModel
+} from './support/Listing.model'
+import {
+  ListingOptionStub,
+  ListingCategoryStub,
+  ListingMenuStub
+} from './stubs/Listings.stub'
 
 describe('ListingsMenu', () => {
   let listingsMenuRepository: ListingMenuRepository
@@ -24,8 +35,12 @@ describe('ListingsMenu', () => {
         ]
       }).compile()
 
-      listingsMenuRepository = moduleRef.get<ListingMenuRepository>(ListingMenuRepository)
-      listingModel = moduleRef.get<ListingMenuModel>(getModelToken(ListingMenu.name))
+      listingsMenuRepository = moduleRef.get<ListingMenuRepository>(
+        ListingMenuRepository
+      )
+      listingModel = moduleRef.get<ListingMenuModel>(
+        getModelToken(ListingMenu.name)
+      )
 
       listingFilterQuery = {
         _id: ListingMenuStub()._id
@@ -40,7 +55,9 @@ describe('ListingsMenu', () => {
 
         beforeEach(async () => {
           jest.spyOn(listingModel, 'findOne')
-          listingMenu = await listingsMenuRepository.findOne(listingFilterQuery)
+          listingMenu = await listingsMenuRepository.findOne(
+            listingFilterQuery
+          )
         })
 
         test('then it should return a Listing Menu', () => {
@@ -70,7 +87,10 @@ describe('ListingsMenu', () => {
 
         beforeEach(async () => {
           jest.spyOn(listingModel, 'findOne')
-          listingMenu = await listingsMenuRepository.findOneAndUpdate(listingFilterQuery, { ...ListingMenuStub() })
+          listingMenu = await listingsMenuRepository.findOneAndUpdate(
+            listingFilterQuery,
+            { ...ListingMenuStub() }
+          )
         })
 
         test('then it should return a Listing Menu', () => {
@@ -98,8 +118,12 @@ describe('ListingOptionGroup', () => {
         ]
       }).compile()
 
-      listingOptionRepository = moduleRef.get<ListingOptionGroupRepository>(ListingOptionGroupRepository)
-      listingModel = moduleRef.get<ListingGroupOptionModel>(getModelToken(ListingOptionGroup.name))
+      listingOptionRepository = moduleRef.get<ListingOptionGroupRepository>(
+        ListingOptionGroupRepository
+      )
+      listingModel = moduleRef.get<ListingGroupOptionModel>(
+        getModelToken(ListingOptionGroup.name)
+      )
 
       listingFilterQuery = {
         _id: ListingMenuStub()._id
@@ -114,7 +138,9 @@ describe('ListingOptionGroup', () => {
 
         beforeEach(async () => {
           jest.spyOn(listingModel, 'findOne')
-          listingMenu = await listingOptionRepository.findOne(listingFilterQuery)
+          listingMenu = await listingOptionRepository.findOne(
+            listingFilterQuery
+          )
         })
 
         test('then it should return a Listing Option', () => {
@@ -144,7 +170,10 @@ describe('ListingOptionGroup', () => {
 
         beforeEach(async () => {
           jest.spyOn(listingModel, 'findOne')
-          listingMenu = await listingOptionRepository.findOneAndUpdate(listingFilterQuery, { ...ListingOptionStub() })
+          listingMenu = await listingOptionRepository.findOneAndUpdate(
+            listingFilterQuery,
+            { ...ListingOptionStub() }
+          )
         })
 
         test('then it should return a Listing option', () => {
@@ -172,8 +201,12 @@ describe('ListingCategory', () => {
         ]
       }).compile()
 
-      listingCategory = moduleRef.get<ListingCategoryRepository>(ListingCategoryRepository)
-      listingModel = moduleRef.get<ListingCategoryModel>(getModelToken(ListingCategory.name))
+      listingCategory = moduleRef.get<ListingCategoryRepository>(
+        ListingCategoryRepository
+      )
+      listingModel = moduleRef.get<ListingCategoryModel>(
+        getModelToken(ListingCategory.name)
+      )
 
       listingFilterQuery = {
         _id: ListingMenuStub()._id
@@ -218,7 +251,10 @@ describe('ListingCategory', () => {
 
         beforeEach(async () => {
           jest.spyOn(listingModel, 'findOne')
-          listingMenu = await listingCategory.findOneAndUpdate(listingFilterQuery, { ...ListingCategoryStub() })
+          listingMenu = await listingCategory.findOneAndUpdate(
+            listingFilterQuery,
+            { ...ListingCategoryStub() }
+          )
         })
 
         test('then it should return Listing Category', () => {

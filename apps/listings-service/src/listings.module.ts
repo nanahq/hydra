@@ -4,20 +4,21 @@ import * as Joi from 'joi'
 
 import { ListingsController } from './listings.controller'
 import { ListingsService } from './listings.service'
-import { Review, ReviewSchema, RmqModule, Vendor, VendorSchema } from '@app/common'
 import {
+  Review,
+  ReviewSchema,
+  RmqModule,
+  Vendor,
+  VendorSchema,
+  DatabaseModule,
   ListingCategory,
-  ListingCategorySchema
-} from '@app/common/database/schemas/listings.cat'
-import {
+  ListingCategorySchema,
   ListingMenu,
-  ListingMenuSchema
-} from '@app/common/database/schemas/listing-menu.schema'
-import {
+  ListingMenuSchema,
   ListingOptionGroup,
   ListingOptionGroupSchema
-} from '@app/common/database/schemas/listing-option.schema'
-import { DatabaseModule } from '@app/common/database/database.module'
+} from '@app/common'
+
 import { MongooseModule } from '@nestjs/mongoose'
 import {
   ListingMenuRepository,

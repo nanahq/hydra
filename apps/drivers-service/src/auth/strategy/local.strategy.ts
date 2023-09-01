@@ -7,9 +7,7 @@ import { DriversServiceService } from '../../drivers-service.service'
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
-  constructor (
-    private readonly driversService: DriversServiceService
-  ) {
+  constructor (private readonly driversService: DriversServiceService) {
     super({ usernameField: 'phone' })
   }
 

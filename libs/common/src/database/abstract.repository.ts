@@ -41,17 +41,20 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
       .populate(populatePath as any)
   }
 
-  async findOne (
-    filterQuery: FilterQuery<TDocument>
-  ): Promise<any> {
-    return await this.model.findOne(filterQuery, {}, { lean: true }).sort({ createdAt: 'desc' })
+  async findOne (filterQuery: FilterQuery<TDocument>): Promise<any> {
+    return await this.model
+      .findOne(filterQuery, {}, { lean: true })
+      .sort({ createdAt: 'desc' })
   }
 
-  async findAndPopulate<T> (
+  async findAndPopulate<T>(
     filterQuery: FilterQuery<TDocument>,
     populatePath: string | string[]
   ): Promise<T[]> {
-    return await this.model.find(filterQuery).populate(populatePath as any).sort({ createdAt: 'desc' }) as any
+    return (await this.model
+      .find(filterQuery)
+      .populate(populatePath as any)
+      .sort({ createdAt: 'desc' })) as any
   }
 
   async findOneAndUpdate (
@@ -95,11 +98,18 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   async find (filterQuery: FilterQuery<TDocument>): Promise<any> {
     return await new Promise((resolve) =>
-      resolve(this.model.find(filterQuery, {}, { lean: true }).sort({ createdAt: 'desc' }))
+      resolve(
+        this.model
+          .find(filterQuery, {}, { lean: true })
+          .sort({ createdAt: 'desc' })
+      )
     )
   }
 
-  async update (filterQuery: FilterQuery<TDocument>, update: Partial<TDocument>): Promise<any> {
+  async update (
+    filterQuery: FilterQuery<TDocument>,
+    update: Partial<TDocument>
+  ): Promise<any> {
     return await new Promise((resolve) =>
       resolve(this.model.updateOne(filterQuery, update))
     )

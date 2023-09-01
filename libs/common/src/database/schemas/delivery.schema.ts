@@ -1,6 +1,10 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, LocationCoordinates, OrderStatus } from '@app/common'
+import {
+  AbstractDocument,
+  LocationCoordinates,
+  OrderStatus
+} from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
 export class Delivery extends AbstractDocument {
@@ -30,14 +34,24 @@ export class Delivery extends AbstractDocument {
 
   @Prop({
     type: {
-      coordinates: [String]
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0] // Default coordinates here
     }
   })
     pickupLocation: LocationCoordinates
 
   @Prop({
     type: {
-      coordinates: [String]
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0] // Default coordinates here
     }
   })
     dropOffLocation: LocationCoordinates
@@ -56,3 +70,4 @@ export class Delivery extends AbstractDocument {
 }
 
 export const DeliverySchema = SchemaFactory.createForClass(Delivery)
+DeliverySchema.index({ dropOffLocation: '2dsphere', pickupLocation: '2dsphere' })

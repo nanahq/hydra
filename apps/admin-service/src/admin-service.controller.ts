@@ -1,5 +1,11 @@
 import { Controller } from '@nestjs/common'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 
 import {
   Admin,
@@ -16,8 +22,7 @@ export class AdminServiceController {
   constructor (
     private readonly adminServiceService: AdminServiceService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_ADMIN)
   async listAdmins (@Ctx() context: RmqContext): Promise<Admin[]> {

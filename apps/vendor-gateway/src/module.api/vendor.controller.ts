@@ -23,14 +23,15 @@ import {
   QUEUE_SERVICE,
   ResponseWithStatus,
   ServicePayload,
-  Vendor
+  Vendor,
+  UpdateVendorSettingsDto,
+  CreateVendorDto
 } from '@app/common'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
-import { GoogleFileService } from '../google-file.service'
+import { AwsService } from '../aws.service'
 
 @Controller('vendor')
 export class VendorController {
@@ -39,29 +40,28 @@ export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorClient: ClientProxy,
-    private readonly googleService: GoogleFileService
-  ) {
-  }
+    private readonly awsService: AwsService
+  ) {}
 
   @Post('register')
   async registerNewVendor (@Body() request: CreateVendorDto): Promise<any> {
-    const {
-      businessEmail,
-      email,
-      ...rest
-    } = request
+    const { businessEmail, email, ...rest } = request
     this.logger.debug('Registering a new vendor')
     return await lastValueFrom<ResponseWithStatus>(
-      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, {
-        businessEmail: businessEmail.toLowerCase(),
-        email: email.toLowerCase(),
-        ...rest
-      }).pipe(
-        catchError((error: IRpcException) => {
-          this.logger.error(`Failed to register a new vendor. Reason: ${error.message}`)
-          throw new HttpException(error.message, error.status)
+      this.vendorClient
+        .send(QUEUE_MESSAGE.CREATE_VENDOR, {
+          businessEmail: businessEmail.toLowerCase(),
+          email: email.toLowerCase(),
+          ...rest
         })
-      )
+        .pipe(
+          catchError((error: IRpcException) => {
+            this.logger.error(
+              `Failed to register a new vendor. Reason: ${error.message}`
+            )
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -77,14 +77,13 @@ export class VendorController {
       storage: multer.memoryStorage()
     })
   )
-
-  @Put('logo')
+  @Put('image')
   async updateVendorLogo (
     @CurrentUser() vendor: Vendor,
       @UploadedFile() file: Express.Multer.File
-  ): Promise<string> {
-    const photo = await this.googleService.saveToCloud(file)
-    const payload: ServicePayload<string> = {
+  ): Promise<string | undefined> {
+    const photo = await this.awsService.upload(file)
+    const payload: ServicePayload<undefined | string> = {
       userId: vendor._id as any,
       data: photo
     }
@@ -104,9 +103,9 @@ export class VendorController {
   async updateVendorRestaurantImage (
     @CurrentUser() vendor: Vendor,
       @UploadedFile() file: Express.Multer.File
-  ): Promise<string> {
-    const photo = await this.googleService.saveToCloud(file)
-    const payload: ServicePayload<string> = {
+  ): Promise<string | undefined> {
+    const photo = await this.awsService.upload(file)
+    const payload: ServicePayload<string | undefined> = {
       userId: vendor._id as any,
       data: photo
     }
@@ -130,7 +129,9 @@ export class VendorController {
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
         catchError((error: IRpcException) => {
-          this.logger.error(`Failed to update vendor profile. Reason: ${error.message}`)
+          this.logger.error(
+            `Failed to update vendor profile. Reason: ${error.message}`
+          )
           throw new HttpException(error.message, error.status)
         })
       )
@@ -144,10 +145,11 @@ export class VendorController {
       @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom(
-      this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_SETTINGS, {
-        vid: _id,
-        settingId: id
-      })
+      this.vendorClient
+        .send(QUEUE_MESSAGE.GET_VENDOR_SETTINGS, {
+          vid: _id,
+          settingId: id
+        })
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -167,7 +169,8 @@ export class VendorController {
       data
     }
     return await lastValueFrom(
-      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR_SETTINGS, payload)
+      this.vendorClient
+        .send(QUEUE_MESSAGE.CREATE_VENDOR_SETTINGS, payload)
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
@@ -187,12 +190,11 @@ export class VendorController {
       data
     }
     return await lastValueFrom(
-      this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_SETTING, payload)
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_SETTING, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 }

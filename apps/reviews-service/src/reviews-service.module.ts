@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
-import { Review, ReviewSchema, RmqModule } from '@app/common'
+import { Review, ReviewSchema, RmqModule, DatabaseModule } from '@app/common'
 import { ReviewsServiceController } from './reviews-service.controller'
 import { ReviewsService } from './reviews-service.service'
-import { DatabaseModule } from '@app/common/database/database.module'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ReviewRepository } from './review.repositoty'
 

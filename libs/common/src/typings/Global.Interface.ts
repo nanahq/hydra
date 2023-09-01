@@ -21,7 +21,7 @@ export type OrderType = 'PRE_ORDER' | 'ON_DEMAND'
 
 export enum OrderTypes {
   PRE = 'PRE_ORDER',
-  INSTANT = 'ON_DEMAND'
+  INSTANT = 'ON_DEMAND',
 }
 
 export interface SendPayoutEmail {
@@ -41,7 +41,6 @@ export interface PayoutOverview {
   '24_hours': number
   '7_days': number
   '30_days': number
-
 }
 
 export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'
@@ -56,5 +55,12 @@ export interface OrderGroup {
 
 export interface DriverWithLocation {
   driverId: string | any
-  coordinates: string[]
+  coordinates: number[]
+}
+
+export interface TravelDistanceResult {
+  distance?: number // in meters
+
+  duration?: number // in minutes
+  eta?: string
 }

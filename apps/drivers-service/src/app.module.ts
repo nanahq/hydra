@@ -1,4 +1,11 @@
-import { DynamicModule, INestApplication, MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common'
+import {
+  DynamicModule,
+  INestApplication,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  ValidationPipe
+} from '@nestjs/common'
 import { DriversServiceController } from './drivers-service.controller'
 import { DriversServiceService } from './drivers-service.service'
 import { ConfigModule, ConfigService } from '@nestjs/config'
@@ -18,9 +25,9 @@ import {
   User,
   UserSchema,
   Vendor,
-  VendorSchema
+  VendorSchema,
+  DatabaseModule
 } from '@app/common'
-import { DatabaseModule } from '@app/common/database/database.module'
 import * as cookieParser from 'cookie-parser'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
 import { JwtModule } from '@nestjs/jwt'

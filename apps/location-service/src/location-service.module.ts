@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import {
-  QUEUE_SERVICE,
-  RmqModule
-} from '@app/common'
+import { QUEUE_SERVICE, RmqModule } from '@app/common'
 import { ScheduleModule } from '@nestjs/schedule'
 import { HttpModule } from '@nestjs/axios'
 import { LocationController } from './location-service.controller'

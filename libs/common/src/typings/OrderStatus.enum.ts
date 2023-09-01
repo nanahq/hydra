@@ -4,5 +4,6 @@ export enum OrderStatus {
   COLLECTED = 'COLLECTED_FROM_VENDOR', // Only vendors can updated/use this
   IN_ROUTE = 'OUT_FOR_DELIVERY', // Only admin/rider can update/use this
   FULFILLED = 'DELIVERED_TO_CUSTOMER',
-  PAYMENT_PENDING = 'PAYMENT_PENDING'
+  PAYMENT_PENDING = 'PAYMENT_PENDING',
+  COURIER_PICKUP = 'COURIER_PICKUP',
 }

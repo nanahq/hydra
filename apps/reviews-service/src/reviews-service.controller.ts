@@ -15,9 +15,9 @@ import {
   Review,
   ReviewToken,
   RmqService,
-  VendorReviewOverview
+  VendorReviewOverview,
+  ReviewDto
 } from '@app/common'
-import { ReviewDto } from '@app/common/database/dto/review.dto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()

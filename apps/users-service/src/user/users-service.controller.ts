@@ -1,4 +1,11 @@
-import { ClientProxy, Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  ClientProxy,
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 import { Controller, Inject, UseFilters } from '@nestjs/common'
 
 import {
@@ -26,8 +33,7 @@ export class UsersServiceController {
     private readonly rmqService: RmqService,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_USER)
   async registerNewUser (
@@ -37,7 +43,10 @@ export class UsersServiceController {
     try {
       const res = await this.usersService.register(data)
       await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, data)
+        this.notificationClient.emit(
+          QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
+          data
+        )
       )
       return res
     } catch (error) {
@@ -143,11 +152,8 @@ export class UsersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT)
   async updateUserOrderCount (
-    @Payload() {
-      orderId,
-      userId
-    }: { orderId: string, userId: string },
-    @Ctx() context: RmqContext
+    @Payload() { orderId, userId }: { orderId: string, userId: string },
+      @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
       return await this.usersService.updateUserOrderCount(orderId, userId)

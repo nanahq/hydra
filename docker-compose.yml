@@ -162,7 +162,7 @@ services:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
-      - api-gateway
+#      - api-gateway
       - vendor-gateway
       - rabbitmq
     volumes:
@@ -225,7 +225,6 @@ services:
       - mongodb-primary
       - mongodb-secondary
       - mongodb-arbiter
-      - cassandra-db
       - rabbitmq
     ports:
       - '3003:3003'

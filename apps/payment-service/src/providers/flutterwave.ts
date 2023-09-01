@@ -5,9 +5,7 @@ import { Injectable } from '@nestjs/common'
 @Injectable()
 export class FlutterwaveService {
   private readonly flw: any
-  constructor (
-    private readonly configService: ConfigService
-  ) {
+  constructor (private readonly configService: ConfigService) {
     const isProduction = isProductionEnv()
     const publicKey = isProduction
       ? this.configService.get('FLW_LIVE_KEY')

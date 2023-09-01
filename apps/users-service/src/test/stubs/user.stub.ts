@@ -16,7 +16,7 @@ export function UserProfileStub (): User {
     lastName: 'Auwal',
     email: 'email@gmail.com',
     isDeleted: false,
-    location: { coordinates: ['', ''] }
+    location: { type: 'Point', coordinates: [0, 0] }
   }
 }
 

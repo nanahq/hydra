@@ -1,6 +1,12 @@
 import { Controller } from '@nestjs/common'
 import { OrdersServiceService } from './orders-service.service'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 import {
   Order,
   QUEUE_MESSAGE,
@@ -17,8 +23,7 @@ export class OrdersServiceController {
   constructor (
     private readonly ordersServiceService: OrdersServiceService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_ORDER)
   async placeOrder (
@@ -119,8 +124,10 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_ORDERS)
-  async getAllOrders (@Payload() filterQuery: FilterQuery<Order>,
-    @Ctx() context: RmqContext): Promise<Order[]> {
+  async getAllOrders (
+    @Payload() filterQuery: FilterQuery<Order>,
+      @Ctx() context: RmqContext
+  ): Promise<Order[]> {
     try {
       return await this.ordersServiceService.getAllOrderInDb(filterQuery)
     } catch (error) {
@@ -136,7 +143,10 @@ export class OrdersServiceController {
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {
-      return await this.ordersServiceService.vendorAcceptOrder(data.orderId, data.phone)
+      return await this.ordersServiceService.vendorAcceptOrder(
+        data.orderId,
+        data.phone
+      )
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -145,9 +155,7 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ODSA_GET_ORDERS_PRE)
-  async getOdsaPreOrders (
-    @Ctx() context: RmqContext
-  ): Promise<Order[] | null> {
+  async getOdsaPreOrders (@Ctx() context: RmqContext): Promise<Order[] | null> {
     try {
       return await this.ordersServiceService.odsaGetPreOrders()
     } catch (error) {

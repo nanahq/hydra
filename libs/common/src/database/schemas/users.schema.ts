@@ -33,7 +33,12 @@ export class User extends AbstractDocument {
 
   @Prop({
     type: {
-      coordinates: [String]
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0] // Default coordinates here
     }
   })
     location: LocationCoordinates
@@ -46,3 +51,4 @@ export class User extends AbstractDocument {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
+UserSchema.index({ location: '2dsphere' })

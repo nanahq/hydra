@@ -45,7 +45,6 @@ export class ListingMenu extends AbstractDocument {
     type: [Types.ObjectId],
     ref: 'Review'
   })
-
     reviews: string
 
   @Prop({

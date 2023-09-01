@@ -2,7 +2,7 @@ import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/
 import { Controller, UseFilters } from '@nestjs/common'
 
 import {
-  ExceptionFilterRpc,
+  ExceptionFilterRpc, LocationCoordinates,
   LoginVendorRequest,
   QUEUE_MESSAGE,
   ResponseWithStatus,
@@ -23,8 +23,7 @@ export class VendorsController {
   constructor (
     private readonly vendorsService: VendorsService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_VENDOR)
   async registerNewVendor (
@@ -207,7 +206,10 @@ export class VendorsController {
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.vendorsService.createVendorSettings(data.data, data.userId)
+      return await this.vendorsService.createVendorSettings(
+        data.data,
+        data.userId
+      )
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -236,6 +238,20 @@ export class VendorsController {
   ): Promise<void> {
     try {
       await this.vendorsService.updateVendorImage(data.data, data.userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_NEAREST_VENDORS)
+  async getNearestVendors (
+    @Payload() { data: { userLocation }, userId }: ServicePayload<{ userLocation: LocationCoordinates }>,
+      @Ctx() context: RmqContext
+  ): Promise<Vendor[]> {
+    try {
+      return await this.vendorsService.getNearestVendors(userLocation, userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

@@ -1,16 +1,17 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 
-import { FitRpcException, ResponseWithStatus, ServicePayload } from '@app/common'
+import {
+  FitRpcException,
+  ResponseWithStatus,
+  ServicePayload
+} from '@app/common'
 import { AddressBookRepository } from './address.book.repository'
 import { AddressBookDto } from '@app/common/database/dto/user/address.book.dto'
 import { AddressBook } from '@app/common/database/schemas/address.book.schema'
 
 @Injectable()
 export class AddressBookService {
-  constructor (
-    private readonly repository: AddressBookRepository
-  ) {
-  }
+  constructor (private readonly repository: AddressBookRepository) {}
 
   async list (): Promise<AddressBook[]> {
     const getRequest = await this.repository.find({ isDeleted: false })

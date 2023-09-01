@@ -1,6 +1,6 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, VendorApprovalStatus } from '@app/common'
+import { AbstractDocument, LocationCoordinates, VendorApprovalStatus } from '@app/common'
 
 @Schema({
   versionKey: false,
@@ -55,11 +55,6 @@ export class Vendor extends AbstractDocument {
   @Prop({
     type: String
   })
-    hello: string
-
-  @Prop({
-    type: String
-  })
     businessLogo: string
 
   @Prop({
@@ -78,12 +73,15 @@ export class Vendor extends AbstractDocument {
 
   @Prop({
     type: {
-      coordinates: [String]
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0] // Default coordinates here
     }
   })
-    location: {
-    coordinates: [string, string]
-  }
+    location: LocationCoordinates
 
   @Prop({
     type: Types.ObjectId,

@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, HttpException, Inject, Param, UseGuards } from '@nestjs/common'
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -17,8 +25,7 @@ export class ListingController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly vendorsClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('listings')
