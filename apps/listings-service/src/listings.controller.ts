@@ -1,27 +1,24 @@
 import { Controller, UseFilters } from '@nestjs/common'
-import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException
-} from '@nestjs/microservices'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 
 import { ListingsService } from './listings.service'
 import {
+  CreateListingCategoryDto,
+  CreateOptionGroupDto,
   ExceptionFilterRpc,
+  IdPayload,
   ListingCategory,
   ListingMenu,
   ListingOptionGroup,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
   ServicePayload,
-  CreateListingCategoryDto,
-  CreateOptionGroupDto,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
 } from '@app/common'
+import { ReasonDto } from '@app/common/database/dto/reason.dto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -29,15 +26,16 @@ export class ListingsController {
   constructor (
     private readonly listingService: ListingsService,
     private readonly rmqService: RmqService
-  ) {}
+  ) {
+  }
 
-  @MessagePattern(QUEUE_MESSAGE.GET__ALL_LISTING_MENU)
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDOR_LISTING_MENU)
   async getAllListings (
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
   ): Promise<ListingMenu[]> {
     try {
-      return await this.listingService.getAllListingMenu(userId)
+      return await this.listingService.getAllVendorListingMenu(userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -66,6 +64,20 @@ export class ListingsController {
   ): Promise<ListingMenu> {
     try {
       return await this.listingService.getSingleListingMenu(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_READ)
+  async findOneById (
+    @Payload() data: IdPayload,
+      @Ctx() context: RmqContext
+  ): Promise<ListingMenu> {
+    try {
+      return await this.listingService.findOneById(data.id)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -246,6 +258,78 @@ export class ListingsController {
   ): Promise<ListingMenu> {
     try {
       return await this.listingService.getSingleUserMenu(mid)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_ALL)
+  async adminListAll (@Ctx() context: RmqContext): Promise<ListingMenu[]> {
+    try {
+      return await this.listingService.getAllListingMenu()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_PENDING)
+  async adminListPending (@Ctx() context: RmqContext): Promise<ListingMenu[]> {
+    try {
+      return await this.listingService.getAllPendingListingMenu()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_APPROVED)
+  async adminListApproved (@Ctx() context: RmqContext): Promise<ListingMenu[]> {
+    try {
+      return await this.listingService.getAllApprovedListingMenu()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_REJECTED)
+  async adminListRejected (@Ctx() context: RmqContext): Promise<ListingMenu[]> {
+    try {
+      return await this.listingService.getAllRejectedListingMenu()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_MENU_APPROVE)
+  async approve (
+    @Payload() data: MultiPurposeServicePayload<null>,
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.listingService.approve(data.id)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_MENU_REJECT)
+  async reject (
+    @Payload() data: MultiPurposeServicePayload<ReasonDto>,
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.listingService.disapprove(data.id, data.data.reason)
     } catch (error) {
       throw new RpcException(error)
     } finally {

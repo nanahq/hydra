@@ -1,22 +1,9 @@
-import {
-  Controller,
-  Get,
-  HttpException,
-  Inject,
-  Param,
-  UseGuards
-} from '@nestjs/common'
+import { Controller, Get, HttpException, Inject, Param, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import {
-  IRpcException,
-  ListingCategory,
-  ListingMenu,
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE
-} from '@app/common'
+import { IRpcException, ListingCategory, ListingMenu, QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common'
 
 @Controller('listing')
 export class ListingsController {

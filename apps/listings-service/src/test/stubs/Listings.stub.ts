@@ -1,14 +1,12 @@
-import {
-  ListingCategory,
-  ListingMenu,
-  ListingOptionGroup,
-  ResponseWithStatus
-} from '@app/common'
+import { ListingCategory, ListingMenu, ListingOptionGroup, ResponseWithStatus } from '@app/common'
 import { type Types } from 'mongoose'
+import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 
 export function ListingMenuStub (): ListingMenu {
   const objectId = '63f93c9f248f6c43d0b76502' as unknown as Types.ObjectId
   return {
+    rejection_reason: '',
+    status: ListingApprovalStatus.APPROVED,
     _id: objectId,
     vendor: '63f7f2d0a0f1d5158f43cb7b',
     name: 'Chicken Wing',

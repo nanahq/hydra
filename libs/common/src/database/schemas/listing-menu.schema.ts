@@ -35,6 +35,9 @@ export class ListingMenu extends AbstractDocument {
   @Prop(String)
     status: ListingApprovalStatus
 
+  @Prop(String)
+    rejection_reason: string
+
   @Prop({
     type: Boolean,
     default: false

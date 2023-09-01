@@ -6,7 +6,8 @@ import {
   ListingMenu,
   ListingOptionGroup,
   ResponseWithStatus,
-  ServicePayload
+  ServicePayload,
+  VendorApprovalStatus
 } from '@app/common'
 import { ListingCategoryRepository, ListingMenuRepository, ListingOptionGroupRepository } from './listings.repository'
 import {
@@ -45,12 +46,15 @@ export class ListingsService {
 
       const newListings = await this.listingMenuRepository.create({
         ...rest,
-        vendor: vendorId
+        vendor: vendorId,
+        status: ListingApprovalStatus.PENDING
       })
+
       await this.listingCategoryRepository.findOneAndUpdate(
         { _id },
         { listingsMenu: [...listingsMenu, newListings._id] }
       )
+
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
@@ -78,7 +82,67 @@ export class ListingsService {
     }
   }
 
-  async getAllListingMenu (vendor: string): Promise<ListingMenu[]> {
+  async getAllPendingListingMenu (): Promise<ListingMenu[]> {
+    const getRequest = await this.listingMenuRepository.findAndPopulate({
+      isDeleted: false,
+      status: ListingApprovalStatus.PENDING
+    }, 'optionGroups') as any
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all listings.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return getRequest
+  }
+
+  async getAllApprovedListingMenu (): Promise<ListingMenu[]> {
+    const getRequest = await this.listingMenuRepository.findAndPopulate({
+      isDeleted: false,
+      status: ListingApprovalStatus.APPROVED
+    }, 'optionGroups') as any
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all listings.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
+  async getAllRejectedListingMenu (): Promise<ListingMenu[]> {
+    const getRequest = await this.listingMenuRepository.findAndPopulate({
+      isDeleted: false,
+      status: ListingApprovalStatus.DISAPPROVED
+    }, 'optionGroups') as any
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all listings.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
+  async getAllListingMenu (): Promise<ListingMenu[]> {
+    const getRequest = await this.listingMenuRepository.findAndPopulate({
+      isDeleted: false
+    }, 'optionGroups') as any
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all listings.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
+  async getAllVendorListingMenu (vendor: string): Promise<ListingMenu[]> {
     const getRequest = await this.listingMenuRepository.findAndPopulate({
       vendor,
       isDeleted: false
@@ -91,6 +155,43 @@ export class ListingsService {
       )
     }
     return getRequest
+  }
+
+  public async approve (id: string): Promise<ResponseWithStatus> {
+    const updateRequest = await this.listingMenuRepository.findOneAndUpdate(
+      { _id: id },
+      {
+        status: VendorApprovalStatus.APPROVED
+      }
+    )
+
+    if (updateRequest === null) {
+      throw new FitRpcException(
+        'Failed to approve listing menu',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return { status: 1 }
+  }
+
+  public async disapprove (id: string, reason: string): Promise<ResponseWithStatus> {
+    const updateRequest = await this.listingMenuRepository.findOneAndUpdate(
+      { _id: id },
+      {
+        rejection_reason: reason,
+        status: VendorApprovalStatus.DISAPPROVED
+      }
+    )
+
+    if (updateRequest === null) {
+      throw new FitRpcException(
+        'Failed to reject listing menu',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return { status: 1 }
   }
 
   async getSingleListingMenu ({
@@ -109,6 +210,33 @@ export class ListingsService {
       }
       return listing
     } catch (error) {
+      throw new FitRpcException(
+        'Failed to fetch listing',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async findOneById (id: string): Promise<ListingMenu> {
+    try {
+      const listing = await this.listingMenuRepository.findOneAndPopulate(
+        { _id: id },
+        'optionGroups'
+      )
+
+      if (listing === null) {
+        throw new FitRpcException(
+          'Listing with that id can not be found',
+          HttpStatus.NOT_FOUND
+        )
+      }
+
+      return listing
+    } catch (error) {
+      if ((Boolean(error.status)) && error.status === 404) {
+        throw error
+      }
+
       throw new FitRpcException(
         'Failed to fetch listing',
         HttpStatus.INTERNAL_SERVER_ERROR

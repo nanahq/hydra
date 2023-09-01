@@ -19,6 +19,8 @@ import { catchError, lastValueFrom } from 'rxjs'
 
 import {
   booleanParser,
+  CreateListingCategoryDto,
+  CreateOptionGroupDto,
   CurrentUser,
   IRpcException,
   ListingMenu,
@@ -26,11 +28,9 @@ import {
   QUEUE_SERVICE,
   ResponseWithStatus,
   ServicePayload,
-  Vendor,
-  CreateListingCategoryDto,
-  CreateOptionGroupDto,
   UpdateListingCategoryDto,
-  UpdateOptionGroupDto
+  UpdateOptionGroupDto,
+  Vendor
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
@@ -46,7 +46,8 @@ export class ListingsController {
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy,
     private readonly awsService: AwsService
-  ) {}
+  ) {
+  }
 
   @Get('menus')
   @UseGuards(JwtAuthGuard)
@@ -60,7 +61,7 @@ export class ListingsController {
     this.logger.debug('Getting all listing menus')
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
-        .send(QUEUE_MESSAGE.GET__ALL_LISTING_MENU, payload)
+        .send(QUEUE_MESSAGE.GET_ALL_VENDOR_LISTING_MENU, payload)
         .pipe(
           catchError((error: IRpcException) => {
             this.logger.error(

@@ -1,11 +1,13 @@
 import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 import {
-  FitRpcException, LocationCoordinates,
+  FitRpcException,
+  LocationCoordinates,
   LoginVendorRequest,
   ResponseWithStatus,
   ServicePayload,
-  UpdateVendorStatus, VendorApprovalStatus,
+  UpdateVendorStatus,
+  VendorApprovalStatus,
   VendorUserI
 } from '@app/common'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
@@ -22,7 +24,8 @@ export class VendorsService {
   constructor (
     private readonly vendorRepository: VendorRepository,
     private readonly vendorSettingsRepository: VendorSettingsRepository
-  ) {}
+  ) {
+  }
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     data.phone = internationalisePhoneNumber(data.phone)
@@ -147,7 +150,7 @@ export class VendorsService {
 
     if (updateRequest === null) {
       throw new FitRpcException(
-        'Failed to approve vendor',
+        'Failed to reject vendor',
         HttpStatus.BAD_REQUEST
       )
     }
@@ -313,16 +316,22 @@ export class VendorsService {
     }
   }
 
-  async getNearestVendors ({ type, coordinates }: LocationCoordinates, userId: string): Promise<Vendor[]> {
+  async getNearestVendors ({
+    type,
+    coordinates
+  }: LocationCoordinates, userId: string): Promise<Vendor[]> {
     try {
       const vendors = this.vendorRepository.find({
         location: {
           $near:
-      {
-        $geometry: { type, coordinates },
-        $minDistance: 200,
-        $maxDistance: 5000
-      }
+            {
+              $geometry: {
+                type,
+                coordinates
+              },
+              $minDistance: 200,
+              $maxDistance: 5000
+            }
         }
       })
       this.logger.log('PIM -> fetching nearest vendors')
