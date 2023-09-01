@@ -15,6 +15,7 @@ import {
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
 } from '@app/common/database/dto/listing.dto'
+import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 
 @Injectable()
 export class ListingsService {
@@ -271,7 +272,10 @@ export class ListingsService {
   // Users Vendor Methods
   async getAllMenuUser (): Promise<ListingMenu[]> {
     try {
-      return await this.listingMenuRepository.findAndPopulate({ isDeleted: false }, ['optionGroups', 'vendor'])
+      return await this.listingMenuRepository.findAndPopulate({
+        isDeleted: false,
+        status: ListingApprovalStatus.APPROVED
+      }, ['optionGroups', 'vendor'])
     } catch (error) {
       throw new FitRpcException('Can not fetch menu at thi time.', HttpStatus.INTERNAL_SERVER_ERROR)
     }

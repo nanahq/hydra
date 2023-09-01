@@ -1,7 +1,7 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument } from '@app/common'
-import { ListingApprovalStatusEnum } from '@app/common/typings/ListingApprovalStatus.enum'
+import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 
 @Schema({ versionKey: false })
 export class ListingMenu extends AbstractDocument {
@@ -33,7 +33,7 @@ export class ListingMenu extends AbstractDocument {
     isAvailable: boolean
 
   @Prop(String)
-    status: ListingApprovalStatusEnum
+    status: ListingApprovalStatus
 
   @Prop({
     type: Boolean,
