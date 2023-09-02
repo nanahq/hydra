@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import {
   FitRpcException,
   ResponseWithStatus,
@@ -10,12 +10,16 @@ import { ReviewRepository } from './review.repositoty'
 
 @Injectable()
 export class ReviewsService {
-  constructor (private readonly reviewRepository: ReviewRepository) {}
+  protected readonly logger = new Logger()
+  constructor (
+    private readonly reviewRepository: ReviewRepository,
+  ) {}
 
   async getAllReviews (): Promise<Review[]> {
     try {
-      return await this.reviewRepository.find({})
+      return await this.reviewRepository.findAndPopulate({}, ['listingId', 'orderId', 'vendorId'])
     } catch (error) {
+      console.log({error})
       throw new FitRpcException(
         'Can not process request, Something went wrong',
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -70,6 +74,7 @@ export class ReviewsService {
 
   async create (data: ReviewDto): Promise<ResponseWithStatus> {
     try {
+      // TODO(@siradji) attach review to listing and user.
       await this.reviewRepository.create(data)
       return { status: 1 }
     } catch (error) {

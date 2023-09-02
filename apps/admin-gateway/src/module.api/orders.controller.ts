@@ -82,7 +82,7 @@ export class OrdersController {
     @Param('id') userId: string
   ): Promise<Order[]> {
     return await lastValueFrom(
-      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_USER_ORDERS, {userId}).pipe(
+      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_USER_ORDERS, { userId }).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

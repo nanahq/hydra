@@ -72,18 +72,6 @@ export class ReviewController {
     )
   }
 
-  @Get('reviews')
-  @UseGuards(JwtAuthGuard)
-  async getAll (): Promise<Review[]> {
-    return await lastValueFrom<Review[]>(
-      this.reviewClient.send(QUEUE_MESSAGE.REVIEW_ADMIN_GET_ALL_IN_DB, {}).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
-  }
-
   @Get('stats/vendor-reviews/:vid')
   @UseGuards(JwtAuthGuard)
   async statGetVendorReviews (
