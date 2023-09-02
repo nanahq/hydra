@@ -325,11 +325,11 @@ export class ListingsController {
 
   @MessagePattern(QUEUE_MESSAGE.LISTING_MENU_REJECT)
   async reject (
-    @Payload() data: MultiPurposeServicePayload<ReasonDto>,
+    @Payload() { data: { reason }, id }: MultiPurposeServicePayload<ReasonDto>,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.listingService.disapprove(data.id, data.data.reason)
+      return await this.listingService.disapprove(id, reason)
     } catch (error) {
       throw new RpcException(error)
     } finally {

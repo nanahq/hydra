@@ -6,8 +6,7 @@ import {
   ListingMenu,
   ListingOptionGroup,
   ResponseWithStatus,
-  ServicePayload,
-  VendorApprovalStatus
+  ServicePayload
 } from '@app/common'
 import { ListingCategoryRepository, ListingMenuRepository, ListingOptionGroupRepository } from './listings.repository'
 import {
@@ -86,7 +85,7 @@ export class ListingsService {
     const getRequest = await this.listingMenuRepository.findAndPopulate({
       isDeleted: false,
       status: ListingApprovalStatus.PENDING
-    }, 'optionGroups') as any
+    }, ['optionGroups', 'vendor']) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -102,7 +101,7 @@ export class ListingsService {
     const getRequest = await this.listingMenuRepository.findAndPopulate({
       isDeleted: false,
       status: ListingApprovalStatus.APPROVED
-    }, 'optionGroups') as any
+    }, ['optionGroups', 'vendor']) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -117,7 +116,7 @@ export class ListingsService {
     const getRequest = await this.listingMenuRepository.findAndPopulate({
       isDeleted: false,
       status: ListingApprovalStatus.DISAPPROVED
-    }, 'optionGroups') as any
+    }, ['optionGroups', 'vendor']) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -131,7 +130,7 @@ export class ListingsService {
   async getAllListingMenu (): Promise<ListingMenu[]> {
     const getRequest = await this.listingMenuRepository.findAndPopulate({
       isDeleted: false
-    }, 'optionGroups') as any
+    }, ['optionGroups', 'vendor']) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -157,11 +156,11 @@ export class ListingsService {
     return getRequest
   }
 
-  public async approve (id: string): Promise<ResponseWithStatus> {
+  public async approve (_id: string): Promise<ResponseWithStatus> {
     const updateRequest = await this.listingMenuRepository.findOneAndUpdate(
-      { _id: id },
+      { _id },
       {
-        status: VendorApprovalStatus.APPROVED
+        status: ListingApprovalStatus.APPROVED
       }
     )
 
@@ -175,12 +174,12 @@ export class ListingsService {
     return { status: 1 }
   }
 
-  public async disapprove (id: string, reason: string): Promise<ResponseWithStatus> {
+  public async disapprove (_id: string, reason: string): Promise<ResponseWithStatus> {
     const updateRequest = await this.listingMenuRepository.findOneAndUpdate(
-      { _id: id },
+      { _id },
       {
         rejection_reason: reason,
-        status: VendorApprovalStatus.DISAPPROVED
+        status: ListingApprovalStatus.DISAPPROVED
       }
     )
 
