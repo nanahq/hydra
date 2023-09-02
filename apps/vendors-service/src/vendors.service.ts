@@ -224,7 +224,7 @@ export class VendorsService {
   }
 
   async getAllVendorsUser (): Promise<VendorUserI[]> {
-    const _vendors = await this.vendorRepository.find({ isDeleted: false })
+    const _vendors = await this.vendorRepository.find({ isDeleted: false, status: VendorApprovalStatus.APPROVED })
 
     if (_vendors === null) {
       throw new FitRpcException(

@@ -177,4 +177,70 @@ export class OrdersServiceController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_ORDERS)
+  async getOrders (
+    @Ctx() context: RmqContext
+  ): Promise<Order[]> {
+    try {
+      return await this.ordersServiceService.getAllOrders()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_PAID_ORDERS)
+  async getPaidOrders (
+    @Ctx() context: RmqContext
+  ): Promise<Order[]> {
+    try {
+      return await this.ordersServiceService.getAllPaidOrder()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_TRANSIT_ORDERS)
+  async getAllTransitOrders (
+    @Ctx() context: RmqContext
+  ): Promise<Order[]> {
+    try {
+      return await this.ordersServiceService.getAllTransitOrders()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_FULFILLED_ORDERS)
+  async getAllFulfilledOrders (
+    @Ctx() context: RmqContext
+  ): Promise<Order[]> {
+    try {
+      return await this.ordersServiceService.getAllFulfilledOrders()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_USER_ORDERS)
+  async getAllUserOrders (
+    @Payload() { userId }: { userId: string },
+      @Ctx() context: RmqContext
+  ): Promise<Order[]> {
+    try {
+      return await this.ordersServiceService.getAllUserOrders(userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

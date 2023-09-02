@@ -84,6 +84,38 @@ export class OrdersServiceService {
     }
   }
 
+  public async getAllFulfilledOrders (): Promise<Order[]> {
+    try {
+      return await this.orderRepository.find({ orderStatus: OrderStatus.FULFILLED })
+    } catch (e) {
+      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllTransitOrders (): Promise<Order[]> {
+    try {
+      return await this.orderRepository.find({ orderStatus: OrderStatus.IN_ROUTE })
+    } catch (e) {
+      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllPaidOrder (): Promise<Order[]> {
+    try {
+      return await this.orderRepository.find({ orderStatus: OrderStatus.PROCESSED })
+    } catch (e) {
+      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllOrders (): Promise<Order[]> {
+    try {
+      return await this.orderRepository.find({ })
+    } catch (e) {
+      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   public async getAllOrderInDb (
     filterQuery: FilterQuery<Order>
   ): Promise<Order[]> {
