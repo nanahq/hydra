@@ -43,7 +43,7 @@ export class Vendor extends AbstractDocument {
   @Prop(String)
     status: 'ONLINE' | 'OFFLINE'
 
-  @Prop(String)
+  @Prop({ type: String, default: VendorApprovalStatus.PENDING })
     acc_status: VendorApprovalStatus
 
   @Prop({ type: String })

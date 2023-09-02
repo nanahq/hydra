@@ -32,7 +32,7 @@ export class ListingMenu extends AbstractDocument {
   @Prop(Boolean)
     isAvailable: boolean
 
-  @Prop(String)
+  @Prop({ type: String, default: ListingApprovalStatus.PENDING })
     status: ListingApprovalStatus
 
   @Prop(String)
