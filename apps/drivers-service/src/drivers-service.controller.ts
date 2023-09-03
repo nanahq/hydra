@@ -13,16 +13,18 @@ import {
   Driver,
   OrderStatus,
   ResponseWithStatus,
-  RegisterDriverDto
+  RegisterDriverDto, QUEUE_MESSAGE, RmqService
 } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { ODSA } from './ODSA/odsa.service'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 
 @Controller('driver')
 export class DriversServiceController {
   constructor (
     private readonly driversServiceService: DriversServiceService,
-    private readonly odsaService: ODSA
+    private readonly odsaService: ODSA,
+    private readonly rmqService: RmqService
   ) {}
 
   @Post('register')
@@ -83,6 +85,74 @@ export class DriversServiceController {
       )
     } catch (error) {
       throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DRIVERS)
+  async getDrivers (
+    @Ctx() context: RmqContext
+  ): Promise<Driver[]> {
+    try {
+      return this.driversServiceService.getAllDrivers()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_APPROVE_DRIVER)
+  async approveDriver (
+    @Payload() { driverId }: { driverId: string },
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return this.driversServiceService.approveDriver(driverId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_REJECT_DRIVER)
+  async rejectDriver (
+    @Payload() { driverId }: { driverId: string },
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return this.driversServiceService.rejectDriver(driverId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_DELETE_DRIVER)
+  async deleteDriver (
+    @Payload() { driverId }: { driverId: string },
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return this.driversServiceService.deleteDriver(driverId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_FREE_DRIVERS)
+  async freeDrivers (
+    @Ctx() context: RmqContext
+  ): Promise<Driver[]> {
+    try {
+      return this.driversServiceService.getAllFreeDrivers()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
     }
   }
 }

@@ -11,7 +11,7 @@ import {
   OrderStatus,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus
+  ResponseWithStatus, VendorApprovalStatus
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
@@ -194,9 +194,9 @@ export class ODSA {
     }
   }
 
-  // @Cron(CronExpression.EVERY_MINUTE, {
-  //   timeZone: 'Africa/Lagos'
-  // })
+  @Cron(CronExpression.EVERY_MINUTE, {
+    timeZone: 'Africa/Lagos'
+  })
   private async assignDemandOrders (): Promise<void> {
     const unassignedDeliveries = (await this.odsaRepository.find({
       assignedToDriver: false
@@ -234,7 +234,8 @@ export class ODSA {
     )
     const drivers = await this.driversRepository.find({
       isValidated: true,
-      type: 'DELIVER_PRE_ORDER'
+      type: 'DELIVER_PRE_ORDER',
+      acc_status: VendorApprovalStatus.APPROVED
     })
 
     const ordersForToday = filterOrdersForDay(orders)
@@ -260,9 +261,6 @@ export class ODSA {
     drivers: any[]
   ): Promise<void> {
     if (drivers?.length <= 0 || groupedOrders?.length <= 0) {
-      this.logger.log(
-        `PIM -> Assigning ${groupedOrders.length} grouped orders to ${drivers.length}`
-      )
       return
     }
 
@@ -298,7 +296,7 @@ export class ODSA {
   }
 
   private async handleFindNearestDeliveryDriver (
-    targetCoord: string[]
+    targetCoord: number[]
   ): Promise<DriverWithLocation | null> {
     this.logger.log('PIM -> Assign order to the nearest delivery person')
 
@@ -307,7 +305,8 @@ export class ODSA {
       status: 'ONLINE',
       isValidated: true,
       isDeleted: false,
-      available: true
+      available: true,
+      acc_status: VendorApprovalStatus.APPROVED
     })) as Driver[]
 
     this.logger.log(
@@ -339,7 +338,7 @@ export class ODSA {
 function filterOrdersForDay (orders: Order[]): Order[] {
   const filteredOrders: Order[] = []
 
-  const targetDate = new Date(2023, 7, 16)
+  const targetDate = new Date()
   const targetYear = targetDate.getFullYear()
   const targetMonth = targetDate.getMonth()
   const targetDay = targetDate.getDate()

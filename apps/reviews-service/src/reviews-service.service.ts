@@ -12,14 +12,14 @@ import { ReviewRepository } from './review.repositoty'
 export class ReviewsService {
   protected readonly logger = new Logger()
   constructor (
-    private readonly reviewRepository: ReviewRepository,
+    private readonly reviewRepository: ReviewRepository
   ) {}
 
   async getAllReviews (): Promise<Review[]> {
     try {
       return await this.reviewRepository.findAndPopulate({}, ['listingId', 'orderId', 'vendorId'])
     } catch (error) {
-      console.log({error})
+      console.log({ error })
       throw new FitRpcException(
         'Can not process request, Something went wrong',
         HttpStatus.INTERNAL_SERVER_ERROR

@@ -4,7 +4,7 @@ import {
   AbstractDocument,
   DriverType,
   LocationCoordinates,
-  Order
+  Order, VendorApprovalStatus
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -62,6 +62,9 @@ export class Driver extends AbstractDocument {
 
   @Prop(String)
     type: DriverType
+
+  @Prop({ type: String, default: VendorApprovalStatus.PENDING })
+    acc_status: VendorApprovalStatus
 }
 
 export const DriverSchema = SchemaFactory.createForClass(Driver)

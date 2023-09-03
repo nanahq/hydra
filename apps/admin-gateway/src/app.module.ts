@@ -28,6 +28,7 @@ import { OrdersController } from './module.api/orders.controller'
 import { ReviewsController } from './module.api/reviews.controller'
 import { DashboardController } from './module.api/dashboard.controller'
 import { AddressBookLabelController } from './module.api/address-book-label.controller'
+import { DriversController } from './module.api/drivers.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -71,8 +72,9 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE, fallback: 'REVIEW'}),
+        RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE, fallback: 'REVIEW' }),
         RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE, fallback: 'RMQ_DRIVER_QUEUE'}),
         AppModule
       ],
       controllers: [
@@ -83,7 +85,8 @@ export class AppModule implements NestModule {
         ListingController,
         OrdersController,
         ReviewsController,
-        AddressBookLabelController
+        AddressBookLabelController,
+        DriversController
       ],
       providers: [
         AuthService,

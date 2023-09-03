@@ -67,6 +67,7 @@ export class ReviewsController {
         )
     )
   }
+
   @Get('listing/:listingId')
   @UseGuards(JwtAuthGuard)
   async getListingReviews (

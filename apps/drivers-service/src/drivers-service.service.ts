@@ -2,9 +2,9 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import {
   Driver,
   FitRpcException,
-  ResponseWithStatus,
+  internationalisePhoneNumber,
   RegisterDriverDto,
-  internationalisePhoneNumber
+  ResponseWithStatus, VendorApprovalStatus
 } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
@@ -119,5 +119,39 @@ export class DriversServiceService {
     driver.password = ''
 
     return driver
+  }
+
+  public async getAllDrivers (): Promise<Driver[]> {
+    try {
+      return await this.driverRepository.find({})
+    } catch (error) {
+      throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllFreeDrivers (): Promise<Driver[]> {
+    try {
+      return await this.driverRepository.find({ available: true })
+    } catch (error) {
+      throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async approveDriver (_id: string): Promise<ResponseWithStatus> {
+    try {
+      await this.driverRepository.findOneAndUpdate({ _id }, { acc_status: VendorApprovalStatus.APPROVED })
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async rejectDriver (_id: string): Promise<ResponseWithStatus> {
+    try {
+      await this.driverRepository.findOneAndUpdate({ _id }, { acc_status: VendorApprovalStatus.DISAPPROVED })
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 }
