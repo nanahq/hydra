@@ -87,7 +87,7 @@ jobs:
           result-encoding: string
 
       - name: Post Report
-        uses: marocchino/sticky-pull-request-comment@f61b6cf21ef2fcc468f4345cdfcc9bda741d2343
+        uses: marocchino/sticky-pull-request-comment@5d0ed2710c19d50d5fa6f54a605948881753645b
         with:
           header: release
           message: ${{ steps.report.outputs.result }}
