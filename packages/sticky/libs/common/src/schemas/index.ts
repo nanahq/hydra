@@ -164,6 +164,8 @@ export interface DeliveryI {
 
   dropOffLocation: LocationCoordinates
 
+  currentLocation: LocationCoordinates
+
   completed: boolean
 
   deliveredWithinTime: boolean

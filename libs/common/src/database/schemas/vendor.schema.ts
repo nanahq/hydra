@@ -1,8 +1,11 @@
 import { SchemaTypes, Types } from 'mongoose'
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, LocationCoordinates } from '@app/common'
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { AbstractDocument, LocationCoordinates, VendorApprovalStatus } from '@app/common'
 
-@Schema({ versionKey: false, timestamps: true })
+@Schema({
+  versionKey: false,
+  timestamps: true
+})
 export class Vendor extends AbstractDocument {
   @Prop()
     firstName: string
@@ -10,10 +13,16 @@ export class Vendor extends AbstractDocument {
   @Prop()
     lastName: string
 
-  @Prop({ unique: true, sparse: true })
+  @Prop({
+    unique: true,
+    sparse: true
+  })
     email: string
 
-  @Prop({ unique: true, sparse: true })
+  @Prop({
+    unique: true,
+    sparse: true
+  })
     businessEmail: string
 
   @Prop()
@@ -34,9 +43,13 @@ export class Vendor extends AbstractDocument {
   @Prop(String)
     status: 'ONLINE' | 'OFFLINE'
 
-  @Prop({
-    type: String
-  })
+  @Prop({ type: String, default: VendorApprovalStatus.PENDING })
+    acc_status: VendorApprovalStatus
+
+  @Prop({ type: String })
+    rejection_reason: string
+
+  @Prop({ type: String })
     businessName: string
 
   @Prop({
@@ -52,7 +65,10 @@ export class Vendor extends AbstractDocument {
   @Prop(String)
     restaurantImage: string
 
-  @Prop({ type: Boolean, default: false })
+  @Prop({
+    type: Boolean,
+    default: false
+  })
     isDeleted: boolean
 
   @Prop({
@@ -67,7 +83,10 @@ export class Vendor extends AbstractDocument {
   })
     location: LocationCoordinates
 
-  @Prop({ type: Types.ObjectId, ref: 'VendorSettings' })
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'VendorSettings'
+  })
     settings: any
 
   @Prop({ type: String })
@@ -75,4 +94,3 @@ export class Vendor extends AbstractDocument {
 }
 
 export const VendorSchema = SchemaFactory.createForClass(Vendor)
-VendorSchema.index({ location: '2dsphere' })

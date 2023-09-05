@@ -44,6 +44,7 @@ import { OdsaController } from './ODSA/odsa.controller'
 import { ScheduleModule } from '@nestjs/schedule'
 import { OdsaRepository } from './ODSA/odsa.repository'
 import { EventsGateway } from './websockets/events.gateway'
+import { EventsService } from './websockets/events.service'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -121,6 +122,7 @@ export class AppModule implements NestModule {
         ODSA,
         OdsaRepository,
         EventsGateway,
+        EventsService,
         {
           provide: APP_FILTER,
           useClass: FitHttpException

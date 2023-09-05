@@ -7,7 +7,7 @@ import {
 import { Server } from 'socket.io'
 import { LocationCoordinates, SOCKET_MESSAGE } from '@app/common'
 import { Logger } from '@nestjs/common'
-import { DriverRepository } from '../drivers-service.repository'
+import { EventsService } from './events.service'
 
 @WebSocketGateway({
   cors: {
@@ -20,20 +20,23 @@ export class EventsGateway {
 
   private readonly logger = new Logger(EventsGateway.name)
 
-  constructor (private readonly driverRepository: DriverRepository) {}
+  constructor (
+    private readonly eventService: EventsService
+  ) {}
 
   @SubscribeMessage(SOCKET_MESSAGE.UPDATE_DRIVER_LOCATION)
   async updateDriversLocation (
-    @MessageBody() data: { driverId: string, location: LocationCoordinates }
+    @MessageBody() { driverId, location }: { driverId: string, location: LocationCoordinates }
   ): Promise<void> {
     try {
-      await this.driverRepository.findOneAndUpdate(
-        { _id: data.driverId },
-        { location: data.location }
-      )
+      if (driverId === undefined || location === undefined) {
+        throw new Error('failed')
+      }
+      await this.eventService.updateDriverLocation(driverId, location)
+      await this.eventService.updateDeliveryLocation(driverId, location)
     } catch (error) {
       this.logger.error(
-        `PIM -> Failed to update location for driver ${data.driverId}`
+        `PIM -> Failed to update location for driver ${driverId}`
       )
     }
   }

@@ -54,6 +54,18 @@ export class Delivery extends AbstractDocument {
       default: [0, 0] // Default coordinates here
     }
   })
+    currentLocation: LocationCoordinates
+
+  @Prop({
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0] // Default coordinates here
+    }
+  })
     dropOffLocation: LocationCoordinates
 
   @Prop({ type: Boolean, default: false })

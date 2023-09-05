@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpException,
-  Inject,
-  Post,
-  Put,
-  UseGuards
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpException, Inject, Logger, Post, Put, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -29,10 +19,31 @@ import {
 
 @Controller('admin')
 export class AdminController {
+  private readonly logger = new Logger(Admin.name)
+
   constructor (
     @Inject(QUEUE_SERVICE.ADMINS_SERVICE)
     private readonly adminClient: ClientProxy
-  ) {}
+  ) {
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('list')
+  async getAll (): Promise<ResponseWithStatus> {
+    const payload: {} = {}
+    this.logger.debug('Getting all admin')
+    return await lastValueFrom<ResponseWithStatus>(
+      this.adminClient
+        .send(QUEUE_MESSAGE.GET_ALL_ADMIN, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            console.error(error)
+            this.logger.error(`Failed to fetch admins. Reason: ${error.message}`)
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
 
   @Post('register')
   async registerNewUser (
@@ -42,6 +53,7 @@ export class AdminController {
       userId: '',
       data: request
     }
+
     return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.CREATE_ADMIN, payload).pipe(
         catchError<any, any>((error: IRpcException) => {

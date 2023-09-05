@@ -10,12 +10,7 @@ import {
   ServicePayload
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
-import {
-  ListingCategoryStub,
-  ListingMenuStub,
-  ListingOptionStub,
-  resStub
-} from './stubs/Listings.stub'
+import { ListingCategoryStub, ListingMenuStub, ListingOptionStub, resStub } from './stubs/Listings.stub'
 import {
   CreateListingCategoryDto,
   CreateListingMenuDto,
@@ -64,7 +59,7 @@ describe('listingsController', () => {
         response = await listingsController.getAllListings(payload, context)
       })
       test('then it should call listingsService.getAllListingMenu', () => {
-        expect(listingsService.getAllListingMenu).toBeCalledWith(
+        expect(listingsService.getAllVendorListingMenu).toBeCalledWith(
           payload.userId
         )
       })
@@ -225,7 +220,7 @@ describe('listingsController', () => {
         data = {
           userId: VendorStub()._id as any,
           data: {
-            catId: ListingMenuStub().vendorId
+            // catId: ListingMenuStub().vendorId
           }
         }
         response = await listingsController.updateListingCategory(

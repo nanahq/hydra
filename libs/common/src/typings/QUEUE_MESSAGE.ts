@@ -8,25 +8,31 @@ export enum QUEUE_MESSAGE {
   UPDATE_USER_STATUS = 'update_user_status',
   GET_USER_LOCAL = 'get_user_with_email_password',
   GET_USER_JWT = 'get_user_with_id',
+
+  // ADMIN
   GET_ADMIN_LOCAL = 'get_admin_with_username_password',
   GET_ADMIN_JWT = 'get_admin_with_id',
   GET_ADMIN = 'get_admin',
+  GET_ALL_ADMIN = 'get_all_admin',
+  VALIDATE_ADMIN = 'validate_admin',
+  UPDATE_ADMIN_STATUS = ' update_admin_status',
+  DELETE_ADMIN = 'delete_admin',
+  CREATE_ADMIN = 'create_admin',
+
+  ADMIN_DASHBOARD_ORDER_METRICS = 'admin_dashboard_order_metrics',
+
   GET_VENDOR = 'get_vendor',
   GET_VENDOR_SETTINGS = 'get_vendor_settings',
   CREATE_VENDOR_SETTINGS = 'create_vendor_settings',
   GET_VENDOR_LOCAL = 'get_vendor_with_email_password',
   GET_VENDOR_JWT = 'get_vendor_with_id',
-  CREATE_ADMIN = 'create_admin',
   CREATE_VENDOR = 'create_vendor',
   UPDATE_VENDOR_STATUS = 'update_vendor_status',
   VALIDATE_VENDOR = 'validate_vendor',
-  VALIDATE_ADMIN = 'validate_admin',
   UPDATE_USER_PROFILE = 'update_user_profile',
   UPDATE_VENDOR_SETTING = 'update_vendor_settings',
   UPDATE_VENDOR_LOGO = 'update_vendor_logo',
   UPDATE_VENDOR_PROFILE = 'update_vendor_profile',
-  UPDATE_ADMIN_STATUS = ' update_admin_status',
-  DELETE_ADMIN = 'delete_admin',
   DELETE_USER_PROFILE = 'delete_user_profile',
   DELETE_VENDOR_PROFILE = 'delete_vendor_profile',
   GET_ALL_VENDORS = 'get_all_vendors',
@@ -34,11 +40,13 @@ export enum QUEUE_MESSAGE {
   GET_ALL_VENDORS_USERS = 'get_vendors_user',
   UPDATE_USER_ORDER_COUNT = 'UPDATE_USER_ORDER_COUNT',
   UPDATE_VENDOR_IMAGE = 'UPDATE_VENDOR_IMAGE',
+  VENDOR_APPROVE = 'VENDOR_APPROVE',
+  VENDOR_DISAPPROVE = 'VENDOR_DISAPPROVE',
 
   VALIDATE_DRIVER = 'VALIDATE_DRIVER',
   // Listing
   GET_ALL_LISTINGS = 'get_listings',
-  GET_LISTING_INFO = 'get_listing_info',
+  GET_LISTING_MENU = 'get_listing_info',
   DELETE_LISTING = 'delete_listing',
   CREATE_LISTING = 'create_listing',
   UPDATE_LISTING = 'update_listing',
@@ -47,10 +55,9 @@ export enum QUEUE_MESSAGE {
   CREATE_LISTING_MENU = 'create_listing_menu',
   CREATE_LISTING_CAT = ' create_listing_cat',
   CREATE_LISTING_OP = 'create_listing_op',
-  GET_LISTING_MENU = 'get_listing_menu',
   GET_LISTING_CAT = ' get_listing_cat',
   GET_LISTING_OP = 'get_listing_op',
-  GET__ALL_LISTING_MENU = 'get_all_listing_menu',
+  GET_ALL_VENDOR_LISTING_MENU = 'get_all_listing_menu',
   GET_ALL_LISTING_CAT = ' get_all_listing_cat',
   GET_ALL_LISTING_OP = 'get_all_listing_op',
   UPDATE_LISTING_MENU = 'update_listing_menu',
@@ -59,6 +66,13 @@ export enum QUEUE_MESSAGE {
   DELETE_LISTING_MENU = 'delete_listing_menu',
   DELETE_LISTING_CAT = 'delete_listing_cat',
   DELETE_LISTING_OP = 'delete_listing_op',
+  LISTING_READ = 'LISTING_READ',
+  LISTING_ADMIN_LIST_ALL = 'LISTING_ADMIN_LIST_ALL',
+  LISTING_ADMIN_LIST_PENDING = 'LISTING_ADMIN_LIST_PENDING',
+  LISTING_ADMIN_LIST_APPROVED = 'LISTING_ADMIN_LIST_APPROVED',
+  LISTING_ADMIN_LIST_REJECTED = 'LISTING_ADMIN_LIST_REJECTED',
+  LISTING_MENU_APPROVE = 'LISTING_MENU_APPROVE',
+  LISTING_MENU_REJECT = 'LISTING_MENU_REJECT',
 
   GET_SINGLE_LISTING_MENU_USER = 'GET_SINGLE_LISTING_MENU_USER',
   GET_SINGLE_LISTING_CAT_USER = 'GET_SINGLE_LISTING_CAT_USER',
@@ -139,7 +153,42 @@ export enum QUEUE_MESSAGE {
   ADDRESS_BOOK_LABEL_DELETE = 'ADDRESS_BOOK_LABEL_DELETE',
 
   // Homepage
-  GET_NEAREST_VENDORS = 'GET_NEAREST_VENDORS'
+  GET_NEAREST_VENDORS = 'GET_NEAREST_VENDORS',
+
+  ADMIN_GET_ALL_PAID_ORDERS = 'ADMIN_GET_ALL_PAID_ORDERS',
+
+  ADMIN_GET_ALL_FULFILLED_ORDERS = 'ADMIN_GET_ALL_FULFILLED_ORDERS',
+
+  ADMIN_GET_ALL_TRANSIT_ORDERS = 'ADMIN_GET_ALL_TRANSIT_ORDERS',
+
+  ADMIN_GET_ALL_ORDERS = 'ADMIN_GET_ALL_ORDERS',
+
+  ADMIN_GET_USER_ORDERS = 'ADMIN_GET_USER_ORDERS',
+
+  ADMIN_GET_DRIVERS = 'ADMIN_GET_DRIVERS',
+
+  ADMIN_GET_FREE_DRIVERS = 'ADMIN_GET_FREE_DRIVERS',
+
+  ADMIN_ASSIGN_DELIVERY = 'ADMIN_ASSIGN_DELIVERY',
+
+  ADMIN_APPROVE_DRIVER = 'ADMIN_APPROVE_DRIVER',
+
+  ADMIN_DELETE_DRIVER = 'ADMIN_DELETE_DRIVER',
+  ADMIN_REJECT_DRIVER = 'ADMIN_REJECT_DRIVER',
+
+  ADMIN_GET_USERS = 'ADMIN_GET_USERS',
+
+  ADMIN_GET_DELETED_USERS = 'ADMIN_GET_DELETED_USERS',
+
+  ADMIN_DELETE_USER = 'ADMIN_DELETE_USER',
+
+  ADMIN_GET_REVIEWS = 'ADMIN_GET_REVIEWS',
+
+  ADMIN_SUSPEND_REVIEW = 'ADMIN_SUSPEND_REVIEW',
+  ADMIN_GET_DELIVERIES = 'ADMIN_GET_DELIVERIES',
+  ADMIN_GET_DRIVER_PENDING_DELIVERIES = 'ADMIN_GET_DRIVER_PENDING_DELIVERIES',
+
+  ADMIN_GET_DRIVER_FULFILLED_DELIVERIES = 'ADMIN_GET_DRIVER_FULFILLED_DELIVERIES'
 }
 
 export enum QUEUE_SERVICE {

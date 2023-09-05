@@ -32,7 +32,57 @@ export class OrdersController {
   @UseGuards(JwtAuthGuard)
   async getAllOrders (): Promise<Order[]> {
     return await lastValueFrom(
-      this.ordersClient.send(QUEUE_MESSAGE.GET_ALL_ORDERS, {}).pipe(
+      this.ordersClient.send(QUEUE_MESSAGE.ADMIN_GET_ALL_ORDERS, {}).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get('paid')
+  @UseGuards(JwtAuthGuard)
+  async getAllPaidOrders (): Promise<Order[]> {
+    return await lastValueFrom(
+      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_ALL_PAID_ORDERS, {}).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get('fulfilled')
+  @UseGuards(JwtAuthGuard)
+  async getAllFulfilledOrders (): Promise<Order[]> {
+    return await lastValueFrom(
+      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_ALL_FULFILLED_ORDERS, {}).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get('transit')
+  @UseGuards(JwtAuthGuard)
+  async getAllTransitOrders (): Promise<Order[]> {
+    return await lastValueFrom(
+      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_ALL_TRANSIT_ORDERS, {}).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get('user/:id')
+  @UseGuards(JwtAuthGuard)
+  async getAllUserOrder (
+    @Param('id') userId: string
+  ): Promise<Order[]> {
+    return await lastValueFrom(
+      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_USER_ORDERS, { userId }).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

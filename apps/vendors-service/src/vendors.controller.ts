@@ -1,26 +1,21 @@
-import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException
-} from '@nestjs/microservices'
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 import { Controller, UseFilters } from '@nestjs/common'
 
 import {
-  ExceptionFilterRpc,
+  ExceptionFilterRpc, LocationCoordinates,
   LoginVendorRequest,
   QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
   ServicePayload,
   UpdateVendorStatus,
-  VendorUserI,
-  VendorSettings,
-  Vendor,
-  UpdateVendorSettingsDto, LocationCoordinates
+  VendorUserI
 } from '@app/common'
 import { VendorsService } from './vendors.service'
+import { Vendor } from '@app/common/database/schemas/vendor.schema'
+import { UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
+import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
+import { ReasonDto } from '@app/common/database/dto/reason.dto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -106,6 +101,34 @@ export class VendorsController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.vendorsService.deleteVendorProfile(data.userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.VENDOR_APPROVE)
+  async approve (
+    @Payload() data: ServicePayload<null>,
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.vendorsService.approve(data.userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.VENDOR_DISAPPROVE)
+  async disapprove (
+    @Payload() data: ServicePayload<ReasonDto>,
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.vendorsService.disapprove(data.userId, data.data.reason)
     } catch (error) {
       throw new RpcException(error)
     } finally {

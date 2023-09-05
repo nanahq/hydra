@@ -1,7 +1,16 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
-import { Review, ReviewSchema, RmqModule, DatabaseModule } from '@app/common'
+import {
+  Review,
+  ReviewSchema,
+  RmqModule,
+  DatabaseModule,
+  Vendor,
+  VendorSchema,
+  ListingMenuSchema,
+  ListingMenu, Order, OrderSchema
+} from '@app/common'
 import { ReviewsServiceController } from './reviews-service.controller'
 import { ReviewsService } from './reviews-service.service'
 import { MongooseModule } from '@nestjs/mongoose'
@@ -19,6 +28,9 @@ import { ReviewRepository } from './review.repositoty'
       envFilePath: './apps/reviews-service/.env'
     }),
     MongooseModule.forFeature([{ name: Review.name, schema: ReviewSchema }]),
+    MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
+    MongooseModule.forFeature([{ name: ListingMenu.name, schema: ListingMenuSchema }]),
+    MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }]),
     DatabaseModule,
     RmqModule
   ],

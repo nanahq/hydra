@@ -11,7 +11,7 @@ import {
   OrderStatus,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus
+  ResponseWithStatus, VendorApprovalStatus
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
@@ -54,6 +54,23 @@ export class ODSA {
     } catch (error) {
       this.logger.error({
         message: `PIM -> Failed to query pending deliveries for driver ${driverId}`,
+        error
+      })
+    }
+  }
+
+  public async queryAllDeliveries (
+  ): Promise<Delivery[] | undefined> {
+    try {
+      return await this.odsaRepository.findAndPopulate({}, [
+        'listing',
+        'vendor',
+        'user',
+        'order'
+      ])
+    } catch (error) {
+      this.logger.error({
+        message: 'PIM -> Failed to query all deliveries',
         error
       })
     }
@@ -144,16 +161,19 @@ export class ODSA {
       )
 
       if (driverToBeAssigned === null) {
-        await this.odsaRepository.create({
-          listing: order.listing._id,
-          order: order._id,
-          vendor: order.vendor?._id,
-          user: order.user._id,
-          deliveryTime: parseInt(order.orderDeliveryScheduledTime),
-          dropOffLocation: order.preciseLocation,
-          pickupLocation: order.vendor.location,
-          assignedToDriver: false
-        })
+        if (existingDeliver === undefined) {
+          await this.odsaRepository.create({
+            listing: order.listing._id,
+            order: order._id,
+            vendor: order.vendor?._id,
+            user: order.user._id,
+            deliveryTime: parseInt(order.orderDeliveryScheduledTime),
+            dropOffLocation: order.preciseLocation,
+            pickupLocation: order.vendor.location,
+            assignedToDriver: false
+          })
+        }
+        return
       }
 
       if (existingDeliver !== undefined && existingDeliver) {
@@ -177,7 +197,6 @@ export class ODSA {
           assignedToDriver: true
         })
       }
-
       await this.driversRepository.findOneAndUpdate(
         { _id: driverToBeAssigned?.driverId },
         { available: false }
@@ -194,9 +213,9 @@ export class ODSA {
     }
   }
 
-  // @Cron(CronExpression.EVERY_MINUTE, {
-  //   timeZone: 'Africa/Lagos'
-  // })
+  @Cron(CronExpression.EVERY_MINUTE, {
+    timeZone: 'Africa/Lagos'
+  })
   private async assignDemandOrders (): Promise<void> {
     const unassignedDeliveries = (await this.odsaRepository.find({
       assignedToDriver: false
@@ -234,7 +253,8 @@ export class ODSA {
     )
     const drivers = await this.driversRepository.find({
       isValidated: true,
-      type: 'DELIVER_PRE_ORDER'
+      type: 'DELIVER_PRE_ORDER',
+      acc_status: VendorApprovalStatus.APPROVED
     })
 
     const ordersForToday = filterOrdersForDay(orders)
@@ -260,9 +280,6 @@ export class ODSA {
     drivers: any[]
   ): Promise<void> {
     if (drivers?.length <= 0 || groupedOrders?.length <= 0) {
-      this.logger.log(
-        `PIM -> Assigning ${groupedOrders.length} grouped orders to ${drivers.length}`
-      )
       return
     }
 
@@ -298,7 +315,7 @@ export class ODSA {
   }
 
   private async handleFindNearestDeliveryDriver (
-    targetCoord: string[]
+    targetCoord: number[]
   ): Promise<DriverWithLocation | null> {
     this.logger.log('PIM -> Assign order to the nearest delivery person')
 
@@ -307,13 +324,13 @@ export class ODSA {
       status: 'ONLINE',
       isValidated: true,
       isDeleted: false,
-      available: true
+      available: true,
+      acc_status: VendorApprovalStatus.APPROVED
     })) as Driver[]
 
     this.logger.log(
       `PIM -> ${availableOnDemandDrivers.length} drivers are open to taking the delivery`
     )
-
     if (availableOnDemandDrivers.length === 0) {
       return null
     }
@@ -339,7 +356,7 @@ export class ODSA {
 function filterOrdersForDay (orders: Order[]): Order[] {
   const filteredOrders: Order[] = []
 
-  const targetDate = new Date(2023, 7, 16)
+  const targetDate = new Date()
   const targetYear = targetDate.getFullYear()
   const targetMonth = targetDate.getMonth()
   const targetDay = targetDate.getDate()

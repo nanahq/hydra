@@ -16,7 +16,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
-import { FilterQuery } from 'mongoose'
+import { Aggregate, FilterQuery } from 'mongoose'
 
 @Injectable()
 export class OrdersServiceService {
@@ -81,6 +81,38 @@ export class OrdersServiceService {
         'Can not process request. Try again later',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
+    }
+  }
+
+  public async getAllFulfilledOrders (): Promise<Order[]> {
+    try {
+      return await this.orderRepository.find({ orderStatus: OrderStatus.FULFILLED })
+    } catch (e) {
+      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllTransitOrders (): Promise<Order[]> {
+    try {
+      return await this.orderRepository.find({ orderStatus: OrderStatus.IN_ROUTE })
+    } catch (e) {
+      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllPaidOrder (): Promise<Order[]> {
+    try {
+      return await this.orderRepository.find({ orderStatus: OrderStatus.PROCESSED })
+    } catch (e) {
+      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllOrders (): Promise<Order[]> {
+    try {
+      return await this.orderRepository.find({ })
+    } catch (e) {
+      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
@@ -273,5 +305,9 @@ export class OrdersServiceService {
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
+  }
+
+  async adminMetrics (): Promise<Aggregate<any>> {
+    return await this.orderRepository.find({})
   }
 }

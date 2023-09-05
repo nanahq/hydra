@@ -2,22 +2,20 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 import {
   FitRpcException,
+  LocationCoordinates,
   LoginVendorRequest,
   ResponseWithStatus,
   ServicePayload,
   UpdateVendorStatus,
-  VendorUserI,
-  internationalisePhoneNumber,
-  VendorSettings,
-  Vendor,
-  CreateVendorDto,
-  UpdateVendorSettingsDto, LocationCoordinates
+  VendorApprovalStatus,
+  VendorUserI
 } from '@app/common'
+import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 
-import {
-  VendorRepository,
-  VendorSettingsRepository
-} from './vendors.repository'
+import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
+import { Vendor } from '@app/common/database/schemas/vendor.schema'
+import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
+import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
 
 @Injectable()
 export class VendorsService {
@@ -26,7 +24,8 @@ export class VendorsService {
   constructor (
     private readonly vendorRepository: VendorRepository,
     private readonly vendorSettingsRepository: VendorSettingsRepository
-  ) {}
+  ) {
+  }
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     data.phone = internationalisePhoneNumber(data.phone)
@@ -54,7 +53,8 @@ export class VendorsService {
     const payload: Partial<Vendor> = {
       ...data,
       password: await bcrypt.hash(data.password, 10),
-      status: 'ONLINE'
+      status: 'ONLINE',
+      acc_status: VendorApprovalStatus.PENDING
     }
 
     try {
@@ -124,6 +124,39 @@ export class VendorsService {
     return { status: 1 }
   }
 
+  async approve (id: string): Promise<ResponseWithStatus> {
+    const updateRequest = await this.vendorRepository.findOneAndUpdate(
+      { _id: id },
+      { acc_status: VendorApprovalStatus.APPROVED }
+    )
+
+    if (updateRequest === null) {
+      throw new FitRpcException(
+        'Failed to approve vendor',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return { status: 1 }
+  }
+
+  async disapprove (id: string, reason: string): Promise<ResponseWithStatus> {
+    const updateRequest = await this.vendorRepository.findOneAndUpdate(
+      { _id: id },
+      {
+        rejection_reason: reason,
+        acc_status: VendorApprovalStatus.DISAPPROVED
+      }
+    )
+
+    if (updateRequest === null) {
+      throw new FitRpcException(
+        'Failed to reject vendor',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return { status: 1 }
+  }
+
   async getVendor (_id: string): Promise<Vendor> {
     const _vendor = await this.vendorRepository.findOneAndPopulate(
       {
@@ -149,7 +182,7 @@ export class VendorsService {
   }: ServicePayload<Partial<Vendor>>): Promise<ResponseWithStatus> {
     const req = await this.vendorRepository.findOneAndUpdate(
       { _id: userId },
-      data
+      { ...data }
     )
 
     if (req === null) {
@@ -191,7 +224,7 @@ export class VendorsService {
   }
 
   async getAllVendorsUser (): Promise<VendorUserI[]> {
-    const _vendors = await this.vendorRepository.find({ isDeleted: false })
+    const _vendors = await this.vendorRepository.find({ isDeleted: false, status: VendorApprovalStatus.APPROVED })
 
     if (_vendors === null) {
       throw new FitRpcException(
@@ -283,16 +316,22 @@ export class VendorsService {
     }
   }
 
-  async getNearestVendors ({ type, coordinates }: LocationCoordinates, userId: string): Promise<Vendor[]> {
+  async getNearestVendors ({
+    type,
+    coordinates
+  }: LocationCoordinates, userId: string): Promise<Vendor[]> {
     try {
       const vendors = this.vendorRepository.find({
         location: {
           $near:
-      {
-        $geometry: { type, coordinates },
-        $minDistance: 200,
-        $maxDistance: 5000
-      }
+            {
+              $geometry: {
+                type,
+                coordinates
+              },
+              $minDistance: 200,
+              $maxDistance: 5000
+            }
         }
       })
       this.logger.log('PIM -> fetching nearest vendors')
