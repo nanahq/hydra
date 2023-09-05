@@ -59,6 +59,23 @@ export class ODSA {
     }
   }
 
+  public async queryAllDeliveries (
+  ): Promise<Delivery[] | undefined> {
+    try {
+      return await this.odsaRepository.findAndPopulate({}, [
+        'listing',
+        'vendor',
+        'user',
+        'order'
+      ])
+    } catch (error) {
+      this.logger.error({
+        message: 'PIM -> Failed to query all deliveries',
+        error
+      })
+    }
+  }
+
   public async queryFulfilledDeliveries (
     driverId: string
   ): Promise<Delivery[] | undefined> {
@@ -144,16 +161,19 @@ export class ODSA {
       )
 
       if (driverToBeAssigned === null) {
-        await this.odsaRepository.create({
-          listing: order.listing._id,
-          order: order._id,
-          vendor: order.vendor?._id,
-          user: order.user._id,
-          deliveryTime: parseInt(order.orderDeliveryScheduledTime),
-          dropOffLocation: order.preciseLocation,
-          pickupLocation: order.vendor.location,
-          assignedToDriver: false
-        })
+        if (existingDeliver === undefined) {
+          await this.odsaRepository.create({
+            listing: order.listing._id,
+            order: order._id,
+            vendor: order.vendor?._id,
+            user: order.user._id,
+            deliveryTime: parseInt(order.orderDeliveryScheduledTime),
+            dropOffLocation: order.preciseLocation,
+            pickupLocation: order.vendor.location,
+            assignedToDriver: false
+          })
+        }
+        return
       }
 
       if (existingDeliver !== undefined && existingDeliver) {
@@ -177,7 +197,6 @@ export class ODSA {
           assignedToDriver: true
         })
       }
-
       await this.driversRepository.findOneAndUpdate(
         { _id: driverToBeAssigned?.driverId },
         { available: false }
@@ -312,7 +331,6 @@ export class ODSA {
     this.logger.log(
       `PIM -> ${availableOnDemandDrivers.length} drivers are open to taking the delivery`
     )
-
     if (availableOnDemandDrivers.length === 0) {
       return null
     }

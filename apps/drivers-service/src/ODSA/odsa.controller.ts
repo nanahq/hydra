@@ -8,7 +8,7 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { QUEUE_MESSAGE, RmqService } from '@app/common'
+import { Delivery, QUEUE_MESSAGE, RmqService } from '@app/common'
 
 /**
  * Order Delivery Sorting and Assignation (ODSA) Service.
@@ -29,6 +29,45 @@ export class OdsaController {
   ): Promise<any> {
     try {
       return await this.odsa.handleProcessOrder(orderId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DELIVERIES)
+  async getDeliveries (@Ctx() context: RmqContext): Promise<Delivery[] | undefined> {
+    try {
+      return await this.odsa.queryAllDeliveries()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DRIVER_FULFILLED_DELIVERIES)
+  async getDriverFulfilledDeliveries (
+    @Ctx() context: RmqContext,
+      @Payload() { driverId }: { driverId: string }
+  ): Promise<Delivery[] | undefined> {
+    try {
+      return await this.odsa.queryFulfilledDeliveries(driverId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DRIVER_PENDING_DELIVERIES)
+  async getDriverPendingDeliveries (
+    @Ctx() context: RmqContext,
+      @Payload() { driverId }: { driverId: string }
+  ): Promise<Delivery[] | undefined> {
+    try {
+      return await this.odsa.queryPendingDeliveries(driverId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
