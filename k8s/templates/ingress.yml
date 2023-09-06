@@ -6,7 +6,8 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     kubernetes.io/ingress.class: alb
-
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds=60
 spec:
   rules:
     - http:
@@ -32,11 +33,11 @@ spec:
                 name: admin-gateway
                 port:
                   number: 3002
-          - path: /drivers-gateway
+          - path: /driver-gateway
             pathType: Prefix
             backend:
               service:
-                name: drivers-gateway
+                name: driver-gateway
                 port:
                   number: 3003
 
@@ -44,6 +45,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: drivers-gateway
+                name: driver-gateway
                 port:
                   number: 3003
