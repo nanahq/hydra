@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: listings
+  name: location
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: listings
+      app: location
   template:
     metadata:
       labels:
-        app: listings
+        app: location
     spec:
       containers:
-        - name: listings
-          image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/listings-service:latest
+        - name: location
+          image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/location-service:latest
           env:
             - name: port
               valueFrom:

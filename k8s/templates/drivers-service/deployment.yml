@@ -1,26 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: listings
+  name: drivers-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: listings
+      app: drivers-service
   template:
     metadata:
       labels:
-        app: listings
+        app: drivers-service
     spec:
       containers:
-        - name: listings
-          image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/listings-service:latest
+        - name: drivers-service
+          image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/drivers-service:latest
+          ports:
+            - containerPort: 3003
           env:
-            - name: port
+            - name: PORT
               valueFrom:
                 secretKeyRef:
                   name: nana-hydra-secret
-                  key: ADMIN_PORT
+                  key: DRIVERS_PORT
             - name: RMQ_URI
               valueFrom:
                 secretKeyRef:

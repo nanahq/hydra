@@ -14,30 +14,182 @@ spec:
     spec:
       containers:
         - name: vendor-gateway
-          image: imagynetech/eatlater-vendor-gateway:1.13.2
+          image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/vendor-gateway:latest
           ports:
             - containerPort: 3001
           env:
             - name: PORT
-              value: '3001'
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: VENDOR_PORT
             - name: RMQ_URI
-              value: amqp://user:user@eatlater-rabbitmq:5672
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_URI
             - name: JWT_EXPIRATION
-              value: '500000'
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: JWT_EXPIRATION
             - name: JWT_SECRET
-              value: 64a5b5676eb9329c8978d3367fd7e1df5404ff886d16c0bc03edf7cc
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: JWT_SECRET
+            - name: RMQ_ADMIN_API_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ADMIN_API_QUEUE
             - name: RMQ_VENDORS_API_QUEUE
-              value: VENDORS_API
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_VENDORS_API_QUEUE
             - name: RMQ_VENDORS_QUEUE
-              value: VENDORS
-            - name: RMQ_LISTINGS_QUEUE
-              value: LISTINGS
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_VENDORS_QUEUE
+            - name: RMQ_ADMIN_SERVICE_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ADMIN_SERVICE_QUEUE
             - name: RMQ_ORDERS_QUEUE
-              value: ORDERS
-            - name: RMQ_REVIEW_QUEUE
-              value: REVIEW
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ORDERS_QUEUE
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: MONGODB_URI
+            - name: RMQ_DRIVER_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_DRIVER_QUEUE
+            - name: RMQ_LOCATION_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_LOCATION_QUEUE
+            - name: RMQ_LISTINGS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_LISTINGS_QUEUE
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: JWT_SECRET
+            - name: RMQ_ORDERS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ORDERS_QUEUE
             - name: RMQ_PAYMENT_QUEUE
-              value: PAYMENT
-
-      imagePullSecrets:
-        - name: regcred
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_PAYMENT_QUEUE
+            - name: RMQ_LOCATION_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_LOCATION_QUEUE
+            - name: RMQ_REVIEW_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_REVIEW_QUEUE
+            - name: RMQ_ADMINS_API_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ADMINS_API_QUEUE
+            - name: RMQ_ADMINS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ADMINS_QUEUE
+            - name: VERSION
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: VERSION
+            - name: RMQ_API_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_API_QUEUE
+            - name: RMQ_USERS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_USERS_QUEUE
+            - name: RMQ_NOTIFICATION_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_NOTIFICATION_QUEUE
+            - name: TWILIO_ACCOUNT_SID
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: TWILIO_ACCOUNT_SID
+            - name: TWILIO_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: TWILIO_AUTH_TOKEN
+            - name: TWILIO_SERVICE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: TWILIO_SERVICE_NAME
+            - name: TWILIO_PHONE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: TWILIO_PHONE
+            - name: SEND_IN_BLUE_API
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: SEND_IN_BLUE_API
+            - name: FLW_LIVE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_LIVE_KEY
+            - name: FLW_LIVE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_LIVE_SECRET
+            - name: FLW_LIVE_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_LIVE_ENCRYPTION_KEY
+            - name: FLW_TEST_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_TEST_KEY
+            - name: FLW_TEST_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_TEST_SECRET
+            - name: FLW_TEST_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_TEST_ENCRYPTION_KEY
