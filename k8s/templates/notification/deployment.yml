@@ -14,29 +14,181 @@ spec:
     spec:
       containers:
         - name: notification
-          image: imagynetech/eatlater-notification-service:1.13.2
+          imagePullPolicy: Always
+          image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/notification-service:latest
           env:
+            - name: port
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: ADMIN_PORT
             - name: RMQ_URI
-              value: amqp://user:user@eatlater-rabbitmq:5672
-            - name: RMQ_API_QUEUE
-              value: API
-            - name: RMQ_NOTIFICATION_QUEUE
-              value: NOTIFICATION
-            - name: RMQ_USERS_QUEUE
-              value: USERS
-            - name: LISTINGS_QUEUE
-              value: LISTINGS
-            - name: TWILIO_ACCOUNT_SID
-              value: ACec965067efbc4019dd61a5aaf0c42369
-            - name: TWILIO_AUTH_TOKEN
-              value: 08e820054933084ca0a680ea7ea926c3
-            - name: TWILIO_SERVICE_NAME
-              value: VA42a1682c2eb59aa5af5ee339dad5eb8c
-            - name: TWILIO_PHONE
-              value: EatLater
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_URI
+            - name: JWT_EXPIRATION
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: JWT_EXPIRATION
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: JWT_SECRET
+            - name: RMQ_ADMIN_API_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ADMIN_API_QUEUE
+            - name: RMQ_VENDORS_API_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_VENDORS_API_QUEUE
+            - name: RMQ_VENDORS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_VENDORS_QUEUE
+            - name: RMQ_ADMIN_SERVICE_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ADMIN_SERVICE_QUEUE
+            - name: RMQ_ORDERS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ORDERS_QUEUE
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: MONGODB_URI
+            - name: RMQ_DRIVER_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_DRIVER_QUEUE
+            - name: RMQ_LOCATION_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_LOCATION_QUEUE
+            - name: RMQ_LISTINGS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_LISTINGS_QUEUE
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: JWT_SECRET
+            - name: RMQ_ORDERS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ORDERS_QUEUE
             - name: RMQ_PAYMENT_QUEUE
-              value: PAYMENT
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_PAYMENT_QUEUE
+            - name: RMQ_LOCATION_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_LOCATION_QUEUE
+            - name: RMQ_REVIEW_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_REVIEW_QUEUE
+            - name: RMQ_ADMINS_API_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ADMINS_API_QUEUE
+            - name: RMQ_ADMINS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_ADMINS_QUEUE
+            - name: VERSION
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: VERSION
+            - name: RMQ_API_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_API_QUEUE
+            - name: RMQ_USERS_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_USERS_QUEUE
+            - name: RMQ_NOTIFICATION_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: RMQ_NOTIFICATION_QUEUE
+            - name: TWILIO_ACCOUNT_SID
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: TWILIO_ACCOUNT_SID
+            - name: TWILIO_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: TWILIO_AUTH_TOKEN
+            - name: TWILIO_SERVICE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: TWILIO_SERVICE_NAME
+            - name: TWILIO_PHONE
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: TWILIO_PHONE
             - name: SEND_IN_BLUE_API
-              value: keysib-7867d5608c468224a263b3f4adca73dbadf869210d20c0d6a3c3d40bc3d643fd-4wtgmNhcgD1JPhKU
-      imagePullSecrets:
-        - name: regcred
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: SEND_IN_BLUE_API
+            - name: FLW_LIVE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_LIVE_KEY
+            - name: FLW_LIVE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_LIVE_SECRET
+            - name: FLW_LIVE_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_LIVE_ENCRYPTION_KEY
+            - name: FLW_TEST_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_TEST_KEY
+            - name: FLW_TEST_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_TEST_SECRET
+            - name: FLW_TEST_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: FLW_TEST_ENCRYPTION_KEY

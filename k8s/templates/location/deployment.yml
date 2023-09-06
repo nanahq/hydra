@@ -1,22 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin
+  name: location
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: admin
+      app: location
   template:
     metadata:
       labels:
-        app: admin
+        app: location
     spec:
       containers:
-        - name: admin
+        - name: location
           imagePullPolicy: Always
-          image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/admin-service:latest
+          image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/location-service:latest
           env:
+            - name: port
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: ADMIN_PORT
             - name: RMQ_URI
               valueFrom:
                 secretKeyRef:
