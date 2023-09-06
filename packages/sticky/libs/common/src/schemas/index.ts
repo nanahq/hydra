@@ -5,9 +5,8 @@ import {
   OrderType,
   PaymentInfo,
   VendorOperationSetting,
-  DriverType
+  DriverType, AdminLevel
 } from '../typings'
-import { AdminLevel } from '../../../../../../libs/common/src'
 
 export interface ListingCategoryI {
   _id: string
