@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
         - name: notification
+          imagePullPolicy: Always
           image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/notification-service:latest
           env:
             - name: port

@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
         - name: drivers-service
+          imagePullPolicy: Always
           image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/drivers-service:latest
           ports:
             - containerPort: 3003

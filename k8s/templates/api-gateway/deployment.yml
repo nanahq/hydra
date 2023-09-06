@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
+          imagePullPolicy: Always
           image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/api-gateway:latest
           ports:
             - containerPort: 3000

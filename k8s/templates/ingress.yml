@@ -39,3 +39,11 @@ spec:
                 name: drivers-gateway
                 port:
                   number: 3003
+
+          - path: /socket.io
+            pathType: Prefix
+            backend:
+              service:
+                name: drivers-gateway
+                port:
+                  number: 3003
