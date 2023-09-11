@@ -1,6 +1,5 @@
 export const AppMetadata = {
-    API_VERSION: 'v1',
-    ADMIN_VERSION: 'v1',
-    APP_NAME: 'EatLater_Aristotle',
-    APP_VERSION: '1.12.0'
+  API_VERSION: 'v1',
+  APP_NAME: 'Nana Hydra',
+  APP_VERSION: '1.17.1'
 }

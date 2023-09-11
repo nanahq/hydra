@@ -11,6 +11,5 @@ export function internationalisePhoneNumber (num: string): string {
       return `+${num}`
     default:
       return num
-
   }
 }
