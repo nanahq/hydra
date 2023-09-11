@@ -2,14 +2,14 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 
 import {
-    FitRpcException, internationalisePhoneNumber,
-    loginUserRequest,
-    registerUserRequest,
-    ResponseWithStatus,
-    ServicePayload,
-    TokenPayload,
-    User,
-    verifyPhoneRequest
+  FitRpcException, internationalisePhoneNumber,
+  loginUserRequest,
+  registerUserRequest,
+  ResponseWithStatus,
+  ServicePayload,
+  TokenPayload,
+  User,
+  verifyPhoneRequest
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
@@ -24,7 +24,7 @@ export class UsersService {
     phone,
     password
   }: registerUserRequest): Promise<ResponseWithStatus> {
-      const formattedPhone = internationalisePhoneNumber(phone);
+    const formattedPhone = internationalisePhoneNumber(phone)
     await this.checkExistingUser(formattedPhone, email) // Gate to check if phone has already been registered
 
     const payload: Partial<User> = {
@@ -51,10 +51,10 @@ export class UsersService {
   }: loginUserRequest): Promise<{ status: number, data: User }> {
     const validateUserRequest = await this.usersRepository.findOne({ phone })
 
-        console.log({phone})
-      if(validateUserRequest === null) {
-          throw new FitRpcException('User with that phone number does not exist', HttpStatus.NOT_FOUND)
-      }
+    console.log({ phone })
+    if (validateUserRequest === null) {
+      throw new FitRpcException('User with that phone number does not exist', HttpStatus.NOT_FOUND)
+    }
     const isCorrectPassword: boolean = await bcrypt.compare(
       password,
       validateUserRequest.password
@@ -171,19 +171,19 @@ export class UsersService {
 
     const _email: User | null = await this.usersRepository.findOne({ email })
 
-      if (_phone !== null) {
+    if (_phone !== null) {
       throw new FitRpcException(
         'Phone Number is  already registered.',
         HttpStatus.CONFLICT
       )
     }
 
-      if (_email !== null) {
-          throw new FitRpcException(
-              'Email is  already registered.',
-              HttpStatus.CONFLICT
-          )
-      }
+    if (_email !== null) {
+      throw new FitRpcException(
+        'Email is  already registered.',
+        HttpStatus.CONFLICT
+      )
+    }
     return _phone as unknown as User
   }
 }

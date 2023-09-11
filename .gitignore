@@ -36,3 +36,4 @@ lerna-debug.log*
 
 *.env
 k8s/secrets.yaml
+/k8s/datadog-values.yaml

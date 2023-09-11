@@ -15,7 +15,7 @@ import {
   UpdateOrderStatusRequestDto
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
-import {  lastValueFrom } from 'rxjs'
+import { lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
 import { Aggregate, FilterQuery } from 'mongoose'
 
@@ -209,9 +209,9 @@ export class OrdersServiceService {
     try {
       this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
 
-      const order = await this.orderRepository.findOneAndPopulate({_id: orderId}, ['vendor', 'listing']) as OrderI
+      const order = await this.orderRepository.findOneAndPopulate({ _id: orderId }, ['vendor', 'listing']) as OrderI
 
-       await this.orderRepository.findOneAndUpdate(
+      await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
         {
           txRefId,

@@ -275,7 +275,6 @@ export class VendorsService {
     vendor: string
   ): Promise<ResponseWithStatus> {
     try {
-
       const newSettings = await this.vendorSettingsRepository.create({
         ...data,
         vendor

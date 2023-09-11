@@ -18,9 +18,8 @@ export class registerUserRequest {
   @MaxLength(20)
     password: string
 
-
- @IsString()
- @IsNotEmpty()
+  @IsString()
+  @IsNotEmpty()
   @IsEmail()
-  email: string
+    email: string
 }

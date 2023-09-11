@@ -72,6 +72,7 @@ export class ListingsController {
         )
     )
   }
+
   // Listings Menu
   @UseGuards(JwtAuthGuard)
   @Post('menu')

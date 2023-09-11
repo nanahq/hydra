@@ -89,9 +89,9 @@ export class VendorController {
     }
     await lastValueFrom(
       this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_LOGO, payload)
-          .pipe(catchError((error) => {
-            throw new HttpException(error.message, error.status)
-          }))
+        .pipe(catchError((error) => {
+          throw new HttpException(error.message, error.status)
+        }))
     )
     return photo
   }
