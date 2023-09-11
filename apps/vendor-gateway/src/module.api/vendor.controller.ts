@@ -77,7 +77,7 @@ export class VendorController {
       storage: multer.memoryStorage()
     })
   )
-  @Put('image')
+  @Put('image/logo')
   async updateVendorLogo (
     @CurrentUser() vendor: Vendor,
       @UploadedFile() file: Express.Multer.File
@@ -89,6 +89,9 @@ export class VendorController {
     }
     await lastValueFrom(
       this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_LOGO, payload)
+          .pipe(catchError((error) => {
+            throw new HttpException(error.message, error.status)
+          }))
     )
     return photo
   }
@@ -99,7 +102,7 @@ export class VendorController {
       storage: multer.memoryStorage()
     })
   )
-  @Put('image')
+  @Put('image/restaurant')
   async updateVendorRestaurantImage (
     @CurrentUser() vendor: Vendor,
       @UploadedFile() file: Express.Multer.File
