@@ -1,10 +1,11 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 
 import {
+  ExportPushNotificationClient,
   FitRpcException,
-  Order,
+  Order, OrderI,
   OrderStatus,
-  OrderTypes,
+  OrderTypes, PushMessage,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
@@ -14,7 +15,7 @@ import {
   UpdateOrderStatusRequestDto
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
-import { catchError, lastValueFrom } from 'rxjs'
+import {  lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
 import { Aggregate, FilterQuery } from 'mongoose'
 
@@ -24,6 +25,9 @@ export class OrdersServiceService {
 
   constructor (
     private readonly orderRepository: OrderRepository,
+
+    private readonly expoClient: ExportPushNotificationClient,
+
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
@@ -187,11 +191,6 @@ export class OrdersServiceService {
             phoneNumber: order.primaryContact,
             status
           })
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
       )
       return { status: 1 }
     } catch (error) {
@@ -210,13 +209,15 @@ export class OrdersServiceService {
     try {
       this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
 
-      const order = (await this.orderRepository.findOneAndUpdate(
+      const order = await this.orderRepository.findOneAndPopulate({_id: orderId}, ['vendor', 'listing']) as OrderI
+
+       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
         {
           txRefId,
           orderStatus: status
         }
-      )) as Order
+      )
 
       this.logger.log(
         `[PIM] - order status updated for paid order: ${orderId}`
@@ -228,12 +229,15 @@ export class OrdersServiceService {
             phoneNumber: order.primaryContact,
             status
           })
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
       )
+
+      const pushNotificationMessage: PushMessage = {
+        title: 'You have a new Order',
+        body: `A new order for ${order.listing.name}`,
+        priority: 'high'
+      }
+
+      await this.expoClient.sendSingleNotification(order.vendor.expoNotificationToken, pushNotificationMessage)
 
       await lastValueFrom(
         this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, {
@@ -271,11 +275,6 @@ export class OrdersServiceService {
       await lastValueFrom(
         this.notificationClient
           .emit(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER, { phone })
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
       )
     } catch (error) {
       throw new FitRpcException(

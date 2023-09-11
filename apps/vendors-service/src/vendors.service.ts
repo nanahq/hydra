@@ -238,15 +238,19 @@ export class VendorsService {
 
   async updateSettings (
     data: UpdateVendorSettingsDto,
-    _id: string
+    vendor: string
   ): Promise<ResponseWithStatus> {
     try {
       await this.vendorSettingsRepository.findOneAndUpdate(
-        { vendorId: _id },
+        { vendor },
         { ...data }
       )
       return { status: 1 }
     } catch (error) {
+      this.logger.error({
+        error,
+        message: 'Failed to update vendor settings'
+      })
       throw new FitRpcException(
         'Can not update settings at this time. Something went wrong',
         HttpStatus.BAD_REQUEST
@@ -268,19 +272,25 @@ export class VendorsService {
 
   async createVendorSettings (
     data: any,
-    vendorId: string
+    vendor: string
   ): Promise<ResponseWithStatus> {
     try {
+
       const newSettings = await this.vendorSettingsRepository.create({
         ...data,
-        vendorId
+        vendor
       })
+
       await this.vendorRepository.findOneAndUpdate(
         { _id: newSettings.vendor },
         { settings: newSettings._id }
       )
       return { status: 1 }
-    } catch (e) {
+    } catch (error) {
+      this.logger.error({
+        error,
+        message: `failed to create vendor settings for vendor ${vendor}`
+      })
       throw new FitRpcException(
         'Failed to create  settings',
         HttpStatus.BAD_GATEWAY

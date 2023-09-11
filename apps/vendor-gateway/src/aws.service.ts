@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { PutObjectCommand, S3 } from '@aws-sdk/client-s3'
 import { fromEnv } from '@aws-sdk/credential-providers'
 import { RandomGen } from '@app/common'
 @Injectable()
 export class AwsService {
+  private readonly logger = new Logger(AwsService.name)
   public AWS_S3_BUCKET
   public s3: S3
   constructor () {
@@ -30,8 +31,11 @@ export class AwsService {
     try {
       await this.s3.send(command)
       return url
-    } catch (e) {
-      console.log(e)
+    } catch (error) {
+      this.logger.error({
+        message: 'failed to save image to s3',
+        error
+      })
     }
   }
 }

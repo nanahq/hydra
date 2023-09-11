@@ -1,4 +1,5 @@
 import {
+  IsEmail,
   IsNotEmpty,
   IsPhoneNumber,
   IsString,
@@ -16,4 +17,10 @@ export class registerUserRequest {
   @MinLength(8)
   @MaxLength(20)
     password: string
+
+
+ @IsString()
+ @IsNotEmpty()
+  @IsEmail()
+  email: string
 }

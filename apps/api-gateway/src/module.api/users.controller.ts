@@ -41,6 +41,7 @@ export class UsersController {
     return await lastValueFrom<ResponseWithStatus>(
       this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
         catchError((error: IRpcException) => {
+          console.log(error)
           throw new HttpException(error.message, error.status)
         })
       )

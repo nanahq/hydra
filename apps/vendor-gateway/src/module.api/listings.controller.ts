@@ -72,7 +72,6 @@ export class ListingsController {
         )
     )
   }
-
   // Listings Menu
   @UseGuards(JwtAuthGuard)
   @Post('menu')
@@ -87,6 +86,7 @@ export class ListingsController {
       @UploadedFile() file: Express.Multer.File
   ): Promise<any> {
     const photo = await this.awsService.upload(file)
+    this.logger.log(`Successfully save photo ${photo as string}`)
     const payload: ServicePayload<any> = {
       userId: _id as any,
       data: {

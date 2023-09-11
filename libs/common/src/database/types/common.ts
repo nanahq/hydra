@@ -87,6 +87,8 @@ export interface VendorI {
   }
   createdAt?: string
   updatedAt?: string
+
+  expoNotificationToken: string
 }
 
 export interface VendorSettingsI {
