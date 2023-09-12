@@ -9,7 +9,7 @@ import {
   Vendor,
   VendorSchema,
   ListingMenuSchema,
-  ListingMenu, Order, OrderSchema
+  ListingMenu, Order, OrderSchema, ExportPushNotificationClient
 } from '@app/common'
 import { ReviewsServiceController } from './reviews-service.controller'
 import { ReviewsService } from './reviews-service.service'
@@ -35,6 +35,6 @@ import { ReviewRepository } from './review.repositoty'
     RmqModule
   ],
   controllers: [ReviewsServiceController],
-  providers: [ReviewsService, ReviewRepository]
+  providers: [ReviewsService, ReviewRepository, ExportPushNotificationClient]
 })
 export class ReviewsServiceModule {}
