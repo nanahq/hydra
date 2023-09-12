@@ -1,18 +1,23 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import {
   FitRpcException,
   ResponseWithStatus,
   Review,
   VendorReviewOverview,
-  ReviewDto
+  ReviewDto, ExportPushNotificationClient, QUEUE_SERVICE, QUEUE_MESSAGE, VendorI, PushMessage
 } from '@app/common'
 import { ReviewRepository } from './review.repositoty'
+import { ClientProxy } from '@nestjs/microservices'
+import { lastValueFrom } from 'rxjs'
 
 @Injectable()
 export class ReviewsService {
-  protected readonly logger = new Logger()
+  protected readonly logger = new Logger(ReviewsService.name)
   constructor (
-    private readonly reviewRepository: ReviewRepository
+    private readonly reviewRepository: ReviewRepository,
+    private readonly expoClient: ExportPushNotificationClient,
+    @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
+    private readonly vendorClient: ClientProxy
   ) {}
 
   async getAllReviews (): Promise<Review[]> {
@@ -29,7 +34,7 @@ export class ReviewsService {
 
   async getVendorReviews (vendorId: string): Promise<Review[]> {
     try {
-      return await this.reviewRepository.find({ vendorId })
+      return await this.reviewRepository.findAndPopulate({ vendorId }, ['listingId', 'orderId'])
     } catch (error) {
       throw new FitRpcException(
         'Can not process your request. Something went wrong',
@@ -74,8 +79,16 @@ export class ReviewsService {
 
   async create (data: ReviewDto): Promise<ResponseWithStatus> {
     try {
-      // TODO(@siradji) attach review to listing and user.
+      const vendor = await lastValueFrom<VendorI>(this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR, { data: data.vendorId }))
+
       await this.reviewRepository.create(data)
+
+      const pushMessage: PushMessage = {
+        title: 'You got a new review',
+        body: 'A customer just reviewed your listing',
+        priority: 'normal'
+      }
+      await this.expoClient.sendSingleNotification(vendor.expoNotificationToken, pushMessage)
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
