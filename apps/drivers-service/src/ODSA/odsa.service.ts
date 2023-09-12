@@ -322,7 +322,7 @@ export class ODSA {
     const availableOnDemandDrivers = (await this.driversRepository.find({
       type: 'DELIVER_ON_DEMAND',
       status: 'ONLINE',
-      isValidated: true,
+      // isValidated: true,
       isDeleted: false,
       available: true,
       acc_status: VendorApprovalStatus.APPROVED
