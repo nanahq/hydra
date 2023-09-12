@@ -9,7 +9,7 @@ import {
   Vendor,
   VendorSchema,
   ListingMenuSchema,
-  ListingMenu, Order, OrderSchema, ExportPushNotificationClient
+  ListingMenu, Order, OrderSchema, ExportPushNotificationClient, QUEUE_SERVICE
 } from '@app/common'
 import { ReviewsServiceController } from './reviews-service.controller'
 import { ReviewsService } from './reviews-service.service'
@@ -31,6 +31,7 @@ import { ReviewRepository } from './review.repositoty'
     MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
     MongooseModule.forFeature([{ name: ListingMenu.name, schema: ListingMenuSchema }]),
     MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }]),
+    RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
     DatabaseModule,
     RmqModule
   ],
