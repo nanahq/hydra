@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: listings
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
         - name: listings

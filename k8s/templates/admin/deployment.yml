@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: admin
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
         - name: admin

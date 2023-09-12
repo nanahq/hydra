@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: drivers-service
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
         - name: drivers-service

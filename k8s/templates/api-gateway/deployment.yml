@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: api-gateway
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
         - name: api-gateway

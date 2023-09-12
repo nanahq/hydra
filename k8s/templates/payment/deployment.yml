@@ -11,12 +11,15 @@ spec:
     metadata:
       labels:
         app: payment
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
         - name: payment
           imagePullPolicy: Always
           image: 814105780686.dkr.ecr.af-south-1.amazonaws.com/payment-service:latest
           env:
+            - name: NODE_ENV
+              value: 'development'
             - name: port
               valueFrom:
                 secretKeyRef:

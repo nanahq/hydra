@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: vendor-gateway
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
         - name: vendor-gateway
@@ -194,3 +195,15 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: FLW_TEST_ENCRYPTION_KEY
+
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: AWS_ACCESS_KEY_ID
+
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: AWS_SECRET_ACCESS_KEY
