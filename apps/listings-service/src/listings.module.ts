@@ -55,7 +55,7 @@ import {
     ListingMenuRepository,
     ListingCategoryRepository,
     ListingOptionGroupRepository,
-    ScheduledListingRepository
+      ScheduledListingRepository
   ]
 })
 export class ListingsModule {}

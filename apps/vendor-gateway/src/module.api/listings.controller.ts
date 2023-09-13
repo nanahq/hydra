@@ -38,7 +38,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
 import { AwsService } from '../aws.service'
-import { ScheduledListingDto } from '../../../../packages/sticky'
 
 @Controller('listing')
 export class ListingsController {
