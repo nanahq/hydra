@@ -16,14 +16,14 @@ import {
   ListingMenu,
   ListingMenuSchema,
   ListingOptionGroup,
-  ListingOptionGroupSchema
+  ListingOptionGroupSchema, ScheduledListing, ScheduledListingSchema
 } from '@app/common'
 
 import { MongooseModule } from '@nestjs/mongoose'
 import {
   ListingMenuRepository,
   ListingCategoryRepository,
-  ListingOptionGroupRepository
+  ListingOptionGroupRepository, ScheduledListingRepository
 } from './listings.repository'
 
 @Module({
@@ -41,11 +41,11 @@ import {
     MongooseModule.forFeature([
       { name: ListingCategory.name, schema: ListingCategorySchema },
       { name: ListingMenu.name, schema: ListingMenuSchema },
-      { name: ListingOptionGroup.name, schema: ListingOptionGroupSchema }
+      { name: ListingOptionGroup.name, schema: ListingOptionGroupSchema },
+      { name: ScheduledListing.name, schema: ScheduledListingSchema }
     ]),
     MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
     MongooseModule.forFeature([{ name: Review.name, schema: ReviewSchema }]),
-
     DatabaseModule,
     RmqModule
   ],
@@ -54,7 +54,8 @@ import {
     ListingsService,
     ListingMenuRepository,
     ListingCategoryRepository,
-    ListingOptionGroupRepository
+    ListingOptionGroupRepository,
+    ScheduledListingRepository
   ]
 })
 export class ListingsModule {}

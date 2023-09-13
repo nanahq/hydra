@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 
 import {
   FitRpcException,
@@ -6,9 +6,15 @@ import {
   ListingMenu,
   ListingOptionGroup,
   ResponseWithStatus,
+  ScheduledListing,
   ServicePayload
 } from '@app/common'
-import { ListingCategoryRepository, ListingMenuRepository, ListingOptionGroupRepository } from './listings.repository'
+import {
+  ListingCategoryRepository,
+  ListingMenuRepository,
+  ListingOptionGroupRepository,
+  ScheduledListingRepository
+} from './listings.repository'
 import {
   CreateListingCategoryDto,
   CreateOptionGroupDto,
@@ -16,13 +22,18 @@ import {
   UpdateOptionGroupDto
 } from '@app/common/database/dto/listing.dto'
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
+import { ScheduledListingDto } from '../../../packages/sticky'
+import { Cron, CronExpression } from '@nestjs/schedule'
+import moment from 'moment'
 
 @Injectable()
 export class ListingsService {
+  protected readonly logger = new Logger(ListingsService.name)
   constructor (
     private readonly listingMenuRepository: ListingMenuRepository,
     private readonly listingOptionGroupRepository: ListingOptionGroupRepository,
-    private readonly listingCategoryRepository: ListingCategoryRepository
+    private readonly listingCategoryRepository: ListingCategoryRepository,
+    private readonly scheduledListingRepository: ScheduledListingRepository
   ) {
   }
 
@@ -404,7 +415,7 @@ export class ListingsService {
         status: ListingApprovalStatus.APPROVED
       }, ['optionGroups', 'vendor'])
     } catch (error) {
-      throw new FitRpcException('Can not fetch menu at thi time.', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException('Can not fetch menu at this time.', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
@@ -432,7 +443,48 @@ export class ListingsService {
     if (category === null) {
       throw new FitRpcException('Can not find category with that ID', HttpStatus.NOT_FOUND)
     }
-
     return category
+  }
+
+  async createScheduledListing (data: ScheduledListingDto): Promise<ResponseWithStatus> {
+    try {
+      await this.scheduledListingRepository.create(data)
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error({
+        error
+      })
+      throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getAllScheduledListing (vendor: string): Promise<ScheduledListing[] > {
+    try {
+      return await this.scheduledListingRepository.findAndPopulate({ vendor }, ['listing', 'vendor'])
+    } catch (error) {
+      this.logger.error({
+        error
+      })
+      throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  @Cron(CronExpression.EVERY_2_HOURS, {
+    timeZone: 'Africa/Lagos'
+  })
+  private async deletePastScheduledListings (): Promise<void> {
+    try {
+      const listings = await this.scheduledListingRepository.find({}) as ScheduledListing[]
+      if (listings.length > 0) {
+        for (const listing of listings) {
+          const listingDate = listing.availableDate
+          if (moment(new Date()).isAfter(new Date(listingDate))) {
+            await this.scheduledListingRepository.delete(listing._id)
+          }
+        }
+      }
+    } catch (error) {
+      this.logger.error({ error })
+    }
   }
 }

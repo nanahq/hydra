@@ -2,7 +2,7 @@ import {
   IsArray,
   IsBoolean,
   IsEnum,
-  IsNotEmpty,
+  IsNotEmpty, IsNumber,
   IsOptional,
   IsString
 } from 'class-validator'
@@ -34,6 +34,9 @@ export class CreateListingCategoryDto {
   @IsBoolean()
   @IsNotEmpty()
     isLive: boolean
+
+  @IsNotEmpty()
+    type: 'string'
 
   @IsOptional()
   public menu?: string
@@ -116,6 +119,21 @@ export class UpdateOptionGroupDto {
 
   @IsNotEmpty()
     optionId?: string
+}
+
+export class CreateScheduledListingDto {
+  @IsNotEmpty()
+    listing: string
+
+  @IsNotEmpty()
+    vendor: string
+
+  @IsNotEmpty()
+  @IsNumber()
+    quantity: number
+
+  @IsNotEmpty()
+    availableDate: number
 }
 
 // Interfaces

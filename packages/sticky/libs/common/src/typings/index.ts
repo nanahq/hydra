@@ -1,4 +1,4 @@
-import { ListingCategoryI, OrderI, ReviewI, VendorI } from '../schemas'
+import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI } from '../schemas'
 
 export interface TokenPayload {
   userId: string
@@ -403,7 +403,7 @@ export interface CreateListingCategoryDto {
   tags: string[]
 
   isLive: boolean
-
+  type: 'PRE_ORDER' | 'ON_DEMAND'
   menu?: string
 }
 
@@ -522,4 +522,12 @@ export interface TravelDistanceResult {
   distance: number
 
   travelTime: string
+}
+
+export interface ScheduledListingDto {
+  vendor: string
+  listing: string
+
+  quantity: number
+  availableDate: number
 }

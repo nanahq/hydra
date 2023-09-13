@@ -17,7 +17,7 @@ export interface ListingCategoryI {
   listingsMenu: ListingMenuI[]
   createdAt: string
   updatedAt: string
-
+  type: 'PRE_ORDER' | 'ON_DEMAND'
   isDeleted: boolean
 }
 
@@ -312,4 +312,20 @@ export interface VendorPayoutI {
   createdAt: string
 
   refId: number
+}
+
+export interface ScheduledListingI {
+  _id: string
+
+  vendor: VendorI
+
+  listing: ListingMenuI
+
+  quantity: number
+  availableDate: number
+
+  updatedAt: string
+
+  createdAt: string
+
 }

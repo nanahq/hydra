@@ -23,7 +23,7 @@ import {
   CreateOptionGroupDto,
   CurrentUser,
   IRpcException,
-  ListingMenu,
+  ListingMenu, MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
@@ -37,6 +37,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
 import { AwsService } from '../aws.service'
+import { ScheduledListingDto } from '../../../../packages/sticky'
 
 @Controller('listing')
 export class ListingsController {
@@ -322,6 +323,47 @@ export class ListingsController {
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.UPDATE_LISTING_OP, { ...payload })
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('scheduled')
+  async createScheduledListing (
+    @Body() data: Omit<ScheduledListingDto, 'vendor'>,
+      @CurrentUser() { _id }: Vendor
+  ): Promise<ResponseWithStatus> {
+    const payload: MultiPurposeServicePayload<ScheduledListingDto> = {
+      id: _id as any,
+      data: { ...data, vendor: _id as any }
+    }
+    return await lastValueFrom<ResponseWithStatus>(
+      this.listingClient
+        .send(QUEUE_MESSAGE.CREATE_SCHEDULED_LISTING, { ...payload })
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('scheduled')
+  async getScheduledListings (
+    @CurrentUser() { _id }: Vendor
+  ): Promise<ResponseWithStatus> {
+    const payload: MultiPurposeServicePayload<null> = {
+      id: _id as any,
+      data: null
+    }
+    return await lastValueFrom<ResponseWithStatus>(
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS, { ...payload })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
