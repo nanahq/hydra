@@ -19,6 +19,9 @@ export class ListingCategory extends AbstractDocument {
   @Prop({ type: [Types.ObjectId], ref: 'ListingMenu' })
     listingsMenu: any[]
 
+  @Prop({ type: String, default: 'ON_DEMAND' })
+    type: 'PRE_ORDER' | 'ON_DEMAND'
+
   @Prop({ type: Boolean, default: false })
     isDeleted: boolean
 

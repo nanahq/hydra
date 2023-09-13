@@ -17,7 +17,7 @@ export interface ListingCategoryI {
   listingsMenu: ListingMenuI[]
   createdAt: string
   updatedAt: string
-
+  type: 'PRE_ORDER' | 'ON_DEMAND'
   isDeleted: boolean
 }
 

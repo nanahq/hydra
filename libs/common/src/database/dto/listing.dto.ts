@@ -35,6 +35,9 @@ export class CreateListingCategoryDto {
   @IsNotEmpty()
     isLive: boolean
 
+  @IsNotEmpty()
+    type: 'string'
+
   @IsOptional()
   public menu?: string
 }

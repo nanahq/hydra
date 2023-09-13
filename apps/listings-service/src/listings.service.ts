@@ -415,7 +415,7 @@ export class ListingsService {
         status: ListingApprovalStatus.APPROVED
       }, ['optionGroups', 'vendor'])
     } catch (error) {
-      throw new FitRpcException('Can not fetch menu at thi time.', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException('Can not fetch menu at this time.', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
