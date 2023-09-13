@@ -36,7 +36,7 @@ export class CreateListingCategoryDto {
     isLive: boolean
 
   @IsNotEmpty()
-    type: 'string'
+    type: 'PRE_ORDER' | 'ON_DEMAND'
 
   @IsOptional()
   public menu?: string
@@ -124,9 +124,6 @@ export class UpdateOptionGroupDto {
 export class CreateScheduledListingDto {
   @IsNotEmpty()
     listing: string
-
-  @IsNotEmpty()
-    vendor: string
 
   @IsNotEmpty()
   @IsNumber()

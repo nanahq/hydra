@@ -30,14 +30,14 @@ import {
   ServicePayload,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto,
-  Vendor
+  Vendor,
+  CreateScheduledListingDto
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
 import { AwsService } from '../aws.service'
-import { ScheduledListingDto } from '../../../../packages/sticky'
 
 @Controller('listing')
 export class ListingsController {
@@ -334,10 +334,10 @@ export class ListingsController {
   @UseGuards(JwtAuthGuard)
   @Post('scheduled')
   async createScheduledListing (
-    @Body() data: Omit<ScheduledListingDto, 'vendor'>,
+    @Body() data: Omit<CreateScheduledListingDto, 'vendor'>,
       @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
-    const payload: MultiPurposeServicePayload<ScheduledListingDto> = {
+    const payload: MultiPurposeServicePayload<any> = {
       id: _id as any,
       data: { ...data, vendor: _id as any }
     }
