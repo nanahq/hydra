@@ -3,7 +3,8 @@ import {
   AbstractRepository,
   ListingOptionGroup,
   ListingCategory,
-  ListingMenu
+  ListingMenu,
+  ScheduledListing
 } from '@app/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
@@ -38,6 +39,18 @@ export class ListingCategoryRepository extends AbstractRepository<ListingCategor
   constructor (
   @InjectModel(ListingCategory.name)
     listingCategoryModel: Model<ListingCategory>
+  ) {
+    super(listingCategoryModel)
+  }
+}
+
+@Injectable()
+export class ScheduledListingRepository extends AbstractRepository<ScheduledListing> {
+  protected readonly logger = new Logger(ScheduledListing.name)
+
+  constructor (
+  @InjectModel(ScheduledListing.name)
+    listingCategoryModel: Model<ScheduledListing>
   ) {
     super(listingCategoryModel)
   }

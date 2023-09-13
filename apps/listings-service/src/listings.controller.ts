@@ -13,12 +13,13 @@ import {
   MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   ResponseWithStatus,
-  RmqService,
+  RmqService, ScheduledListing,
   ServicePayload,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
 } from '@app/common'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
+import { ScheduledListingDto } from '../../../packages/sticky'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -330,6 +331,34 @@ export class ListingsController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.listingService.disapprove(id, reason)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.CREATE_SCHEDULED_LISTING)
+  async createScheduledListing (
+    @Payload() { data }: MultiPurposeServicePayload<ScheduledListingDto>,
+      @Ctx() context
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.listingService.createScheduledListing(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS)
+  async getScheduledListings (
+    @Payload() { id }: MultiPurposeServicePayload<null>,
+      @Ctx() context
+  ): Promise<ScheduledListing[]> {
+    try {
+      return await this.listingService.getAllScheduledListing(id)
     } catch (error) {
       throw new RpcException(error)
     } finally {

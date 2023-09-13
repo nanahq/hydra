@@ -313,3 +313,19 @@ export interface VendorPayoutI {
 
   refId: number
 }
+
+export interface ScheduledListingI {
+  _id: string
+
+  vendor: VendorI
+
+  listing: ListingMenuI
+
+  quantity: number
+  availableDate: number
+
+  updatedAt: string
+
+  createdAt: string
+
+}
