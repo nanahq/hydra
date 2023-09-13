@@ -125,7 +125,6 @@ export class CreateScheduledListingDto {
   @IsNotEmpty()
     listing: string
 
-  @IsNotEmpty()
   @IsNumber()
     quantity: number
 

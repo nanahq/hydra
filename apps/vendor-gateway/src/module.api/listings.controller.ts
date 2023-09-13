@@ -38,6 +38,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { FileInterceptor } from '@nestjs/platform-express'
 import * as multer from 'multer'
 import { AwsService } from '../aws.service'
+import { ScheduledListingDto } from '../../../../packages/sticky'
 
 @Controller('listing')
 export class ListingsController {
@@ -338,6 +339,7 @@ export class ListingsController {
       @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
     const payload: MultiPurposeServicePayload<any> = {
+
       id: _id as any,
       data: { ...data, vendor: _id as any }
     }
