@@ -36,7 +36,8 @@ export function ListingCategoryStub (): ListingCategory {
     tags: ['african', 'lunch'],
     isLive: true,
     listingsMenu: [],
-    isDeleted: false
+    isDeleted: false,
+    type: 'PRE_ORDER'
   }
 }
 

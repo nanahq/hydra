@@ -30,7 +30,8 @@ import {
   ServicePayload,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto,
-  Vendor
+  Vendor,
+  CreateScheduledListingDto
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
@@ -334,10 +335,11 @@ export class ListingsController {
   @UseGuards(JwtAuthGuard)
   @Post('scheduled')
   async createScheduledListing (
-    @Body() data: Omit<ScheduledListingDto, 'vendor'>,
+    @Body() data: Omit<CreateScheduledListingDto, 'vendor'>,
       @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
-    const payload: MultiPurposeServicePayload<ScheduledListingDto> = {
+    const payload: MultiPurposeServicePayload<any> = {
+
       id: _id as any,
       data: { ...data, vendor: _id as any }
     }
