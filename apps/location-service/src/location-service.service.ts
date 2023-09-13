@@ -31,6 +31,8 @@ export class LocationService {
       }
     }
 
+    this.logger.log({closestCoordinate})
+
     return closestCoordinate
   }
 

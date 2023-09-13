@@ -195,3 +195,10 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: FLW_TEST_ENCRYPTION_KEY
+
+            - name: MAPBOX_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: MAPBOX_TOKEN
+

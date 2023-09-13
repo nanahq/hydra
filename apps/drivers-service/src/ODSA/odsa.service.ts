@@ -160,6 +160,8 @@ export class ODSA {
         collectionLocation
       )
 
+      this.logger.log({ driverToBeAssigned })
+
       if (driverToBeAssigned === null) {
         if (existingDeliver === undefined) {
           await this.odsaRepository.create({
