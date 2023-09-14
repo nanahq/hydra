@@ -5,7 +5,7 @@ import { RandomGen } from '@app/common'
 @Injectable()
 export class AwsService {
   private readonly logger = new Logger(AwsService.name)
-  public AWS_S3_BUCKET
+  protected readonly AWS_S3_BUCKET
   public s3: S3
   constructor () {
     this.AWS_S3_BUCKET = 'nana-ng'
