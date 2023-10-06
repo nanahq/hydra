@@ -8,6 +8,7 @@ import {
   ResponseWithStatus,
   ScheduledListing,
   ServicePayload
+  , ScheduledListingDto
 } from '@app/common'
 import {
   ListingCategoryRepository,
@@ -22,7 +23,6 @@ import {
   UpdateOptionGroupDto
 } from '@app/common/database/dto/listing.dto'
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
-import { ScheduledListingDto } from '../../../packages/sticky'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import moment from 'moment'
 

@@ -64,3 +64,10 @@ export interface TravelDistanceResult {
   duration?: number // in minutes
   eta?: string
 }
+export interface ScheduledListingDto {
+  vendor: string
+  listing: string
+
+  quantity: number
+  availableDate: number
+}

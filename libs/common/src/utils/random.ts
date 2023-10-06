@@ -17,5 +17,5 @@ export const RandomGen = {
 }
 
 export function booleanParser (booleanString: string): boolean {
-  return booleanParser.length <= 4
+  return booleanString.length === 4
 }

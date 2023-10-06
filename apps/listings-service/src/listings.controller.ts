@@ -17,9 +17,9 @@ import {
   ServicePayload,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
+  , ScheduledListingDto
 } from '@app/common'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
-import { ScheduledListingDto } from '../../../packages/sticky'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()

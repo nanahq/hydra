@@ -5,7 +5,7 @@ import { RandomGen } from '@app/common'
 @Injectable()
 export class AwsService {
   private readonly logger = new Logger(AwsService.name)
-  protected readonly AWS_S3_BUCKET
+  protected readonly AWS_S3_BUCKET: string
   public s3: S3
   constructor () {
     this.AWS_S3_BUCKET = 'nana-ng'
@@ -27,7 +27,7 @@ export class AwsService {
       ACL: 'public-read'
     })
 
-    const url = `https://nana-ng.s3.af-south-1.amazonaws.com/${Key}`
+    const url = `https://${this.AWS_S3_BUCKET}.s3.af-south-1.amazonaws.com/${Key}`
     try {
       await this.s3.send(command)
       return url
