@@ -21,6 +21,9 @@ export class ScheduledListing extends AbstractDocument {
 
   @Prop(SchemaTypes.Date)
     updatedAt: string
+
+  @Prop({type: SchemaTypes.Boolean, default: false })
+    soldOut: boolean
 }
 
 export const ScheduledListingSchema = SchemaFactory.createForClass(ScheduledListing)
