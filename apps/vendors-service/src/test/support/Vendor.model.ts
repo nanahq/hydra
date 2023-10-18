@@ -4,7 +4,7 @@ import { VendorStub } from '../stubs/vendor.stub'
 import { VendorSettingStub } from '../stubs/VendorSettings.stub'
 
 export class VendorModel extends MockModel<Vendor> {
-  protected entityStub = VendorStub() as Vendor
+  protected entityStub = VendorStub()
 }
 
 export class VendorSettingsModel extends MockModel<VendorSettings> {

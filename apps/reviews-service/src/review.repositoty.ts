@@ -1,16 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { AbstractRepository, Review } from '@app/common'
-import { InjectModel, InjectConnection } from '@nestjs/mongoose'
-import { Model, Connection } from 'mongoose'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
 
 @Injectable()
 export class ReviewRepository extends AbstractRepository<Review> {
   protected readonly logger = new Logger(ReviewRepository.name)
 
   constructor (
-  @InjectModel(Review.name) ReviewModel: Model<Review>,
-    @InjectConnection() connection: Connection
+  @InjectModel(Review.name) ReviewModel: Model<Review>
   ) {
-    super(ReviewModel, connection)
+    super(ReviewModel)
   }
 }

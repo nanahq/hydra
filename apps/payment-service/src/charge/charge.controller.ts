@@ -1,4 +1,5 @@
 import {
+  BankTransferAccountDetails,
   BankTransferRequest,
   ExceptionFilterRpc,
   QUEUE_MESSAGE,
@@ -28,8 +29,7 @@ export class PaymentController {
   async chargeWithBankTransfer (
     @Payload() payload: BankTransferRequest,
       @Ctx() context: RmqContext
-  ): Promise<any> {
-    console.log('payload', payload)
+  ): Promise<BankTransferAccountDetails> {
     try {
       return await this.paymentService.chargeWithBankTransfer(payload)
     } catch (error) {

@@ -11,7 +11,7 @@ import {
   RandomGen,
   ResponseWithStatus,
   SendPayoutEmail,
-  VendorPayout
+  VendorPayout, VendorPayoutServiceI
 } from '@app/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
@@ -19,7 +19,7 @@ import { catchError, lastValueFrom } from 'rxjs'
 import { FilterQuery } from 'mongoose'
 
 @Injectable()
-export class VendorPayoutService {
+export class VendorPayoutService implements VendorPayoutServiceI {
   private readonly logger = new Logger(VendorPayoutService.name)
   constructor (
     private readonly payoutRepository: VendorPayoutRepository,

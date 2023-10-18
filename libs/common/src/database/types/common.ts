@@ -142,7 +142,7 @@ export interface OrderI {
   vendor: VendorI
   totalOrderValue: number
   orderValuePayable: number
-  deliveryAddess: string
+  deliveryAddress: string
   primaryContact: string
   isThirdParty: boolean
   createdAt: string

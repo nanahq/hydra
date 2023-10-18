@@ -25,7 +25,7 @@ export const RmqServiceMock = {
 
 jest.mock('../vendors.service.ts')
 
-describe('vendorsController', () => {
+describe('Vendors Service - Controller', () => {
   let vendorsController: VendorsController
   let vendorsService: VendorsService
 
@@ -102,28 +102,6 @@ describe('vendorsController', () => {
       let loginData: LoginVendorRequest
       let context: RmqContext
 
-      beforeEach(async () => {
-        loginData = {
-          password: VendorStub().password as any,
-          businessEmail: VendorStub().businessEmail as any
-        }
-        response = await vendorsController.getVendorByEmail(loginData, context)
-      })
-      test('then it should call validateVendor', () => {
-        expect(vendorsService.validateVendor).toHaveBeenCalledWith(loginData)
-      })
-
-      test('then it should return a vendor', () => {
-        expect(response).toStrictEqual(VendorStub())
-      })
-    })
-  })
-
-  describe('getVendorByEmail', () => {
-    describe('when a vendor login', () => {
-      let response: Vendor
-      let loginData: LoginVendorRequest
-      let context: RmqContext
       beforeEach(async () => {
         loginData = {
           password: VendorStub().password as any,
@@ -234,9 +212,7 @@ describe('vendorsController', () => {
         response = await vendorsController.getSingleVendor(data, context)
       })
       test('then it should call getVendor', () => {
-        expect(vendorsService.getVendor).toHaveBeenCalledWith({
-          userId: data.data
-        })
+        expect(vendorsService.getVendor).toHaveBeenCalledWith(data.data)
       })
 
       test('then it should return a vendor', () => {
@@ -334,7 +310,7 @@ describe('vendorsController', () => {
 
       beforeEach(async () => {
         data = {
-          userId: VendorSettingStub().vendorId as any,
+          userId: VendorSettingStub().vendor as any,
           data: null
         }
         response = await vendorsController.getVendorSettings(data, context)
@@ -346,7 +322,7 @@ describe('vendorsController', () => {
       })
 
       test('then it should return a vendor settings', () => {
-        expect(response.vendorId).toStrictEqual(data.userId)
+        expect(response.vendor).toStrictEqual(data.userId)
       })
     })
   })
@@ -359,7 +335,7 @@ describe('vendorsController', () => {
 
       beforeEach(async () => {
         data = {
-          userId: VendorSettingStub().vendorId as any,
+          userId: VendorSettingStub().vendor as any,
           data: {
             payment: {
               bankAccountName: 'GOOD VENDOR',
@@ -390,7 +366,7 @@ describe('vendorsController', () => {
 
       beforeEach(async () => {
         data = {
-          userId: VendorSettingStub().vendorId as any,
+          userId: VendorSettingStub().vendor as any,
           data: 'https://mygoogle.com/logo.png'
         }
         await vendorsController.updateVendorLogo(data, context)

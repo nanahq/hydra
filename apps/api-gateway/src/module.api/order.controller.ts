@@ -11,7 +11,7 @@ import {
 import {
   CurrentUser,
   IRpcException,
-  Order,
+  Order, PlaceOrderDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
@@ -32,7 +32,7 @@ export class OrderController {
   @Post('create')
   @UseGuards(JwtAuthGuard)
   async createNewOrder (
-    @Body() data: any,
+    @Body() data: PlaceOrderDto,
       @CurrentUser() user: User
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<any> = {

@@ -29,7 +29,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     })
     return (
       await createdDocument.save(options as SaveOptions)
-    ).toJSON() as unknown as TDocument
+    )
   }
 
   async findOneAndPopulate (
@@ -44,17 +44,15 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   async findOne (filterQuery: FilterQuery<TDocument>): Promise<any> {
     return await this.model
       .findOne(filterQuery, {}, { lean: true })
-      .sort({ createdAt: 'desc' })
   }
 
   async findAndPopulate<T>(
     filterQuery: FilterQuery<TDocument>,
     populatePath: string | string[]
   ): Promise<T[]> {
-    return (await this.model
+    return await this.model
       .find(filterQuery)
-      .populate(populatePath as any)
-      .sort({ createdAt: 'desc' })) as any
+      .populate(populatePath as any) as any
   }
 
   async findOneAndUpdate (
@@ -101,7 +99,6 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
       resolve(
         this.model
           .find(filterQuery, {}, { lean: true })
-          .sort({ createdAt: 'desc' })
       )
     )
   }

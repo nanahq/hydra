@@ -29,8 +29,8 @@ export class ReviewsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_LISTING_REVIEWS)
   async getListingReviews (
-    @Ctx() context: RmqContext,
-      @Payload() { listingId }: ReviewToken
+    @Payload() { listingId }: ReviewToken,
+      @Ctx() context: RmqContext
   ): Promise<Review[]> {
     try {
       return await this.reviewService.getListingReviews(listingId)
@@ -43,8 +43,8 @@ export class ReviewsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_VENDOR_REVIEWS)
   async getVendorReviews (
-    @Ctx() context: RmqContext,
-      @Payload() { vendorId }: { vendorId: string }
+    @Payload() { vendorId }: { vendorId: string },
+      @Ctx() context: RmqContext
   ): Promise<Review[]> {
     try {
       return await this.reviewService.getVendorReviews(vendorId)
@@ -110,8 +110,8 @@ export class ReviewsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_LISTING_REVIEWS)
   async statGetListingReviews (
-    @Ctx() context: RmqContext,
-      @Payload() { listingId }: { listingId: string }
+    @Payload() { listingId }: { listingId: string },
+      @Ctx() context: RmqContext
   ): Promise<{ sum_listing_reviews: string }> {
     try {
       return await this.reviewService.statGetListingReviews(listingId)
@@ -127,7 +127,6 @@ export class ReviewsServiceController {
     @Payload() { vendorId }: { vendorId: string },
       @Ctx() context: RmqContext
   ): Promise<VendorReviewOverview> {
-    console.log('Hello world')
     try {
       return await this.reviewService.getVendorReviewOverview(vendorId)
     } catch (error) {

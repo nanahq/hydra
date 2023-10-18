@@ -4,14 +4,14 @@ import {
   ResponseWithStatus,
   Review,
   VendorReviewOverview,
-  ReviewDto, ExportPushNotificationClient, QUEUE_SERVICE, QUEUE_MESSAGE, VendorI, PushMessage
+  ReviewDto, ExportPushNotificationClient, QUEUE_SERVICE, QUEUE_MESSAGE, VendorI, PushMessage, ReviewsServiceI
 } from '@app/common'
 import { ReviewRepository } from './review.repositoty'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
 
 @Injectable()
-export class ReviewsService {
+export class ReviewsService implements ReviewsServiceI {
   protected readonly logger = new Logger(ReviewsService.name)
   constructor (
     private readonly reviewRepository: ReviewRepository,
