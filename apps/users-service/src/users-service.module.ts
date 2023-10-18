@@ -16,9 +16,9 @@ import { UsersServiceController } from './users-service.controller'
 import { UsersService } from './users-service.service'
 import { MongooseModule } from '@nestjs/mongoose'
 import { UserRepository } from './users.repository'
-import { AddressBookServiceController } from './address-book/address-book-service.controller'
-import { AddressBookRepository } from './address-book/address.book.repository'
-import { AddressBookService } from './address-book/address-book-service.service'
+import { AddressBookServiceController } from './address-book-service.controller'
+import { AddressBookRepository } from './address.book.repository'
+import { AddressBookService } from './address-book-service.service'
 
 @Module({
   imports: [
