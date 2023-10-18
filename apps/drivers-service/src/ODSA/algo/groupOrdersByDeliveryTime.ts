@@ -1,6 +1,12 @@
 import { Order, OrderGroup } from '@app/common'
 import * as moment from 'moment'
 
+/**
+ *  Groups order by delivery time
+ *  constraint: Groups order that [delivery time difference is less 45 minutes adn greater than 20 minutes]
+ * @param orders
+ * @param numberOfAvailableDrivers
+ */
 export function groupOrdersByDeliveryTime (
   orders: Order[],
   numberOfAvailableDrivers: number

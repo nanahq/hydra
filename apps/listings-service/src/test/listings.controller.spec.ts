@@ -142,7 +142,8 @@ describe('listingsController', () => {
           data: {
             name: 'Japanese Food',
             tags: ['african', 'lunch'],
-            isLive: true
+            isLive: true,
+            type: 'PRE_ORDER'
           }
         }
         response = await listingsController.createListingCategory(

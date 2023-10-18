@@ -12,10 +12,10 @@ import {
   AddressBook,
   AddressBookSchema
 } from '@app/common'
-import { UsersServiceController } from './user/users-service.controller'
-import { UsersService } from './user/users-service.service'
+import { UsersServiceController } from './users-service.controller'
+import { UsersService } from './users-service.service'
 import { MongooseModule } from '@nestjs/mongoose'
-import { UserRepository } from './user/users.repository'
+import { UserRepository } from './users.repository'
 import { AddressBookServiceController } from './address-book/address-book-service.controller'
 import { AddressBookRepository } from './address-book/address.book.repository'
 import { AddressBookService } from './address-book/address-book-service.service'

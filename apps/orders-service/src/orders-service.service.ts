@@ -5,7 +5,7 @@ import {
   FitRpcException,
   Order, OrderI,
   OrderStatus,
-  OrderTypes, PushMessage,
+  OrderTypes, PlaceOrderDto, PushMessage,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
@@ -39,7 +39,7 @@ export class OrdersServiceService {
   public async placeOrder ({
     data,
     userId
-  }: ServicePayload<Order>): Promise<ResponseWithStatus> {
+  }: ServicePayload<PlaceOrderDto>): Promise<ResponseWithStatus> {
     const createOrderPayload: Partial<Order> = {
       ...data,
       user: userId,

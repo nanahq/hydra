@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing'
-import { UsersService } from '../user/users-service.service'
-import { UsersServiceController } from '../user/users-service.controller'
+import { UsersService } from '../users-service.service'
+import { UsersServiceController } from '../users-service.controller'
 import {
   loginUserRequest,
   registerUserRequest,
@@ -19,7 +19,7 @@ export const RmqServiceMock = {
   ack: jest.fn()
 }
 
-jest.mock('../users-service.service.ts')
+jest.mock('../users-service.service')
 
 describe('usersServiceController', () => {
   let usersController: UsersServiceController
@@ -50,7 +50,8 @@ describe('usersServiceController', () => {
       beforeEach(async () => {
         payload = {
           password: '1234567',
-          phone: 'SURAJ@GMAIL.COM'
+          phone: '08065032636',
+          email: 'SURAJ@GMAIL.COM'
         }
 
         response = await usersController.registerNewUser(payload, context)
@@ -105,7 +106,7 @@ describe('usersServiceController', () => {
         expect(usersService.validateUser).toHaveBeenCalledWith(payload)
       })
 
-      test('then it should return a single menu', () => {
+      test('then it should get a user profile by phone', () => {
         expect(response).toStrictEqual(UserProfileStub())
       })
     })

@@ -8,7 +8,7 @@ import {
   RpcException
 } from '@nestjs/microservices'
 import {
-  Order,
+  Order, PlaceOrderDto,
   QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
@@ -27,7 +27,7 @@ export class OrdersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_ORDER)
   async placeOrder (
-    @Payload() data: ServicePayload<any>,
+    @Payload() data: ServicePayload<PlaceOrderDto>,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {

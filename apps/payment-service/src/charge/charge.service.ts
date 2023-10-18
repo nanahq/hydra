@@ -6,7 +6,7 @@ import {
   FitRpcException,
   OrderI,
   OrderStatus,
-  Payment,
+  Payment, PaymentServiceI,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
@@ -21,7 +21,7 @@ import { PaymentRepository } from './charge.repository'
 import { FlutterwaveService } from '../providers/flutterwave'
 
 @Injectable()
-export class PaymentService {
+export class PaymentService implements PaymentServiceI {
   private readonly logger = new Logger(PaymentService.name)
 
   constructor (

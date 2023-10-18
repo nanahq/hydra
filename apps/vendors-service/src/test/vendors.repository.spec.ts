@@ -10,7 +10,7 @@ import { VendorModel, VendorSettingsModel } from './support/Vendor.model'
 import { VendorStub } from './stubs/vendor.stub'
 import { VendorSettingStub } from './stubs/VendorSettings.stub'
 
-describe('VendorsRepository', () => {
+describe('Vendors Service - Repository', () => {
   let vendorRepository: VendorRepository
   describe('find operations', () => {
     let vendorModel: VendorModel
@@ -147,7 +147,7 @@ describe('VendorsSettingsRepository', () => {
       )
 
       userFilterQuery = {
-        vendorId: VendorSettingStub().vendorId
+        vendorId: VendorSettingStub()._id
       }
 
       jest.clearAllMocks()
@@ -203,7 +203,6 @@ describe('VendorsSettingsRepository', () => {
       })
     })
   })
-
   // describe('create operations', () => {
   //     let vendorSettingsModel: VendorSettingsModel
   //     let vendorSettingsRepository: VendorSettingsRepository

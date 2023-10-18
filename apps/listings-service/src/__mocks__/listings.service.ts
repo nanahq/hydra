@@ -19,5 +19,6 @@ export const ListingsService = jest.fn().mockReturnValue({
   getAllListingOptionsVendor: jest
     .fn()
     .mockResolvedValue([ListingOptionStub()]),
-  updateListingMenu: jest.fn().mockResolvedValue(resStub())
+  updateListingMenu: jest.fn().mockResolvedValue(resStub()),
+  getAllVendorListingMenu: jest.fn().mockResolvedValue([ListingMenuStub()])
 })
