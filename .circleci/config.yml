@@ -49,8 +49,7 @@ workflows:
       - build
       - test
       - lint
-
-  upload-to-codecov:
-    jobs:
-      - checkout
-      - codecov/upload
+#  upload-to-codecov:
+#    jobs:
+#      - checkout
+#      - codecov/upload
