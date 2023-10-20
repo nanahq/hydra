@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { RmqOptions, RmqContext, Transport } from '@nestjs/microservices'
+import * as process from 'process'
 
 @Injectable()
 export class RmqService {
@@ -10,7 +11,7 @@ export class RmqService {
     return {
       transport: Transport.RMQ,
       options: {
-        urls: [this.configService.get<string>('RMQ_URI') as string],
+        urls: [process.env.NODE_ENV === 'test' ? this.configService.get<string>('TEST_RMQ_URI') as string : this.configService.get<string>('RMQ_URI') as string],
         queue: this.configService.get<string>(`RMQ_${queue}_QUEUE`),
         noAck,
         persistent: true

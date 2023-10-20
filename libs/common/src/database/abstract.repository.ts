@@ -87,6 +87,14 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     )
   }
 
+  async deleteMany (): Promise<HydratedDocument<TDocument> | any> {
+    return await new Promise((resolve) =>
+      resolve(
+        this.model.deleteMany()
+      )
+    )
+  }
+
   async insertMany (
     documents: Array<Omit<TDocument, '_id'>> | Array<Partial<TDocument>>,
     options?: SaveOptions

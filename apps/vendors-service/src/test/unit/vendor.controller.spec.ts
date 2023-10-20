@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing'
-import { VendorsService } from '../vendors.service'
-import { VendorsController } from '../vendors.controller'
+import { VendorsService } from '../../vendors.service'
+import { VendorsController } from '../../vendors.controller'
 import {
   LoginVendorRequest,
   ResponseWithStatus,
@@ -16,8 +16,8 @@ import {
   UpdateVendorSettingsDto
 } from '@app/common/database/dto/vendor.dto'
 import { RmqContext } from '@nestjs/microservices'
-import { VendorStub } from './stubs/vendor.stub'
-import { VendorSettingStub } from './stubs/VendorSettings.stub'
+import { VendorStub } from '../stubs/vendor.stub'
+import { VendorSettingStub } from '../stubs/VendorSettings.stub'
 
 export const RmqServiceMock = {
   ack: jest.fn()

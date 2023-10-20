@@ -76,7 +76,7 @@ export class UpdateVendorProfileDto {
 export class UpdateVendorSettingsDto {
   @IsObject()
   @IsOptional()
-    operation?: VendorOperationSetting
+    operations?: VendorOperationSetting
 
   @IsObject()
   @IsOptional()

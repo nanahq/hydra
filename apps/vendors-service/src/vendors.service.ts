@@ -31,7 +31,7 @@ export class VendorsService {
     data.phone = internationalisePhoneNumber(data.phone)
     // Validation gate to check if vendor with the request phone is already exist
     const existingUser: Vendor = await this.vendorRepository.findOne({
-      $or: [{ phone: data.phone }, { businessEmail: data.businessEmail }]
+      $or: [{ phone: data.phone }, { email: data.email }]
     })
 
     if (existingUser !== null) {
@@ -87,7 +87,7 @@ export class VendorsService {
     if (vendor === null) {
       throw new FitRpcException(
         'Incorrect email address. Please recheck and try again',
-        HttpStatus.CONFLICT
+        HttpStatus.UNAUTHORIZED
       )
     }
     const isCorrectPassword: boolean = await bcrypt.compare(
@@ -127,7 +127,7 @@ export class VendorsService {
   async approve (id: string): Promise<ResponseWithStatus> {
     const updateRequest = await this.vendorRepository.findOneAndUpdate(
       { _id: id },
-      { acc_status: VendorApprovalStatus.APPROVED }
+      { acc_status: VendorApprovalStatus.APPROVED, rejection_reason: '' }
     )
 
     if (updateRequest === null) {
@@ -168,7 +168,7 @@ export class VendorsService {
 
     if (_vendor === null) {
       throw new FitRpcException(
-        'Provided vendor id is not found',
+        `Provided vendor id is not found: ${_id}`,
         HttpStatus.UNAUTHORIZED
       )
     }
@@ -224,7 +224,7 @@ export class VendorsService {
   }
 
   async getAllVendorsUser (): Promise<VendorUserI[]> {
-    const _vendors = await this.vendorRepository.find({ isDeleted: false, status: VendorApprovalStatus.APPROVED })
+    const _vendors = await this.vendorRepository.find({ isDeleted: false, acc_status: VendorApprovalStatus.APPROVED })
 
     if (_vendors === null) {
       throw new FitRpcException(
@@ -328,7 +328,7 @@ export class VendorsService {
   async getNearestVendors ({
     type,
     coordinates
-  }: LocationCoordinates, userId: string): Promise<Vendor[]> {
+  }: LocationCoordinates): Promise<Vendor[]> {
     try {
       const vendors = this.vendorRepository.find({
         location: {
@@ -339,7 +339,7 @@ export class VendorsService {
                 coordinates
               },
               $minDistance: 200,
-              $maxDistance: 5000
+              $maxDistance: 3000
             }
         }
       })

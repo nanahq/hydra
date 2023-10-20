@@ -40,7 +40,7 @@ export class Vendor extends AbstractDocument {
   @Prop(SchemaTypes.Date)
     updatedAt: string
 
-  @Prop(String)
+  @Prop({ type: String, default: 'ONLINE' })
     status: 'ONLINE' | 'OFFLINE'
 
   @Prop({ type: String, default: VendorApprovalStatus.PENDING })
@@ -94,3 +94,4 @@ export class Vendor extends AbstractDocument {
 }
 
 export const VendorSchema = SchemaFactory.createForClass(Vendor)
+VendorSchema.index({ location: '2dsphere' })
