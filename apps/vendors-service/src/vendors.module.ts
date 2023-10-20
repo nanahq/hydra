@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
-import * as Joi from 'joi'
-
 import {
   RmqModule,
   Vendor,
@@ -25,12 +23,6 @@ import {
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: Joi.object({
-        RMQ_VENDORS_QUEUE: Joi.string(),
-        RMQ_VENDORS_API_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string(),
-        MONGODB_URI: Joi.string().required()
-      }),
       envFilePath: './apps/vendors-service/.env'
     }),
     MongooseModule.forFeature([
