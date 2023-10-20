@@ -1,12 +1,11 @@
 version: 2.1
-executors:
-  node-executor:
-    docker:
-      - image: circleci/node:18
-
+orbs:
+  node: circleci/node@5.0.2
+  docker: circleci/docker@2.4.0
+  codecov: codecov/codecov@3.3.0
 jobs:
   build:
-    executor: node-executor
+    executor: node/default
     steps:
       - checkout
       - run:
@@ -15,9 +14,15 @@ jobs:
       - run:
           name: Build
           command: yarn all:build
+  pull:
+    executor: docker/machine
+    steps:
+      - checkout
+      - docker/pull:
+          images: mongo:6,rabbitmq:latest
 
   test:
-    executor: node-executor
+    executor: node/default
     steps:
       - checkout
       - run:
@@ -27,18 +32,8 @@ jobs:
           name: Test
           command: yarn ci:test
 
-  codecov:
-    executor: node-executor
-    steps:
-      - checkout
-      - run:
-          name: Upload to Codecov
-          command: |
-            curl -s https://codecov.io/bash | bash -s
-            -t $CODECOV_TOKEN
-
   lint:
-    executor: node-executor
+    executor: node/default
     steps:
       - checkout
       - run:
@@ -54,5 +49,9 @@ workflows:
     jobs:
       - build
       - test
-      - codecov
       - lint
+
+  upload-to-codecov:
+    jobs:
+      - checkout
+      - codecov/upload
