@@ -52,15 +52,25 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Test
+      - name: Pull RabbitMQ Docker Image  # New step to pull RabbitMQ image
+        run: docker pull rabbitmq:latest
+
+      - name: Pull RabbitMQ Docker Image  # New step to pull RabbitMQ image
+        run: docker pull mongo:6
+#      - name: Start RabbitMQ Container  # New step to run RabbitMQ container
+#        run: docker run -d --name rabbitmq-container rabbitmq:latest
+
+      - name: Test with RabbitMQ  # Updated test step
         run: yarn ci:test
         env:
           GH_INSTANCE_INDEX: ${{ matrix.instance }}
+          RABBITMQ_CONNECTION_STRING: amqp://guest:guest@localhost:5672  # Set RabbitMQ connection string
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
