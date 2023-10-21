@@ -4,15 +4,6 @@ orbs:
   docker: circleci/docker@2.4.0
   codecov: codecov/codecov@3.3.0
 jobs:
-  docker-start:
-    docker:
-      - image: rabbitmq:latest
-      - image: mongo:6
-    steps:
-      - run:
-          name: Start Docker Daemon
-          command: |
-             dockerd --experimental
   build:
     executor: node/default
     steps:
@@ -42,6 +33,8 @@ jobs:
           command: yarn ci:test
 
   lint:
+    docker:
+      - image: cimg/go:1.17
     executor: node/default
     steps:
       - checkout

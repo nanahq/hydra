@@ -23,43 +23,28 @@ jobs:
           node-version: '16'
           cache: 'yarn'
 
-      - name: Cache Node Modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
       - name: Build
         run: yarn all:build
 
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+test:
+  name: Test
+  runs-on: ubuntu-latest
+  strategy:
+    fail-fast: false
+    matrix:
+      instance: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+  env:
+    GH_INSTANCE_TOTAL: 10
+  steps:
+    - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'yarn'
-
-      - name: Cache Node Modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-
-      - name: Test
-        run: npm run ci:test
+    - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+    - run: npm run ci:test
+      env:
+        GH_INSTANCE_INDEX: ${{ matrix.instance }}
 
   lint:
     name: Lint
@@ -73,14 +58,6 @@ jobs:
         with:
           node-version: '16'
           cache: 'yarn'
-
-      - name: Cache Node Modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
