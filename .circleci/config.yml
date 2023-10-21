@@ -55,7 +55,10 @@ jobs:
 workflows:
   build-deploy:
     jobs:
-      - build
+      - docker-start
+      - build:
+         requires:
+           - docker-start
       - test
       - pull
       - lint
