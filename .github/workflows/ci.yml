@@ -43,6 +43,12 @@ jobs:
 
       - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
 
+      - name: Pull docker images [RabbitMq]
+        run: docker pull rabbitmq:latest
+
+      - name: Pull docker images [mongo]
+        run: docker pull mongo:6
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
