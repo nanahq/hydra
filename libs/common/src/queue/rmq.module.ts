@@ -19,7 +19,7 @@ export class RmqModule {
             useFactory: (configService: ConfigService): RmqOptions => ({
               transport: Transport.RMQ,
               options: {
-                urls: [process.env.NODE_ENV === 'test' ? configService.get<string>('TEST_RMQ_URI') as string : configService.get<string>('RMQ_URI') as string],
+                urls: [process.env.NODE_ENV === 'test' ? configService.get<string>('TEST_RMQ_URI', 'amqp://localhost:5672') as string : configService.get<string>('RMQ_URI') as string],
                 queue: configService.get<string>(`RMQ_${name}_QUEUE`) as string ?? fallback
               }
             }),
