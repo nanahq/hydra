@@ -29,20 +29,6 @@ jobs:
       - name: Build
         run: yarn all:build
 
-  kill-process:
-    name: Kill Process on Port 5672
-    runs-on: ubuntu-latest
-    steps:
-      - name: Kill Process Using Port
-        run: |
-          PID=$(sudo lsof -t -i :5672)
-          if [ -n "$PID" ]; then
-            echo "Killing process $PID"
-            sudo kill -9 $PID
-          else
-            echo "No process found on port 5672"
-          fi
-
   test:
     name: Test
     runs-on: ubuntu-latest
@@ -57,6 +43,15 @@ jobs:
 
       - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
 
+      - name: Kill Process Using Port
+        run: |
+          PID=$(lsof -t -i :5672)
+          if [ -n "$PID" ]; then
+            echo "Killing process $PID"
+             kill -9 $PID
+          else
+            echo "No process found on port 5672"
+          fi
       - name: Pull docker images [RabbitMQ]
         run: docker pull rabbitmq:latest
 
