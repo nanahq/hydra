@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        instance: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+        instance: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     env:
       GH_INSTANCE_TOTAL: 10
     steps:
@@ -43,13 +43,15 @@ jobs:
 
       - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
 
-      - name: remove docker containers
-        run: docker rm (docker ps -a -q)
+      - name: Remove Docker containers
+        run: |
+          docker stop $(docker ps -a -q)
+          docker rm $(docker ps -a -q)
 
-      - name: Pull docker images [RabbitMq]
+      - name: Pull docker images [RabbitMQ]
         run: docker pull rabbitmq:latest
 
-      - name: Pull docker images [mongo]
+      - name: Pull docker images [Mongo]
         run: docker pull mongo:6
 
       - name: Install dependencies
