@@ -45,8 +45,8 @@ jobs:
 
       - name: Remove Docker containers
         run: |
-          docker stop $(docker ps -a -q)
-          docker rm $(docker ps -a -q)
+          docker stop $(docker ps -a -q) || true
+          docker rm $(docker ps -a -q) || true
 
       - name: Pull docker images [RabbitMQ]
         run: docker pull rabbitmq:latest
