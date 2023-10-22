@@ -43,6 +43,9 @@ jobs:
 
       - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
 
+      - name: Containers before pull
+        run: docker container ls -a
+
       - name: Pull docker images [RabbitMQ]
         run: docker pull rabbitmq:latest
 
@@ -51,6 +54,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Containers after pull
+        run: docker container ls -a
 
       - run: npm run ci:test
         env:
