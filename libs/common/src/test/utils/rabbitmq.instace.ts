@@ -8,9 +8,12 @@ export async function RabbitmqInstance (): Promise<Docker.Container> {
     rabbitmqContainer = await docker.createContainer({
       Image: 'rabbitmq', // Use the desired RabbitMQ image version
       HostConfig: {
-        PortBindings: {
-          '5672/tcp': [{ HostPort: '5672' }]
-        }
+        PortBindings: process.env.CI !== undefined
+          ? {
+              '5672/tcp': [{ HostPort: '5672' }]
+            }
+          : undefined
+
       }
     })
 

@@ -714,7 +714,7 @@ describe('Vendors - E2E', () => {
       })
     })
 
-    it('should get vendors within  3k of specified poin ', async () => {
+    it('should get vendors within  3k of specified point ', async () => {
       const userLocation: LocationCoordinates = {
         type: 'Point',
         coordinates: [11.982653944440587, 8.53611196845496]

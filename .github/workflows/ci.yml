@@ -56,6 +56,11 @@ jobs:
         env:
           GH_INSTANCE_INDEX: ${{ matrix.instance }}
 
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
