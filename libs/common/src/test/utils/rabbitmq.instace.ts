@@ -1,7 +1,12 @@
 
 import * as Docker from 'dockerode'
-import * as process from 'process'
-export async function RabbitmqInstance (): Promise<Docker.Container> {
+
+export async function waitForContainer (timeout: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(true), timeout)
+  })
+}
+export async function RabbitmqInstance (port: number): Promise<Docker.Container> {
   let rabbitmqContainer: Docker.Container
   try {
     const docker = new Docker()
@@ -9,19 +14,34 @@ export async function RabbitmqInstance (): Promise<Docker.Container> {
       Image: 'rabbitmq', // Use the desired RabbitMQ image version
       HostConfig: {
         PortBindings: {
-          '5672/tcp': [{ HostPort: '5672' }]
-        }
-
+          '5672/tcp': [{ HostPort: port.toString() }]
+        },
+        AutoRemove: true
       }
     })
 
     await rabbitmqContainer.start()
-
-    process.env.TEST_RMQ_URI = 'amqp://localhost:5672'
-
+    // await waitForContainer(60000)
     return rabbitmqContainer
   } catch (error) {
     console.error('Failed to start RabbitMQ container:', error)
+    throw error
+  }
+}
+
+export async function stopRabbitmqContainer (container: Docker.Container): Promise<void> {
+  try {
+    if (container !== undefined) {
+      // Stop the container
+      await container.stop()
+
+      // // Remove the container
+      // await container.remove({ force: true })
+
+      console.log('RabbitMQ container stopped and removed.')
+    }
+  } catch (error) {
+    console.error('Failed to stop and remove RabbitMQ container:', error)
     throw error
   }
 }

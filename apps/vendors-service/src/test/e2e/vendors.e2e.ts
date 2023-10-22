@@ -3,7 +3,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { VendorsModule } from '../../vendors.module'
 import { ClientProxy } from '@nestjs/microservices'
-import { RabbitmqInstance } from '@app/common/test/utils/rabbitmq.instace'
+import { RabbitmqInstance, stopRabbitmqContainer } from '@app/common/test/utils/rabbitmq.instace'
 import { MongodbInstance } from '@app/common/test/utils/mongodb.instance'
 import Docker from 'dockerode'
 import {
@@ -25,6 +25,8 @@ import * as bcrypt from 'bcryptjs'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
 
 describe('Vendors - E2E', () => {
+  const port = 5673
+  const rmqConnectionUri = `amqp://localhost:${port}`
   let app: INestApplication
   let mongo: StartedTestContainer
   let rabbitMq: Docker.Container
@@ -32,20 +34,20 @@ describe('Vendors - E2E', () => {
   let repository: VendorRepository
   let vendorSettingsRepository: VendorSettingsRepository
   beforeAll(async () => {
-    rabbitMq = await RabbitmqInstance()
+    rabbitMq = await RabbitmqInstance(port)
 
     mongo = await MongodbInstance()
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         VendorsModule,
-        RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE })
+        RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE, fallbackUri: rmqConnectionUri })
       ]
     }).compile()
 
     app = moduleFixture.createNestApplication()
     const rmq = app.get<RmqService>(RmqService)
-    app.connectMicroservice(rmq.getOption(QUEUE_SERVICE.VENDORS_SERVICE))
+    app.connectMicroservice(rmq.getOption(QUEUE_SERVICE.VENDORS_SERVICE, false, rmqConnectionUri))
     await app.startAllMicroservices()
     await app.init()
 
@@ -61,8 +63,7 @@ describe('Vendors - E2E', () => {
   afterAll(async () => {
     await app.close()
     await mongo.stop()
-    await rabbitMq.stop()
-    await rabbitMq.remove()
+    await stopRabbitmqContainer(rabbitMq)
     client.close()
   })
   describe('create operations', () => {

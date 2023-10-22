@@ -55,7 +55,7 @@ export class UsersService {
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
-        'can not process request. Try again later',
+        `can not process request. Try again later ${JSON.stringify(error)}`,
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }

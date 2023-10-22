@@ -2,7 +2,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common'
 import { StartedTestContainer } from 'testcontainers'
 import Docker from 'dockerode'
 import { ClientProxy } from '@nestjs/microservices'
-import { RabbitmqInstance } from '@app/common/test/utils/rabbitmq.instace'
+import { RabbitmqInstance, stopRabbitmqContainer } from '@app/common/test/utils/rabbitmq.instace'
 import { MongodbInstance } from '@app/common/test/utils/mongodb.instance'
 import { Test, TestingModule } from '@nestjs/testing'
 import {
@@ -20,33 +20,45 @@ import { UsersServiceModule } from '../../users-service.module'
 import { catchError, lastValueFrom } from 'rxjs'
 import * as bcrypt from 'bcryptjs'
 import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
+import { createClientProxyMock } from '../support/client-proxy.mock'
 
 describe('users service e2e', () => {
+  const port = 5672
+  const rmqConnectionUri = `amqp://localhost:${port}`
   let app: INestApplication
   let mongo: StartedTestContainer
   let rabbitMq: Docker.Container
   let client: ClientProxy
   let repository: UserRepository
   beforeAll(async () => {
-    rabbitMq = await RabbitmqInstance()
+    try {
+      rabbitMq = await RabbitmqInstance(port)
 
-    mongo = await MongodbInstance()
+      mongo = await MongodbInstance()
 
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [
-        UsersServiceModule,
-        RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE })
-      ]
-    }).compile()
+      const moduleFixture: TestingModule = await Test.createTestingModule({
+        imports: [
+          UsersServiceModule,
+          RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE, fallbackUri: rmqConnectionUri })
+        ]
+      })
+        .overrideProvider(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+        .useValue(createClientProxyMock())
+        .compile()
 
-    app = moduleFixture.createNestApplication()
-    const rmq = app.get<RmqService>(RmqService)
-    app.connectMicroservice(rmq.getOption(QUEUE_SERVICE.USERS_SERVICE))
-    await app.startAllMicroservices()
-    await app.init()
+      app = moduleFixture.createNestApplication()
+      const rmq = app.get<RmqService>(RmqService)
+      app.connectMicroservice(rmq.getOption(QUEUE_SERVICE.USERS_SERVICE, false, rmqConnectionUri))
+      await app.startAllMicroservices()
+      await app.init()
 
-    client = app.get(QUEUE_SERVICE.USERS_SERVICE)
-    repository = moduleFixture.get<UserRepository>(UserRepository)
+      client = app.get(QUEUE_SERVICE.USERS_SERVICE)
+      repository = moduleFixture.get<UserRepository>(UserRepository)
+    } catch (error) {
+      console.error(error)
+      await mongo.stop()
+      await stopRabbitmqContainer(rabbitMq)
+    }
   })
 
   beforeEach(async () => {
@@ -56,9 +68,14 @@ describe('users service e2e', () => {
   afterAll(async () => {
     await app.close()
     await mongo.stop()
-    await rabbitMq.stop()
-    await rabbitMq.remove()
+    await stopRabbitmqContainer(rabbitMq)
     client.close()
+  })
+
+  describe('smoke', () => {
+    it('should smoke test ', function () {
+      expect(rabbitMq).toBeDefined()
+    })
   })
 
   describe('create operation', () => {
