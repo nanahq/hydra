@@ -1,4 +1,4 @@
-import {  IsOptional } from 'class-validator'
+import { IsOptional } from 'class-validator'
 import { LocationCoordinates } from '../database/types/common'
 
 export class UpdateUserDto {
