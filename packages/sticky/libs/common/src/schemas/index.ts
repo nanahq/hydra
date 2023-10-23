@@ -329,4 +329,6 @@ export interface ScheduledListingI {
   createdAt: string
 
   soldOut: boolean
+
+  remainingQuantity: number
 }

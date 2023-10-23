@@ -352,6 +352,20 @@ export class ListingsController {
     }
   }
 
+  @MessagePattern(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY)
+  async updateScheduledListing (
+    @Payload() { listingId }: { listingId: string },
+      @Ctx() context
+  ): Promise<void> {
+    try {
+      return await this.listingService.updateScheduledListingCount(listingId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS)
   async getScheduledListings (
     @Payload() { id }: MultiPurposeServicePayload<null>,

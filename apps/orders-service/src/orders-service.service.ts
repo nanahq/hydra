@@ -33,7 +33,10 @@ export class OrdersServiceService {
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly userClient: ClientProxy,
     @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
-    private readonly driverClient: ClientProxy
+    private readonly driverClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
+    private readonly listingsClient: ClientProxy
   ) {}
 
   public async placeOrder ({
@@ -243,6 +246,12 @@ export class OrdersServiceService {
         this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, {
           orderId: order._id,
           userId: order.user
+        })
+      )
+
+      await lastValueFrom(
+        this.listingsClient.emit(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY, {
+          listingId: order.listing._id
         })
       )
 

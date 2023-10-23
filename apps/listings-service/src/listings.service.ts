@@ -448,13 +448,24 @@ export class ListingsService {
 
   async createScheduledListing (data: ScheduledListingDto): Promise<ResponseWithStatus> {
     try {
-      await this.scheduledListingRepository.create(data)
+      await this.scheduledListingRepository.create({ ...data, remainingQuantity: data.quantity })
       return { status: 1 }
     } catch (error) {
       this.logger.error({
         error
       })
       throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async updateScheduledListingCount (listingMenuId): Promise<void> {
+    try {
+      const listing = await this.scheduledListingRepository.findOne({ listing: listingMenuId })
+      if (listing !== null) {
+        await this.scheduledListingRepository.findOneAndUpdate({ _id: listing._id }, { remainingQuantity: listing.remainingQuantity - 1 })
+      }
+    } catch (error) {
+      throw new FitRpcException('Can not update schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 

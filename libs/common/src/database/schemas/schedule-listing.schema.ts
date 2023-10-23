@@ -14,6 +14,9 @@ export class ScheduledListing extends AbstractDocument {
     quantity: number
 
   @Prop(Number)
+    remainingQuantity: number
+
+  @Prop(Number)
     availableDate: number
 
   @Prop(SchemaTypes.Date)
