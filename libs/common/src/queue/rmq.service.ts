@@ -6,11 +6,12 @@ import { RmqOptions, RmqContext, Transport } from '@nestjs/microservices'
 export class RmqService {
   constructor (private readonly configService: ConfigService) {}
 
-  getOption (queue: string, noAck = false): RmqOptions {
+  getOption (queue: string, noAck = false, fallbackUri?: string): RmqOptions {
+    console.log({ fallbackUri })
     return {
       transport: Transport.RMQ,
       options: {
-        urls: [this.configService.get<string>('RMQ_URI') as string],
+        urls: [fallbackUri !== undefined ? fallbackUri : this.configService.get<string>('RMQ_URI') as string],
         queue: this.configService.get<string>(`RMQ_${queue}_QUEUE`),
         noAck,
         persistent: true

@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing'
-import { VendorsService } from '../vendors.service'
-import { VendorsController } from '../vendors.controller'
+import { VendorsService } from '../../vendors.service'
+import { VendorsController } from '../../vendors.controller'
 import {
   LoginVendorRequest,
   ResponseWithStatus,
@@ -16,14 +16,14 @@ import {
   UpdateVendorSettingsDto
 } from '@app/common/database/dto/vendor.dto'
 import { RmqContext } from '@nestjs/microservices'
-import { VendorStub } from './stubs/vendor.stub'
-import { VendorSettingStub } from './stubs/VendorSettings.stub'
+import { VendorStub } from '../stubs/vendor.stub'
+import { VendorSettingStub } from '../stubs/VendorSettings.stub'
 
 export const RmqServiceMock = {
   ack: jest.fn()
 }
 
-jest.mock('../vendors.service.ts')
+jest.mock('../../vendors.service.ts')
 
 describe('Vendors Service - Controller', () => {
   let vendorsController: VendorsController
@@ -285,7 +285,7 @@ describe('Vendors Service - Controller', () => {
         data = {
           userId: VendorStub()._id as any,
           data: {
-            operation: { startTime: '11:30' }
+            operations: { startTime: '11:30' }
           }
         }
         response = await vendorsController.updateVendorSettings(data, context)

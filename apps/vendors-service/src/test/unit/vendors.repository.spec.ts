@@ -4,11 +4,11 @@ import { FilterQuery } from 'mongoose'
 import {
   VendorRepository,
   VendorSettingsRepository
-} from '../vendors.repository'
+} from '../../vendors.repository'
 import { Vendor, VendorSettings } from '@app/common'
-import { VendorModel, VendorSettingsModel } from './support/Vendor.model'
-import { VendorStub } from './stubs/vendor.stub'
-import { VendorSettingStub } from './stubs/VendorSettings.stub'
+import { VendorModel, VendorSettingsModel } from '../support/Vendor.model'
+import { VendorStub } from '../stubs/vendor.stub'
+import { VendorSettingStub } from '../stubs/VendorSettings.stub'
 
 describe('Vendors Service - Repository', () => {
   let vendorRepository: VendorRepository

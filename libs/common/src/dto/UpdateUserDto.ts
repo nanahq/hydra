@@ -1,16 +1,22 @@
-import { IsNotEmpty } from 'class-validator'
+import { IsOptional } from 'class-validator'
 import { LocationCoordinates } from '../database/types/common'
 
 export class UpdateUserDto {
-  @IsNotEmpty()
+  @IsOptional()
     email: string
 
-  @IsNotEmpty()
+  @IsOptional()
     phone: string
 
-  @IsNotEmpty()
+  @IsOptional()
     status: 'ONLINE' | 'OFFLINE'
 
-  @IsNotEmpty()
+  @IsOptional()
     location: LocationCoordinates
+
+  @IsOptional()
+    firstName: string
+
+  @IsOptional()
+    lastName: string
 }
