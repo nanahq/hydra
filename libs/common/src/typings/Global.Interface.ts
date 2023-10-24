@@ -1,5 +1,4 @@
-import { ListingCategory, Order, Vendor } from '@app/common'
-import { DriverI, ListingMenuI, LocationCoordinates, OrderI, UserI, VendorI } from '../../../../packages/sticky'
+import { ListingCategory, Order, Vendor, ListingMenuI, LocationCoordinates, OrderI, UserI, VendorI  } from '@app/common'
 
 export interface IdPayload {
   id: string
@@ -77,7 +76,7 @@ export interface DeliveryI {
   _id: string
   user: UserI
 
-  driver: DriverI
+  driver: any
 
   order: OrderI
 
