@@ -11,7 +11,7 @@ import {
   OrderStatus,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus, VendorApprovalStatus, TravelDistanceResult, OrderI,
+  ResponseWithStatus, VendorApprovalStatus, TravelDistanceResult, OrderI
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
@@ -27,7 +27,7 @@ const PendingDeliveryStatuses: OrderStatus[] = [
 @Injectable()
 export class ODSA {
   private readonly logger = new Logger(ODSA.name)
-
+  private readonly MAX_ORDER_EXPIRY = 2
   constructor (
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly orderClient: ClientProxy,
@@ -162,6 +162,14 @@ export class ODSA {
             })
           )
       )
+
+      const createdAt = moment(order.createdAt)
+      const currentTime = moment()
+      const timeDiff = currentTime.diff(createdAt, 'hours')
+
+      if(timeDiff > this.MAX_ORDER_EXPIRY) {
+        return
+      }
 
       const collectionLocation = order?.vendor?.location?.coordinates as [number, number] // address for the vendor/restaurant
       const driverToBeAssigned = await this.handleFindNearestDeliveryDriver(
