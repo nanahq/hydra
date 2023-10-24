@@ -25,9 +25,11 @@ import {
   ListingCategoryRepository,
   ListingOptionGroupRepository, ScheduledListingRepository
 } from './listings.repository'
+import { ScheduleModule } from '@nestjs/schedule'
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({

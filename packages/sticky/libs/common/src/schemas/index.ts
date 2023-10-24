@@ -5,9 +5,8 @@ import {
   OrderType,
   PaymentInfo,
   VendorOperationSetting,
-  DriverType, AdminLevel
+  DriverType, AdminLevel, ListingApprovalStatus
 } from '../typings'
-
 export interface ListingCategoryI {
   _id: string
   vendor: VendorI
@@ -47,6 +46,10 @@ export interface ListingMenuI {
   createdAt: string
   reviews: ReviewI[]
   updatedAt: string
+
+  status: ListingApprovalStatus
+
+  rejection_reason: string
 }
 
 export interface VendorI {

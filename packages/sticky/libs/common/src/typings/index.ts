@@ -503,6 +503,12 @@ export interface AddressBookDto {
   coordinates: [string, string]
 }
 
+export enum ListingApprovalStatus {
+  PENDING = 'PENDING', // Default
+  APPROVED = 'CLEARED',
+  DISAPPROVED = 'RETURNED',
+}
+
 export interface UserDto {
 
   phoneNumber: string
