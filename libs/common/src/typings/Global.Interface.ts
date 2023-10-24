@@ -1,4 +1,5 @@
 import { ListingCategory, Order, Vendor } from '@app/common'
+import { DriverI, ListingMenuI, LocationCoordinates, OrderI, UserI, VendorI } from '../../../../packages/sticky'
 
 export interface IdPayload {
   id: string
@@ -70,4 +71,37 @@ export interface ScheduledListingDto {
 
   quantity: number
   availableDate: number
+}
+
+export interface DeliveryI {
+  _id: string
+  user: UserI
+
+  driver: DriverI
+
+  order: OrderI
+
+  listing: ListingMenuI
+
+  vendor: VendorI
+
+  createdAt: string
+
+  updatedAt: string
+
+  status: string
+
+  pickupLocation: LocationCoordinates
+
+  dropOffLocation: LocationCoordinates
+
+  currentLocation: LocationCoordinates
+
+  completed: boolean
+
+  deliveredWithinTime: boolean
+
+  deliveryTime: number
+
+  assignedToDriver: boolean
 }
