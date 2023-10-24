@@ -11,11 +11,12 @@ import {
   OrderStatus,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus, VendorApprovalStatus
+  ResponseWithStatus, VendorApprovalStatus, TravelDistanceResult, OrderI,
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
 import { OdsaRepository } from './odsa.repository'
+import moment from 'moment'
 
 const PendingDeliveryStatuses: OrderStatus[] = [
   OrderStatus.IN_ROUTE,
@@ -108,16 +109,23 @@ export class ODSA {
       const delivery = await this.odsaRepository.findOne({
         driver: data.driverId,
         _id: data.deliveryId
-      })
+      }) as Delivery
 
       await this.orderClient.emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
         orderId: delivery.order,
         status: data.status
       })
 
+      const delivered = data.status === OrderStatus.FULFILLED
+
+      let deliveredWithinTime: boolean = false
+
+      if (delivered) {
+        deliveredWithinTime = moment(new Date()).isSameOrBefore(new Date(delivery.deliveryTime))
+      }
       await this.odsaRepository.findOneAndUpdate(
         { _id: delivery._id },
-        { status: data.status }
+        { status: data.status, deliveredWithinTime, completed: delivered }
       )
 
       this.logger.log('PIM -> Success: Updated delivery status')
@@ -141,7 +149,7 @@ export class ODSA {
   ): Promise<void> {
     this.logger.log(`PIM -> started processing instant order: ${orderId}`)
     try {
-      const order = await lastValueFrom<any>(
+      const order = await lastValueFrom<OrderI>(
         this.orderClient
           .send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, {
             userId: '',
@@ -155,12 +163,17 @@ export class ODSA {
           )
       )
 
-      const collectionLocation = order?.vendor?.location?.coordinates // address for the vendor/restaurant
+      const collectionLocation = order?.vendor?.location?.coordinates as [number, number] // address for the vendor/restaurant
       const driverToBeAssigned = await this.handleFindNearestDeliveryDriver(
         collectionLocation
       )
 
-      this.logger.log({ driverToBeAssigned })
+      const travelDistance = await lastValueFrom<TravelDistanceResult>(
+        this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: order.preciseLocation, vendorCoords: collectionLocation })
+      )
+
+      const deliveryTime = new Date()
+      deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
 
       if (driverToBeAssigned === null) {
         if (existingDeliver === undefined) {
@@ -169,7 +182,7 @@ export class ODSA {
             order: order._id,
             vendor: order.vendor?._id,
             user: order.user._id,
-            deliveryTime: parseInt(order.orderDeliveryScheduledTime),
+            deliveryTime: deliveryTime.getTime(),
             dropOffLocation: order.preciseLocation,
             pickupLocation: order.vendor.location,
             assignedToDriver: false
@@ -193,7 +206,7 @@ export class ODSA {
           order: order._id,
           vendor: order.vendor?._id,
           user: order.user._id,
-          deliveryTime: parseInt(order.orderDeliveryScheduledTime),
+          deliveryTime: deliveryTime.getTime(),
           dropOffLocation: order.preciseLocation,
           pickupLocation: order.vendor.location,
           assignedToDriver: true
@@ -215,17 +228,20 @@ export class ODSA {
     }
   }
 
-  @Cron(CronExpression.EVERY_MINUTE, {
+  @Cron(CronExpression.EVERY_5_MINUTES, {
     timeZone: 'Africa/Lagos'
   })
   private async assignDemandOrders (): Promise<void> {
-    const unassignedDeliveries = (await this.odsaRepository.find({
+    const unassignedDeliveries = await this.odsaRepository.findAndPopulate({
       assignedToDriver: false
-    })) as Delivery[]
+    }, ['order']) as any
+
+    const filteredDeliveries = unassignedDeliveries.filter((delivery) => delivery.order.orderType === 'ON_DEMAND')
+
     // @Todo(siradji) improve code and add additional check to make sure only on demand orders get assigned
     try {
-      for (const delivery of unassignedDeliveries) {
-        await this.handleProcessOrder(delivery.order, true)
+      for (const delivery of filteredDeliveries) {
+        await this.handleProcessOrder(delivery.order._id, true)
       }
     } catch (error) {
       this.logger.error({

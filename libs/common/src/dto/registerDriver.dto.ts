@@ -6,6 +6,7 @@ import {
   MaxLength,
   MinLength
 } from 'class-validator'
+import { DriverType } from '@app/common'
 
 export class RegisterDriverDto {
   @IsNotEmpty()
@@ -33,4 +34,8 @@ export class RegisterDriverDto {
   @IsEmail()
   @IsNotEmpty()
     email: string
+
+  @IsEmail()
+  @IsNotEmpty()
+    type: DriverType
 }

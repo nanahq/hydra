@@ -82,9 +82,7 @@ export interface VendorI {
   businessLogo?: string
   businessAddress: string
   settings?: VendorSettingsI
-  location?: {
-    coordinates: [string, string]
-  }
+  location?: LocationCoordinates
   createdAt?: string
   updatedAt?: string
 
