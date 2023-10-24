@@ -1,4 +1,4 @@
-import { ListingCategory, Order, Vendor, ListingMenuI, LocationCoordinates, OrderI, UserI, VendorI  } from '@app/common'
+import { ListingCategory, Order, Vendor, ListingMenuI, LocationCoordinates, OrderI, UserI, VendorI } from '@app/common'
 
 export interface IdPayload {
   id: string

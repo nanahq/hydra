@@ -167,7 +167,8 @@ export class ODSA {
       const currentTime = moment()
       const timeDiff = currentTime.diff(createdAt, 'hours')
 
-      if(timeDiff > this.MAX_ORDER_EXPIRY) {
+      this.logger.debug(timeDiff)
+      if (timeDiff > this.MAX_ORDER_EXPIRY) {
         return
       }
 
@@ -225,7 +226,7 @@ export class ODSA {
         { available: false }
       )
     } catch (error) {
-      this.logger.error({
+      this.logger.debug({
         error,
         message: `Something went wrong processing order ${orderId}`
       })
