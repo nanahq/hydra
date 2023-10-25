@@ -24,7 +24,7 @@ import {
 } from '@app/common/database/dto/listing.dto'
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import moment from 'moment'
+import * as moment from 'moment'
 
 @Injectable()
 export class ListingsService {

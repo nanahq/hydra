@@ -16,7 +16,7 @@ import {
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
 import { OdsaRepository } from './odsa.repository'
-import moment from 'moment'
+import * as moment from 'moment'
 
 const PendingDeliveryStatuses: OrderStatus[] = [
   OrderStatus.IN_ROUTE,
@@ -54,7 +54,7 @@ export class ODSA {
       )
     } catch (error) {
       this.logger.error(
-          `PIM -> Failed to query pending deliveries for driver ${driverId}`,
+        `PIM -> Failed to query pending deliveries for driver ${driverId}`
       )
       this.logger.error(JSON.stringify(error))
     }
@@ -151,7 +151,6 @@ export class ODSA {
 
     this.logger.log(`PIM -> started processing instant order: ${typeof _order !== 'string' ? _order?._id.toString() : _order}`)
     try {
-
       if ((existingDeliver === true) && typeof _order !== 'string') {
         const createdAt = moment(_order.createdAt)
         const currentTime = moment()
