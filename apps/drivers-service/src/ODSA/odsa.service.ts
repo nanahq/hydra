@@ -63,10 +63,8 @@ export class ODSA {
   public async queryOrderDelivery (orderId: string): Promise<DeliveryI | undefined> {
     try {
       return (await this.odsaRepository.findOneAndPopulate({ order: orderId }, [
-        'listing',
-        'vendor',
-        'user',
-        'order'
+        'order',
+        'driver'
       ])) as DeliveryI
     } catch (error) {
       this.logger.error({
@@ -76,13 +74,12 @@ export class ODSA {
     }
   }
 
-  public async queryVendorDeliveries (orderId: string): Promise<DeliveryI[] | undefined> {
+  public async queryVendorDeliveries (vendor: string): Promise<DeliveryI[] | undefined> {
     try {
-      return (await this.odsaRepository.findAndPopulate({}, [
+      return (await this.odsaRepository.findAndPopulate({ vendor }, [
         'listing',
-        'vendor',
-        'user',
-        'order'
+        'order',
+        'driver'
       ]))
     } catch (error) {
       this.logger.error({
@@ -164,10 +161,8 @@ export class ODSA {
 
       return { status: 1 }
     } catch (error) {
-      this.logger.error({
-        error,
-        message: `Failed to update delivery status for id: ${data.deliveryId}`
-      })
+      this.logger.error(JSON.stringify(error))
+      this.logger.error(`Failed to update delivery status for id: ${data.deliveryId}`)
       throw new FitRpcException(
         'Failed to update delivery status',
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -177,7 +172,8 @@ export class ODSA {
 
   public async handleProcessOrder (
     _order: Order | string,
-    existingDeliver?: boolean
+    existingDeliver?: boolean,
+    deliveryId?: string
   ): Promise<void> {
     this.logger.log(`PIM -> started processing instant order: ${typeof _order !== 'string' ? _order?._id.toString() : _order}`)
     try {
@@ -186,7 +182,9 @@ export class ODSA {
         const currentTime = moment()
         const timeDiff = currentTime.diff(createdAt, 'hours')
 
+        // TODO(@siradji) update order status to 'UNDELIVERABLE' and send email to user.
         if (timeDiff > this.MAX_ORDER_EXPIRY) {
+          await this.odsaRepository.delete(deliveryId as any)
           this.logger.log('[FORWARD_ADMIN]: Order has exceeded 2 hours')
           return
         }
@@ -263,7 +261,6 @@ export class ODSA {
         { available: false }
       )
     } catch (error) {
-      console.error(error)
       this.logger.error(
         `Something went wrong processing order ${typeof _order !== 'string' ? _order?._id.toString() : _order}`
       )
@@ -287,7 +284,7 @@ export class ODSA {
 
     try {
       for (const delivery of filteredDeliveries) {
-        await this.handleProcessOrder(delivery.order, true)
+        await this.handleProcessOrder(delivery.order, true, delivery._id)
       }
     } catch (error) {
       this.logger.error('failed to assign orders')

@@ -89,7 +89,7 @@ export class OdsaController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.GET_ORDER_DELIVERY)
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_DELIVERIES)
   async getVendorDeliveries (
     @Ctx() context: RmqContext,
       @Payload() { vendorId }: { vendorId: string }
