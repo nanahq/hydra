@@ -11,9 +11,8 @@ import {
   CurrentUser,
   Delivery,
   Driver,
-  OrderStatus,
   ResponseWithStatus,
-  RegisterDriverDto, QUEUE_MESSAGE, RmqService
+  RegisterDriverDto, QUEUE_MESSAGE, RmqService, UpdateDeliveryStatusDto
 } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { ODSA } from './ODSA/odsa.service'
@@ -47,7 +46,7 @@ export class DriversServiceController {
   @Post('order/status')
   @UseGuards(JwtAuthGuard)
   async updateDeliveryStatus (
-    @Body() data: { status: OrderStatus, deliveryId: string },
+    @Body() data: UpdateDeliveryStatusDto,
       @CurrentUser() driver: Driver
   ): Promise<ResponseWithStatus> {
     try {
