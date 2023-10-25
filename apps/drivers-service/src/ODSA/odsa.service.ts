@@ -140,17 +140,19 @@ export class ODSA {
         _id: data.deliveryId
       }) as Delivery
 
-      await this.orderClient.emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
-        orderId: delivery.order,
-        status: data.status
-      })
+      await lastValueFrom(
+        this.orderClient.emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
+          orderId: delivery.order,
+          status: data.status
+        })
+      )
 
       const delivered = data.status === OrderStatus.FULFILLED
 
       let deliveredWithinTime: boolean = false
 
       if (delivered) {
-        deliveredWithinTime = moment(new Date()).isSameOrBefore(new Date(delivery.deliveryTime))
+        deliveredWithinTime = moment().isSameOrBefore(new Date(delivery.deliveryTime))
       }
       await this.odsaRepository.findOneAndUpdate(
         { _id: delivery._id },
