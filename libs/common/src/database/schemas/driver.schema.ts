@@ -4,7 +4,7 @@ import {
   AbstractDocument,
   DriverType,
   LocationCoordinates,
-   VendorApprovalStatus
+  VendorApprovalStatus
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
