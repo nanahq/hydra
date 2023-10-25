@@ -18,9 +18,11 @@ import {
 } from '@app/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { OrderRepository } from './order.repository'
+import { ScheduleModule } from '@nestjs/schedule'
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({

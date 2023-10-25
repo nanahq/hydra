@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsBoolean, IsArray, IsObject, IsPhoneNumber, IsISO8601, ValidateNested } from 'class-validator'
+import { IsString, IsNumber, IsBoolean, IsArray, IsObject, IsPhoneNumber, ValidateNested } from 'class-validator'
 import { OrderType } from '@app/common/typings/Global.Interface'
 
 class PreciseLocationDto {
@@ -59,10 +59,9 @@ export class PlaceOrderDto {
     preciseLocation: PreciseLocationDto
 
   @IsArray()
-  @IsString()
     options: string[]
 
-  @IsISO8601()
+  @IsString()
     orderDeliveryScheduledTime: string
 
   @ValidateNested()

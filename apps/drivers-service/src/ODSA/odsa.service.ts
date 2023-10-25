@@ -230,10 +230,11 @@ export class ODSA {
         { available: false }
       )
     } catch (error) {
-      this.logger.error({
-        error: JSON.stringify(error),
-        message: `Something went wrong processing order ${typeof _order !== 'string' ? _order?._id.toString() : _order}`
-      })
+      console.error(error)
+      this.logger.error(
+        `Something went wrong processing order ${typeof _order !== 'string' ? _order?._id.toString() : _order}`
+      )
+      this.logger.error(JSON.stringify(error))
       throw new FitRpcException(
         'Can not process order right now',
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -256,10 +257,8 @@ export class ODSA {
         await this.handleProcessOrder(delivery.order, true)
       }
     } catch (error) {
-      this.logger.error({
-        error,
-        message: 'failed to assign failed orders'
-      })
+      this.logger.error('failed to assign orders')
+      this.logger.error(JSON.stringify(error))
     }
   }
 

@@ -480,12 +480,17 @@ export class ListingsService {
     }
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_8AM, {
+  @Cron(CronExpression.EVERY_DAY_AT_1AM, {
     timeZone: 'Africa/Lagos'
   })
   private async deletePastScheduledListings (): Promise<void> {
     try {
+      this.logger.log('[CRON] -> Deleting past day scheduled listing')
+
       const listings = await this.scheduledListingRepository.find({}) as ScheduledListing[]
+
+      this.logger.log(`[CRON] -> ${listings.length} scheduled listings to be deleted `)
+
       if (listings.length > 0) {
         for (const listing of listings) {
           const listingDate = listing.availableDate
