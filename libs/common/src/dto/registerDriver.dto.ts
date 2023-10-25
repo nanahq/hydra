@@ -35,7 +35,7 @@ export class RegisterDriverDto {
   @IsNotEmpty()
     email: string
 
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
     type: DriverType
 }

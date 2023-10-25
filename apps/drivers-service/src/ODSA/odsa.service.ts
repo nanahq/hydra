@@ -144,16 +144,29 @@ export class ODSA {
   }
 
   public async handleProcessOrder (
-    orderId: string,
+    _order: Order | string,
     existingDeliver?: boolean
   ): Promise<void> {
-    this.logger.log(`PIM -> started processing instant order: ${orderId}`)
+    this.logger.log(`PIM -> started processing instant order: ${typeof _order !== 'string' ? _order?._id.toString() : _order}`)
     try {
+      if ((existingDeliver === true) && typeof _order !== 'string') {
+        const createdAt = moment(_order.createdAt)
+        const currentTime = moment()
+        const timeDiff = currentTime.diff(createdAt, 'hours')
+        console.log('Hello world')
+        this.logger.log('TimeDiff', timeDiff)
+
+        if (timeDiff > this.MAX_ORDER_EXPIRY) {
+          this.logger.log('[FORWARD_ADMIN]: Order has exceeded 2 hours')
+          return
+        }
+      }
+
       const order = await lastValueFrom<OrderI>(
         this.orderClient
           .send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, {
             userId: '',
-            data: { orderId }
+            data: { orderId: typeof _order !== 'string' ? _order?._id.toString() : _order }
           })
           .pipe(
             catchError((error) => {
@@ -162,18 +175,6 @@ export class ODSA {
             })
           )
       )
-
-      const createdAt = moment(order.createdAt)
-      const currentTime = moment()
-      const timeDiff = currentTime.diff(createdAt, 'hours')
-
-      console.log('Hello world')
-      this.logger.log('TimeDiff', timeDiff)
-
-      if (timeDiff > this.MAX_ORDER_EXPIRY) {
-        this.logger.log('[FORWARD_ADMIN]: Order has exceeded 2 hours')
-        return
-      }
 
       const collectionLocation = order?.vendor?.location?.coordinates as [number, number] // address for the vendor/restaurant
       const driverToBeAssigned = await this.handleFindNearestDeliveryDriver(
@@ -205,7 +206,7 @@ export class ODSA {
 
       if (existingDeliver !== undefined && existingDeliver) {
         await this.odsaRepository.findOneAndUpdate(
-          { order: orderId },
+          { order: typeof _order !== 'string' ? _order?._id.toString() : _order },
           {
             driver: driverToBeAssigned?.driverId,
             assignedToDriver: true
@@ -231,7 +232,7 @@ export class ODSA {
     } catch (error) {
       this.logger.error({
         error: JSON.stringify(error),
-        message: `Something went wrong processing order ${orderId}`
+        message: `Something went wrong processing order ${typeof _order !== 'string' ? _order?._id.toString() : _order}`
       })
       throw new FitRpcException(
         'Can not process order right now',
@@ -240,7 +241,7 @@ export class ODSA {
     }
   }
 
-  @Cron(CronExpression.EVERY_5_MINUTES, {
+  @Cron(CronExpression.EVERY_MINUTE, {
     timeZone: 'Africa/Lagos'
   })
   private async assignDemandOrders (): Promise<void> {
@@ -250,10 +251,9 @@ export class ODSA {
 
     const filteredDeliveries = unassignedDeliveries.filter((delivery) => delivery.order.orderType === 'ON_DEMAND')
 
-    // @Todo(siradji) improve code and add additional check to make sure only on demand orders get assigned
     try {
       for (const delivery of filteredDeliveries) {
-        await this.handleProcessOrder(delivery.order._id, true)
+        await this.handleProcessOrder(delivery.order, true)
       }
     } catch (error) {
       this.logger.error({
