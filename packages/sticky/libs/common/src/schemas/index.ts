@@ -203,8 +203,9 @@ export interface DriverI {
 
   status: 'ONLINE' | 'OFFLINE'
 
-  trips: OrderI[]
+  trips: DeliveryI[]
 
+  totalTrips: number
   type: DriverType
 
   updatedAt: string

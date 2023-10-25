@@ -4,7 +4,7 @@ import {
   AbstractDocument,
   DriverType,
   LocationCoordinates,
-  Order, VendorApprovalStatus
+   VendorApprovalStatus
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -48,8 +48,11 @@ export class Driver extends AbstractDocument {
   })
     location: LocationCoordinates
 
-  @Prop({ type: [Types.ObjectId], ref: 'Order' })
-    trips: Order[]
+  @Prop({ type: [Types.ObjectId], ref: 'Delivery' })
+    deliveries: string[]
+
+  @Prop({ type: Number, default: 0 })
+    totalTrips: number
 
   @Prop({ type: Boolean, default: false })
     isDeleted: false

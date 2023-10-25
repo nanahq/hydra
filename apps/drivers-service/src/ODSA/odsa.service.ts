@@ -178,6 +178,15 @@ export class ODSA {
         updates
       )
 
+      if (delivered) {
+        const driver = await this.driversRepository.findOne({ _id: delivery.driver }) as Driver
+
+        const deliveries = [...driver.deliveries, delivery._id]
+        const totalTrips = driver.totalTrips + 1
+
+        await this.driversRepository.findOneAndUpdate({ _id: driver._id }, { available: true, deliveries, totalTrips })
+      }
+
       this.logger.log('PIM -> Success: Updated delivery status')
 
       return { status: 1 }
