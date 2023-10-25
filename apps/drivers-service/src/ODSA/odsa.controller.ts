@@ -8,7 +8,7 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { Delivery, QUEUE_MESSAGE, RmqService } from '@app/common'
+import { Delivery, DeliveryI, QUEUE_MESSAGE, RmqService } from '@app/common'
 
 /**
  * Order Delivery Sorting and Assignation (ODSA) Service.
@@ -68,6 +68,34 @@ export class OdsaController {
   ): Promise<Delivery[] | undefined> {
     try {
       return await this.odsa.queryPendingDeliveries(driverId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_ORDER_DELIVERY)
+  async getOrderDelivery (
+    @Ctx() context: RmqContext,
+      @Payload() { orderId }: { orderId: string }
+  ): Promise<DeliveryI | undefined> {
+    try {
+      return await this.odsa.queryOrderDelivery(orderId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_ORDER_DELIVERY)
+  async getVendorDeliveries (
+    @Ctx() context: RmqContext,
+      @Payload() { vendorId }: { vendorId: string }
+  ): Promise<DeliveryI[] | undefined> {
+    try {
+      return await this.odsa.queryVendorDeliveries(vendorId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

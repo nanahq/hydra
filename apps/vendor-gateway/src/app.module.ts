@@ -27,6 +27,7 @@ import { OrdersController } from './module.api/orders.controller'
 import { ReviewController } from './module.api/review.controller'
 import { WalletController } from './module.api/wallet.controller'
 import { AwsService } from './aws.service'
+import { DriversController } from './module.api/drivers.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -68,7 +69,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
-
+        RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
@@ -83,7 +84,8 @@ export class AppModule implements NestModule {
         ListingsController,
         OrdersController,
         ReviewController,
-        WalletController
+        WalletController,
+        DriversController
       ],
       providers: [
         AuthService,

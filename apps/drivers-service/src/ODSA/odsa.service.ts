@@ -11,7 +11,7 @@ import {
   OrderStatus,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus, VendorApprovalStatus, TravelDistanceResult, OrderI
+  ResponseWithStatus, VendorApprovalStatus, TravelDistanceResult, OrderI, DeliveryI
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
@@ -57,6 +57,38 @@ export class ODSA {
         `PIM -> Failed to query pending deliveries for driver ${driverId}`
       )
       this.logger.error(JSON.stringify(error))
+    }
+  }
+
+  public async queryOrderDelivery (orderId: string): Promise<DeliveryI | undefined> {
+    try {
+      return (await this.odsaRepository.findOneAndPopulate({ order: orderId }, [
+        'listing',
+        'vendor',
+        'user',
+        'order'
+      ])) as DeliveryI
+    } catch (error) {
+      this.logger.error({
+        message: 'PIM -> Failed to query all deliveries',
+        error
+      })
+    }
+  }
+
+  public async queryVendorDeliveries (orderId: string): Promise<DeliveryI[] | undefined> {
+    try {
+      return (await this.odsaRepository.findAndPopulate({}, [
+        'listing',
+        'vendor',
+        'user',
+        'order'
+      ]))
+    } catch (error) {
+      this.logger.error({
+        message: 'PIM -> Failed to query all deliveries',
+        error
+      })
     }
   }
 
@@ -147,16 +179,12 @@ export class ODSA {
     _order: Order | string,
     existingDeliver?: boolean
   ): Promise<void> {
-    this.logger.log('Hello world')
-
     this.logger.log(`PIM -> started processing instant order: ${typeof _order !== 'string' ? _order?._id.toString() : _order}`)
     try {
       if ((existingDeliver === true) && typeof _order !== 'string') {
         const createdAt = moment(_order.createdAt)
         const currentTime = moment()
         const timeDiff = currentTime.diff(createdAt, 'hours')
-        console.log('Hello world')
-        this.logger.log('TimeDiff', timeDiff)
 
         if (timeDiff > this.MAX_ORDER_EXPIRY) {
           this.logger.log('[FORWARD_ADMIN]: Order has exceeded 2 hours')
@@ -183,12 +211,15 @@ export class ODSA {
         collectionLocation
       )
 
-      const travelDistance = await lastValueFrom<TravelDistanceResult>(
-        this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: order.preciseLocation, vendorCoords: collectionLocation })
-      )
-
+      let travelDistance: TravelDistanceResult
       const deliveryTime = new Date()
-      deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
+
+      if (existingDeliver === undefined) {
+        travelDistance = await lastValueFrom<TravelDistanceResult>(
+          this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: order.preciseLocation.coordinates, vendorCoords: collectionLocation })
+        )
+        deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
+      }
 
       if (driverToBeAssigned === null) {
         if (existingDeliver === undefined) {

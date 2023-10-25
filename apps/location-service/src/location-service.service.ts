@@ -31,8 +31,6 @@ export class LocationService {
       }
     }
 
-    this.logger.log({ closestCoordinate })
-
     return closestCoordinate
   }
 
@@ -53,10 +51,8 @@ export class LocationService {
         duration: data?.routes[0]?.duration
       }
     } catch (error) {
-      this.logger.error({
-        error,
-        message: 'Can not get travel distance via mapbox'
-      })
+      this.logger.log(JSON.stringify(error))
+      this.logger.error('Can not get travel distance via mapbox')
       throw new FitRpcException(
         'Can not fetch travel distance at this time',
         HttpStatus.INTERNAL_SERVER_ERROR
