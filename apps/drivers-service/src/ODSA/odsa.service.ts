@@ -144,7 +144,7 @@ export class ODSA {
       }, ['order, vendor']) as DeliveryI
 
       await lastValueFrom(
-        this.orderClient.emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
+        this.orderClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
           orderId: delivery.order,
           status: data.status
         })
