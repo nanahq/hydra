@@ -168,6 +168,7 @@ export class ODSA {
       const timeDiff = currentTime.diff(createdAt, 'hours')
 
       if (timeDiff > this.MAX_ORDER_EXPIRY) {
+        console.log('[FORWARD_ADMIN]: Order has exceeded 2 hours')
         return
       }
 
