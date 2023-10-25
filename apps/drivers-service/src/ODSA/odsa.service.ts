@@ -53,10 +53,10 @@ export class ODSA {
         PendingDeliveryStatuses.includes(dv.status as any)
       )
     } catch (error) {
-      this.logger.error({
-        message: `PIM -> Failed to query pending deliveries for driver ${driverId}`,
-        error
-      })
+      this.logger.error(
+          `PIM -> Failed to query pending deliveries for driver ${driverId}`,
+      )
+      this.logger.error(JSON.stringify(error))
     }
   }
 
@@ -147,8 +147,11 @@ export class ODSA {
     _order: Order | string,
     existingDeliver?: boolean
   ): Promise<void> {
+    this.logger.log('Hello world')
+
     this.logger.log(`PIM -> started processing instant order: ${typeof _order !== 'string' ? _order?._id.toString() : _order}`)
     try {
+
       if ((existingDeliver === true) && typeof _order !== 'string') {
         const createdAt = moment(_order.createdAt)
         const currentTime = moment()
