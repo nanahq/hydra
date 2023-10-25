@@ -52,12 +52,8 @@ export class OrdersController {
   async updateOrderStatus (
     @Body() data: UpdateOrderStatusRequestDto
   ): Promise<ResponseWithStatus> {
-    const payload: ServicePayload<UpdateOrderStatusRequestDto> = {
-      userId: '',
-      data
-    }
     return await lastValueFrom<ResponseWithStatus>(
-      this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, payload).pipe(
+      this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, data).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

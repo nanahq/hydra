@@ -143,6 +143,9 @@ export class ODSA {
         _id: data.deliveryId
       }, ['order, vendor']) as DeliveryI
 
+      this.logger.log(JSON.stringify(delivery))
+      this.logger.log('Fetched delivery')
+
       await lastValueFrom(
         this.orderClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
           orderId: delivery.order,

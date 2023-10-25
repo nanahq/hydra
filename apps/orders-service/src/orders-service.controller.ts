@@ -55,7 +55,7 @@ export class OrdersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_ORDER_STATUS)
   async updateOrderStatus (
-    @Payload() { data }: ServicePayload<UpdateOrderStatusRequestDto>,
+    @Payload() data: UpdateOrderStatusRequestDto,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
