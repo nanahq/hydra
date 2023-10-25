@@ -38,17 +38,17 @@ export class LocationService {
     origin: number[],
     destination: number[]
   ): Promise<TravelDistanceResult> {
-    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${
-      origin[0]
-    },${origin[1]};${destination[0]},${destination[1]}?access_token=${
+    const url = `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${
+      origin[1]
+    },${origin[0]};${destination[1]},${destination[0]}?access_token=${
       this.mapboxToken as string
     }`
     try {
       this.logger.log('PIM -> Getting travel distance via mapbox')
       const { data } = await firstValueFrom(this.httpService.get(url))
       return {
-        distance: data?.routes[0]?.distance,
-        duration: data?.routes[0]?.duration
+        distance: Math.ceil((data?.routes[0]?.distance ?? 0) / 1000), // kilometres
+        duration: Math.ceil((data?.routes[0]?.duration ?? 0) / 60) // minutes
       }
     } catch (error) {
       this.logger.log(JSON.stringify(error))

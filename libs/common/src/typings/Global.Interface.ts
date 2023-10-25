@@ -104,3 +104,37 @@ export interface DeliveryI {
 
   assignedToDriver: boolean
 }
+
+export interface DriverI {
+  _id: string
+  available: boolean
+
+  createdAt: string
+
+  email: string
+
+  firstName: string
+
+  isDeleted: false
+
+  isValidated: boolean
+
+  lastName: string
+
+  location: LocationCoordinates
+
+  password: string
+
+  phone: string
+
+  state: string
+
+  status: 'ONLINE' | 'OFFLINE'
+
+  trips: DeliveryI[]
+
+  totalTrips: number
+  type: DriverType
+
+  updatedAt: string
+}
