@@ -4,14 +4,17 @@ import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import {
   Delivery,
+  DeliveryI,
   Driver,
   DriverWithLocation,
   FitRpcException,
   Order,
+  OrderI,
   OrderStatus,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus, VendorApprovalStatus, TravelDistanceResult, OrderI, DeliveryI
+  ResponseWithStatus, TravelDistanceResult,
+  VendorApprovalStatus
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
@@ -135,10 +138,10 @@ export class ODSA {
     try {
       this.logger.log('PIM -> Updating delivery status')
 
-      const delivery = await this.odsaRepository.findOne({
+      const delivery = await this.odsaRepository.findOneAndPopulate({
         driver: data.driverId,
         _id: data.deliveryId
-      }) as Delivery
+      }, ['order, vendor']) as DeliveryI
 
       await lastValueFrom(
         this.orderClient.emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
@@ -147,16 +150,32 @@ export class ODSA {
         })
       )
 
+      const updates: Partial<Delivery> = { status: data.status }
+
+      // Check if it is a pickup update
+      const pickedUp = data.status === OrderStatus.COLLECTED
+
+      if (pickedUp) {
+        const deliveryTime = new Date()
+        const travelDistance = await lastValueFrom<TravelDistanceResult>(
+          this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: delivery.order.preciseLocation.coordinates, vendorCoords: delivery.vendor.location?.coordinates })
+        )
+        deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
+        updates.deliveryTime = deliveryTime.getTime()
+      }
+
       const delivered = data.status === OrderStatus.FULFILLED
 
       let deliveredWithinTime: boolean = false
 
       if (delivered) {
         deliveredWithinTime = moment().isSameOrBefore(new Date(delivery.deliveryTime))
+        updates.deliveredWithinTime = deliveredWithinTime
+        updates.completed = true
       }
       await this.odsaRepository.findOneAndUpdate(
         { _id: delivery._id },
-        { status: data.status, deliveredWithinTime, completed: delivered }
+        updates
       )
 
       this.logger.log('PIM -> Success: Updated delivery status')
@@ -211,16 +230,6 @@ export class ODSA {
         collectionLocation
       )
 
-      let travelDistance: TravelDistanceResult
-      const deliveryTime = new Date()
-
-      if (existingDeliver === undefined) {
-        travelDistance = await lastValueFrom<TravelDistanceResult>(
-          this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: order.preciseLocation.coordinates, vendorCoords: collectionLocation })
-        )
-        deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
-      }
-
       if (driverToBeAssigned === null) {
         if (existingDeliver === undefined) {
           await this.odsaRepository.create({
@@ -228,7 +237,6 @@ export class ODSA {
             order: order._id,
             vendor: order.vendor?._id,
             user: order.user._id,
-            deliveryTime: deliveryTime.getTime(),
             dropOffLocation: order.preciseLocation,
             pickupLocation: order.vendor.location,
             assignedToDriver: false
@@ -252,7 +260,6 @@ export class ODSA {
           order: order._id,
           vendor: order.vendor?._id,
           user: order.user._id,
-          deliveryTime: deliveryTime.getTime(),
           dropOffLocation: order.preciseLocation,
           pickupLocation: order.vendor.location,
           assignedToDriver: true
