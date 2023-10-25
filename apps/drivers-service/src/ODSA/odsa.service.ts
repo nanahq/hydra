@@ -167,8 +167,11 @@ export class ODSA {
       const currentTime = moment()
       const timeDiff = currentTime.diff(createdAt, 'hours')
 
+      console.log('Hello world')
+      this.logger.log('TimeDiff', timeDiff)
+
       if (timeDiff > this.MAX_ORDER_EXPIRY) {
-        console.log('[FORWARD_ADMIN]: Order has exceeded 2 hours')
+        this.logger.log('[FORWARD_ADMIN]: Order has exceeded 2 hours')
         return
       }
 
