@@ -157,7 +157,7 @@ export class ODSA {
           })
           .pipe(
             catchError((error) => {
-              this.logger.error(error)
+              this.logger.error(JSON.stringify(error))
               throw new RpcException(error)
             })
           )
@@ -167,7 +167,6 @@ export class ODSA {
       const currentTime = moment()
       const timeDiff = currentTime.diff(createdAt, 'hours')
 
-      this.logger.debug(timeDiff)
       if (timeDiff > this.MAX_ORDER_EXPIRY) {
         return
       }
@@ -226,8 +225,8 @@ export class ODSA {
         { available: false }
       )
     } catch (error) {
-      this.logger.debug({
-        error,
+      this.logger.error({
+        error: JSON.stringify(error),
         message: `Something went wrong processing order ${orderId}`
       })
       throw new FitRpcException(
