@@ -140,10 +140,10 @@ export class ODSA {
 
       const delivery = await this.odsaRepository.findOneAndPopulate({
         _id: data.deliveryId
-      }, ['order, vendor']) as DeliveryI
+      }, ['order', 'vendor']) as DeliveryI
 
       this.logger.log(JSON.stringify(delivery))
-      this.logger.log('Fetched delivery')
+      this.logger.log(data.driverId)
       await lastValueFrom(
         this.orderClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
           orderId: delivery.order,
