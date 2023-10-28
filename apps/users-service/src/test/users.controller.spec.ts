@@ -44,7 +44,7 @@ describe('usersServiceController', () => {
 
   describe('register', () => {
     describe('When registering a new  user', () => {
-      let response: ResponseWithStatus
+      let response: User
       let payload: registerUserRequest
       let context: RmqContext
       beforeEach(async () => {
@@ -61,7 +61,7 @@ describe('usersServiceController', () => {
       })
 
       test('then is should return a success status', () => {
-        expect(response).toStrictEqual(resStub())
+        expect(response).toStrictEqual(UserProfileStub())
       })
     })
   })

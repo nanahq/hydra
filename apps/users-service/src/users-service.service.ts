@@ -30,7 +30,7 @@ export class UsersService {
     email,
     phone,
     password
-  }: registerUserRequest): Promise<ResponseWithStatus> {
+  }: registerUserRequest): Promise<User> {
     const formattedPhone = internationalisePhoneNumber(phone)
     await this.checkExistingUser(formattedPhone, email) // Gate to check if phone has already been registered
 
@@ -42,7 +42,7 @@ export class UsersService {
     }
 
     try {
-      await this.usersRepository.create(payload)
+      const user = await this.usersRepository.create(payload)
       await lastValueFrom(
         this.notificationClient.emit(
           QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
@@ -53,7 +53,7 @@ export class UsersService {
           }
         )
       )
-      return { status: 1 }
+      return user
     } catch (error) {
       throw new FitRpcException(
         `can not process request. Try again later ${JSON.stringify(error)}`,

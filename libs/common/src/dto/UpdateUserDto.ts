@@ -19,4 +19,7 @@ export class UpdateUserDto {
 
   @IsOptional()
     lastName: string
+
+  @IsOptional()
+    expoNotificationToken: string
 }

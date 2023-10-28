@@ -111,7 +111,7 @@ export interface UserI {
   firstName: string
   lastName: string
   email: string
-  password: string
+  password?: string
   phone: string
   isValidated: boolean
   createdAt: string
@@ -119,7 +119,8 @@ export interface UserI {
   status: 'ONLINE' | 'OFFLINE'
   isDeleted: boolean
   orders: OrderI[]
-  location: LocationCoordinates
+  location?: LocationCoordinates
+  expoNotificationToken?: string
 }
 
 export interface ReviewI {

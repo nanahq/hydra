@@ -35,10 +35,9 @@ export class UsersServiceController {
   async registerNewUser (
     @Payload() data: registerUserRequest,
       @Ctx() context: RmqContext
-  ): Promise<ResponseWithStatus> {
+  ): Promise<User> {
     try {
-      const res = await this.usersService.register(data)
-      return res
+      return await this.usersService.register(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {
