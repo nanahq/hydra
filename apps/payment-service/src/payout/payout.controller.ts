@@ -85,7 +85,6 @@ export class VendorPayoutController {
     @Payload() { vendorId }: { vendorId: string },
       @Ctx() context: RmqContext
   ): Promise<PayoutOverview> {
-    console.log(vendorId)
     try {
       return await this.payoutService.payoutOverview(vendorId)
     } catch (error) {
