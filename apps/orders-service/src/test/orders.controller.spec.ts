@@ -287,22 +287,19 @@ describe('ordersServiceController', () => {
   describe('Update Operations', () => {
     describe('When updating order status', () => {
       let response: ResponseWithStatus
-      let payload: ServicePayload<UpdateOrderStatusRequestDto>
+      let payload: UpdateOrderStatusRequestDto
 
       beforeEach(async () => {
         payload = {
-          userId: '',
-          data: {
-            orderId: OrderStub()._id as unknown as string,
-            status: OrderStatus.IN_ROUTE
-          }
+          orderId: OrderStub()._id as unknown as string,
+          status: OrderStatus.IN_ROUTE
         }
 
         response = await ordersController.updateOrderStatus(payload, context)
       })
 
       test('then it should call ordersService.updateOrderStatus', () => {
-        expect(ordersService.updateStatus).toHaveBeenCalledWith(payload.data)
+        expect(ordersService.updateStatus).toHaveBeenCalledWith(payload)
       })
 
       test('then is should return success', () => {
