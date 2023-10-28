@@ -48,6 +48,9 @@ export class User extends AbstractDocument {
 
   @Prop({ type: Boolean, default: false })
     isDeleted: false
+
+  @Prop({ type: String })
+    expoNotificationToken: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

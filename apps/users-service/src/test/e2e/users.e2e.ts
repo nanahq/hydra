@@ -91,7 +91,7 @@ describe('users service e2e', () => {
     it('should create a new user', async () => {
       expect((await repository.find({})).length).toStrictEqual(0)
 
-      const response = await lastValueFrom<ResponseWithStatus>(
+      await lastValueFrom<User>(
         client.send(QUEUE_MESSAGE.CREATE_USER, payload)
           .pipe(
             catchError((error) => {
@@ -99,7 +99,7 @@ describe('users service e2e', () => {
             })
           )
       )
-      expect(response).toStrictEqual({ status: 1 })
+
       const users: User[] = await repository.find({})
 
       expect(users.length).toStrictEqual(1)
