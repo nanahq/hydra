@@ -8,6 +8,7 @@ import {
 import { Controller, UseFilters } from '@nestjs/common'
 
 import {
+  CheckUserAccountI,
   ExceptionFilterRpc,
   loginUserRequest,
   QUEUE_MESSAGE,
@@ -137,6 +138,20 @@ export class UsersServiceController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.usersService.updateUserOrderCount(orderId, userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.CHECK_PHONE_NUMBER)
+  async checkUserAccount (
+    @Payload() { phone }: { phone: string },
+      @Ctx() context: RmqContext
+  ): Promise<CheckUserAccountI> {
+    try {
+      return await this.usersService.checkUserAccount(phone)
     } catch (error) {
       throw new RpcException(error)
     } finally {

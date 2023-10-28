@@ -2,6 +2,7 @@ import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 
 import {
+  CheckUserAccountI,
   FitRpcException, internationalisePhoneNumber,
   loginUserRequest, QUEUE_MESSAGE, QUEUE_SERVICE,
   registerUserRequest,
@@ -179,6 +180,20 @@ export class UsersService {
       { orders: [...user?.orders, orderId] }
     )
     return { status: 1 }
+  }
+
+  public async checkUserAccount (phone: string): Promise<CheckUserAccountI> {
+    const user: User | null = await this.usersRepository.findOne({ phone })
+    if (user === null) {
+      return {
+        hasAccount: false,
+        firstName: undefined
+      }
+    }
+    return {
+      hasAccount: true,
+      firstName: user.firstName
+    }
   }
 
   private async checkExistingUser (phone: string, email: string): Promise<User> {

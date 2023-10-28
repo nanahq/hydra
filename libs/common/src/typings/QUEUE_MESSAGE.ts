@@ -21,6 +21,7 @@ export enum QUEUE_MESSAGE {
 
   ADMIN_DASHBOARD_ORDER_METRICS = 'admin_dashboard_order_metrics',
 
+  CHECK_PHONE_NUMBER = 'CHECK_PHONE_NUMBER',
   GET_VENDOR = 'get_vendor',
   GET_VENDOR_SETTINGS = 'get_vendor_settings',
   CREATE_VENDOR_SETTINGS = 'create_vendor_settings',

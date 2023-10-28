@@ -138,3 +138,8 @@ export interface DriverI {
 
   updatedAt: string
 }
+
+export interface CheckUserAccountI {
+  hasAccount: boolean
+  firstName: string | undefined
+}

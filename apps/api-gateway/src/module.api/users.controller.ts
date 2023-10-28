@@ -4,7 +4,7 @@ import {
   Delete,
   Get,
   HttpException,
-  Inject,
+  Inject, Param,
   Post,
   Put,
   UseGuards
@@ -13,6 +13,7 @@ import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
+  CheckUserAccountI,
   CurrentUser,
   IRpcException,
   PhoneVerificationPayload,
@@ -62,6 +63,18 @@ export class UsersController {
             throw new HttpException(error.message, error.status)
           })
         )
+    )
+  }
+
+  @Get('validate/:phone')
+  async validatePhoneNumber (
+    @Param('phone') phone: string
+  ): Promise<CheckUserAccountI> {
+    return await lastValueFrom<CheckUserAccountI>(
+      this.usersClient.send(QUEUE_MESSAGE.CHECK_PHONE_NUMBER, { phone })
+        .pipe(catchError((error) => {
+          throw new HttpException(error.message, error.status)
+        }))
     )
   }
 
