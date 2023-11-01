@@ -17,7 +17,7 @@ import {
   ServicePayload,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
-  , ScheduledListingDto
+  , ScheduledListingDto, ListingCategoryI
 } from '@app/common'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
 
@@ -373,6 +373,20 @@ export class ListingsController {
   ): Promise<ScheduledListing[]> {
     try {
       return await this.listingService.getAllScheduledListing(id)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_WITH_LISTING)
+  async getVendorListings (
+    @Payload() { vendorId }: { vendorId },
+      @Ctx() context
+  ): Promise<ListingCategoryI[]> {
+    try {
+      return await this.listingService.getVendorListings(vendorId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

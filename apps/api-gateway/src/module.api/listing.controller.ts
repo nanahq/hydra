@@ -3,7 +3,14 @@ import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { IRpcException, ListingCategory, ListingMenu, QUEUE_MESSAGE, QUEUE_SERVICE } from '@app/common'
+import {
+  IRpcException,
+  ListingCategory,
+  ListingCategoryI,
+  ListingMenu,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE
+} from '@app/common'
 
 @Controller('listing')
 export class ListingsController {
@@ -59,6 +66,22 @@ export class ListingsController {
     return await lastValueFrom<ListingMenu | null>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_SINGLE_LISTING_CAT_USER, catid)
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @Get('/vendor/:vid')
+  @UseGuards(JwtAuthGuard)
+  async getVendorListings (
+    @Param('vid') vendorId: string
+  ): Promise<ListingCategoryI> {
+    return await lastValueFrom<ListingCategoryI>(
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_VENDOR_WITH_LISTING, { vendorId })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
