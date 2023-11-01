@@ -48,12 +48,15 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   async findAndPopulate<T>(
     filterQuery: FilterQuery<TDocument>,
-    populatePath: string | string[],
-    secondPopulate?: string | string[]
+    populatePath: string | string[]
   ): Promise<T[]> {
     return await this.model
       .find(filterQuery)
-      .populate({ path: populatePath as any, populate: secondPopulate }) as any
+      .populate(populatePath as any) as any
+  }
+
+  findRaw (): Model<TDocument> {
+    return this.model
   }
 
   async findOneAndUpdate (
@@ -88,10 +91,12 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     )
   }
 
-  async deleteMany (): Promise<HydratedDocument<TDocument> | any> {
+  async deleteMany (
+    filterQuery?: FilterQuery<TDocument>
+  ): Promise<HydratedDocument<TDocument> | any> {
     return await new Promise((resolve) =>
       resolve(
-        this.model.deleteMany()
+        this.model.deleteMany(filterQuery)
       )
     )
   }

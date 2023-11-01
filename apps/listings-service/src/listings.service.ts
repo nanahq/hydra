@@ -483,8 +483,14 @@ export class ListingsService {
 
   async getVendorListings (vendor: string): Promise<any[]> {
     try {
-      const listings: ListingCategoryI[] = await this.listingCategoryRepository.findAndPopulate({ vendor, isLive: true }, ['listingsMenu'], ['optionGroups'])
-
+      const rawModel = this.listingCategoryRepository.findRaw()
+      const listings: ListingCategoryI[] = await rawModel.find({ vendor, isLive: true })
+        .populate({
+          path: 'listingsMenu',
+          populate: {
+            path: 'optionGroups'
+          }
+        })
       return listings.map((li) => {
         return li.listingsMenu.filter((menu) => menu.status === ListingApprovalStatus.APPROVED)
       })
@@ -496,7 +502,7 @@ export class ListingsService {
     }
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_1AM, {
+  @Cron(CronExpression.EVERY_12_HOURS, {
     timeZone: 'Africa/Lagos'
   })
   private async deletePastScheduledListings (): Promise<void> {
@@ -507,13 +513,15 @@ export class ListingsService {
 
       this.logger.log(`[CRON] -> ${listings.length} scheduled listings to be deleted `)
 
+      const idsToDelete: any[] = []
       if (listings.length > 0) {
         for (const listing of listings) {
           const listingDate = listing.availableDate
           if (moment(new Date()).isAfter(new Date(listingDate))) {
-            await this.scheduledListingRepository.delete(listing._id)
+            idsToDelete.push(listing._id)
           }
         }
+        await this.scheduledListingRepository.deleteMany({ _id: { $in: idsToDelete } })
       }
     } catch (error) {
       this.logger.error({ error })
