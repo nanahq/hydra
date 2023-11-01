@@ -3,12 +3,13 @@ import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import {
   FitRpcException,
   ListingCategory,
+  ListingCategoryI,
   ListingMenu,
   ListingOptionGroup,
   ResponseWithStatus,
   ScheduledListing,
+  ScheduledListingDto,
   ServicePayload
-  , ScheduledListingDto
 } from '@app/common'
 import {
   ListingCategoryRepository,
@@ -472,6 +473,21 @@ export class ListingsService {
   async getAllScheduledListing (vendor: string): Promise<ScheduledListing[] > {
     try {
       return await this.scheduledListingRepository.findAndPopulate({ vendor }, ['listing', 'vendor'])
+    } catch (error) {
+      this.logger.error({
+        error
+      })
+      throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getVendorListings (vendor: string): Promise<any[]> {
+    try {
+      const listings: ListingCategoryI[] = await this.listingCategoryRepository.findAndPopulate({ vendor, isLive: true }, ['listingsMenu'], ['optionGroups'])
+
+      return listings.map((li) => {
+        return li.listingsMenu.filter((menu) => menu.status === ListingApprovalStatus.APPROVED)
+      })
     } catch (error) {
       this.logger.error({
         error

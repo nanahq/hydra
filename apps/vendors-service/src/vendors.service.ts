@@ -367,7 +367,12 @@ function getVendorsMapper (vendors: Vendor[]): VendorUserI[] {
       businessLogo: vendor.businessLogo,
       isValidated: vendor.isValidated,
       status: vendor.status,
-      location: vendor.location
+      location: vendor.location,
+      businessImage: vendor.restaurantImage,
+      ratings: {
+        rating: 0,
+        totalReviews: 0
+      }
     }
   })
 }

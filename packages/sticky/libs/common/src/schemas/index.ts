@@ -42,7 +42,7 @@ export interface ListingMenuI {
   isLive: boolean
   isAvailable: boolean
   isDeleted: boolean
-  optionGroups: ListingOption[]
+  optionGroups: ListingOptionGroupI[]
   createdAt: string
   reviews: ReviewI[]
   updatedAt: string
@@ -89,10 +89,19 @@ export interface VendorUserI {
   status: 'ONLINE' | 'OFFLINE'
   businessName: string
   businessLogo: string
+
+  businessImage: string
   businessAddress: string
   location: LocationCoordinates
+
+  ratings: VendorRatings
 }
 
+
+export interface VendorRatings {
+  rating: number
+  totalReviews: number
+}
 export interface UserI {
   _id: string
   firstName: string

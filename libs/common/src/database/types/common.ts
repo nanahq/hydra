@@ -1,4 +1,6 @@
 import { OrderType, VendorOperationType, OrderStatus } from '@app/common'
+import { VendorRatings } from '../../../../../packages/sticky'
+import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 
 export interface ListingOption {
   name: string
@@ -56,9 +58,11 @@ export interface ListingMenuI {
   isLive: boolean
   isAvailable: boolean
   isDeleted: boolean
-  optionGroups: ListingOption[]
+  optionGroups: ListingOptionGroupI[]
   createdAt: string
   updatedAt: string
+
+  status: ListingApprovalStatus
 }
 
 export interface OrderBreakDown {
@@ -102,8 +106,12 @@ export interface VendorUserI {
   status: 'ONLINE' | 'OFFLINE'
   businessName: string
   businessLogo: string
+
+  businessImage: string
   businessAddress: string
   location: LocationCoordinates
+
+  ratings: VendorRatings
 }
 
 export interface UserI {

@@ -48,11 +48,12 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   async findAndPopulate<T>(
     filterQuery: FilterQuery<TDocument>,
-    populatePath: string | string[]
+    populatePath: string | string[],
+    secondPopulate?: string | string[]
   ): Promise<T[]> {
     return await this.model
       .find(filterQuery)
-      .populate(populatePath as any) as any
+      .populate({ path: populatePath as any, populate: secondPopulate }) as any
   }
 
   async findOneAndUpdate (
