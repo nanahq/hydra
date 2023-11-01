@@ -1,5 +1,4 @@
 import { OrderType, VendorOperationType, OrderStatus } from '@app/common'
-import { VendorRatings } from '../../../../../packages/sticky'
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 
 export interface ListingOption {
@@ -111,7 +110,10 @@ export interface VendorUserI {
   businessAddress: string
   location: LocationCoordinates
 
-  ratings: VendorRatings
+  ratings: {
+    totalReviews: number
+    rating: number
+  }
 }
 
 export interface UserI {
