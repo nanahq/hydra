@@ -380,13 +380,40 @@ export class ListingsController {
     }
   }
 
+  @MessagePattern(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS_USER)
+  async getScheduledListingsUser (
+    @Ctx() context
+  ): Promise<ScheduledListing[]> {
+    try {
+      return await this.listingService.getAllScheduledListingUser()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_WITH_LISTING)
   async getVendorListings (
-    @Payload() { vendorId }: { vendorId },
+    @Payload() { vendorId }: { vendorId: string },
       @Ctx() context
   ): Promise<ListingCategoryI[]> {
     try {
       return await this.listingService.getVendorListings(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_CAT_USER)
+  async getVendorCategories (
+    @Payload() { vendorId }: { vendorId: string },
+      @Ctx() context
+  ): Promise<ListingCategory[]> {
+    try {
+      return await this.listingService.getVendorCategories(vendorId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

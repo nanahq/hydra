@@ -408,7 +408,6 @@ export class ListingsService {
     }
   }
 
-  // Users Vendor Methods
   async getAllMenuUser (): Promise<ListingMenu[]> {
     try {
       return await this.listingMenuRepository.findAndPopulate({
@@ -462,6 +461,7 @@ export class ListingsService {
   async updateScheduledListingCount (listingMenuId): Promise<void> {
     try {
       const listing = await this.scheduledListingRepository.findOne({ listing: listingMenuId })
+
       if (listing !== null) {
         await this.scheduledListingRepository.findOneAndUpdate({ _id: listing._id }, { remainingQuantity: listing.remainingQuantity - 1 })
       }
@@ -478,6 +478,26 @@ export class ListingsService {
         error
       })
       throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getAllScheduledListingUser (): Promise<ScheduledListing[] > {
+    try {
+      return await this.scheduledListingRepository.findAndPopulate({ }, ['listing', 'vendor'])
+    } catch (error) {
+      this.logger.error({
+        error
+      })
+      throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getVendorCategories (vendor: string): Promise<ListingCategory[]> {
+    try {
+      return await this.listingCategoryRepository.findAndPopulate({ vendor, isLive: true }, ['listingsMenu'])
+    } catch (error) {
+      this.logger.error(error)
+      throw new FitRpcException('Can not fetch vendor listings at this time', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
@@ -498,7 +518,7 @@ export class ListingsService {
       this.logger.error({
         error
       })
-      throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException('Can not fetch vendor listings at this time', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
@@ -524,7 +544,7 @@ export class ListingsService {
         await this.scheduledListingRepository.deleteMany({ _id: { $in: idsToDelete } })
       }
     } catch (error) {
-      this.logger.error({ error })
+      this.logger.error(error)
     }
   }
 }

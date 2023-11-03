@@ -7,10 +7,11 @@ import {
   IRpcException,
   ListingCategory,
   ListingCategoryI,
-  ListingMenu,
+  ListingMenu, MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE
 } from '@app/common'
+import { ScheduledListingI } from '../../../../packages/sticky'
 
 @Controller('listing')
 export class ListingsController {
@@ -25,6 +26,50 @@ export class ListingsController {
   async getMenus (): Promise<ListingMenu[]> {
     return await lastValueFrom<ListingMenu[]>(
       this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER, {}).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get('categories/:vid')
+  @UseGuards(JwtAuthGuard)
+  async getVendorCategories (
+    @Param('vid') vendorId: string
+  ): Promise<ListingCategory[]> {
+    return await lastValueFrom<ListingCategory[]>(
+      this.listingClient.send(QUEUE_MESSAGE.GET_VENDOR_CAT_USER, { vendorId }).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get('scheduled/:vid')
+  @UseGuards(JwtAuthGuard)
+  async getVendorScheduledListings (
+    @Param('vid') vendorId: string
+  ): Promise<ScheduledListingI[]> {
+    const payload: MultiPurposeServicePayload<null> = {
+      id: vendorId,
+      data: null
+    }
+    return await lastValueFrom<ScheduledListingI[]>(
+      this.listingClient.send(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get('scheduled')
+  @UseGuards(JwtAuthGuard)
+  async getAllScheduledListings (): Promise<ScheduledListingI[]> {
+    return await lastValueFrom<ScheduledListingI[]>(
+      this.listingClient.send(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS_USER, {}).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

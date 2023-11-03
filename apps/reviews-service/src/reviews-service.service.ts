@@ -123,6 +123,9 @@ export class ReviewsService implements ReviewsServiceI {
       } else {
         riskFactor = 'HIGH'
       }
+    } else if (vendorReviews.length > 0 && vendorReviews.length < 5) {
+      aggregateRating = vendorReviews.length
+      riskFactor = 'LOW'
     }
 
     return {
