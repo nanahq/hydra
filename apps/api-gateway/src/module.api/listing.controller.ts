@@ -9,9 +9,9 @@ import {
   ListingCategoryI,
   ListingMenu, MultiPurposeServicePayload,
   QUEUE_MESSAGE,
-  QUEUE_SERVICE
+  QUEUE_SERVICE,
+  ScheduledListingI
 } from '@app/common'
-import { ScheduledListingI } from '../../../../packages/sticky'
 
 @Controller('listing')
 export class ListingsController {

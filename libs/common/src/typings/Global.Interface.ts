@@ -143,3 +143,23 @@ export interface CheckUserAccountI {
   hasAccount: boolean
   firstName: string | undefined
 }
+
+
+export interface ScheduledListingI {
+  _id: string
+
+  vendor: VendorI
+
+  listing: ListingMenuI
+
+  quantity: number
+  availableDate: number
+
+  updatedAt: string
+
+  createdAt: string
+
+  soldOut: boolean
+
+  remainingQuantity: number
+}
