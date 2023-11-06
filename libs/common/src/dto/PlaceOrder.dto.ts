@@ -1,5 +1,6 @@
 import { IsString, IsNumber, IsBoolean, IsArray, IsObject, IsPhoneNumber, ValidateNested } from 'class-validator'
 import { OrderType } from '@app/common/typings/Global.Interface'
+import { OrderOptions } from '@app/common/database/types/common'
 
 class PreciseLocationDto {
   @IsArray()
@@ -31,7 +32,7 @@ export class PlaceOrderDto {
     vendor: string
 
   @IsString()
-    listing: string
+    listing: string[]
 
   @IsString()
     quantity: string
@@ -59,7 +60,7 @@ export class PlaceOrderDto {
     preciseLocation: PreciseLocationDto
 
   @IsArray()
-    options: string[]
+    options: OrderOptions[]
 
   @IsString()
     orderDeliveryScheduledTime: string

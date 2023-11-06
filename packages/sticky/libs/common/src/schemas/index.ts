@@ -5,7 +5,7 @@ import {
   OrderType,
   PaymentInfo,
   VendorOperationSetting,
-  DriverType, AdminLevel, ListingApprovalStatus
+  DriverType, AdminLevel, ListingApprovalStatus, OrderOptions
 } from '../typings'
 export interface ListingCategoryI {
   _id: string
@@ -94,9 +94,9 @@ export interface VendorUserI {
   businessAddress: string
   location: LocationCoordinates
 
+  settings: VendorOperationSetting
   ratings: VendorRatings
 }
-
 
 export interface VendorRatings {
   rating: number
@@ -142,7 +142,7 @@ export interface OrderI {
   createdAt: string
   updatedAt: string
   refId: number
-  options: string[]
+  options: OrderOptions[]
   orderStatus: OrderStatus
   orderType: OrderType
   orderBreakDown: OrderBreakDown

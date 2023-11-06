@@ -110,7 +110,7 @@ export interface VendorUserI {
   businessImage: string
   businessAddress: string
   location: LocationCoordinates
-
+  settings: VendorOperationSetting
   ratings: {
     totalReviews: number
     rating: number
@@ -179,4 +179,10 @@ export interface VendorReviewOverview {
   rating: string
   numberOfReviews: number
   riskFactor: 'HIGH' | 'MEDIUM' | 'LOW'
+}
+
+
+export interface OrderOptions {
+  listing: string
+  options: string[]
 }
