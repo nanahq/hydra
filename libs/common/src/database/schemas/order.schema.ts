@@ -4,7 +4,7 @@ import {
   AbstractDocument,
   OrderStatus,
   OrderBreakDown,
-  OrderType, LocationCoordinates
+  OrderType, LocationCoordinates, OrderOptions
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -16,10 +16,10 @@ export class Order extends AbstractDocument {
     user: string
 
   @Prop({
-    type: Types.ObjectId,
+    type: [Types.ObjectId],
     ref: 'ListingMenu'
   })
-    listing: string
+    listing: string[]
 
   @Prop({
     type: Types.ObjectId,
@@ -57,8 +57,13 @@ export class Order extends AbstractDocument {
   @Prop(Number)
     refId: number
 
-  @Prop([String])
-    options: string[]
+  @Prop({
+    type: [{
+      listing: Types.ObjectId,
+      options: [String]
+    }]
+  })
+    options: OrderOptions[]
 
   @Prop(String)
     orderType: OrderType

@@ -537,3 +537,8 @@ export interface ScheduledListingDto {
   quantity: number
   availableDate: number
 }
+
+export interface OrderOptions {
+  listing: string
+  options: string[]
+}

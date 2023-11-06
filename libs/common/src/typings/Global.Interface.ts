@@ -144,7 +144,6 @@ export interface CheckUserAccountI {
   firstName: string | undefined
 }
 
-
 export interface ScheduledListingI {
   _id: string
 
