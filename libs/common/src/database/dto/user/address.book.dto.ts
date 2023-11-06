@@ -1,4 +1,4 @@
-import { MaxLength, MinLength } from 'class-validator'
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
 
 export class AddressBookDto {
   @MinLength(8)
@@ -9,9 +9,14 @@ export class AddressBookDto {
   @MaxLength(24)
     labelId: string
 
-  plot_number?: number
+  @IsOptional()
+    plot_number?: number
 
   house_number?: number
 
-  coordinates: [string, string]
+  @IsString()
+    labelName: string
+
+  @IsOptional()
+    coordinates: [string, string]
 }
