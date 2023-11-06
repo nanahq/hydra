@@ -6,7 +6,7 @@ export function OrderStub (): Order {
   return {
     _id: objectId,
     user: 'user_id_123',
-    listing: 'listing_id_456',
+    listing: ['listing_id_456'],
     vendor: 'vendor_id_789',
     totalOrderValue: 100.0,
     orderValuePayable: 95.0,
@@ -16,7 +16,10 @@ export function OrderStub (): Order {
     createdAt: '2023-01-15T10:00:00.000Z' as any,
     updatedAt: '2023-01-15T10:00:00.000Z' as any,
     refId: 12345,
-    options: ['Option1', 'Option2'],
+    options: [{
+      listing: 'listing_123',
+      options: ['Option1', 'Option2']
+    }],
     orderType: OrderTypes.PRE,
     preciseLocation: {
       type: 'Point',
