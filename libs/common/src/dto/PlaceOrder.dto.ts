@@ -31,7 +31,7 @@ export class PlaceOrderDto {
   @IsString()
     vendor: string
 
-  @IsString()
+  @IsArray()
     listing: string[]
 
   @IsString()

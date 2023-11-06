@@ -181,7 +181,6 @@ export interface VendorReviewOverview {
   riskFactor: 'HIGH' | 'MEDIUM' | 'LOW'
 }
 
-
 export interface OrderOptions {
   listing: string
   options: string[]

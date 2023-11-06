@@ -368,7 +368,7 @@ function getVendorsMapper (vendors: any[]): VendorUserI[] {
       status: vendor.status,
       location: vendor.location,
       businessImage: vendor.restaurantImage,
-      settings: vendor.settings,
+      settings: vendor.settings.operations,
       ratings: {
         rating: 0,
         totalReviews: 0
