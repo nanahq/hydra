@@ -94,6 +94,7 @@ export interface VendorUserI {
   businessAddress: string
   location: LocationCoordinates
 
+  settings: VendorOperationSetting
   ratings: VendorRatings
 }
 

@@ -224,8 +224,7 @@ export class VendorsService {
   }
 
   async getAllVendorsUser (): Promise<VendorUserI[]> {
-    const _vendors = await this.vendorRepository.find({ isDeleted: false, acc_status: VendorApprovalStatus.APPROVED })
-
+    const _vendors: any = await this.vendorRepository.findAndPopulate({ isDeleted: false, acc_status: VendorApprovalStatus.APPROVED }, ['settings'])
     if (_vendors === null) {
       throw new FitRpcException(
         'Something went wrong fetching all vendors.',
@@ -358,10 +357,10 @@ export class VendorsService {
   }
 }
 
-function getVendorsMapper (vendors: Vendor[]): VendorUserI[] {
-  return vendors.map((vendor) => {
+function getVendorsMapper (vendors: any[]): VendorUserI[] {
+  return vendors.map((vendor: any) => {
     return {
-      _id: vendor._id as any,
+      _id: vendor._id,
       businessName: vendor.businessName,
       businessAddress: vendor.businessAddress,
       businessLogo: vendor.businessLogo,
@@ -369,6 +368,7 @@ function getVendorsMapper (vendors: Vendor[]): VendorUserI[] {
       status: vendor.status,
       location: vendor.location,
       businessImage: vendor.restaurantImage,
+      settings: vendor.settings,
       ratings: {
         rating: 0,
         totalReviews: 0

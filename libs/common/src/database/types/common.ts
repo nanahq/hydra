@@ -110,7 +110,7 @@ export interface VendorUserI {
   businessImage: string
   businessAddress: string
   location: LocationCoordinates
-
+  settings: VendorOperationSetting
   ratings: {
     totalReviews: number
     rating: number
