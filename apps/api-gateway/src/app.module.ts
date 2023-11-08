@@ -29,6 +29,7 @@ import { ReviewController } from './module.api/review.controller'
 import { PaymentController } from './module.api/payment.controller'
 import { AddressBookController } from './module.api/address-book.controller'
 import { LocationController } from './module.api/location.controller'
+import { GeneralController } from './module.api/general.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -87,7 +88,8 @@ export class AppModule implements NestModule {
         ReviewController,
         PaymentController,
         AddressBookController,
-        LocationController
+        LocationController,
+        GeneralController
       ],
       providers: [
         AuthService,

@@ -561,3 +561,16 @@ export interface DeliveryPriceMeta {
   LONG_DISTANCE_RATE: number
   MAX_DELIVERY_FEE_PAYABLE: number
 }
+
+export interface AppConstants {
+  cart:CartConstants
+  delivery: DeliveryPriceMeta
+}
+
+
+export interface DeliveryFeeResult {
+  distance?: number // in meters
+
+  duration?: number // in minutes
+  fee: number // in naira
+}

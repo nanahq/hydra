@@ -1,6 +1,6 @@
 import { Body, Controller, HttpException, Inject, Post, UseGuards } from '@nestjs/common'
 import {
-  CurrentUser,
+  CurrentUser, DeliveryFeeResult,
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -27,6 +27,21 @@ export class LocationController {
   ): Promise<any> {
     return await lastValueFrom<TravelDistanceResult>(
       this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, data).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Post('delivery-fee')
+  @UseGuards(JwtAuthGuard)
+  async getDeliveryFee (
+    @CurrentUser() user: User,
+      @Body() data: { userCoords: number[], vendorCoords: number[] }
+  ): Promise<any> {
+    return await lastValueFrom<DeliveryFeeResult>(
+      this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_DELIVERY_FEE, data).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

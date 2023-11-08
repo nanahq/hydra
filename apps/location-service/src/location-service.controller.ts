@@ -7,7 +7,7 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { RmqService, QUEUE_MESSAGE, DriverWithLocation, TravelDistanceResult } from '@app/common'
+import { RmqService, QUEUE_MESSAGE, DriverWithLocation, TravelDistanceResult, DeliveryFeeResult } from '@app/common'
 @Controller()
 export class LocationController {
   constructor (
@@ -47,6 +47,27 @@ export class LocationController {
   ): Promise<TravelDistanceResult | null> {
     try {
       return await this.locationService.getTravelDistance(
+        userCoords,
+        vendorCoords
+      )
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LOCATION_GET_ETA)
+  async getDeliveryFee (
+    @Payload()
+      {
+        userCoords,
+        vendorCoords
+      }: { userCoords: number[], vendorCoords: number[] },
+      @Ctx() context: RmqContext
+  ): Promise<DeliveryFeeResult | null> {
+    try {
+      return await this.locationService.getDeliveryFee(
         userCoords,
         vendorCoords
       )
