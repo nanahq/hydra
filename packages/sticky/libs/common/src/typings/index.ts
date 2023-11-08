@@ -1,4 +1,4 @@
-import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI } from '../schemas'
+import { ListingCategoryI, OrderI, ReviewI, VendorI } from '../schemas'
 
 export interface TokenPayload {
   userId: string
@@ -11,6 +11,11 @@ export interface VendorWithListing {
 
 export interface ReviewToken {
   listingId: string
+}
+
+export interface ResponseWithStatusAndData<T> {
+  status: 0 | 1
+  data: T
 }
 
 export type OrderType = 'PRE_ORDER' | 'ON_DEMAND'
