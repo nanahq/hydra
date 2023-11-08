@@ -53,7 +53,7 @@ export class OrdersServiceService {
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
 
-    const populatedOrder: any = await this.orderRepository.findAndPopulate({ _id: _newOrder._id }, ['listing', 'vendor'])
+    const populatedOrder: any = await this.orderRepository.findOneAndPopulate({ _id: _newOrder._id }, ['listing', 'vendor'])
 
     if (_newOrder === null) {
       throw new FitRpcException(

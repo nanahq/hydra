@@ -57,7 +57,7 @@ export class LocationController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.LOCATION_GET_ETA)
+  @MessagePattern(QUEUE_MESSAGE.LOCATION_GET_DELIVERY_FEE)
   async getDeliveryFee (
     @Payload()
       {

@@ -10,7 +10,7 @@ import {
   UserSchema,
   DatabaseModule,
   AddressBook,
-  AddressBookSchema
+  AddressBookSchema, AddressBookLabel, AddressBookLabelSchema
 } from '@app/common'
 import { UsersServiceController } from './users-service.controller'
 import { UsersService } from './users-service.service'
@@ -38,6 +38,10 @@ import { AddressBookService } from './address-book-service.service'
       {
         name: AddressBook.name,
         schema: AddressBookSchema
+      },
+      {
+        name: AddressBookLabel.name,
+        schema: AddressBookLabelSchema
       }
     ]),
     DatabaseModule,
