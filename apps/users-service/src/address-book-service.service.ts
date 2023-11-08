@@ -14,7 +14,7 @@ export class AddressBookService {
   constructor (private readonly repository: AddressBookRepository) {}
 
   async list (): Promise<AddressBook[]> {
-    const getRequest = await this.repository.find({ isDeleted: false })
+    const getRequest: AddressBook[] = await this.repository.findAndPopulate({ isDeleted: false }, ['labelId'])
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -26,10 +26,10 @@ export class AddressBookService {
   }
 
   async listByUserId (id: string): Promise<AddressBook[]> {
-    const addresses = await this.repository.find({
+    const addresses: AddressBook[] = await this.repository.findAndPopulate({
       userId: id,
       isDeleted: false
-    })
+    }, ['labelId'])
 
     if (addresses === null) {
       throw new FitRpcException(
