@@ -56,22 +56,9 @@ export class AddressBookController {
     @Body() data: AddressBookDto,
       @CurrentUser() user: User
   ): Promise<ResponseWithStatus> {
-    const label = await lastValueFrom<AddressBookLabel>(
-      this.adminClient
-        .send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_READ, { id: data.labelId })
-        .pipe(
-          catchError((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
-    )
-
     const payload: Partial<ServicePayload<AddressBookDto>> = {
       userId: user._id as any,
-      ...{
-        ...data,
-        labelName: label.name
-      }
+      data
     }
 
     return await lastValueFrom<ResponseWithStatus>(

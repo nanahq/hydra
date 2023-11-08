@@ -64,6 +64,13 @@ export interface TravelDistanceResult {
   duration?: number // in minutes
   eta?: string
 }
+
+export interface DeliveryFeeResult {
+  distance?: number // in meters
+
+  duration?: number // in minutes
+  fee: number // in naira
+}
 export interface ScheduledListingDto {
   vendor: string
   listing: string
@@ -161,4 +168,23 @@ export interface ScheduledListingI {
   soldOut: boolean
 
   remainingQuantity: number
+}
+
+export interface CartConstants {
+  SERVICE_FEE: number
+  VAT_FEE: number
+}
+
+export interface DeliveryPriceMeta {
+  GAS_PRICE: number
+  BASE_FEE: number
+  SHORT_DISTANCE_RATE: number
+  MEDIUM_DISTANCE_RATE: number
+  LONG_DISTANCE_RATE: number
+  MAX_DELIVERY_FEE_PAYABLE: number
+}
+
+export interface AppConstants {
+  cart: CartConstants
+  delivery: DeliveryPriceMeta
 }

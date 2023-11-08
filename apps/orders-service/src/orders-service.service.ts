@@ -10,6 +10,7 @@ import {
   QUEUE_SERVICE,
   RandomGen,
   ResponseWithStatus,
+  ResponseWithStatusAndData,
   ServicePayload,
   UpdateOrderStatusPaidRequestDto,
   UpdateOrderStatusRequestDto
@@ -42,7 +43,7 @@ export class OrdersServiceService {
   public async placeOrder ({
     data,
     userId
-  }: ServicePayload<PlaceOrderDto>): Promise<ResponseWithStatus> {
+  }: ServicePayload<PlaceOrderDto>): Promise<ResponseWithStatusAndData<Order>> {
     const createOrderPayload: Partial<Order> = {
       ...data,
       user: userId,
@@ -52,6 +53,8 @@ export class OrdersServiceService {
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
 
+    const populatedOrder: any = await this.orderRepository.findAndPopulate({ _id: _newOrder._id }, ['listing', 'vendor'])
+
     if (_newOrder === null) {
       throw new FitRpcException(
         'Can not create your order at this time',
@@ -59,7 +62,7 @@ export class OrdersServiceService {
       )
     }
 
-    return { status: 1 }
+    return { status: 1, data: populatedOrder }
   }
 
   public async getAllVendorOrders (vendor: string): Promise<Order[]> {

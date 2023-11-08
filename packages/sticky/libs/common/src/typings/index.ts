@@ -1,4 +1,4 @@
-import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI } from '../schemas'
+import { ListingCategoryI, OrderI, ReviewI, VendorI } from '../schemas'
 
 export interface TokenPayload {
   userId: string
@@ -11,6 +11,11 @@ export interface VendorWithListing {
 
 export interface ReviewToken {
   listingId: string
+}
+
+export interface ResponseWithStatusAndData<T> {
+  status: 0 | 1
+  data: T
 }
 
 export type OrderType = 'PRE_ORDER' | 'ON_DEMAND'
@@ -541,4 +546,31 @@ export interface ScheduledListingDto {
 export interface OrderOptions {
   listing: string
   options: string[]
+}
+
+export interface CartConstants {
+  SERVICE_FEE: number
+  VAT_FEE: number
+}
+
+export interface DeliveryPriceMeta {
+  GAS_PRICE: number
+  BASE_FEE: number
+  SHORT_DISTANCE_RATE: number
+  MEDIUM_DISTANCE_RATE: number
+  LONG_DISTANCE_RATE: number
+  MAX_DELIVERY_FEE_PAYABLE: number
+}
+
+export interface AppConstants {
+  cart:CartConstants
+  delivery: DeliveryPriceMeta
+}
+
+
+export interface DeliveryFeeResult {
+  distance?: number // in meters
+
+  duration?: number // in minutes
+  fee: number // in naira
 }

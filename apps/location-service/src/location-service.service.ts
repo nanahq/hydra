@@ -1,8 +1,15 @@
 import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
-import { DriverWithLocation, FitRpcException, TravelDistanceResult } from '@app/common'
+import {
+  DELIVERY_PRICE_META,
+  DeliveryFeeResult,
+  DriverWithLocation,
+  FitRpcException,
+  TravelDistanceResult
+} from '@app/common'
 import { ConfigService } from '@nestjs/config'
 import { firstValueFrom } from 'rxjs'
+import { calculateDeliveryPrice } from '@app/common/utils/calculateDeliveryPrice'
 @Injectable()
 export class LocationService {
   private readonly logger = new Logger(LocationService.name)
@@ -53,6 +60,28 @@ export class LocationService {
     } catch (error) {
       this.logger.log(JSON.stringify(error))
       this.logger.error('Can not get travel distance via mapbox')
+      throw new FitRpcException(
+        'Can not fetch travel distance at this time',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async getDeliveryFee (
+    origin: number[],
+    destination: number[]
+  ): Promise<DeliveryFeeResult> {
+    try {
+      const travelDistance = await this.getTravelDistance(origin, destination)
+      const fee = calculateDeliveryPrice(travelDistance.distance ?? 0, DELIVERY_PRICE_META)
+
+      return {
+        ...travelDistance,
+        fee
+      }
+    } catch (error) {
+      this.logger.log(JSON.stringify(error))
+      this.logger.error('Can not get delivery fee via mapbox')
       throw new FitRpcException(
         'Can not fetch travel distance at this time',
         HttpStatus.INTERNAL_SERVER_ERROR
