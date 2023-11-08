@@ -15,7 +15,7 @@ export class AddressBook extends AbstractDocument {
 
   @Prop({
     type: Types.ObjectId,
-    ref: 'Label'
+    ref: 'AddressBookLabel'
   })
     labelId: string
 
