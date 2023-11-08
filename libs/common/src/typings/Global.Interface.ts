@@ -162,3 +162,17 @@ export interface ScheduledListingI {
 
   remainingQuantity: number
 }
+
+export interface CartConstants {
+  SERVICE_FEE: number
+  VAT_FEE: number
+}
+
+export interface DeliveryPriceMeta {
+  GAS_PRICE: number
+  BASE_FEE: number
+  SHORT_DISTANCE_RATE: number
+  MEDIUM_DISTANCE_RATE: number
+  LONG_DISTANCE_RATE: number
+  MAX_DELIVERY_FEE_PAYABLE: number
+}
