@@ -49,7 +49,7 @@ export class Order extends AbstractDocument {
     isThirdParty: boolean
 
   @Prop({ default: '', type: String })
-    thirdPartyName: string
+    thirdPartyName?: string
 
   @Prop(SchemaTypes.Date)
     createdAt: string

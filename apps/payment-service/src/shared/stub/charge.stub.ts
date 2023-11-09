@@ -13,7 +13,8 @@ export function PaymentStub (): Payment {
     chargedAmount: '3000',
     refId: '34904890',
     user: objectId._id as unknown as any,
-    order: objectId._id as unknown as any
+    order: objectId._id as unknown as any,
+    paymentMeta: ''
   }
 }
 
