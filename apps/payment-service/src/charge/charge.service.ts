@@ -19,6 +19,7 @@ import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { PaymentRepository } from './charge.repository'
 import { FlutterwaveService } from '../providers/flutterwave'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class PaymentService implements PaymentServiceI {
@@ -37,7 +38,7 @@ export class PaymentService implements PaymentServiceI {
     private readonly flutterwave: FlutterwaveService
   ) {}
 
-  async chargeWithUssd (payload: UssdRequest): Promise<any> {
+  async chargeWithUssd (payload: UssdRequest): Promise<{ code: string }> {
     try {
       // Fetch order information
       const orderQueryPayload: ServicePayload<{ orderId: string }> = {
@@ -54,6 +55,12 @@ export class PaymentService implements PaymentServiceI {
           )
       )
 
+      const existingPayment = await this.paymentRepository.findOne({ order: order._id }) as Payment | null
+
+      if (existingPayment !== null) {
+        return JSON.parse(existingPayment.paymentMeta)
+      }
+
       this.logger.log(
         `[PIM] - Initiating a ussd charge for user_id: ${order.user._id} order_refId: ${order.refId}`
       )
@@ -61,7 +68,7 @@ export class PaymentService implements PaymentServiceI {
       // Prepare charge payload
       const chargePayload: UssdCharge = {
         tx_ref: `NANA-${RandomGen.genRandomNum()}`,
-        amount: String(order.totalOrderValue),
+        amount: String(order.orderValuePayable),
         email: order.user.email,
         currency: 'NGN',
         account_bank: payload.account_bank,
@@ -70,6 +77,10 @@ export class PaymentService implements PaymentServiceI {
 
       // Initiate charge and process response
       const response = await this.flutterwave.ussd(chargePayload)
+
+      const code = {
+        code: response?.meta?.authorization?.note
+      }
       if (response.status === 'success') {
         await this.paymentRepository.create({
           refId: chargePayload.tx_ref,
@@ -78,16 +89,15 @@ export class PaymentService implements PaymentServiceI {
           type: 'USSD',
           user: order.user._id,
           order: order._id,
-          status: 'PENDING'
+          status: 'PENDING',
+          paymentMeta: JSON.stringify(code)
         })
 
         this.logger.log(
           `[PIM] - Bank USSD charge initiated  for user_id: ${order.user._id} order_refId: ${order.refId}`
         )
 
-        return {
-          code: response?.meta?.authorization?.note
-        }
+        return code
       }
       throw new Error('Failed')
     } catch (e) {
@@ -118,6 +128,12 @@ export class PaymentService implements PaymentServiceI {
           )
       )
 
+      const existingPayment = await this.paymentRepository.findOne({ order: order._id }) as Payment | null
+
+      if (existingPayment !== null) {
+        return JSON.parse(existingPayment.paymentMeta)
+      }
+
       this.logger.log(
         `[PIM] - Initiating a bank transfer charge for user_id: ${order.user._id} order_refId: ${order.refId}`
       )
@@ -133,6 +149,7 @@ export class PaymentService implements PaymentServiceI {
       // Initiate charge and process response
       const response = await this.flutterwave.bankTransfer(chargePayload)
 
+      const paymentMeta = bankChargeMapper(response.meta.authorization)
       if (response.status === 'success') {
         await this.paymentRepository.create({
           refId: chargePayload.tx_ref,
@@ -141,13 +158,15 @@ export class PaymentService implements PaymentServiceI {
           type: 'BANK_TRANSFER',
           user: order.user._id,
           order: order._id,
-          status: 'PENDING'
+          status: 'PENDING',
+          paymentMeta: JSON.stringify(paymentMeta)
         })
 
         this.logger.log(
           `[PIM] - Bank transfer charge initiated  for user_id: ${order.user._id} order_refId: ${order.refId}`
         )
-        return bankChargeMapper(response.meta.authorization)
+
+        return paymentMeta
       }
       throw new Error('Failed')
     } catch (e) {
@@ -213,6 +232,41 @@ export class PaymentService implements PaymentServiceI {
       this.logger.error('[PIM] - Failed pending payment verification', error)
       throw new FitRpcException(
         'Can not place charge at this moment. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  @Cron(CronExpression.EVERY_10_MINUTES, {
+    timeZone: 'Africa/Lagos'
+  })
+  async deleteUnpaidPayments (): Promise<void> {
+    try {
+      const date = new Date()
+      const pastTenMinutes = new Date(date.getTime() - 10 * 60 * 1000)
+
+      const payments = await this.paymentRepository.find({
+        createdAt: {
+          $lt: pastTenMinutes
+        },
+        status: 'PENDING'
+      }) as Payment[] | null
+
+      if (payments !== null && payments.length > 0) {
+        const paymentIds = payments.map(({ _id }) => _id)
+
+        await this.paymentRepository.deleteMany({
+          _id: {
+            $in: paymentIds
+          }
+        })
+
+        this.logger.log(`[PIM] - Deleted ${payments.length} unpaid payments.`)
+      }
+    } catch (error) {
+      this.logger.error('[PIM] - Failed to delete unpaid payments:', error)
+      throw new FitRpcException(
+        'Failed to delete unpaid payments. Please try again later.',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }

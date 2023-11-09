@@ -239,7 +239,7 @@ export class OrdersServiceService {
 
       const pushNotificationMessage: PushMessage = {
         title: 'You have a new Order',
-        body: `A new order for ${order.listing.name}`,
+        body: `A new ${order.orderType === 'PRE_ORDER' ? 'Pre-order' : 'Instant order'}`,
         priority: 'high'
       }
 

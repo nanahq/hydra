@@ -48,6 +48,9 @@ export class Order extends AbstractDocument {
   @Prop({ default: false, type: Boolean })
     isThirdParty: boolean
 
+  @Prop({ default: '', type: String })
+    thirdPartyName: string
+
   @Prop(SchemaTypes.Date)
     createdAt: string
 
@@ -80,8 +83,16 @@ export class Order extends AbstractDocument {
   })
     preciseLocation: LocationCoordinates
 
-  @Prop(String)
-    quantity: string
+  @Prop({
+    type: [{
+      listing: Types.ObjectId,
+      quantity: Number
+    }]
+  })
+    quantity: [{
+    listing: string
+    quantity: number
+  }]
 
   @Prop(String)
     specialNote: string

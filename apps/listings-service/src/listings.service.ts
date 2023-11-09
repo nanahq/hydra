@@ -25,7 +25,6 @@ import {
 } from '@app/common/database/dto/listing.dto'
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import * as moment from 'moment'
 
 @Injectable()
 export class ListingsService {
@@ -527,24 +526,29 @@ export class ListingsService {
   })
   private async deletePastScheduledListings (): Promise<void> {
     try {
-      this.logger.log('[CRON] -> Deleting past day scheduled listing')
+      this.logger.log('[CRON] -> Deleting past day scheduled listings')
 
       const listings = await this.scheduledListingRepository.find({}) as ScheduledListing[]
 
       this.logger.log(`[CRON] -> ${listings.length} scheduled listings to be deleted `)
 
       const idsToDelete: any[] = []
-      if (listings.length > 0) {
-        for (const listing of listings) {
-          const listingDate = listing.availableDate
-          if (moment(new Date()).isAfter(new Date(listingDate))) {
-            idsToDelete.push(listing._id)
-          }
+
+      const currentDate = new Date()
+
+      for (const listing of listings) {
+        const listingDate = new Date(listing.availableDate)
+
+        if (currentDate > listingDate) {
+          idsToDelete.push(listing._id)
         }
+      }
+
+      if (idsToDelete.length > 0) {
         await this.scheduledListingRepository.deleteMany({ _id: { $in: idsToDelete } })
       }
     } catch (error) {
-      this.logger.error(error)
+      this.logger.error('[CRON] -> Failed to delete past day scheduled listings:', error)
     }
   }
 }
