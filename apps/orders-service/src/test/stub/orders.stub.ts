@@ -25,7 +25,10 @@ export function OrderStub (): Order {
       type: 'Point',
       coordinates: [12.34, 56.78]
     },
-    quantity: '2',
+    quantity: [{
+      listing: '',
+      quantity: 2
+    }],
     specialNote: 'Special instructions for the order',
     orderStatus: OrderStatus.PROCESSED,
     orderDeliveryScheduledTime: '2023-01-16T15:00:00.000Z',
