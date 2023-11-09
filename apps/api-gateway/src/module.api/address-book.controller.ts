@@ -56,11 +56,10 @@ export class AddressBookController {
     @Body() data: AddressBookDto,
       @CurrentUser() user: User
   ): Promise<ResponseWithStatus> {
-    const payload: Partial<ServicePayload<AddressBookDto>> = {
+    const payload = {
       userId: user._id as any,
-      data
+      ...data
     }
-
     return await lastValueFrom<ResponseWithStatus>(
       this.userClient.send(QUEUE_MESSAGE.ADDRESS_BOOK_CREATE, payload).pipe(
         catchError((error: IRpcException) => {

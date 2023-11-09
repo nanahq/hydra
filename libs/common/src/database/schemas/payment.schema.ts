@@ -35,6 +35,9 @@ export class Payment extends AbstractDocument {
 
   @Prop(String)
     paymentId: string
+
+  @Prop(String)
+    paymentMeta: string
 }
 
 export const PaymentHistorySchema = SchemaFactory.createForClass(Payment)

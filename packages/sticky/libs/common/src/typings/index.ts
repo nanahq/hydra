@@ -1,5 +1,16 @@
 import { ListingCategoryI, OrderI, ReviewI, VendorI } from '../schemas'
 
+import {
+  IsString,
+  IsNumber,
+  IsBoolean,
+  IsArray,
+  IsObject,
+  IsPhoneNumber,
+  ValidateNested,
+  IsOptional
+} from 'class-validator'
+
 export interface TokenPayload {
   userId: string
 }
@@ -563,14 +574,87 @@ export interface DeliveryPriceMeta {
 }
 
 export interface AppConstants {
-  cart:CartConstants
+  cart: CartConstants
   delivery: DeliveryPriceMeta
 }
-
 
 export interface DeliveryFeeResult {
   distance?: number // in meters
 
   duration?: number // in minutes
   fee: number // in naira
+}
+
+class PreciseLocationDto {
+  @IsArray()
+  @IsNumber()
+    coordinates: [number, number]
+
+  type: 'Point'
+}
+
+class OrderBreakDownDto {
+  @IsNumber()
+    orderCost: number
+
+  @IsNumber()
+    systemFee: number
+
+  @IsNumber()
+    deliveryFee: number
+
+  @IsNumber()
+    vat: number
+}
+
+export class PlaceOrderDto {
+  @IsString()
+    user: string
+
+  @IsString()
+    vendor: string
+
+  @IsArray()
+    listing: string[]
+
+  @IsArray()
+    quantity: [{
+    listing: string
+    quantity: number
+  }]
+
+  @IsNumber()
+    totalOrderValue: number
+
+  @IsString()
+    orderType: OrderType
+
+  @IsNumber()
+    orderValuePayable: number
+
+  @IsString()
+    deliveryAddress: string
+
+  @IsPhoneNumber('NG', { message: 'Invalid Nigerian phone number' })
+    primaryContact: string
+
+  @IsBoolean()
+    isThirdParty: boolean
+
+  @ValidateNested()
+  @IsObject()
+    preciseLocation: PreciseLocationDto
+
+  @IsArray()
+    options: OrderOptions[]
+
+  @IsString()
+    orderDeliveryScheduledTime: string
+
+  @ValidateNested()
+  @IsObject()
+    orderBreakDown: OrderBreakDownDto
+
+  @IsOptional()
+    thirdPartyName: string
 }

@@ -148,7 +148,10 @@ export interface OrderI {
   orderBreakDown: OrderBreakDown
   orderDeliveryScheduledTime: string
   preciseLocation: LocationCoordinates
-  quantity: string
+  quantity: {
+    listing: string
+    quantity: number
+  }
   specialNote?: string
   txRefId?: string
 }
@@ -259,7 +262,7 @@ export interface AddressBookI {
 
   house_number?: number
 
-  location: LocationCoordinates
+  location: number[]
 
   isDeleted: boolean
 
@@ -303,6 +306,8 @@ export interface PaymentI {
   refId: string
 
   paymentId: string
+
+  paymentMeta: string
 }
 
 export interface UserWalletI {

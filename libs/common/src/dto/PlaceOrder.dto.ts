@@ -1,4 +1,13 @@
-import { IsString, IsNumber, IsBoolean, IsArray, IsObject, IsPhoneNumber, ValidateNested } from 'class-validator'
+import {
+  IsString,
+  IsNumber,
+  IsBoolean,
+  IsArray,
+  IsObject,
+  IsPhoneNumber,
+  ValidateNested,
+  IsOptional
+} from 'class-validator'
 import { OrderType } from '@app/common/typings/Global.Interface'
 import { OrderOptions } from '@app/common/database/types/common'
 
@@ -34,8 +43,11 @@ export class PlaceOrderDto {
   @IsArray()
     listing: string[]
 
-  @IsString()
-    quantity: string
+  @IsArray()
+    quantity: [{
+    listing: string
+    quantity: number
+  }]
 
   @IsNumber()
     totalOrderValue: number
@@ -68,4 +80,7 @@ export class PlaceOrderDto {
   @ValidateNested()
   @IsObject()
     orderBreakDown: OrderBreakDownDto
+
+  @IsOptional()
+    thirdPartyName: string
 }

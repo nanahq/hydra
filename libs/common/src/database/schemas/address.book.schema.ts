@@ -33,7 +33,7 @@ export class AddressBook extends AbstractDocument {
 
   @Prop({
     type: {
-      coordinates: [String]
+      coordinates: [Number]
     }
   })
     location: {
