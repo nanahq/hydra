@@ -30,6 +30,7 @@ import { PaymentController } from './module.api/payment.controller'
 import { AddressBookController } from './module.api/address-book.controller'
 import { LocationController } from './module.api/location.controller'
 import { GeneralController } from './module.api/general.controller'
+import { DeliveriesController } from './module.api/deliveries.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -71,6 +72,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE }),
         ThrottlerModule.forRootAsync({
           useFactory: () => ({
             ttl: 60,
@@ -89,7 +91,8 @@ export class AppModule implements NestModule {
         PaymentController,
         AddressBookController,
         LocationController,
-        GeneralController
+        GeneralController,
+        DeliveriesController
       ],
       providers: [
         AuthService,

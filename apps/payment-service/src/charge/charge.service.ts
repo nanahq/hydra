@@ -241,16 +241,16 @@ export class PaymentService implements PaymentServiceI {
 
   async getPaymentInfo (payload: { userId: string, orderId: string }): Promise<Payment | null> {
     try {
-      return await this.paymentRepository.findOne({order: payload.orderId, user: payload.userId})
-    } catch (error){
+      return await this.paymentRepository.findOne({ order: payload.orderId, user: payload.userId })
+    } catch (error) {
       throw new FitRpcException('Something went wrong getting payment info', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
   async getAllPaymentInfo (payload: { userId: string }): Promise<Payment[] | null> {
     try {
-      return await this.paymentRepository.find({ user: payload.userId})
-    } catch (error){
+      return await this.paymentRepository.find({ user: payload.userId })
+    } catch (error) {
       throw new FitRpcException('Something went wrong getting payment info', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
