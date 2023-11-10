@@ -70,7 +70,7 @@ export class PaymentController {
     )
   }
 
-  @Get('payments/:id')
+  @Get('payment/:id')
   @UseGuards(JwtAuthGuard)
   async getPaymentInfo (
     @Param('id') orderId: string,
