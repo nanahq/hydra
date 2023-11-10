@@ -10,7 +10,7 @@ import {
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  Delivery,
+  Delivery
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
