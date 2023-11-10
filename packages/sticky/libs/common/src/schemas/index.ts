@@ -132,7 +132,7 @@ export interface ReviewI {
 export interface OrderI {
   _id: string
   user: UserI
-  listing: ListingMenuI
+  listing: ListingMenuI[]
   vendor: VendorI
   totalOrderValue: number
   orderValuePayable: number

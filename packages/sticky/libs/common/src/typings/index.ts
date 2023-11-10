@@ -1,16 +1,5 @@
 import { ListingCategoryI, OrderI, ReviewI, VendorI } from '../schemas'
 
-import {
-  IsString,
-  IsNumber,
-  IsBoolean,
-  IsArray,
-  IsObject,
-  IsPhoneNumber,
-  ValidateNested,
-  IsOptional
-} from 'class-validator'
-
 export interface TokenPayload {
   userId: string
 }
@@ -585,76 +574,48 @@ export interface DeliveryFeeResult {
   fee: number // in naira
 }
 
-class PreciseLocationDto {
-  @IsArray()
-  @IsNumber()
-    coordinates: [number, number]
 
-  type: 'Point'
+interface OrderBreakDownDto {
+  orderCost: number
+
+  systemFee: number
+
+  deliveryFee: number
+
+  vat: number
 }
 
-class OrderBreakDownDto {
-  @IsNumber()
-    orderCost: number
+export interface PlaceOrderDto {
+  user: string
 
-  @IsNumber()
-    systemFee: number
+  vendor: string
 
-  @IsNumber()
-    deliveryFee: number
+  listing: string[]
 
-  @IsNumber()
-    vat: number
-}
-
-export class PlaceOrderDto {
-  @IsString()
-    user: string
-
-  @IsString()
-    vendor: string
-
-  @IsArray()
-    listing: string[]
-
-  @IsArray()
-    quantity: [{
+  quantity: [{
     listing: string
     quantity: number
   }]
 
-  @IsNumber()
-    totalOrderValue: number
+  totalOrderValue: number
 
-  @IsString()
-    orderType: OrderType
+  orderType: OrderType
 
-  @IsNumber()
-    orderValuePayable: number
+  orderValuePayable: number
 
-  @IsString()
-    deliveryAddress: string
+  deliveryAddress: string
 
-  @IsPhoneNumber('NG', { message: 'Invalid Nigerian phone number' })
-    primaryContact: string
+  primaryContact: string
 
-  @IsBoolean()
-    isThirdParty: boolean
+  isThirdParty: boolean
 
-  @ValidateNested()
-  @IsObject()
-    preciseLocation: PreciseLocationDto
+  preciseLocation: LocationCoordinates
 
-  @IsArray()
-    options: OrderOptions[]
+  options: OrderOptions[]
 
-  @IsString()
-    orderDeliveryScheduledTime: string
+  orderDeliveryScheduledTime: string
 
-  @ValidateNested()
-  @IsObject()
-    orderBreakDown: OrderBreakDownDto
+  orderBreakDown: OrderBreakDownDto
 
-  @IsOptional()
-    thirdPartyName: string
+  thirdPartyName?: string
 }

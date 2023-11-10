@@ -1,12 +1,12 @@
 import {
-  Body,
-  Controller,
-  HttpException,
-  HttpStatus,
-  Inject,
-  Post,
-  Res,
-  UseGuards
+    Body,
+    Controller, Get,
+    HttpException,
+    HttpStatus,
+    Inject, Param,
+    Post,
+    Res,
+    UseGuards
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import {
@@ -22,6 +22,7 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { catchError, lastValueFrom } from 'rxjs'
 import { Response } from 'express'
+import { PaymentI } from '../../../../packages/sticky'
 
 @Controller('payment')
 export class PaymentController {
@@ -60,6 +61,44 @@ export class PaymentController {
       this.paymentClient
         .send(QUEUE_MESSAGE.CHARGE_USSD, {
           ...data,
+          userId: user._id
+        })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @Get('payments/:id')
+  @UseGuards(JwtAuthGuard)
+  async getPaymentInfo (
+    @Param('id') orderId: string,
+      @CurrentUser() user: User
+  ): Promise<PaymentI> {
+    return await lastValueFrom<PaymentI>(
+      this.paymentClient
+        .send(QUEUE_MESSAGE.GET_SINGLE_PAYMENT_USER, {
+          orderId,
+          userId: user._id
+        })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @Get('payments')
+  @UseGuards(JwtAuthGuard)
+  async getAllPaymentInfo (
+    @CurrentUser() user: User
+  ): Promise<PaymentI[]> {
+    return await lastValueFrom<PaymentI[]>(
+      this.paymentClient
+        .send(QUEUE_MESSAGE.GET_ALL_PAYMENT_USER, {
           userId: user._id
         })
         .pipe(

@@ -8,6 +8,8 @@ export enum QUEUE_MESSAGE {
   UPDATE_USER_STATUS = 'update_user_status',
   GET_USER_LOCAL = 'get_user_with_email_password',
   GET_USER_JWT = 'get_user_with_id',
+  GET_SINGLE_PAYMENT_USER = 'GET_SINGLE_PAYMENT_USER',
+  GET_ALL_PAYMENT_USER = 'GET_ALL_PAYMENT_USER',
 
   // ADMIN
   GET_ADMIN_LOCAL = 'get_admin_with_username_password',

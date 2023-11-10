@@ -6,7 +6,8 @@ import {
   FitRpcException,
   OrderI,
   OrderStatus,
-  Payment, PaymentServiceI,
+  Payment,
+  PaymentServiceI,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
@@ -20,6 +21,7 @@ import { catchError, lastValueFrom } from 'rxjs'
 import { PaymentRepository } from './charge.repository'
 import { FlutterwaveService } from '../providers/flutterwave'
 import { Cron, CronExpression } from '@nestjs/schedule'
+import { Promise } from 'mongoose'
 
 @Injectable()
 export class PaymentService implements PaymentServiceI {
@@ -234,6 +236,22 @@ export class PaymentService implements PaymentServiceI {
         'Can not place charge at this moment. Try again later',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
+    }
+  }
+
+  async getPaymentInfo (payload: { userId: string, orderId: string }): Promise<Payment | null> {
+    try {
+      return await this.paymentRepository.findOne({order: payload.orderId, user: payload.userId})
+    } catch (error){
+      throw new FitRpcException('Something went wrong getting payment info', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getAllPaymentInfo (payload: { userId: string }): Promise<Payment[] | null> {
+    try {
+      return await this.paymentRepository.find({ user: payload.userId})
+    } catch (error){
+      throw new FitRpcException('Something went wrong getting payment info', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
