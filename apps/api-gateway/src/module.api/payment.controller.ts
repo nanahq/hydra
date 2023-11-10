@@ -17,12 +17,11 @@ import {
   QUEUE_SERVICE,
   User,
   ChargeWithUssdDto,
-  ChargeWithBankTransferDto
+  ChargeWithBankTransferDto, Payment
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { catchError, lastValueFrom } from 'rxjs'
 import { Response } from 'express'
-import { PaymentI } from '../../../../packages/sticky'
 
 @Controller('payment')
 export class PaymentController {
@@ -76,8 +75,8 @@ export class PaymentController {
   async getPaymentInfo (
     @Param('id') orderId: string,
       @CurrentUser() user: User
-  ): Promise<PaymentI> {
-    return await lastValueFrom<PaymentI>(
+  ): Promise<Payment> {
+    return await lastValueFrom<Payment>(
       this.paymentClient
         .send(QUEUE_MESSAGE.GET_SINGLE_PAYMENT_USER, {
           orderId,
@@ -93,10 +92,10 @@ export class PaymentController {
 
   @Get('payments')
   @UseGuards(JwtAuthGuard)
-  async getAllPaymentInfo (
+  async getAllPaymentnfo (
     @CurrentUser() user: User
-  ): Promise<PaymentI[]> {
-    return await lastValueFrom<PaymentI[]>(
+  ): Promise<Payment[]> {
+    return await lastValueFrom<Payment[]>(
       this.paymentClient
         .send(QUEUE_MESSAGE.GET_ALL_PAYMENT_USER, {
           userId: user._id
