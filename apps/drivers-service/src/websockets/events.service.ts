@@ -17,6 +17,7 @@ export class EventsService {
       const delivery: Delivery | null = await this.odsaRepository.findOneAndUpdate({ assignedToDriver: true, completed: false, driver: driverId, status: OrderStatus.IN_ROUTE }, { currentLocation: location })
       return delivery?._id
     } catch (error) {
+      this.logger.error(JSON.stringify(error))
       throw new FitRpcException('failed to update Delivery location. Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
@@ -28,6 +29,7 @@ export class EventsService {
         { location }
       )
     } catch (error) {
+      this.logger.error(JSON.stringify(error))
       throw new FitRpcException('Failed to updated drivers location. Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
