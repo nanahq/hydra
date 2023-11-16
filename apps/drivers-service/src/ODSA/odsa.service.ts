@@ -328,7 +328,7 @@ export class ODSA {
       )
     )
     const drivers = await this.driversRepository.find({
-      isValidated: true,
+      // isValidated: true,
       type: 'DELIVER_PRE_ORDER',
       acc_status: VendorApprovalStatus.APPROVED
     })
@@ -430,26 +430,15 @@ export class ODSA {
 }
 
 function filterOrdersForDay (orders: Order[]): Order[] {
-  const filteredOrders: Order[] = []
+  const targetDate = moment()
 
-  const targetDate = new Date()
-  const targetYear = targetDate.getFullYear()
-  const targetMonth = targetDate.getMonth()
-  const targetDay = targetDate.getDate()
+  return orders.filter((order) => {
+    const orderDate = moment(order.orderDeliveryScheduledTime)
 
-  for (const order of orders) {
-    const orderDate = new Date(Number(order.orderDeliveryScheduledTime))
-    const orderYear = orderDate.getFullYear()
-    const orderMonth = orderDate.getMonth()
-    const orderDay = orderDate.getDate()
-
-    if (
-      targetYear === orderYear &&
-      targetMonth === orderMonth &&
-      targetDay === orderDay
-    ) {
-      filteredOrders.push(order)
-    }
-  }
-  return filteredOrders
+    return (
+      targetDate.isSame(orderDate, 'year') &&
+        targetDate.isSame(orderDate, 'month') &&
+        targetDate.isSame(orderDate, 'day')
+    )
+  })
 }

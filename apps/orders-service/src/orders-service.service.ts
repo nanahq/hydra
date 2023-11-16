@@ -3,9 +3,11 @@ import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import {
   ExportPushNotificationClient,
   FitRpcException,
-  Order, OrderI,
+  Order,
+  OrderI,
   OrderStatus,
-  OrderTypes, PlaceOrderDto, PushMessage,
+  OrderTypes,
+  PlaceOrderDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
@@ -182,7 +184,9 @@ export class OrdersServiceService {
     orderId
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
     try {
-      const order = await this.orderRepository.findOneAndUpdate(
+      const order = await this.orderRepository.findOneAndPopulate({ _id: orderId }, ['vendor', 'listing']) as OrderI
+
+      await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
         { orderStatus: status }
       )
@@ -191,13 +195,17 @@ export class OrdersServiceService {
         `[PIM] - order status updated for order: ${orderId} status: ${status}`
       )
 
-      await lastValueFrom<any>(
-        this.notificationClient
-          .emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
-            phoneNumber: order.primaryContact,
-            status
-          })
-      )
+      await this.sendPushNotifications(status, order)
+
+      if (status === OrderStatus.FULFILLED) {
+        await lastValueFrom<any>(
+          this.notificationClient
+            .emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
+              phoneNumber: order.primaryContact,
+              status
+            })
+        )
+      }
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
@@ -237,13 +245,7 @@ export class OrdersServiceService {
           })
       )
 
-      const pushNotificationMessage: PushMessage = {
-        title: 'You have a new Order',
-        body: `A new ${order.orderType === 'PRE_ORDER' ? 'Pre-order' : 'Instant order'}`,
-        priority: 'high'
-      }
-
-      await this.expoClient.sendSingleNotification(order.vendor.expoNotificationToken, pushNotificationMessage)
+      await this.sendPushNotifications(status, order)
 
       await lastValueFrom(
         this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, {
@@ -320,5 +322,36 @@ export class OrdersServiceService {
 
   async adminMetrics (): Promise<Aggregate<any>> {
     return await this.orderRepository.find({})
+  }
+
+  private async sendPushNotifications (status: OrderStatus, order: OrderI): Promise<void> {
+    switch (status) {
+      case OrderStatus.PROCESSED:
+        await this.expoClient.sendSingleNotification(order.vendor.expoNotificationToken, {
+          title: 'You have a new Order',
+          body: `A new ${order.orderType === 'PRE_ORDER' ? 'Pre-order' : 'Instant order'}`,
+          priority: 'high'
+        })
+        await this.expoClient.sendSingleNotification(order?.user?.expoNotificationToken as string, {
+          title: 'Your order has been processed',
+          body: 'Track the progress of your order on the mobile app',
+          priority: 'high'
+        })
+        break
+      case OrderStatus.IN_ROUTE:
+        await this.expoClient.sendSingleNotification(order?.user?.expoNotificationToken as string, {
+          title: 'Your order is been delivered',
+          body: 'Our delivery person is on his way',
+          priority: 'high'
+        })
+        break
+
+      case OrderStatus.COURIER_PICKUP:
+        await this.expoClient.sendSingleNotification(order?.user?.expoNotificationToken as string, {
+          title: 'Your order has been prepared',
+          body: `${order.vendor.businessName} has finished preparing your order`,
+          priority: 'high'
+        })
+    }
   }
 }

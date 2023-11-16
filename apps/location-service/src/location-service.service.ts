@@ -29,7 +29,7 @@ export class LocationService {
     let minDistance = Number.POSITIVE_INFINITY
 
     for (const coord of coordinates) {
-      const { duration } = await this.getTravelDistance(coord.coordinates, target)
+      const { duration } = await this.getTravelDistance(target, coord.coordinates)
       if (duration !== undefined) {
         if (duration < minDistance) {
           minDistance = duration

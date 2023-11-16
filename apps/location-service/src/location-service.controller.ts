@@ -47,8 +47,8 @@ export class LocationController {
   ): Promise<TravelDistanceResult | null> {
     try {
       return await this.locationService.getTravelDistance(
-        userCoords,
-        vendorCoords
+        vendorCoords,
+        userCoords
       )
     } catch (error) {
       throw new RpcException(error)
