@@ -14,7 +14,7 @@ export class EventsService {
 
   async updateDeliveryLocation (driverId: string, location: LocationCoordinates): Promise<void> {
     try {
-      await this.odsaRepository.findAndUpdate({ assignedToDriver: true, driver: driverId, status: OrderStatus.IN_ROUTE }, { currentLocation: location })
+      await this.odsaRepository.findOneAndUpdate({ assignedToDriver: true, driver: driverId, status: OrderStatus.IN_ROUTE}, { currentLocation: location })
     } catch (error) {
       throw new FitRpcException('failed to update Delivery location. Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
     }
