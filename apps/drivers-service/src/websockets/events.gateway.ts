@@ -37,21 +37,9 @@ export class EventsGateway implements OnGatewayConnection {
   ): Promise<void> {
     try {
       await this.eventService.updateDriverLocation(driverId, location)
-
-      const updatedDeliveryId = await this.eventService.updateDeliveryLocation(driverId, location)
-      if (updatedDeliveryId !== null) {
-
-        this.server.emit('message', {location})
-        this.server.in(updatedDeliveryId).emit(
-            'update_location', {
-              driverId,
-              location
-            }
-        )
-        this.server.to(updatedDeliveryId).emit(SOCKET_MESSAGE.DRIVER_LOCATION_UPDATED, {
-          driverId,
-          location
-        })
+      const deliveryId = await this.eventService.updateDeliveryLocation(driverId, location)
+      if (deliveryId !== null) {
+        this.server.emit(SOCKET_MESSAGE.DRIVER_LOCATION_UPDATED, { location, deliveryId })
       }
     } catch (error) {
       this.logger.error(JSON.stringify(error))
