@@ -5,7 +5,7 @@ import {
   WebSocketServer
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
-import { LocationCoordinates, SOCKET_MESSAGE } from '@app/common'
+import { LocationCoordinates, SOCKET_MESSAGE, TravelDistanceResult } from '@app/common'
 import { Logger } from '@nestjs/common'
 import { EventsService } from './events.service'
 
@@ -33,13 +33,15 @@ export class EventsGateway implements OnGatewayConnection {
   @SubscribeMessage(SOCKET_MESSAGE.UPDATE_DRIVER_LOCATION)
   async updateDriversLocation (
     @MessageBody()
-      { driverId, location }: { driverId: string, location: LocationCoordinates }
+      { driverId, location, travelDistance }: { driverId: string, location: LocationCoordinates, travelDistance: TravelDistanceResult }
   ): Promise<void> {
     try {
       await this.eventService.updateDriverLocation(driverId, location)
+
       const deliveryId = await this.eventService.updateDeliveryLocation(driverId, location)
+
       if (deliveryId !== null) {
-        this.server.emit(SOCKET_MESSAGE.DRIVER_LOCATION_UPDATED, { location, deliveryId })
+        this.server.emit(SOCKET_MESSAGE.DRIVER_LOCATION_UPDATED, { location, deliveryId, travelDistance })
       }
     } catch (error) {
       this.logger.error(JSON.stringify(error))

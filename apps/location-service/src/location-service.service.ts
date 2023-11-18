@@ -46,8 +46,8 @@ export class LocationService {
     destination: number[]
   ): Promise<TravelDistanceResult> {
     const url = `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${
-      origin[1]
-    },${origin[0]};${destination[1]},${destination[0]}?access_token=${
+      origin[0]
+    },${origin[1]};${destination[0]},${destination[1]}?access_token=${
       this.mapboxToken as string
     }`
     try {

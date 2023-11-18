@@ -68,8 +68,8 @@ export class LocationController {
   ): Promise<DeliveryFeeResult | null> {
     try {
       return await this.locationService.getDeliveryFee(
-        userCoords,
-        vendorCoords
+        vendorCoords,
+        userCoords
       )
     } catch (error) {
       throw new RpcException(error)
