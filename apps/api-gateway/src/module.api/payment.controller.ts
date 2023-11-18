@@ -17,7 +17,7 @@ import {
   QUEUE_SERVICE,
   User,
   ChargeWithUssdDto,
-  ChargeWithBankTransferDto, Payment
+  ChargeWithBankTransferDto, Payment, InitiateChargeDto, PaystackChargeResponseData
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -42,6 +42,21 @@ export class PaymentController {
           ...data,
           userId: user._id
         })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @Post('charge/initiate')
+  async initiateCharge (
+    @Body() data: InitiateChargeDto
+  ): Promise<PaystackChargeResponseData> {
+    return await lastValueFrom<PaystackChargeResponseData>(
+      this.paymentClient
+        .send(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK, data)
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

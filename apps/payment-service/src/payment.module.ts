@@ -86,7 +86,8 @@ import { PaymentController } from './charge/charge.controller'
     ConfigService,
     PaymentRepository,
     PaymentService,
-    FlutterwaveService
+    FlutterwaveService,
+    PaymentService
   ]
 })
 export class PaymentServiceModule {}

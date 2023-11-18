@@ -44,11 +44,30 @@ export interface BankTransferRequest {
   orderId: string
 }
 
+export interface PaystackCharge {
+  email: string
+  amount: number
+}
+
+export interface PaystackChargeResponse {
+  status: boolean
+  message: string
+  data: PaystackChargeResponseData
+}
+export interface PaystackChargeResponseData {
+  authorization_url: string
+  access_code: string
+  reference: string
+}
 export interface BaseChargeRequest {
   tx_ref: string
   amount: string
   email: string
   currency: string
+}
+
+export enum PAYSTACK_URLS {
+  INITIATE_CHARGE = '/transaction/initialize',
 }
 
 export interface BankTransferAccountDetails {

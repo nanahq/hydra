@@ -13,6 +13,10 @@ export interface ReviewToken {
   listingId: string
 }
 
+export interface PaystackCharge {
+  email: string
+  amount: number
+}
 export interface ResponseWithStatusAndData<T> {
   status: 0 | 1
   data: T

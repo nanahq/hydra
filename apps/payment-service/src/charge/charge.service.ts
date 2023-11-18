@@ -1,13 +1,13 @@
-import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import {
   BankTransferAccountDetails,
   BankTransferRequest,
   BaseChargeRequest,
-  FitRpcException,
+  FitRpcException, nairaToKobo,
   OrderI,
   OrderStatus,
   Payment,
-  PaymentServiceI,
+  PaymentServiceI, PaystackCharge,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
@@ -22,10 +22,11 @@ import { PaymentRepository } from './charge.repository'
 import { FlutterwaveService } from '../providers/flutterwave'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { Promise } from 'mongoose'
+import { PaystackService } from '../providers/paystack'
 
 @Injectable()
 export class PaymentService implements PaymentServiceI {
-  private readonly logger = new Logger(PaymentService.name)
+  private readonly logger = console
 
   constructor (
     private readonly paymentRepository: PaymentRepository,
@@ -37,7 +38,9 @@ export class PaymentService implements PaymentServiceI {
     private readonly notificationClient: ClientProxy,
     @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
     private readonly odsaClient: ClientProxy,
-    private readonly flutterwave: FlutterwaveService
+    private readonly flutterwave: FlutterwaveService,
+
+    private readonly paystack: PaystackService
   ) {}
 
   async chargeWithUssd (payload: UssdRequest): Promise<{ code: string }> {
@@ -173,6 +176,23 @@ export class PaymentService implements PaymentServiceI {
       throw new Error('Failed')
     } catch (e) {
       this.logger.log('[PIM] Failed to create bank transfer charged -', e)
+      throw new FitRpcException(
+        'Can not place charge at this moment. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async initiateChargePaystack (req: PaystackCharge): Promise<any> {
+    this.logger.log(`[PIM] - Initiating paystack charge for ${req.email}`)
+    const payload = {
+      ...req,
+      amount: nairaToKobo(req.amount)
+    }
+    try {
+      return await this.paystack.initiateCharge(payload)
+    } catch (error) {
+      this.logger.error(`Failed to initiate charge for ${req.email}`)
       throw new FitRpcException(
         'Can not place charge at this moment. Try again later',
         HttpStatus.INTERNAL_SERVER_ERROR
