@@ -1,7 +1,7 @@
 import {
   BankTransferAccountDetails,
   BankTransferRequest,
-  ExceptionFilterRpc,
+  ExceptionFilterRpc, PaystackCharge,
   QUEUE_MESSAGE,
   RmqService,
   UssdRequest
@@ -32,6 +32,20 @@ export class PaymentController {
   ): Promise<BankTransferAccountDetails> {
     try {
       return await this.paymentService.chargeWithBankTransfer(payload)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK)
+  async intiatePaystackCharge (
+    @Payload() payload: PaystackCharge,
+      @Ctx() context: RmqContext
+  ): Promise<BankTransferAccountDetails> {
+    try {
+      return await this.paymentService.initiateChargePaystack(payload)
     } catch (error) {
       throw new RpcException(error)
     } finally {

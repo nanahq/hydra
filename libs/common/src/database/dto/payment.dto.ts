@@ -15,3 +15,11 @@ export class ChargeWithUssdDto extends ChargeWithBankTransferDto {
   @IsNotEmpty()
   public account_number: string
 }
+
+export class InitiateChargeDto {
+  @IsString()
+    email: string
+
+  @IsString()
+    amount: string
+}
