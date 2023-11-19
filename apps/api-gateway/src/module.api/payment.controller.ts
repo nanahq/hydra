@@ -147,14 +147,13 @@ export class PaymentController {
     // if (!PaystackWebhookIps.includes(ip)) {
     //   return res.status(HttpStatus.UNAUTHORIZED).end()
     // }
-
+      console.log(body)
     switch (body.event) {
       case PaystackEvents.PAYMENT_SUCCESS:
-        console.log(body.data)
         await lastValueFrom(
           this.paymentClient.emit(QUEUE_MESSAGE.VERIFY_PAYMENT_PAYSTACK, { requestCode: body.data.request_code })
         )
-        return res.status(HttpStatus.OK).end()
     }
+      return res.status(HttpStatus.OK).end()
   }
 }
