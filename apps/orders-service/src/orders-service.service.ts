@@ -4,9 +4,9 @@ import {
   ExportPushNotificationClient,
   FitRpcException,
   Order,
-  OrderI,
+  OrderI, OrderInitiateCharge,
   OrderStatus,
-  OrderTypes,
+  OrderTypes, PaystackChargeResponseData,
   PlaceOrderDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -39,13 +39,16 @@ export class OrdersServiceService {
     private readonly driverClient: ClientProxy,
 
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
-    private readonly listingsClient: ClientProxy
+    private readonly listingsClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy
   ) {}
 
   public async placeOrder ({
     data,
     userId
-  }: ServicePayload<PlaceOrderDto>): Promise<ResponseWithStatusAndData<Order>> {
+  }: ServicePayload<PlaceOrderDto>): Promise<ResponseWithStatusAndData<{ order: OrderI, paymentMeta: PaystackChargeResponseData }>> {
     const createOrderPayload: Partial<Order> = {
       ...data,
       user: userId,
@@ -55,7 +58,7 @@ export class OrdersServiceService {
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
 
-    const populatedOrder: any = await this.orderRepository.findOneAndPopulate({ _id: _newOrder._id }, ['listing', 'vendor'])
+    const populatedOrder: OrderI = await this.orderRepository.findOneAndPopulate({ _id: _newOrder._id }, ['listing', 'vendor'])
 
     if (_newOrder === null) {
       throw new FitRpcException(
@@ -64,7 +67,16 @@ export class OrdersServiceService {
       )
     }
 
-    return { status: 1, data: populatedOrder }
+    const chargePayload: OrderInitiateCharge = {
+      orderId: populatedOrder._id,
+      email: populatedOrder.user.email,
+      userId: populatedOrder.user._id,
+      amount: populatedOrder.totalOrderValue.toLocaleString()
+    }
+
+    const paymentMeta = await lastValueFrom<PaystackChargeResponseData>(this.paymentClient.send(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK, chargePayload))
+
+    return { status: 1, data: { order: populatedOrder, paymentMeta } }
   }
 
   public async getAllVendorOrders (vendor: string): Promise<Order[]> {

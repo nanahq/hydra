@@ -4,10 +4,11 @@ import {
   BankTransferRequest,
   BaseChargeRequest,
   FitRpcException, nairaToKobo,
-  OrderI,
+  OrderI, OrderInitiateCharge,
   OrderStatus,
   Payment,
   PaymentServiceI, PaystackCharge,
+  PaystackChargeResponseData,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
@@ -183,16 +184,33 @@ export class PaymentService implements PaymentServiceI {
     }
   }
 
-  async initiateChargePaystack (req: PaystackCharge): Promise<any> {
-    this.logger.log(`[PIM] - Initiating paystack charge for ${req.email}`)
-    const payload = {
-      ...req,
-      amount: nairaToKobo(req.amount)
+  async initiateChargePaystack (req: OrderInitiateCharge): Promise<PaystackChargeResponseData> {
+    this.logger.log(`[PIM] - Initiating paystack charge for order ${req.orderId}`)
+
+    const payload: PaystackCharge = {
+      email: req.email,
+      amount: nairaToKobo(req.amount),
+      metadata: {
+        transaction_ref: `NANA-${RandomGen.genRandomNum()}`
+      }
     }
     try {
-      return await this.paystack.initiateCharge(payload)
+      const chargeMeta = await this.paystack.initiateCharge(payload)
+
+      await this.paymentRepository.create({
+        refId: chargeMeta.data.reference,
+        chargedAmount: req.amount,
+        paymentId: chargeMeta.data.access_code,
+        type: 'PAYSTACK',
+        user: req.userId,
+        order: req.orderId,
+        status: 'PENDING',
+        paymentMeta: JSON.stringify(chargeMeta.data)
+      })
+      return chargeMeta.data
     } catch (error) {
-      this.logger.error(`Failed to initiate charge for ${req.email}`)
+      this.logger.error(`Failed to initiate charge for order ${req.orderId}`)
+      this.logger.error(error)
       throw new FitRpcException(
         'Can not place charge at this moment. Try again later',
         HttpStatus.INTERNAL_SERVER_ERROR

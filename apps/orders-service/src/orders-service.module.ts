@@ -43,6 +43,7 @@ import { ScheduleModule } from '@nestjs/schedule'
     RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
     RmqModule
   ],
   controllers: [OrdersServiceController],

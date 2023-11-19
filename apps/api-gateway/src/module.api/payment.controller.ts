@@ -3,7 +3,7 @@ import {
   Controller, Get,
   HttpException,
   HttpStatus,
-  Inject, Param,
+  Inject, Ip, Param,
   Post,
   Res,
   UseGuards
@@ -17,7 +17,12 @@ import {
   QUEUE_SERVICE,
   User,
   ChargeWithUssdDto,
-  ChargeWithBankTransferDto, Payment, InitiateChargeDto, PaystackChargeResponseData
+  ChargeWithBankTransferDto,
+  Payment,
+  InitiateChargeDto,
+  PaystackChargeResponseData,
+  PaymentRequestSuccessEvent,
+  PaystackEvents
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -107,7 +112,7 @@ export class PaymentController {
 
   @Get('payments')
   @UseGuards(JwtAuthGuard)
-  async getAllPaymentnfo (
+  async getAllPaymentInfo (
     @CurrentUser() user: User
   ): Promise<Payment[]> {
     return await lastValueFrom<Payment[]>(
@@ -124,7 +129,7 @@ export class PaymentController {
   }
 
   @Post('flw-webhook')
-  async paymentWebhook (@Body() body: any, @Res() res: Response): Promise<any> {
+  async flutterwavePaymentWebhook (@Body() body: any, @Res() res: Response): Promise<any> {
     if (body?.data?.status === 'successful') {
       await lastValueFrom<any>(
         this.paymentClient.emit(QUEUE_MESSAGE.VERIFY_PAYMENT, {
@@ -134,5 +139,22 @@ export class PaymentController {
       )
     }
     return res.status(HttpStatus.OK).end()
+  }
+
+  @Post('paystack-webhook')
+  async paystackPaymentWebhook (@Body() body: PaymentRequestSuccessEvent, @Res() res: Response, @Ip() ip: string): Promise<any> {
+    //     @Todo(siradji) improve ip whitelisting for paystack
+    // if (!PaystackWebhookIps.includes(ip)) {
+    //   return res.status(HttpStatus.UNAUTHORIZED).end()
+    // }
+
+    switch (body.event) {
+      case PaystackEvents.PAYMENT_SUCCESS:
+        console.log(body.data)
+        await lastValueFrom(
+          this.paymentClient.emit(QUEUE_MESSAGE.VERIFY_PAYMENT_PAYSTACK, { requestCode: body.data.request_code })
+        )
+        return res.status(HttpStatus.OK).end()
+    }
   }
 }

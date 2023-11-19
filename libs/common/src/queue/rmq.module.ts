@@ -9,7 +9,6 @@ import { RmqService } from './rmq.service'
 })
 export class RmqModule {
   static register ({ name, fallback, fallbackUri }: RmqModuleOptions): DynamicModule {
-    console.log({ fallbackUri })
     return {
       module: RmqModule,
       imports: [

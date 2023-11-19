@@ -218,6 +218,7 @@ export interface RegisterAdminDTO {
 export interface SupportedPaymentType {
   BANK_TRANSFER: 'BANK_TRANSFER'
   USSD: 'USSD'
+  PAYSTACK: 'PAYSTACK'
 }
 
 export interface PaymentDetails {

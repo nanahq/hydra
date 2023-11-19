@@ -3,8 +3,7 @@ import {
   FitRpcException,
   PAYSTACK_URLS,
   PaystackCharge,
-  PaystackChargeResponse,
-  PaystackChargeResponseData
+  PaystackChargeResponse
 } from '@app/common'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
@@ -26,10 +25,10 @@ export class PaystackService {
     }
   }
 
-  async initiateCharge (payload: PaystackCharge): Promise<PaystackChargeResponseData> {
+  async initiateCharge (payload: PaystackCharge): Promise<PaystackChargeResponse> {
     try {
       const { data } = await firstValueFrom(this.httpService.post<PaystackChargeResponse>(`https://api.paystack.co/${PAYSTACK_URLS.INITIATE_CHARGE}`, payload, { headers: this.HEADERS }))
-      return data.data
+      return data
     } catch (error) {
       console.error(error)
       throw new FitRpcException('Can not initiate paystack charge', HttpStatus.INTERNAL_SERVER_ERROR)

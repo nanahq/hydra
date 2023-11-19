@@ -34,11 +34,22 @@ export interface UssdCharge extends BaseChargeRequest {
   account_number: string
 }
 
+export const PaystackWebhookIps = [
+  '52.31.139.75',
+  '52.49.173.169',
+  '52.214.14.220'
+]
 export interface UssdRequest extends BankTransferRequest {
   account_bank: SupportedBanks
   account_number: string
 }
 
+export interface OrderInitiateCharge {
+  userId: string
+  orderId: string
+  amount: string
+  email: string
+}
 export interface BankTransferRequest {
   userId: string
   orderId: string
@@ -47,6 +58,8 @@ export interface BankTransferRequest {
 export interface PaystackCharge {
   email: string
   amount: number
+
+  metadata?: any
 }
 
 export interface PaystackChargeResponse {
@@ -58,6 +71,39 @@ export interface PaystackChargeResponseData {
   authorization_url: string
   access_code: string
   reference: string
+}
+
+export enum PaystackEvents {
+  PAYMENT_SUCCESS = 'paymentrequest.success'
+}
+
+export interface PaymentRequestSuccessEvent {
+  event: PaystackEvents
+  data: {
+    id: number
+    domain: string
+    amount: number
+    currency: string
+    due_date: string | null
+    has_invoice: boolean
+    invoice_number: string | null
+    description: string
+    pdf_url: string | null
+    line_items: any[] // You might want to create a specific interface for line items
+    tax: any[] // You might want to create a specific interface for tax
+    request_code: string
+    status: 'success'
+    paid: boolean
+    paid_at: string
+    metadata: any | null // You might want to create a specific interface for metadata
+    notifications: Array<{
+      sent_at: string
+      channel: string
+    }>
+    offline_reference: string
+    customer: number
+    created_at: string
+  }
 }
 export interface BaseChargeRequest {
   tx_ref: string
