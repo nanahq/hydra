@@ -12,11 +12,13 @@ import { firstValueFrom } from 'rxjs'
 
 @Injectable()
 export class PaystackService {
-  private readonly httpService: HttpService
-
   private readonly HEADERS: { Authorization: string, ContentType: string }
 
-  constructor (private readonly configService: ConfigService) {
+  constructor (
+    private readonly configService: ConfigService,
+    private readonly httpService: HttpService
+
+  ) {
     const paystackSecret = configService.get<string>('PAY_STACK_SECRET', '')
     this.HEADERS = {
       ContentType: 'application/json',
