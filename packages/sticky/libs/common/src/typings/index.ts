@@ -17,6 +17,17 @@ export interface PaystackCharge {
   email: string
   amount: number
 }
+
+export interface PaystackChargeResponse {
+  status: boolean
+  message: string
+  data: PaystackChargeResponseData
+}
+export interface PaystackChargeResponseData {
+  authorization_url: string
+  access_code: string
+  reference: string
+}
 export interface ResponseWithStatusAndData<T> {
   status: 0 | 1
   data: T

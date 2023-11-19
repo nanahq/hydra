@@ -67,7 +67,7 @@ export interface BaseChargeRequest {
 }
 
 export enum PAYSTACK_URLS {
-  INITIATE_CHARGE = '/transaction/initialize',
+  INITIATE_CHARGE = 'transaction/initialize',
 }
 
 export interface BankTransferAccountDetails {

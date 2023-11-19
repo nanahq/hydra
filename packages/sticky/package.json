@@ -1,6 +1,6 @@
 {
   "name": "@nanahq/sticky",
-  "version": "0.1.17",
+  "version": "0.1.20",
   "description": "Types declarations, components and collection of tools for Nana",
   "scripts": {
     "prepublish": "tsc",
