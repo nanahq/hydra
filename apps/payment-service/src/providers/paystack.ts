@@ -30,7 +30,7 @@ export class PaystackService {
       const { data } = await firstValueFrom(this.httpService.post<PaystackChargeResponse>(`https://api.paystack.co/${PAYSTACK_URLS.INITIATE_CHARGE}`, payload, { headers: this.HEADERS }))
       return data
     } catch (error) {
-      console.error(error)
+      console.error(error?.message)
       throw new FitRpcException('Can not initiate paystack charge', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }

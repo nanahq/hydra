@@ -58,7 +58,7 @@ export class OrdersServiceService {
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
 
-    const populatedOrder: OrderI = await this.orderRepository.findOneAndPopulate({ _id: _newOrder._id }, ['listing', 'vendor'])
+    const populatedOrder: OrderI = await this.orderRepository.findOneAndPopulate({ _id: _newOrder._id }, ['listing', 'vendor', 'user'])
 
     if (_newOrder === null) {
       throw new FitRpcException(
@@ -73,7 +73,6 @@ export class OrdersServiceService {
       userId: populatedOrder.user._id,
       amount: populatedOrder.totalOrderValue.toLocaleString()
     }
-    this.logger.log({ chargePayload })
     const paymentMeta = await lastValueFrom<PaystackChargeResponseData>(this.paymentClient.send(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK, chargePayload))
 
     return { status: 1, data: { order: populatedOrder, paymentMeta } }
