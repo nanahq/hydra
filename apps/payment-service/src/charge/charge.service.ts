@@ -292,9 +292,13 @@ export class PaymentService implements PaymentServiceI {
         return
       }
 
+      this.logger.log('[PIM] - fetching payment verification')
+
       const verificationStatus = await this.paystack.verify(refId)
 
-      if (verificationStatus.data.status.toLowerCase() !== 'success' || verificationStatus.data.amount !== Number(payment.chargedAmount)) {
+      this.logger.log(`[PIM] - fetched payment verification :${verificationStatus.data.status}`)
+
+      if (verificationStatus.data.status.toLowerCase() !== 'success' || (verificationStatus.data.amount / 100) !== Number(payment.chargedAmount)) {
         throw new Error('Payment not successful')
       }
 
