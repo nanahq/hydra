@@ -72,7 +72,6 @@ export class AddressBookController {
   @Get('labels')
   @UseGuards(JwtAuthGuard)
   async listLabels (): Promise<AddressBookLabel[]> {
-    console.log('Hello 1')
     return await lastValueFrom<AddressBookLabel[]>(
       this.adminClient.send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_LIST, {}).pipe(
         catchError((error: IRpcException) => {

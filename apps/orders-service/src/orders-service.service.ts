@@ -1,4 +1,4 @@
-import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 
 import {
   ExportPushNotificationClient,
@@ -24,7 +24,7 @@ import { Aggregate, FilterQuery } from 'mongoose'
 
 @Injectable()
 export class OrdersServiceService {
-  private readonly logger = new Logger(OrdersServiceService.name)
+  private readonly logger = console
 
   constructor (
     private readonly orderRepository: OrderRepository,
@@ -73,7 +73,7 @@ export class OrdersServiceService {
       userId: populatedOrder.user._id,
       amount: populatedOrder.totalOrderValue.toLocaleString()
     }
-
+    this.logger.log({ chargePayload })
     const paymentMeta = await lastValueFrom<PaystackChargeResponseData>(this.paymentClient.send(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK, chargePayload))
 
     return { status: 1, data: { order: populatedOrder, paymentMeta } }

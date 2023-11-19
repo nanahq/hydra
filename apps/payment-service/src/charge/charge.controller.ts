@@ -44,6 +44,7 @@ export class PaymentController {
     @Payload() payload: OrderInitiateCharge,
       @Ctx() context: RmqContext
   ): Promise<PaystackChargeResponseData> {
+    console.log({ payload })
     try {
       return await this.paymentService.initiateChargePaystack(payload)
     } catch (error) {

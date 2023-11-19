@@ -194,6 +194,8 @@ export class PaymentService implements PaymentServiceI {
         transaction_ref: `NANA-${RandomGen.genRandomNum()}`
       }
     }
+
+    this.logger.log('service payload', payload)
     try {
       const chargeMeta = await this.paystack.initiateCharge(payload)
 
