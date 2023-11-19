@@ -74,9 +74,117 @@ export interface PaystackChargeResponseData {
 }
 
 export enum PaystackEvents {
-  PAYMENT_SUCCESS = 'paymentrequest.success'
+  PAYMENT_SUCCESS = 'charge.success'
 }
 
+interface TransactionData {
+  id: number
+  domain: string
+  status: string
+  reference: string
+  receipt_number: null | string
+  amount: number
+  message: null | string
+  gateway_response: string
+  paid_at: null | string
+  created_at: string
+  channel: string
+  currency: string
+  ip_address: string
+  metadata: {
+    transaction_ref: string
+  }
+  log: null
+  fees: null
+  fees_split: null
+  authorization: {}
+  customer: {
+    id: number
+    first_name: null
+    last_name: null
+    email: string
+    customer_code: string
+    phone: null
+    metadata: null
+    risk_action: string
+    international_format_phone: null
+  }
+  plan: null
+  split: {}
+  order_id: null
+  paidAt: null
+  createdAt: string
+  requested_amount: number
+  pos_transaction_data: null
+  source: null
+  fees_breakdown: null
+  transaction_date: string
+  plan_object: {}
+  subaccount: {}
+}
+
+export interface TransactionVerificationResponse {
+  status: boolean
+  message: string
+  data: TransactionData
+}
+export interface ChargeSuccessEvent {
+  event: 'charge.success'
+  data: {
+    id: number
+    domain: string
+    status: string
+    reference: string
+    amount: number
+    message: string | null
+    gateway_response: string
+    paid_at: string
+    created_at: string
+    channel: string
+    currency: string
+    ip_address: string
+    metadata: number
+    log: {
+      time_spent: number
+      attempts: number
+      authentication: string
+      errors: number
+      success: boolean
+      mobile: boolean
+      input: any[] // You might want to create a specific interface for input
+      channel: string | null
+      history: Array<{
+        type: string
+        message: string
+        time: number
+      }>
+    }
+    fees: any | null // You might want to create a specific interface for fees
+    customer: {
+      id: number
+      first_name: string
+      last_name: string
+      email: string
+      customer_code: string
+      phone: string | null
+      metadata: any | null // You might want to create a specific interface for metadata
+      risk_action: string
+    }
+    authorization: {
+      authorization_code: string
+      bin: string
+      last4: string
+      exp_month: string
+      exp_year: string
+      card_type: string
+      bank: string
+      country_code: string
+      brand: string
+      account_name: string
+    }
+    plan: Record<string, never> // Assuming the plan object is always empty
+  }
+}
 export interface PaymentRequestSuccessEvent {
   event: PaystackEvents
   data: {
@@ -114,6 +222,7 @@ export interface BaseChargeRequest {
 
 export enum PAYSTACK_URLS {
   INITIATE_CHARGE = 'transaction/initialize',
+  VERIFY_TRANSACTION = 'transaction/verify'
 }
 
 export interface BankTransferAccountDetails {

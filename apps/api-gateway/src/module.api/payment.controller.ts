@@ -21,7 +21,7 @@ import {
   Payment,
   InitiateChargeDto,
   PaystackChargeResponseData,
-  PaymentRequestSuccessEvent,
+  ChargeSuccessEvent,
   PaystackEvents
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -142,17 +142,15 @@ export class PaymentController {
   }
 
   @Post('paystack-webhook')
-  async paystackPaymentWebhook (@Body() body: PaymentRequestSuccessEvent, @Res() res: Response, @Ip() ip: string): Promise<any> {
+  async paystackPaymentWebhook (@Body() body: ChargeSuccessEvent, @Res() res: Response, @Ip() ip: string): Promise<any> {
     //     @Todo(siradji) improve ip whitelisting for paystack
     // if (!PaystackWebhookIps.includes(ip)) {
     //   return res.status(HttpStatus.UNAUTHORIZED).end()
     // }
-      console.log('ip address', ip)
-    console.log(body)
     switch (body.event) {
       case PaystackEvents.PAYMENT_SUCCESS:
         await lastValueFrom(
-          this.paymentClient.emit(QUEUE_MESSAGE.VERIFY_PAYMENT_PAYSTACK, { requestCode: body.data.request_code })
+          this.paymentClient.emit(QUEUE_MESSAGE.VERIFY_PAYMENT_PAYSTACK, { reference: body.data.reference })
         )
     }
     return res.status(HttpStatus.OK).end()

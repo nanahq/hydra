@@ -195,7 +195,7 @@ export class OrdersServiceService {
     orderId
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
     try {
-      const order = await this.orderRepository.findOneAndPopulate({ _id: orderId }, ['vendor', 'listing']) as OrderI
+      const order = await this.orderRepository.findOneAndPopulate({ _id: orderId }, ['vendor', 'listing', 'user']) as OrderI
 
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
@@ -230,11 +230,11 @@ export class OrdersServiceService {
     status,
     orderId,
     txRefId
-  }: UpdateOrderStatusPaidRequestDto): Promise<ResponseWithStatus> {
+  }: UpdateOrderStatusPaidRequestDto): Promise<void> {
     try {
       this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
 
-      const order = await this.orderRepository.findOneAndPopulate({ _id: orderId }, ['vendor', 'listing']) as OrderI
+      const order = await this.orderRepository.findOneAndPopulate({ _id: orderId }, ['vendor', 'listing', 'user']) as OrderI
 
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
@@ -277,8 +277,6 @@ export class OrdersServiceService {
           this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
         )
       }
-
-      return { status: 1 }
     } catch (error) {
       this.logger.error(`[PIM] - Failed to process paid order ${orderId} `)
       throw new FitRpcException(

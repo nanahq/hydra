@@ -15,15 +15,14 @@ import {
   ServicePayload,
   UpdateOrderStatusPaidRequestDto,
   UssdCharge,
-  UssdRequest
+  UssdRequest,
+  PaystackService
 } from '@app/common'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { PaymentRepository } from './charge.repository'
 import { FlutterwaveService } from '../providers/flutterwave'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import { Promise } from 'mongoose'
-import { PaystackService } from '../providers/paystack'
 
 @Injectable()
 export class PaymentService implements PaymentServiceI {
@@ -261,7 +260,7 @@ export class PaymentService implements PaymentServiceI {
 
       await lastValueFrom<any>(
         this.ordersClient
-          .send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID, payload)
+          .emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID, payload)
           .pipe(
             catchError((error) => {
               throw new RpcException(error)
@@ -273,7 +272,61 @@ export class PaymentService implements PaymentServiceI {
     } catch (error) {
       this.logger.error('[PIM] - Failed pending payment verification', error)
       throw new FitRpcException(
-        'Can not place charge at this moment. Try again later',
+        'Can not verify transaction. Try again later',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async verifyPaymentPaystack (refId: string): Promise<void> {
+    this.logger.log(
+      `[PIM] - Verifying paystack order payment ref: ${refId}`
+    )
+
+    try {
+      const payment = (await this.paymentRepository.findOne({
+        refId
+      })) as Payment
+
+      if (payment.status !== 'PENDING') {
+        return
+      }
+
+      const verificationStatus = await this.paystack.verify(refId)
+
+      if (verificationStatus.data.status.toLowerCase() !== 'success' || verificationStatus.data.amount !== Number(payment.chargedAmount)) {
+        throw new Error('Payment not successful')
+      }
+
+      // Update order status
+      const payload: ServicePayload<UpdateOrderStatusPaidRequestDto> = {
+        userId: '',
+        data: {
+          status: OrderStatus.PROCESSED,
+          orderId: payment.order,
+          txRefId: payment.refId
+        }
+      }
+
+      this.logger.log(
+        `[PIM] - Updating order status after payment order_id: ${payment.order}`
+      )
+
+      await lastValueFrom<any>(
+        this.ordersClient
+          .emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID, payload)
+          .pipe(
+            catchError((error) => {
+              throw new RpcException(error)
+            })
+          )
+      )
+
+      await this.paymentRepository.update({ refId }, { status: 'SUCCESS' })
+    } catch (error) {
+      this.logger.error('[PIM] - Failed pending payment verification', error)
+      throw new FitRpcException(
+        'Can not verify transaction at this moment. Try again later',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }

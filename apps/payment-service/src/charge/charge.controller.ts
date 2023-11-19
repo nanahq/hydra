@@ -109,17 +109,17 @@ export class PaymentController {
     }
   }
 
-  // @EventPattern(QUEUE_MESSAGE.VERIFY_PAYMENT_PAYSTACK)
-  // async verifyPaymentPaystack (
-  //   @Payload() { requestCode }: { requestCode: string },
-  //     @Ctx() context: RmqContext
-  // ): Promise<void> {
-  //   try {
-  //     await this.paymentService.verifyPayment(requestCode)
-  //   } catch (error) {
-  //     throw new RpcException(error)
-  //   } finally {
-  //     this.rmqService.ack(context)
-  //   }
-  // }
+  @EventPattern(QUEUE_MESSAGE.VERIFY_PAYMENT_PAYSTACK)
+  async verifyPaymentPaystack (
+    @Payload() { reference }: { reference: string },
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      await this.paymentService.verifyPaymentPaystack(reference)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

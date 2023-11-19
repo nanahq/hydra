@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common'
 import { OrdersServiceService } from './orders-service.service'
 import {
-  Ctx,
+  Ctx, EventPattern,
   MessagePattern,
   Payload,
   RmqContext,
@@ -60,20 +60,6 @@ export class OrdersServiceController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.ordersServiceService.updateStatus(data)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
-
-  @MessagePattern(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID)
-  async updateOrderStatusWhenPaid (
-    @Payload() { data }: ServicePayload<UpdateOrderStatusPaidRequestDto>,
-      @Ctx() context: RmqContext
-  ): Promise<ResponseWithStatus> {
-    try {
-      return await this.ordersServiceService.updateStatusPaid(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -237,6 +223,20 @@ export class OrdersServiceController {
   ): Promise<Order[]> {
     try {
       return await this.ordersServiceService.getAllUserOrders(userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID)
+  async updateOrderStatusWhenPaid (
+    @Payload() { data }: ServicePayload<UpdateOrderStatusPaidRequestDto>,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.ordersServiceService.updateStatusPaid(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

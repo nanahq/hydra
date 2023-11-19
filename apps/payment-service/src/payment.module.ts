@@ -18,7 +18,8 @@ import {
   VendorPayout,
   VendorPayoutSchema,
   VendorSchema,
-  DatabaseModule
+  DatabaseModule,
+  PaystackService
 } from '@app/common'
 import { ScheduleModule } from '@nestjs/schedule'
 import { PaymentRepository } from './charge/charge.repository'
@@ -26,7 +27,6 @@ import { PaymentService } from './charge/charge.service'
 import { HttpModule } from '@nestjs/axios'
 import { FlutterwaveService } from './providers/flutterwave'
 import { PaymentController } from './charge/charge.controller'
-import { PaystackService } from './providers/paystack'
 
 @Module({
   imports: [

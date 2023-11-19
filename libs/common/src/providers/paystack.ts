@@ -3,7 +3,7 @@ import {
   FitRpcException,
   PAYSTACK_URLS,
   PaystackCharge,
-  PaystackChargeResponse
+  PaystackChargeResponse, TransactionVerificationResponse
 } from '@app/common'
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
@@ -32,6 +32,16 @@ export class PaystackService {
     } catch (error) {
       console.error(error?.message)
       throw new FitRpcException('Can not initiate paystack charge', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async verify (refId: string): Promise<TransactionVerificationResponse> {
+    try {
+      const { data } = await firstValueFrom(this.httpService.get(`https://api.paystack.co/${PAYSTACK_URLS.VERIFY_TRANSACTION}/${refId}`, { headers: this.HEADERS }))
+      return data as TransactionVerificationResponse
+    } catch (error) {
+      console.error(error?.message)
+      throw new FitRpcException('Can not verify paystack transaction', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }
