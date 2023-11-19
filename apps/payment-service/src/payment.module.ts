@@ -26,6 +26,7 @@ import { PaymentService } from './charge/charge.service'
 import { HttpModule } from '@nestjs/axios'
 import { FlutterwaveService } from './providers/flutterwave'
 import { PaymentController } from './charge/charge.controller'
+import { PaystackService } from './providers/paystack'
 
 @Module({
   imports: [
@@ -87,7 +88,7 @@ import { PaymentController } from './charge/charge.controller'
     PaymentRepository,
     PaymentService,
     FlutterwaveService,
-    PaymentService
+    PaystackService
   ]
 })
 export class PaymentServiceModule {}
