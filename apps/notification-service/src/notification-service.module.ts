@@ -1,13 +1,21 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TwilioModule } from 'nestjs-twilio'
-
 import * as Joi from 'joi'
-
-import { RmqModule, QUEUE_SERVICE } from '@app/common'
+import {
+  RmqModule,
+  QUEUE_SERVICE,
+  ScheduledListingNotification,
+  ScheduledListingNotificationSchema,
+  Vendor, User, UserSchema, VendorSchema, ExportPushNotificationClient
+} from '@app/common'
 import { NotificationServiceController } from './notification-service.controller'
 import { NotificationServiceService } from './notification-service.service'
 import { TransactionEmails } from './email/transactional.service'
+import { MongooseModule } from '@nestjs/mongoose'
+import { SubscriptionController } from './subscription.controller'
+import { SubscriptionService } from './subscription.service'
+import { SubscriptionRepository } from './subscription.repository'
 
 @Module({
   imports: [
@@ -31,11 +39,16 @@ import { TransactionEmails } from './email/transactional.service'
       }),
       inject: [ConfigService]
     }),
+    MongooseModule.forFeature([
+      { name: ScheduledListingNotification.name, schema: ScheduledListingNotificationSchema },
+      { name: User.name, schema: UserSchema },
+      { name: Vendor.name, schema: VendorSchema }
+    ]),
     RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE })
   ],
-  controllers: [NotificationServiceController],
-  providers: [NotificationServiceService, ConfigService, TransactionEmails]
+  controllers: [NotificationServiceController, SubscriptionController],
+  providers: [NotificationServiceService, ConfigService, SubscriptionService, ExportPushNotificationClient, SubscriptionRepository, TransactionEmails]
 })
 export class NotificationServiceModule {}

@@ -1,9 +1,10 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 import {
+  CreateSubscriptionDto,
   FitRpcException,
   LocationCoordinates,
-  LoginVendorRequest,
+  LoginVendorRequest, QUEUE_MESSAGE, QUEUE_SERVICE,
   ResponseWithStatus,
   ServicePayload,
   UpdateVendorStatus,
@@ -16,6 +17,8 @@ import { VendorRepository, VendorSettingsRepository } from './vendors.repository
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
+import { ClientProxy } from '@nestjs/microservices'
+import { lastValueFrom } from 'rxjs'
 
 @Injectable()
 export class VendorsService {
@@ -23,14 +26,17 @@ export class VendorsService {
 
   constructor (
     private readonly vendorRepository: VendorRepository,
-    private readonly vendorSettingsRepository: VendorSettingsRepository
+    private readonly vendorSettingsRepository: VendorSettingsRepository,
+
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy
   ) {
   }
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     data.phone = internationalisePhoneNumber(data.phone)
     // Validation gate to check if vendor with the request phone is already exist
-    const existingUser: Vendor = await this.vendorRepository.findOne({
+    const existingUser: Vendor | null = await this.vendorRepository.findOne({
       $or: [{ phone: data.phone }, { email: data.email }]
     })
 
@@ -136,6 +142,14 @@ export class VendorsService {
         HttpStatus.BAD_REQUEST
       )
     }
+
+    const notificationSubCreatePayload: CreateSubscriptionDto = {
+      vendor: id
+    }
+
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.CREATE_VENDOR_NOTIFICATION, notificationSubCreatePayload)
+    )
     return { status: 1 }
   }
 

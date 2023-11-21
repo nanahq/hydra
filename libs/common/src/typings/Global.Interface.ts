@@ -188,3 +188,10 @@ export interface AppConstants {
   cart: CartConstants
   delivery: DeliveryPriceMeta
 }
+
+export interface ScheduledPushPayload {
+  vendor: string
+  listingName: string
+
+  listingAvailableDate: number
+}

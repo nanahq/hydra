@@ -185,3 +185,16 @@ export interface OrderOptions {
   listing: string
   options: string[]
 }
+
+
+export interface SubscriptionNotification {
+  _id: string
+  subscribers: UserI[]
+  vendor: VendorI
+
+  enabledByVendor: boolean
+
+  createdAt: string
+
+  updatedAt: string
+}
