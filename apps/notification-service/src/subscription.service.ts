@@ -34,6 +34,18 @@ export class SubscriptionService {
     }
   }
 
+  async getVendorSubscription (vendor: string): Promise<ScheduledListingNotification> {
+    try {
+      return await this.subscriptionRepository.findOne({ vendor })
+    } catch (error) {
+      this.logger.log(JSON.stringify({
+        message: 'PIM -> failed to fetch subscription',
+        error
+      }))
+      throw new FitRpcException('Can not fetch subscription at this time', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   async createSubscriptionInstance (payload: CreateSubscriptionDto): Promise<void> {
     try {
       await this.subscriptionRepository.create({

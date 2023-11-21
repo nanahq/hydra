@@ -138,7 +138,7 @@ export class VendorsController {
       data: null
     }
     return await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, payload)
+      this.notificationClient.emit(QUEUE_MESSAGE.GET_USER_SUBSCRIPTIONS, payload)
         .pipe(catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         }))

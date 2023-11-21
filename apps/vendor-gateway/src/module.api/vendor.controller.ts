@@ -25,7 +25,7 @@ import {
   ServicePayload,
   Vendor,
   UpdateVendorSettingsDto,
-  CreateVendorDto, UpdateSubscriptionByVendorDto
+  CreateVendorDto, UpdateSubscriptionByVendorDto, ScheduledListingNotification
 } from '@app/common'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -205,7 +205,7 @@ export class VendorController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('user-subscribe')
+  @Put('subscription')
   async updateSubscriptionNotification (
     @Body() data: UpdateSubscriptionByVendorDto,
       @Res() response: Response
@@ -219,5 +219,23 @@ export class VendorController {
     )
 
     response.status(HttpStatus.OK).end()
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('subscription')
+  async getSubscription (
+    @CurrentUser() vendor: Vendor
+  ): Promise<ScheduledListingNotification> {
+    const payload: ServicePayload<null> = {
+      userId: vendor._id as any,
+      data: null
+    }
+    return await lastValueFrom(
+      this.notificationClient.send(QUEUE_MESSAGE.GET_VENDOR_SUBSCRIPTION, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 }

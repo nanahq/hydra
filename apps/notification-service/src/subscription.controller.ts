@@ -40,6 +40,20 @@ export class SubscriptionController {
     }
   }
 
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_SUBSCRIPTION)
+  async getVendorSubscription (
+    @Payload() { userId }: ServicePayload<null>,
+      @Ctx() context: RmqContext
+  ): Promise<ScheduledListingNotification> {
+    try {
+      return await this.subscriptionService.getVendorSubscription(userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @EventPattern(QUEUE_MESSAGE.CREATE_VENDOR_NOTIFICATION)
   async createVendorNotificationSub (
     @Payload() payload: CreateSubscriptionDto,
