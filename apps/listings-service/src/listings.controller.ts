@@ -354,7 +354,7 @@ export class ListingsController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY)
   async updateScheduledListing (
-    @Payload() { listingsId, quantity }: {listingsId: string[], quantity: Array<{listing: string, quantity: number}>},
+    @Payload() { listingsId, quantity }: { listingsId: string[], quantity: Array<{ listing: string, quantity: number }> },
       @Ctx() context
   ): Promise<void> {
     try {
