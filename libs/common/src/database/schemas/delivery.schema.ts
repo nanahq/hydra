@@ -17,8 +17,8 @@ export class Delivery extends AbstractDocument {
   @Prop({ type: Types.ObjectId, ref: 'Order' })
     order: string
 
-  @Prop({ type: Types.ObjectId, ref: 'ListingMenu' })
-    listing: string
+  @Prop({ type: [Types.ObjectId], ref: 'ListingMenu' })
+    listing: string[]
 
   @Prop({ type: Types.ObjectId, ref: 'Vendor' })
     vendor: string

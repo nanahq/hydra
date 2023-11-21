@@ -354,11 +354,11 @@ export class ListingsController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY)
   async updateScheduledListing (
-    @Payload() { listingId }: { listingId: string },
+    @Payload() { listingsId, quantity }: {listingsId: string[], quantity: Array<{listing: string, quantity: number}>},
       @Ctx() context
   ): Promise<void> {
     try {
-      return await this.listingService.updateScheduledListingCount(listingId)
+      return await this.listingService.updateScheduledListingCount(listingsId, quantity)
     } catch (error) {
       throw new RpcException(error)
     } finally {

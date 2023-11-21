@@ -1,14 +1,14 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 
 import {
   FitRpcException,
   ListingCategory,
   ListingCategoryI,
-  ListingMenu,
-  ListingOptionGroup,
+  ListingMenu, ListingMenuI,
+  ListingOptionGroup, QUEUE_MESSAGE, QUEUE_SERVICE,
   ResponseWithStatus,
   ScheduledListing,
-  ScheduledListingDto,
+  ScheduledListingDto, ScheduledPushPayload,
   ServicePayload
 } from '@app/common'
 import {
@@ -25,6 +25,7 @@ import {
 } from '@app/common/database/dto/listing.dto'
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 import { Cron, CronExpression } from '@nestjs/schedule'
+import { ClientProxy } from '@nestjs/microservices'
 
 @Injectable()
 export class ListingsService {
@@ -33,9 +34,10 @@ export class ListingsService {
     private readonly listingMenuRepository: ListingMenuRepository,
     private readonly listingOptionGroupRepository: ListingOptionGroupRepository,
     private readonly listingCategoryRepository: ListingCategoryRepository,
-    private readonly scheduledListingRepository: ScheduledListingRepository
-  ) {
-  }
+    private readonly scheduledListingRepository: ScheduledListingRepository,
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy
+  ) {}
 
   async createListingMenu ({
     data,
@@ -448,6 +450,18 @@ export class ListingsService {
   async createScheduledListing (data: ScheduledListingDto): Promise<ResponseWithStatus> {
     try {
       await this.scheduledListingRepository.create({ ...data, remainingQuantity: data.quantity })
+
+      const listingMenu: ListingMenuI = await this.listingMenuRepository.findOneAndPopulate({ id: data.listing }, ['vendor'])
+
+      if (listingMenu !== null) {
+        const notificationPayload: ScheduledPushPayload = {
+          vendor: listingMenu.vendor.businessName,
+          listingName: listingMenu.name,
+          listingAvailableDate: data.availableDate
+
+        }
+        await this.notificationClient.emit(QUEUE_MESSAGE.SEND_PUSH_NOTIFICATION_LISTING, notificationPayload)
+      }
       return { status: 1 }
     } catch (error) {
       this.logger.error({
@@ -457,15 +471,21 @@ export class ListingsService {
     }
   }
 
-  async updateScheduledListingCount (listingMenuId): Promise<void> {
+  async updateScheduledListingCount (listingMenuIds: string[], quantity: Array<{ listing: string, quantity: number }>): Promise<void> {
     try {
-      const listing = await this.scheduledListingRepository.findOne({ listing: listingMenuId })
+      const listings = await this.scheduledListingRepository.find({ listing: { $in: listingMenuIds } })
 
-      if (listing !== null) {
-        await this.scheduledListingRepository.findOneAndUpdate({ _id: listing._id }, { remainingQuantity: listing.remainingQuantity - 1 })
+      for (const item of quantity) {
+        const listing = listings.find((l) => l.listing === item.listing)
+
+        if (listing !== null) {
+          await this.scheduledListingRepository.findOneAndUpdate({ _id: listing._id }, {
+            remainingQuantity: listing.remainingQuantity - item.quantity
+          })
+        }
       }
     } catch (error) {
-      throw new FitRpcException('Can not update schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException('Cannot update scheduled listings at this time; something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
