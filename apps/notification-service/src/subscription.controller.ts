@@ -1,7 +1,7 @@
 import { Controller, UseFilters } from '@nestjs/common'
 import {
   Ctx,
-  EventPattern,
+  EventPattern, MessagePattern,
   Payload,
   RmqContext,
   RpcException
@@ -14,7 +14,7 @@ import {
   SubscribeDto,
   ExceptionFilterRpc,
   UpdateSubscriptionByVendorDto,
-  ScheduledPushPayload
+  ScheduledPushPayload, ServicePayload, ScheduledListingNotification
 } from '@app/common'
 import { SubscriptionService } from './subscription.service'
 
@@ -25,6 +25,20 @@ export class SubscriptionController {
     private readonly subscriptionService: SubscriptionService,
     private readonly rmqService: RmqService
   ) {}
+
+  @MessagePattern(QUEUE_MESSAGE.GET_USER_SUBSCRIPTIONS)
+  async getUserSubscriptions (
+    @Payload() { userId }: ServicePayload<null>,
+      @Ctx() context: RmqContext
+  ): Promise<ScheduledListingNotification[]> {
+    try {
+      return await this.subscriptionService.getUserSubscriptions(userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 
   @EventPattern(QUEUE_MESSAGE.CREATE_VENDOR_NOTIFICATION)
   async createVendorNotificationSub (

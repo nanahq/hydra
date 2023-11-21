@@ -12,7 +12,7 @@ import {
   CurrentUser,
   IRpcException, LocationCoordinates,
   QUEUE_MESSAGE,
-  QUEUE_SERVICE,
+  QUEUE_SERVICE, ScheduledListingNotification,
   ServicePayload, SubscribeDto, TravelDistanceResult,
   User,
   Vendor
@@ -112,7 +112,7 @@ export class VendorsController {
     )
   }
 
-  @Post('/listing/subscribe')
+  @Post('subscribe')
   @UseGuards(JwtAuthGuard)
   async subscribeUnsubscribeToVendor (
     @Body() payload: SubscribeDto,
@@ -120,11 +120,28 @@ export class VendorsController {
       @Res() response: Response
   ): Promise<void> {
     await lastValueFrom(
-      this.vendorsClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, payload)
+      this.notificationClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, payload)
         .pipe(catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         }))
     )
     response.status(HttpStatus.OK).end()
+  }
+
+  @Get('subscriptions')
+  @UseGuards(JwtAuthGuard)
+  async getAllSubscriptions (
+    @CurrentUser() user: User
+  ): Promise<ScheduledListingNotification[]> {
+    const payload: ServicePayload<null> = {
+      userId: user._id as any,
+      data: null
+    }
+    return await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, payload)
+        .pipe(catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        }))
+    )
   }
 }

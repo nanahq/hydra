@@ -5,7 +5,7 @@ import { Expo, ExpoPushMessage } from 'expo-server-sdk'
 import {
   CreateSubscriptionDto,
   ExportPushNotificationClient,
-  FitRpcException, ScheduledPushPayload,
+  FitRpcException, ScheduledListingNotification, ScheduledPushPayload,
   SubscribeDto, SubscriptionNotification,
   UpdateSubscriptionByVendorDto
 } from '@app/common'
@@ -21,6 +21,18 @@ export class SubscriptionService {
 
     private readonly pushNotificationClient: ExportPushNotificationClient
   ) {}
+
+  async getUserSubscriptions (userId: string): Promise<ScheduledListingNotification[]> {
+    try {
+      return await this.subscriptionRepository.find({ subscribers: userId })
+    } catch (error) {
+      this.logger.log(JSON.stringify({
+        message: 'PIM -> failed to fetch subscription',
+        error
+      }))
+      throw new FitRpcException('Can not fetch subscription at this time', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 
   async createSubscriptionInstance (payload: CreateSubscriptionDto): Promise<void> {
     try {
