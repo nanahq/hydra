@@ -7,7 +7,7 @@ import {
   QUEUE_SERVICE,
   ScheduledListingNotification,
   ScheduledListingNotificationSchema,
-  Vendor, User, UserSchema, VendorSchema, ExportPushNotificationClient
+  Vendor, User, UserSchema, VendorSchema, ExportPushNotificationClient, DatabaseModule
 } from '@app/common'
 import { NotificationServiceController } from './notification-service.controller'
 import { NotificationServiceService } from './notification-service.service'
@@ -46,7 +46,9 @@ import { SubscriptionRepository } from './subscription.repository'
     ]),
     RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
-    RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE })
+    RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
+    DatabaseModule,
+    RmqModule
   ],
   controllers: [NotificationServiceController, SubscriptionController],
   providers: [NotificationServiceService, ConfigService, SubscriptionService, ExportPushNotificationClient, SubscriptionRepository, TransactionEmails]
