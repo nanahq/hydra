@@ -128,13 +128,13 @@ export class VendorsController {
     response.status(HttpStatus.OK).end()
   }
 
-  @Get('subscriptions')
+  @Get('subscriptions/:id')
   @UseGuards(JwtAuthGuard)
   async getAllSubscriptions (
-    @CurrentUser() user: User
+    @Param('id') id: string
   ): Promise<ScheduledListingNotification[]> {
     const payload: ServicePayload<null> = {
-      userId: user._id as any,
+      userId: id,
       data: null
     }
     return await lastValueFrom(

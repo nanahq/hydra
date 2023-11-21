@@ -96,7 +96,7 @@ export class SubscriptionController {
     }
   }
 
-  @EventPattern(QUEUE_MESSAGE.VENDOR_UPDATE_NOTIFICATION_SETTINGS)
+  @EventPattern(QUEUE_MESSAGE.SEND_PUSH_NOTIFICATION_LISTING)
   async sendPushNotificationForNewListing (
     @Payload() payload: ScheduledPushPayload,
       @Ctx() context: RmqContext
