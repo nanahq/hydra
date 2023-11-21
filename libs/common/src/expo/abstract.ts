@@ -33,33 +33,33 @@ export class ExportPushNotificationClient {
     }
   }
 
-  // public async sendMultipleNotifications (tokens: string[], message: Omit<ExpoPushMessage, 'to'>): Promise<void> {
-  //   try {
-  //     const messages = []
-  //     for (const pushToken of tokens) {
-  //       if (!Expo.isExpoPushToken(pushToken)) {
-  //         console.error(`Push token ${pushToken} is not a valid Expo push token`)
-  //         continue
-  //       }
-  //       messages.push({
-  //         to: pushToken,
-  //         sound: 'default',
-  //         ...message
-  //       })
-  //     }
-  //
-  //     const chunks = this.expoClient.chunkPushNotifications(messages)
-  //
-  //     for (const chunk of chunks) {
-  //       await this.expoClient.sendPushNotificationsAsync(chunk)
-  //     }
-  //   } catch (error) {
-  //     this.logger.error({
-  //       error,
-  //       message: 'Failed to send multiple notifications'
-  //     })
-  //   }
-  // }
+  public async sendMultipleNotifications (tokens: string[], message: Omit<ExpoPushMessage, 'to'>): Promise<void> {
+    try {
+      const messages: ExpoPushMessage[] = []
+      for (const pushToken of tokens) {
+        if (!Expo.isExpoPushToken(pushToken)) {
+          console.error(`Push token ${pushToken as string} is not a valid Expo push token`)
+          continue
+        }
+        messages.push({
+          to: pushToken,
+          sound: 'default',
+          ...message
+        })
+      }
+
+      const chunks = this.expoClient.chunkPushNotifications(messages)
+
+      for (const chunk of chunks) {
+        await this.expoClient.sendPushNotificationsAsync(chunk)
+      }
+    } catch (error) {
+      this.logger.error({
+        error,
+        message: 'Failed to send multiple notifications'
+      })
+    }
+  }
 
   private async checkTokenValidity (pushToken: string): Promise<void> {
     return new Promise((resolve) => {

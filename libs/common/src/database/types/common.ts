@@ -49,7 +49,7 @@ export interface ListingOptionGroupI {
 
 export interface ListingMenuI {
   _id: string
-  vendorId: string
+  vendor: VendorI
   name: string
   desc: string
   price: string
@@ -148,7 +148,7 @@ export interface ReviewI {
 export interface OrderI {
   _id: string
   user: UserI
-  listing: ListingMenuI
+  listing: [ListingMenuI]
   vendor: VendorI
   totalOrderValue: number
   orderValuePayable: number
@@ -158,13 +158,16 @@ export interface OrderI {
   createdAt: string
   updatedAt: string
   refId: number
-  options: string[]
+  options: OrderOptions[]
   orderStatus: OrderStatus
   orderBreakDown: OrderBreakDown
   orderType: OrderType
   orderDeliveryScheduledTime: string
   preciseLocation: LocationCoordinates
-  quantity: string
+  quantity: [{
+    listing: string
+    quantity: number
+  }]
   specialNote?: string
   txRefId?: string
 }
@@ -184,4 +187,16 @@ export interface VendorReviewOverview {
 export interface OrderOptions {
   listing: string
   options: string[]
+}
+
+export interface SubscriptionNotification {
+  _id: string
+  subscribers: UserI[]
+  vendor: VendorI
+
+  enabledByVendor: boolean
+
+  createdAt: string
+
+  updatedAt: string
 }

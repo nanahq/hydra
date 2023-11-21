@@ -2,12 +2,12 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
+  HttpException, HttpStatus,
   Inject,
   Logger,
   Param,
   Post,
-  Put,
+  Put, Res,
   UploadedFile,
   UseGuards,
   UseInterceptors
@@ -15,7 +15,7 @@ import {
 
 import { catchError, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
-
+import { Response } from 'express'
 import {
   CurrentUser,
   IRpcException,
@@ -25,7 +25,7 @@ import {
   ServicePayload,
   Vendor,
   UpdateVendorSettingsDto,
-  CreateVendorDto
+  CreateVendorDto, UpdateSubscriptionByVendorDto
 } from '@app/common'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -40,6 +40,9 @@ export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy,
     private readonly awsService: AwsService
   ) {}
 
@@ -199,5 +202,22 @@ export class VendorController {
         })
       )
     )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('user-subscribe')
+  async updateSubscriptionNotification (
+    @Body() data: UpdateSubscriptionByVendorDto,
+      @Res() response: Response
+  ): Promise<void> {
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, data).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+
+    response.status(HttpStatus.OK).end()
   }
 }

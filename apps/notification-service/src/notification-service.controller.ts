@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common'
+import { Controller, UseFilters } from '@nestjs/common'
 import {
   Ctx,
   EventPattern,
@@ -14,11 +14,12 @@ import {
   verifyPhoneRequest,
   QUEUE_MESSAGE,
   SendPayoutEmail,
-  OrderStatusUpdateDto
+  OrderStatusUpdateDto, ExceptionFilterRpc
 } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
 import { TransactionEmails } from './email/transactional.service'
 
+@UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class NotificationServiceController {
   constructor (

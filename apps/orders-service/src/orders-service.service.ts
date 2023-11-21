@@ -267,7 +267,8 @@ export class OrdersServiceService {
 
       await lastValueFrom(
         this.listingsClient.emit(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY, {
-          listingId: order.listing._id
+          listingsId: order.listing.map(li => li._id),
+          quantity: order.quantity
         })
       )
 

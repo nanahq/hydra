@@ -241,7 +241,7 @@ export class ODSA {
       if (driverToBeAssigned === null) {
         if (existingDeliver === undefined) {
           await this.odsaRepository.create({
-            listing: order.listing._id,
+            listing: order.listing.map(li => li._id),
             order: order._id,
             vendor: order.vendor?._id,
             user: order.user._id,
@@ -264,7 +264,7 @@ export class ODSA {
       } else {
         await this.odsaRepository.create({
           driver: driverToBeAssigned?.driverId,
-          listing: order.listing._id,
+          listing: order.listing.map(li => li._id),
           order: order._id,
           vendor: order.vendor?._id,
           user: order.user._id,

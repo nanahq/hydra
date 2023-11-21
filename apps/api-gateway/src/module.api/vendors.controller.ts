@@ -6,19 +6,20 @@ import {
   Inject,
   Param,
   UseGuards,
-  Post, Body
+  Post, Body, Res, HttpStatus
 } from '@nestjs/common'
 import {
   CurrentUser,
   IRpcException, LocationCoordinates,
   QUEUE_MESSAGE,
-  QUEUE_SERVICE,
-  ServicePayload, TravelDistanceResult,
+  QUEUE_SERVICE, ScheduledListingNotification,
+  ServicePayload, SubscribeDto, TravelDistanceResult,
   User,
   Vendor
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { catchError, lastValueFrom } from 'rxjs'
+import { Response } from 'express'
 
 @Controller('vendor')
 export class VendorsController {
@@ -27,7 +28,10 @@ export class VendorsController {
     private readonly vendorsClient: ClientProxy,
 
     @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
-    private readonly locationClient: ClientProxy
+    private readonly locationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy
   ) {}
 
   @Get('vendors')
@@ -102,6 +106,39 @@ export class VendorsController {
   ): Promise<TravelDistanceResult> {
     return await lastValueFrom<TravelDistanceResult>(
       this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: user.location.coordinates, vendorCoords: data.coordinates })
+        .pipe(catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        }))
+    )
+  }
+
+  @Post('subscribe')
+  @UseGuards(JwtAuthGuard)
+  async subscribeUnsubscribeToVendor (
+    @Body() payload: SubscribeDto,
+      @CurrentUser() user: User,
+      @Res() response: Response
+  ): Promise<void> {
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, payload)
+        .pipe(catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        }))
+    )
+    response.status(HttpStatus.OK).end()
+  }
+
+  @Get('subscriptions')
+  @UseGuards(JwtAuthGuard)
+  async getAllSubscriptions (
+    @CurrentUser() user: User
+  ): Promise<ScheduledListingNotification[]> {
+    const payload: ServicePayload<null> = {
+      userId: user._id as any,
+      data: null
+    }
+    return await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, payload)
         .pipe(catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         }))

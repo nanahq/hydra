@@ -148,10 +148,10 @@ export interface OrderI {
   orderBreakDown: OrderBreakDown
   orderDeliveryScheduledTime: string
   preciseLocation: LocationCoordinates
-  quantity: {
+  quantity: Array<{
     listing: string
     quantity: number
-  }
+  }>
   specialNote?: string
   txRefId?: string
 }
@@ -349,4 +349,17 @@ export interface ScheduledListingI {
   soldOut: boolean
 
   remainingQuantity: number
+}
+
+export interface SubscriptionNotificationI {
+  _id: string
+  subscribers: UserI[]
+
+  vendor: VendorI
+
+  enabledByVendor: boolean
+
+  createdAt: string
+
+  updatedAt: string
 }

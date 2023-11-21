@@ -16,7 +16,9 @@ import {
   ListingMenu,
   ListingMenuSchema,
   ListingOptionGroup,
-  ListingOptionGroupSchema, ScheduledListing, ScheduledListingSchema
+  ListingOptionGroupSchema,
+  ScheduledListing,
+  ScheduledListingSchema
 } from '@app/common'
 
 import { MongooseModule } from '@nestjs/mongoose'
@@ -44,7 +46,8 @@ import { ScheduleModule } from '@nestjs/schedule'
       { name: ListingCategory.name, schema: ListingCategorySchema },
       { name: ListingMenu.name, schema: ListingMenuSchema },
       { name: ListingOptionGroup.name, schema: ListingOptionGroupSchema },
-      { name: ScheduledListing.name, schema: ScheduledListingSchema }
+      { name: ScheduledListing.name, schema: ScheduledListingSchema },
+      { name: Vendor.name, schema: VendorSchema }
     ]),
     MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
     MongooseModule.forFeature([{ name: Review.name, schema: ReviewSchema }]),
