@@ -24,7 +24,7 @@ export class SubscriptionService {
 
   async getUserSubscriptions (userId: string): Promise<ScheduledListingNotification[]> {
     try {
-      return await this.subscriptionRepository.find({ subscribers: userId })
+      return await this.subscriptionRepository.find({ subscribers: { $in: [userId] } })
     } catch (error) {
       this.logger.log(JSON.stringify({
         message: 'PIM -> failed to fetch subscription',
@@ -51,7 +51,7 @@ export class SubscriptionService {
       await this.subscriptionRepository.create({
         vendor: payload.vendor,
         subscribers: [],
-        enabledByVendor: false
+        enabledByVendor: true
       })
     } catch (error) {
       throw new FitRpcException('Can not create a subscription object for vendor', HttpStatus.INTERNAL_SERVER_ERROR)

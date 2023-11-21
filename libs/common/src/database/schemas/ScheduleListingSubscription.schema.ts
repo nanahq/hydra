@@ -16,7 +16,8 @@ export class ScheduledListingNotification extends AbstractDocument {
   @Prop(
     {
       type: Types.ObjectId,
-      ref: 'Vendor'
+      ref: 'Vendor',
+      unique: true
     }
   )
     vendor: string

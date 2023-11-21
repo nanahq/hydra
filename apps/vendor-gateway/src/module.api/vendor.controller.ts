@@ -211,7 +211,7 @@ export class VendorController {
       @Res() response: Response
   ): Promise<void> {
     await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, data).pipe(
+      this.notificationClient.emit(QUEUE_MESSAGE.VENDOR_UPDATE_NOTIFICATION_SETTINGS, data).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
