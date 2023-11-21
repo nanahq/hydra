@@ -202,3 +202,8 @@ spec:
                   name: nana-hydra-secret
                   key: MAPBOX_TOKEN
 
+            - name: NO_COLOR
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: NO_COLOR

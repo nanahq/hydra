@@ -201,3 +201,8 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: PAY_STACK_SECRET
+            - name: NO_COLOR
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: NO_COLOR

@@ -194,3 +194,8 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: FLW_TEST_ENCRYPTION_KEY
+            - name: NO_COLOR
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: NO_COLOR
