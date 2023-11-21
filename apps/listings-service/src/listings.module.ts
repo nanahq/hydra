@@ -18,7 +18,7 @@ import {
   ListingOptionGroup,
   ListingOptionGroupSchema,
   ScheduledListing,
-  ScheduledListingSchema
+  ScheduledListingSchema, QUEUE_SERVICE
 } from '@app/common'
 
 import { MongooseModule } from '@nestjs/mongoose'
@@ -51,6 +51,7 @@ import { ScheduleModule } from '@nestjs/schedule'
     ]),
     MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
     MongooseModule.forFeature([{ name: Review.name, schema: ReviewSchema }]),
+    RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
     DatabaseModule,
     RmqModule
   ],
