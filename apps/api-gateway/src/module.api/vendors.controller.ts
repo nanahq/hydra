@@ -144,4 +144,22 @@ export class VendorsController {
         }))
     )
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('subscription/vendor/:vid')
+  async getVendorSubscribers (
+    @Param('vid') vendor: string
+  ): Promise<ScheduledListingNotification> {
+    const payload: ServicePayload<null> = {
+      userId: vendor,
+      data: null
+    }
+    return await lastValueFrom(
+      this.notificationClient.send(QUEUE_MESSAGE.GET_VENDOR_SUBSCRIPTION, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
 }
