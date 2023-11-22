@@ -195,7 +195,7 @@ export interface ScheduledPushPayload {
   listingAvailableDate: number
 }
 
-export interface VendorSoldOutPush extends BasePushMessage  {
+export interface VendorSoldOutPush extends BasePushMessage {
   vendorName: string
   listingName: string
   listingAvailableDate: string

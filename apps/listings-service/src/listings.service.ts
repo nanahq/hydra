@@ -567,7 +567,7 @@ export class ListingsService {
     }
   }
 
-  @Cron(CronExpression.EVERY_12_HOURS, {
+  @Cron(CronExpression.EVERY_6_HOURS, {
     timeZone: 'Africa/Lagos'
   })
   private async deletePastScheduledListings (): Promise<void> {
