@@ -123,8 +123,11 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     const today = new Date()
     const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
 
-    const start = yesterday.setHours(0, 0, 0, 0)
-    const end = yesterday.setHours(23, 59, 59, 999)
+    const start = new Date(yesterday)
+    start.setHours(0, 0, 0, 0)
+
+    const end = new Date(yesterday)
+    end.setHours(23, 59, 59, 999)
 
     const filter: FilterQuery<Order> = {
       createdAt: {
@@ -172,8 +175,11 @@ export class VendorPayoutService implements VendorPayoutServiceI {
   })
   async sendPayoutEmails (): Promise<void> {
     const today = new Date()
-    const start = today.setHours(0, 0, 0, 0)
-    const end = today.setHours(23, 59, 59, 999)
+    const start = new Date(today)
+    start.setHours(0, 0, 0, 0)
+
+    const end = new Date(today)
+    end.setHours(23, 59, 59, 999)
 
     const filter: FilterQuery<VendorPayout> = {
       createdAt: {
