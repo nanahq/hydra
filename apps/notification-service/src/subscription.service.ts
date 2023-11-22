@@ -94,7 +94,7 @@ export class SubscriptionService {
     try {
       const subscription: SubscriptionNotification = await this.subscriptionRepository.findOneAndPopulate({ vendor: payload.vendor }, ['subscribers', 'vendor'])
 
-      if (subscription.subscribers.length < 1) {
+      if (subscription.subscribers.length === 0) {
         return
       }
 
@@ -103,7 +103,6 @@ export class SubscriptionService {
       const notificationTokens: any[] = subscription
         .subscribers
         .map(sub => sub?.expoNotificationToken)
-        .filter(token => token !== undefined)
         .filter(token => Expo.isExpoPushToken(token))
 
       const message: Omit<ExpoPushMessage, 'to'> = {

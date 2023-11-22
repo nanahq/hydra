@@ -1,11 +1,11 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 
 import {
-  FitRpcException,
+  FitRpcException, ListingApprovePush,
   ListingCategory,
   ListingCategoryI,
   ListingMenu, ListingMenuI,
-  ListingOptionGroup, QUEUE_MESSAGE, QUEUE_SERVICE,
+  ListingOptionGroup, ListingRejectPush, QUEUE_MESSAGE, QUEUE_SERVICE,
   ResponseWithStatus,
   ScheduledListing,
   ScheduledListingDto, ScheduledPushPayload,
@@ -177,12 +177,23 @@ export class ListingsService {
       }
     )
 
+    const listing = await this.listingMenuRepository.findOneAndPopulate({ _id }, ['vendor']) as unknown as ListingMenuI
+
     if (updateRequest === null) {
       throw new FitRpcException(
         'Failed to approve listing menu',
         HttpStatus.BAD_REQUEST
       )
     }
+
+    this.logger.log(`Sending approval push to ${listing.vendor.businessName}`)
+
+    const payload: ListingApprovePush = {
+      token: listing.vendor.expoNotificationToken,
+      listingName: listing.name,
+      vendorName: listing.vendor.businessName
+    }
+    await this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_APPROVED, payload)
 
     return { status: 1 }
   }
@@ -196,12 +207,24 @@ export class ListingsService {
       }
     )
 
+    const listing = await this.listingMenuRepository.findOneAndPopulate({ _id }, ['vendor']) as unknown as ListingMenuI
+
     if (updateRequest === null) {
       throw new FitRpcException(
         'Failed to reject listing menu',
         HttpStatus.BAD_REQUEST
       )
     }
+
+    this.logger.log(`Sending rejection push to ${listing.vendor.businessName}`)
+
+    const payload: ListingRejectPush = {
+      token: listing.vendor.expoNotificationToken,
+      listingName: listing.name,
+      vendorName: listing.vendor.businessName,
+      rejectionReason: reason
+    }
+    await this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_REJECTED, payload)
 
     return { status: 1 }
   }
@@ -453,6 +476,8 @@ export class ListingsService {
 
       const listingMenu: ListingMenuI = await this.listingMenuRepository.findOneAndPopulate({ _id: data.listing }, ['vendor'])
 
+      this.logger.log('sending push scheduled to subscribe')
+
       if (listingMenu !== null) {
         const notificationPayload: ScheduledPushPayload = {
           vendor: listingMenu.vendor.businessName,
@@ -480,7 +505,8 @@ export class ListingsService {
 
         if (listing !== null) {
           await this.scheduledListingRepository.findOneAndUpdate({ _id: listing._id }, {
-            remainingQuantity: listing.remainingQuantity - item.quantity
+            remainingQuantity: listing.remainingQuantity - item.quantity,
+            soldOut: (listing.remainingQuantity - item.quantity) === 0
           })
         }
       }

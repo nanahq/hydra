@@ -14,7 +14,7 @@ import {
   verifyPhoneRequest,
   QUEUE_MESSAGE,
   SendPayoutEmail,
-  OrderStatusUpdateDto, ExceptionFilterRpc
+  OrderStatusUpdateDto, ExceptionFilterRpc, VendorSoldOutPush, VendorApprovedPush, ListingApprovePush, ListingRejectPush
 } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
 import { TransactionEmails } from './email/transactional.service'
@@ -105,6 +105,62 @@ export class NotificationServiceController {
   ): Promise<void> {
     try {
       await this.transctionalEmail.sendVendorPayoutEmail(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.NOTIFICATION_SCHEDULED_SOLD_OUT)
+  async sendSoldOutPush (
+    @Payload() data: VendorSoldOutPush,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.notificationServiceService.sendSoldOutMessage(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.NOTIFICATION_APPROVE_VENDOR)
+  async sendVendorApprovedPush (
+    @Payload() data: VendorApprovedPush,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.notificationServiceService.sendVendorApprovedPush(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.NOTIFICATION_LISTING_APPROVED)
+  async sendListingApproved (
+    @Payload() data: ListingApprovePush,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.notificationServiceService.sendListingApprovedPush(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.NOTIFICATION_LISTING_REJECTED)
+  async sendListingRejectedPush (
+    @Payload() data: ListingRejectPush,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.notificationServiceService.sendListingRejectedPush(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

@@ -192,6 +192,37 @@ export interface AppConstants {
 export interface ScheduledPushPayload {
   vendor: string
   listingName: string
-
   listingAvailableDate: number
+}
+
+export interface VendorSoldOutPush extends BasePushMessage  {
+  vendorName: string
+  listingName: string
+  listingAvailableDate: string
+  listingQuantity: number
+}
+
+export interface BasePushMessage {
+  token: string
+}
+
+export interface VendorApprovedPush extends BasePushMessage {
+  vendorName: string
+}
+
+export interface VendorRejectPush extends BasePushMessage {
+  vendorName: string
+
+  rejectionReason: string
+}
+
+export interface ListingApprovePush extends BasePushMessage {
+  vendorName: string
+  listingName: string
+}
+
+export interface ListingRejectPush extends BasePushMessage {
+  vendorName: string
+  listingName: string
+  rejectionReason: string
 }

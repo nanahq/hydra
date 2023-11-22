@@ -10,7 +10,12 @@ import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   verifyPhoneRequest,
-  OrderStatusUpdateDto
+  OrderStatusUpdateDto,
+  VendorSoldOutPush,
+  ExportPushNotificationClient,
+  PushMessage,
+  ListingApprovePush,
+  ListingRejectPush, VendorApprovedPush
 } from '@app/common'
 
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
@@ -23,7 +28,9 @@ export class NotificationServiceService {
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     private readonly twilioService: TwilioService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+
+    private readonly pushClient: ExportPushNotificationClient
   ) {
     this.fromPhone = 'EatLater'
   }
@@ -133,5 +140,57 @@ export class NotificationServiceService {
       .catch((error) => {
         throw new RpcException(error)
       })
+  }
+
+  public async sendSoldOutMessage (data: VendorSoldOutPush): Promise<void> {
+    try {
+      const message: PushMessage = {
+        priority: 'high',
+        title: `${data.listingName} has sold out!!`,
+        body: `${data.vendorName}, ${data.listingQuantity} of the available ${data.listingName} have been order!`
+      }
+      return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {
+
+    }
+  }
+
+  public async sendListingApprovedPush (data: ListingApprovePush): Promise<void> {
+    try {
+      const message: PushMessage = {
+        priority: 'high',
+        title: `${data.listingName} has been approved!`,
+        body: 'Your listing is now visible on Nana '
+      }
+      return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {
+
+    }
+  }
+
+  public async sendListingRejectedPush (data: ListingRejectPush): Promise<void> {
+    try {
+      const message: PushMessage = {
+        priority: 'high',
+        title: `${data.listingName} has been rejected!`,
+        body: 'Go to the listing and check the rejection reason'
+      }
+      return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {
+
+    }
+  }
+
+  public async sendVendorApprovedPush (data: VendorApprovedPush): Promise<void> {
+    try {
+      const message: PushMessage = {
+        priority: 'high',
+        title: `${data.vendorName} Your account has been approved!!`,
+        body: 'A warm welcome to Nana. Add listings to start selling'
+      }
+      return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {
+
+    }
   }
 }
