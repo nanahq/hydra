@@ -451,7 +451,7 @@ export class ListingsService {
     try {
       await this.scheduledListingRepository.create({ ...data, remainingQuantity: data.quantity })
 
-      const listingMenu: ListingMenuI = await this.listingMenuRepository.findOneAndPopulate({ id: data.listing }, ['vendor'])
+      const listingMenu: ListingMenuI = await this.listingMenuRepository.findOneAndPopulate({ _id: data.listing }, ['vendor'])
 
       if (listingMenu !== null) {
         const notificationPayload: ScheduledPushPayload = {

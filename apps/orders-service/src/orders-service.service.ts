@@ -71,7 +71,7 @@ export class OrdersServiceService {
       orderId: populatedOrder._id,
       email: populatedOrder.user.email,
       userId: populatedOrder.user._id,
-      amount: populatedOrder.totalOrderValue.toLocaleString()
+      amount: String(populatedOrder.totalOrderValue)
     }
     const paymentMeta = await lastValueFrom<PaystackChargeResponseData>(this.paymentClient.send(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK, chargePayload))
 
