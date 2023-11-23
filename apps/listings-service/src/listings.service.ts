@@ -572,33 +572,35 @@ export class ListingsService {
     }
   }
 
-  @Cron(CronExpression.EVERY_6_HOURS, {
+  @Cron(CronExpression.EVERY_MINUTE, {
     timeZone: 'Africa/Lagos'
   })
   private async deletePastScheduledListings (): Promise<void> {
-    try {
-      this.logger.log('[CRON] -> Deleting past day scheduled listings')
+    console.log('cron for listing running')
 
-      const listings = await this.scheduledListingRepository.find({}) as ScheduledListing[]
-
-      this.logger.log(`[CRON] -> ${listings.length} scheduled listings to be deleted `)
-
-      const idsToDelete: any[] = []
-
-      const currentDate = new Date()
-
-      for (const listing of listings) {
-        const listingDate = new Date(listing.availableDate)
-        if (currentDate > listingDate) {
-          idsToDelete.push(listing._id)
-        }
-      }
-
-      if (idsToDelete.length > 0) {
-        await this.scheduledListingRepository.deleteMany({ _id: { $in: idsToDelete } })
-      }
-    } catch (error) {
-      this.logger.error('[CRON] -> Failed to delete past day scheduled listings:', error)
-    }
+  //   try {
+  //     this.logger.log('[CRON] -> Deleting past day scheduled listings')
+  //
+  //     const listings = await this.scheduledListingRepository.find({}) as ScheduledListing[]
+  //
+  //     this.logger.log(`[CRON] -> ${listings.length} scheduled listings to be deleted `)
+  //
+  //     const idsToDelete: any[] = []
+  //
+  //     const currentDate = new Date()
+  //
+  //     for (const listing of listings) {
+  //       const listingDate = new Date(listing.availableDate)
+  //       if (currentDate > listingDate) {
+  //         idsToDelete.push(listing._id)
+  //       }
+  //     }
+  //
+  //     if (idsToDelete.length > 0) {
+  //       await this.scheduledListingRepository.deleteMany({ _id: { $in: idsToDelete } })
+  //     }
+  //   } catch (error) {
+  //     this.logger.error('[CRON] -> Failed to delete past day scheduled listings:', error)
+  //   }
   }
 }
