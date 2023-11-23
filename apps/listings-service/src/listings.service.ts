@@ -26,6 +26,7 @@ import {
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy } from '@nestjs/microservices'
+import { lastValueFrom } from 'rxjs'
 
 @Injectable()
 export class ListingsService {
@@ -193,7 +194,9 @@ export class ListingsService {
       listingName: listing.name,
       vendorName: listing.vendor.businessName
     }
-    await this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_APPROVED, payload)
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_APPROVED, payload)
+    )
 
     return { status: 1 }
   }
@@ -224,7 +227,9 @@ export class ListingsService {
       vendorName: listing.vendor.businessName,
       rejectionReason: reason
     }
-    await this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_REJECTED, payload)
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_REJECTED, payload)
+    )
 
     return { status: 1 }
   }
@@ -485,7 +490,7 @@ export class ListingsService {
           listingAvailableDate: data.availableDate
 
         }
-        await this.notificationClient.emit(QUEUE_MESSAGE.SEND_PUSH_NOTIFICATION_LISTING, notificationPayload)
+        await lastValueFrom(this.notificationClient.emit(QUEUE_MESSAGE.SEND_PUSH_NOTIFICATION_LISTING, notificationPayload))
       }
       return { status: 1 }
     } catch (error) {
@@ -502,11 +507,11 @@ export class ListingsService {
 
       for (const item of quantity) {
         const listing = listings.find((l) => l.listing === item.listing)
-
+        const soldOut = (listing.remainingQuantity - item.quantity) === 0
         if (listing !== null) {
           await this.scheduledListingRepository.findOneAndUpdate({ _id: listing._id }, {
             remainingQuantity: listing.remainingQuantity - item.quantity,
-            soldOut: (listing.remainingQuantity - item.quantity) === 0
+            soldOut
           })
         }
       }
@@ -584,7 +589,6 @@ export class ListingsService {
 
       for (const listing of listings) {
         const listingDate = new Date(listing.availableDate)
-
         if (currentDate > listingDate) {
           idsToDelete.push(listing._id)
         }
