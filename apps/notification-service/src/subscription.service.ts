@@ -105,7 +105,7 @@ export class SubscriptionService {
         .map(sub => sub?.expoNotificationToken)
         .filter(token => Expo.isExpoPushToken(token))
 
-      console.log({notificationTokens})
+      console.log({ notificationTokens })
       const message: Omit<ExpoPushMessage, 'to'> = {
         body: `${subscription.vendor.businessName}'s ${payload.listingName} will be available on ${availableDate}`,
         title: 'Place your Order Now!'

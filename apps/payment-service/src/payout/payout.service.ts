@@ -2,9 +2,9 @@ import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import { VendorPayoutRepository } from './payout.repository'
 import {
   FitRpcException,
-  // IRpcException,
-  // Order,
-  // OrderI,
+  IRpcException,
+  Order,
+  OrderI,
   PayoutOverview,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -122,30 +122,32 @@ export class VendorPayoutService implements VendorPayoutServiceI {
   async handlePayoutComputation (): Promise<void> {
     console.log('running payout cron')
 
-    // const today = new Date()
-    // const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
-    //
-    // const start = new Date(yesterday)
-    // start.setHours(0, 0, 0, 0)
-    //
-    // const end = new Date(yesterday)
-    // end.setHours(23, 59, 59, 999)
-    //
-    // const filter: FilterQuery<Order> = {
-    //   createdAt: {
-    //     $gte: start,
-    //     $lt: end
-    //   },
-    //   orderStatus: 'DELIVERED_TO_CUSTOMER'
-    // }
-    // const orders = await lastValueFrom<OrderI[]>(
-    //   this.ordersClient.send(QUEUE_MESSAGE.GET_ALL_ORDERS, filter).pipe(
-    //     catchError((error: IRpcException) => {
-    //       throw new FitRpcException(error.message, error.status)
-    //     })
-    //   )
-    // )
-    //
+    const today = new Date()
+    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
+
+    const start = new Date(yesterday)
+    start.setHours(0, 0, 0, 0)
+
+    const end = new Date(yesterday)
+    end.setHours(23, 59, 59, 999)
+
+    const filter: FilterQuery<Order> = {
+      createdAt: {
+        $gte: start,
+        $lt: end
+      },
+      orderStatus: 'DELIVERED_TO_CUSTOMER'
+    }
+    const orders = await lastValueFrom<OrderI[]>(
+      this.ordersClient.send(QUEUE_MESSAGE.GET_ALL_ORDERS, filter).pipe(
+        catchError((error: IRpcException) => {
+          throw new FitRpcException(error.message, error.status)
+        })
+      )
+    )
+
+    console.log({orders})
+
     // // Compute earnings for each vendor
     // const vendorEarnings = new Map<string, number>()
     //
