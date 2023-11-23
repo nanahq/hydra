@@ -488,7 +488,6 @@ export class ListingsService {
           vendor: listingMenu.vendor.businessName,
           listingName: listingMenu.name,
           listingAvailableDate: data.availableDate
-
         }
         await lastValueFrom(this.notificationClient.emit(QUEUE_MESSAGE.SEND_PUSH_NOTIFICATION_LISTING, notificationPayload))
       }
@@ -575,7 +574,7 @@ export class ListingsService {
   @Cron(CronExpression.EVERY_MINUTE, {
     timeZone: 'Africa/Lagos'
   })
-  private async deletePastScheduledListings (): Promise<void> {
+  async deletePastScheduledListings (): Promise<void> {
     console.log('cron for listing running')
 
   //   try {

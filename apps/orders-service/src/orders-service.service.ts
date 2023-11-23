@@ -143,10 +143,12 @@ export class OrdersServiceService {
     filterQuery: FilterQuery<Order>
   ): Promise<Order[]> {
     try {
+      console.log({filterQuery})
       const _orders = (await this.orderRepository.findAndPopulate(
         filterQuery,
         'vendor'
       )) as any
+      console.log({_orders})
       return _orders
     } catch (error) {
       throw new FitRpcException(
