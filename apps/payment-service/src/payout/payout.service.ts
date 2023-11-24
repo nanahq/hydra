@@ -133,8 +133,8 @@ export class VendorPayoutService implements VendorPayoutServiceI {
 
     const filter: FilterQuery<Order> = {
       createdAt: {
-        $gte: start,
-        $lt: end
+        $gte: start.toString(),
+        $lt: end.toString()
       },
       orderStatus: 'DELIVERED_TO_CUSTOMER'
     }
@@ -146,7 +146,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
       )
     )
 
-    console.log({orders})
+    console.log({ orders })
 
     // // Compute earnings for each vendor
     // const vendorEarnings = new Map<string, number>()
