@@ -32,7 +32,7 @@ export class NotificationServiceService {
 
     private readonly pushClient: ExportPushNotificationClient
   ) {
-    this.fromPhone = 'EatLater'
+    this.fromPhone = 'Nana'
   }
 
   async verifyPhone ({ code, phone }: PhoneVerificationPayload): Promise<any> {

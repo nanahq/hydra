@@ -210,6 +210,9 @@ export class VendorPayoutService implements VendorPayoutServiceI {
       return
     }
 
+    
+
+
     const transactionalEmailPayload = payoutMapper(todayPayouts)
 
     await lastValueFrom(

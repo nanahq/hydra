@@ -6,7 +6,7 @@ import {
   HttpException,
   Inject, Param,
   Post,
-  Put, Res,
+  Put,
   UseGuards
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
@@ -25,8 +25,6 @@ import {
   User
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { AuthService } from './auth.service'
-import { Response } from 'express'
 
 @Controller('user')
 export class UsersController {
@@ -34,25 +32,21 @@ export class UsersController {
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy,
+    private readonly notificationClient: ClientProxy
 
-    private readonly authService: AuthService
   ) {}
 
   @Post('register')
   async registerNewUser (
     @Body() request: registerUserRequest,
-      @Res({ passthrough: true }) res: Response
-  ): Promise<void> {
-    const user = await lastValueFrom<User>(
+  ): Promise<User> {
+    return await lastValueFrom<User>(
       this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
         catchError((error: IRpcException) => {
-          console.log(error)
           throw new HttpException(error.message, error.status)
         })
       )
     )
-    return await this.authService.login(user, res)
   }
 
   @Post('verify')
