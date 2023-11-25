@@ -76,7 +76,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
 
     const yesterdayPayout = (await this.payoutRepository.find({
       createdAt: {
-        $gte: yesterday.setHours(0, 0, 0, 0),
+        $gte: (yesterday.setHours(0, 0, 0, 0)),
         $lt: yesterday.setHours(23, 59, 59, 999)
       },
       vendor
@@ -85,7 +85,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     const weekPayout = (await this.payoutRepository.find({
       createdAt: {
         $gte: week.setHours(0, 0, 0, 0),
-        $lt: today
+        $lt: today.toISOString()
       },
       vendor
     })) as VendorPayout[]
@@ -93,7 +93,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     const monthPayout = (await this.payoutRepository.find({
       createdAt: {
         $gte: month.setHours(0, 0, 0, 0),
-        $lt: today
+        $lt: today.toISOString()
       },
       vendor
     })) as VendorPayout[]
