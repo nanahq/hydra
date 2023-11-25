@@ -207,18 +207,8 @@ export class OrdersServiceService {
       this.logger.log(
         `[PIM] - order status updated for order: ${orderId} status: ${status}`
       )
-
       await this.sendPushNotifications(status, order)
 
-      if (status === OrderStatus.FULFILLED) {
-        await lastValueFrom<any>(
-          this.notificationClient
-            .emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
-              phoneNumber: order.primaryContact,
-              status
-            })
-        )
-      }
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
@@ -249,15 +239,6 @@ export class OrdersServiceService {
       this.logger.log(
         `[PIM] - order status updated for paid order: ${orderId}`
       )
-
-      await lastValueFrom<any>(
-        this.notificationClient
-          .emit(QUEUE_MESSAGE.PROCESS_PAID_ORDER, {
-            phoneNumber: order.primaryContact,
-            status
-          })
-      )
-
       await this.sendPushNotifications(status, order)
 
       await lastValueFrom(

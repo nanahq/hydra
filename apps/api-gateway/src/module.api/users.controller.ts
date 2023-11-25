@@ -38,7 +38,7 @@ export class UsersController {
 
   @Post('register')
   async registerNewUser (
-    @Body() request: registerUserRequest,
+    @Body() request: registerUserRequest
   ): Promise<User> {
     return await lastValueFrom<User>(
       this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
