@@ -74,25 +74,35 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     const week = new Date(today.getTime() - 168 * 60 * 60 * 1000)
     const month = new Date(today.getTime() - 1020 * 60 * 60 * 1000)
 
+    const yesterdayStart = new Date(yesterday)
+    yesterdayStart.setHours(0, 0, 0, 0)
+
+    const yesterdayEnd = new Date(yesterday)
+    yesterdayEnd.setHours(23, 59, 59, 999)
     const yesterdayPayout = (await this.payoutRepository.find({
       createdAt: {
-        $gte: (yesterday.setHours(0, 0, 0, 0)),
-        $lt: yesterday.setHours(23, 59, 59, 999)
+        $gte: yesterdayStart.toISOString(),
+        $lt: yesterdayEnd.toISOString()
       },
       vendor
     })) as VendorPayout[]
 
+    const weekStart = new Date(week)
+    weekStart.setHours(0, 0, 0, 0)
+
     const weekPayout = (await this.payoutRepository.find({
       createdAt: {
-        $gte: week.setHours(0, 0, 0, 0),
+        $gte: weekStart.toISOString(),
         $lt: today.toISOString()
       },
       vendor
     })) as VendorPayout[]
 
+    const monthStart = new Date(month)
+    monthStart.setHours(0, 0, 0, 0)
     const monthPayout = (await this.payoutRepository.find({
       createdAt: {
-        $gte: month.setHours(0, 0, 0, 0),
+        $gte: monthStart.toISOString(),
         $lt: today.toISOString()
       },
       vendor
@@ -185,8 +195,8 @@ export class VendorPayoutService implements VendorPayoutServiceI {
 
     const filter: FilterQuery<VendorPayout> = {
       createdAt: {
-        $gte: start,
-        $lt: end
+        $gte: start.toISOString(),
+        $lt: end.toISOString()
       },
       paid: true
     }
