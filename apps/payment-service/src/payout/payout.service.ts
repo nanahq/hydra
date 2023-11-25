@@ -123,7 +123,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     console.log('running payout cron')
 
     const today = new Date()
-    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
+    const yesterday = new Date(today.getTime() - 98 * 60 * 60 * 1000)
 
     const start = new Date(yesterday)
     start.setHours(0, 0, 0, 0)
@@ -133,8 +133,8 @@ export class VendorPayoutService implements VendorPayoutServiceI {
 
     const filter: FilterQuery<Order> = {
       createdAt: {
-        $gte: start.toString(),
-        $lt: end.toString()
+        $gte: start.toISOString(),
+        $lt: end.toISOString()
       },
       orderStatus: 'DELIVERED_TO_CUSTOMER'
     }
