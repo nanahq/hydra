@@ -116,14 +116,14 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     }
   }
 
-  @Cron(CronExpression.EVERY_MINUTE, {
+  @Cron(CronExpression.EVERY_DAY_AT_6AM, {
     timeZone: 'Africa/Lagos'
   })
   async handlePayoutComputation (): Promise<void> {
     console.log('running payout cron')
 
     const today = new Date()
-    const yesterday = new Date(today.getTime() - 98 * 60 * 60 * 1000)
+    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
 
     const start = new Date(yesterday)
     start.setHours(0, 0, 0, 0)
@@ -146,32 +146,30 @@ export class VendorPayoutService implements VendorPayoutServiceI {
       )
     )
 
-    console.log({ orders })
+    // Compute earnings for each vendor
+    const vendorEarnings = new Map<string, number>()
 
-    // // Compute earnings for each vendor
-    // const vendorEarnings = new Map<string, number>()
-    //
-    // orders.forEach((order) => {
-    //   const vendorId = order.vendor._id.toString()
-    //   const earnings = vendorEarnings.get(vendorId) ?? 0
-    //   vendorEarnings.set(
-    //     vendorId,
-    //     earnings + Number(order.orderBreakDown.orderCost)
-    //   )
-    // })
-    //
-    // const payoutsToMake: Array<Partial<VendorPayout>> = []
-    //
-    // for (const [vendorId, earnings] of vendorEarnings) {
-    //   payoutsToMake.push({
-    //     refId: RandomGen.genRandomNum(10, 7),
-    //     vendor: vendorId,
-    //     earnings,
-    //     paid: false
-    //   })
-    // }
-    //
-    // await this.payoutRepository.insertMany(payoutsToMake)
+    orders.forEach((order) => {
+      const vendorId = order.vendor._id.toString()
+      const earnings = vendorEarnings.get(vendorId) ?? 0
+      vendorEarnings.set(
+        vendorId,
+        earnings + Number(order.orderBreakDown.orderCost)
+      )
+    })
+
+    const payoutsToMake: Array<Partial<VendorPayout>> = []
+
+    for (const [vendorId, earnings] of vendorEarnings) {
+      payoutsToMake.push({
+        refId: RandomGen.genRandomNum(10, 7),
+        vendor: vendorId,
+        earnings,
+        paid: false
+      })
+    }
+
+    await this.payoutRepository.insertMany(payoutsToMake)
   }
 
   @Cron(CronExpression.EVERY_DAY_AT_NOON, {

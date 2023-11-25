@@ -11,6 +11,7 @@ async function bootstrap (): Promise<void> {
     rmq.getOption(QUEUE_SERVICE.LISTINGS_SERVICE)
   )
   await app.startAllMicroservices()
+  await app.init()
 }
 
 void bootstrap()
