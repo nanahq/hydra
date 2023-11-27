@@ -157,4 +157,18 @@ export class UsersServiceController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.RESEND_PHONE_VERIFICATION)
+  async resendPhoneVerification (
+    @Payload() { phone }: { phone: string },
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.usersService.resendPhoneNumberRequest(phone)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

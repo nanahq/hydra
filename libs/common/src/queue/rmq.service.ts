@@ -7,7 +7,6 @@ export class RmqService {
   constructor (private readonly configService: ConfigService) {}
 
   getOption (queue: string, noAck = false, fallbackUri?: string): RmqOptions {
-    console.log({ fallbackUri })
     return {
       transport: Transport.RMQ,
       options: {

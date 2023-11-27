@@ -62,11 +62,32 @@ export class UsersService {
     }
   }
 
+  async resendPhoneNumberRequest (phone: string): Promise<ResponseWithStatus> {
+    const user: User | null = await this.usersRepository.findOne({ phone })
+
+    if (user === null) {
+      throw new FitRpcException('User with that phone number does not exist', HttpStatus.NOT_FOUND)
+    }
+
+    if (user.isValidated) {
+      throw new FitRpcException('Phone number has been verified', HttpStatus.BAD_REQUEST)
+    }
+
+    await lastValueFrom(
+      this.notificationClient.emit(
+        QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
+        { phone }
+      )
+    )
+
+    return { status: 1 }
+  }
+
   async validateUser ({
     phone,
     password
   }: loginUserRequest): Promise<{ status: number, data: User }> {
-    const validateUserRequest = await this.usersRepository.findOne({ phone })
+    const validateUserRequest: User = await this.usersRepository.findOne({ phone })
 
     if (validateUserRequest === null) {
       throw new FitRpcException('User with that phone number does not exist', HttpStatus.NOT_FOUND)
@@ -80,6 +101,19 @@ export class UsersService {
       throw new FitRpcException(
         'Provided Password is incorrect',
         HttpStatus.UNAUTHORIZED
+      )
+    }
+
+    if (!validateUserRequest.isValidated) {
+      await lastValueFrom(
+        this.notificationClient.emit(
+          QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
+          { phone: validateUserRequest.phone }
+        )
+      )
+      throw new FitRpcException(
+        'Verify phone number',
+        HttpStatus.FORBIDDEN
       )
     }
 

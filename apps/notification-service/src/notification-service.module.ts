@@ -34,7 +34,7 @@ import { SubscriptionRepository } from './subscription.repository'
     TwilioModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        accountSid: 'ACec965067efbc4019dd61a5aaf0c42369',
+        accountSid: configService.get('TWILIO_ACCOUNT_SID'),
         authToken: configService.get('TWILIO_AUTH_TOKEN')
       }),
       inject: [ConfigService]

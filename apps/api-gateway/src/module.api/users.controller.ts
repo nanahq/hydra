@@ -119,4 +119,15 @@ export class UsersController {
       )
     )
   }
+
+  @Get('resend-validation/:phone')
+  async resendPhoneVerification (@Param('phone') phone: string): Promise<{ status: number }> {
+    return await lastValueFrom<ResponseWithStatus>(
+      this.usersClient.send(QUEUE_MESSAGE.RESEND_PHONE_VERIFICATION, { phone }).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
 }
