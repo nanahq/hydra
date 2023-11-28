@@ -91,16 +91,12 @@ export class SubscriptionService {
   }
 
   async sendPushMessageToSubscribers (payload: ScheduledPushPayload): Promise<void> {
-    console.log('Payload', { payload })
     try {
       const subscription: SubscriptionNotification = await this.subscriptionRepository.findOneAndPopulate({ vendor: payload.vendor }, ['subscribers', 'vendor'])
-
       if (subscription.subscribers.length === 0) {
         return
       }
-
       const availableDate = moment(payload.listingAvailableDate).format('dddd Do')
-
       const notificationTokens: any[] = subscription
         .subscribers
         .map(sub => sub?.expoNotificationToken)
@@ -113,6 +109,7 @@ export class SubscriptionService {
       }
 
       await this.pushNotificationClient.sendMultipleNotifications(notificationTokens, message)
+      console.log('Sent push notification')
     } catch (error) {
       this.logger.log(JSON.stringify({
         message: 'PIM -> failed to send subscription notification to users',

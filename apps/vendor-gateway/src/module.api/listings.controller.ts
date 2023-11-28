@@ -341,8 +341,6 @@ export class ListingsController {
       vendor: _id.toString(),
       ...data
     }
-
-    console.log('Listing scheduled payload', { payload })
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
         .send(QUEUE_MESSAGE.CREATE_SCHEDULED_LISTING, payload)

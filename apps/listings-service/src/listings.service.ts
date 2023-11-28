@@ -486,7 +486,7 @@ export class ListingsService {
       if (listingMenu !== null) {
         console.log({ listingMenu })
         const notificationPayload: ScheduledPushPayload = {
-          vendor: listingMenu.vendor.businessName,
+          vendor: listingMenu.vendor._id,
           listingName: listingMenu.name,
           listingAvailableDate: data.availableDate
         }
