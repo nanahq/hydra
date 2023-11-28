@@ -499,7 +499,7 @@ export class ListingsService {
       })
       throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
     }
-  }
+  }f
 
   async updateScheduledListingCount (listingMenuIds: string[], quantity: Array<{ listing: string, quantity: number }>): Promise<void> {
     try {
