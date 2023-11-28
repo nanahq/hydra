@@ -130,8 +130,6 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     timeZone: 'Africa/Lagos'
   })
   async handlePayoutComputation (): Promise<void> {
-    console.log('running payout cron')
-
     const today = new Date()
     const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
 

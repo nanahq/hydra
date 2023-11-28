@@ -484,7 +484,6 @@ export class ListingsService {
       this.logger.log('sending push scheduled to subscribe')
 
       if (listingMenu !== null) {
-        console.log({ listingMenu })
         const notificationPayload: ScheduledPushPayload = {
           vendor: listingMenu.vendor._id,
           listingName: listingMenu.name,
@@ -499,7 +498,9 @@ export class ListingsService {
       })
       throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
     }
-  }f
+  }
+
+  f
 
   async updateScheduledListingCount (listingMenuIds: string[], quantity: Array<{ listing: string, quantity: number }>): Promise<void> {
     try {

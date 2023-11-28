@@ -21,6 +21,7 @@ import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
 import { Aggregate, FilterQuery } from 'mongoose'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class OrdersServiceService {
@@ -143,12 +144,10 @@ export class OrdersServiceService {
     filterQuery: FilterQuery<Order>
   ): Promise<Order[]> {
     try {
-      console.log({ filterQuery })
       const _orders = (await this.orderRepository.findAndPopulate(
         filterQuery,
         'vendor'
       )) as any
-      console.log({ _orders })
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -345,6 +344,42 @@ export class OrdersServiceService {
           body: `${order.vendor.businessName} has finished preparing your order`,
           priority: 'high'
         })
+    }
+  }
+
+  @Cron(CronExpression.EVERY_2_HOURS, {
+    timeZone: 'Africa/Lagos'
+  })
+  async deleteUnpaidPayments (): Promise<void> {
+    try {
+      const now = new Date()
+
+      const twoHoursAgo = new Date(now)
+
+      twoHoursAgo.setHours(now.getHours() - 2)
+
+      const filter: FilterQuery<Order> = {
+        createdAt: {
+          $lte: twoHoursAgo.toISOString()
+        },
+        orderStatus: OrderStatus.PAYMENT_PENDING
+      }
+
+      const orders: Order[] = await this.orderRepository.find(filter)
+
+      if (orders !== null && orders.length > 0) {
+        const orderIds = orders.map(({ _id }) => _id)
+
+        await this.orderRepository.deleteMany({
+          _id: {
+            $in: orderIds
+          }
+        })
+
+        this.logger.log(`[PIM] - Deleted ${orderIds.length} unpaid orders.`)
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 }
