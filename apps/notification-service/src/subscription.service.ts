@@ -91,6 +91,7 @@ export class SubscriptionService {
   }
 
   async sendPushMessageToSubscribers (payload: ScheduledPushPayload): Promise<void> {
+    console.log('Payload', { payload })
     try {
       const subscription: SubscriptionNotification = await this.subscriptionRepository.findOneAndPopulate({ vendor: payload.vendor }, ['subscribers', 'vendor'])
 
