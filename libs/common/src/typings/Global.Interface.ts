@@ -74,7 +74,6 @@ export interface DeliveryFeeResult {
 export interface ScheduledListingDto {
   vendor: string
   listing: string
-
   quantity: number
   availableDate: number
 }

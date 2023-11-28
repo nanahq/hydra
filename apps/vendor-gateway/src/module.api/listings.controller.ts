@@ -31,7 +31,7 @@ import {
   UpdateListingCategoryDto,
   UpdateOptionGroupDto,
   Vendor,
-  CreateScheduledListingDto
+  CreateScheduledListingDto, ScheduledListingDto
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
@@ -334,17 +334,18 @@ export class ListingsController {
   @UseGuards(JwtAuthGuard)
   @Post('scheduled')
   async createScheduledListing (
-    @Body() data: Omit<CreateScheduledListingDto, 'vendor'>,
+    @Body() data: CreateScheduledListingDto,
       @CurrentUser() { _id }: Vendor
   ): Promise<ResponseWithStatus> {
-    const payload: MultiPurposeServicePayload<any> = {
-
-      id: _id as any,
-      data: { ...data, vendor: _id as any }
+    const payload: ScheduledListingDto = {
+      vendor: _id.toString(),
+      ...data
     }
+
+    console.log('Listing scheduled payload', { payload })
     return await lastValueFrom<ResponseWithStatus>(
       this.listingClient
-        .send(QUEUE_MESSAGE.CREATE_SCHEDULED_LISTING, { ...payload })
+        .send(QUEUE_MESSAGE.CREATE_SCHEDULED_LISTING, payload)
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

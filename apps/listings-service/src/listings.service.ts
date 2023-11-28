@@ -477,7 +477,6 @@ export class ListingsService {
 
   async createScheduledListing (data: ScheduledListingDto): Promise<ResponseWithStatus> {
     try {
-      console.log(data)
       await this.scheduledListingRepository.create({ ...data, remainingQuantity: data.quantity })
 
       const listingMenu: ListingMenuI = await this.listingMenuRepository.findOneAndPopulate({ _id: data.listing }, ['vendor'])
@@ -485,7 +484,7 @@ export class ListingsService {
       this.logger.log('sending push scheduled to subscribe')
 
       if (listingMenu !== null) {
-        console.log({listingMenu})
+        console.log({ listingMenu })
         const notificationPayload: ScheduledPushPayload = {
           vendor: listingMenu.vendor.businessName,
           listingName: listingMenu.name,

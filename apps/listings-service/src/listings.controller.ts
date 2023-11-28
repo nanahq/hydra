@@ -340,7 +340,7 @@ export class ListingsController {
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_SCHEDULED_LISTING)
   async createScheduledListing (
-    @Payload() { data }: MultiPurposeServicePayload<ScheduledListingDto>,
+    @Payload() data: ScheduledListingDto,
       @Ctx() context
   ): Promise<ResponseWithStatus> {
     try {
