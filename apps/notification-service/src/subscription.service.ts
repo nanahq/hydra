@@ -3,9 +3,8 @@ import { ConfigService } from '@nestjs/config'
 import { SubscriptionRepository } from './subscription.repository'
 import { Expo, ExpoPushMessage } from 'expo-server-sdk'
 import {
-  CreateSubscriptionDto,
   ExportPushNotificationClient,
-  FitRpcException, ScheduledListingNotification, ScheduledPushPayload,
+  FitRpcException, PushMessage, ScheduledListingNotification, ScheduledPushPayload, SendApprovalPushNotification,
   SubscribeDto, SubscriptionNotification,
   UpdateSubscriptionByVendorDto
 } from '@app/common'
@@ -46,13 +45,22 @@ export class SubscriptionService {
     }
   }
 
-  async createSubscriptionInstance (payload: CreateSubscriptionDto): Promise<void> {
+  async createSubscriptionInstance (payload: SendApprovalPushNotification): Promise<void> {
     try {
       await this.subscriptionRepository.create({
         vendor: payload.vendor,
         subscribers: [],
         enabledByVendor: true
       })
+
+      if (payload.token !== undefined) {
+        const message: PushMessage = {
+          title: 'Your Account Has Been Approved!',
+          body: 'A warm welcome to Nana! Your account has been approved.',
+          priority: 'high'
+        }
+        await this.pushNotificationClient.sendSingleNotification(payload.token, message)
+      }
     } catch (error) {
       throw new FitRpcException('Can not create a subscription object for vendor', HttpStatus.INTERNAL_SERVER_ERROR)
     }
@@ -101,8 +109,6 @@ export class SubscriptionService {
         .subscribers
         .map(sub => sub?.expoNotificationToken)
         .filter(token => Expo.isExpoPushToken(token))
-
-      console.log({ notificationTokens })
       const message: Omit<ExpoPushMessage, 'to'> = {
         body: `${subscription.vendor.businessName}'s ${payload.listingName} will be available on ${availableDate}`,
         title: 'Place your Order Now!'

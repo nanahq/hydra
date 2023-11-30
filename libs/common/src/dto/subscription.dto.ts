@@ -14,3 +14,8 @@ export class UpdateSubscriptionByVendorDto extends CreateSubscriptionDto {
   @IsBoolean()
     enabledByVendor: boolean
 }
+
+export class SendApprovalPushNotification extends CreateSubscriptionDto {
+  @IsString()
+    token: string
+}

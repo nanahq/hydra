@@ -10,11 +10,10 @@ import {
 import {
   RmqService,
   QUEUE_MESSAGE,
-  CreateSubscriptionDto,
   SubscribeDto,
   ExceptionFilterRpc,
   UpdateSubscriptionByVendorDto,
-  ScheduledPushPayload, ServicePayload, ScheduledListingNotification
+  ScheduledPushPayload, ServicePayload, ScheduledListingNotification, SendApprovalPushNotification
 } from '@app/common'
 import { SubscriptionService } from './subscription.service'
 
@@ -56,7 +55,7 @@ export class SubscriptionController {
 
   @EventPattern(QUEUE_MESSAGE.CREATE_VENDOR_NOTIFICATION)
   async createVendorNotificationSub (
-    @Payload() payload: CreateSubscriptionDto,
+    @Payload() payload: SendApprovalPushNotification,
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {

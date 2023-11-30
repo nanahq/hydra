@@ -1,11 +1,10 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 import {
-  CreateSubscriptionDto,
   FitRpcException,
   LocationCoordinates,
   LoginVendorRequest, QUEUE_MESSAGE, QUEUE_SERVICE,
-  ResponseWithStatus,
+  ResponseWithStatus, SendApprovalPushNotification,
   ServicePayload,
   UpdateVendorStatus,
   VendorApprovalStatus,
@@ -131,7 +130,7 @@ export class VendorsService {
   }
 
   async approve (id: string): Promise<ResponseWithStatus> {
-    const updateRequest = await this.vendorRepository.findOneAndUpdate(
+    const updateRequest: Vendor = await this.vendorRepository.findOneAndUpdate(
       { _id: id },
       { acc_status: VendorApprovalStatus.APPROVED, rejection_reason: '' }
     )
@@ -143,8 +142,9 @@ export class VendorsService {
       )
     }
 
-    const notificationSubCreatePayload: CreateSubscriptionDto = {
-      vendor: id
+    const notificationSubCreatePayload: SendApprovalPushNotification = {
+      vendor: id,
+      token: updateRequest.expoNotificationToken
     }
 
     await lastValueFrom(
