@@ -13,7 +13,7 @@ import {
   QUEUE_SERVICE,
   ResponseWithStatus, ReviewServiceGetMostReviewed,
   ScheduledListing,
-  ScheduledListingDto,
+  ScheduledListingDto, ScheduledListingI,
   ScheduledPushPayload,
   ServicePayload,
   UserHomePage, VendorServiceHomePageResult, VendorUserI
@@ -598,7 +598,7 @@ export class ListingsService {
             ),
             this.listingCategoryRepository.findAndPopulate({}, ['vendor', 'listingsMenu']),
             this.listingMenuRepository.find({}),
-            this.scheduledListingRepository.findAndPopulate({}, ['listing'])
+            this.scheduledListingRepository.findAndPopulate<ScheduledListingI>({}, ['listing'])
           ])
 
       const mostReviewedListingsIds: Set<any> = new Set(
@@ -637,7 +637,7 @@ export class ListingsService {
       const availableTomorrow = scheduled
         .filter((sch) => {
           const availableStart = moment(sch.availableDate).startOf('day')
-          return availableStart.isSame(tomorrowStart) && sch.soldOut === false
+          return availableStart.isSame(tomorrowStart) && !sch.soldOut
         })
         .map(li => li.listing)
         .slice(0, 20)

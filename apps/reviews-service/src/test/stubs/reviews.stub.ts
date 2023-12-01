@@ -10,9 +10,9 @@ export function ReviewStub (): Review {
     reviewBody: 'Good food and fast delivery',
     reviewerName: 'Musa, Isa',
     reviewStars: 5,
-    listingId: objectId as unknown as string,
-    orderId: objectId as unknown as string,
-    vendorId: objectId as unknown as string
+    listing: objectId as unknown as string,
+    order: objectId as unknown as string,
+    vendor: objectId as unknown as string
   }
 }
 

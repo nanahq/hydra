@@ -43,9 +43,9 @@ describe('reviewsServiceController', () => {
       let context: RmqContext
       beforeEach(async () => {
         payload = {
-          vendorId: ReviewStub().vendorId,
-          listingId: ReviewStub().listingId,
-          orderId: ReviewStub().orderId,
+          vendor: ReviewStub().vendor,
+          listing: ReviewStub().listing,
+          order: ReviewStub().order,
           reviewBody: 'Amazing food. Good food.',
           reviewStars: 5
         }
@@ -92,7 +92,7 @@ describe('reviewsServiceController', () => {
 
       beforeEach(async () => {
         payload = {
-          vendorId: ReviewStub().vendorId
+          vendorId: ReviewStub().vendor
         }
 
         response = await reviewsController.getVendorReviews(payload, context)
