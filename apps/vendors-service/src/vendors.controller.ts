@@ -9,7 +9,7 @@ import {
   ResponseWithStatus,
   RmqService,
   ServicePayload,
-  UpdateVendorStatus,
+  UpdateVendorStatus, VendorServiceHomePageResult,
   VendorUserI
 } from '@app/common'
 import { VendorsService } from './vendors.service'
@@ -255,6 +255,20 @@ export class VendorsController {
   ): Promise<Vendor[]> {
     try {
       return await this.vendorsService.getNearestVendors(userLocation)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE)
+  async getHomepageData (
+    @Payload() userLocation: LocationCoordinates,
+      @Ctx() context: RmqContext
+  ): Promise<VendorServiceHomePageResult> {
+    try {
+      return await this.vendorsService.getVendorsForHomepage(userLocation)
     } catch (error) {
       throw new RpcException(error)
     } finally {

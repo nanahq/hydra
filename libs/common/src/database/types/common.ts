@@ -137,10 +137,10 @@ export interface UserI {
 export interface ReviewI {
   _id: string
   reviewBody: string
-  listingId: ListingMenuI
-  vendorId: VendorI
+  listing: ListingMenuI
+  vendor: VendorI
   reviewStars: number
-  orderId: OrderI
+  order: OrderI
   reviewerName: string
   createdAt: string
   updatedAt: string

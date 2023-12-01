@@ -3,11 +3,15 @@ import * as bcrypt from 'bcryptjs'
 import {
   FitRpcException,
   LocationCoordinates,
-  LoginVendorRequest, QUEUE_MESSAGE, QUEUE_SERVICE,
-  ResponseWithStatus, SendApprovalPushNotification,
+  LoginVendorRequest,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus,
+  SendApprovalPushNotification,
   ServicePayload,
   UpdateVendorStatus,
   VendorApprovalStatus,
+  VendorServiceHomePageResult,
   VendorUserI
 } from '@app/common'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
@@ -341,9 +345,9 @@ export class VendorsService {
   async getNearestVendors ({
     type,
     coordinates
-  }: LocationCoordinates): Promise<Vendor[]> {
+  }: LocationCoordinates): Promise<any[]> {
     try {
-      const vendors = this.vendorRepository.find({
+      const vendors: any = this.vendorRepository.findAndPopulate({
         location: {
           $near:
             {
@@ -355,7 +359,7 @@ export class VendorsService {
               $maxDistance: 3000
             }
         }
-      })
+      }, ['settings'])
       this.logger.log('PIM -> fetching nearest vendors')
       return vendors
     } catch (error) {
@@ -367,6 +371,20 @@ export class VendorsService {
         'Failed to create  settings',
         HttpStatus.BAD_GATEWAY
       )
+    }
+  }
+
+  async getVendorsForHomepage (userLocation: LocationCoordinates): Promise<VendorServiceHomePageResult> {
+    try {
+      const nearest = await this.getNearestVendors(userLocation)
+      const allVendors: any = await this.vendorRepository.findAndPopulate({ acc_status: VendorApprovalStatus.APPROVED }, ['settings'])
+      return {
+        nearest,
+        allVendors
+      }
+    } catch (error) {
+      this.logger.log(error)
+      throw new FitRpcException('Something went wrong fetching vendors for homepage', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }

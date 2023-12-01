@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, Inject, Param, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, HttpException, Inject, Param, Post, UseGuards } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -7,10 +7,10 @@ import {
   IRpcException,
   ListingCategory,
   ListingCategoryI,
-  ListingMenu, MultiPurposeServicePayload,
+  ListingMenu, LocationCoordinates, MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ScheduledListingI
+  ScheduledListingI, UserHomePage
 } from '@app/common'
 
 @Controller('listing')
@@ -127,6 +127,22 @@ export class ListingsController {
     return await lastValueFrom<ListingCategoryI>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_VENDOR_WITH_LISTING, { vendorId })
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @Post('/homepage')
+  @UseGuards(JwtAuthGuard)
+  async getHomepageListings (
+    @Body() userLocation: LocationCoordinates
+  ): Promise<UserHomePage> {
+    return await lastValueFrom<UserHomePage>(
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_HOMEPAGE_USERS, { userLocation })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

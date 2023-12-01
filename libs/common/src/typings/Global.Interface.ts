@@ -1,4 +1,14 @@
-import { ListingCategory, Order, Vendor, ListingMenuI, LocationCoordinates, OrderI, UserI, VendorI } from '@app/common'
+import {
+  ListingCategory,
+  Order,
+  Vendor,
+  ListingMenuI,
+  LocationCoordinates,
+  OrderI,
+  UserI,
+  VendorI,
+  VendorUserI, ListingMenu
+} from '@app/common'
 
 export interface IdPayload {
   id: string
@@ -224,4 +234,30 @@ export interface ListingRejectPush extends BasePushMessage {
   vendorName: string
   listingName: string
   rejectionReason: string
+}
+
+export interface UserHomePage {
+  mostPopularVendors: VendorUserI[]
+
+  mostPopularListings: ListingMenuI[]
+
+  instantDelivery: VendorUserI[]
+
+  homeMadeChefs: VendorUserI[]
+
+  fastestDelivery: VendorUserI[]
+
+  allVendors: VendorUserI[]
+
+  scheduledListingsToday: ListingMenuI[]
+}
+
+export interface VendorServiceHomePageResult {
+  nearest: VendorI[]
+  allVendors: VendorI[]
+}
+
+export interface ReviewServiceGetMostReviewed {
+  listings: ListingMenu[]
+  vendors: Vendor[]
 }

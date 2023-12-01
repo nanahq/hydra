@@ -1,15 +1,22 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 
 import {
-  FitRpcException, ListingApprovePush,
+  FitRpcException,
+  ListingApprovePush,
   ListingCategory,
   ListingCategoryI,
-  ListingMenu, ListingMenuI,
-  ListingOptionGroup, ListingRejectPush, QUEUE_MESSAGE, QUEUE_SERVICE,
-  ResponseWithStatus,
+  ListingMenu,
+  ListingMenuI,
+  ListingOptionGroup,
+  ListingRejectPush, LocationCoordinates,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus, ReviewServiceGetMostReviewed,
   ScheduledListing,
-  ScheduledListingDto, ScheduledPushPayload,
-  ServicePayload
+  ScheduledListingDto,
+  ScheduledPushPayload,
+  ServicePayload,
+  UserHomePage, VendorServiceHomePageResult, VendorUserI
 } from '@app/common'
 import {
   ListingCategoryRepository,
@@ -27,7 +34,7 @@ import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
-
+import * as moment from 'moment'
 @Injectable()
 export class ListingsService {
   protected readonly logger = new Logger(ListingsService.name)
@@ -37,7 +44,13 @@ export class ListingsService {
     private readonly listingCategoryRepository: ListingCategoryRepository,
     private readonly scheduledListingRepository: ScheduledListingRepository,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
+    private readonly notificationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
+    private readonly vendorClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.REVIEW_SERVICE)
+    private readonly reviewsClient: ClientProxy
   ) {}
 
   async createListingMenu ({
@@ -573,6 +586,77 @@ export class ListingsService {
     }
   }
 
+  async getHomePageData (userLocation: LocationCoordinates): Promise<UserHomePage> {
+    try {
+      const [vendorServiceResult, reviewServiceResult, listingsCategories, listingMenus, scheduled] =
+          await Promise.all([
+            lastValueFrom<VendorServiceHomePageResult>(
+              this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, { userLocation })
+            ),
+            lastValueFrom<ReviewServiceGetMostReviewed>(
+              this.reviewsClient.send(QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE, {})
+            ),
+            this.listingCategoryRepository.findAndPopulate({}, ['vendor', 'listingsMenu']),
+            this.listingMenuRepository.find({}),
+            this.scheduledListingRepository.findAndPopulate({}, ['listing'])
+          ])
+
+      const mostReviewedListingsIds: Set<any> = new Set(
+        reviewServiceResult.listings.map(li => li._id)
+      )
+
+      const mostReviewedVendorsIds: Set<any> = new Set(
+        reviewServiceResult.vendors.map(v => v._id)
+      )
+      const popularListings = listingMenus.filter(li => mostReviewedListingsIds.has(li._id))
+
+      const categoriesWithListingsMenuIds: Set<string> = new Set(
+        listingsCategories
+          .filter((cat: any) => cat.listingsMenu.length > 0)
+          .map((cat: any) => cat.vendor._id)
+      )
+
+      const [filteredVendors, filteredNearestVendors] = [
+        vendorServiceResult.allVendors,
+        vendorServiceResult.nearest
+      ].map(vendors =>
+        vendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor._id))
+      )
+
+      const filteredTopVendors = filteredVendors.filter(v => mostReviewedVendorsIds.has(v._id))
+
+      const [homeMadeChefs, instantDelivery] = [
+        'PRE_ORDER',
+        'ON_DEMAND'
+      ].map(deliveryType =>
+        filteredVendors.filter(v => v.settings?.operations?.deliveryType === deliveryType).slice(0, 20)
+      )
+
+      const tomorrowStart = moment().add(1, 'day').startOf('day')
+
+      const availableTomorrow = scheduled
+        .filter((sch) => {
+          const availableStart = moment(sch.availableDate).startOf('day')
+          return availableStart.isSame(tomorrowStart) && sch.soldOut === false
+        })
+        .map(li => li.listing)
+        .slice(0, 20)
+
+      return {
+        allVendors: getVendorsMapper(filteredVendors),
+        fastestDelivery: getVendorsMapper(filteredNearestVendors),
+        homeMadeChefs: getVendorsMapper(homeMadeChefs),
+        instantDelivery: getVendorsMapper(instantDelivery),
+        mostPopularListings: popularListings,
+        mostPopularVendors: getVendorsMapper(filteredTopVendors),
+        scheduledListingsToday: availableTomorrow
+      }
+    } catch (error) {
+      this.logger.log({ error })
+      throw new FitRpcException('Something went wrong fetching Homepage', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
   @Cron(CronExpression.EVERY_6_HOURS, {
     timeZone: 'Africa/Lagos'
   })
@@ -602,4 +686,24 @@ export class ListingsService {
       this.logger.error('[CRON] -> Failed to delete past day scheduled listings:', error)
     }
   }
+}
+
+function getVendorsMapper (vendors: any[]): VendorUserI[] {
+  return vendors.map((vendor: any) => {
+    return {
+      _id: vendor._id,
+      businessName: vendor.businessName,
+      businessAddress: vendor.businessAddress,
+      businessLogo: vendor.businessLogo,
+      isValidated: vendor.isValidated,
+      status: vendor.status,
+      location: vendor.location,
+      businessImage: vendor.restaurantImage,
+      settings: vendor.settings.operations,
+      ratings: {
+        rating: 0,
+        totalReviews: 0
+      }
+    }
+  })
 }

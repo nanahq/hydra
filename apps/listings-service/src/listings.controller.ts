@@ -17,7 +17,7 @@ import {
   ServicePayload,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
-  , ScheduledListingDto, ListingCategoryI
+  , ScheduledListingDto, ListingCategoryI, UserHomePage, LocationCoordinates
 } from '@app/common'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
 
@@ -414,6 +414,20 @@ export class ListingsController {
   ): Promise<ListingCategory[]> {
     try {
       return await this.listingService.getVendorCategories(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)
+  async userHomePage (
+    @Payload() { userLocation }: { userLocation: LocationCoordinates },
+      @Ctx() context: RmqContext
+  ): Promise<UserHomePage> {
+    try {
+      return await this.listingService.getHomePageData(userLocation)
     } catch (error) {
       throw new RpcException(error)
     } finally {
