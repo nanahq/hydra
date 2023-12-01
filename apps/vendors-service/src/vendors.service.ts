@@ -150,7 +150,7 @@ export class VendorsService {
       vendor: id,
       token: updateRequest.expoNotificationToken
     }
-
+    console.log({ notificationSubCreatePayload })
     await lastValueFrom(
       this.notificationClient.emit(QUEUE_MESSAGE.CREATE_VENDOR_NOTIFICATION, notificationSubCreatePayload)
     )
@@ -356,7 +356,7 @@ export class VendorsService {
                 coordinates
               },
               $minDistance: 200,
-              $maxDistance: 3000
+              $maxDistance: 4000
             }
         }
       }, ['settings'])
