@@ -52,6 +52,8 @@ import { ScheduleModule } from '@nestjs/schedule'
     MongooseModule.forFeature([{ name: Vendor.name, schema: VendorSchema }]),
     MongooseModule.forFeature([{ name: Review.name, schema: ReviewSchema }]),
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
     DatabaseModule,
     RmqModule
   ],

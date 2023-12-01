@@ -16,7 +16,7 @@ import {
   ReviewToken,
   RmqService,
   VendorReviewOverview,
-  ReviewDto
+  ReviewDto, ListingMenu, ReviewServiceGetMostReviewed, Vendor
 } from '@app/common'
 
 @UseFilters(new ExceptionFilterRpc())
@@ -129,6 +129,45 @@ export class ReviewsServiceController {
   ): Promise<VendorReviewOverview> {
     try {
       return await this.reviewService.getVendorReviewOverview(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_TOP_REVIEWED_VENDORS)
+  async getMostReviewedVendors (
+    @Ctx() context: RmqContext
+  ): Promise<Vendor[]> {
+    try {
+      return this.reviewService.getTopVendors()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_TOP_REVIEWED_LISTINGS)
+  async getMostReviewedListings (
+    @Ctx() context: RmqContext
+  ): Promise<ListingMenu[]> {
+    try {
+      return this.reviewService.getTopListings()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE)
+  async getMostReviewedHomepage (
+    @Ctx() context: RmqContext
+  ): Promise<ReviewServiceGetMostReviewed> {
+    try {
+      return this.reviewService.getTopHomepage()
     } catch (error) {
       throw new RpcException(error)
     } finally {

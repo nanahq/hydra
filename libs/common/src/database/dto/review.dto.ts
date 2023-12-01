@@ -2,17 +2,17 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
 
 export class ReviewDto {
   @IsNotEmpty()
-  public listingId: string
+  public listing: string
 
   @IsNotEmpty()
-  public orderId: string
+  public order: string
 
   @IsString()
   @IsNotEmpty()
   public reviewBody: string
 
   @IsNotEmpty()
-  public vendorId: string
+  public vendor: string
 
   @IsNumber()
   @IsNotEmpty()

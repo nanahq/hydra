@@ -4,7 +4,14 @@ import {
   ResponseWithStatus,
   Review,
   VendorReviewOverview,
-  ReviewDto, ExportPushNotificationClient, QUEUE_SERVICE, QUEUE_MESSAGE, VendorI, PushMessage, ReviewsServiceI
+  ReviewDto,
+  ExportPushNotificationClient,
+  QUEUE_SERVICE,
+  QUEUE_MESSAGE,
+  VendorI,
+  PushMessage,
+  ReviewsServiceI,
+  ListingMenu, Vendor, ReviewI, ReviewServiceGetMostReviewed
 } from '@app/common'
 import { ReviewRepository } from './review.repositoty'
 import { ClientProxy } from '@nestjs/microservices'
@@ -22,7 +29,7 @@ export class ReviewsService implements ReviewsServiceI {
 
   async getAllReviews (): Promise<Review[]> {
     try {
-      return await this.reviewRepository.findAndPopulate({}, ['listingId', 'orderId', 'vendorId'])
+      return await this.reviewRepository.findAndPopulate({}, ['listing', 'order', 'vendor'])
     } catch (error) {
       console.log({ error })
       throw new FitRpcException(
@@ -32,9 +39,9 @@ export class ReviewsService implements ReviewsServiceI {
     }
   }
 
-  async getVendorReviews (vendorId: string): Promise<Review[]> {
+  async getVendorReviews (vendor: string): Promise<Review[]> {
     try {
-      return await this.reviewRepository.findAndPopulate({ vendorId }, ['listingId', 'orderId'])
+      return await this.reviewRepository.findAndPopulate({ vendor }, ['listing', 'order'])
     } catch (error) {
       throw new FitRpcException(
         'Can not process your request. Something went wrong',
@@ -43,9 +50,9 @@ export class ReviewsService implements ReviewsServiceI {
     }
   }
 
-  async getListingReviews (listingId: string): Promise<Review[]> {
+  async getListingReviews (listing: string): Promise<Review[]> {
     try {
-      return await this.reviewRepository.find({ listingId })
+      return await this.reviewRepository.find({ listing })
     } catch (error) {
       throw new FitRpcException(
         'Can not process your request. Something went wrong',
@@ -79,9 +86,11 @@ export class ReviewsService implements ReviewsServiceI {
 
   async create (data: ReviewDto): Promise<ResponseWithStatus> {
     try {
-      const vendor = await lastValueFrom<VendorI>(this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR, { data: data.vendorId }))
+      const vendor = await lastValueFrom<VendorI>(this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR, { data: data.vendor }))
 
       await this.reviewRepository.create(data)
+
+      // @todo(siradji) Move this push to notification service
 
       const pushMessage: PushMessage = {
         title: 'You got a new review',
@@ -99,10 +108,10 @@ export class ReviewsService implements ReviewsServiceI {
   }
 
   async getVendorReviewOverview (
-    vendorId: string
+    vendor: string
   ): Promise<VendorReviewOverview> {
     const vendorReviews = (await this.reviewRepository.find({
-      vendorId
+      vendor
     })) as Review[]
 
     let aggregateRating: number = 0
@@ -132,6 +141,81 @@ export class ReviewsService implements ReviewsServiceI {
       riskFactor,
       rating: parseFloat(aggregateRating.toString()).toFixed(2),
       numberOfReviews: vendorReviews.length
+    }
+  }
+
+  async getTopVendors (): Promise<Vendor[]> {
+    try {
+      const reviews: ReviewI[] = await this.reviewRepository.findAndPopulate({}, ['vendor'])
+
+      if (reviews.length < 1) {
+        return []
+      }
+      const vendorReviewCounts: Map<string, number> = new Map()
+
+      reviews.forEach((review) => {
+        const vendorId = review.vendor._id
+        vendorReviewCounts.set(vendorId, (vendorReviewCounts.get(vendorId) ?? 0) + 1)
+      })
+
+      const vendorsWithReviewCount: any[] = Array.from(vendorReviewCounts.entries()).map(([vendorId, reviewCount]) => ({
+        vendor: reviews.find((review) => review.vendor._id === vendorId)?.vendor,
+        reviewCount
+      }))
+
+      vendorsWithReviewCount.sort((a, b) => b.reviewCount - a.reviewCount)
+
+      const topVendors: Vendor[] = vendorsWithReviewCount.slice(0, 20).map((entry) => entry.vendor)
+
+      return topVendors
+    } catch (error) {
+      this.logger.log(error)
+      throw new FitRpcException(
+        'Failed To Fetch Top vendors',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async getTopListings (): Promise<ListingMenu[]> {
+    try {
+      const reviews: ReviewI[] = await this.reviewRepository.findAndPopulate({}, ['listing'])
+
+      if (reviews.length < 1) {
+        return []
+      }
+      const listingReviewCounts: Map<string, number> = new Map()
+
+      reviews.forEach((review) => {
+        const listingId = review.listing._id
+        listingReviewCounts.set(listingId, (listingReviewCounts.get(listingId) ?? 0) + 1)
+      })
+
+      const listingWithReviewCountWithReviewCount: any[] = Array.from(listingReviewCounts.entries()).map(([listingId, reviewCount]) => ({
+        listing: reviews.find((review) => review.listing._id === listingId)?.listing,
+        reviewCount
+      }))
+
+      listingWithReviewCountWithReviewCount.sort((a, b) => b.reviewCount - a.reviewCount)
+
+      const topListings: ListingMenu[] = listingWithReviewCountWithReviewCount.slice(0, 20).map((entry) => entry.listing)
+
+      return topListings
+    } catch (error) {
+      this.logger.log(error)
+      throw new FitRpcException(
+        'Failed To Fetch Top vendors',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async getTopHomepage (): Promise<ReviewServiceGetMostReviewed> {
+    const listings = await this.getTopListings()
+    const vendors = await this.getTopVendors()
+    return {
+      listings,
+      vendors
     }
   }
 

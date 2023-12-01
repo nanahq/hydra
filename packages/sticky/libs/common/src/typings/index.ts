@@ -1,4 +1,5 @@
 import { ListingCategoryI, OrderI, ReviewI, VendorI } from '../schemas'
+import { ListingMenuI, VendorUserI } from '../../../../../../libs/common/src'
 
 export interface TokenPayload {
   userId: string
@@ -590,7 +591,6 @@ export interface DeliveryFeeResult {
   fee: number // in naira
 }
 
-
 interface OrderBreakDownDto {
   orderCost: number
 
@@ -634,4 +634,17 @@ export interface PlaceOrderDto {
   orderBreakDown: OrderBreakDownDto
 
   thirdPartyName?: string
+}
+
+export interface UserHomePage {
+  featured: VendorUserI[]
+
+  homeMadeChefs: VendorUserI[]
+
+  popular: VendorUserI[]
+
+  fastestDelivery: VendorUserI[]
+  allVendors: VendorUserI[]
+
+  scheduledListingsToday: ListingMenuI[]
 }

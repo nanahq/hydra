@@ -8,16 +8,16 @@ export class Review extends AbstractDocument {
     reviewBody: string
 
   @Prop({ type: Types.ObjectId, ref: 'ListingMenu' })
-    listingId: string
+    listing: string
 
   @Prop({ type: Types.ObjectId, ref: 'Vendor' })
-    vendorId: string
+    vendor: string
 
   @Prop(Number)
     reviewStars: number
 
   @Prop({ type: Types.ObjectId, ref: 'Order' })
-    orderId: string
+    order: string
 
   @Prop(String)
     reviewerName: string
