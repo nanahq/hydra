@@ -346,21 +346,20 @@ export class VendorsService {
     type,
     coordinates
   }: LocationCoordinates): Promise<any[]> {
+    this.logger.log('PIM -> fetching nearest vendors')
     try {
       const vendors: any = this.vendorRepository.findAndPopulate({
         location: {
-          $near:
-            {
-              $geometry: {
-                type,
-                coordinates
-              },
-              $minDistance: 200,
-              $maxDistance: 4000
-            }
+          $near: {
+            $geometry: {
+              type,
+              coordinates
+            },
+            $minDistance: 200,
+            $maxDistance: 4000
+          }
         }
       }, ['settings'])
-      this.logger.log('PIM -> fetching nearest vendors')
       return vendors
     } catch (error) {
       this.logger.log({
