@@ -16,7 +16,7 @@ import {
   ScheduledListingDto, ScheduledListingI,
   ScheduledPushPayload,
   ServicePayload,
-  UserHomePage, VendorServiceHomePageResult
+  UserHomePage
 } from '@app/common'
 import {
   ListingCategoryRepository,
@@ -595,11 +595,11 @@ export class ListingsService {
     const mostPopularVendors = []
     const scheduledListingsToday = []
     try {
-      const [vendorServiceResult, reviewServiceResult, listingsCategories, listingMenus, scheduled] =
+      const [reviewServiceResult, listingsCategories, listingMenus, scheduled] =
           await Promise.all([
-            lastValueFrom<VendorServiceHomePageResult>(
-              this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, { userLocation })
-            ),
+            // lastValueFrom<VendorServiceHomePageResult>(
+            //   this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, { userLocation })
+            // ),
             lastValueFrom<ReviewServiceGetMostReviewed>(
               this.reviewsClient.send(QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE, {})
             ),
@@ -609,7 +609,7 @@ export class ListingsService {
           ])
 
       console.log('Result', JSON.stringify({
-        vendorServiceResult,
+        // vendorServiceResult,
         reviewServiceResult,
         listingsCategories,
         listingMenus,
