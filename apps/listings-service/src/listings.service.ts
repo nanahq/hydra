@@ -603,14 +603,17 @@ export class ListingsService {
       const mostReviewedVendorsIds: Set<any> = new Set(
         reviewServiceResult.vendors.map(v => v._id)
       )
-      // const popularListings = listingMenus.filter(li => mostReviewedListingsIds.has(li._id))
+
+      console.log(JSON.stringify({mostReviewedVendorsIds}))
 
       const categoriesWithListingsMenuIds: Set<string> = new Set(
         listingsCategories
           .filter((cat: any) => cat.listingsMenu.length > 0)
           .map((cat: any) => cat.vendor._id)
       )
-      //
+
+      console.log(JSON.stringify({categoriesWithListingsMenuIds}))
+
       const [filteredVendors] = [
         vendorServiceResult.allVendors,
         vendorServiceResult.nearest
@@ -637,6 +640,11 @@ export class ListingsService {
         .map(li => li.listing)
         .slice(0, 20)
 
+      console.log('filteredVendors', JSON.stringify(filteredVendors))
+      console.log('homeMadeChefs', JSON.stringify(homeMadeChefs))
+      console.log('instantDelivery', JSON.stringify(instantDelivery))
+      console.log('topVendors', JSON.stringify(topVendors))
+      console.log('availableTomorrow', JSON.stringify(availableTomorrow))
       return {
         allVendors: getVendorsMapper(filteredVendors),
         fastestDelivery: [],

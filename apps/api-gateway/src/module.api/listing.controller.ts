@@ -140,7 +140,6 @@ export class ListingsController {
   async getHomepageListings (
     @Body() userLocation: LocationCoordinates
   ): Promise<UserHomePage> {
-    console.log({ userLocation })
     return await lastValueFrom<UserHomePage>(
       this.listingClient
         .send(QUEUE_MESSAGE.GET_HOMEPAGE_USERS, { userLocation })

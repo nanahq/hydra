@@ -375,7 +375,7 @@ export class VendorsService {
 
   async getVendorsForHomepage (userLocation: LocationCoordinates): Promise<VendorServiceHomePageResult> {
     try {
-      console.log({ userLocation })
+      console.log(userLocation)
       // const nearest = await this.getNearestVendors(userLocation)
       const allVendors: any = await this.vendorRepository.findAndPopulate({ acc_status: VendorApprovalStatus.APPROVED }, ['settings'])
       return {
