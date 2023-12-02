@@ -16,7 +16,7 @@ import {
   ScheduledListingDto, ScheduledListingI,
   ScheduledPushPayload,
   ServicePayload,
-  UserHomePage
+  UserHomePage, VendorServiceHomePageResult, VendorUserI
 } from '@app/common'
 import {
   ListingCategoryRepository,
@@ -34,7 +34,7 @@ import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
-// import * as moment from 'moment'
+import * as moment from 'moment'
 @Injectable()
 export class ListingsService {
   protected readonly logger = new Logger(ListingsService.name)
@@ -587,84 +587,63 @@ export class ListingsService {
   }
 
   async getHomePageData (userLocation: LocationCoordinates): Promise<UserHomePage> {
-    const allVendors = []
-    const fastestDelivery = []
-    const homeMadeChefs = []
-    const instantDelivery = []
-    const mostPopularListings = []
-    const mostPopularVendors = []
-    const scheduledListingsToday = []
     try {
-      const [reviewServiceResult, listingsCategories, listingMenus, scheduled] =
+      const [vendorServiceResult, reviewServiceResult, listingsCategories, scheduled] =
           await Promise.all([
-            // lastValueFrom<VendorServiceHomePageResult>(
-            //   this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, { userLocation })
-            // ),
+            lastValueFrom<VendorServiceHomePageResult>(
+              this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, { userLocation })
+            ),
             lastValueFrom<ReviewServiceGetMostReviewed>(
               this.reviewsClient.send(QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE, {})
             ),
             this.listingCategoryRepository.findAndPopulate({}, ['vendor', 'listingsMenu']),
-            this.listingMenuRepository.find({}),
             this.scheduledListingRepository.findAndPopulate<ScheduledListingI>({}, ['listing'])
           ])
 
-      console.log('Result', JSON.stringify({
-        // vendorServiceResult,
-        reviewServiceResult,
-        listingsCategories,
-        listingMenus,
-        scheduled
-      }))
-
-      // const mostReviewedListingsIds: Set<any> = new Set(
-      //   reviewServiceResult.listings.map(li => li._id)
-      // )
-      //
-      // const mostReviewedVendorsIds: Set<any> = new Set(
-      //   reviewServiceResult.vendors.map(v => v._id)
-      // )
+      const mostReviewedVendorsIds: Set<any> = new Set(
+        reviewServiceResult.vendors.map(v => v._id)
+      )
       // const popularListings = listingMenus.filter(li => mostReviewedListingsIds.has(li._id))
+
+      const categoriesWithListingsMenuIds: Set<string> = new Set(
+        listingsCategories
+          .filter((cat: any) => cat.listingsMenu.length > 0)
+          .map((cat: any) => cat.vendor._id)
+      )
       //
-      // const categoriesWithListingsMenuIds: Set<string> = new Set(
-      //   listingsCategories
-      //     .filter((cat: any) => cat.listingsMenu.length > 0)
-      //     .map((cat: any) => cat.vendor._id)
-      // )
-      //
-      // const [filteredVendors, filteredNearestVendors] = [
-      //   vendorServiceResult.allVendors,
-      //   vendorServiceResult.nearest
-      // ].map(vendors =>
-      //   vendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor._id))
-      // )
-      //
-      // const filteredTopVendors = filteredVendors.filter(v => mostReviewedVendorsIds.has(v._id))
-      //
-      // const [homeMadeChefs, instantDelivery] = [
-      //   'PRE_ORDER',
-      //   'ON_DEMAND'
-      // ].map(deliveryType =>
-      //   filteredVendors.filter(v => v.settings?.operations?.deliveryType === deliveryType).slice(0, 20)
-      // )
-      //
-      // const tomorrowStart = moment().add(1, 'day').startOf('day')
-      //
-      // const availableTomorrow = scheduled
-      //   .filter((sch) => {
-      //     const availableStart = moment(sch.availableDate).startOf('day')
-      //     return availableStart.isSame(tomorrowStart) && !sch.soldOut
-      //   })
-      //   .map(li => li.listing)
-      //   .slice(0, 20)
+      const [filteredVendors] = [
+        vendorServiceResult.allVendors,
+        vendorServiceResult.nearest
+      ].map(vendors =>
+        vendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor?._id))
+      )
+
+      const topVendors = filteredVendors.filter(v => mostReviewedVendorsIds.has(v._id))
+
+      const [homeMadeChefs, instantDelivery] = [
+        'PRE_ORDER',
+        'ON_DEMAND'
+      ].map(deliveryType =>
+        filteredVendors.filter(v => v.settings?.operations?.deliveryType === deliveryType).slice(0, 20)
+      )
+
+      const tomorrowStart = moment().add(1, 'day').startOf('day')
+
+      const availableTomorrow = scheduled
+        .filter((sch) => {
+          const availableStart = moment(sch.availableDate).startOf('day')
+          return availableStart.isSame(tomorrowStart) && !sch.soldOut
+        })
+        .map(li => li.listing)
+        .slice(0, 20)
 
       return {
-        allVendors,
-        fastestDelivery,
-        homeMadeChefs,
-        instantDelivery,
-        mostPopularListings,
-        mostPopularVendors,
-        scheduledListingsToday
+        allVendors: getVendorsMapper(filteredVendors),
+        fastestDelivery: [],
+        homeMadeChefs: getVendorsMapper(homeMadeChefs),
+        instantDelivery: getVendorsMapper(instantDelivery),
+        mostPopularVendors: getVendorsMapper(topVendors),
+        scheduledListingsTomorrow: availableTomorrow
       }
     } catch (error) {
       this.logger.log({ error })
@@ -703,22 +682,22 @@ export class ListingsService {
   }
 }
 
-// function getVendorsMapper (vendors: any[]): VendorUserI[] {
-//   return vendors.map((vendor: any) => {
-//     return {
-//       _id: vendor._id,
-//       businessName: vendor.businessName,
-//       businessAddress: vendor.businessAddress,
-//       businessLogo: vendor.businessLogo,
-//       isValidated: vendor.isValidated,
-//       status: vendor.status,
-//       location: vendor.location,
-//       businessImage: vendor.restaurantImage,
-//       settings: vendor.settings.operations,
-//       ratings: {
-//         rating: 0,
-//         totalReviews: 0
-//       }
-//     }
-//   })
-// }
+function getVendorsMapper (vendors: any[]): VendorUserI[] {
+  return vendors.map((vendor: any) => {
+    return {
+      _id: vendor._id,
+      businessName: vendor.businessName,
+      businessAddress: vendor.businessAddress,
+      businessLogo: vendor.businessLogo,
+      isValidated: vendor.isValidated,
+      status: vendor.status,
+      location: vendor.location,
+      businessImage: vendor.restaurantImage,
+      settings: vendor.settings.operations,
+      ratings: {
+        rating: 0,
+        totalReviews: 0
+      }
+    }
+  })
+}

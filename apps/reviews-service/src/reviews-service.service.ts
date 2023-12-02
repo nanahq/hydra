@@ -211,10 +211,9 @@ export class ReviewsService implements ReviewsServiceI {
   }
 
   async getTopHomepage (): Promise<ReviewServiceGetMostReviewed> {
-    const listings = await this.getTopListings()
     const vendors = await this.getTopVendors()
     return {
-      listings,
+      listings: [],
       vendors
     }
   }

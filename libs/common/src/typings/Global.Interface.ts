@@ -239,8 +239,6 @@ export interface ListingRejectPush extends BasePushMessage {
 export interface UserHomePage {
   mostPopularVendors: VendorUserI[]
 
-  mostPopularListings: ListingMenuI[]
-
   instantDelivery: VendorUserI[]
 
   homeMadeChefs: VendorUserI[]
@@ -249,7 +247,7 @@ export interface UserHomePage {
 
   allVendors: VendorUserI[]
 
-  scheduledListingsToday: ListingMenuI[]
+  scheduledListingsTomorrow: ListingMenuI[]
 }
 
 export interface VendorServiceHomePageResult {

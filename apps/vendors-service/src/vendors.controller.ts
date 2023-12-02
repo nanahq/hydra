@@ -267,6 +267,7 @@ export class VendorsController {
     @Payload() userLocation: LocationCoordinates,
       @Ctx() context: RmqContext
   ): Promise<VendorServiceHomePageResult> {
+    console.log({ userLocation })
     try {
       return await this.vendorsService.getVendorsForHomepage(userLocation)
     } catch (error) {
