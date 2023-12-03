@@ -600,10 +600,6 @@ export class ListingsService {
             this.scheduledListingRepository.findAndPopulate<ScheduledListingI>({}, ['listing'])
           ])
 
-      console.log(JSON.stringify({ vendorServiceResult }))
-      console.log(JSON.stringify({ reviewServiceResult }))
-      console.log(JSON.stringify({ listingsCategories }))
-
       const mostReviewedVendorsIds: Set<any> = new Set(
         reviewServiceResult.vendors.map(v => v._id)
       )
@@ -613,12 +609,10 @@ export class ListingsService {
           .map((cat: any) => cat.vendor._id)
       )
 
-      const [filteredVendors] = [
-        vendorServiceResult.allVendors,
-        vendorServiceResult.nearest
-      ].map(vendors =>
-        vendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor?._id))
-      )
+      console.log(JSON.stringify(Array.from(categoriesWithListingsMenuIds)))
+      console.log(JSON.stringify(Array.from(mostReviewedVendorsIds)))
+
+      const filteredVendors = vendorServiceResult.allVendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor?._id))
 
       const topVendors = filteredVendors.filter(v => mostReviewedVendorsIds.has(v._id))
 
