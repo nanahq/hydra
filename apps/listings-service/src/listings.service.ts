@@ -606,11 +606,9 @@ export class ListingsService {
       const categoriesWithListingsMenuIds: Set<string> = new Set(
         listingsCategories
           .filter((cat: any) => cat.listingsMenu.length > 0)
-          .map((cat: any) => cat.vendor._id)
+          .map((cat: any) => cat.vendor._id.toString())
       )
 
-      console.log(JSON.stringify(Array.from(categoriesWithListingsMenuIds)))
-      console.log(JSON.stringify(vendorServiceResult.allVendors.map(v => v._id)))
       const filteredVendors = vendorServiceResult.allVendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor?._id.toString()))
 
       const topVendors = filteredVendors.filter(v => mostReviewedVendorsIds.has(v._id.toString()))
