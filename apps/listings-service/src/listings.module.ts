@@ -28,9 +28,11 @@ import {
   ListingOptionGroupRepository, ScheduledListingRepository
 } from './listings.repository'
 import { ScheduleModule } from '@nestjs/schedule'
+import { CacheModule } from '@nestjs/cache-manager'
 
 @Module({
   imports: [
+    CacheModule.register(),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
