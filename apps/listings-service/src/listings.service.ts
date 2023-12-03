@@ -610,6 +610,9 @@ export class ListingsService {
       )
       console.log(JSON.stringify({ vendors: vendorServiceResult.allVendors }))
 
+      const arrayFrom = vendorServiceResult.allVendors.filter(vendor => Array.from(categoriesWithListingsMenuIds).includes(vendor?._id))
+      console.log(JSON.stringify({ arrayFrom }))
+
       const filteredVendors = vendorServiceResult.allVendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor?._id.toString()))
 
       const topVendors = filteredVendors.filter(v => mostReviewedVendorsIds.has(v._id.toString()))
