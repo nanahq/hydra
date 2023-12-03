@@ -1,4 +1,4 @@
-import { Controller, UseFilters } from '@nestjs/common'
+import { Controller, UseFilters, UseInterceptors } from '@nestjs/common'
 import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
 
 import { ListingsService } from './listings.service'
@@ -20,6 +20,7 @@ import {
   , ScheduledListingDto, ListingCategoryI, UserHomePage, LocationCoordinates
 } from '@app/common'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -214,6 +215,9 @@ export class ListingsController {
 
   // User and Admin query
 
+  @CacheKey(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER)
   async getAllMenuUser (@Ctx() context: RmqContext): Promise<ListingMenu[]> {
     try {
@@ -252,6 +256,9 @@ export class ListingsController {
     }
   }
 
+  @CacheKey(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
   @MessagePattern(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER)
   async getSingleMenuUser (
     @Payload() mid: string,
@@ -366,6 +373,9 @@ export class ListingsController {
     }
   }
 
+  @CacheKey(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
   @MessagePattern(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS)
   async getScheduledListings (
     @Payload() { id }: MultiPurposeServicePayload<null>,
@@ -407,6 +417,9 @@ export class ListingsController {
     }
   }
 
+  @CacheKey(QUEUE_MESSAGE.GET_VENDOR_CAT_USER)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_CAT_USER)
   async getVendorCategories (
     @Payload() { vendorId }: { vendorId: string },
@@ -421,6 +434,9 @@ export class ListingsController {
     }
   }
 
+  @CacheKey(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(1000)
   @MessagePattern(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)
   async userHomePage (
     @Payload() { userLocation }: { userLocation: LocationCoordinates },
