@@ -609,12 +609,12 @@ export class ListingsService {
           .map((cat: any) => cat.vendor._id)
       )
 
-      console.log(JSON.stringify(Array.from(categoriesWithListingsMenuIds)))
-      console.log(JSON.stringify(Array.from(mostReviewedVendorsIds)))
+      const filteredVendors = vendorServiceResult.allVendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor?._id.toString()))
 
-      const filteredVendors = vendorServiceResult.allVendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor?._id))
+      const topVendors = filteredVendors.filter(v => mostReviewedVendorsIds.has(v._id.toString()))
 
-      const topVendors = filteredVendors.filter(v => mostReviewedVendorsIds.has(v._id))
+      console.log(JSON.stringify({ filteredVendors }))
+      console.log(JSON.stringify({ topVendors }))
 
       const [homeMadeChefs, instantDelivery] = [
         'PRE_ORDER',
