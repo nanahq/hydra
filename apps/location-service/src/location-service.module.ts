@@ -5,9 +5,11 @@ import { ScheduleModule } from '@nestjs/schedule'
 import { HttpModule } from '@nestjs/axios'
 import { LocationController } from './location-service.controller'
 import { LocationService } from './location-service.service'
+import { CacheModule } from '@nestjs/cache-manager'
 
 @Module({
   imports: [
+    CacheModule.register(),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,

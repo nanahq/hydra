@@ -1,5 +1,4 @@
-import { ListingCategoryI, OrderI, ReviewI, VendorI } from '../schemas'
-import { ListingMenuI, VendorUserI } from '../../../../../../libs/common/src'
+import { ListingCategoryI, OrderI, ReviewI, VendorI, ListingMenuI, VendorUserI } from '../schemas'
 
 export interface TokenPayload {
   userId: string
@@ -637,14 +636,15 @@ export interface PlaceOrderDto {
 }
 
 export interface UserHomePage {
-  featured: VendorUserI[]
+  mostPopularVendors: VendorUserI[]
+
+  instantDelivery: VendorUserI[]
 
   homeMadeChefs: VendorUserI[]
 
-  popular: VendorUserI[]
-
   fastestDelivery: VendorUserI[]
+
   allVendors: VendorUserI[]
 
-  scheduledListingsToday: ListingMenuI[]
+  scheduledListingsTomorrow: ListingMenuI[]
 }

@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common'
+import { Controller, UseInterceptors } from '@nestjs/common'
 import { LocationService } from './location-service.service'
 import {
   Ctx,
@@ -8,6 +8,7 @@ import {
   RpcException
 } from '@nestjs/microservices'
 import { RmqService, QUEUE_MESSAGE, DriverWithLocation, TravelDistanceResult, DeliveryFeeResult } from '@app/common'
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager'
 @Controller()
 export class LocationController {
   constructor (
@@ -57,6 +58,9 @@ export class LocationController {
     }
   }
 
+  @CacheKey(QUEUE_MESSAGE.LOCATION_GET_DELIVERY_FEE)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(500)
   @MessagePattern(QUEUE_MESSAGE.LOCATION_GET_DELIVERY_FEE)
   async getDeliveryFee (
     @Payload()
