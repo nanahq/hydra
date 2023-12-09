@@ -74,8 +74,8 @@ export class Delivery extends AbstractDocument {
   @Prop({ type: Boolean, default: false })
     deliveredWithinTime: boolean
 
-  @Prop({ type: Number })
-    deliveryTime: number
+  @Prop({ type: Date })
+    deliveryTime: string
 
   @Prop({ type: Boolean, default: false })
     assignedToDriver: boolean

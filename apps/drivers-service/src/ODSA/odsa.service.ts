@@ -68,8 +68,41 @@ export class ODSA {
     try {
       return (await this.odsaRepository.findOneAndPopulate({ order: orderId }, [
         'order',
-        'driver'
+        'driver',
+        'listing'
       ])) as DeliveryI
+    } catch (error) {
+      this.logger.error({
+        message: 'PIM -> Failed to query all deliveries',
+        error
+      })
+    }
+  }
+
+  public async queryDayDeliveries (driverId: string): Promise<DeliveryI[] | undefined> {
+    const today = new Date()
+
+    this.logger.log(`PIM -> sorting and processing pre orders for ${today.toISOString()}`)
+
+    const start = new Date(today)
+    start.setHours(0, 0, 0, 0)
+
+    const end = new Date(today)
+    end.setHours(23, 59, 59, 999)
+
+    const filters: FilterQuery<Delivery> = {
+      driver: driverId,
+      deliveryTime: {
+        $gte: start.toISOString(),
+        $le: end.toISOString()
+      }
+    }
+    try {
+      return (await this.odsaRepository.findOneAndPopulate(filters, [
+        'order',
+        'driver',
+        'listing'
+      ])) as DeliveryI[]
     } catch (error) {
       this.logger.error({
         message: 'PIM -> Failed to query all deliveries',
@@ -161,7 +194,7 @@ export class ODSA {
           this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: delivery.order.preciseLocation.coordinates, vendorCoords: delivery.vendor.location?.coordinates })
         )
         deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
-        updates.deliveryTime = deliveryTime.getTime()
+        updates.deliveryTime = moment(deliveryTime).toISOString()
       }
 
       const delivered = data.status === OrderStatus.FULFILLED
@@ -391,7 +424,7 @@ export class ODSA {
             vendor: order.vendor._id,
             user: order.user._id,
             driver: driver._id,
-            deliveryTime: parseInt(order.orderDeliveryScheduledTime),
+            deliveryTime: order.orderDeliveryScheduledTime,
             dropOffLocation: order.preciseLocation,
             pickupLocation: order.vendor.location,
             assignedToDriver: true

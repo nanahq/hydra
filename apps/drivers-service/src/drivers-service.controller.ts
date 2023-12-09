@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
+  HttpException, Param,
   Post,
   UseGuards
 } from '@nestjs/common'
@@ -12,7 +12,7 @@ import {
   Delivery,
   Driver,
   ResponseWithStatus,
-  RegisterDriverDto, QUEUE_MESSAGE, RmqService, UpdateDeliveryStatusDto
+  RegisterDriverDto, QUEUE_MESSAGE, RmqService, UpdateDeliveryStatusDto, DeliveryI
 } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { ODSA } from './ODSA/odsa.service'
@@ -68,6 +68,30 @@ export class DriversServiceController {
       return await this.odsaService.queryPendingDeliveries(
         driver._id as unknown as string
       )
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @Get('deliveries/:id')
+  @UseGuards(JwtAuthGuard)
+  async getOrderDelivery (
+    @Param('id') orderId: string
+  ): Promise<DeliveryI | undefined> {
+    try {
+      return await this.odsaService.queryOrderDelivery(orderId)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @Get('deliveries/today')
+  @UseGuards(JwtAuthGuard)
+  async getDayDeliveries (
+    @CurrentUser() driver: Driver
+  ): Promise<DeliveryI[] | undefined> {
+    try {
+      return await this.odsaService.queryDayDeliveries(driver._id as any)
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
