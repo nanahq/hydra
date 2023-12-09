@@ -1,6 +1,5 @@
 import {
   ListingCategory,
-  Order,
   Vendor,
   ListingMenuI,
   LocationCoordinates,
@@ -59,8 +58,8 @@ export type DriverType = 'DELIVER_PRE_ORDER' | 'DELIVER_ON_DEMAND'
 
 export interface OrderGroup {
   groupId: number
-  orders: Order[]
-  maxDeliveryTime: number
+  orders: OrderI[]
+  maxDeliveryTime: string
 }
 
 export interface DriverWithLocation {

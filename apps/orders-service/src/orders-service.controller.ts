@@ -141,9 +141,9 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ODSA_GET_ORDERS_PRE)
-  async getOdsaPreOrders (@Ctx() context: RmqContext): Promise<Order[] | null> {
+  async getOdsaPreOrders (@Payload() { filter }: { filter: FilterQuery<Order> }, @Ctx() context: RmqContext): Promise<Order[] | null> {
     try {
-      return await this.ordersServiceService.odsaGetPreOrders()
+      return await this.ordersServiceService.odsaGetPreOrders(filter)
     } catch (error) {
       throw new RpcException(error)
     } finally {

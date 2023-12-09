@@ -1,4 +1,4 @@
-import { Order, OrderGroup } from '@app/common'
+import { OrderGroup, OrderI } from '@app/common'
 import * as moment from 'moment'
 
 /**
@@ -8,7 +8,7 @@ import * as moment from 'moment'
  * @param numberOfAvailableDrivers
  */
 export function groupOrdersByDeliveryTime (
-  orders: Order[],
+  orders: OrderI[],
   numberOfAvailableDrivers: number
 ): OrderGroup[] {
   const groupedOrders: OrderGroup[] = []
@@ -21,15 +21,15 @@ export function groupOrdersByDeliveryTime (
       currentGroup = {
         groupId: currentGroupId,
         orders: [order],
-        maxDeliveryTime: parseInt(order.orderDeliveryScheduledTime)
+        maxDeliveryTime: order.orderDeliveryScheduledTime
       }
       currentDriverCount++
     } else {
       const lastOrder = currentGroup.orders[currentGroup.orders.length - 1]
       const timeDiffMinutes = moment
         .duration(
-          moment(parseInt(order.orderDeliveryScheduledTime)).diff(
-            moment(parseInt(lastOrder.orderDeliveryScheduledTime))
+          moment(order.orderDeliveryScheduledTime).diff(
+            moment(lastOrder.orderDeliveryScheduledTime)
           )
         )
         .asMinutes()
@@ -40,11 +40,11 @@ export function groupOrdersByDeliveryTime (
         currentGroup.orders.length < 10 &&
         currentDriverCount < numberOfAvailableDrivers
       ) {
+        const groupMaxDelivery = moment(currentGroup.maxDeliveryTime)
+        const scheduleTime = moment(order.orderDeliveryScheduledTime)
         currentGroup.orders.push(order)
-        currentGroup.maxDeliveryTime = Math.max(
-          currentGroup.maxDeliveryTime,
-          parseInt(order.orderDeliveryScheduledTime)
-        )
+        currentGroup.maxDeliveryTime = moment.max(groupMaxDelivery, scheduleTime).toISOString()
+
         currentDriverCount++
       } else {
         groupedOrders.push(currentGroup)
@@ -52,7 +52,7 @@ export function groupOrdersByDeliveryTime (
         currentGroup = {
           groupId: currentGroupId,
           orders: [order],
-          maxDeliveryTime: parseInt(order.orderDeliveryScheduledTime)
+          maxDeliveryTime: order.orderDeliveryScheduledTime
         }
         currentDriverCount = 1
       }

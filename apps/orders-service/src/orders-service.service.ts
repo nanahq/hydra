@@ -290,11 +290,12 @@ export class OrdersServiceService {
     }
   }
 
-  public async odsaGetPreOrders (): Promise<Order[] | null> {
+  public async odsaGetPreOrders (filterQuery: FilterQuery<Order>): Promise<Order[] | null> {
     try {
       this.logger.log('PIM -> Getting pre orders for ODSA daily cron')
       return await this.orderRepository.findAndPopulate(
         {
+          ...filterQuery,
           orderStatus: 'ORDER_PLACED',
           orderType: OrderTypes.PRE
         },

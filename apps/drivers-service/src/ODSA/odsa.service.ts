@@ -20,6 +20,7 @@ import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
 import { OdsaRepository } from './odsa.repository'
 import * as moment from 'moment'
+import { FilterQuery } from 'mongoose'
 
 const PendingDeliveryStatuses: OrderStatus[] = [
   OrderStatus.IN_ROUTE,
@@ -313,20 +314,38 @@ export class ODSA {
    * Odsa Cron for pre-order. Runs daily @ 8AM WAT to assign orders to drivers
    * @private
    */
-  @Cron(CronExpression.EVERY_DAY_AT_8AM, {
+  @Cron(CronExpression.EVERY_5_MINUTES, {
     timeZone: 'Africa/Lagos'
   })
   private async sortAndAssignPreOrders (): Promise<void> {
-    const today = new Date().toLocaleDateString()
-    this.logger.log(`PIM -> sorting and processing pre orders for ${today}`)
+    const today = new Date()
 
-    const orders = await lastValueFrom<any>(
-      this.orderClient.send(QUEUE_MESSAGE.ODSA_GET_ORDERS_PRE, {}).pipe(
+    this.logger.log(`PIM -> sorting and processing pre orders for ${today.toISOString()}`)
+
+    const start = new Date(today)
+    start.setHours(0, 0, 0, 0)
+
+    const end = new Date(today)
+    end.setHours(23, 59, 59, 999)
+
+    const filter: FilterQuery<Order> = {
+      orderDeliveryScheduledTime: {
+        $gte: start.toISOString(),
+        $lt: end.toISOString()
+      }
+    }
+    const orders = await lastValueFrom<OrderI[]>(
+      this.orderClient.send(QUEUE_MESSAGE.ODSA_GET_ORDERS_PRE, { filter }).pipe(
         catchError((error) => {
           throw new RpcException(error)
         })
       )
     )
+
+    if (orders.length < 1) {
+      return
+    }
+
     const drivers = await this.driversRepository.find({
       // isValidated: true,
       type: 'DELIVER_PRE_ORDER',
@@ -362,9 +381,7 @@ export class ODSA {
     this.logger.log(
       `PIM -> Assigning ${groupedOrders.length} grouped orders to ${drivers.length}`
     )
-
     const newDeliveries: Array<Partial<Delivery>> = []
-
     groupedOrders.forEach((group) => {
       group.orders.forEach((order) => {
         drivers.forEach((driver) => {
@@ -429,7 +446,7 @@ export class ODSA {
   }
 }
 
-function filterOrdersForDay (orders: Order[]): Order[] {
+function filterOrdersForDay (orders: OrderI[]): OrderI[] {
   const targetDate = moment()
 
   return orders.filter((order) => {

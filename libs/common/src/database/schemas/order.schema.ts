@@ -102,7 +102,7 @@ export class Order extends AbstractDocument {
   })
     orderStatus: OrderStatus
 
-  @Prop(String)
+  @Prop(Date)
     orderDeliveryScheduledTime: string
 
   @Prop({
