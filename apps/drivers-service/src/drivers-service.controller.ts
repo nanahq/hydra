@@ -59,14 +59,16 @@ export class DriversServiceController {
     }
   }
 
-  @Get('deliveries/pending')
+  @Get('deliveries/:id/pending')
   @UseGuards(JwtAuthGuard)
   async getDriversPendingDelivery (
-    @CurrentUser() driver: Driver
+    @Param('id') driverId: string,
+      @CurrentUser() driver: Driver
   ): Promise<Delivery[] | undefined> {
+    console.log(driver._id === driverId as any)
     try {
       return await this.odsaService.queryPendingDeliveries(
-        driver._id.toString() as unknown as string
+        driverId
       )
     } catch (error) {
       throw new HttpException(error.message, error.status)
@@ -85,13 +87,15 @@ export class DriversServiceController {
     }
   }
 
-  @Get('deliveries/today')
+  @Get('deliveries/:id/today')
   @UseGuards(JwtAuthGuard)
   async getDayDeliveries (
-    @CurrentUser() driver: Driver
+    @Param('id') driverId: string,
+      @CurrentUser() driver: Driver
   ): Promise<DeliveryI[] | undefined> {
+    console.log(driver._id === driverId as any)
     try {
-      return await this.odsaService.queryDayDeliveries(driver._id as any)
+      return await this.odsaService.queryDayDeliveries(driverId as any)
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
