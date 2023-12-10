@@ -29,7 +29,7 @@ export class Delivery extends AbstractDocument {
   @Prop(SchemaTypes.Date)
     updatedAt: string
 
-  @Prop({ type: String, default: OrderStatus.PROCESSED })
+  @Prop({ type: String, default: OrderStatus.PAYMENT_PENDING })
     status: string
 
   @Prop({

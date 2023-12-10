@@ -22,12 +22,6 @@ import { OdsaRepository } from './odsa.repository'
 import * as moment from 'moment'
 import { FilterQuery } from 'mongoose'
 
-const PendingDeliveryStatuses: OrderStatus[] = [
-  OrderStatus.IN_ROUTE,
-  OrderStatus.COLLECTED,
-  OrderStatus.PROCESSED
-]
-
 @Injectable()
 export class ODSA {
   private readonly logger = new Logger(ODSA.name)
@@ -46,16 +40,14 @@ export class ODSA {
   ): Promise<Delivery[] | undefined> {
     try {
       const deliveries: Delivery[] | null =
-        await this.odsaRepository.findAndPopulate({ driver: driverId }, [
+        await this.odsaRepository.findAndPopulate({ driver: driverId, status: { $ne: OrderStatus.FULFILLED } }, [
           'listing',
           'vendor',
           'user',
           'order'
         ])
 
-      return deliveries?.filter((dv) =>
-        PendingDeliveryStatuses.includes(dv.status as any)
-      )
+      return deliveries
     } catch (error) {
       this.logger.error(
         `PIM -> Failed to query pending deliveries for driver ${driverId}`
@@ -82,7 +74,7 @@ export class ODSA {
   public async queryDayDeliveries (driverId: string): Promise<DeliveryI[] | undefined> {
     const today = new Date()
 
-    this.logger.log(`PIM -> sorting and processing pre orders for ${today.toISOString()}`)
+    this.logger.log(`PIM -> Getting today's delivery ${today.toISOString()}`)
 
     const start = new Date(today)
     start.setHours(0, 0, 0, 0)
@@ -94,9 +86,10 @@ export class ODSA {
       driver: driverId,
       deliveryTime: {
         $gte: start.toISOString(),
-        $le: end.toISOString()
+        $lte: end.toISOString()
       }
     }
+
     try {
       return (await this.odsaRepository.findOneAndPopulate(filters, [
         'order',
@@ -212,7 +205,7 @@ export class ODSA {
       )
 
       if (delivered) {
-        const driver = await this.driversRepository.findOne({ _id: delivery.driver }) as Driver
+        const driver = await this.driversRepository.findOne({ _id: delivery.driver, type: 'DELIVER_ON_DEMAND' }) as Driver
 
         const deliveries = [...driver.deliveries, delivery._id]
         const totalTrips = driver.totalTrips + 1
@@ -344,10 +337,10 @@ export class ODSA {
   }
 
   /**
-   * Odsa Cron for pre-order. Runs daily @ 8AM WAT to assign orders to drivers
+   * Odsa Cron for pre-order. Runs daily @ 6AM WAT to assign orders to drivers
    * @private
    */
-  @Cron(CronExpression.EVERY_5_MINUTES, {
+  @Cron(CronExpression.EVERY_DAY_AT_6AM, {
     timeZone: 'Africa/Lagos'
   })
   private async sortAndAssignPreOrders (): Promise<void> {
@@ -382,7 +375,8 @@ export class ODSA {
     const drivers = await this.driversRepository.find({
       // isValidated: true,
       type: 'DELIVER_PRE_ORDER',
-      acc_status: VendorApprovalStatus.APPROVED
+      acc_status: VendorApprovalStatus.APPROVED,
+      available: true
     })
 
     const ordersForToday = filterOrdersForDay(orders)
@@ -433,7 +427,11 @@ export class ODSA {
       })
     })
 
+    const driverIds = drivers.map(driver => driver._id)
+
     await this.odsaRepository.insertMany(newDeliveries)
+
+    await this.driversRepository.findAndUpdate({ _id: { $in: driverIds } }, { available: false })
 
     this.logger.log(
       `PIM -> Success: Assigned ${groupedOrders.length} grouped orders to ${drivers.length} drivers`

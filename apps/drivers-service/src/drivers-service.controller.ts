@@ -66,7 +66,7 @@ export class DriversServiceController {
   ): Promise<Delivery[] | undefined> {
     try {
       return await this.odsaService.queryPendingDeliveries(
-        driver._id as unknown as string
+        driver._id.toString() as unknown as string
       )
     } catch (error) {
       throw new HttpException(error.message, error.status)
@@ -104,7 +104,7 @@ export class DriversServiceController {
   ): Promise<Delivery[] | undefined> {
     try {
       return await this.odsaService.queryFulfilledDeliveries(
-        driver._id as unknown as string
+        driver._id.toString() as unknown as string
       )
     } catch (error) {
       throw new HttpException(error.message, error.status)
