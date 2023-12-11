@@ -65,6 +65,8 @@ export class DriversServiceController {
     @Param('id') driverId: string,
       @CurrentUser() driver: Driver
   ): Promise<Delivery[] | undefined> {
+    console.log({ driverId })
+    console.log({ driverIdB: driver._id })
     console.log(driver._id === driverId as any)
     try {
       return await this.odsaService.queryPendingDeliveries(
@@ -93,6 +95,8 @@ export class DriversServiceController {
     @Param('id') driverId: string,
       @CurrentUser() driver: Driver
   ): Promise<DeliveryI[] | undefined> {
+    console.log({ driverId })
+    console.log({ driverIdB: driver._id })
     console.log(driver._id === driverId as any)
     try {
       return await this.odsaService.queryDayDeliveries(driverId as any)

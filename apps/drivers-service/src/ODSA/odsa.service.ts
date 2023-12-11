@@ -413,7 +413,7 @@ export class ODSA {
       group.orders.forEach((order) => {
         drivers.forEach((driver) => {
           newDeliveries.push({
-            listing: order.listing._id,
+            listing: order.listing.map(li => li._id),
             order: order._id,
             vendor: order.vendor._id,
             user: order.user._id,
