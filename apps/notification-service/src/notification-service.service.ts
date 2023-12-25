@@ -44,14 +44,13 @@ export class NotificationServiceService {
         .verificationChecks.create({ to: phone, code })
 
       if (res.status === 'approved') {
-        await lastValueFrom(
-          this.usersClient.emit(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
+        return await lastValueFrom(
+          this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
             phone
           })
         )
-        return { status: 1 }
       }
-      return { status: 0 }
+      return null
     } catch (error) {
       throw new RpcException(error)
     }

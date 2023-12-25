@@ -22,6 +22,9 @@ export class VendorPayout extends AbstractDocument {
   @Prop(Date)
     createdAt: string
 
+  @Prop({ type: [Types.ObjectId], ref: 'Order' })
+    orders: string[]
+
   @Prop(Number)
     refId: number
 }

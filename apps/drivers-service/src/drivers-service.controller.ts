@@ -59,47 +59,27 @@ export class DriversServiceController {
     }
   }
 
-  @Get('deliveries/:id/pending')
+  @Get('deliveries/pending')
   @UseGuards(JwtAuthGuard)
   async getDriversPendingDelivery (
-    @Param('id') driverId: string,
-      @CurrentUser() driver: Driver
+    @CurrentUser() driver: Driver
   ): Promise<Delivery[] | undefined> {
-    console.log({ driverId })
-    console.log({ driverIdB: driver._id })
-    console.log(driver._id === driverId as any)
     try {
       return await this.odsaService.queryPendingDeliveries(
-        driverId
+        driver._id as any
       )
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
   }
 
-  @Get('deliveries/:id')
-  @UseGuards(JwtAuthGuard)
-  async getOrderDelivery (
-    @Param('id') orderId: string
-  ): Promise<DeliveryI | undefined> {
-    try {
-      return await this.odsaService.queryOrderDelivery(orderId)
-    } catch (error) {
-      throw new HttpException(error.message, error.status)
-    }
-  }
-
-  @Get('deliveries/:id/today')
+  @Get('deliveries/today')
   @UseGuards(JwtAuthGuard)
   async getDayDeliveries (
-    @Param('id') driverId: string,
-      @CurrentUser() driver: Driver
+    @CurrentUser() driver: Driver
   ): Promise<DeliveryI[] | undefined> {
-    console.log({ driverId })
-    console.log({ driverIdB: driver._id })
-    console.log(driver._id === driverId as any)
     try {
-      return await this.odsaService.queryDayDeliveries(driverId as any)
+      return await this.odsaService.queryDayDeliveries(driver._id as any)
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
@@ -112,8 +92,20 @@ export class DriversServiceController {
   ): Promise<Delivery[] | undefined> {
     try {
       return await this.odsaService.queryFulfilledDeliveries(
-        driver._id.toString() as unknown as string
+        driver._id as unknown as string
       )
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @Get('delivery/order/:id')
+  @UseGuards(JwtAuthGuard)
+  async getOrderDelivery (
+    @Param('id') orderId: string
+  ): Promise<DeliveryI | undefined> {
+    try {
+      return await this.odsaService.queryOrderDelivery(orderId)
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }

@@ -253,6 +253,7 @@ services:
     image: rabbitmq
     ports:
       - '5672:5672'
+      - '15672:15672'
     volumes:
       - queue_data:/var/lib/rabbitmq
     networks:
@@ -302,8 +303,6 @@ volumes:
   queue_data:
     driver: local
   db_data:
-    driver: local
-  cs_data:
     driver: local
 networks:
   nana-app:

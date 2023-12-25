@@ -15,13 +15,15 @@ export class RmqModule {
         ClientsModule.registerAsync([
           {
             name,
-            useFactory: (configService: ConfigService): RmqOptions => ({
-              transport: Transport.RMQ,
-              options: {
-                urls: [fallbackUri !== undefined ? fallbackUri : configService.get<string>('RMQ_URI') as string],
-                queue: configService.get<string>(`RMQ_${name}_QUEUE`) as string ?? fallback
+            useFactory: (configService: ConfigService): RmqOptions => {
+              return {
+                transport: Transport.RMQ,
+                options: {
+                  urls: [fallbackUri !== undefined ? fallbackUri : configService.get<string>('RMQ_URI') as string],
+                  queue: configService.get<string>(`RMQ_${name}_QUEUE`) as string ?? fallback
+                }
               }
-            }),
+            },
             inject: [ConfigService]
           }
         ])

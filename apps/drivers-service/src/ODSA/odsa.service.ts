@@ -40,13 +40,12 @@ export class ODSA {
   ): Promise<Delivery[] | undefined> {
     try {
       const deliveries: Delivery[] | null =
-        await this.odsaRepository.findAndPopulate({ driver: driverId, status: { $ne: OrderStatus.FULFILLED } }, [
+        await this.odsaRepository.findAndPopulate({ driver: driverId.toString(), status: { $ne: OrderStatus.FULFILLED } }, [
           'listing',
           'vendor',
           'user',
           'order'
         ])
-
       return deliveries
     } catch (error) {
       this.logger.error(
@@ -83,19 +82,20 @@ export class ODSA {
     end.setHours(23, 59, 59, 999)
 
     const filters: FilterQuery<Delivery> = {
-      driver: driverId,
+      driver: driverId.toString(),
       deliveryTime: {
         $gte: start.toISOString(),
         $lte: end.toISOString()
       }
     }
 
+    this.logger.log(filters)
     try {
-      return (await this.odsaRepository.findOneAndPopulate(filters, [
+      return (await this.odsaRepository.findAndPopulate(filters, [
         'order',
         'driver',
         'listing'
-      ])) as DeliveryI[]
+      ]))
     } catch (error) {
       this.logger.error({
         message: 'PIM -> Failed to query all deliveries',
@@ -141,14 +141,14 @@ export class ODSA {
   ): Promise<Delivery[] | undefined> {
     try {
       const deliveries: Delivery[] | null =
-        await this.odsaRepository.findAndPopulate({ driver: driverId }, [
+        await this.odsaRepository.findAndPopulate({ driver: driverId.toString() }, [
           'listing',
           'vendor',
           'user',
           'order'
         ])
 
-      return deliveries?.filter((dv) => dv.status === OrderStatus.FULFILLED)
+      return deliveries
     } catch (error) {
       this.logger.error({
         message: `PIM -> Failed to query pending deliveries for driver ${driverId}`,
@@ -184,8 +184,9 @@ export class ODSA {
       if (pickedUp) {
         const deliveryTime = new Date()
         const travelDistance = await lastValueFrom<TravelDistanceResult>(
-          this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: delivery.order.preciseLocation.coordinates, vendorCoords: delivery.vendor.location?.coordinates })
+          this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { vendorCoords: delivery.pickupLocation.coordinates, userCoords: delivery.dropOffLocation.coordinates })
         )
+
         deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
         updates.deliveryTime = moment(deliveryTime).toISOString()
       }
@@ -274,7 +275,9 @@ export class ODSA {
             user: order.user._id,
             dropOffLocation: order.preciseLocation,
             pickupLocation: order.vendor.location,
-            assignedToDriver: false
+            assignedToDriver: false,
+            status: OrderStatus.PROCESSED,
+            deliveryType: 'ON_DEMAND'
           })
         }
         return
@@ -297,7 +300,9 @@ export class ODSA {
           user: order.user._id,
           dropOffLocation: order.preciseLocation,
           pickupLocation: order.vendor.location,
-          assignedToDriver: true
+          assignedToDriver: true,
+          status: OrderStatus.PROCESSED,
+          deliveryType: 'ON_DEMAND'
         })
       }
       await this.driversRepository.findOneAndUpdate(
@@ -316,18 +321,17 @@ export class ODSA {
     }
   }
 
-  @Cron(CronExpression.EVERY_MINUTE, {
+  @Cron(CronExpression.EVERY_5_MINUTES, {
     timeZone: 'Africa/Lagos'
   })
   private async assignDemandOrders (): Promise<void> {
     const unassignedDeliveries = await this.odsaRepository.findAndPopulate({
-      assignedToDriver: false
+      assignedToDriver: false,
+      deliveryType: 'ON_DEMAND'
     }, ['order']) as any
 
-    const filteredDeliveries = unassignedDeliveries.filter((delivery) => delivery.order.orderType === 'ON_DEMAND')
-
     try {
-      for (const delivery of filteredDeliveries) {
+      for (const delivery of unassignedDeliveries) {
         await this.handleProcessOrder(delivery.order, true, delivery._id)
       }
     } catch (error) {
@@ -421,7 +425,8 @@ export class ODSA {
             deliveryTime: order.orderDeliveryScheduledTime,
             dropOffLocation: order.preciseLocation,
             pickupLocation: order.vendor.location,
-            assignedToDriver: true
+            assignedToDriver: true,
+            deliveryType: 'PRE_ORDER'
           })
         })
       })

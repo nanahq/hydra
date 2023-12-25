@@ -3,7 +3,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import {
   AbstractDocument,
   LocationCoordinates,
-  OrderStatus
+  OrderStatus, OrderType
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -79,6 +79,9 @@ export class Delivery extends AbstractDocument {
 
   @Prop({ type: Boolean, default: false })
     assignedToDriver: boolean
+
+  @Prop(String)
+    deliveryType: OrderType
 }
 
 export const DeliverySchema = SchemaFactory.createForClass(Delivery)

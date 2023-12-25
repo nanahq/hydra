@@ -1,4 +1,4 @@
-import { type Logger, NotFoundException } from '@nestjs/common'
+import { type Logger } from '@nestjs/common'
 import {
   type FilterQuery,
   type Model,
@@ -70,7 +70,6 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
     if (document === null) {
       this.logger.warn('Document not found with filterQuery:', filterQuery)
-      throw new NotFoundException('Document not found.')
     }
 
     return document

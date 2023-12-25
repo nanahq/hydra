@@ -6,7 +6,7 @@ import {
   HttpException,
   Inject, Param,
   Post,
-  Put,
+  Put, Res,
   UseGuards
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
@@ -25,6 +25,8 @@ import {
   User
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+import { AuthService } from './auth.service'
+import { Response } from 'express'
 
 @Controller('user')
 export class UsersController {
@@ -32,7 +34,9 @@ export class UsersController {
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
+    private readonly notificationClient: ClientProxy,
+
+    private readonly authService: AuthService
 
   ) {}
 
@@ -51,9 +55,10 @@ export class UsersController {
 
   @Post('verify')
   async verifyUser (
-    @Body() request: PhoneVerificationPayload
-  ): Promise<ResponseWithStatus> {
-    return await lastValueFrom<ResponseWithStatus>(
+    @Body() request: PhoneVerificationPayload,
+      @Res({ passthrough: true }) response: Response
+  ): Promise<any> {
+    const user = await lastValueFrom<any>(
       this.notificationClient
         .send(QUEUE_MESSAGE.VERIFY_PHONE, {
           ...request
@@ -64,6 +69,11 @@ export class UsersController {
           })
         )
     )
+    if (user !== null) {
+      return this.authService.login(user, response)
+    }
+
+    return { status: 0 }
   }
 
   @Get('validate/:phone')

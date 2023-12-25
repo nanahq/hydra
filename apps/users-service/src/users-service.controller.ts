@@ -49,7 +49,7 @@ export class UsersServiceController {
   async updateUserStatus (
     @Payload() data: verifyPhoneRequest,
       @Ctx() context: RmqContext
-  ): Promise<ResponseWithStatus> {
+  ): Promise<User> {
     try {
       return await this.usersService.updateUserStatus(data)
     } catch (error) {

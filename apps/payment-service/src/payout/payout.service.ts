@@ -61,7 +61,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
   }
 
   async getAllPayout (): Promise<any> {
-    return await this.payoutRepository.findAndPopulate({}, 'vendor')
+    return await this.payoutRepository.findAndPopulate({}, ['vendor', 'orders'])
   }
 
   async getVendorPayout (vendor: string): Promise<VendorPayout[]> {
@@ -154,6 +154,8 @@ export class VendorPayoutService implements VendorPayoutServiceI {
       )
     )
 
+    const ordersId = orders.map(order => order._id)
+
     // Compute earnings for each vendor
     const vendorEarnings = new Map<string, number>()
 
@@ -173,7 +175,8 @@ export class VendorPayoutService implements VendorPayoutServiceI {
         refId: RandomGen.genRandomNum(10, 7),
         vendor: vendorId,
         earnings,
-        paid: false
+        paid: false,
+        orders: ordersId
       })
     }
 

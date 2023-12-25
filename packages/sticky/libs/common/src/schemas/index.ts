@@ -186,6 +186,7 @@ export interface DeliveryI {
 
   deliveryTime: number
 
+  deliveryType: OrderType
   assignedToDriver: boolean
 }
 
@@ -323,6 +324,8 @@ export interface VendorPayoutI {
 
   earnings: number
 
+
+  orders: OrderI[]
   paid: boolean
 
   updatedAt: string

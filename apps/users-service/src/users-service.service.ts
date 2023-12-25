@@ -69,9 +69,9 @@ export class UsersService {
       throw new FitRpcException('User with that phone number does not exist', HttpStatus.NOT_FOUND)
     }
 
-    if (user.isValidated) {
-      throw new FitRpcException('Phone number has been verified', HttpStatus.BAD_REQUEST)
-    }
+    // if (user.isValidated) {
+    //   throw new FitRpcException('Phone number has been verified', HttpStatus.BAD_REQUEST)
+    // }
 
     await lastValueFrom(
       this.notificationClient.emit(
@@ -126,13 +126,14 @@ export class UsersService {
 
   async updateUserStatus ({
     phone
-  }: verifyPhoneRequest): Promise<ResponseWithStatus> {
+  }: verifyPhoneRequest): Promise<User> {
     try {
-      await this.usersRepository.findOneAndUpdate(
+      const user = await this.usersRepository.findOneAndUpdate(
         { phone },
         { isValidated: true }
       )
-      return { status: 1 }
+
+      return user
     } catch {
       throw new FitRpcException(
         'Failed to update user status',

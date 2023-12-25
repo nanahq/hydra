@@ -11,7 +11,8 @@ export function PayoutStub (): VendorPayout {
     paid: true,
     createdAt: '2023-03-05T04:26:02.148Z',
     updatedAt: '2023-03-05T04:34:34.002Z',
-    refId: 6798304958
+    refId: 6798304958,
+    orders: []
   }
 }
 
