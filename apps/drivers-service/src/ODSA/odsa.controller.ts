@@ -2,13 +2,13 @@ import { Controller } from '@nestjs/common'
 import { DriversServiceService } from '../drivers-service.service'
 import { ODSA } from './odsa.service'
 import {
-  Ctx,
+  Ctx, EventPattern,
   MessagePattern,
   Payload,
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { Delivery, DeliveryI, QUEUE_MESSAGE, RmqService } from '@app/common'
+import { Delivery, DeliveryI, OrderUpdateStream, QUEUE_MESSAGE, RmqService } from '@app/common'
 
 /**
  * Order Delivery Sorting and Assignation (ODSA) Service.
@@ -96,6 +96,20 @@ export class OdsaController {
   ): Promise<DeliveryI[] | undefined> {
     try {
       return await this.odsa.queryVendorDeliveries(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.STREAM_ORDER_UPDATES)
+  async streamOrderUpdates (
+    @Ctx() context: RmqContext,
+      @Payload() data: OrderUpdateStream
+  ): Promise<void> {
+    try {
+      this.odsa.streamOrderUpdatesViaSocket(data.orderId, data.userId, data.status)
     } catch (error) {
       throw new RpcException(error)
     } finally {

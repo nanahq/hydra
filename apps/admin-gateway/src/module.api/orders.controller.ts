@@ -114,9 +114,9 @@ export class OrdersController {
   async updateOrderStatus (
     @Body() data: UpdateOrderStatusRequestDto
   ): Promise<ResponseWithStatus> {
-    const payload: ServicePayload<UpdateOrderStatusRequestDto> = {
-      userId: '',
-      data
+    const payload: UpdateOrderStatusRequestDto = {
+      ...data,
+      streamUpdates: true
     }
     return await lastValueFrom<ResponseWithStatus>(
       this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, payload).pipe(

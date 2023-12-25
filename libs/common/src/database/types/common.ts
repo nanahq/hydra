@@ -200,3 +200,10 @@ export interface SubscriptionNotification {
 
   updatedAt: string
 }
+
+export interface OrderUpdateStream {
+  userId: string
+  orderId: string
+
+  status: OrderStatus
+}
