@@ -1,5 +1,5 @@
 import { OrderStatus } from '@app/common'
-import { IsNotEmpty } from 'class-validator'
+import { IsBoolean, IsNotEmpty, IsOptional } from 'class-validator'
 
 export class UpdateOrderStatusRequestDto {
   @IsNotEmpty()
@@ -7,6 +7,10 @@ export class UpdateOrderStatusRequestDto {
 
   @IsNotEmpty()
     orderId: string
+
+  @IsOptional()
+  @IsBoolean()
+    streamUpdates?: boolean
 }
 
 export class UpdateOrderStatusPaidRequestDto {

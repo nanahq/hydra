@@ -6,7 +6,7 @@ import {
   Order,
   OrderI, OrderInitiateCharge,
   OrderStatus,
-  OrderTypes, PaystackChargeResponseData,
+  OrderTypes, OrderUpdateStream, PaystackChargeResponseData,
   PlaceOrderDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -193,7 +193,8 @@ export class OrdersServiceService {
 
   public async updateStatus ({
     status,
-    orderId
+    orderId,
+    streamUpdates
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
     try {
       const order = await this.orderRepository.findOneAndPopulate({ _id: orderId }, ['vendor', 'listing', 'user']) as OrderI
@@ -208,6 +209,14 @@ export class OrdersServiceService {
       )
       await this.sendPushNotifications(status, order)
 
+      if (streamUpdates !== undefined && streamUpdates) {
+        const updateStream: OrderUpdateStream = {
+          userId: order.user._id.toString(),
+          orderId: order._id.toString(),
+          status
+        }
+        await this.driverClient.emit(QUEUE_MESSAGE.STREAM_ORDER_UPDATES, updateStream)
+      }
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(

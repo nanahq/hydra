@@ -10,10 +10,10 @@ import {
   FitRpcException,
   Order,
   OrderI,
-  OrderStatus,
+  OrderStatus, OrderUpdateStream,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus, TravelDistanceResult,
+  ResponseWithStatus, SOCKET_MESSAGE, TravelDistanceResult,
   VendorApprovalStatus
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
@@ -21,6 +21,7 @@ import { DriverRepository } from '../drivers-service.repository'
 import { OdsaRepository } from './odsa.repository'
 import * as moment from 'moment'
 import { FilterQuery } from 'mongoose'
+import { EventsGateway } from '../websockets/events.gateway'
 
 @Injectable()
 export class ODSA {
@@ -32,7 +33,10 @@ export class ODSA {
     @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
     private readonly locationClient: ClientProxy,
     private readonly driversRepository: DriverRepository,
-    private readonly odsaRepository: OdsaRepository
+    private readonly odsaRepository: OdsaRepository,
+
+    //   Websocket gateway injection for order status updates
+    private readonly eventsGateway: EventsGateway
   ) {}
 
   public async queryPendingDeliveries (
@@ -167,7 +171,7 @@ export class ODSA {
 
       const delivery = await this.odsaRepository.findOneAndPopulate({
         _id: data.deliveryId
-      }, ['order', 'vendor']) as DeliveryI
+      }, ['order', 'vendor', 'user']) as DeliveryI
 
       await lastValueFrom(
         this.orderClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
@@ -200,6 +204,7 @@ export class ODSA {
         updates.deliveredWithinTime = deliveredWithinTime
         updates.completed = true
       }
+
       await this.odsaRepository.findOneAndUpdate(
         { _id: delivery._id },
         updates
@@ -216,6 +221,13 @@ export class ODSA {
 
       this.logger.log('PIM -> Success: Updated delivery status')
 
+      const streamPayload: OrderUpdateStream = {
+        userId: delivery.user._id,
+        orderId: delivery.order._id,
+        status: data.status
+
+      }
+      this.streamOrderUpdatesViaSocket(streamPayload.orderId, streamPayload.userId, streamPayload.status)
       return { status: 1 }
     } catch (error) {
       this.logger.error(JSON.stringify(error))
@@ -479,6 +491,14 @@ export class ODSA {
         coordinates: driversCoordinates
       })
     )
+  }
+
+  public streamOrderUpdatesViaSocket (orderId: string, userId: string, orderStatus: OrderStatus): void {
+    this.eventsGateway.server.emit(SOCKET_MESSAGE.UPDATE_ORDER_STATUS, {
+      user: userId,
+      order: orderId,
+      status: orderStatus
+    })
   }
 }
 

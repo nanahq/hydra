@@ -53,7 +53,7 @@ export class OrdersController {
     @Body() data: UpdateOrderStatusRequestDto
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, data).pipe(
+      this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, { ...data, streamUpdates: true }).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
