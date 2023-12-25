@@ -118,6 +118,13 @@ export interface DeliveryI {
   deliveryTime: number
 
   assignedToDriver: boolean
+
+  deliveryType: OrderType
+
+  travelMeta?: {
+    distance: number
+    travelTime: number
+  }
 }
 
 export interface DriverI {
@@ -257,4 +264,17 @@ export interface VendorServiceHomePageResult {
 export interface ReviewServiceGetMostReviewed {
   listings: ListingMenu[]
   vendors: Vendor[]
+}
+
+export interface DriverStats {
+  distance: number
+  time: number
+  earnings: number
+}
+
+export interface DriverStatGroup {
+  today: DriverStats
+  yesterday: DriverStats
+  week: DriverStats
+  month: DriverStats
 }

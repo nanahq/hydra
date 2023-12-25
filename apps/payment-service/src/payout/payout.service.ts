@@ -112,13 +112,15 @@ export class VendorPayoutService implements VendorPayoutServiceI {
       return acc + obj.earnings
     }, 0)
 
-    const yesterdayEarning = yesterdayPayout.reduce((acc, obj) => {
-      return acc + obj.earnings
-    }, 0)
 
     const weekEarning = weekPayout.reduce((acc, obj) => {
       return acc + obj.earnings
     }, 0)
+
+    const yesterdayEarning = yesterdayPayout.reduce((acc, obj) => {
+      return acc + obj.earnings
+    }, 0)
+
     return {
       '24_hours': yesterdayEarning,
       '7_days': weekEarning,

@@ -648,3 +648,16 @@ export interface UserHomePage {
 
   scheduledListingsTomorrow: ListingMenuI[]
 }
+
+export interface DriverStats {
+  distance: number
+  time: number
+  earnings: number
+}
+
+export interface DriverStatGroup {
+  today: DriverStats
+  yesterday: DriverStats
+  week: DriverStats
+  month: DriverStats
+}

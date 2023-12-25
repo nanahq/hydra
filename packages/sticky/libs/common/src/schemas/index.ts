@@ -188,6 +188,10 @@ export interface DeliveryI {
 
   deliveryType: OrderType
   assignedToDriver: boolean
+  travelMeta?: {
+    distance: number
+    travelTime: number
+  }
 }
 
 export interface DriverI {

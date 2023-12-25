@@ -82,6 +82,17 @@ export class Delivery extends AbstractDocument {
 
   @Prop(String)
     deliveryType: OrderType
+
+  @Prop({
+    type: {
+      distance: Number,
+      travelTime: Number
+    }
+  })
+    travelMeta: {
+    distance: number
+    travelTime: number
+  }
 }
 
 export const DeliverySchema = SchemaFactory.createForClass(Delivery)

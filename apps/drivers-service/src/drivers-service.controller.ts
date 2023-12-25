@@ -12,7 +12,7 @@ import {
   Delivery,
   Driver,
   ResponseWithStatus,
-  RegisterDriverDto, QUEUE_MESSAGE, RmqService, UpdateDeliveryStatusDto, DeliveryI
+  RegisterDriverDto, QUEUE_MESSAGE, RmqService, UpdateDeliveryStatusDto, DeliveryI, DriverStatGroup
 } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { ODSA } from './ODSA/odsa.service'
@@ -106,6 +106,18 @@ export class DriversServiceController {
   ): Promise<DeliveryI | undefined> {
     try {
       return await this.odsaService.queryOrderDelivery(orderId)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @Get('stats')
+  @UseGuards(JwtAuthGuard)
+  async getDriverStats (
+    @CurrentUser() driver: Driver
+  ): Promise<DriverStatGroup> {
+    try {
+      return await this.odsaService.getDriverStats(driver._id.toString())
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
