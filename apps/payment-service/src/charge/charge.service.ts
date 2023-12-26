@@ -362,7 +362,7 @@ export class PaymentService implements PaymentServiceI {
 
       const payments = await this.paymentRepository.find({
         createdAt: {
-          $lt: pastTenMinutes
+          $lt: pastTenMinutes.toISOString()
         },
         status: 'PENDING'
       }) as Payment[] | null
