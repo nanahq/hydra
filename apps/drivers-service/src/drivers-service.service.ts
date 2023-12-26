@@ -8,6 +8,7 @@ import {
 } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class DriversServiceService {
@@ -49,6 +50,18 @@ export class DriversServiceService {
       })
       throw new FitRpcException(
         'Can not register a new driver at the moment. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async updateDriver (payload: Partial<Driver>, driverId: string): Promise<ResponseWithStatus> {
+    try {
+      await this.driverRepository.findOneAndUpdate({ _id: driverId.toString() }, { ...payload })
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not update driver. Something went wrong.',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
@@ -152,6 +165,39 @@ export class DriversServiceService {
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   *  Cron to run every 5 minutes to flag inactive driver offline.
+   *  The logic behind this is using updatedAt - drivers send location updates every 20 seconds via sockets
+   *  if last updateAt  >  5 minute, driver should go offline
+   */
+  @Cron(CronExpression.EVERY_5_MINUTES)
+  async flagDriversOffline (): Promise<void> {
+    this.logger.debug('PIM -> Flagging Drivers Offline')
+    try {
+      const date = new Date()
+      const pastTwoMinutes = new Date(date.getTime() - 2 * 60 * 1000)
+
+      const driversThatWentOffline: Driver[] = await this.driverRepository.find({
+        updatedAt: {
+          $lt: pastTwoMinutes.toISOString()
+        },
+        status: 'ONLINE',
+        // isValidated: true,
+        available: true
+      })
+
+      if (driversThatWentOffline?.length < 1) {
+        return
+      }
+
+      const driverIds = driversThatWentOffline.map(driver => driver._id.toString())
+
+      await this.driverRepository.findAndUpdate({ _id: { $in: driverIds } }, { status: 'OFFLINE' })
+    } catch (error) {
+      this.logger.error(JSON.stringify({ message: 'Something went wrong flagging drivers offline', error }))
     }
   }
 }

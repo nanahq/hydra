@@ -3,7 +3,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import {
   AbstractDocument,
   DriverType,
-  LocationCoordinates,
+  LocationCoordinates, PaymentInfo,
   VendorApprovalStatus
 } from '@app/common'
 
@@ -68,6 +68,16 @@ export class Driver extends AbstractDocument {
 
   @Prop({ type: String, default: VendorApprovalStatus.PENDING })
     acc_status: VendorApprovalStatus
+
+  @Prop({
+    type: {
+      bankName: String,
+      bankAccountName: String,
+      bankAccountNumber: String
+    },
+    nullable: true
+  })
+    payment: PaymentInfo
 }
 
 export const DriverSchema = SchemaFactory.createForClass(Driver)

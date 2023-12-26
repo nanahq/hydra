@@ -5,7 +5,9 @@ import { catchError, lastValueFrom } from 'rxjs'
 import {
   Delivery,
   DeliveryI,
-  Driver, DriverStatGroup, DriverStats,
+  Driver,
+  DriverStatGroup,
+  DriverStats,
   DriverWithLocation,
   FitRpcException,
   Order,
