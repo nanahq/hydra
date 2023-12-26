@@ -8,7 +8,7 @@ import {
 } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
-import { Cron } from '@nestjs/schedule'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class DriversServiceService {
@@ -50,6 +50,18 @@ export class DriversServiceService {
       })
       throw new FitRpcException(
         'Can not register a new driver at the moment. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async updateDriver (payload: Partial<Driver>, driverId: string): Promise<ResponseWithStatus> {
+    try {
+      await this.driverRepository.findOneAndUpdate({ _id: driverId.toString() }, { ...payload })
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not update driver. Something went wrong.',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
@@ -157,11 +169,11 @@ export class DriversServiceService {
   }
 
   /**
-   *  Cron to run every two minute to flag inactive driver offline.
+   *  Cron to run every 5 minutes to flag inactive driver offline.
    *  The logic behind this is using updatedAt - drivers send location updates every 20 seconds via sockets
-   *  if last updateAt  >  2 minute, driver should go offline
+   *  if last updateAt  >  5 minute, driver should go offline
    */
-  @Cron('0 */2 * * * *')
+  @Cron(CronExpression.EVERY_5_MINUTES)
   async flagDriversOffline (): Promise<void> {
     this.logger.debug('PIM -> Flagging Drivers Offline')
     try {
@@ -176,7 +188,6 @@ export class DriversServiceService {
         // isValidated: true,
         available: true
       })
-
 
       if (driversThatWentOffline?.length < 1) {
         return

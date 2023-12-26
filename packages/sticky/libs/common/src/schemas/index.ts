@@ -226,6 +226,8 @@ export interface DriverI {
   type: DriverType
 
   updatedAt: string
+
+  payment?: PaymentInfo
 }
 
 export interface AdminI {
@@ -327,7 +329,6 @@ export interface VendorPayoutI {
   vendor: string
 
   earnings: number
-
 
   orders: OrderI[]
   paid: boolean

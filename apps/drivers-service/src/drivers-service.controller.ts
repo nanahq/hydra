@@ -3,7 +3,7 @@ import {
   Controller,
   Get,
   HttpException, Param,
-  Post,
+  Post, Put,
   UseGuards
 } from '@nestjs/common'
 import { DriversServiceService } from './drivers-service.service'
@@ -41,6 +41,16 @@ export class DriversServiceController {
   @UseGuards(JwtAuthGuard)
   async getProfile (@CurrentUser() driver: Driver): Promise<Driver> {
     return driver
+  }
+
+  @Put('update')
+  @UseGuards(JwtAuthGuard)
+  async updateProfile (@CurrentUser() driver: Driver, @Body() payload: Partial<Driver>): Promise<ResponseWithStatus> {
+    try {
+      return await this.driversServiceService.updateDriver(payload, driver._id.toString())
+    } catch (error) {
+      throw new HttpException(error, 500)
+    }
   }
 
   @Post('order/status')
@@ -177,6 +187,8 @@ export class DriversServiceController {
       this.rmqService.ack(context)
     }
   }
+
+
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_FREE_DRIVERS)
   async freeDrivers (
