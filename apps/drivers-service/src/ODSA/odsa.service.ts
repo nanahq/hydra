@@ -5,7 +5,7 @@ import { catchError, lastValueFrom } from 'rxjs'
 import {
   Delivery,
   DeliveryI,
-  Driver,
+  Driver, DriverStatGroup, DriverStats,
   DriverWithLocation,
   FitRpcException,
   Order,
@@ -87,13 +87,13 @@ export class ODSA {
 
     const filters: FilterQuery<Delivery> = {
       driver: driverId.toString(),
+      deliveryType: 'PRE_ORDER',
       deliveryTime: {
         $gte: start.toISOString(),
         $lte: end.toISOString()
       }
     }
 
-    this.logger.log(filters)
     try {
       return (await this.odsaRepository.findAndPopulate(filters, [
         'order',
@@ -193,6 +193,10 @@ export class ODSA {
 
         deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
         updates.deliveryTime = moment(deliveryTime).toISOString()
+        updates.travelMeta = {
+          distance: travelDistance?.distance ?? 0,
+          travelTime: travelDistance?.duration ?? 0
+        }
       }
 
       const delivered = data.status === OrderStatus.FULFILLED
@@ -227,7 +231,10 @@ export class ODSA {
         status: data.status
 
       }
+
+      // Emit socket event -> Order Status update
       this.streamOrderUpdatesViaSocket(streamPayload.orderId, streamPayload.userId, streamPayload.status)
+
       return { status: 1 }
     } catch (error) {
       this.logger.error(JSON.stringify(error))
@@ -499,6 +506,111 @@ export class ODSA {
       order: orderId,
       status: orderStatus
     })
+  }
+
+  public async getDriverStats (driverId: string): Promise<DriverStatGroup> {
+    const today = new Date()
+    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
+    const week = new Date(today.getTime() - 168 * 60 * 60 * 1000)
+    const month = new Date(today.getTime() - 1020 * 60 * 60 * 1000)
+
+    const todayStart = new Date(today)
+    todayStart.setHours(0, 0, 0, 0)
+
+    const todayEnd = new Date(today)
+    todayEnd.setHours(23, 59, 59, 999)
+
+    const yesterdayStart = new Date(yesterday)
+    yesterdayStart.setHours(0, 0, 0, 0)
+
+    const yesterdayEnd = new Date(yesterday)
+    yesterdayEnd.setHours(23, 59, 59, 999)
+
+    const weekStart = new Date(week)
+    weekStart.setHours(0, 0, 0, 0)
+
+    const weekEnd = new Date(week)
+    weekEnd.setHours(23, 59, 59, 999)
+
+    const monthStart = new Date(month)
+    monthStart.setHours(0, 0, 0, 0)
+
+    const monthEnd = new Date(month)
+    monthEnd.setHours(23, 59, 59, 999)
+
+    const todayCompletedDelivery: Delivery[] = await this.odsaRepository.find({
+      createdAt: {
+        $gte: todayStart.toISOString(),
+        $lt: todayEnd.toISOString()
+      },
+      driver: driverId.toString(),
+      completed: true
+    })
+
+    const yesterdayCompletedDelivery: Delivery[] = await this.odsaRepository.find({
+      createdAt: {
+        $gte: yesterdayStart.toISOString(),
+        $lt: yesterdayEnd.toISOString()
+      },
+      driver: driverId.toString(),
+      completed: true
+    })
+
+    const weekCompletedDelivery: Delivery[] = await this.odsaRepository.find({
+      createdAt: {
+        $gte: weekStart.toISOString(),
+        $lt: today.toISOString()
+      },
+      driver: driverId.toString(),
+      completed: true
+    })
+
+    const monthCompletedDelivery: Delivery[] = await this.odsaRepository.find({
+      createdAt: {
+        $gte: monthStart.toISOString(),
+        $lt: today.toISOString()
+      },
+      driver: driverId.toString(),
+      completed: true
+    })
+
+    const dailyStats: DriverStats = todayCompletedDelivery.reduce((acc, delivery) => {
+      return {
+        time: acc.time + delivery.travelMeta.travelTime,
+        distance: acc.distance + delivery.travelMeta.distance,
+        earnings: acc.earnings + 100
+      }
+    }, { distance: 0, time: 0, earnings: 0 })
+
+    const previousDayStats: DriverStats = yesterdayCompletedDelivery.reduce((acc, delivery) => {
+      return {
+        time: acc.time + delivery.travelMeta.travelTime,
+        distance: acc.distance + delivery.travelMeta.distance,
+        earnings: acc.earnings + 100
+      }
+    }, { distance: 0, time: 0, earnings: 0 })
+
+    const weeklyStats: DriverStats = weekCompletedDelivery.reduce((acc, delivery) => {
+      return {
+        time: acc.time + delivery.travelMeta.travelTime,
+        distance: acc.distance + delivery.travelMeta.distance,
+        earnings: acc.earnings + 100
+      }
+    }, { distance: 0, time: 0, earnings: 0 })
+
+    const monthlyStats: DriverStats = monthCompletedDelivery.reduce((acc, delivery) => {
+      return {
+        time: acc.time + delivery.travelMeta.travelTime,
+        distance: acc.distance + delivery.travelMeta.distance,
+        earnings: acc.earnings + 100
+      }
+    }, { distance: 0, time: 0, earnings: 0 })
+    return {
+      today: dailyStats,
+      yesterday: previousDayStats,
+      week: weeklyStats,
+      month: monthlyStats
+    }
   }
 }
 
