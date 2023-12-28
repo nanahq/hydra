@@ -133,6 +133,40 @@ export class DriversServiceController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('delivery/accept')
+  async driverAcceptDelivery (
+    @Body() data: { deliveryId: string, orderId: string },
+      @CurrentUser() driver: Driver
+  ): Promise<ResponseWithStatus> {
+    try {
+      const payload = {
+        ...data,
+        driverId: driver._id.toString()
+      }
+      return await this.odsaService.handleAcceptDelivery(payload)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('delivery/reject')
+  async driverRejectDelivery (
+    @Body() data: { deliveryId: string, orderId: string },
+      @CurrentUser() driver: Driver
+  ): Promise<ResponseWithStatus> {
+    try {
+      const payload = {
+        ...data,
+        driverId: driver._id.toString()
+      }
+      return await this.odsaService.handleRejectDelivery(payload)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DRIVERS)
   async getDrivers (
     @Ctx() context: RmqContext

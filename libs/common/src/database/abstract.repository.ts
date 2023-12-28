@@ -3,7 +3,6 @@ import {
   type FilterQuery,
   type Model,
   Types,
-  type UpdateQuery,
   type SaveOptions,
   type Connection,
   type HydratedDocument,
