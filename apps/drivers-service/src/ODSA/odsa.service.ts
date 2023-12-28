@@ -12,10 +12,13 @@ import {
   FitRpcException,
   Order,
   OrderI,
-  OrderStatus, OrderUpdateStream,
+  OrderStatus,
+  OrderUpdateStream,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus, SOCKET_MESSAGE, TravelDistanceResult,
+  ResponseWithStatus,
+  SOCKET_MESSAGE,
+  TravelDistanceResult,
   VendorApprovalStatus
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
@@ -245,6 +248,32 @@ export class ODSA {
       this.logger.error(`Failed to update delivery status for id: ${data.deliveryId}`)
       throw new FitRpcException(
         'Failed to update delivery status',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async handleAcceptDelivery (opts: { deliveryId: string, orderId: string, driverId: string }): Promise<ResponseWithStatus> {
+    try {
+      await this.odsaRepository.findOneAndUpdate({ _id: opts.deliveryId, order: opts.orderId, driver: opts.driverId }, { driverAccepted: true })
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      throw new FitRpcException(
+        'Can not accept delivery  right now',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async handleRejectDelivery (opts: { deliveryId: string, orderId: string, driverId: string }): Promise<ResponseWithStatus> {
+    try {
+      await this.odsaRepository.findOneAndUpdate({ _id: opts.deliveryId, order: opts.orderId, driver: opts.driverId }, { assignedToDriver: false, driver: '' })
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      throw new FitRpcException(
+        'Can not reject delivery  right now',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
