@@ -66,7 +66,9 @@ export class ODSA {
       return (await this.odsaRepository.findOneAndPopulate({ order: orderId }, [
         'order',
         'driver',
-        'listing'
+        'listing',
+        'vendor',
+        'user'
       ])) as DeliveryI
     } catch (error) {
       this.logger.error({
