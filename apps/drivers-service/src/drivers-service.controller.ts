@@ -188,8 +188,6 @@ export class DriversServiceController {
     }
   }
 
-
-
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_FREE_DRIVERS)
   async freeDrivers (
     @Ctx() context: RmqContext

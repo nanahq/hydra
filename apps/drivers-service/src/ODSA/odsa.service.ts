@@ -578,32 +578,32 @@ export class ODSA {
 
     const dailyStats: DriverStats = todayCompletedDelivery.reduce((acc, delivery) => {
       return {
-        time: acc.time + delivery.travelMeta.travelTime,
-        distance: acc.distance + delivery.travelMeta.distance,
+        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
         earnings: acc.earnings + 100
       }
     }, { distance: 0, time: 0, earnings: 0 })
 
     const previousDayStats: DriverStats = yesterdayCompletedDelivery.reduce((acc, delivery) => {
       return {
-        time: acc.time + delivery.travelMeta.travelTime,
-        distance: acc.distance + delivery.travelMeta.distance,
+        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
         earnings: acc.earnings + 100
       }
     }, { distance: 0, time: 0, earnings: 0 })
 
     const weeklyStats: DriverStats = weekCompletedDelivery.reduce((acc, delivery) => {
       return {
-        time: acc.time + delivery.travelMeta.travelTime,
-        distance: acc.distance + delivery.travelMeta.distance,
+        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
         earnings: acc.earnings + 100
       }
     }, { distance: 0, time: 0, earnings: 0 })
 
     const monthlyStats: DriverStats = monthCompletedDelivery.reduce((acc, delivery) => {
       return {
-        time: acc.time + delivery.travelMeta.travelTime,
-        distance: acc.distance + delivery.travelMeta.distance,
+        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
         earnings: acc.earnings + 100
       }
     }, { distance: 0, time: 0, earnings: 0 })
