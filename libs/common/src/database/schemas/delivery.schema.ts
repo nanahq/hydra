@@ -83,6 +83,9 @@ export class Delivery extends AbstractDocument {
   @Prop(String)
     deliveryType: OrderType
 
+  @Prop({ type: Boolean, default: false })
+    driverAccepted: boolean
+
   @Prop({
     type: {
       distance: Number,

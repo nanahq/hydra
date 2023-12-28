@@ -186,6 +186,8 @@ export interface DeliveryI {
 
   deliveryTime: number
 
+  driverAccepted: boolean
+
   deliveryType: OrderType
   assignedToDriver: boolean
   travelMeta?: {
