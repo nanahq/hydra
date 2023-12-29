@@ -109,7 +109,7 @@ export class OdsaController {
       @Payload() data: OrderUpdateStream
   ): Promise<void> {
     try {
-      this.odsa.streamOrderUpdatesViaSocket(data.orderId, data.userId, data.status)
+      this.odsa.streamOrderUpdatesViaSocket(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

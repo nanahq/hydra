@@ -204,6 +204,7 @@ export interface SubscriptionNotification {
 export interface OrderUpdateStream {
   userId: string
   orderId: string
-
   status: OrderStatus
+  driver?: string
+  vendorName?: string
 }

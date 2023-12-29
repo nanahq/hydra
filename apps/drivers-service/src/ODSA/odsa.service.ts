@@ -235,12 +235,13 @@ export class ODSA {
       const streamPayload: OrderUpdateStream = {
         userId: delivery.user._id,
         orderId: delivery.order._id,
-        status: data.status
-
+        status: data.status,
+        driver: delivery.driver,
+        vendorName: delivery.vendor.businessName
       }
 
       // Emit socket event -> Order Status update
-      this.streamOrderUpdatesViaSocket(streamPayload.orderId, streamPayload.userId, streamPayload.status)
+      this.streamOrderUpdatesViaSocket(streamPayload)
 
       return { status: 1 }
     } catch (error) {
@@ -533,11 +534,9 @@ export class ODSA {
     )
   }
 
-  public streamOrderUpdatesViaSocket (orderId: string, userId: string, orderStatus: OrderStatus): void {
+  public streamOrderUpdatesViaSocket (updates: OrderUpdateStream): void {
     this.eventsGateway.server.emit(SOCKET_MESSAGE.UPDATE_ORDER_STATUS, {
-      user: userId,
-      order: orderId,
-      status: orderStatus
+      ...updates
     })
   }
 

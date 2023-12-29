@@ -213,7 +213,8 @@ export class OrdersServiceService {
         const updateStream: OrderUpdateStream = {
           userId: order.user._id.toString(),
           orderId: order._id.toString(),
-          status
+          status,
+          vendorName: order.vendor.businessName
         }
         await this.driverClient.emit(QUEUE_MESSAGE.STREAM_ORDER_UPDATES, updateStream)
       }
