@@ -281,7 +281,7 @@ export interface DriverStatGroup {
 }
 export interface DeliveryTaskStream {
   driverId: string
-  vendorName: string,
+  vendorName: string
 
   orderId: string
 }
