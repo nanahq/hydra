@@ -1,12 +1,13 @@
 import {
   ListingCategory,
-  Vendor,
+  ListingMenu,
   ListingMenuI,
   LocationCoordinates,
   OrderI,
   UserI,
+  Vendor,
   VendorI,
-  VendorUserI, ListingMenu
+  VendorUserI
 } from '@app/common'
 
 export interface IdPayload {
@@ -277,4 +278,10 @@ export interface DriverStatGroup {
   yesterday: DriverStats
   week: DriverStats
   month: DriverStats
+}
+export interface DeliveryTaskStream {
+  driverId: string
+  vendorName: string,
+
+  orderId: string
 }

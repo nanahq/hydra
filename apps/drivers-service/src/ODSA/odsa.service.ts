@@ -5,6 +5,7 @@ import { catchError, lastValueFrom } from 'rxjs'
 import {
   Delivery,
   DeliveryI,
+  DeliveryTaskStream,
   Driver,
   DriverStatGroup,
   DriverStats,
@@ -362,6 +363,14 @@ export class ODSA {
         { _id: driverToBeAssigned?.driverId },
         { available: false }
       )
+
+      const deliveryStream: DeliveryTaskStream = {
+        driverId: driverToBeAssigned?.driverId,
+        orderId: order._id.toString(),
+        vendorName: order.vendor.businessName
+      }
+
+      this.eventsGateway.server.emit(SOCKET_MESSAGE.NEW_DELIVERY_TASK, deliveryStream)
     } catch (error) {
       this.logger.error(
         `Something went wrong processing order ${typeof _order !== 'string' ? _order?._id.toString() : _order}`
