@@ -1,4 +1,4 @@
-import { ListingCategoryI, OrderI, ReviewI, VendorI, ListingMenuI, VendorUserI } from '../schemas'
+import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI, VendorUserI } from '../schemas'
 
 export interface TokenPayload {
   userId: string
@@ -660,4 +660,16 @@ export interface DriverStatGroup {
   yesterday: DriverStats
   week: DriverStats
   month: DriverStats
+}
+
+export enum SOCKET_MESSAGE {
+  UPDATE_DRIVER_LOCATION = 'UPDATE_DRIVER_LOCATION',
+
+  DRIVER_LOCATION_UPDATED = 'DRIVER_LOCATION_UPDATED',
+
+  JOIN_ROOM = 'JOIN_ROOM',
+
+  NEW_DELIVERY_TASK = 'NEW_DELIVERY_TASK',
+
+  UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
 }
