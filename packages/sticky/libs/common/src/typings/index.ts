@@ -673,3 +673,9 @@ export enum SOCKET_MESSAGE {
 
   UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
 }
+
+export interface DeliveryTaskStream {
+  driverId: string
+  vendorName: string
+  orderId: string
+}
