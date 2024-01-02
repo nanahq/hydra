@@ -479,11 +479,11 @@ export class ODSA {
       group.orders.forEach((order) => {
         drivers.forEach((driver) => {
           newDeliveries.push({
-            listing: order.listing.map(li => li._id),
-            order: order._id,
-            vendor: order.vendor._id,
-            user: order.user._id,
-            driver: driver._id,
+            listing: order.listing.map(li => li._id.toString()),
+            order: order._id.toString(),
+            vendor: order.vendor._id.toString(),
+            user: order.user._id.toString(),
+            driver: driver._id.toString(),
             deliveryTime: order.orderDeliveryScheduledTime,
             dropOffLocation: order.preciseLocation,
             pickupLocation: order.vendor.location,

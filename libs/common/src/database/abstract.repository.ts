@@ -51,6 +51,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   ): Promise<T[]> {
     return await this.model
       .find(filterQuery)
+      .sort({ createdAt: 'desc' })
       .populate(populatePath as any) as any
   }
 
@@ -111,6 +112,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
       resolve(
         this.model
           .find(filterQuery, {}, { lean: true })
+          .sort({ createdAt: 'desc' })
       )
     )
   }
@@ -129,7 +131,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     update: Partial<TDocument>
   ): Promise<any> {
     return await new Promise((resolve) => {
-      resolve(this.model.updateMany(filterQuery, update))
+      resolve(this.model.updateMany(filterQuery, update).sort({ createdAt: 'desc' }))
     })
   }
 
