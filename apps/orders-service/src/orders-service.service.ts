@@ -197,7 +197,7 @@ export class OrdersServiceService {
     streamUpdates
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
     try {
-      const order = await this.orderRepository.findOneAndPopulate({ _id: orderId }, ['vendor', 'listing', 'user']) as OrderI
+      const order = await this.orderRepository.findOneAndPopulate<OrderI>({ _id: orderId }, ['vendor', 'listing', 'user'])
 
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
@@ -235,7 +235,7 @@ export class OrdersServiceService {
     try {
       this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
 
-      const order = await this.orderRepository.findOneAndPopulate({ _id: orderId }, ['vendor', 'listing', 'user']) as OrderI
+      const order = await this.orderRepository.findOneAndPopulate<OrderI>({ _id: orderId }, ['vendor', 'listing', 'user'])
 
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },

@@ -1,4 +1,4 @@
-import { OrderType, VendorOperationType, OrderStatus } from '@app/common'
+import { OrderType, VendorOperationType, OrderStatus, DriverI } from '@app/common'
 
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 
@@ -207,4 +207,44 @@ export interface OrderUpdateStream {
   status: OrderStatus
   driver?: string
   vendorName?: string
+}
+
+export type WalletTransactionType = 'CREDIT' | 'DEBIT'
+
+export enum WalletTransactionStatus {
+  PENDING = 'PENDING',
+  PROCESSED = 'PROCESSED',
+
+  REJECTED = 'REJECTED'
+}
+export interface DriverWalletTransactionI {
+  driver: DriverI
+
+  wallet: DriverWalletI
+
+  amount: number
+
+  refid: number
+
+  createdAt: string
+
+  updatedAt: string
+
+  txType: WalletTransactionType
+
+  status: WalletTransactionStatus
+  transaction: string
+}
+export interface DriverWalletI {
+  driver: DriverI
+
+  transactions: DriverWalletTransactionI[]
+
+  createdAt: string
+
+  updatedAt: string
+
+  balance: number
+
+  logs: string[]
 }

@@ -20,7 +20,8 @@ import {
   ResponseWithStatus,
   SOCKET_MESSAGE,
   TravelDistanceResult,
-  VendorApprovalStatus
+  VendorApprovalStatus,
+  WalletTransactionStatus
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
@@ -28,6 +29,7 @@ import { OdsaRepository } from './odsa.repository'
 import * as moment from 'moment'
 import { FilterQuery } from 'mongoose'
 import { EventsGateway } from '../websockets/events.gateway'
+import { CreditWallet } from '@app/common/dto/General.dto'
 
 @Injectable()
 export class ODSA {
@@ -38,6 +40,9 @@ export class ODSA {
     private readonly orderClient: ClientProxy,
     @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
     private readonly locationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy,
     private readonly driversRepository: DriverRepository,
     private readonly odsaRepository: OdsaRepository,
 
@@ -67,13 +72,13 @@ export class ODSA {
 
   public async queryOrderDelivery (orderId: string): Promise<DeliveryI | undefined> {
     try {
-      return (await this.odsaRepository.findOneAndPopulate({ order: orderId }, [
+      return await this.odsaRepository.findOneAndPopulate<DeliveryI>({ order: orderId }, [
         'order',
         'driver',
         'listing',
         'vendor',
         'user'
-      ])) as DeliveryI
+      ])
     } catch (error) {
       this.logger.error({
         message: 'PIM -> Failed to query all deliveries',
@@ -177,9 +182,9 @@ export class ODSA {
     try {
       this.logger.log('PIM -> Updating delivery status')
 
-      const delivery = await this.odsaRepository.findOneAndPopulate({
+      const delivery = await this.odsaRepository.findOneAndPopulate<DeliveryI>({
         _id: data.deliveryId
-      }, ['order', 'vendor', 'user']) as DeliveryI
+      }, ['order', 'vendor', 'user'])
 
       await lastValueFrom(
         this.orderClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
@@ -229,6 +234,16 @@ export class ODSA {
         const totalTrips = driver.totalTrips + 1
 
         await this.driversRepository.findOneAndUpdate({ _id: driver._id }, { available: true, deliveries, totalTrips })
+
+        const creditPayload: CreditWallet = {
+          status: WalletTransactionStatus.PROCESSED,
+          withTransaction: false,
+          driver: data.driverId,
+          amount: Math.floor((delivery?.travelMeta?.distance ?? 0) * 25)
+        }
+        await lastValueFrom(
+          this.paymentClient.send(QUEUE_MESSAGE.DRIVER_WALLET_ADD_BALANCE, creditPayload)
+        )
       }
 
       this.logger.log('PIM -> Success: Updated delivery status')

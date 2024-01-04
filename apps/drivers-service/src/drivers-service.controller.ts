@@ -12,11 +12,12 @@ import {
   Delivery,
   Driver,
   ResponseWithStatus,
-  RegisterDriverDto, QUEUE_MESSAGE, RmqService, UpdateDeliveryStatusDto, DeliveryI, DriverStatGroup
+  RegisterDriverDto, QUEUE_MESSAGE, RmqService, UpdateDeliveryStatusDto, DeliveryI, DriverStatGroup, DriverWalletI
 } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { ODSA } from './ODSA/odsa.service'
 import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import { createTransaction } from '@app/common/dto/General.dto'
 
 @Controller('driver')
 export class DriversServiceController {
@@ -162,6 +163,45 @@ export class DriversServiceController {
         driverId: driver._id.toString()
       }
       return await this.odsaService.handleRejectDelivery(payload)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  //  Wallet -------
+
+  @UseGuards(JwtAuthGuard)
+  @Get('driver/wallet')
+  async driverFetchWallet (
+    @CurrentUser() driver: Driver
+  ): Promise<DriverWalletI> {
+    try {
+      return await this.driversServiceService.fetchWallet(driver._id.toString())
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('driver/wallet/withdrawal')
+  async driverWithdraw (
+    @Body() data: createTransaction,
+      @CurrentUser() driver: Driver
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.driversServiceService.withdrawal(data)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('driver/wallet/transactions')
+  async driverFetchTransactions (
+    @CurrentUser() driver: Driver
+  ): Promise<DriverWalletI[]> {
+    try {
+      return await this.driversServiceService.fetchTransactions(driver._id.toString())
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }

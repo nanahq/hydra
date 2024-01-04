@@ -85,7 +85,7 @@ export class VendorsService {
     businessEmail,
     password
   }: LoginVendorRequest): Promise<Vendor> {
-    const vendor = await this.vendorRepository.findOneAndPopulate(
+    const vendor = await this.vendorRepository.findOneAndPopulate<Vendor>(
       {
         businessEmail,
         isDeleted: false
@@ -175,7 +175,7 @@ export class VendorsService {
   }
 
   async getVendor (_id: string): Promise<Vendor> {
-    const _vendor = await this.vendorRepository.findOneAndPopulate(
+    const _vendor = await this.vendorRepository.findOneAndPopulate<Vendor>(
       {
         _id,
         isDeleted: false
