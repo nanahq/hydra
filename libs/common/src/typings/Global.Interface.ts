@@ -200,8 +200,13 @@ export interface DeliveryPriceMeta {
   MAX_DELIVERY_FEE_PAYABLE: number
 }
 
+export interface DriverCommissionMeta {
+  commissionPerKm: 25 // 25 naira per each kilometre
+}
 export interface AppConstants {
   cart: CartConstants
+
+  driver?: DriverCommissionMeta
   delivery: DeliveryPriceMeta
 }
 

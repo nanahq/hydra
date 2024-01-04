@@ -27,6 +27,14 @@ import { PaymentService } from './charge/charge.service'
 import { HttpModule } from '@nestjs/axios'
 import { FlutterwaveService } from './providers/flutterwave'
 import { PaymentController } from './charge/charge.controller'
+import { DriverWallet, DriverWalletSchema } from '@app/common/database/schemas/driver-wallet.schema'
+import {
+  DriverWalletTransaction,
+  DriverWalletTransactionSchema
+} from '@app/common/database/schemas/driver-wallet-transactions.schema'
+import { DriverWalletRepository, DriverWalletTransactionRepository } from './wallet/driver/wallet.repository'
+import { DriverWalletService } from './wallet/driver/wallet.service'
+import { DriverWalletController } from './wallet/driver/wallet.controller'
 
 @Module({
   imports: [
@@ -69,6 +77,14 @@ import { PaymentController } from './charge/charge.controller'
       {
         name: Payment.name,
         schema: PaymentHistorySchema
+      },
+      {
+        name: DriverWallet.name,
+        schema: DriverWalletSchema
+      },
+      {
+        name: DriverWalletTransaction.name,
+        schema: DriverWalletTransactionSchema
       }
     ]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
@@ -88,7 +104,11 @@ import { PaymentController } from './charge/charge.controller'
     PaymentRepository,
     PaymentService,
     FlutterwaveService,
-    PaystackService
+    PaystackService,
+    DriverWalletRepository,
+    DriverWalletTransactionRepository,
+    DriverWalletService,
+    DriverWalletController
   ]
 })
 export class PaymentServiceModule {}

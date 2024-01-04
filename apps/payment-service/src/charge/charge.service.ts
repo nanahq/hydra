@@ -60,7 +60,7 @@ export class PaymentService implements PaymentServiceI {
           )
       )
 
-      const existingPayment = await this.paymentRepository.findOne({ order: order._id }) as Payment | null
+      const existingPayment = await this.paymentRepository.findOne({ order: order._id })
 
       if (existingPayment !== null) {
         return JSON.parse(existingPayment.paymentMeta)
@@ -133,7 +133,7 @@ export class PaymentService implements PaymentServiceI {
           )
       )
 
-      const existingPayment = await this.paymentRepository.findOne({ order: order._id }) as Payment | null
+      const existingPayment = await this.paymentRepository.findOne({ order: order._id })
 
       if (existingPayment !== null) {
         return JSON.parse(existingPayment.paymentMeta)

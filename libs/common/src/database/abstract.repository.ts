@@ -31,16 +31,16 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     )
   }
 
-  async findOneAndPopulate (
+  async findOneAndPopulate<T> (
     filterQuery: FilterQuery<TDocument>,
     populatePath: string | string[]
-  ): Promise<any> {
+  ): Promise<T> {
     return await this.model
       .findOne(filterQuery, {}, { lean: true })
-      .populate(populatePath as any)
+      .populate(populatePath as any) as any
   }
 
-  async findOne (filterQuery: FilterQuery<TDocument>): Promise<any> {
+  async findOne (filterQuery: FilterQuery<TDocument>): Promise<TDocument | any> {
     return await this.model
       .findOne(filterQuery, {}, { lean: true })
   }

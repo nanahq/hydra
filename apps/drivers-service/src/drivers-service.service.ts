@@ -1,20 +1,28 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { HttpException, HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import {
-  Driver,
+  Driver, DriverWalletI,
   FitRpcException,
-  internationalisePhoneNumber,
+  internationalisePhoneNumber, IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE,
   RegisterDriverDto,
   ResponseWithStatus, VendorApprovalStatus
 } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
 import { Cron, CronExpression } from '@nestjs/schedule'
+import { ClientProxy } from '@nestjs/microservices'
+import { createTransaction } from '@app/common/dto/General.dto'
+import { catchError, lastValueFrom } from 'rxjs'
 
 @Injectable()
 export class DriversServiceService {
   private readonly logger = new Logger(DriversServiceService.name)
 
-  constructor (private readonly driverRepository: DriverRepository) {}
+  constructor (
+    private readonly driverRepository: DriverRepository,
+
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy
+  ) {}
 
   public async register (
     payload: RegisterDriverDto
@@ -38,10 +46,13 @@ export class DriversServiceService {
       }
       this.logger.log(`Registering a new driver with email: ${payload.email}`)
 
-      await this.driverRepository.create(_driver)
+      const driver = await this.driverRepository.create(_driver)
 
       this.logger.log(`Driver ${payload.email} registered`)
 
+      await lastValueFrom(
+        this.paymentClient.emit(QUEUE_MESSAGE.DRIVER_WALLET_CREATE_WALLET, { driverId: driver._id.toString() })
+      )
       return { status: 1 }
     } catch (error) {
       this.logger.error({
@@ -109,7 +120,7 @@ export class DriversServiceService {
   ): Promise<Driver> {
     const driver = (await this.driverRepository.findOne({
       phone
-    })) as Driver | null
+    }))
 
     if (driver === null) {
       this.logger.error({
@@ -166,6 +177,33 @@ export class DriversServiceService {
     } catch (error) {
       throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
     }
+  }
+
+  public async withdrawal (payload: createTransaction): Promise<ResponseWithStatus> {
+    return lastValueFrom(
+      this.paymentClient.send<ResponseWithStatus>(QUEUE_MESSAGE.DRIVER_WALLET_CREATE_TRANSACTION, payload)
+        .pipe(catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        }))
+    )
+  }
+
+  public async fetchWallet (driverId: string): Promise<DriverWalletI> {
+    return lastValueFrom(
+      this.paymentClient.send<DriverWalletI>(QUEUE_MESSAGE.DRIVER_WALLET_FETCH, { driverId })
+        .pipe(catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        }))
+    )
+  }
+
+  public async fetchTransactions (driverId: string): Promise<DriverWalletI[]> {
+    return lastValueFrom(
+      this.paymentClient.send<DriverWalletI[]>(QUEUE_MESSAGE.DRIVER_WALLET_FETCH_TRANSACTIONS, { driverId })
+        .pipe(catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        }))
+    )
   }
 
   /**

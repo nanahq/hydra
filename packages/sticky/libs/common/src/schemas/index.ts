@@ -373,3 +373,45 @@ export interface SubscriptionNotificationI {
 
   updatedAt: string
 }
+
+
+
+export type WalletTransactionType = 'CREDIT' | 'DEBIT'
+
+export interface DriverWalletTransactionI {
+  driver: DriverI
+
+  wallet: DriverWalletI
+
+  amount: number
+
+  refid: number
+
+  createdAt: string
+
+  updatedAt: string
+
+  status: WalletTransactionStatus
+  txType: WalletTransactionType
+  transaction: string
+}
+export interface DriverWalletI {
+  driver: DriverI
+
+  transactions: DriverWalletTransactionI[]
+
+  createdAt: string
+
+  updatedAt: string
+
+  balance: number
+
+  logs: string[]
+}
+
+export enum WalletTransactionStatus {
+  PENDING = 'PENDING',
+  PROCESSED = 'PROCESSED',
+
+  REJECTED = 'REJECTED'
+}

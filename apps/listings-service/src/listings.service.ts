@@ -191,7 +191,7 @@ export class ListingsService {
       }
     )
 
-    const listing = await this.listingMenuRepository.findOneAndPopulate({ _id }, ['vendor']) as unknown as ListingMenuI
+    const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenuI>({ _id }, ['vendor'])
 
     if (updateRequest === null) {
       throw new FitRpcException(
@@ -223,7 +223,7 @@ export class ListingsService {
       }
     )
 
-    const listing = await this.listingMenuRepository.findOneAndPopulate({ _id }, ['vendor']) as unknown as ListingMenuI
+    const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenuI>({ _id }, ['vendor'])
 
     if (updateRequest === null) {
       throw new FitRpcException(
@@ -251,7 +251,7 @@ export class ListingsService {
     data
   }: ServicePayload<string>): Promise<ListingMenu> {
     try {
-      const listing = await this.listingMenuRepository.findOneAndPopulate(
+      const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
         { _id: data },
         'optionGroups'
       )
@@ -272,7 +272,7 @@ export class ListingsService {
 
   async findOneById (id: string): Promise<ListingMenu> {
     try {
-      const listing = await this.listingMenuRepository.findOneAndPopulate(
+      const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
         { _id: id },
         'optionGroups'
       )
@@ -320,7 +320,7 @@ export class ListingsService {
     userId: vendorId
   }: ServicePayload<string>): Promise<ListingCategory> {
     try {
-      const cat = await this.listingCategoryRepository.findOneAndPopulate(
+      const cat = await this.listingCategoryRepository.findOneAndPopulate<ListingCategory>(
         {
           _id,
           vendorId
@@ -462,7 +462,7 @@ export class ListingsService {
   }
 
   async getSingleUserMenu (mid: string): Promise<ListingMenu> {
-    const menu = await this.listingMenuRepository.findOneAndPopulate({ _id: mid }, 'optionGroups')
+    const menu = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>({ _id: mid }, 'optionGroups')
 
     if (menu === null) {
       throw new FitRpcException('Can not find menu with that ID', HttpStatus.NOT_FOUND)
@@ -480,7 +480,7 @@ export class ListingsService {
   }
 
   async getSingleUserCategory (catid: string): Promise<ListingCategory> {
-    const category = await this.listingCategoryRepository.findOneAndPopulate({ _id: catid }, ['listingsMenu', 'vendor'])
+    const category = await this.listingCategoryRepository.findOneAndPopulate<ListingCategory>({ _id: catid }, ['listingsMenu', 'vendor'])
 
     if (category === null) {
       throw new FitRpcException('Can not find category with that ID', HttpStatus.NOT_FOUND)
