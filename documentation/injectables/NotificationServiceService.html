@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,33 +39,39 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >NotificationServiceService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >NotificationServiceService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/notification-service/src/notification-service.odsa.service.ts</code>
+            <code>apps/notification-service/src/notification-service.service.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -82,6 +88,11 @@
                                     <span class="modifier">Readonly</span>
                                 <a href="#fromPhone" >fromPhone</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#logger" >logger</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -95,8 +106,33 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#processPaidOrder" >processPaidOrder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendListingApprovedPush" >sendListingApprovedPush</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendListingRejectedPush" >sendListingRejectedPush</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#sendOrderStatusUpdate" >sendOrderStatusUpdate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendSoldOutMessage" >sendSoldOutMessage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendVendorApprovedPush" >sendVendorApprovedPush</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -123,18 +159,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(usersClient: ClientProxy, twilioService: TwilioService, configService: ConfigService)</code>
+<code>constructor(usersClient: ClientProxy, twilioService: TwilioService, configService: ConfigService, pushClient: <a href="../classes/ExportPushNotificationClient.html" target="_self">ExportPushNotificationClient</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">apps/notification-service/src/notification-service.odsa.service.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">apps/notification-service/src/notification-service.service.ts:26</a></div>
                             </td>
                         </tr>
 
@@ -187,6 +223,18 @@
                                                     </td>
 
                                                 </tr>
+                                                <tr>
+                                                        <td>pushClient</td>
+
+                                                        <td>
+                                                                        <code><a href="../classes/ExportPushNotificationClient.html" target="_self" >ExportPushNotificationClient</a></code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -196,7 +244,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
@@ -205,26 +253,27 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="sendOrderStatusUpdate"></a>
+                    <a name="processPaidOrder"></a>
                     <span class="name">
+                        <span class="modifier">Public</span>
                         <span class="modifier">Async</span>
-                        <span ><b>sendOrderStatusUpdate</b></span>
-                        <a href="#sendOrderStatusUpdate"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>processPaidOrder</b></span>
+                        <a href="#processPaidOrder"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendOrderStatusUpdate(undefined: <a href="../classes/OrderStatusUpdateDto.html" target="_self">OrderStatusUpdateDto</a>)</code>
+                    <code>processPaidOrder(undefined: <a href="../interfaces/OrderStatusUpdateDto.html" target="_self">OrderStatusUpdateDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="66"
-                            class="link-to-prism">apps/notification-service/src/notification-service.odsa.service.ts:66</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">apps/notification-service/src/notification-service.service.ts:72</a></div>
                 </td>
             </tr>
 
@@ -246,7 +295,365 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/OrderStatusUpdateDto.html" target="_self" >OrderStatusUpdateDto</a></code>
+                                                <code><a href="../interfaces/OrderStatusUpdateDto.html" target="_self" >OrderStatusUpdateDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendListingApprovedPush"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendListingApprovedPush</b></span>
+                        <a href="#sendListingApprovedPush"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendListingApprovedPush(data: <a href="../interfaces/ListingApprovePush.html" target="_self">ListingApprovePush</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="158"
+                            class="link-to-prism">apps/notification-service/src/notification-service.service.ts:158</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ListingApprovePush.html" target="_self" >ListingApprovePush</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendListingRejectedPush"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendListingRejectedPush</b></span>
+                        <a href="#sendListingRejectedPush"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendListingRejectedPush(data: <a href="../interfaces/ListingRejectPush.html" target="_self">ListingRejectPush</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="171"
+                            class="link-to-prism">apps/notification-service/src/notification-service.service.ts:171</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ListingRejectPush.html" target="_self" >ListingRejectPush</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendOrderStatusUpdate"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>sendOrderStatusUpdate</b></span>
+                        <a href="#sendOrderStatusUpdate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendOrderStatusUpdate(undefined: <a href="../interfaces/OrderStatusUpdateDto.html" target="_self">OrderStatusUpdateDto</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">apps/notification-service/src/notification-service.service.ts:97</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../interfaces/OrderStatusUpdateDto.html" target="_self" >OrderStatusUpdateDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendSoldOutMessage"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendSoldOutMessage</b></span>
+                        <a href="#sendSoldOutMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendSoldOutMessage(data: <a href="../interfaces/VendorSoldOutPush.html" target="_self">VendorSoldOutPush</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="145"
+                            class="link-to-prism">apps/notification-service/src/notification-service.service.ts:145</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/VendorSoldOutPush.html" target="_self" >VendorSoldOutPush</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendVendorApprovedPush"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendVendorApprovedPush</b></span>
+                        <a href="#sendVendorApprovedPush"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendVendorApprovedPush(data: <a href="../interfaces/VendorApprovedPush.html" target="_self">VendorApprovedPush</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="184"
+                            class="link-to-prism">apps/notification-service/src/notification-service.service.ts:184</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/VendorApprovedPush.html" target="_self" >VendorApprovedPush</a></code>
                                     </td>
 
                                     <td>
@@ -286,15 +693,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendVerification(undefined: <a href="../classes/verifyPhoneRequest.html" target="_self">verifyPhoneRequest</a>)</code>
+                    <code>sendVerification(undefined: <a href="../interfaces/verifyPhoneRequest.html" target="_self">verifyPhoneRequest</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="54"
-                            class="link-to-prism">apps/notification-service/src/notification-service.odsa.service.ts:54</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">apps/notification-service/src/notification-service.service.ts:59</a></div>
                 </td>
             </tr>
 
@@ -316,7 +723,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/verifyPhoneRequest.html" target="_self" >verifyPhoneRequest</a></code>
+                                                <code><a href="../interfaces/verifyPhoneRequest.html" target="_self" >verifyPhoneRequest</a></code>
                                     </td>
 
                                     <td>
@@ -364,8 +771,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="100"
-                            class="link-to-prism">apps/notification-service/src/notification-service.odsa.service.ts:100</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">apps/notification-service/src/notification-service.service.ts:131</a></div>
                 </td>
             </tr>
 
@@ -428,15 +835,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>verifyPhone(undefined: <a href="../classes/PhoneVerificationPayload.html" target="_self">PhoneVerificationPayload</a>)</code>
+                    <code>verifyPhone(undefined: <a href="../interfaces/PhoneVerificationPayload.html" target="_self">PhoneVerificationPayload</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">apps/notification-service/src/notification-service.odsa.service.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">apps/notification-service/src/notification-service.service.ts:38</a></div>
                 </td>
             </tr>
 
@@ -458,7 +865,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/PhoneVerificationPayload.html" target="_self" >PhoneVerificationPayload</a></code>
+                                                <code><a href="../interfaces/PhoneVerificationPayload.html" target="_self" >PhoneVerificationPayload</a></code>
                                     </td>
 
                                     <td>
@@ -484,7 +891,7 @@
         </tbody>
     </table>
 </section>
-            <section>
+            <section data-compodoc="block-properties">
 
     <h3 id="inputs">
         Properties
@@ -510,7 +917,34 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">apps/notification-service/src/notification-service.odsa.service.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">apps/notification-service/src/notification-service.service.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logger"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>logger</b></span>
+                        <a href="#logger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Logger(NotificationServiceService.name)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">apps/notification-service/src/notification-service.service.ts:26</a></div>
                         </td>
                     </tr>
 
@@ -522,8 +956,8 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable } from &#x27;@nestjs/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, Logger } from &#x27;@nestjs/common&#x27;
 import { ConfigService } from &#x27;@nestjs/config&#x27;
 import { ClientProxy, RpcException } from &#x27;@nestjs/microservices&#x27;
 import { TwilioService } from &#x27;nestjs-twilio&#x27;
@@ -534,27 +968,33 @@ import {
   PhoneVerificationPayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  verifyPhoneRequest
+  verifyPhoneRequest,
+  OrderStatusUpdateDto,
+  VendorSoldOutPush,
+  ExportPushNotificationClient,
+  PushMessage,
+  ListingApprovePush,
+  ListingRejectPush, VendorApprovedPush
 } from &#x27;@app/common&#x27;
-import { OrderStatusUpdateDto } from &#x27;@app/common/dto/OrderStatusUpdate.dto&#x27;
+
 import { OrderStatusMessage } from &#x27;./templates/OrderStatusMessage&#x27;
 
 @Injectable()
 export class NotificationServiceService {
   private readonly fromPhone: string
+  private readonly logger &#x3D; new Logger(NotificationServiceService.name)
   constructor (
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     private readonly twilioService: TwilioService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+
+    private readonly pushClient: ExportPushNotificationClient
   ) {
-    this.fromPhone &#x3D; this.configService.get&lt;string&gt;(&#x27;TWILIO_PHONE&#x27;) as string
+    this.fromPhone &#x3D; &#x27;Nana&#x27;
   }
 
-  async verifyPhone ({
-    code,
-    phone
-  }: PhoneVerificationPayload): Promise&lt;any&gt; {
+  async verifyPhone ({ code, phone }: PhoneVerificationPayload): Promise&lt;any&gt; {
     try {
       const res &#x3D; await this.twilioService.client.verify.v2
         .services(
@@ -563,14 +1003,13 @@ export class NotificationServiceService {
         .verificationChecks.create({ to: phone, code })
 
       if (res.status &#x3D;&#x3D;&#x3D; &#x27;approved&#x27;) {
-        await lastValueFrom(
-          this.usersClient.emit(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
+        return await lastValueFrom(
+          this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
             phone
           })
         )
-        return { status: 1 }
       }
-      return { status: 0 }
+      return null
     } catch (error) {
       throw new RpcException(error)
     }
@@ -584,8 +1023,34 @@ export class NotificationServiceService {
         )
         .verifications.create({ to: phone, channel: &#x27;sms&#x27; })
     } catch (error) {
+      console.log(JSON.stringify(error))
       throw new RpcException(error)
     }
+  }
+
+  public async processPaidOrder ({
+    phoneNumber,
+    status
+  }: OrderStatusUpdateDto): Promise&lt;void&gt; {
+    const message &#x3D; OrderStatusMessage[status]()
+    this.logger.log(&#x60;Sending paid order status update for ${phoneNumber}&#x60;)
+    this.twilioService.client.messages
+      .create({
+        from: this.fromPhone,
+        body: message,
+        to: phoneNumber
+      })
+      .then((msg) &#x3D;&gt; {
+        this.logger.log(&#x60;Sent paid order status update for ${phoneNumber}&#x60;)
+        return msg
+      })
+      .catch((error) &#x3D;&gt; {
+        this.logger.error({
+          error,
+          message: &#x27;failed to send paid order status sms&#x27;
+        })
+        throw new RpcException(error)
+      })
   }
 
   async sendOrderStatusUpdate ({
@@ -634,6 +1099,58 @@ export class NotificationServiceService {
       .catch((error) &#x3D;&gt; {
         throw new RpcException(error)
       })
+  }
+
+  public async sendSoldOutMessage (data: VendorSoldOutPush): Promise&lt;void&gt; {
+    try {
+      const message: PushMessage &#x3D; {
+        priority: &#x27;high&#x27;,
+        title: &#x60;${data.listingName} has sold out!!&#x60;,
+        body: &#x60;${data.vendorName}, ${data.listingQuantity} of the available ${data.listingName} have been order!&#x60;
+      }
+      return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {
+
+    }
+  }
+
+  public async sendListingApprovedPush (data: ListingApprovePush): Promise&lt;void&gt; {
+    try {
+      const message: PushMessage &#x3D; {
+        priority: &#x27;high&#x27;,
+        title: &#x60;${data.listingName} has been approved!&#x60;,
+        body: &#x27;Your listing is now visible on Nana &#x27;
+      }
+      return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {
+
+    }
+  }
+
+  public async sendListingRejectedPush (data: ListingRejectPush): Promise&lt;void&gt; {
+    try {
+      const message: PushMessage &#x3D; {
+        priority: &#x27;high&#x27;,
+        title: &#x60;${data.listingName} has been rejected!&#x60;,
+        body: &#x27;Go to the listing and check the rejection reason&#x27;
+      }
+      return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {
+
+    }
+  }
+
+  public async sendVendorApprovedPush (data: VendorApprovedPush): Promise&lt;void&gt; {
+    try {
+      const message: PushMessage &#x3D; {
+        priority: &#x27;high&#x27;,
+        title: &#x60;${data.vendorName} Your account has been approved!!&#x60;,
+        body: &#x27;A warm welcome to Nana. Add listings to start selling&#x27;
+      }
+      return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {
+
+    }
   }
 }
 </code></pre>

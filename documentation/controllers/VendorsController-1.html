@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >VendorsController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >VendorsController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,12 +90,46 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllSubscriptions" >getAllSubscriptions</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getTravelDistance" >getTravelDistance</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendor" >getVendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendors" >getVendors</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getVendorSubscribers" >getVendorSubscribers</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#nearestToYou" >nearestToYou</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#subscribeUnsubscribeToVendor" >subscribeUnsubscribeToVendor</a>
                             </li>
                         </ul>
                     </td>
@@ -103,8 +143,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -112,8 +152,182 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getAllSubscriptions"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllSubscriptions</b></span>
+                        <a href="#getAllSubscriptions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllSubscriptions(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;subscriptions/:id&#x27;)<br />@UseGuards(JwtAuthGuard)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="133"
+                            class="link-to-prism">apps/api-gateway/src/module.api/vendors.controller.ts:133</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ScheduledListingNotification[]&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTravelDistance"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getTravelDistance</b></span>
+                        <a href="#getTravelDistance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTravelDistance(data: Omit<LocationCoordinates | type>, user: <a href="../classes/User.html" target="_self">User</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;/travel-distance&#x27;)<br />@UseGuards(JwtAuthGuard)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="103"
+                            class="link-to-prism">apps/api-gateway/src/module.api/vendors.controller.ts:103</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                            <code>Omit&lt;LocationCoordinates | type&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>user</td>
+                                    <td>
+                                                <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;TravelDistanceResult&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getVendor"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendor</b></span>
                         <a href="#getVendor"><span class="icon ion-ios-link"></span></a>
@@ -137,8 +351,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="41"
-                            class="link-to-prism">apps/api-gateway/src/module.api/vendors.controller.ts:41</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">apps/api-gateway/src/module.api/vendors.controller.ts:51</a></div>
                 </td>
             </tr>
 
@@ -148,7 +362,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -180,7 +394,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -192,6 +406,8 @@
                 <td class="col-md-4">
                     <a name="getVendors"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendors</b></span>
                         <a href="#getVendors"><span class="icon ion-ios-link"></span></a>
@@ -215,8 +431,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">apps/api-gateway/src/module.api/vendors.controller.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">apps/api-gateway/src/module.api/vendors.controller.ts:39</a></div>
                 </td>
             </tr>
 
@@ -232,10 +448,276 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getVendorSubscribers"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getVendorSubscribers</b></span>
+                        <a href="#getVendorSubscribers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getVendorSubscribers(vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;subscription/vendor/:vid&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="150"
+                            class="link-to-prism">apps/api-gateway/src/module.api/vendors.controller.ts:150</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ScheduledListingNotification&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nearestToYou"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>nearestToYou</b></span>
+                        <a href="#nearestToYou"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nearestToYou(user: <a href="../classes/User.html" target="_self">User</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;/home/nearest&#x27;)<br />@UseGuards(JwtAuthGuard)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">apps/api-gateway/src/module.api/vendors.controller.ts:83</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get restaurants closest to the user</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>user</td>
+                                    <td>
+                                                <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Vendor.html" target="_self" >Promise&lt;Vendor[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscribeUnsubscribeToVendor"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>subscribeUnsubscribeToVendor</b></span>
+                        <a href="#subscribeUnsubscribeToVendor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>subscribeUnsubscribeToVendor(payload: <a href="../classes/SubscribeDto.html" target="_self">SubscribeDto</a>, user: <a href="../classes/User.html" target="_self">User</a>, response: Response)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;subscribe&#x27;)<br />@UseGuards(JwtAuthGuard)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="117"
+                            class="link-to-prism">apps/api-gateway/src/module.api/vendors.controller.ts:117</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>payload</td>
+                                    <td>
+                                                <code><a href="../classes/SubscribeDto.html" target="_self" >SubscribeDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>user</td>
+                                    <td>
+                                                <code><a href="../classes/User.html" target="_self" >User</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>
+                                            <code>Response</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
 import {
   Controller,
@@ -243,23 +725,33 @@ import {
   HttpException,
   Inject,
   Param,
-  UseGuards
+  UseGuards,
+  Post, Body, Res, HttpStatus
 } from &#x27;@nestjs/common&#x27;
 import {
-  IRpcException,
+  CurrentUser,
+  IRpcException, LocationCoordinates,
   QUEUE_MESSAGE,
-  QUEUE_SERVICE,
-  ServicePayload,
+  QUEUE_SERVICE, ScheduledListingNotification,
+  ServicePayload, SubscribeDto, TravelDistanceResult,
+  User,
   Vendor
 } from &#x27;@app/common&#x27;
 import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
 import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
+import { Response } from &#x27;express&#x27;
 
 @Controller(&#x27;vendor&#x27;)
 export class VendorsController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
-    private readonly vendorsClient: ClientProxy
+    private readonly vendorsClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
+    private readonly locationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy
   ) {}
 
   @Get(&#x27;vendors&#x27;)
@@ -300,6 +792,95 @@ export class VendorsController {
       businessLogo,
       phone
     }
+  }
+  //   Homepage/landing page endpoints
+
+  /**
+   * Get restaurants closest to the user
+   */
+  @Get(&#x27;/home/nearest&#x27;)
+  @UseGuards(JwtAuthGuard)
+  async nearestToYou (
+    @CurrentUser() user: User
+  ): Promise&lt;Vendor[]&gt; {
+    const payload: ServicePayload&lt;{ userLocation: LocationCoordinates }&gt; &#x3D; {
+      userId: user._id as any,
+      data: {
+        userLocation: user.location
+      }
+    }
+    return await lastValueFrom&lt;Vendor[]&gt;(
+      this.vendorsClient.send(QUEUE_MESSAGE.GET_NEAREST_VENDORS, payload).pipe(
+        catchError((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Post(&#x27;/travel-distance&#x27;)
+  @UseGuards(JwtAuthGuard)
+  async getTravelDistance (
+    @Body() data: Omit&lt;LocationCoordinates, &#x27;type&#x27;&gt;,
+      @CurrentUser() user: User
+  ): Promise&lt;TravelDistanceResult&gt; {
+    return await lastValueFrom&lt;TravelDistanceResult&gt;(
+      this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: user.location.coordinates, vendorCoords: data.coordinates })
+        .pipe(catchError((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        }))
+    )
+  }
+
+  @Post(&#x27;subscribe&#x27;)
+  @UseGuards(JwtAuthGuard)
+  async subscribeUnsubscribeToVendor (
+    @Body() payload: SubscribeDto,
+      @CurrentUser() user: User,
+      @Res() response: Response
+  ): Promise&lt;void&gt; {
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, payload)
+        .pipe(catchError((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        }))
+    )
+    response.status(HttpStatus.OK).end()
+  }
+
+  @Get(&#x27;subscriptions/:id&#x27;)
+  @UseGuards(JwtAuthGuard)
+  async getAllSubscriptions (
+    @Param(&#x27;id&#x27;) id: string
+  ): Promise&lt;ScheduledListingNotification[]&gt; {
+    const payload: ServicePayload&lt;null&gt; &#x3D; {
+      userId: id,
+      data: null
+    }
+    return await lastValueFrom(
+      this.notificationClient.send(QUEUE_MESSAGE.GET_USER_SUBSCRIPTIONS, payload)
+        .pipe(catchError((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        }))
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(&#x27;subscription/vendor/:vid&#x27;)
+  async getVendorSubscribers (
+    @Param(&#x27;vid&#x27;) vendor: string
+  ): Promise&lt;ScheduledListingNotification&gt; {
+    const payload: ServicePayload&lt;null&gt; &#x3D; {
+      userId: vendor,
+      data: null
+    }
+    return await lastValueFrom(
+      this.notificationClient.send(QUEUE_MESSAGE.GET_VENDOR_SUBSCRIPTION, payload).pipe(
+        catchError((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 }
 </code></pre>

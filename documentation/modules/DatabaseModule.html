@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -34,22 +34,28 @@
 
 
 <ol class="breadcrumb">
-    <li>Modules</li>
-    <li >DatabaseModule</li>
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >DatabaseModule</li>
 </ol>
 
 
 <ul class="nav nav-tabs" role="tablist">
-    <li  class="active" >
-        <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+    <li class="nav-item">
+        <a href="#info"
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
     </li>
-    <li >
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    <li class="nav-item">
+        <a href="#source"
+            class="nav-link"
+
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
 
         <p class="comment">
             <h3>File</h3>
@@ -71,18 +77,18 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &#x27;@nestjs/common&#x27;
 import { ConfigService } from &#x27;@nestjs/config&#x27;
 import { MongooseModule, MongooseModuleOptions } from &#x27;@nestjs/mongoose&#x27;
+import * as process from &#x27;process&#x27;
 
 @Module({
   imports: [
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigService): MongooseModuleOptions &#x3D;&gt; ({
         uri:
-          configService.get&lt;string&gt;(&#x27;MONGODB_URI&#x27;) ??
-          &#x27;mongodb://root:password123@mongodb-primary:27017/&#x27;
+            process.env.NODE_ENV &#x3D;&#x3D;&#x3D; &#x27;test&#x27; ? configService.get&lt;string&gt;(&#x27;TEST_MONGODB_URI&#x27;) : configService.get&lt;string&gt;(&#x27;MONGODB_URI&#x27;, &#x27;mongodb://root:password123@mongodb-primary:27017/&#x27;)
       }),
       inject: [ConfigService]
     } as any)

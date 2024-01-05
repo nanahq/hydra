@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -43,21 +43,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >ListingCategory</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >ListingCategory</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -76,7 +82,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -89,30 +95,43 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#createdAt" >createdAt</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#isDeleted" >isDeleted</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#isLive" >isLive</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#listingsMenu" >listingsMenu</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#name" >name</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#tags" >tags</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                <a href="#type" >type</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                 <a href="#updatedAt" >updatedAt</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#vendor" >vendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#_id" >_id</a>
                             </li>
                         </ul>
@@ -129,8 +148,8 @@
 </section>
 
 
-            <section>
-    
+            <section data-compodoc="block-properties">
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -140,6 +159,7 @@
                 <td class="col-md-4">
                     <a name="createdAt"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>createdAt</b></span>
                         <a href="#createdAt"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -162,7 +182,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">libs/common/src/database/schemas/listings.cat.ts:26</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">libs/common/src/database/schemas/listings.cat.ts:29</a></div>
                         </td>
                     </tr>
 
@@ -175,6 +195,7 @@
                 <td class="col-md-4">
                     <a name="isDeleted"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>isDeleted</b></span>
                         <a href="#isDeleted"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -197,7 +218,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">libs/common/src/database/schemas/listings.cat.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">libs/common/src/database/schemas/listings.cat.ts:26</a></div>
                         </td>
                     </tr>
 
@@ -210,6 +231,7 @@
                 <td class="col-md-4">
                     <a name="isLive"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>isLive</b></span>
                         <a href="#isLive"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -245,6 +267,7 @@
                 <td class="col-md-4">
                     <a name="listingsMenu"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>listingsMenu</b></span>
                         <a href="#listingsMenu"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -280,6 +303,7 @@
                 <td class="col-md-4">
                     <a name="name"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>name</b></span>
                         <a href="#name"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -315,6 +339,7 @@
                 <td class="col-md-4">
                     <a name="tags"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>tags</b></span>
                         <a href="#tags"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -348,8 +373,45 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="type"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>type</b></span>
+                        <a href="#type"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;PRE_ORDER&quot; | &quot;ON_DEMAND&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: String, default: &#x27;ON_DEMAND&#x27;})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">libs/common/src/database/schemas/listings.cat.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updatedAt"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>updatedAt</b></span>
                         <a href="#updatedAt"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -372,7 +434,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">libs/common/src/database/schemas/listings.cat.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">libs/common/src/database/schemas/listings.cat.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -385,6 +447,7 @@
                 <td class="col-md-4">
                     <a name="vendor"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>vendor</b></span>
                         <a href="#vendor"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -420,6 +483,7 @@
                 <td class="col-md-4">
                     <a name="_id"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>_id</b></span>
                         <a href="#_id"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -467,7 +531,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { SchemaTypes, Types } from &#x27;mongoose&#x27;
 import { Schema, Prop, SchemaFactory } from &#x27;@nestjs/mongoose&#x27;
 import { AbstractDocument } from &#x27;@app/common&#x27;
@@ -488,6 +552,9 @@ export class ListingCategory extends AbstractDocument {
 
   @Prop({ type: [Types.ObjectId], ref: &#x27;ListingMenu&#x27; })
     listingsMenu: any[]
+
+  @Prop({ type: String, default: &#x27;ON_DEMAND&#x27; })
+    type: &#x27;PRE_ORDER&#x27; | &#x27;ON_DEMAND&#x27;
 
   @Prop({ type: Boolean, default: false })
     isDeleted: boolean

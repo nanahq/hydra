@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,36 +39,61 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >ListingsService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >ListingsService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/listings-service/src/listings.odsa.service.ts</code>
+            <code>apps/listings-service/src/listings.service.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#f" >f</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#logger" >logger</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -78,6 +103,11 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#approve" >approve</a>
+                            </li>
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#createListingCategory" >createListingCategory</a>
@@ -89,6 +119,28 @@
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#createListingOptionGroup" >createListingOptionGroup</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createScheduledListing" >createScheduledListing</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#deletePastScheduledListings" >deletePastScheduledListings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#disapprove" >disapprove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOneById" >findOneById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllApprovedListingMenu" >getAllApprovedListingMenu</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -112,6 +164,30 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#getAllPendingListingMenu" >getAllPendingListingMenu</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllRejectedListingMenu" >getAllRejectedListingMenu</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllScheduledListing" >getAllScheduledListing</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllScheduledListingUser" >getAllScheduledListingUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllVendorListingMenu" >getAllVendorListingMenu</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getHomePageData" >getHomePageData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#getSingleListingCat" >getSingleListingCat</a>
                             </li>
                             <li>
@@ -132,6 +208,14 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#getVendorCategories" >getVendorCategories</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getVendorListings" >getVendorListings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#updateListingCat" >updateListingCat</a>
                             </li>
                             <li>
@@ -141,6 +225,10 @@
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#updateListingOption" >updateListingOption</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateScheduledListingCount" >updateScheduledListingCount</a>
                             </li>
                         </ul>
                     </td>
@@ -154,18 +242,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(listingMenuRepository: <a href="../injectables/ListingMenuRepository.html" target="_self">ListingMenuRepository</a>, listingOptionGroupRepository: <a href="../injectables/ListingOptionGroupRepository.html" target="_self">ListingOptionGroupRepository</a>, listingCategoryRepository: <a href="../injectables/ListingCategoryRepository.html" target="_self">ListingCategoryRepository</a>)</code>
+<code>constructor(listingMenuRepository: <a href="../injectables/ListingMenuRepository.html" target="_self">ListingMenuRepository</a>, listingOptionGroupRepository: <a href="../injectables/ListingOptionGroupRepository.html" target="_self">ListingOptionGroupRepository</a>, listingCategoryRepository: <a href="../injectables/ListingCategoryRepository.html" target="_self">ListingCategoryRepository</a>, scheduledListingRepository: <a href="../injectables/ScheduledListingRepository.html" target="_self">ScheduledListingRepository</a>, notificationClient: ClientProxy, vendorClient: ClientProxy, reviewsClient: ClientProxy)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">apps/listings-service/src/listings.service.ts:40</a></div>
                             </td>
                         </tr>
 
@@ -218,6 +306,54 @@
                                                     </td>
 
                                                 </tr>
+                                                <tr>
+                                                        <td>scheduledListingRepository</td>
+
+                                                        <td>
+                                                                        <code><a href="../injectables/ScheduledListingRepository.html" target="_self" >ScheduledListingRepository</a></code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>notificationClient</td>
+
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>vendorClient</td>
+
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>reviewsClient</td>
+
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -227,11 +363,83 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="approve"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>approve</b></span>
+                        <a href="#approve"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>approve(_id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="186"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:186</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>_id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -254,8 +462,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="102"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:102</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="300"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:300</a></div>
                 </td>
             </tr>
 
@@ -317,15 +525,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createListingMenu(undefined: ServicePayload<any>)</code>
+                    <code>createListingMenu(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;any&gt;</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:27</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:56</a></div>
                 </td>
             </tr>
 
@@ -347,7 +555,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;any&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;any&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -394,8 +602,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="174"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:174</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="378"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:378</a></div>
                 </td>
             </tr>
 
@@ -446,6 +654,318 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="createScheduledListing"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>createScheduledListing</b></span>
+                        <a href="#createScheduledListing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createScheduledListing(data: <a href="../interfaces/ScheduledListingDto.html" target="_self">ScheduledListingDto</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="491"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:491</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ScheduledListingDto.html" target="_self" >ScheduledListingDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deletePastScheduledListings"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>deletePastScheduledListings</b></span>
+                        <a href="#deletePastScheduledListings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deletePastScheduledListings()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Cron(CronExpression.EVERY_6_HOURS, {timeZone: &#x27;Africa/Lagos&#x27;})<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="650"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:650</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="disapprove"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>disapprove</b></span>
+                        <a href="#disapprove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>disapprove(_id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, reason: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="217"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:217</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>_id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>reason</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOneById"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findOneById</b></span>
+                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="273"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:273</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllApprovedListingMenu"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllApprovedListingMenu</b></span>
+                        <a href="#getAllApprovedListingMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllApprovedListingMenu()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:127</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getAllCategoriesUsers"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -464,8 +984,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="268"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:268</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="474"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:474</a></div>
                 </td>
             </tr>
 
@@ -496,15 +1016,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllCatVendor(vendorId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>getAllCatVendor(vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="142"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:142</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="343"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:343</a></div>
                 </td>
             </tr>
 
@@ -525,7 +1045,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>vendorId</td>
+                                    <td>vendor</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -567,15 +1087,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllListingMenu(vendorId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>getAllListingMenu()</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="64"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:64</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="157"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:157</a></div>
                 </td>
             </tr>
 
@@ -583,40 +1103,8 @@
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>vendorId</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
 
                     </div>
                 </td>
@@ -645,8 +1133,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="215"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:215</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="419"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:419</a></div>
                 </td>
             </tr>
 
@@ -716,8 +1204,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="250"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:250</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="453"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:453</a></div>
                 </td>
             </tr>
 
@@ -727,6 +1215,336 @@
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllPendingListingMenu"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllPendingListingMenu</b></span>
+                        <a href="#getAllPendingListingMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllPendingListingMenu()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="111"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:111</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllRejectedListingMenu"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllRejectedListingMenu</b></span>
+                        <a href="#getAllRejectedListingMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllRejectedListingMenu()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="142"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:142</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllScheduledListing"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllScheduledListing</b></span>
+                        <a href="#getAllScheduledListing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllScheduledListing(vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="537"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:537</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ScheduledListing.html" target="_self" >Promise&lt;ScheduledListing[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllScheduledListingUser"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllScheduledListingUser</b></span>
+                        <a href="#getAllScheduledListingUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllScheduledListingUser()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="548"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:548</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ScheduledListing.html" target="_self" >Promise&lt;ScheduledListing[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllVendorListingMenu"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllVendorListingMenu</b></span>
+                        <a href="#getAllVendorListingMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllVendorListingMenu(vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="171"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:171</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getHomePageData"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getHomePageData</b></span>
+                        <a href="#getHomePageData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getHomePageData(userLocation: <a href="../interfaces/LocationCoordinates.html" target="_self">LocationCoordinates</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="589"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:589</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userLocation</td>
+                                    <td>
+                                                <code><a href="../interfaces/LocationCoordinates.html" target="_self" >LocationCoordinates</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;UserHomePage&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
 
                     </div>
                 </td>
@@ -748,15 +1566,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getSingleListingCat(undefined: ServicePayload<string>)</code>
+                    <code>getSingleListingCat(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;string&gt;</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="120"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:120</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="318"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:318</a></div>
                 </td>
             </tr>
 
@@ -778,7 +1596,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;string&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;string&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -818,15 +1636,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getSingleListingMenu(undefined: ServicePayload<string>)</code>
+                    <code>getSingleListingMenu(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;string&gt;</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:79</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="250"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:250</a></div>
                 </td>
             </tr>
 
@@ -848,7 +1666,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;string&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;string&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -888,15 +1706,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getSingleListingOption(undefined: ServicePayload<string>)</code>
+                    <code>getSingleListingOption(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;string&gt;</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="192"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:192</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="396"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:396</a></div>
                 </td>
             </tr>
 
@@ -918,7 +1736,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;string&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;string&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -965,8 +1783,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="276"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:276</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="482"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:482</a></div>
                 </td>
             </tr>
 
@@ -1036,8 +1854,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="258"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:258</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="464"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:464</a></div>
                 </td>
             </tr>
 
@@ -1089,6 +1907,148 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getVendorCategories"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getVendorCategories</b></span>
+                        <a href="#getVendorCategories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getVendorCategories(vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="559"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:559</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategory[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getVendorListings"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getVendorListings</b></span>
+                        <a href="#getVendorListings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getVendorListings(vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="568"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:568</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any[]&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="updateListingCat"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -1100,15 +2060,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateListingCat(undefined: <a href="../classes/UpdateListingCategoryDto.html" target="_self">UpdateListingCategoryDto</a>)</code>
+                    <code>updateListingCat(undefined: <a href="../interfaces/UpdateListingCategoryDto.html" target="_self">UpdateListingCategoryDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="156"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:156</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="360"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:360</a></div>
                 </td>
             </tr>
 
@@ -1130,7 +2090,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/UpdateListingCategoryDto.html" target="_self" >UpdateListingCategoryDto</a></code>
+                                                <code><a href="../interfaces/UpdateListingCategoryDto.html" target="_self" >UpdateListingCategoryDto</a></code>
                                     </td>
 
                                     <td>
@@ -1170,15 +2130,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateListingMenu(undefined: ServicePayload<any>)</code>
+                    <code>updateListingMenu(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;any&gt;</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="55"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:55</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:93</a></div>
                 </td>
             </tr>
 
@@ -1200,7 +2160,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;any&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;any&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -1240,15 +2200,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateListingOption(undefined: <a href="../classes/UpdateOptionGroupDto.html" target="_self">UpdateOptionGroupDto</a>)</code>
+                    <code>updateListingOption(undefined: <a href="../interfaces/UpdateOptionGroupDto.html" target="_self">UpdateOptionGroupDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="231"
-                            class="link-to-prism">apps/listings-service/src/listings.odsa.service.ts:231</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="435"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:435</a></div>
                 </td>
             </tr>
 
@@ -1270,7 +2230,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/UpdateOptionGroupDto.html" target="_self" >UpdateOptionGroupDto</a></code>
+                                                <code><a href="../interfaces/UpdateOptionGroupDto.html" target="_self" >UpdateOptionGroupDto</a></code>
                                     </td>
 
                                     <td>
@@ -1295,57 +2255,231 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateScheduledListingCount"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>updateScheduledListingCount</b></span>
+                        <a href="#updateScheduledListingCount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateScheduledListingCount(listingMenuIds: string[], quantity: Array<literal type>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="518"
+                            class="link-to-prism">apps/listings-service/src/listings.service.ts:518</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>listingMenuIds</td>
+                                    <td>
+                                            <code>string[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>quantity</td>
+                                    <td>
+                                            <code>Array&lt;literal type&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="f"></a>
+                    <span class="name">
+                        <span ><b>f</b></span>
+                        <a href="#f"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="516" class="link-to-prism">apps/listings-service/src/listings.service.ts:516</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logger"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>logger</b></span>
+                        <a href="#logger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Logger(ListingsService.name)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">apps/listings-service/src/listings.service.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
 </section>
 
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Injectable } from &#x27;@nestjs/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Inject, Injectable, Logger } from &#x27;@nestjs/common&#x27;
 
 import {
   FitRpcException,
+  ListingApprovePush,
   ListingCategory,
+  ListingCategoryI,
   ListingMenu,
+  ListingMenuI,
   ListingOptionGroup,
-  ResponseWithStatus,
-  ServicePayload
+  ListingRejectPush, LocationCoordinates,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus, ReviewServiceGetMostReviewed,
+  ScheduledListing,
+  ScheduledListingDto, ScheduledListingI,
+  ScheduledPushPayload,
+  ServicePayload,
+  UserHomePage, VendorServiceHomePageResult, VendorUserI
 } from &#x27;@app/common&#x27;
-import { ListingCategoryRepository, ListingMenuRepository, ListingOptionGroupRepository } from &#x27;./listings.repository&#x27;
+import {
+  ListingCategoryRepository,
+  ListingMenuRepository,
+  ListingOptionGroupRepository,
+  ScheduledListingRepository
+} from &#x27;./listings.repository&#x27;
 import {
   CreateListingCategoryDto,
   CreateOptionGroupDto,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
 } from &#x27;@app/common/database/dto/listing.dto&#x27;
-
+import { ListingApprovalStatus } from &#x27;@app/common/typings/ListingApprovalStatus.enum&#x27;
+import { Cron, CronExpression } from &#x27;@nestjs/schedule&#x27;
+import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
+import { lastValueFrom } from &#x27;rxjs&#x27;
+import * as moment from &#x27;moment&#x27;
 @Injectable()
 export class ListingsService {
+  protected readonly logger &#x3D; new Logger(ListingsService.name)
   constructor (
     private readonly listingMenuRepository: ListingMenuRepository,
     private readonly listingOptionGroupRepository: ListingOptionGroupRepository,
-    private readonly listingCategoryRepository: ListingCategoryRepository
+    private readonly listingCategoryRepository: ListingCategoryRepository,
+    private readonly scheduledListingRepository: ScheduledListingRepository,
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
+    private readonly vendorClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.REVIEW_SERVICE)
+    private readonly reviewsClient: ClientProxy
   ) {}
 
   async createListingMenu ({
     data,
     userId: vendorId
   }: ServicePayload&lt;any&gt;): Promise&lt;ResponseWithStatus&gt; {
-    const { categoryId, ...rest } &#x3D; data
+    const {
+      categoryId,
+      ...rest
+    } &#x3D; data
     try {
-      const { _id, listingsMenu } &#x3D;
+      const {
+        _id,
+        listingsMenu
+      } &#x3D;
         (await this.listingCategoryRepository.findOne({
           _id: categoryId
         })) as ListingCategory
 
       const newListings &#x3D; await this.listingMenuRepository.create({
         ...rest,
-        vendorId
+        vendor: vendorId,
+        status: ListingApprovalStatus.PENDING
       })
+
       await this.listingCategoryRepository.findOneAndUpdate(
         { _id },
         { listingsMenu: [...listingsMenu, newListings._id] }
       )
+
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
@@ -1355,18 +2489,87 @@ export class ListingsService {
     }
   }
 
-  async updateListingMenu ({ data: { menuId, ...rest }, userId }: ServicePayload&lt;any&gt;): Promise&lt;ResponseWithStatus&gt; {
+  async updateListingMenu ({
+    data: {
+      menuId,
+      ...rest
+    },
+    userId
+  }: ServicePayload&lt;any&gt;): Promise&lt;ResponseWithStatus&gt; {
     try {
-      await this.listingMenuRepository.findOneAndUpdate({ _id: menuId, vendorId: userId }, { ...rest })
+      await this.listingMenuRepository.findOneAndUpdate({
+        _id: menuId,
+        vendor: userId
+      }, { ...rest })
       return { status: 1 }
     } catch (e) {
       throw new FitRpcException(&#x27;Failed to update listings&#x27;, HttpStatus.UNPROCESSABLE_ENTITY)
     }
   }
 
-  async getAllListingMenu (vendorId: string): Promise&lt;ListingMenu[]&gt; {
+  async getAllPendingListingMenu (): Promise&lt;ListingMenu[]&gt; {
     const getRequest &#x3D; await this.listingMenuRepository.findAndPopulate({
-      vendorId,
+      isDeleted: false,
+      status: ListingApprovalStatus.PENDING
+    }, [&#x27;optionGroups&#x27;, &#x27;vendor&#x27;]) as any
+
+    if (getRequest &#x3D;&#x3D;&#x3D; null) {
+      throw new FitRpcException(
+        &#x27;Something went wrong fetching all listings.&#x27;,
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    return getRequest
+  }
+
+  async getAllApprovedListingMenu (): Promise&lt;ListingMenu[]&gt; {
+    const getRequest &#x3D; await this.listingMenuRepository.findAndPopulate({
+      isDeleted: false,
+      status: ListingApprovalStatus.APPROVED
+    }, [&#x27;optionGroups&#x27;, &#x27;vendor&#x27;]) as any
+
+    if (getRequest &#x3D;&#x3D;&#x3D; null) {
+      throw new FitRpcException(
+        &#x27;Something went wrong fetching all listings.&#x27;,
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
+  async getAllRejectedListingMenu (): Promise&lt;ListingMenu[]&gt; {
+    const getRequest &#x3D; await this.listingMenuRepository.findAndPopulate({
+      isDeleted: false,
+      status: ListingApprovalStatus.DISAPPROVED
+    }, [&#x27;optionGroups&#x27;, &#x27;vendor&#x27;]) as any
+
+    if (getRequest &#x3D;&#x3D;&#x3D; null) {
+      throw new FitRpcException(
+        &#x27;Something went wrong fetching all listings.&#x27;,
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
+  async getAllListingMenu (): Promise&lt;ListingMenu[]&gt; {
+    const getRequest &#x3D; await this.listingMenuRepository.findAndPopulate({
+      isDeleted: false
+    }, [&#x27;optionGroups&#x27;, &#x27;vendor&#x27;]) as any
+
+    if (getRequest &#x3D;&#x3D;&#x3D; null) {
+      throw new FitRpcException(
+        &#x27;Something went wrong fetching all listings.&#x27;,
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
+  async getAllVendorListingMenu (vendor: string): Promise&lt;ListingMenu[]&gt; {
+    const getRequest &#x3D; await this.listingMenuRepository.findAndPopulate({
+      vendor,
       isDeleted: false
     }, &#x27;optionGroups&#x27;) as any
 
@@ -1379,11 +2582,75 @@ export class ListingsService {
     return getRequest
   }
 
+  public async approve (_id: string): Promise&lt;ResponseWithStatus&gt; {
+    const updateRequest &#x3D; await this.listingMenuRepository.findOneAndUpdate(
+      { _id },
+      {
+        status: ListingApprovalStatus.APPROVED
+      }
+    )
+
+    const listing &#x3D; await this.listingMenuRepository.findOneAndPopulate&lt;ListingMenuI&gt;({ _id }, [&#x27;vendor&#x27;])
+
+    if (updateRequest &#x3D;&#x3D;&#x3D; null) {
+      throw new FitRpcException(
+        &#x27;Failed to approve listing menu&#x27;,
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    this.logger.log(&#x60;Sending approval push to ${listing.vendor.businessName}&#x60;)
+
+    const payload: ListingApprovePush &#x3D; {
+      token: listing.vendor.expoNotificationToken,
+      listingName: listing.name,
+      vendorName: listing.vendor.businessName
+    }
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_APPROVED, payload)
+    )
+
+    return { status: 1 }
+  }
+
+  public async disapprove (_id: string, reason: string): Promise&lt;ResponseWithStatus&gt; {
+    const updateRequest &#x3D; await this.listingMenuRepository.findOneAndUpdate(
+      { _id },
+      {
+        rejection_reason: reason,
+        status: ListingApprovalStatus.DISAPPROVED
+      }
+    )
+
+    const listing &#x3D; await this.listingMenuRepository.findOneAndPopulate&lt;ListingMenuI&gt;({ _id }, [&#x27;vendor&#x27;])
+
+    if (updateRequest &#x3D;&#x3D;&#x3D; null) {
+      throw new FitRpcException(
+        &#x27;Failed to reject listing menu&#x27;,
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    this.logger.log(&#x60;Sending rejection push to ${listing.vendor.businessName}&#x60;)
+
+    const payload: ListingRejectPush &#x3D; {
+      token: listing.vendor.expoNotificationToken,
+      listingName: listing.name,
+      vendorName: listing.vendor.businessName,
+      rejectionReason: reason
+    }
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_REJECTED, payload)
+    )
+
+    return { status: 1 }
+  }
+
   async getSingleListingMenu ({
     data
   }: ServicePayload&lt;string&gt;): Promise&lt;ListingMenu&gt; {
     try {
-      const listing &#x3D; await this.listingMenuRepository.findOneAndPopulate(
+      const listing &#x3D; await this.listingMenuRepository.findOneAndPopulate&lt;ListingMenu&gt;(
         { _id: data },
         &#x27;optionGroups&#x27;
       )
@@ -1395,6 +2662,33 @@ export class ListingsService {
       }
       return listing
     } catch (error) {
+      throw new FitRpcException(
+        &#x27;Failed to fetch listing&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async findOneById (id: string): Promise&lt;ListingMenu&gt; {
+    try {
+      const listing &#x3D; await this.listingMenuRepository.findOneAndPopulate&lt;ListingMenu&gt;(
+        { _id: id },
+        &#x27;optionGroups&#x27;
+      )
+
+      if (listing &#x3D;&#x3D;&#x3D; null) {
+        throw new FitRpcException(
+          &#x27;Listing with that id can not be found&#x27;,
+          HttpStatus.NOT_FOUND
+        )
+      }
+
+      return listing
+    } catch (error) {
+      if ((Boolean(error.status)) &amp;&amp; error.status &#x3D;&#x3D;&#x3D; 404) {
+        throw error
+      }
+
       throw new FitRpcException(
         &#x27;Failed to fetch listing&#x27;,
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -1425,8 +2719,11 @@ export class ListingsService {
     userId: vendorId
   }: ServicePayload&lt;string&gt;): Promise&lt;ListingCategory&gt; {
     try {
-      const cat &#x3D; await this.listingCategoryRepository.findOneAndPopulate(
-        { _id, vendorId },
+      const cat &#x3D; await this.listingCategoryRepository.findOneAndPopulate&lt;ListingCategory&gt;(
+        {
+          _id,
+          vendorId
+        },
         [&#x27;listingsMenu&#x27;, &#x27;vendor&#x27;]
       )
       if (cat &#x3D;&#x3D;&#x3D; null) {
@@ -1442,11 +2739,14 @@ export class ListingsService {
     }
   }
 
-  async getAllCatVendor (vendorId: string): Promise&lt;ListingCategory[]&gt; {
+  async getAllCatVendor (vendor: string): Promise&lt;ListingCategory[]&gt; {
     try {
       return await this.listingCategoryRepository.findAndPopulate&lt;ListingCategory&gt;(
-        { vendorId, isDeleted: false },
-        &#x27;listingsMenu vendor&#x27;
+        {
+          vendor,
+          isDeleted: false
+        },
+        [&#x27;listingsMenu&#x27;, &#x27;vendor&#x27;]
       )
     } catch (error) {
       throw new FitRpcException(
@@ -1549,17 +2849,19 @@ export class ListingsService {
     }
   }
 
-  // Users Vendor Methods
   async getAllMenuUser (): Promise&lt;ListingMenu[]&gt; {
     try {
-      return await this.listingMenuRepository.findAndPopulate({ isDeleted: false }, &#x27;optionGroups&#x27;)
+      return await this.listingMenuRepository.findAndPopulate({
+        isDeleted: false,
+        status: ListingApprovalStatus.APPROVED
+      }, [&#x27;optionGroups&#x27;, &#x27;vendor&#x27;])
     } catch (error) {
-      throw new FitRpcException(&#x27;Can not fetch menu at thi time.&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(&#x27;Can not fetch menu at this time.&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
   async getSingleUserMenu (mid: string): Promise&lt;ListingMenu&gt; {
-    const menu &#x3D; await this.listingMenuRepository.findOneAndPopulate({ _id: mid }, &#x27;optionGroups&#x27;)
+    const menu &#x3D; await this.listingMenuRepository.findOneAndPopulate&lt;ListingMenu&gt;({ _id: mid }, &#x27;optionGroups&#x27;)
 
     if (menu &#x3D;&#x3D;&#x3D; null) {
       throw new FitRpcException(&#x27;Can not find menu with that ID&#x27;, HttpStatus.NOT_FOUND)
@@ -1577,14 +2879,219 @@ export class ListingsService {
   }
 
   async getSingleUserCategory (catid: string): Promise&lt;ListingCategory&gt; {
-    const category &#x3D; await this.listingCategoryRepository.findOneAndPopulate({ _id: catid }, [&#x27;listingsMenu&#x27;, &#x27;vendor&#x27;])
+    const category &#x3D; await this.listingCategoryRepository.findOneAndPopulate&lt;ListingCategory&gt;({ _id: catid }, [&#x27;listingsMenu&#x27;, &#x27;vendor&#x27;])
 
     if (category &#x3D;&#x3D;&#x3D; null) {
       throw new FitRpcException(&#x27;Can not find category with that ID&#x27;, HttpStatus.NOT_FOUND)
     }
-
     return category
   }
+
+  async createScheduledListing (data: ScheduledListingDto): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      await this.scheduledListingRepository.create({ ...data, remainingQuantity: data.quantity })
+
+      const listingMenu: ListingMenuI &#x3D; await this.listingMenuRepository.findOneAndPopulate({ _id: data.listing }, [&#x27;vendor&#x27;])
+
+      this.logger.log(&#x27;sending push scheduled to subscribe&#x27;)
+
+      if (listingMenu !&#x3D;&#x3D; null) {
+        const notificationPayload: ScheduledPushPayload &#x3D; {
+          vendor: listingMenu.vendor._id,
+          listingName: listingMenu.name,
+          listingAvailableDate: data.availableDate
+        }
+        await lastValueFrom(this.notificationClient.emit(QUEUE_MESSAGE.SEND_PUSH_NOTIFICATION_LISTING, notificationPayload))
+      }
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error({
+        error
+      })
+      throw new FitRpcException(&#x27;Can not create schedule listings at this time something went wrong&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  f
+
+  async updateScheduledListingCount (listingMenuIds: string[], quantity: Array&lt;{ listing: string, quantity: number }&gt;): Promise&lt;void&gt; {
+    try {
+      const listings &#x3D; await this.scheduledListingRepository.find({ listing: { $in: listingMenuIds } })
+
+      for (const item of quantity) {
+        const listing &#x3D; listings.find((l) &#x3D;&gt; l.listing &#x3D;&#x3D;&#x3D; item.listing)
+        const soldOut &#x3D; (listing.remainingQuantity - item.quantity) &#x3D;&#x3D;&#x3D; 0
+        if (listing !&#x3D;&#x3D; null) {
+          await this.scheduledListingRepository.findOneAndUpdate({ _id: listing._id }, {
+            remainingQuantity: listing.remainingQuantity - item.quantity,
+            soldOut
+          })
+        }
+      }
+    } catch (error) {
+      throw new FitRpcException(&#x27;Cannot update scheduled listings at this time; something went wrong&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getAllScheduledListing (vendor: string): Promise&lt;ScheduledListing[] &gt; {
+    try {
+      return await this.scheduledListingRepository.findAndPopulate({ vendor }, [&#x27;listing&#x27;, &#x27;vendor&#x27;])
+    } catch (error) {
+      this.logger.error({
+        error
+      })
+      throw new FitRpcException(&#x27;Can not create schedule listings at this time something went wrong&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getAllScheduledListingUser (): Promise&lt;ScheduledListing[] &gt; {
+    try {
+      return await this.scheduledListingRepository.findAndPopulate({ }, [&#x27;listing&#x27;, &#x27;vendor&#x27;])
+    } catch (error) {
+      this.logger.error({
+        error
+      })
+      throw new FitRpcException(&#x27;Can not create schedule listings at this time something went wrong&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getVendorCategories (vendor: string): Promise&lt;ListingCategory[]&gt; {
+    try {
+      return await this.listingCategoryRepository.findAndPopulate({ vendor, isLive: true }, [&#x27;listingsMenu&#x27;])
+    } catch (error) {
+      this.logger.error(error)
+      throw new FitRpcException(&#x27;Can not fetch vendor listings at this time&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getVendorListings (vendor: string): Promise&lt;any[]&gt; {
+    try {
+      const rawModel &#x3D; this.listingCategoryRepository.findRaw()
+      const listings: ListingCategoryI[] &#x3D; await rawModel.find({ vendor, isLive: true })
+        .populate({
+          path: &#x27;listingsMenu&#x27;,
+          populate: {
+            path: &#x27;optionGroups&#x27;
+          }
+        })
+      return listings.map((li) &#x3D;&gt; {
+        return li.listingsMenu.filter((menu) &#x3D;&gt; menu.status &#x3D;&#x3D;&#x3D; ListingApprovalStatus.APPROVED)
+      })
+    } catch (error) {
+      this.logger.error({
+        error
+      })
+      throw new FitRpcException(&#x27;Can not fetch vendor listings at this time&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async getHomePageData (userLocation: LocationCoordinates): Promise&lt;UserHomePage&gt; {
+    try {
+      const [vendorServiceResult, reviewServiceResult, listingsCategories, scheduled] &#x3D;
+          await Promise.all([
+            lastValueFrom&lt;VendorServiceHomePageResult&gt;(
+              this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, { userLocation })
+            ),
+            lastValueFrom&lt;ReviewServiceGetMostReviewed&gt;(
+              this.reviewsClient.send(QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE, {})
+            ),
+            this.listingCategoryRepository.findAndPopulate({}, [&#x27;vendor&#x27;, &#x27;listingsMenu&#x27;]),
+            this.scheduledListingRepository.findAndPopulate&lt;ScheduledListingI&gt;({}, [&#x27;listing&#x27;])
+          ])
+
+      const mostReviewedVendorsIds: Set&lt;any&gt; &#x3D; new Set(
+        reviewServiceResult.vendors.map(v &#x3D;&gt; v._id)
+      )
+      const categoriesWithListingsMenuIds: Set&lt;string&gt; &#x3D; new Set(
+        listingsCategories
+          .filter((cat: any) &#x3D;&gt; cat.listingsMenu.length &gt; 0)
+          .map((cat: any) &#x3D;&gt; cat.vendor._id.toString())
+      )
+
+      const filteredVendors &#x3D; vendorServiceResult.allVendors.filter(vendor &#x3D;&gt; categoriesWithListingsMenuIds.has(vendor?._id.toString()))
+
+      const topVendors &#x3D; filteredVendors.filter(v &#x3D;&gt; mostReviewedVendorsIds.has(v._id.toString()))
+
+      const [homeMadeChefs, instantDelivery] &#x3D; [
+        &#x27;PRE_ORDER&#x27;,
+        &#x27;ON_DEMAND&#x27;
+      ].map(deliveryType &#x3D;&gt;
+        filteredVendors.filter(v &#x3D;&gt; v.settings?.operations?.deliveryType &#x3D;&#x3D;&#x3D; deliveryType).slice(0, 20)
+      )
+
+      const tomorrowStart &#x3D; moment().add(1, &#x27;day&#x27;).startOf(&#x27;day&#x27;)
+
+      const availableTomorrow &#x3D; scheduled
+        .filter((sch) &#x3D;&gt; {
+          const availableStart &#x3D; moment(sch.availableDate).startOf(&#x27;day&#x27;)
+          return availableStart.isSame(tomorrowStart) &amp;&amp; !sch.soldOut
+        })
+        .map(li &#x3D;&gt; li.listing)
+        .slice(0, 20)
+
+      return {
+        allVendors: getVendorsMapper(filteredVendors),
+        fastestDelivery: [],
+        homeMadeChefs: getVendorsMapper(homeMadeChefs),
+        instantDelivery: getVendorsMapper(instantDelivery),
+        mostPopularVendors: getVendorsMapper(topVendors),
+        scheduledListingsTomorrow: availableTomorrow
+      }
+    } catch (error) {
+      this.logger.log({ error })
+      throw new FitRpcException(&#x27;Something went wrong fetching Homepage&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  @Cron(CronExpression.EVERY_6_HOURS, {
+    timeZone: &#x27;Africa/Lagos&#x27;
+  })
+  async deletePastScheduledListings (): Promise&lt;void&gt; {
+    try {
+      this.logger.log(&#x27;[CRON] -&gt; Deleting past day scheduled listings&#x27;)
+
+      const listings &#x3D; await this.scheduledListingRepository.find({}) as ScheduledListing[]
+
+      this.logger.log(&#x60;[CRON] -&gt; ${listings.length} scheduled listings to be deleted &#x60;)
+
+      const idsToDelete: any[] &#x3D; []
+
+      const currentDate &#x3D; new Date()
+
+      for (const listing of listings) {
+        const listingDate &#x3D; new Date(listing.availableDate)
+        if (currentDate &gt; listingDate) {
+          idsToDelete.push(listing._id)
+        }
+      }
+
+      if (idsToDelete.length &gt; 0) {
+        await this.scheduledListingRepository.deleteMany({ _id: { $in: idsToDelete } })
+      }
+    } catch (error) {
+      this.logger.error(&#x27;[CRON] -&gt; Failed to delete past day scheduled listings:&#x27;, error)
+    }
+  }
+}
+
+function getVendorsMapper (vendors: any[]): VendorUserI[] {
+  return vendors.map((vendor: any) &#x3D;&gt; {
+    return {
+      _id: vendor._id,
+      businessName: vendor.businessName,
+      businessAddress: vendor.businessAddress,
+      businessLogo: vendor.businessLogo,
+      isValidated: vendor.isValidated,
+      status: vendor.status,
+      location: vendor.location,
+      businessImage: vendor.restaurantImage,
+      settings: vendor.settings.operations,
+      ratings: {
+        rating: 0,
+        totalReviews: 0
+      }
+    }
+  })
 }
 </code></pre>
     </div>

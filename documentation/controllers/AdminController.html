@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >AdminController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >AdminController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,18 +90,31 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#deleteAdminProfile" >deleteAdminProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAll" >getAll</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getUserProfile" >getUserProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#registerNewUser" >registerNewUser</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateAdminProfile" >updateAdminProfile</a>
                             </li>
@@ -111,8 +130,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -122,6 +141,8 @@
                 <td class="col-md-4">
                     <a name="deleteAdminProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>deleteAdminProfile</b></span>
                         <a href="#deleteAdminProfile"><span class="icon ion-ios-link"></span></a>
@@ -145,8 +166,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/admin.controller.ts:79</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="91"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/admin.controller.ts:91</a></div>
                 </td>
             </tr>
 
@@ -156,7 +177,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -188,7 +209,55 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAll"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAll</b></span>
+                        <a href="#getAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAll()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;list&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/admin.controller.ts:32</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
                     </div>
                 </td>
             </tr>
@@ -200,6 +269,8 @@
                 <td class="col-md-4">
                     <a name="getUserProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getUserProfile</b></span>
                         <a href="#getUserProfile"><span class="icon ion-ios-link"></span></a>
@@ -223,8 +294,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="98"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/admin.controller.ts:98</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="110"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/admin.controller.ts:110</a></div>
                 </td>
             </tr>
 
@@ -234,7 +305,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -266,7 +337,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -278,6 +349,7 @@
                 <td class="col-md-4">
                     <a name="registerNewUser"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>registerNewUser</b></span>
                         <a href="#registerNewUser"><span class="icon ion-ios-link"></span></a>
@@ -287,7 +359,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>registerNewUser(request: <a href="../classes/RegisterAdminDTO.html" target="_self">RegisterAdminDTO</a>)</code>
+                    <code>registerNewUser(request: <a href="../interfaces/RegisterAdminDTO.html" target="_self">RegisterAdminDTO</a>)</code>
                 </td>
             </tr>
 
@@ -301,8 +373,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="38"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/admin.controller.ts:38</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/admin.controller.ts:49</a></div>
                 </td>
             </tr>
 
@@ -312,7 +384,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -325,7 +397,7 @@
                                 <tr>
                                     <td>request</td>
                                     <td>
-                                                <code><a href="../classes/RegisterAdminDTO.html" target="_self" >RegisterAdminDTO</a></code>
+                                                <code><a href="../interfaces/RegisterAdminDTO.html" target="_self" >RegisterAdminDTO</a></code>
                                     </td>
 
                                     <td>
@@ -344,7 +416,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -356,6 +428,8 @@
                 <td class="col-md-4">
                     <a name="updateAdminProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateAdminProfile</b></span>
                         <a href="#updateAdminProfile"><span class="icon ion-ios-link"></span></a>
@@ -379,8 +453,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/admin.controller.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="68"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/admin.controller.ts:68</a></div>
                 </td>
             </tr>
 
@@ -390,7 +464,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -433,7 +507,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -442,18 +516,8 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  Inject,
-  Post,
-  UseGuards,
-  Put,
-  Delete
-} from &#x27;@nestjs/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Body, Controller, Delete, Get, HttpException, Inject, Logger, Post, Put, UseGuards } from &#x27;@nestjs/common&#x27;
 import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
 import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
 
@@ -461,23 +525,44 @@ import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
 import { CurrentUser } from &#x27;./current-user.decorator&#x27;
 
 import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE,
-  UpdateAdminLevelRequestDto,
   Admin,
-  ServicePayload,
   AdminLevel,
   IRpcException,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  RegisterAdminDTO,
   ResponseWithStatus,
-  RegisterAdminDTO
+  ServicePayload,
+  UpdateAdminLevelRequestDto
 } from &#x27;@app/common&#x27;
 
 @Controller(&#x27;admin&#x27;)
 export class AdminController {
+  private readonly logger &#x3D; new Logger(Admin.name)
+
   constructor (
-    @Inject(QUEUE_SERVICE.ADMIN_SERVICE)
+    @Inject(QUEUE_SERVICE.ADMINS_SERVICE)
     private readonly adminClient: ClientProxy
-  ) {}
+  ) {
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(&#x27;list&#x27;)
+  async getAll (): Promise&lt;ResponseWithStatus&gt; {
+    const payload: {} &#x3D; {}
+    this.logger.debug(&#x27;Getting all admin&#x27;)
+    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+      this.adminClient
+        .send(QUEUE_MESSAGE.GET_ALL_ADMIN, payload)
+        .pipe(
+          catchError((error: IRpcException) &#x3D;&gt; {
+            console.error(error)
+            this.logger.error(&#x60;Failed to fetch admins. Reason: ${error.message}&#x60;)
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
 
   @Post(&#x27;register&#x27;)
   async registerNewUser (
@@ -487,6 +572,7 @@ export class AdminController {
       userId: &#x27;&#x27;,
       data: request
     }
+
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
       this.adminClient.send(QUEUE_MESSAGE.CREATE_ADMIN, payload).pipe(
         catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {

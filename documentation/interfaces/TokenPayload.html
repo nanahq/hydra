@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -44,34 +44,40 @@
 
 
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
   >
   TokenPayload</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>libs/common/src/typings/index.ts</code>
+            <code>libs/common/src/typings/Global.Interface.ts</code>
         </p>
 
 
 
 
-        <section>
+        <section data-compodoc="block-index">
             <h3 id="index">Index</h3>
             <table class="table table-sm table-bordered index-table">
                 <tbody>
@@ -98,7 +104,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-properties">
                 <h3 id="inputs">Properties</h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
@@ -137,8 +143,22 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ListingCategory, Vendor } from &#x27;@app/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  ListingCategory,
+  ListingMenu,
+  ListingMenuI,
+  LocationCoordinates,
+  OrderI,
+  UserI,
+  Vendor,
+  VendorI,
+  VendorUserI
+} from &#x27;@app/common&#x27;
+
+export interface IdPayload {
+  id: string
+}
 
 export interface TokenPayload {
   userId: string
@@ -154,6 +174,11 @@ export interface ReviewToken {
 }
 
 export type OrderType &#x3D; &#x27;PRE_ORDER&#x27; | &#x27;ON_DEMAND&#x27;
+
+export enum OrderTypes {
+  PRE &#x3D; &#x27;PRE_ORDER&#x27;,
+  INSTANT &#x3D; &#x27;ON_DEMAND&#x27;,
+}
 
 export interface SendPayoutEmail {
   vendorName: string
@@ -172,9 +197,245 @@ export interface PayoutOverview {
   &#x27;24_hours&#x27;: number
   &#x27;7_days&#x27;: number
   &#x27;30_days&#x27;: number
-
 }
+
 export type VendorOperationType &#x3D; &#x27;PRE_ORDER&#x27; | &#x27;ON_DEMAND&#x27; | &#x27;PRE_AND_INSTANT&#x27;
+
+export type DriverType &#x3D; &#x27;DELIVER_PRE_ORDER&#x27; | &#x27;DELIVER_ON_DEMAND&#x27;
+
+export interface OrderGroup {
+  groupId: number
+  orders: OrderI[]
+  maxDeliveryTime: string
+}
+
+export interface DriverWithLocation {
+  driverId: string | any
+  coordinates: number[]
+}
+
+export interface TravelDistanceResult {
+  distance?: number // in meters
+
+  duration?: number // in minutes
+  eta?: string
+}
+
+export interface DeliveryFeeResult {
+  distance?: number // in meters
+
+  duration?: number // in minutes
+  fee: number // in naira
+}
+export interface ScheduledListingDto {
+  vendor: string
+  listing: string
+  quantity: number
+  availableDate: number
+}
+
+export interface DeliveryI {
+  _id: string
+  user: UserI
+
+  driver: any
+
+  order: OrderI
+
+  listing: ListingMenuI
+
+  vendor: VendorI
+
+  createdAt: string
+
+  updatedAt: string
+
+  status: string
+
+  pickupLocation: LocationCoordinates
+
+  dropOffLocation: LocationCoordinates
+
+  currentLocation: LocationCoordinates
+
+  completed: boolean
+
+  deliveredWithinTime: boolean
+
+  deliveryTime: number
+
+  assignedToDriver: boolean
+
+  deliveryType: OrderType
+
+  travelMeta?: {
+    distance: number
+    travelTime: number
+  }
+}
+
+export interface DriverI {
+  _id: string
+  available: boolean
+
+  createdAt: string
+
+  email: string
+
+  firstName: string
+
+  isDeleted: false
+
+  isValidated: boolean
+
+  lastName: string
+
+  location: LocationCoordinates
+
+  password: string
+
+  phone: string
+
+  state: string
+
+  status: &#x27;ONLINE&#x27; | &#x27;OFFLINE&#x27;
+
+  trips: DeliveryI[]
+
+  totalTrips: number
+  type: DriverType
+
+  updatedAt: string
+}
+
+export interface CheckUserAccountI {
+  hasAccount: boolean
+  firstName: string | undefined
+}
+
+export interface ScheduledListingI {
+  _id: string
+
+  vendor: VendorI
+
+  listing: ListingMenuI
+
+  quantity: number
+  availableDate: number
+
+  updatedAt: string
+
+  createdAt: string
+
+  soldOut: boolean
+
+  remainingQuantity: number
+}
+
+export interface CartConstants {
+  SERVICE_FEE: number
+  VAT_FEE: number
+}
+
+export interface DeliveryPriceMeta {
+  GAS_PRICE: number
+  BASE_FEE: number
+  SHORT_DISTANCE_RATE: number
+  MEDIUM_DISTANCE_RATE: number
+  LONG_DISTANCE_RATE: number
+  MAX_DELIVERY_FEE_PAYABLE: number
+}
+
+export interface DriverCommissionMeta {
+  commissionPerKm: 25 // 25 naira per each kilometre
+}
+export interface AppConstants {
+  cart: CartConstants
+
+  driver?: DriverCommissionMeta
+  delivery: DeliveryPriceMeta
+}
+
+export interface ScheduledPushPayload {
+  vendor: string
+  listingName: string
+  listingAvailableDate: number
+}
+
+export interface VendorSoldOutPush extends BasePushMessage {
+  vendorName: string
+  listingName: string
+  listingAvailableDate: string
+  listingQuantity: number
+}
+
+export interface BasePushMessage {
+  token: string
+}
+
+export interface VendorApprovedPush extends BasePushMessage {
+  vendorName: string
+}
+
+export interface VendorRejectPush extends BasePushMessage {
+  vendorName: string
+
+  rejectionReason: string
+}
+
+export interface ListingApprovePush extends BasePushMessage {
+  vendorName: string
+  listingName: string
+}
+
+export interface ListingRejectPush extends BasePushMessage {
+  vendorName: string
+  listingName: string
+  rejectionReason: string
+}
+
+export interface UserHomePage {
+  mostPopularVendors: VendorUserI[]
+
+  instantDelivery: VendorUserI[]
+
+  homeMadeChefs: VendorUserI[]
+
+  fastestDelivery: VendorUserI[]
+
+  allVendors: VendorUserI[]
+
+  scheduledListingsTomorrow: ListingMenuI[]
+}
+
+export interface VendorServiceHomePageResult {
+  nearest: VendorI[]
+  allVendors: VendorI[]
+}
+
+export interface ReviewServiceGetMostReviewed {
+  listings: ListingMenu[]
+  vendors: Vendor[]
+}
+
+export interface DriverStats {
+  distance: number
+  time: number
+  earnings: number
+}
+
+export interface DriverStatGroup {
+  today: DriverStats
+  yesterday: DriverStats
+  week: DriverStats
+  month: DriverStats
+}
+export interface DeliveryTaskStream {
+  driverId: string
+  vendorName: string
+
+  orderId: string
+}
 </code></pre>
     </div>
 </div>

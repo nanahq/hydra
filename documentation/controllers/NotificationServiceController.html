@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >NotificationServiceController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >NotificationServiceController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -64,7 +70,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -78,22 +84,52 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#processPaidOrder" >processPaidOrder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendListingApproved" >sendListingApproved</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendListingRejectedPush" >sendListingRejectedPush</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#sendOrderStatus" >sendOrderStatus</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#sendPayoutEmails" >sendPayoutEmails</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendSoldOutPush" >sendSoldOutPush</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendVendorApprovedPush" >sendVendorApprovedPush</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#sendVerification" >sendVerification</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#vendorAcceptOrder" >vendorAcceptOrder</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#verify" >verify</a>
                             </li>
@@ -109,8 +145,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -118,18 +154,19 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="sendOrderStatus"></a>
+                    <a name="processPaidOrder"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>sendOrderStatus</b></span>
-                        <a href="#sendOrderStatus"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>processPaidOrder</b></span>
+                        <a href="#processPaidOrder"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendOrderStatus(data: <a href="../classes/OrderStatusUpdateDto.html" target="_self">OrderStatusUpdateDto</a>, context: RmqContext)</code>
+                    <code>processPaidOrder(data: <a href="../interfaces/OrderStatusUpdateDto.html" target="_self">OrderStatusUpdateDto</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -137,14 +174,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@EventPattern(QUEUE_MESSAGE.ORDER_STATUS_UPDATE)<br /></code>
+                    <code>@EventPattern(QUEUE_MESSAGE.PROCESS_PAID_ORDER)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="59"
-                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:59</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:74</a></div>
                 </td>
             </tr>
 
@@ -154,7 +191,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -167,7 +204,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/OrderStatusUpdateDto.html" target="_self" >OrderStatusUpdateDto</a></code>
+                                                <code><a href="../interfaces/OrderStatusUpdateDto.html" target="_self" >OrderStatusUpdateDto</a></code>
                                     </td>
 
                                     <td>
@@ -198,7 +235,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -208,18 +245,19 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="sendPayoutEmails"></a>
+                    <a name="sendListingApproved"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>sendPayoutEmails</b></span>
-                        <a href="#sendPayoutEmails"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>sendListingApproved</b></span>
+                        <a href="#sendListingApproved"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendPayoutEmails(data: <a href="../interfaces/SendPayoutEmail.html" target="_self">SendPayoutEmail[]</a>, context: RmqContext)</code>
+                    <code>sendListingApproved(data: <a href="../interfaces/ListingApprovePush.html" target="_self">ListingApprovePush</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -227,14 +265,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@EventPattern(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS)<br /></code>
+                    <code>@EventPattern(QUEUE_MESSAGE.NOTIFICATION_LISTING_APPROVED)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="87"
-                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:87</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:144</a></div>
                 </td>
             </tr>
 
@@ -244,7 +282,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -257,7 +295,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../interfaces/SendPayoutEmail.html" target="_self" >SendPayoutEmail[]</a></code>
+                                                <code><a href="../interfaces/ListingApprovePush.html" target="_self" >ListingApprovePush</a></code>
                                     </td>
 
                                     <td>
@@ -288,7 +326,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -298,18 +336,19 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="sendVerification"></a>
+                    <a name="sendListingRejectedPush"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>sendVerification</b></span>
-                        <a href="#sendVerification"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>sendListingRejectedPush</b></span>
+                        <a href="#sendListingRejectedPush"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendVerification(data: <a href="../classes/verifyPhoneRequest.html" target="_self">verifyPhoneRequest</a>, context: RmqContext)</code>
+                    <code>sendListingRejectedPush(data: <a href="../interfaces/ListingRejectPush.html" target="_self">ListingRejectPush</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -317,14 +356,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@EventPattern(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION)<br /></code>
+                    <code>@EventPattern(QUEUE_MESSAGE.NOTIFICATION_LISTING_REJECTED)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:45</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="158"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:158</a></div>
                 </td>
             </tr>
 
@@ -334,7 +373,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -347,7 +386,98 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/verifyPhoneRequest.html" target="_self" >verifyPhoneRequest</a></code>
+                                                <code><a href="../interfaces/ListingRejectPush.html" target="_self" >ListingRejectPush</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendOrderStatus"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendOrderStatus</b></span>
+                        <a href="#sendOrderStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendOrderStatus(data: <a href="../interfaces/OrderStatusUpdateDto.html" target="_self">OrderStatusUpdateDto</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@EventPattern(QUEUE_MESSAGE.ORDER_STATUS_UPDATE)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:60</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/OrderStatusUpdateDto.html" target="_self" >OrderStatusUpdateDto</a></code>
                                     </td>
 
                                     <td>
@@ -378,7 +508,371 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendPayoutEmails"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendPayoutEmails</b></span>
+                        <a href="#sendPayoutEmails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendPayoutEmails(data: SendPayoutEmail[], context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@EventPattern(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="102"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:102</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                            <code>SendPayoutEmail[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendSoldOutPush"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendSoldOutPush</b></span>
+                        <a href="#sendSoldOutPush"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendSoldOutPush(data: <a href="../interfaces/VendorSoldOutPush.html" target="_self">VendorSoldOutPush</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@EventPattern(QUEUE_MESSAGE.NOTIFICATION_SCHEDULED_SOLD_OUT)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="116"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:116</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/VendorSoldOutPush.html" target="_self" >VendorSoldOutPush</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendVendorApprovedPush"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendVendorApprovedPush</b></span>
+                        <a href="#sendVendorApprovedPush"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendVendorApprovedPush(data: <a href="../interfaces/VendorApprovedPush.html" target="_self">VendorApprovedPush</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@EventPattern(QUEUE_MESSAGE.NOTIFICATION_APPROVE_VENDOR)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="130"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:130</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/VendorApprovedPush.html" target="_self" >VendorApprovedPush</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendVerification"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendVerification</b></span>
+                        <a href="#sendVerification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendVerification(data: <a href="../interfaces/verifyPhoneRequest.html" target="_self">verifyPhoneRequest</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@EventPattern(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="46"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:46</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/verifyPhoneRequest.html" target="_self" >verifyPhoneRequest</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -390,6 +884,7 @@
                 <td class="col-md-4">
                     <a name="vendorAcceptOrder"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>vendorAcceptOrder</b></span>
                         <a href="#vendorAcceptOrder"><span class="icon ion-ios-link"></span></a>
@@ -413,8 +908,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="73"
-                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:73</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="88"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:88</a></div>
                 </td>
             </tr>
 
@@ -424,7 +919,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -467,7 +962,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -479,6 +974,7 @@
                 <td class="col-md-4">
                     <a name="verify"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>verify</b></span>
                         <a href="#verify"><span class="icon ion-ios-link"></span></a>
@@ -488,7 +984,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>verify(data: <a href="../classes/PhoneVerificationPayload.html" target="_self">PhoneVerificationPayload</a>, context: RmqContext)</code>
+                    <code>verify(data: <a href="../interfaces/PhoneVerificationPayload.html" target="_self">PhoneVerificationPayload</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -502,8 +998,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">apps/notification-service/src/notification-service.controller.ts:32</a></div>
                 </td>
             </tr>
 
@@ -513,7 +1009,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -526,7 +1022,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/PhoneVerificationPayload.html" target="_self" >PhoneVerificationPayload</a></code>
+                                                <code><a href="../interfaces/PhoneVerificationPayload.html" target="_self" >PhoneVerificationPayload</a></code>
                                     </td>
 
                                     <td>
@@ -557,7 +1053,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -566,8 +1062,8 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller } from &#x27;@nestjs/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, UseFilters } from &#x27;@nestjs/common&#x27;
 import {
   Ctx,
   EventPattern,
@@ -582,12 +1078,13 @@ import {
   PhoneVerificationPayload,
   verifyPhoneRequest,
   QUEUE_MESSAGE,
-  SendPayoutEmail
+  SendPayoutEmail,
+  OrderStatusUpdateDto, ExceptionFilterRpc, VendorSoldOutPush, VendorApprovedPush, ListingApprovePush, ListingRejectPush
 } from &#x27;@app/common&#x27;
 import { NotificationServiceService } from &#x27;./notification-service.service&#x27;
-import { OrderStatusUpdateDto } from &#x27;@app/common/dto/OrderStatusUpdate.dto&#x27;
 import { TransactionEmails } from &#x27;./email/transactional.service&#x27;
 
+@UseFilters(new ExceptionFilterRpc())
 @Controller()
 export class NotificationServiceController {
   constructor (
@@ -638,6 +1135,20 @@ export class NotificationServiceController {
     }
   }
 
+  @EventPattern(QUEUE_MESSAGE.PROCESS_PAID_ORDER)
+  async processPaidOrder (
+    @Payload() data: OrderStatusUpdateDto,
+      @Ctx() context: RmqContext
+  ): Promise&lt;any&gt; {
+    try {
+      return await this.notificationServiceService.processPaidOrder(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @EventPattern(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER)
   async vendorAcceptOrder (
     @Payload() { phone }: { phone: string },
@@ -659,6 +1170,62 @@ export class NotificationServiceController {
   ): Promise&lt;void&gt; {
     try {
       await this.transctionalEmail.sendVendorPayoutEmail(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.NOTIFICATION_SCHEDULED_SOLD_OUT)
+  async sendSoldOutPush (
+    @Payload() data: VendorSoldOutPush,
+      @Ctx() context: RmqContext
+  ): Promise&lt;void&gt; {
+    try {
+      return await this.notificationServiceService.sendSoldOutMessage(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.NOTIFICATION_APPROVE_VENDOR)
+  async sendVendorApprovedPush (
+    @Payload() data: VendorApprovedPush,
+      @Ctx() context: RmqContext
+  ): Promise&lt;void&gt; {
+    try {
+      return await this.notificationServiceService.sendVendorApprovedPush(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.NOTIFICATION_LISTING_APPROVED)
+  async sendListingApproved (
+    @Payload() data: ListingApprovePush,
+      @Ctx() context: RmqContext
+  ): Promise&lt;void&gt; {
+    try {
+      return await this.notificationServiceService.sendListingApprovedPush(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.NOTIFICATION_LISTING_REJECTED)
+  async sendListingRejectedPush (
+    @Payload() data: ListingRejectPush,
+      @Ctx() context: RmqContext
+  ): Promise&lt;void&gt; {
+    try {
+      return await this.notificationServiceService.sendListingRejectedPush(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

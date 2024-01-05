@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >VendorController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >VendorController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,34 +90,63 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createSettings" >createSettings</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getSetting" >getSetting</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getSubscription" >getSubscription</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendorProfile" >getVendorProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#registerNewVendor" >registerNewVendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#update" >update</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateSubscriptionNotification" >updateSubscriptionNotification</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateVendorLogo" >updateVendorLogo</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateVendorProfile" >updateVendorProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateVendorRestaurantImage" >updateVendorRestaurantImage</a>
                             </li>
@@ -127,8 +162,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -138,6 +173,8 @@
                 <td class="col-md-4">
                     <a name="createSettings"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createSettings</b></span>
                         <a href="#createSettings"><span class="icon ion-ios-link"></span></a>
@@ -147,7 +184,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createSettings(data: <a href="../classes/UpdateVendorSettingsDto.html" target="_self">UpdateVendorSettingsDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                    <code>createSettings(data: <a href="../interfaces/UpdateVendorSettingsDto.html" target="_self">UpdateVendorSettingsDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
                 </td>
             </tr>
 
@@ -161,8 +198,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="144"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:144</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="169"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:169</a></div>
                 </td>
             </tr>
 
@@ -172,7 +209,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -185,7 +222,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/UpdateVendorSettingsDto.html" target="_self" >UpdateVendorSettingsDto</a></code>
+                                                <code><a href="../interfaces/UpdateVendorSettingsDto.html" target="_self" >UpdateVendorSettingsDto</a></code>
                                     </td>
 
                                     <td>
@@ -215,7 +252,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -227,6 +264,8 @@
                 <td class="col-md-4">
                     <a name="getSetting"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getSetting</b></span>
                         <a href="#getSetting"><span class="icon ion-ios-link"></span></a>
@@ -250,8 +289,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="128"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:128</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="149"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:149</a></div>
                 </td>
             </tr>
 
@@ -261,7 +300,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -304,7 +343,87 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSubscription"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getSubscription</b></span>
+                        <a href="#getSubscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getSubscription(vendor: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;subscription&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="226"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:226</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ScheduledListingNotification&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -316,6 +435,8 @@
                 <td class="col-md-4">
                     <a name="getVendorProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendorProfile</b></span>
                         <a href="#getVendorProfile"><span class="icon ion-ios-link"></span></a>
@@ -339,8 +460,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="62"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:62</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:73</a></div>
                 </td>
             </tr>
 
@@ -350,7 +471,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -382,7 +503,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -394,6 +515,7 @@
                 <td class="col-md-4">
                     <a name="registerNewVendor"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>registerNewVendor</b></span>
                         <a href="#registerNewVendor"><span class="icon ion-ios-link"></span></a>
@@ -403,7 +525,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>registerNewVendor(request: <a href="../classes/CreateVendorDto.html" target="_self">CreateVendorDto</a>)</code>
+                    <code>registerNewVendor(request: <a href="../interfaces/CreateVendorDto.html" target="_self">CreateVendorDto</a>)</code>
                 </td>
             </tr>
 
@@ -417,8 +539,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="47"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:47</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:50</a></div>
                 </td>
             </tr>
 
@@ -428,7 +550,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -441,7 +563,7 @@
                                 <tr>
                                     <td>request</td>
                                     <td>
-                                                <code><a href="../classes/CreateVendorDto.html" target="_self" >CreateVendorDto</a></code>
+                                                <code><a href="../interfaces/CreateVendorDto.html" target="_self" >CreateVendorDto</a></code>
                                     </td>
 
                                     <td>
@@ -460,7 +582,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -472,6 +594,8 @@
                 <td class="col-md-4">
                     <a name="update"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>update</b></span>
                         <a href="#update"><span class="icon ion-ios-link"></span></a>
@@ -481,7 +605,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>update(data: <a href="../classes/UpdateVendorSettingsDto.html" target="_self">UpdateVendorSettingsDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                    <code>update(data: <a href="../interfaces/UpdateVendorSettingsDto.html" target="_self">UpdateVendorSettingsDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
                 </td>
             </tr>
 
@@ -495,8 +619,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="164"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:164</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="190"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:190</a></div>
                 </td>
             </tr>
 
@@ -506,7 +630,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -519,7 +643,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/UpdateVendorSettingsDto.html" target="_self" >UpdateVendorSettingsDto</a></code>
+                                                <code><a href="../interfaces/UpdateVendorSettingsDto.html" target="_self" >UpdateVendorSettingsDto</a></code>
                                     </td>
 
                                     <td>
@@ -549,7 +673,99 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateSubscriptionNotification"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>updateSubscriptionNotification</b></span>
+                        <a href="#updateSubscriptionNotification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateSubscriptionNotification(data: <a href="../classes/UpdateSubscriptionByVendorDto.html" target="_self">UpdateSubscriptionByVendorDto</a>, response: Response)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Put(&#x27;subscription&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="209"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:209</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../classes/UpdateSubscriptionByVendorDto.html" target="_self" >UpdateSubscriptionByVendorDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>
+                                            <code>Response</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -561,6 +777,9 @@
                 <td class="col-md-4">
                     <a name="updateVendorLogo"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateVendorLogo</b></span>
                         <a href="#updateVendorLogo"><span class="icon ion-ios-link"></span></a>
@@ -578,14 +797,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@UseGuards(JwtAuthGuard)<br />@UseInterceptors(undefined)<br />@Put(&#x27;logo&#x27;)<br /></code>
+                    <code>@UseGuards(JwtAuthGuard)<br />@UseInterceptors(undefined)<br />@Put(&#x27;image/logo&#x27;)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="74"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:74</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="84"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:84</a></div>
                 </td>
             </tr>
 
@@ -595,7 +814,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -635,11 +854,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;string | undefined&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -651,6 +870,8 @@
                 <td class="col-md-4">
                     <a name="updateVendorProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateVendorProfile</b></span>
                         <a href="#updateVendorProfile"><span class="icon ion-ios-link"></span></a>
@@ -674,8 +895,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="107"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:107</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="126"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:126</a></div>
                 </td>
             </tr>
 
@@ -685,7 +906,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -729,7 +950,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -741,6 +962,9 @@
                 <td class="col-md-4">
                     <a name="updateVendorRestaurantImage"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateVendorRestaurantImage</b></span>
                         <a href="#updateVendorRestaurantImage"><span class="icon ion-ios-link"></span></a>
@@ -758,14 +982,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Put(&#x27;image&#x27;)<br /></code>
+                    <code>@UseGuards(JwtAuthGuard)<br />@UseInterceptors(undefined)<br />@Put(&#x27;image/restaurant&#x27;)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="90"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:90</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="109"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/vendor.controller.ts:109</a></div>
                 </td>
             </tr>
 
@@ -775,7 +999,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -815,11 +1039,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;string | undefined&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -828,16 +1052,17 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Body,
   Controller,
   Get,
-  HttpException,
+  HttpException, HttpStatus,
   Inject,
+  Logger,
   Param,
   Post,
-  Put,
+  Put, Res,
   UploadedFile,
   UseGuards,
   UseInterceptors
@@ -845,33 +1070,35 @@
 
 import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
 import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
-
+import { Response } from &#x27;express&#x27;
 import {
+  CurrentUser,
+  IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  Vendor,
+  ResponseWithStatus,
   ServicePayload,
-  IRpcException,
-  ResponseWithStatus
+  Vendor,
+  UpdateVendorSettingsDto,
+  CreateVendorDto, UpdateSubscriptionByVendorDto, ScheduledListingNotification
 } from &#x27;@app/common&#x27;
 
 import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
-import { CurrentUser } from &#x27;./current-user.decorator&#x27;
-import { CreateVendorDto, UpdateVendorSettingsDto } from &#x27;@app/common/database/dto/vendor.dto&#x27;
-import { Logger } from &#x27;winston&#x27;
-import { WINSTON_MODULE_PROVIDER } from &#x27;nest-winston&#x27;
 import { FileInterceptor } from &#x27;@nestjs/platform-express&#x27;
 import * as multer from &#x27;multer&#x27;
-import { GoogleFileService } from &#x27;../google-file.service&#x27;
+import { AwsService } from &#x27;../aws.service&#x27;
+
 @Controller(&#x27;vendor&#x27;)
 export class VendorController {
+  private readonly logger &#x3D; new Logger(VendorController.name)
+
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorClient: ClientProxy,
-    @Inject(WINSTON_MODULE_PROVIDER)
-    private readonly logger: Logger,
-    private readonly googleService: GoogleFileService
 
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy,
+    private readonly awsService: AwsService
   ) {}
 
   @Post(&#x27;register&#x27;)
@@ -879,12 +1106,20 @@ export class VendorController {
     const { businessEmail, email, ...rest } &#x3D; request
     this.logger.debug(&#x27;Registering a new vendor&#x27;)
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
-      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR, { businessEmail: businessEmail.toLowerCase(), email: email.toLowerCase(), ...rest }).pipe(
-        catchError((error: IRpcException) &#x3D;&gt; {
-          this.logger.error(&#x60;Failed to register a new vendor. Reason: ${error.message}&#x60;)
-          throw new HttpException(error.message, error.status)
+      this.vendorClient
+        .send(QUEUE_MESSAGE.CREATE_VENDOR, {
+          businessEmail: businessEmail.toLowerCase(),
+          email: email.toLowerCase(),
+          ...rest
         })
-      )
+        .pipe(
+          catchError((error: IRpcException) &#x3D;&gt; {
+            this.logger.error(
+              &#x60;Failed to register a new vendor. Reason: ${error.message}&#x60;
+            )
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -900,30 +1135,38 @@ export class VendorController {
       storage: multer.memoryStorage()
     })
   )
-
-  @Put(&#x27;logo&#x27;)
+  @Put(&#x27;image/logo&#x27;)
   async updateVendorLogo (
     @CurrentUser() vendor: Vendor,
       @UploadedFile() file: Express.Multer.File
-  ): Promise&lt;string&gt; {
-    const photo &#x3D; await this.googleService.saveToCloud(file)
-    const payload: ServicePayload&lt;string&gt; &#x3D; {
+  ): Promise&lt;string | undefined&gt; {
+    const photo &#x3D; await this.awsService.upload(file)
+    const payload: ServicePayload&lt;undefined | string&gt; &#x3D; {
       userId: vendor._id as any,
       data: photo
     }
     await lastValueFrom(
       this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_LOGO, payload)
+        .pipe(catchError((error) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        }))
     )
     return photo
   }
 
-  @Put(&#x27;image&#x27;)
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor(&#x27;image&#x27;, {
+      storage: multer.memoryStorage()
+    })
+  )
+  @Put(&#x27;image/restaurant&#x27;)
   async updateVendorRestaurantImage (
     @CurrentUser() vendor: Vendor,
       @UploadedFile() file: Express.Multer.File
-  ): Promise&lt;string&gt; {
-    const photo &#x3D; await this.googleService.saveToCloud(file)
-    const payload: ServicePayload&lt;string&gt; &#x3D; {
+  ): Promise&lt;string | undefined&gt; {
+    const photo &#x3D; await this.awsService.upload(file)
+    const payload: ServicePayload&lt;string | undefined&gt; &#x3D; {
       userId: vendor._id as any,
       data: photo
     }
@@ -947,7 +1190,9 @@ export class VendorController {
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
       this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE, payload).pipe(
         catchError((error: IRpcException) &#x3D;&gt; {
-          this.logger.error(&#x60;Failed to update vendor profile. Reason: ${error.message}&#x60;)
+          this.logger.error(
+            &#x60;Failed to update vendor profile. Reason: ${error.message}&#x60;
+          )
           throw new HttpException(error.message, error.status)
         })
       )
@@ -961,7 +1206,11 @@ export class VendorController {
       @CurrentUser() { _id }: Vendor
   ): Promise&lt;ResponseWithStatus&gt; {
     return await lastValueFrom(
-      this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_SETTINGS, { vid: _id, settingId: id })
+      this.vendorClient
+        .send(QUEUE_MESSAGE.GET_VENDOR_SETTINGS, {
+          vid: _id,
+          settingId: id
+        })
         .pipe(
           catchError((error: IRpcException) &#x3D;&gt; {
             throw new HttpException(error.message, error.status)
@@ -981,7 +1230,8 @@ export class VendorController {
       data
     }
     return await lastValueFrom(
-      this.vendorClient.send(QUEUE_MESSAGE.CREATE_VENDOR_SETTINGS, payload)
+      this.vendorClient
+        .send(QUEUE_MESSAGE.CREATE_VENDOR_SETTINGS, payload)
         .pipe(
           catchError((error: IRpcException) &#x3D;&gt; {
             throw new HttpException(error.message, error.status)
@@ -1001,12 +1251,46 @@ export class VendorController {
       data
     }
     return await lastValueFrom(
-      this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_SETTING, payload)
-        .pipe(
-          catchError((error: IRpcException) &#x3D;&gt; {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.vendorClient.send(QUEUE_MESSAGE.UPDATE_VENDOR_SETTING, payload).pipe(
+        catchError((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(&#x27;subscription&#x27;)
+  async updateSubscriptionNotification (
+    @Body() data: UpdateSubscriptionByVendorDto,
+      @Res() response: Response
+  ): Promise&lt;void&gt; {
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.VENDOR_UPDATE_NOTIFICATION_SETTINGS, data).pipe(
+        catchError((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+
+    response.status(HttpStatus.OK).end()
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(&#x27;subscription&#x27;)
+  async getSubscription (
+    @CurrentUser() vendor: Vendor
+  ): Promise&lt;ScheduledListingNotification&gt; {
+    const payload: ServicePayload&lt;null&gt; &#x3D; {
+      userId: vendor._id as any,
+      data: null
+    }
+    return await lastValueFrom(
+      this.notificationClient.send(QUEUE_MESSAGE.GET_VENDOR_SUBSCRIPTION, payload).pipe(
+        catchError((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 }

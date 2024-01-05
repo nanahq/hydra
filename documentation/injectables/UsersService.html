@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,36 +39,58 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >UsersService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >UsersService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/users-service/src/users-service.odsa.service.ts</code>
+            <code>apps/users-service/src/users-service.service.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#logger" >logger</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -82,6 +104,11 @@
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Async</span>
                                 <a href="#checkExistingUser" >checkExistingUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#checkUserAccount" >checkUserAccount</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -99,6 +126,10 @@
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#register" >register</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#resendPhoneNumberRequest" >resendPhoneNumberRequest</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -129,18 +160,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(usersRepository: <a href="../injectables/UserRepository.html" target="_self">UserRepository</a>)</code>
+<code>constructor(usersRepository: <a href="../injectables/UserRepository.html" target="_self">UserRepository</a>, notificationClient: ClientProxy)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">apps/users-service/src/users-service.service.ts:22</a></div>
                             </td>
                         </tr>
 
@@ -169,6 +200,18 @@
                                                     </td>
 
                                                 </tr>
+                                                <tr>
+                                                        <td>notificationClient</td>
+
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -178,7 +221,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
@@ -199,15 +242,99 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>checkExistingUser(phone: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>checkExistingUser(phone: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="143"
-                            class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:143</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="234"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:234</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>phone</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>email</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkUserAccount"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>checkUserAccount</b></span>
+                        <a href="#checkUserAccount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkUserAccount(phone: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="220"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:220</a></div>
                 </td>
             </tr>
 
@@ -245,7 +372,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+                        <b>Returns : </b>        <code><a href="../interfaces/CheckUserAccountI.html" target="_self" >Promise&lt;CheckUserAccountI&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -277,8 +404,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="118"
-                            class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:118</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="183"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:183</a></div>
                 </td>
             </tr>
 
@@ -348,8 +475,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="102"
-                            class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:102</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="164"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:164</a></div>
                 </td>
             </tr>
 
@@ -419,8 +546,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="123"
-                            class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:123</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="191"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:191</a></div>
                 </td>
             </tr>
 
@@ -483,15 +610,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>register(undefined: <a href="../classes/registerUserRequest.html" target="_self">registerUserRequest</a>)</code>
+                    <code>register(undefined: <a href="../interfaces/registerUserRequest.html" target="_self">registerUserRequest</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="22"
-                            class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:22</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:29</a></div>
                 </td>
             </tr>
 
@@ -513,7 +640,78 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/registerUserRequest.html" target="_self" >registerUserRequest</a></code>
+                                                <code><a href="../interfaces/registerUserRequest.html" target="_self" >registerUserRequest</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resendPhoneNumberRequest"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>resendPhoneNumberRequest</b></span>
+                        <a href="#resendPhoneNumberRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resendPhoneNumberRequest(phone: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:65</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>phone</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -561,8 +759,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="137"
-                            class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:137</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="208"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:208</a></div>
                 </td>
             </tr>
 
@@ -644,8 +842,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="87"
-                            class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:87</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="145"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:145</a></div>
                 </td>
             </tr>
 
@@ -707,15 +905,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateUserStatus(undefined: <a href="../classes/verifyPhoneRequest.html" target="_self">verifyPhoneRequest</a>)</code>
+                    <code>updateUserStatus(undefined: <a href="../interfaces/verifyPhoneRequest.html" target="_self">verifyPhoneRequest</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="73"
-                            class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:73</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:127</a></div>
                 </td>
             </tr>
 
@@ -737,7 +935,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/verifyPhoneRequest.html" target="_self" >verifyPhoneRequest</a></code>
+                                                <code><a href="../interfaces/verifyPhoneRequest.html" target="_self" >verifyPhoneRequest</a></code>
                                     </td>
 
                                     <td>
@@ -752,7 +950,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -777,15 +975,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>validateUser(undefined: <a href="../classes/loginUserRequest.html" target="_self">loginUserRequest</a>)</code>
+                    <code>validateUser(undefined: <a href="../interfaces/loginUserRequest.html" target="_self">loginUserRequest</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">apps/users-service/src/users-service.odsa.service.ts:45</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="86"
+                            class="link-to-prism">apps/users-service/src/users-service.service.ts:86</a></div>
                 </td>
             </tr>
 
@@ -807,7 +1005,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/loginUserRequest.html" target="_self" >loginUserRequest</a></code>
+                                                <code><a href="../interfaces/loginUserRequest.html" target="_self" >loginUserRequest</a></code>
                                     </td>
 
                                     <td>
@@ -833,17 +1031,51 @@
         </tbody>
     </table>
 </section>
+            <section data-compodoc="block-properties">
+
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logger"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>logger</b></span>
+                        <a href="#logger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Logger()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">apps/users-service/src/users-service.service.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
 
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Injectable } from &#x27;@nestjs/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Inject, Injectable, Logger } from &#x27;@nestjs/common&#x27;
 import * as bcrypt from &#x27;bcryptjs&#x27;
 
 import {
-  FitRpcException,
-  loginUserRequest,
+  CheckUserAccountI,
+  FitRpcException, internationalisePhoneNumber,
+  loginUserRequest, QUEUE_MESSAGE, QUEUE_SERVICE,
   registerUserRequest,
   ResponseWithStatus,
   ServicePayload,
@@ -853,47 +1085,84 @@ import {
 } from &#x27;@app/common&#x27;
 import { UserRepository } from &#x27;./users.repository&#x27;
 import { UpdateUserDto } from &#x27;@app/common/dto/UpdateUserDto&#x27;
+import { lastValueFrom } from &#x27;rxjs&#x27;
+import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
+
 @Injectable()
 export class UsersService {
+  private readonly logger &#x3D; new Logger()
   constructor (
-    private readonly usersRepository: UserRepository
+    private readonly usersRepository: UserRepository,
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy
   ) {}
 
   async register ({
+    email,
     phone,
     password
-  }: registerUserRequest): Promise&lt;ResponseWithStatus&gt; {
-    await this.checkExistingUser(phone) // Gate to check if phone has already been registered
+  }: registerUserRequest): Promise&lt;User&gt; {
+    const formattedPhone &#x3D; internationalisePhoneNumber(phone)
+    await this.checkExistingUser(formattedPhone, email) // Gate to check if phone has already been registered
 
     const payload: Partial&lt;User&gt; &#x3D; {
-      phone,
+      email,
+      phone: formattedPhone,
       password: await bcrypt.hash(password, 10),
       isValidated: false
     }
 
     try {
-      await this.usersRepository.create(payload)
-      return { status: 1 }
+      const user &#x3D; await this.usersRepository.create(payload)
+      await lastValueFrom(
+        this.notificationClient.emit(
+          QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
+          {
+            email,
+            phone,
+            password
+          }
+        )
+      )
+      return user
     } catch (error) {
       throw new FitRpcException(
-        &#x27;can not process request. Try again later&#x27;,
+        &#x60;can not process request. Try again later ${JSON.stringify(error)}&#x60;,
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
+  }
+
+  async resendPhoneNumberRequest (phone: string): Promise&lt;ResponseWithStatus&gt; {
+    const user: User | null &#x3D; await this.usersRepository.findOne({ phone })
+
+    if (user &#x3D;&#x3D;&#x3D; null) {
+      throw new FitRpcException(&#x27;User with that phone number does not exist&#x27;, HttpStatus.NOT_FOUND)
+    }
+
+    // if (user.isValidated) {
+    //   throw new FitRpcException(&#x27;Phone number has been verified&#x27;, HttpStatus.BAD_REQUEST)
+    // }
+
+    await lastValueFrom(
+      this.notificationClient.emit(
+        QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
+        { phone }
+      )
+    )
+
+    return { status: 1 }
   }
 
   async validateUser ({
     phone,
     password
   }: loginUserRequest): Promise&lt;{ status: number, data: User }&gt; {
-    const validateUserRequest &#x3D; await this.usersRepository.findOne({ phone })
+    const validateUserRequest: User &#x3D; await this.usersRepository.findOne({ phone })
 
     if (validateUserRequest &#x3D;&#x3D;&#x3D; null) {
-      await this.register({ password, phone })
-      const data &#x3D; await this.usersRepository.findOne({ phone }) as User
-      return { status: 1, data }
+      throw new FitRpcException(&#x27;User with that phone number does not exist&#x27;, HttpStatus.NOT_FOUND)
     }
-
     const isCorrectPassword: boolean &#x3D; await bcrypt.compare(
       password,
       validateUserRequest.password
@@ -906,16 +1175,36 @@ export class UsersService {
       )
     }
 
+    if (!validateUserRequest.isValidated) {
+      await lastValueFrom(
+        this.notificationClient.emit(
+          QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
+          { phone: validateUserRequest.phone }
+        )
+      )
+      throw new FitRpcException(
+        &#x27;Verify phone number&#x27;,
+        HttpStatus.FORBIDDEN
+      )
+    }
+
     validateUserRequest.password &#x3D; &#x27;&#x27;
-    return { status: 2, data: validateUserRequest }
+    return {
+      status: 1,
+      data: validateUserRequest
+    }
   }
 
   async updateUserStatus ({
     phone
-  }: verifyPhoneRequest): Promise&lt;ResponseWithStatus&gt; {
+  }: verifyPhoneRequest): Promise&lt;User&gt; {
     try {
-      await this.usersRepository.findOneAndUpdate({ phone }, { isValidated: true })
-      return { status: 1 }
+      const user &#x3D; await this.usersRepository.findOneAndUpdate(
+        { phone },
+        { isValidated: true }
+      )
+
+      return user
     } catch {
       throw new FitRpcException(
         &#x27;Failed to update user status&#x27;,
@@ -931,9 +1220,13 @@ export class UsersService {
     try {
       await this.usersRepository.findOneAndUpdate({ _id: userId }, { ...data })
       return { status: 1 }
-    } catch {
+    } catch (error) {
+      this.logger.log({
+        error,
+        message: &#x60;PIM -&gt; failed to update user ${userId}&#x60;
+      })
       throw new FitRpcException(
-        &#x27;Failed to update user status&#x27;,
+        &#x27;Failed to update user profile&#x27;,
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
@@ -941,7 +1234,10 @@ export class UsersService {
 
   async getUser ({ userId }: TokenPayload): Promise&lt;User&gt; {
     try {
-      const user &#x3D; await this.usersRepository.findOne({ _id: userId })
+      const user &#x3D; await this.usersRepository.findOne({
+        _id: userId,
+        isDeleted: false
+      })
       if (user &#x3D;&#x3D;&#x3D; null) {
         throw new Error()
       }
@@ -956,12 +1252,18 @@ export class UsersService {
   }
 
   async deleteUserProfile (userId: string): Promise&lt;ResponseWithStatus&gt; {
-    await this.usersRepository.findOneAndUpdate({ _id: userId }, { isDeleted: true })
+    await this.usersRepository.findOneAndUpdate(
+      { _id: userId },
+      { isDeleted: true }
+    )
     return { status: 1 }
   }
 
   public async getUserWithPhone (phone: string): Promise&lt;User&gt; {
-    const _user &#x3D; await this.usersRepository.findOne({ phone })
+    const _user &#x3D; await this.usersRepository.findOne({
+      phone,
+      isDeleted: false
+    })
 
     if (_user &#x3D;&#x3D;&#x3D; null) {
       throw new FitRpcException(
@@ -974,20 +1276,51 @@ export class UsersService {
     return _user
   }
 
-  public async updateUserOrderCount (orderId: string, userId: string): Promise&lt;ResponseWithStatus&gt; {
-    const user &#x3D; await this.usersRepository.findOne({ _id: userId }) as User
-    await this.usersRepository.findOneAndUpdate({ _id: user?._id }, { orders: [...user?.orders, orderId] })
+  public async updateUserOrderCount (
+    orderId: string,
+    userId: string
+  ): Promise&lt;ResponseWithStatus&gt; {
+    const user &#x3D; (await this.usersRepository.findOne({ _id: userId })) as User
+    await this.usersRepository.findOneAndUpdate(
+      { _id: user?._id },
+      { orders: [...user?.orders, orderId] }
+    )
     return { status: 1 }
   }
 
-  private async checkExistingUser (phone: string): Promise&lt;void&gt; {
-    const user &#x3D; await this.usersRepository.findOne({ phone })
-    if (user !&#x3D;&#x3D; null) {
+  public async checkUserAccount (phone: string): Promise&lt;CheckUserAccountI&gt; {
+    const user: User | null &#x3D; await this.usersRepository.findOne({ phone })
+    if (user &#x3D;&#x3D;&#x3D; null) {
+      return {
+        hasAccount: false,
+        firstName: undefined
+      }
+    }
+    return {
+      hasAccount: true,
+      firstName: user.firstName
+    }
+  }
+
+  private async checkExistingUser (phone: string, email: string): Promise&lt;User&gt; {
+    const _phone: User | null &#x3D; await this.usersRepository.findOne({ phone })
+
+    const _email: User | null &#x3D; await this.usersRepository.findOne({ email })
+
+    if (_phone !&#x3D;&#x3D; null) {
       throw new FitRpcException(
         &#x27;Phone Number is  already registered.&#x27;,
         HttpStatus.CONFLICT
       )
     }
+
+    if (_email !&#x3D;&#x3D; null) {
+      throw new FitRpcException(
+        &#x27;Email is  already registered.&#x27;,
+        HttpStatus.CONFLICT
+      )
+    }
+    return _phone as unknown as User
   }
 }
 </code></pre>

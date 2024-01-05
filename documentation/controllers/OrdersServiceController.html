@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >OrdersServiceController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >OrdersServiceController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,34 +90,82 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#adminAggregates" >adminAggregates</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllFulfilledOrders" >getAllFulfilledOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllOrders" >getAllOrders</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllTransitOrders" >getAllTransitOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllUserOrders" >getAllUserOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getOdsaPreOrders" >getOdsaPreOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getOrderById" >getOrderById</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getOrderByRefNumber" >getOrderByRefNumber</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getOrders" >getOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getPaidOrders" >getPaidOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getUsersOrders" >getUsersOrders</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendorsOrders" >getVendorsOrders</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#placeOrder" >placeOrder</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateOrderStatus" >updateOrderStatus</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateOrderStatusWhenPaid" >updateOrderStatusWhenPaid</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#vendorAcceptOrder" >vendorAcceptOrder</a>
                             </li>
@@ -127,8 +181,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -136,8 +190,167 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="adminAggregates"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>adminAggregates</b></span>
+                        <a href="#adminAggregates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adminAggregates(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD_ORDER_METRICS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:155</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;[] | null&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllFulfilledOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllFulfilledOrders</b></span>
+                        <a href="#getAllFulfilledOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllFulfilledOrders(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_FULFILLED_ORDERS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="207"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:207</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getAllOrders"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllOrders</b></span>
                         <a href="#getAllOrders"><span class="icon ion-ios-link"></span></a>
@@ -161,8 +374,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="111"
-                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:111</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="113"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:113</a></div>
                 </td>
             </tr>
 
@@ -172,7 +385,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -216,7 +429,266 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllTransitOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllTransitOrders</b></span>
+                        <a href="#getAllTransitOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllTransitOrders(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_TRANSIT_ORDERS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="194"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:194</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllUserOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllUserOrders</b></span>
+                        <a href="#getAllUserOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllUserOrders(undefined: literal type, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.ADMIN_GET_USER_ORDERS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="220"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:220</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOdsaPreOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getOdsaPreOrders</b></span>
+                        <a href="#getOdsaPreOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOdsaPreOrders(undefined: literal type, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.ODSA_GET_ORDERS_PRE)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:144</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;[] | null&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -228,6 +700,7 @@
                 <td class="col-md-4">
                     <a name="getOrderById"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getOrderById</b></span>
                         <a href="#getOrderById"><span class="icon ion-ios-link"></span></a>
@@ -237,7 +710,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getOrderById(undefined: ServicePayload<literal type>, context: RmqContext)</code>
+                    <code>getOrderById(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;literal type&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -251,8 +724,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="97"
-                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:97</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="99"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:99</a></div>
                 </td>
             </tr>
 
@@ -262,7 +735,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -274,7 +747,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;literal type&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;literal type&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -305,7 +778,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -317,6 +790,7 @@
                 <td class="col-md-4">
                     <a name="getOrderByRefNumber"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getOrderByRefNumber</b></span>
                         <a href="#getOrderByRefNumber"><span class="icon ion-ios-link"></span></a>
@@ -326,7 +800,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getOrderByRefNumber(undefined: ServicePayload<literal type>, context: RmqContext)</code>
+                    <code>getOrderByRefNumber(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;literal type&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -340,8 +814,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="83"
-                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:83</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:85</a></div>
                 </td>
             </tr>
 
@@ -351,7 +825,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -363,7 +837,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;literal type&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;literal type&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -394,7 +868,165 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getOrders</b></span>
+                        <a href="#getOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOrders(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_ORDERS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="168"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:168</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPaidOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getPaidOrders</b></span>
+                        <a href="#getPaidOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getPaidOrders(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_PAID_ORDERS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="181"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:181</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -406,6 +1038,7 @@
                 <td class="col-md-4">
                     <a name="getUsersOrders"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getUsersOrders</b></span>
                         <a href="#getUsersOrders"><span class="icon ion-ios-link"></span></a>
@@ -415,7 +1048,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getUsersOrders(undefined: ServicePayload<>, context: RmqContext)</code>
+                    <code>getUsersOrders(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -429,8 +1062,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="69"
-                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:69</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="71"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:71</a></div>
                 </td>
             </tr>
 
@@ -440,7 +1073,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -452,7 +1085,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -483,7 +1116,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -495,6 +1128,7 @@
                 <td class="col-md-4">
                     <a name="getVendorsOrders"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendorsOrders</b></span>
                         <a href="#getVendorsOrders"><span class="icon ion-ios-link"></span></a>
@@ -504,7 +1138,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getVendorsOrders(undefined: ServicePayload<>, context: RmqContext)</code>
+                    <code>getVendorsOrders(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -518,8 +1152,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="41"
-                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:41</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="43"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:43</a></div>
                 </td>
             </tr>
 
@@ -529,7 +1163,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -541,7 +1175,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -572,7 +1206,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -584,6 +1218,7 @@
                 <td class="col-md-4">
                     <a name="placeOrder"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>placeOrder</b></span>
                         <a href="#placeOrder"><span class="icon ion-ios-link"></span></a>
@@ -593,7 +1228,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>placeOrder(data: ServicePayload<any>, context: RmqContext)</code>
+                    <code>placeOrder(data: ServicePayload<PlaceOrderDto>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -607,8 +1242,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:27</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:29</a></div>
                 </td>
             </tr>
 
@@ -618,7 +1253,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -631,7 +1266,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;any&gt;</code>
+                                            <code>ServicePayload&lt;PlaceOrderDto&gt;</code>
                                     </td>
 
                                     <td>
@@ -658,11 +1293,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatusAndData&lt;literal type&gt;&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -674,6 +1309,7 @@
                 <td class="col-md-4">
                     <a name="updateOrderStatus"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateOrderStatus</b></span>
                         <a href="#updateOrderStatus"><span class="icon ion-ios-link"></span></a>
@@ -683,7 +1319,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateOrderStatus(undefined: ServicePayload<UpdateOrderStatusRequestDto>, context: RmqContext)</code>
+                    <code>updateOrderStatus(data: <a href="../interfaces/UpdateOrderStatusRequestDto.html" target="_self">UpdateOrderStatusRequestDto</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -697,8 +1333,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="55"
-                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:55</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="57"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:57</a></div>
                 </td>
             </tr>
 
@@ -708,7 +1344,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -719,8 +1355,9 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;UpdateOrderStatusRequestDto&gt;</code>
+                                                <code><a href="../interfaces/UpdateOrderStatusRequestDto.html" target="_self" >UpdateOrderStatusRequestDto</a></code>
                                     </td>
 
                                     <td>
@@ -751,7 +1388,97 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateOrderStatusWhenPaid"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>updateOrderStatusWhenPaid</b></span>
+                        <a href="#updateOrderStatusWhenPaid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateOrderStatusWhenPaid(undefined: ServicePayload<UpdateOrderStatusPaidRequestDto>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@EventPattern(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="234"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:234</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>ServicePayload&lt;UpdateOrderStatusPaidRequestDto&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -763,6 +1490,7 @@
                 <td class="col-md-4">
                     <a name="vendorAcceptOrder"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>vendorAcceptOrder</b></span>
                         <a href="#vendorAcceptOrder"><span class="icon ion-ios-link"></span></a>
@@ -786,8 +1514,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="123"
-                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:123</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">apps/orders-service/src/orders-service.controller.ts:127</a></div>
                 </td>
             </tr>
 
@@ -797,7 +1525,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -841,7 +1569,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -850,25 +1578,27 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller } from &#x27;@nestjs/common&#x27;
 import { OrdersServiceService } from &#x27;./orders-service.service&#x27;
 import {
+  Ctx, EventPattern,
   MessagePattern,
   Payload,
-  RpcException,
-  Ctx,
-  RmqContext
+  RmqContext,
+  RpcException
 } from &#x27;@nestjs/microservices&#x27;
 import {
-  ResponseWithStatus,
+  Order, OrderI, PaystackChargeResponseData, PlaceOrderDto,
+  QUEUE_MESSAGE,
+  ResponseWithStatus, ResponseWithStatusAndData,
   RmqService,
   ServicePayload,
-  QUEUE_MESSAGE,
-  Order,
+  UpdateOrderStatusPaidRequestDto,
   UpdateOrderStatusRequestDto
 } from &#x27;@app/common&#x27;
 import { FilterQuery } from &#x27;mongoose&#x27;
+
 @Controller(&#x27;order&#x27;)
 export class OrdersServiceController {
   constructor (
@@ -878,9 +1608,9 @@ export class OrdersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_ORDER)
   async placeOrder (
-    @Payload() data: ServicePayload&lt;any&gt;,
+    @Payload() data: ServicePayload&lt;PlaceOrderDto&gt;,
       @Ctx() context: RmqContext
-  ): Promise&lt;ResponseWithStatus&gt; {
+  ): Promise&lt;ResponseWithStatusAndData&lt;{ order: OrderI, paymentMeta: PaystackChargeResponseData }&gt;&gt; {
     try {
       return await this.ordersServiceService.placeOrder(data)
     } catch (error) {
@@ -906,7 +1636,7 @@ export class OrdersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_ORDER_STATUS)
   async updateOrderStatus (
-    @Payload() { data }: ServicePayload&lt;UpdateOrderStatusRequestDto&gt;,
+    @Payload() data: UpdateOrderStatusRequestDto,
       @Ctx() context: RmqContext
   ): Promise&lt;ResponseWithStatus&gt; {
     try {
@@ -961,8 +1691,10 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_ORDERS)
-  async getAllOrders (@Payload() filterQuery: FilterQuery&lt;Order&gt;,
-    @Ctx() context: RmqContext): Promise&lt;Order[]&gt; {
+  async getAllOrders (
+    @Payload() filterQuery: FilterQuery&lt;Order&gt;,
+      @Ctx() context: RmqContext
+  ): Promise&lt;Order[]&gt; {
     try {
       return await this.ordersServiceService.getAllOrderInDb(filterQuery)
     } catch (error) {
@@ -978,7 +1710,114 @@ export class OrdersServiceController {
       @Ctx() context: RmqContext
   ): Promise&lt;void&gt; {
     try {
-      return await this.ordersServiceService.vendorAcceptOrder(data.orderId, data.phone)
+      return await this.ordersServiceService.vendorAcceptOrder(
+        data.orderId,
+        data.phone
+      )
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ODSA_GET_ORDERS_PRE)
+  async getOdsaPreOrders (@Payload() { filter }: { filter: FilterQuery&lt;Order&gt; }, @Ctx() context: RmqContext): Promise&lt;Order[] | null&gt; {
+    try {
+      return await this.ordersServiceService.odsaGetPreOrders(filter)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD_ORDER_METRICS)
+  async adminAggregates (
+    @Ctx() context: RmqContext
+  ): Promise&lt;Order[] | null&gt; {
+    try {
+      return await this.ordersServiceService.adminMetrics()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_ORDERS)
+  async getOrders (
+    @Ctx() context: RmqContext
+  ): Promise&lt;Order[]&gt; {
+    try {
+      return await this.ordersServiceService.getAllOrders()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_PAID_ORDERS)
+  async getPaidOrders (
+    @Ctx() context: RmqContext
+  ): Promise&lt;Order[]&gt; {
+    try {
+      return await this.ordersServiceService.getAllPaidOrder()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_TRANSIT_ORDERS)
+  async getAllTransitOrders (
+    @Ctx() context: RmqContext
+  ): Promise&lt;Order[]&gt; {
+    try {
+      return await this.ordersServiceService.getAllTransitOrders()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_FULFILLED_ORDERS)
+  async getAllFulfilledOrders (
+    @Ctx() context: RmqContext
+  ): Promise&lt;Order[]&gt; {
+    try {
+      return await this.ordersServiceService.getAllFulfilledOrders()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_USER_ORDERS)
+  async getAllUserOrders (
+    @Payload() { userId }: { userId: string },
+      @Ctx() context: RmqContext
+  ): Promise&lt;Order[]&gt; {
+    try {
+      return await this.ordersServiceService.getAllUserOrders(userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.UPDATE_ORDER_STATUS_PAID)
+  async updateOrderStatusWhenPaid (
+    @Payload() { data }: ServicePayload&lt;UpdateOrderStatusPaidRequestDto&gt;,
+      @Ctx() context: RmqContext
+  ): Promise&lt;void&gt; {
+    try {
+      return await this.ordersServiceService.updateStatusPaid(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

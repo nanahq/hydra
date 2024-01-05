@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -34,28 +34,34 @@
 
 
 <ol class="breadcrumb">
-    <li>Modules</li>
-    <li >AppModule</li>
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >AppModule</li>
 </ol>
 
 
 <ul class="nav nav-tabs" role="tablist">
-    <li  class="active" >
-        <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+    <li class="nav-item">
+        <a href="#info"
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
     </li>
-    <li >
-        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    <li class="nav-item">
+        <a href="#source"
+            class="nav-link"
+
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
     </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
 
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/admin-gateway/src/app.module.ts</code>
+            <code>apps/api-gateway/src/app.module.ts</code>
         </p>
 
 
@@ -67,80 +73,11 @@
             </div>
         </div>
 
-        <section>
-    
+        <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="configure"></a>
-                    <span class="name">
-                        <span ><b>configure</b></span>
-                        <a href="#configure"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>configure(consumer: MiddlewareConsumer)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="32"
-                            class="link-to-prism">apps/admin-gateway/src/app.module.ts:32</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>consumer</td>
-                                    <td>
-                                            <code>MiddlewareConsumer</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -163,8 +100,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="102"
-                            class="link-to-prism">apps/admin-gateway/src/app.module.ts:102</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">apps/api-gateway/src/app.module.ts:118</a></div>
                 </td>
             </tr>
 
@@ -176,7 +113,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -224,6 +161,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="configure"></a>
+                    <span class="name">
+                        <span ><b>configure</b></span>
+                        <a href="#configure"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>configure(consumer: MiddlewareConsumer)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">apps/api-gateway/src/app.module.ts:136</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>consumer</td>
+                                    <td>
+                                            <code>MiddlewareConsumer</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="create"></a>
                     <span class="name">
                         <span class="modifier">Static</span>
@@ -243,8 +249,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="36"
-                            class="link-to-prism">apps/admin-gateway/src/app.module.ts:36</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">apps/api-gateway/src/app.module.ts:37</a></div>
                 </td>
             </tr>
 
@@ -282,8 +288,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="42"
-                            class="link-to-prism">apps/admin-gateway/src/app.module.ts:42</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="43"
+                            class="link-to-prism">apps/api-gateway/src/app.module.ts:43</a></div>
                 </td>
             </tr>
 
@@ -321,8 +327,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="115"
-                            class="link-to-prism">apps/admin-gateway/src/app.module.ts:115</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="126"
+                            class="link-to-prism">apps/api-gateway/src/app.module.ts:126</a></div>
                 </td>
             </tr>
 
@@ -342,7 +348,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   DynamicModule,
   INestApplication,
@@ -351,33 +357,34 @@
   NestModule,
   ValidationPipe
 } from &#x27;@nestjs/common&#x27;
-import { ThrottlerModule } from &#x27;@nestjs/throttler&#x27;
 import { ConfigModule, ConfigService } from &#x27;@nestjs/config&#x27;
 import { APP_FILTER, APP_GUARD, NestFactory } from &#x27;@nestjs/core&#x27;
+import { AppMetadata } from &#x27;app.config&#x27;
+import { JwtModule } from &#x27;@nestjs/jwt&#x27;
+import { ThrottlerModule } from &#x27;@nestjs/throttler&#x27;
 
-import * as Joi from &#x27;joi&#x27;
 import * as cookieParser from &#x27;cookie-parser&#x27;
+import * as Joi from &#x27;joi&#x27;
 import helmet from &#x27;helmet&#x27;
 
-import { JwtModule } from &#x27;@nestjs/jwt&#x27;
-import { AppMetadata } from &#x27;app.config&#x27;
-import { AdminController } from &#x27;./module.api/admin.controller&#x27;
+import { FitHttpException, QUEUE_SERVICE, RmqModule } from &#x27;@app/common&#x27;
+import { UsersController } from &#x27;./module.api/users.controller&#x27;
 import { AuthController } from &#x27;./module.api/auth.controller&#x27;
 import { AuthService } from &#x27;./module.api/auth.service&#x27;
 import { LocalStrategy } from &#x27;./auth/strategy/local.strategy&#x27;
 import { JwtStrategy } from &#x27;./auth/strategy/jwt.strategy&#x27;
-import { FitHttpException, QUEUE_SERVICE, RmqModule } from &#x27;@app/common&#x27;
-import { VendorController } from &#x27;./module.api/vendor.controller&#x27;
-import { ListingController } from &#x27;./module.api/listing.controller&#x27;
-import { OrdersController } from &#x27;./module.api/orders.controller&#x27;
-import { ReviewsController } from &#x27;./module.api/reviews.controller&#x27;
+import { VendorsController } from &#x27;./module.api/vendors.controller&#x27;
+import { ListingsController } from &#x27;./module.api/listing.controller&#x27;
+import { OrderController } from &#x27;./module.api/order.controller&#x27;
+import { ReviewController } from &#x27;./module.api/review.controller&#x27;
+import { PaymentController } from &#x27;./module.api/payment.controller&#x27;
+import { AddressBookController } from &#x27;./module.api/address-book.controller&#x27;
+import { LocationController } from &#x27;./module.api/location.controller&#x27;
+import { GeneralController } from &#x27;./module.api/general.controller&#x27;
+import { DeliveriesController } from &#x27;./module.api/deliveries.controller&#x27;
 
 @Module({})
 export class AppModule implements NestModule {
-  configure (consumer: MiddlewareConsumer): void {
-    consumer.apply(cookieParser() as any).forRoutes(&#x27;*&#x27;)
-  }
-
   static async create (): Promise&lt;INestApplication&gt; {
     const app &#x3D; await NestFactory.create(this.forRoot())
     this.configure(app)
@@ -392,10 +399,9 @@ export class AppModule implements NestModule {
           isGlobal: true,
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
-            JWT_EXPIRATION: Joi.string().required(),
-            PORT: Joi.string().required()
+            JWT_EXPIRATION: Joi.string().required()
           }),
-          envFilePath: &#x27;./apps/admin-gateway/.env&#x27;
+          envFilePath: &#x27;./apps/api-gateway/.env&#x27;
         }),
         JwtModule.registerAsync({
           useFactory: (configService: ConfigService) &#x3D;&gt; ({
@@ -408,20 +414,36 @@ export class AppModule implements NestModule {
           }),
           inject: [ConfigService]
         }),
-        RmqModule.register({ name: QUEUE_SERVICE.ADMIN_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.ADMINS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.REVIEWS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE }),
+        ThrottlerModule.forRootAsync({
+          useFactory: () &#x3D;&gt; ({
+            ttl: 60,
+            limit: 10
+          })
+        }),
         AppModule
       ],
       controllers: [
-        AdminController,
+        UsersController,
         AuthController,
-        VendorController,
-        ListingController,
-        OrdersController,
-        ReviewsController
+        VendorsController,
+        ListingsController,
+        OrderController,
+        ReviewController,
+        PaymentController,
+        AddressBookController,
+        LocationController,
+        GeneralController,
+        DeliveriesController
       ],
       providers: [
         AuthService,
@@ -448,18 +470,22 @@ export class AppModule implements NestModule {
     const version &#x3D; this.getVersion()
     app.use(helmet())
     app.useGlobalPipes(new ValidationPipe())
-    app.setGlobalPrefix(&#x60;admin-gateway/${version}&#x60;)
+    app.setGlobalPrefix(&#x60;api-gateway/${version}&#x60;)
   }
-
-  /*
-      Get the version info from App meta data  file or enviromental variable
-      @returns string
-      */
 
   // TODO(@siradji) improve versioning
   static getVersion (): string {
     const { API_VERSION } &#x3D; AppMetadata
     return API_VERSION
+  }
+
+  /*
+        Get the version info from App meta data  file or enviromental variable
+        @returns string
+        */
+
+  configure (consumer: MiddlewareConsumer): void {
+    consumer.apply(cookieParser()).forRoutes(&#x27;*&#x27;)
   }
 }
 </code></pre>

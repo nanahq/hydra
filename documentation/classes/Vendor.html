@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -43,21 +43,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >Vendor</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >Vendor</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -76,7 +82,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -89,57 +95,87 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                <a href="#acc_status" >acc_status</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                 <a href="#businessAddress" >businessAddress</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#businessEmail" >businessEmail</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#businessLogo" >businessLogo</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#businessName" >businessName</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#createdAt" >createdAt</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#email" >email</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                <a href="#expoNotificationToken" >expoNotificationToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                 <a href="#firstName" >firstName</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#isDeleted" >isDeleted</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#isValidated" >isValidated</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#lastName" >lastName</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#location" >location</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#password" >password</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#phone" >phone</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                <a href="#rejection_reason" >rejection_reason</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                 <a href="#restaurantImage" >restaurantImage</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#settings" >settings</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#status" >status</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#updatedAt" >updatedAt</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#_id" >_id</a>
                             </li>
                         </ul>
@@ -156,8 +192,8 @@
 </section>
 
 
-            <section>
-    
+            <section data-compodoc="block-properties">
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -165,8 +201,45 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="acc_status"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>acc_status</b></span>
+                        <a href="#acc_status"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#VendorApprovalStatus" target="_self" >VendorApprovalStatus</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: String, default: undefined})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="businessAddress"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>businessAddress</b></span>
                         <a href="#businessAddress"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -189,7 +262,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -202,6 +275,7 @@
                 <td class="col-md-4">
                     <a name="businessEmail"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>businessEmail</b></span>
                         <a href="#businessEmail"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -224,7 +298,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:26</a></div>
                         </td>
                     </tr>
 
@@ -237,6 +311,7 @@
                 <td class="col-md-4">
                     <a name="businessLogo"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>businessLogo</b></span>
                         <a href="#businessLogo"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -259,7 +334,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:45</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:58</a></div>
                         </td>
                     </tr>
 
@@ -272,6 +347,7 @@
                 <td class="col-md-4">
                     <a name="businessName"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>businessName</b></span>
                         <a href="#businessName"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -294,7 +370,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:40</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:53</a></div>
                         </td>
                     </tr>
 
@@ -307,6 +383,7 @@
                 <td class="col-md-4">
                     <a name="createdAt"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>createdAt</b></span>
                         <a href="#createdAt"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -329,7 +406,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:38</a></div>
                         </td>
                     </tr>
 
@@ -342,6 +419,7 @@
                 <td class="col-md-4">
                     <a name="email"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>email</b></span>
                         <a href="#email"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -364,7 +442,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:20</a></div>
                         </td>
                     </tr>
 
@@ -375,10 +453,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="firstName"></a>
+                    <a name="expoNotificationToken"></a>
                     <span class="name">
-                        <span ><b>firstName</b></span>
-                        <a href="#firstName"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>expoNotificationToken</b></span>
+                        <a href="#expoNotificationToken"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -393,13 +472,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @Prop()<br />
+                            @Prop({type: String})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:8</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:93</a></div>
                         </td>
                     </tr>
 
@@ -410,80 +489,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="isDeleted"></a>
+                    <a name="firstName"></a>
                     <span class="name">
-                        <span ><b>isDeleted</b></span>
-                        <a href="#isDeleted"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @Prop({type: Boolean, default: false})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:56</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="isValidated"></a>
-                    <span class="name">
-                        <span ><b>isValidated</b></span>
-                        <a href="#isValidated"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @Prop({default: false})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:26</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="lastName"></a>
-                    <span class="name">
-                        <span ><b>lastName</b></span>
-                        <a href="#lastName"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>firstName</b></span>
+                        <a href="#firstName"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -515,16 +525,17 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="location"></a>
+                    <a name="isDeleted"></a>
                     <span class="name">
-                        <span ><b>location</b></span>
-                        <a href="#location"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>isDeleted</b></span>
+                        <a href="#isDeleted"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>literal type</code>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
 
                     </td>
                 </tr>
@@ -533,13 +544,121 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @Prop({type: undefined})<br />
+                            @Prop({type: Boolean, default: false})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:63</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isValidated"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>isValidated</b></span>
+                        <a href="#isValidated"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({default: false})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lastName"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>lastName</b></span>
+                        <a href="#lastName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="location"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>location</b></span>
+                        <a href="#location"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/LocationCoordinates.html" target="_self" >LocationCoordinates</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: undefined, coordinates: undefined})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:84</a></div>
                         </td>
                     </tr>
 
@@ -552,6 +671,7 @@
                 <td class="col-md-4">
                     <a name="password"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>password</b></span>
                         <a href="#password"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -574,7 +694,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:29</a></div>
                         </td>
                     </tr>
 
@@ -587,6 +707,7 @@
                 <td class="col-md-4">
                     <a name="phone"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>phone</b></span>
                         <a href="#phone"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -609,7 +730,43 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rejection_reason"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>rejection_reason</b></span>
+                        <a href="#rejection_reason"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: String})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:50</a></div>
                         </td>
                     </tr>
 
@@ -622,6 +779,7 @@
                 <td class="col-md-4">
                     <a name="restaurantImage"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>restaurantImage</b></span>
                         <a href="#restaurantImage"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -644,7 +802,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:53</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:66</a></div>
                         </td>
                     </tr>
 
@@ -657,6 +815,7 @@
                 <td class="col-md-4">
                     <a name="settings"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>settings</b></span>
                         <a href="#settings"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -679,7 +838,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:68</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:90</a></div>
                         </td>
                     </tr>
 
@@ -692,6 +851,7 @@
                 <td class="col-md-4">
                     <a name="status"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>status</b></span>
                         <a href="#status"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -708,13 +868,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @Prop(String)<br />
+                            @Prop({type: String, default: &#x27;ONLINE&#x27;})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:35</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:44</a></div>
                         </td>
                     </tr>
 
@@ -727,6 +887,7 @@
                 <td class="col-md-4">
                     <a name="updatedAt"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>updatedAt</b></span>
                         <a href="#updatedAt"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -749,7 +910,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:32</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">libs/common/src/database/schemas/vendor.schema.ts:41</a></div>
                         </td>
                     </tr>
 
@@ -762,6 +923,7 @@
                 <td class="col-md-4">
                     <a name="_id"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>_id</b></span>
                         <a href="#_id"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -809,12 +971,15 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { SchemaTypes, Types } from &#x27;mongoose&#x27;
-import { Schema, Prop, SchemaFactory } from &#x27;@nestjs/mongoose&#x27;
-import { AbstractDocument } from &#x27;@app/common&#x27;
+import { Prop, Schema, SchemaFactory } from &#x27;@nestjs/mongoose&#x27;
+import { AbstractDocument, LocationCoordinates, VendorApprovalStatus } from &#x27;@app/common&#x27;
 
-@Schema({ versionKey: false, timestamps: true })
+@Schema({
+  versionKey: false,
+  timestamps: true
+})
 export class Vendor extends AbstractDocument {
   @Prop()
     firstName: string
@@ -822,10 +987,16 @@ export class Vendor extends AbstractDocument {
   @Prop()
     lastName: string
 
-  @Prop({ unique: true, sparse: true })
+  @Prop({
+    unique: true,
+    sparse: true
+  })
     email: string
 
-  @Prop({ unique: true, sparse: true })
+  @Prop({
+    unique: true,
+    sparse: true
+  })
     businessEmail: string
 
   @Prop()
@@ -843,12 +1014,16 @@ export class Vendor extends AbstractDocument {
   @Prop(SchemaTypes.Date)
     updatedAt: string
 
-  @Prop(String)
+  @Prop({ type: String, default: &#x27;ONLINE&#x27; })
     status: &#x27;ONLINE&#x27; | &#x27;OFFLINE&#x27;
 
-  @Prop({
-    type: String
-  })
+  @Prop({ type: String, default: VendorApprovalStatus.PENDING })
+    acc_status: VendorApprovalStatus
+
+  @Prop({ type: String })
+    rejection_reason: string
+
+  @Prop({ type: String })
     businessName: string
 
   @Prop({
@@ -864,23 +1039,36 @@ export class Vendor extends AbstractDocument {
   @Prop(String)
     restaurantImage: string
 
-  @Prop({ type: Boolean, default: false })
+  @Prop({
+    type: Boolean,
+    default: false
+  })
     isDeleted: boolean
 
   @Prop({
     type: {
-      coordinates: [String]
+      type: String,
+      default: &#x27;Point&#x27;
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0] // Default coordinates here
     }
   })
-    location: {
-    coordinates: [string, string]
-  }
+    location: LocationCoordinates
 
-  @Prop({ type: Types.ObjectId, ref: &#x27;VendorSettings&#x27; })
+  @Prop({
+    type: Types.ObjectId,
+    ref: &#x27;VendorSettings&#x27;
+  })
     settings: any
+
+  @Prop({ type: String })
+    expoNotificationToken: string
 }
 
 export const VendorSchema &#x3D; SchemaFactory.createForClass(Vendor)
+VendorSchema.index({ location: &#x27;2dsphere&#x27; })
 </code></pre>
     </div>
 </div>

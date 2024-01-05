@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,33 +39,39 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >LocalStrategy</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >LocalStrategy</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/vendor-gateway/src/auth/strategy/local.strategy.ts</code>
+            <code>apps/drivers-service/src/auth/strategy/local.strategy.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -94,18 +100,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(vendorClient: ClientProxy)</code>
+<code>constructor(driversService: <a href="../injectables/DriversServiceService.html" target="_self">DriversServiceService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">apps/vendor-gateway/src/auth/strategy/local.strategy.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">apps/drivers-service/src/auth/strategy/local.strategy.ts:9</a></div>
                             </td>
                         </tr>
 
@@ -123,16 +129,16 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>vendorClient</td>
-                                                  
+                                                        <td>driversService</td>
+
                                                         <td>
-                                                                    <code>ClientProxy</code>
+                                                                        <code><a href="../injectables/DriversServiceService.html" target="_self" >DriversServiceService</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -143,8 +149,8 @@
         </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -163,15 +169,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>validate(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>validate(phone: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="18"
-                            class="link-to-prism">apps/vendor-gateway/src/auth/strategy/local.strategy.ts:18</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="14"
+                            class="link-to-prism">apps/drivers-service/src/auth/strategy/local.strategy.ts:14</a></div>
                 </td>
             </tr>
 
@@ -181,7 +187,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -192,7 +198,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>email</td>
+                                    <td>phone</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -221,11 +227,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/Driver.html" target="_self" >Promise&lt;Driver&gt;</a></code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -236,37 +242,26 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, UnauthorizedException } from &#x27;@nestjs/common&#x27;
-import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, UnauthorizedException } from &#x27;@nestjs/common&#x27;
 import { PassportStrategy } from &#x27;@nestjs/passport&#x27;
 import { Strategy } from &#x27;passport-local&#x27;
-import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
 
-import { QUEUE_MESSAGE, QUEUE_SERVICE } from &#x27;@app/common&#x27;
+import { Driver, internationalisePhoneNumber } from &#x27;@app/common&#x27;
+import { DriversServiceService } from &#x27;../../drivers-service.service&#x27;
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
-  constructor (
-    @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
-    private readonly vendorClient: ClientProxy
-  ) {
-    super({ usernameField: &#x27;email&#x27; })
+  constructor (private readonly driversService: DriversServiceService) {
+    super({ usernameField: &#x27;phone&#x27; })
   }
 
-  async validate (email: string, password: string): Promise&lt;any&gt; {
-    return await lastValueFrom(
-      this.vendorClient
-        .send(QUEUE_MESSAGE.GET_VENDOR_LOCAL, {
-          businessEmail: email.toLowerCase(),
-          password
-        })
-        .pipe(
-          catchError((error) &#x3D;&gt; {
-            throw new UnauthorizedException(error)
-          })
-        )
-    )
+  async validate (phone: string, password: string): Promise&lt;Driver&gt; {
+    try {
+      return await this.driversService.validateDriver(internationalisePhoneNumber(phone), password)
+    } catch (error) {
+      throw new UnauthorizedException(error)
+    }
   }
 }
 </code></pre>

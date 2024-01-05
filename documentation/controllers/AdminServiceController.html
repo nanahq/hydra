@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >AdminServiceController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >AdminServiceController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -64,7 +70,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -78,22 +84,32 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createAdmin" >createAdmin</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#deleteAdminProfile" >deleteAdminProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAdminWithId" >getAdminWithId</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAdminWithPassword" >getAdminWithPassword</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#listAdmins" >listAdmins</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateAdminLevel" >updateAdminLevel</a>
                             </li>
@@ -109,8 +125,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -120,6 +136,7 @@
                 <td class="col-md-4">
                     <a name="createAdmin"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createAdmin</b></span>
                         <a href="#createAdmin"><span class="icon ion-ios-link"></span></a>
@@ -143,8 +160,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="28"
-                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:28</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:39</a></div>
                 </td>
             </tr>
 
@@ -154,7 +171,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -197,7 +214,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -209,6 +226,7 @@
                 <td class="col-md-4">
                     <a name="deleteAdminProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>deleteAdminProfile</b></span>
                         <a href="#deleteAdminProfile"><span class="icon ion-ios-link"></span></a>
@@ -218,7 +236,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deleteAdminProfile(undefined: ServicePayload<>, context: RmqContext)</code>
+                    <code>deleteAdminProfile(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -232,8 +250,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="84"
-                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:84</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="95"
+                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:95</a></div>
                 </td>
             </tr>
 
@@ -243,7 +261,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -255,7 +273,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -286,7 +304,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -298,6 +316,7 @@
                 <td class="col-md-4">
                     <a name="getAdminWithId"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAdminWithId</b></span>
                         <a href="#getAdminWithId"><span class="icon ion-ios-link"></span></a>
@@ -307,7 +326,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAdminWithId(undefined: ServicePayload<>, context: RmqContext)</code>
+                    <code>getAdminWithId(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -321,8 +340,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="67"
+                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:67</a></div>
                 </td>
             </tr>
 
@@ -332,7 +351,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -344,7 +363,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -375,7 +394,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -387,6 +406,7 @@
                 <td class="col-md-4">
                     <a name="getAdminWithPassword"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAdminWithPassword</b></span>
                         <a href="#getAdminWithPassword"><span class="icon ion-ios-link"></span></a>
@@ -396,7 +416,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAdminWithPassword(undefined: ServicePayload<literal type>, context: RmqContext)</code>
+                    <code>getAdminWithPassword(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;literal type&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -410,8 +430,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="42"
-                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:42</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="53"
+                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:53</a></div>
                 </td>
             </tr>
 
@@ -421,7 +441,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -433,7 +453,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;literal type&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;literal type&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -464,7 +484,86 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="listAdmins"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>listAdmins</b></span>
+                        <a href="#listAdmins"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>listAdmins(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_ALL_ADMIN)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:28</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Admin.html" target="_self" >Promise&lt;Admin[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -476,6 +575,7 @@
                 <td class="col-md-4">
                     <a name="updateAdminLevel"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateAdminLevel</b></span>
                         <a href="#updateAdminLevel"><span class="icon ion-ios-link"></span></a>
@@ -499,8 +599,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="70"
-                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:70</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">apps/admin-service/src/admin-service.controller.ts:81</a></div>
                 </td>
             </tr>
 
@@ -510,7 +610,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -553,7 +653,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -562,7 +662,7 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller } from &#x27;@nestjs/common&#x27;
 import {
   Ctx,
@@ -573,11 +673,11 @@ import {
 } from &#x27;@nestjs/microservices&#x27;
 
 import {
+  Admin,
   QUEUE_MESSAGE,
+  RegisterAdminDTO,
   RmqService,
   ServicePayload,
-  RegisterAdminDTO,
-  Admin,
   UpdateAdminLevelRequestDto
 } from &#x27;@app/common&#x27;
 import { AdminServiceService } from &#x27;./admin-service.service&#x27;
@@ -588,6 +688,17 @@ export class AdminServiceController {
     private readonly adminServiceService: AdminServiceService,
     private readonly rmqService: RmqService
   ) {}
+
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_ADMIN)
+  async listAdmins (@Ctx() context: RmqContext): Promise&lt;Admin[]&gt; {
+    try {
+      return await this.adminServiceService.getAllAdmins()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_ADMIN)
   async createAdmin (

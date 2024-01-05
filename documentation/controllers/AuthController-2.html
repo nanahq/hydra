@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >AuthController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >AuthController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,14 +90,19 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getUserProfile" >getUserProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#login" >login</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#logout" >logout</a>
                             </li>
@@ -107,8 +118,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -118,6 +129,8 @@
                 <td class="col-md-4">
                     <a name="getUserProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getUserProfile</b></span>
                         <a href="#getUserProfile"><span class="icon ion-ios-link"></span></a>
@@ -141,8 +154,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/auth.controller.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/auth.controller.ts:30</a></div>
                 </td>
             </tr>
 
@@ -152,7 +165,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -184,7 +197,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -196,6 +209,8 @@
                 <td class="col-md-4">
                     <a name="login"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>login</b></span>
                         <a href="#login"><span class="icon ion-ios-link"></span></a>
@@ -219,8 +234,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="17"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/auth.controller.ts:17</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="16"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/auth.controller.ts:16</a></div>
                 </td>
             </tr>
 
@@ -230,7 +245,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -274,7 +289,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -286,6 +301,7 @@
                 <td class="col-md-4">
                     <a name="logout"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>logout</b></span>
                         <a href="#logout"><span class="icon ion-ios-link"></span></a>
@@ -309,8 +325,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="25"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/auth.controller.ts:25</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="24"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/auth.controller.ts:24</a></div>
                 </td>
             </tr>
 
@@ -320,7 +336,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -352,7 +368,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -361,16 +377,15 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Get, Post, Res, UseGuards } from &#x27;@nestjs/common&#x27;
 import { MessagePattern } from &#x27;@nestjs/microservices&#x27;
 import { Response } from &#x27;express&#x27;
 
-import { QUEUE_MESSAGE, Vendor } from &#x27;@app/common&#x27;
+import { QUEUE_MESSAGE, Vendor, CurrentUser } from &#x27;@app/common&#x27;
 import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
 import { LocalGuard } from &#x27;../auth/guards/local.guard&#x27;
 import { AuthService } from &#x27;./auth.service&#x27;
-import { CurrentUser } from &#x27;./current-user.decorator&#x27;
 
 @Controller(&#x27;auth&#x27;)
 export class AuthController {
@@ -392,7 +407,7 @@ export class AuthController {
 
   @MessagePattern(QUEUE_MESSAGE.VALIDATE_VENDOR)
   @UseGuards(JwtAuthGuard)
-  async getUserProfile (@CurrentUser()vendor: Vendor): Promise&lt;Vendor&gt; {
+  async getUserProfile (@CurrentUser() vendor: Vendor): Promise&lt;Vendor&gt; {
     return vendor
   }
 }

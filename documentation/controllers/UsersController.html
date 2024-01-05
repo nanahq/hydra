@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >UsersController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >UsersController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,22 +90,40 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#deleteUser" >deleteUser</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getUserProfile" >getUserProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#registerNewUser" >registerNewUser</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#resendPhoneVerification" >resendPhoneVerification</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateUserProfile" >updateUserProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#validatePhoneNumber" >validatePhoneNumber</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#verifyUser" >verifyUser</a>
                             </li>
@@ -115,8 +139,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -126,6 +150,8 @@
                 <td class="col-md-4">
                     <a name="deleteUser"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>deleteUser</b></span>
                         <a href="#deleteUser"><span class="icon ion-ios-link"></span></a>
@@ -149,8 +175,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="94"
-                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:94</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:118</a></div>
                 </td>
             </tr>
 
@@ -160,7 +186,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -192,7 +218,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -204,6 +230,8 @@
                 <td class="col-md-4">
                     <a name="getUserProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getUserProfile</b></span>
                         <a href="#getUserProfile"><span class="icon ion-ios-link"></span></a>
@@ -227,8 +255,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="69"
-                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:69</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:93</a></div>
                 </td>
             </tr>
 
@@ -238,7 +266,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -270,7 +298,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -282,6 +310,7 @@
                 <td class="col-md-4">
                     <a name="registerNewUser"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>registerNewUser</b></span>
                         <a href="#registerNewUser"><span class="icon ion-ios-link"></span></a>
@@ -291,7 +320,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>registerNewUser(request: <a href="../classes/registerUserRequest.html" target="_self">registerUserRequest</a>)</code>
+                    <code>registerNewUser(request: <a href="../interfaces/registerUserRequest.html" target="_self">registerUserRequest</a>)</code>
                 </td>
             </tr>
 
@@ -305,8 +334,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="38"
-                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:38</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="44"
+                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:44</a></div>
                 </td>
             </tr>
 
@@ -316,7 +345,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -329,7 +358,7 @@
                                 <tr>
                                     <td>request</td>
                                     <td>
-                                                <code><a href="../classes/registerUserRequest.html" target="_self" >registerUserRequest</a></code>
+                                                <code><a href="../interfaces/registerUserRequest.html" target="_self" >registerUserRequest</a></code>
                                     </td>
 
                                     <td>
@@ -344,11 +373,90 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resendPhoneVerification"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>resendPhoneVerification</b></span>
+                        <a href="#resendPhoneVerification"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resendPhoneVerification(phone: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;resend-validation/:phone&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="134"
+                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:134</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>phone</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -360,6 +468,8 @@
                 <td class="col-md-4">
                     <a name="updateUserProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateUserProfile</b></span>
                         <a href="#updateUserProfile"><span class="icon ion-ios-link"></span></a>
@@ -383,8 +493,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="75"
-                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:75</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="99"
+                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:99</a></div>
                 </td>
             </tr>
 
@@ -394,7 +504,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -438,7 +548,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -448,18 +558,19 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="verifyUser"></a>
+                    <a name="validatePhoneNumber"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>verifyUser</b></span>
-                        <a href="#verifyUser"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>validatePhoneNumber</b></span>
+                        <a href="#validatePhoneNumber"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>verifyUser(request: <a href="../classes/PhoneVerificationPayload.html" target="_self">PhoneVerificationPayload</a>)</code>
+                    <code>validatePhoneNumber(phone: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -467,14 +578,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post(&#x27;verify&#x27;)<br /></code>
+                    <code>@Get(&#x27;validate/:phone&#x27;)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="51"
-                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:51</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:80</a></div>
                 </td>
             </tr>
 
@@ -484,7 +595,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -495,9 +606,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>request</td>
+                                    <td>phone</td>
                                     <td>
-                                                <code><a href="../classes/PhoneVerificationPayload.html" target="_self" >PhoneVerificationPayload</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -512,11 +623,102 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+                        <b>Returns : </b>        <code><a href="../interfaces/CheckUserAccountI.html" target="_self" >Promise&lt;CheckUserAccountI&gt;</a></code>
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="verifyUser"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>verifyUser</b></span>
+                        <a href="#verifyUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>verifyUser(request: <a href="../interfaces/PhoneVerificationPayload.html" target="_self">PhoneVerificationPayload</a>, response: Response)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;verify&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="57"
+                            class="link-to-prism">apps/api-gateway/src/module.api/users.controller.ts:57</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>request</td>
+                                    <td>
+                                                <code><a href="../interfaces/PhoneVerificationPayload.html" target="_self" >PhoneVerificationPayload</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>response</td>
+                                    <td>
+                                            <code>Response</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -525,22 +727,24 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Body,
   Controller,
   Delete,
   Get,
   HttpException,
-  Inject,
+  Inject, Param,
   Post,
-  Put,
+  Put, Res,
   UseGuards
 } from &#x27;@nestjs/common&#x27;
 import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
 import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
 
 import {
+  CheckUserAccountI,
+  CurrentUser,
   IRpcException,
   PhoneVerificationPayload,
   QUEUE_MESSAGE,
@@ -551,7 +755,8 @@ import {
   User
 } from &#x27;@app/common&#x27;
 import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
-import { CurrentUser } from &#x27;./current-user.decorator&#x27;
+import { AuthService } from &#x27;./auth.service&#x27;
+import { Response } from &#x27;express&#x27;
 
 @Controller(&#x27;user&#x27;)
 export class UsersController {
@@ -559,14 +764,17 @@ export class UsersController {
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
+    private readonly notificationClient: ClientProxy,
+
+    private readonly authService: AuthService
+
   ) {}
 
   @Post(&#x27;register&#x27;)
   async registerNewUser (
     @Body() request: registerUserRequest
-  ): Promise&lt;ResponseWithStatus&gt; {
-    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+  ): Promise&lt;User&gt; {
+    return await lastValueFrom&lt;User&gt;(
       this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
         catchError((error: IRpcException) &#x3D;&gt; {
           throw new HttpException(error.message, error.status)
@@ -577,9 +785,10 @@ export class UsersController {
 
   @Post(&#x27;verify&#x27;)
   async verifyUser (
-    @Body() request: PhoneVerificationPayload
-  ): Promise&lt;ResponseWithStatus&gt; {
-    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+    @Body() request: PhoneVerificationPayload,
+      @Res({ passthrough: true }) response: Response
+  ): Promise&lt;any&gt; {
+    const user &#x3D; await lastValueFrom&lt;any&gt;(
       this.notificationClient
         .send(QUEUE_MESSAGE.VERIFY_PHONE, {
           ...request
@@ -589,6 +798,23 @@ export class UsersController {
             throw new HttpException(error.message, error.status)
           })
         )
+    )
+    if (user !&#x3D;&#x3D; null) {
+      return this.authService.login(user, response)
+    }
+
+    return { status: 0 }
+  }
+
+  @Get(&#x27;validate/:phone&#x27;)
+  async validatePhoneNumber (
+    @Param(&#x27;phone&#x27;) phone: string
+  ): Promise&lt;CheckUserAccountI&gt; {
+    return await lastValueFrom&lt;CheckUserAccountI&gt;(
+      this.usersClient.send(QUEUE_MESSAGE.CHECK_PHONE_NUMBER, { phone })
+        .pipe(catchError((error) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        }))
     )
   }
 
@@ -619,9 +845,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(&#x27;delete&#x27;)
-  async deleteUser (
-    @CurrentUser() user: User
-  ): Promise&lt;{ status: number }&gt; {
+  async deleteUser (@CurrentUser() user: User): Promise&lt;{ status: number }&gt; {
     const payload: ServicePayload&lt;null&gt; &#x3D; {
       userId: user._id as any,
       data: null
@@ -629,6 +853,17 @@ export class UsersController {
 
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
       this.usersClient.send(QUEUE_MESSAGE.DELETE_USER_PROFILE, payload).pipe(
+        catchError((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get(&#x27;resend-validation/:phone&#x27;)
+  async resendPhoneVerification (@Param(&#x27;phone&#x27;) phone: string): Promise&lt;{ status: number }&gt; {
+    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+      this.usersClient.send(QUEUE_MESSAGE.RESEND_PHONE_VERIFICATION, { phone }).pipe(
         catchError((error: IRpcException) &#x3D;&gt; {
           throw new HttpException(error.message, error.status)
         })

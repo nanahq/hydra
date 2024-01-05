@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,36 +39,58 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >ReviewsService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >ReviewsService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/reviews-service/src/reviews-service.odsa.service.ts</code>
+            <code>apps/reviews-service/src/reviews-service.service.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Protected</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#logger" >logger</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -100,6 +122,18 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#getTopHomepage" >getTopHomepage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getTopListings" >getTopListings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getTopVendors" >getTopVendors</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#getVendorReviewOverview" >getVendorReviewOverview</a>
                             </li>
                             <li>
@@ -122,18 +156,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(reviewRepository: <a href="../injectables/ReviewRepository.html" target="_self">ReviewRepository</a>)</code>
+<code>constructor(reviewRepository: <a href="../injectables/ReviewRepository.html" target="_self">ReviewRepository</a>, expoClient: <a href="../classes/ExportPushNotificationClient.html" target="_self">ExportPushNotificationClient</a>, vendorClient: ClientProxy)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">apps/reviews-service/src/reviews-service.odsa.service.ts:7</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:22</a></div>
                             </td>
                         </tr>
 
@@ -162,6 +196,30 @@
                                                     </td>
 
                                                 </tr>
+                                                <tr>
+                                                        <td>expoClient</td>
+
+                                                        <td>
+                                                                        <code><a href="../classes/ExportPushNotificationClient.html" target="_self" >ExportPushNotificationClient</a></code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>vendorClient</td>
+
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -171,7 +229,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
@@ -191,15 +249,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>create(data: <a href="../classes/ReviewDto.html" target="_self">ReviewDto</a>)</code>
+                    <code>create(data: <a href="../interfaces/ReviewDto.html" target="_self">ReviewDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="65"
-                            class="link-to-prism">apps/reviews-service/src/reviews-service.odsa.service.ts:65</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="87"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:87</a></div>
                 </td>
             </tr>
 
@@ -222,7 +280,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/ReviewDto.html" target="_self" >ReviewDto</a></code>
+                                                <code><a href="../interfaces/ReviewDto.html" target="_self" >ReviewDto</a></code>
                                     </td>
 
                                     <td>
@@ -269,8 +327,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="53"
-                            class="link-to-prism">apps/reviews-service/src/reviews-service.odsa.service.ts:53</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="75"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:75</a></div>
                 </td>
             </tr>
 
@@ -340,8 +398,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="42"
-                            class="link-to-prism">apps/reviews-service/src/reviews-service.odsa.service.ts:42</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:64</a></div>
                 </td>
             </tr>
 
@@ -411,8 +469,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">apps/reviews-service/src/reviews-service.odsa.service.ts:12</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:30</a></div>
                 </td>
             </tr>
 
@@ -443,15 +501,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getListingReviews(listingId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>getListingReviews(listing: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">apps/reviews-service/src/reviews-service.odsa.service.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="53"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:53</a></div>
                 </td>
             </tr>
 
@@ -472,7 +530,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>listingId</td>
+                                    <td>listing</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -503,6 +561,123 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getTopHomepage"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getTopHomepage</b></span>
+                        <a href="#getTopHomepage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTopHomepage()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="213"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:213</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/ReviewServiceGetMostReviewed.html" target="_self" >Promise&lt;ReviewServiceGetMostReviewed&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTopListings"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getTopListings</b></span>
+                        <a href="#getTopListings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTopListings()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="180"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:180</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTopVendors"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getTopVendors</b></span>
+                        <a href="#getTopVendors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTopVendors()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="147"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:147</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Vendor.html" target="_self" >Promise&lt;Vendor[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getVendorReviewOverview"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -514,15 +689,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getVendorReviewOverview(vendorId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>getVendorReviewOverview(vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="77"
-                            class="link-to-prism">apps/reviews-service/src/reviews-service.odsa.service.ts:77</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="110"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:110</a></div>
                 </td>
             </tr>
 
@@ -543,7 +718,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>vendorId</td>
+                                    <td>vendor</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -585,15 +760,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getVendorReviews(vendorId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>getVendorReviews(vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="20"
-                            class="link-to-prism">apps/reviews-service/src/reviews-service.odsa.service.ts:20</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="42"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:42</a></div>
                 </td>
             </tr>
 
@@ -614,7 +789,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>vendorId</td>
+                                    <td>vendor</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -663,8 +838,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="104"
-                            class="link-to-prism">apps/reviews-service/src/reviews-service.odsa.service.ts:104</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="221"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:221</a></div>
                 </td>
             </tr>
 
@@ -713,33 +888,88 @@
         </tbody>
     </table>
 </section>
+            <section data-compodoc="block-properties">
+
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logger"></a>
+                    <span class="name">
+                            <span class="modifier">Protected</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>logger</b></span>
+                        <a href="#logger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Logger(ReviewsService.name)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">apps/reviews-service/src/reviews-service.service.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
 
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Injectable } from &#x27;@nestjs/common&#x27;
-import { FitRpcException, ResponseWithStatus, Review, VendorReviewOverview } from &#x27;@app/common&#x27;
-import { ReviewDto } from &#x27;@app/common/database/dto/review.dto&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Inject, Injectable, Logger } from &#x27;@nestjs/common&#x27;
+import {
+  FitRpcException,
+  ResponseWithStatus,
+  Review,
+  VendorReviewOverview,
+  ReviewDto,
+  ExportPushNotificationClient,
+  QUEUE_SERVICE,
+  QUEUE_MESSAGE,
+  VendorI,
+  PushMessage,
+  ReviewsServiceI,
+  ListingMenu, Vendor, ReviewI, ReviewServiceGetMostReviewed
+} from &#x27;@app/common&#x27;
 import { ReviewRepository } from &#x27;./review.repositoty&#x27;
+import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
+import { lastValueFrom } from &#x27;rxjs&#x27;
 
 @Injectable()
-export class ReviewsService {
+export class ReviewsService implements ReviewsServiceI {
+  protected readonly logger &#x3D; new Logger(ReviewsService.name)
   constructor (
-    private readonly reviewRepository: ReviewRepository
+    private readonly reviewRepository: ReviewRepository,
+    private readonly expoClient: ExportPushNotificationClient,
+    @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
+    private readonly vendorClient: ClientProxy
   ) {}
 
   async getAllReviews (): Promise&lt;Review[]&gt; {
     try {
-      return await this.reviewRepository.find({})
+      return await this.reviewRepository.findAndPopulate({}, [&#x27;listing&#x27;, &#x27;order&#x27;, &#x27;vendor&#x27;])
     } catch (error) {
-      throw new FitRpcException(&#x27;Can not process request, Something went wrong&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+      console.log({ error })
+      throw new FitRpcException(
+        &#x27;Can not process request, Something went wrong&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  async getVendorReviews (vendorId: string): Promise&lt;Review[]&gt; {
+  async getVendorReviews (vendor: string): Promise&lt;Review[]&gt; {
     try {
-      return await this.reviewRepository.find({ vendorId })
+      return await this.reviewRepository.findAndPopulate({ vendor }, [&#x27;listing&#x27;, &#x27;order&#x27;])
     } catch (error) {
       throw new FitRpcException(
         &#x27;Can not process your request. Something went wrong&#x27;,
@@ -748,9 +978,9 @@ export class ReviewsService {
     }
   }
 
-  async getListingReviews (listingId: string): Promise&lt;Review[]&gt; {
+  async getListingReviews (listing: string): Promise&lt;Review[]&gt; {
     try {
-      return await this.reviewRepository.find({ listingId })
+      return await this.reviewRepository.find({ listing })
     } catch (error) {
       throw new FitRpcException(
         &#x27;Can not process your request. Something went wrong&#x27;,
@@ -784,7 +1014,18 @@ export class ReviewsService {
 
   async create (data: ReviewDto): Promise&lt;ResponseWithStatus&gt; {
     try {
+      const vendor &#x3D; await lastValueFrom&lt;VendorI&gt;(this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR, { data: data.vendor }))
+
       await this.reviewRepository.create(data)
+
+      // @todo(siradji) Move this push to notification service
+
+      const pushMessage: PushMessage &#x3D; {
+        title: &#x27;You got a new review&#x27;,
+        body: &#x27;A customer just reviewed your listing&#x27;,
+        priority: &#x27;normal&#x27;
+      }
+      await this.expoClient.sendSingleNotification(vendor.expoNotificationToken, pushMessage)
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
@@ -794,17 +1035,24 @@ export class ReviewsService {
     }
   }
 
-  async getVendorReviewOverview (vendorId: string): Promise&lt;VendorReviewOverview&gt; {
-    const vendorReviews &#x3D; await this.reviewRepository.find({ vendorId }) as Review[]
+  async getVendorReviewOverview (
+    vendor: string
+  ): Promise&lt;VendorReviewOverview&gt; {
+    const vendorReviews &#x3D; (await this.reviewRepository.find({
+      vendor
+    })) as Review[]
 
     let aggregateRating: number &#x3D; 0
+
     let riskFactor: &#x27;HIGH&#x27; | &#x27;LOW&#x27; | &#x27;MEDIUM&#x27; &#x3D; &#x27;MEDIUM&#x27;
-    for (const review of vendorReviews) {
-      aggregateRating +&#x3D; review.reviewStars
-    }
-    aggregateRating &#x3D; aggregateRating / vendorReviews.length
 
     if (vendorReviews.length &gt;&#x3D; 5) {
+      for (const review of vendorReviews) {
+        aggregateRating +&#x3D; review.reviewStars
+      }
+
+      aggregateRating &#x3D; aggregateRating / vendorReviews.length
+
       if (aggregateRating &gt;&#x3D; 4) {
         riskFactor &#x3D; &#x27;LOW&#x27;
       } else if (aggregateRating &lt; 4 &amp;&amp; aggregateRating &gt; 2.5) {
@@ -812,6 +1060,9 @@ export class ReviewsService {
       } else {
         riskFactor &#x3D; &#x27;HIGH&#x27;
       }
+    } else if (vendorReviews.length &gt; 0 &amp;&amp; vendorReviews.length &lt; 5) {
+      aggregateRating &#x3D; vendorReviews.length
+      riskFactor &#x3D; &#x27;LOW&#x27;
     }
 
     return {
@@ -821,10 +1072,84 @@ export class ReviewsService {
     }
   }
 
-  async statGetListingReviews (
-    listingId: string
-  ): Promise&lt;any&gt; {
-    const listingReview &#x3D; await this.reviewRepository.find({ listingId }) as Review[]
+  async getTopVendors (): Promise&lt;Vendor[]&gt; {
+    try {
+      const reviews: ReviewI[] &#x3D; await this.reviewRepository.findAndPopulate({}, [&#x27;vendor&#x27;])
+
+      if (reviews.length &lt; 1) {
+        return []
+      }
+      const vendorReviewCounts: Map&lt;string, number&gt; &#x3D; new Map()
+
+      reviews.forEach((review) &#x3D;&gt; {
+        const vendorId &#x3D; review.vendor._id
+        vendorReviewCounts.set(vendorId, (vendorReviewCounts.get(vendorId) ?? 0) + 1)
+      })
+
+      const vendorsWithReviewCount: any[] &#x3D; Array.from(vendorReviewCounts.entries()).map(([vendorId, reviewCount]) &#x3D;&gt; ({
+        vendor: reviews.find((review) &#x3D;&gt; review.vendor._id &#x3D;&#x3D;&#x3D; vendorId)?.vendor,
+        reviewCount
+      }))
+
+      vendorsWithReviewCount.sort((a, b) &#x3D;&gt; b.reviewCount - a.reviewCount)
+
+      const topVendors: Vendor[] &#x3D; vendorsWithReviewCount.slice(0, 20).map((entry) &#x3D;&gt; entry.vendor)
+
+      return topVendors
+    } catch (error) {
+      this.logger.log(error)
+      throw new FitRpcException(
+        &#x27;Failed To Fetch Top vendors&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async getTopListings (): Promise&lt;ListingMenu[]&gt; {
+    try {
+      const reviews: ReviewI[] &#x3D; await this.reviewRepository.findAndPopulate({}, [&#x27;listing&#x27;])
+
+      if (reviews.length &lt; 1) {
+        return []
+      }
+      const listingReviewCounts: Map&lt;string, number&gt; &#x3D; new Map()
+
+      reviews.forEach((review) &#x3D;&gt; {
+        const listingId &#x3D; review.listing._id
+        listingReviewCounts.set(listingId, (listingReviewCounts.get(listingId) ?? 0) + 1)
+      })
+
+      const listingWithReviewCountWithReviewCount: any[] &#x3D; Array.from(listingReviewCounts.entries()).map(([listingId, reviewCount]) &#x3D;&gt; ({
+        listing: reviews.find((review) &#x3D;&gt; review.listing._id &#x3D;&#x3D;&#x3D; listingId)?.listing,
+        reviewCount
+      }))
+
+      listingWithReviewCountWithReviewCount.sort((a, b) &#x3D;&gt; b.reviewCount - a.reviewCount)
+
+      const topListings: ListingMenu[] &#x3D; listingWithReviewCountWithReviewCount.slice(0, 20).map((entry) &#x3D;&gt; entry.listing)
+
+      return topListings
+    } catch (error) {
+      this.logger.log(error)
+      throw new FitRpcException(
+        &#x27;Failed To Fetch Top vendors&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async getTopHomepage (): Promise&lt;ReviewServiceGetMostReviewed&gt; {
+    const vendors &#x3D; await this.getTopVendors()
+    return {
+      listings: [],
+      vendors
+    }
+  }
+
+  async statGetListingReviews (listingId: string): Promise&lt;any&gt; {
+    const listingReview &#x3D; (await this.reviewRepository.find({
+      listingId
+    })) as Review[]
 
     let aggregateRating: number &#x3D; 0
     for (const review of listingReview) {

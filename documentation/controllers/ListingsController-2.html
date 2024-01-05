@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >ListingsController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >ListingsController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,50 +90,88 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createListingCategory" >createListingCategory</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createListingMenu" >createListingMenu</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createListingOption" >createListingOption</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createScheduledListing" >createScheduledListing</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllListingCategory" >getAllListingCategory</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllListingOptions" >getAllListingOptions</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllListings" >getAllListings</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getListingMenu" >getListingMenu</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getScheduledListings" >getScheduledListings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getSingleListingCategory" >getSingleListingCategory</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getSingleListingOption" >getSingleListingOption</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateListingCategory" >updateListingCategory</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateListingOptions" >updateListingOptions</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateMenu" >updateMenu</a>
                             </li>
@@ -143,8 +187,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -154,6 +198,8 @@
                 <td class="col-md-4">
                     <a name="createListingCategory"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createListingCategory</b></span>
                         <a href="#createListingCategory"><span class="icon ion-ios-link"></span></a>
@@ -163,7 +209,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createListingCategory(data: <a href="../classes/CreateListingCategoryDto.html" target="_self">CreateListingCategoryDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                    <code>createListingCategory(data: <a href="../interfaces/CreateListingCategoryDto.html" target="_self">CreateListingCategoryDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
                 </td>
             </tr>
 
@@ -177,8 +223,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="157"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:157</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="168"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:168</a></div>
                 </td>
             </tr>
 
@@ -188,7 +234,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -201,7 +247,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/CreateListingCategoryDto.html" target="_self" >CreateListingCategoryDto</a></code>
+                                                <code><a href="../interfaces/CreateListingCategoryDto.html" target="_self" >CreateListingCategoryDto</a></code>
                                     </td>
 
                                     <td>
@@ -231,7 +277,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -243,6 +289,9 @@
                 <td class="col-md-4">
                     <a name="createListingMenu"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createListingMenu</b></span>
                         <a href="#createListingMenu"><span class="icon ion-ios-link"></span></a>
@@ -252,7 +301,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createListingMenu(data: <a href="../classes/CreateListingMenuDto.html" target="_self">CreateListingMenuDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>, file: Express.Multer.File)</code>
+                    <code>createListingMenu(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>, file: Express.Multer.File)</code>
                 </td>
             </tr>
 
@@ -266,8 +315,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="82"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:82</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:85</a></div>
                 </td>
             </tr>
 
@@ -277,7 +326,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -290,7 +339,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/CreateListingMenuDto.html" target="_self" >CreateListingMenuDto</a></code>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
                                     </td>
 
                                     <td>
@@ -332,7 +381,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -344,6 +393,8 @@
                 <td class="col-md-4">
                     <a name="createListingOption"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createListingOption</b></span>
                         <a href="#createListingOption"><span class="icon ion-ios-link"></span></a>
@@ -353,7 +404,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createListingOption(data: <a href="../classes/CreateOptionGroupDto.html" target="_self">CreateOptionGroupDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                    <code>createListingOption(data: <a href="../interfaces/CreateOptionGroupDto.html" target="_self">CreateOptionGroupDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
                 </td>
             </tr>
 
@@ -367,8 +418,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="242"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:242</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="253"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:253</a></div>
                 </td>
             </tr>
 
@@ -378,7 +429,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -391,7 +442,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/CreateOptionGroupDto.html" target="_self" >CreateOptionGroupDto</a></code>
+                                                <code><a href="../interfaces/CreateOptionGroupDto.html" target="_self" >CreateOptionGroupDto</a></code>
                                     </td>
 
                                     <td>
@@ -421,7 +472,98 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createScheduledListing"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>createScheduledListing</b></span>
+                        <a href="#createScheduledListing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createScheduledListing(data: <a href="../classes/CreateScheduledListingDto.html" target="_self">CreateScheduledListingDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Post(&#x27;scheduled&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="336"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:336</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../classes/CreateScheduledListingDto.html" target="_self" >CreateScheduledListingDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -433,6 +575,8 @@
                 <td class="col-md-4">
                     <a name="getAllListingCategory"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllListingCategory</b></span>
                         <a href="#getAllListingCategory"><span class="icon ion-ios-link"></span></a>
@@ -456,8 +600,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="199"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:199</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="210"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:210</a></div>
                 </td>
             </tr>
 
@@ -467,7 +611,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -498,7 +642,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -510,6 +654,8 @@
                 <td class="col-md-4">
                     <a name="getAllListingOptions"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllListingOptions</b></span>
                         <a href="#getAllListingOptions"><span class="icon ion-ios-link"></span></a>
@@ -533,8 +679,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="284"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:284</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="295"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:295</a></div>
                 </td>
             </tr>
 
@@ -544,7 +690,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -575,7 +721,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -587,6 +733,8 @@
                 <td class="col-md-4">
                     <a name="getAllListings"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllListings</b></span>
                         <a href="#getAllListings"><span class="icon ion-ios-link"></span></a>
@@ -610,8 +758,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="54"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:54</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:55</a></div>
                 </td>
             </tr>
 
@@ -621,7 +769,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -653,7 +801,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -665,6 +813,8 @@
                 <td class="col-md-4">
                     <a name="getListingMenu"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getListingMenu</b></span>
                         <a href="#getListingMenu"><span class="icon ion-ios-link"></span></a>
@@ -688,8 +838,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="113"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:113</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="119"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:119</a></div>
                 </td>
             </tr>
 
@@ -699,7 +849,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -743,7 +893,86 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getScheduledListings"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getScheduledListings</b></span>
+                        <a href="#getScheduledListings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getScheduledListings(undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;scheduled&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="357"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:357</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/Vendor.html" target="_self" >Vendor</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -755,6 +984,8 @@
                 <td class="col-md-4">
                     <a name="getSingleListingCategory"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getSingleListingCategory</b></span>
                         <a href="#getSingleListingCategory"><span class="icon ion-ios-link"></span></a>
@@ -778,8 +1009,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="178"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:178</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="189"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:189</a></div>
                 </td>
             </tr>
 
@@ -789,7 +1020,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -832,7 +1063,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -844,6 +1075,8 @@
                 <td class="col-md-4">
                     <a name="getSingleListingOption"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getSingleListingOption</b></span>
                         <a href="#getSingleListingOption"><span class="icon ion-ios-link"></span></a>
@@ -867,8 +1100,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="263"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:263</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="274"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:274</a></div>
                 </td>
             </tr>
 
@@ -878,7 +1111,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -921,7 +1154,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -933,6 +1166,8 @@
                 <td class="col-md-4">
                     <a name="updateListingCategory"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateListingCategory</b></span>
                         <a href="#updateListingCategory"><span class="icon ion-ios-link"></span></a>
@@ -942,7 +1177,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateListingCategory(data: <a href="../classes/UpdateListingCategoryDto.html" target="_self">UpdateListingCategoryDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                    <code>updateListingCategory(data: <a href="../interfaces/UpdateListingCategoryDto.html" target="_self">UpdateListingCategoryDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
                 </td>
             </tr>
 
@@ -956,8 +1191,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="219"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:219</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="230"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:230</a></div>
                 </td>
             </tr>
 
@@ -967,7 +1202,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -980,7 +1215,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/UpdateListingCategoryDto.html" target="_self" >UpdateListingCategoryDto</a></code>
+                                                <code><a href="../interfaces/UpdateListingCategoryDto.html" target="_self" >UpdateListingCategoryDto</a></code>
                                     </td>
 
                                     <td>
@@ -1010,7 +1245,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1022,6 +1257,8 @@
                 <td class="col-md-4">
                     <a name="updateListingOptions"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateListingOptions</b></span>
                         <a href="#updateListingOptions"><span class="icon ion-ios-link"></span></a>
@@ -1031,7 +1268,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateListingOptions(data: <a href="../classes/UpdateOptionGroupDto.html" target="_self">UpdateOptionGroupDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
+                    <code>updateListingOptions(data: <a href="../interfaces/UpdateOptionGroupDto.html" target="_self">UpdateOptionGroupDto</a>, undefined: <a href="../classes/Vendor.html" target="_self">Vendor</a>)</code>
                 </td>
             </tr>
 
@@ -1045,8 +1282,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="304"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:304</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="315"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:315</a></div>
                 </td>
             </tr>
 
@@ -1056,7 +1293,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1069,7 +1306,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/UpdateOptionGroupDto.html" target="_self" >UpdateOptionGroupDto</a></code>
+                                                <code><a href="../interfaces/UpdateOptionGroupDto.html" target="_self" >UpdateOptionGroupDto</a></code>
                                     </td>
 
                                     <td>
@@ -1099,7 +1336,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1111,6 +1348,9 @@
                 <td class="col-md-4">
                     <a name="updateMenu"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateMenu</b></span>
                         <a href="#updateMenu"><span class="icon ion-ios-link"></span></a>
@@ -1134,8 +1374,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="137"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:137</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="145"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/listings.controller.ts:145</a></div>
                 </td>
             </tr>
 
@@ -1145,7 +1385,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1189,7 +1429,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1198,13 +1438,16 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Body,
   Controller,
-  Get, HttpCode,
-  HttpException, HttpStatus,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
   Inject,
+  Logger,
   Param,
   Post,
   Put,
@@ -1216,39 +1459,37 @@ import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
 import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
 
 import {
+  booleanParser,
+  CreateListingCategoryDto,
+  CreateOptionGroupDto,
+  CurrentUser,
   IRpcException,
-  ResponseWithStatus,
-  ServicePayload,
-  Vendor,
+  ListingMenu, MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  booleanParser,
-  ListingMenu
+  ResponseWithStatus,
+  ServicePayload,
+  UpdateListingCategoryDto,
+  UpdateOptionGroupDto,
+  Vendor,
+  CreateScheduledListingDto, ScheduledListingDto
 } from &#x27;@app/common&#x27;
 import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
-import { CurrentUser } from &#x27;../../../admin-gateway/src/module.api/current-user.decorator&#x27;
-import {
-  CreateListingCategoryDto,
-  CreateListingMenuDto,
-  CreateOptionGroupDto,
-  UpdateListingCategoryDto,
-  UpdateOptionGroupDto
-} from &#x27;@app/common/database/dto/listing.dto&#x27;
+
 import { FileInterceptor } from &#x27;@nestjs/platform-express&#x27;
 import * as multer from &#x27;multer&#x27;
-import { GoogleFileService } from &#x27;../google-file.service&#x27;
-import { Logger } from &#x27;winston&#x27;
-import { WINSTON_MODULE_NEST_PROVIDER } from &#x27;nest-winston&#x27;
+import { AwsService } from &#x27;../aws.service&#x27;
 
 @Controller(&#x27;listing&#x27;)
 export class ListingsController {
+  private readonly logger &#x3D; new Logger(ListingsController.name)
+
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy,
-    private readonly googleService: GoogleFileService,
-    @Inject(WINSTON_MODULE_NEST_PROVIDER)
-    private readonly logger: Logger
-  ) {}
+    private readonly awsService: AwsService
+  ) {
+  }
 
   @Get(&#x27;menus&#x27;)
   @UseGuards(JwtAuthGuard)
@@ -1262,10 +1503,12 @@ export class ListingsController {
     this.logger.debug(&#x27;Getting all listing menus&#x27;)
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
       this.listingClient
-        .send(QUEUE_MESSAGE.GET__ALL_LISTING_MENU, payload)
+        .send(QUEUE_MESSAGE.GET_ALL_VENDOR_LISTING_MENU, payload)
         .pipe(
           catchError((error: IRpcException) &#x3D;&gt; {
-            this.logger.error(&#x60;Failed to fetch listing menus. Reason: ${error.message}&#x60;)
+            this.logger.error(
+              &#x60;Failed to fetch listing menus. Reason: ${error.message}&#x60;
+            )
             throw new HttpException(error.message, error.status)
           })
         )
@@ -1276,16 +1519,17 @@ export class ListingsController {
   @UseGuards(JwtAuthGuard)
   @Post(&#x27;menu&#x27;)
   @UseInterceptors(
-    FileInterceptor(&#x27;listingImage&#x27;, {
+    FileInterceptor(&#x27;image&#x27;, {
       storage: multer.memoryStorage()
     })
   )
   async createListingMenu (
-    @Body() data: CreateListingMenuDto,
+    @Body() data: any,
       @CurrentUser() { _id }: Vendor,
       @UploadedFile() file: Express.Multer.File
   ): Promise&lt;any&gt; {
-    const photo &#x3D; await this.googleService.saveToCloud(file)
+    const photo &#x3D; await this.awsService.upload(file)
+    this.logger.log(&#x60;Successfully save photo ${photo as string}&#x60;)
     const payload: ServicePayload&lt;any&gt; &#x3D; {
       userId: _id as any,
       data: {
@@ -1293,16 +1537,18 @@ export class ListingsController {
         photo,
         isLive: booleanParser(data.isLive),
         isAvailable: booleanParser(data.isAvailable),
-        optionGroups: data.optionGroups.split(&#x27;,&#x27;)
+        optionGroups: data?.optionGroups?.split(&#x27;,&#x27;) ?? []
       }
     }
-    this.logger.debug(&#x27;Creating new listing menu&#x27;)
+    this.logger.log(&#x27;Creating new listing menu&#x27;)
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
       this.listingClient
         .send(QUEUE_MESSAGE.CREATE_LISTING_MENU, { ...payload })
         .pipe(
           catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
-            this.logger.error(&#x60;Failed to create new listing menu. Reason: ${error.message}&#x60;)
+            this.logger.error(
+              &#x60;Failed to create new listing menu. Reason: ${error.message}&#x60;
+            )
             throw new HttpException(error.message, error.status)
           })
         )
@@ -1325,7 +1571,9 @@ export class ListingsController {
         .send(QUEUE_MESSAGE.GET_LISTING_MENU, { ...payload })
         .pipe(
           catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
-            this.logger.error(&#x60;Failed to get listing menu. Reason: ${error.message}&#x60;)
+            this.logger.error(
+              &#x60;Failed to get listing menu. Reason: ${error.message}&#x60;
+            )
             throw new HttpException(error.message, error.status)
           })
         )
@@ -1339,17 +1587,20 @@ export class ListingsController {
     @Body() data: { isLive: boolean, isAvailable: boolean, menuId: string },
       @CurrentUser() vendor: Vendor
   ): Promise&lt;ResponseWithStatus&gt; {
-    const payload: ServicePayload&lt;{ isLive: boolean, isAvailable: boolean, menuId: string }&gt; &#x3D; {
+    const payload: ServicePayload&lt;{
+      isLive: boolean
+      isAvailable: boolean
+      menuId: string
+    }&gt; &#x3D; {
       userId: vendor._id as any,
       data
     }
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
-      this.listingClient.send(QUEUE_MESSAGE.UPDATE_LISTING_MENU, payload)
-        .pipe(
-          catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.listingClient.send(QUEUE_MESSAGE.UPDATE_LISTING_MENU, payload).pipe(
+        catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 
@@ -1513,6 +1764,47 @@ export class ListingsController {
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
       this.listingClient
         .send(QUEUE_MESSAGE.UPDATE_LISTING_OP, { ...payload })
+        .pipe(
+          catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(&#x27;scheduled&#x27;)
+  async createScheduledListing (
+    @Body() data: CreateScheduledListingDto,
+      @CurrentUser() { _id }: Vendor
+  ): Promise&lt;ResponseWithStatus&gt; {
+    const payload: ScheduledListingDto &#x3D; {
+      vendor: _id.toString(),
+      ...data
+    }
+    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+      this.listingClient
+        .send(QUEUE_MESSAGE.CREATE_SCHEDULED_LISTING, payload)
+        .pipe(
+          catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(&#x27;scheduled&#x27;)
+  async getScheduledListings (
+    @CurrentUser() { _id }: Vendor
+  ): Promise&lt;ResponseWithStatus&gt; {
+    const payload: MultiPurposeServicePayload&lt;null&gt; &#x3D; {
+      id: _id as any,
+      data: null
+    }
+    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS, { ...payload })
         .pipe(
           catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
             throw new HttpException(error.message, error.status)

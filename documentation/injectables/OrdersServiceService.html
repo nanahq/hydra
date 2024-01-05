@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,36 +39,58 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >OrdersServiceService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >OrdersServiceService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/orders-service/src/orders-service.odsa.service.ts</code>
+            <code>apps/orders-service/src/orders-service.service.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#logger" >logger</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -79,9 +101,38 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#adminMetrics" >adminMetrics</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteUnpaidPayments" >deleteUnpaidPayments</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllFulfilledOrders" >getAllFulfilledOrders</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllOrderInDb" >getAllOrderInDb</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllOrders" >getAllOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllPaidOrder" >getAllPaidOrder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllTransitOrders" >getAllTransitOrders</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -106,12 +157,27 @@
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Async</span>
+                                <a href="#odsaGetPreOrders" >odsaGetPreOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
                                 <a href="#placeOrder" >placeOrder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendPushNotifications" >sendPushNotifications</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateStatus" >updateStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateStatusPaid" >updateStatusPaid</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -130,18 +196,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(orderRepository: <a href="../injectables/OrderRepository.html" target="_self">OrderRepository</a>, notificationClient: ClientProxy, userClient: ClientProxy)</code>
+<code>constructor(orderRepository: <a href="../injectables/OrderRepository.html" target="_self">OrderRepository</a>, expoClient: <a href="../classes/ExportPushNotificationClient.html" target="_self">ExportPushNotificationClient</a>, notificationClient: ClientProxy, userClient: ClientProxy, driverClient: ClientProxy, listingsClient: ClientProxy, paymentClient: ClientProxy)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">apps/orders-service/src/orders-service.odsa.service.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">apps/orders-service/src/orders-service.service.ts:28</a></div>
                             </td>
                         </tr>
 
@@ -163,6 +229,18 @@
 
                                                         <td>
                                                                         <code><a href="../injectables/OrderRepository.html" target="_self" >OrderRepository</a></code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>expoClient</td>
+
+                                                        <td>
+                                                                        <code><a href="../classes/ExportPushNotificationClient.html" target="_self" >ExportPushNotificationClient</a></code>
                                                         </td>
 
                                                     <td>
@@ -194,6 +272,42 @@
                                                     </td>
 
                                                 </tr>
+                                                <tr>
+                                                        <td>driverClient</td>
+
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>listingsClient</td>
+
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                        <td>paymentClient</td>
+
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -203,11 +317,137 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="adminMetrics"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>adminMetrics</b></span>
+                        <a href="#adminMetrics"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adminMetrics()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="326"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:326</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;Aggregate&lt;any&gt;&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteUnpaidPayments"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>deleteUnpaidPayments</b></span>
+                        <a href="#deleteUnpaidPayments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteUnpaidPayments()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Cron(CronExpression.EVERY_2_HOURS, {timeZone: &#x27;Africa/Lagos&#x27;})<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="364"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:364</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllFulfilledOrders"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllFulfilledOrders</b></span>
+                        <a href="#getAllFulfilledOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllFulfilledOrders()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="111"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:111</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -231,8 +471,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="92"
-                            class="link-to-prism">apps/orders-service/src/orders-service.odsa.service.ts:92</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="143"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:143</a></div>
                 </td>
             </tr>
 
@@ -284,6 +524,126 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getAllOrders"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllOrders</b></span>
+                        <a href="#getAllOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllOrders()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="135"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:135</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllPaidOrder"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllPaidOrder</b></span>
+                        <a href="#getAllPaidOrder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllPaidOrder()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:127</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllTransitOrders"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllTransitOrders</b></span>
+                        <a href="#getAllTransitOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllTransitOrders()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="119"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:119</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getAllUserOrders"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -303,8 +663,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="81"
-                            class="link-to-prism">apps/orders-service/src/orders-service.odsa.service.ts:81</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="97"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:97</a></div>
                 </td>
             </tr>
 
@@ -375,8 +735,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="69"
-                            class="link-to-prism">apps/orders-service/src/orders-service.odsa.service.ts:69</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:82</a></div>
                 </td>
             </tr>
 
@@ -440,15 +800,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getOrderById(_id: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                    <code>getOrderById(_id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="115"
-                            class="link-to-prism">apps/orders-service/src/orders-service.odsa.service.ts:115</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="174"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:174</a></div>
                 </td>
             </tr>
 
@@ -471,7 +831,7 @@
                                 <tr>
                                     <td>_id</td>
                                     <td>
-                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -519,8 +879,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="104"
-                            class="link-to-prism">apps/orders-service/src/orders-service.odsa.service.ts:104</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="160"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:160</a></div>
                 </td>
             </tr>
 
@@ -572,6 +932,78 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="odsaGetPreOrders"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>odsaGetPreOrders</b></span>
+                        <a href="#odsaGetPreOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>odsaGetPreOrders(filterQuery: <a href="../classes/Order.html" target="_self">FilterQuery&lt;Order&gt;</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="303"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:303</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterQuery</td>
+                                    <td>
+                                                <code><a href="../classes/Order.html" target="_self" >FilterQuery&lt;Order&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;[] | null&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="placeOrder"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -584,15 +1016,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>placeOrder(undefined: <a href="../classes/Order.html" target="_self">ServicePayload&lt;Order&gt;</a>)</code>
+                    <code>placeOrder(undefined: ServicePayload<PlaceOrderDto>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">apps/orders-service/src/orders-service.odsa.service.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:49</a></div>
                 </td>
             </tr>
 
@@ -614,7 +1046,162 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/Order.html" target="_self" >ServicePayload&lt;Order&gt;</a></code>
+                                            <code>ServicePayload&lt;PlaceOrderDto&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatusAndData&lt;literal type&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendPushNotifications"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sendPushNotifications</b></span>
+                        <a href="#sendPushNotifications"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendPushNotifications(status: <a href="../undefineds/OrderStatus.html" target="_self">OrderStatus</a>, order: <a href="../interfaces/OrderI.html" target="_self">OrderI</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="330"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:330</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>status</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/enumerations.html#OrderStatus" target="_self" >OrderStatus</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>order</td>
+                                    <td>
+                                                <code><a href="../interfaces/OrderI.html" target="_self" >OrderI</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateStatus"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>updateStatus</b></span>
+                        <a href="#updateStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateStatus(undefined: <a href="../interfaces/UpdateOrderStatusRequestDto.html" target="_self">UpdateOrderStatusRequestDto</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="194"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:194</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../interfaces/UpdateOrderStatusRequestDto.html" target="_self" >UpdateOrderStatusRequestDto</a></code>
                                     </td>
 
                                     <td>
@@ -643,27 +1230,27 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="updateStatus"></a>
+                    <a name="updateStatusPaid"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
                         <span class="modifier">Async</span>
-                        <span ><b>updateStatus</b></span>
-                        <a href="#updateStatus"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>updateStatusPaid</b></span>
+                        <a href="#updateStatusPaid"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateStatus(undefined: <a href="../classes/UpdateOrderStatusRequestDto.html" target="_self">UpdateOrderStatusRequestDto</a>)</code>
+                    <code>updateStatusPaid(undefined: <a href="../interfaces/UpdateOrderStatusPaidRequestDto.html" target="_self">UpdateOrderStatusPaidRequestDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="126"
-                            class="link-to-prism">apps/orders-service/src/orders-service.odsa.service.ts:126</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="230"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:230</a></div>
                 </td>
             </tr>
 
@@ -685,7 +1272,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/UpdateOrderStatusRequestDto.html" target="_self" >UpdateOrderStatusRequestDto</a></code>
+                                                <code><a href="../interfaces/UpdateOrderStatusPaidRequestDto.html" target="_self" >UpdateOrderStatusPaidRequestDto</a></code>
                                     </td>
 
                                     <td>
@@ -700,7 +1287,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -733,8 +1320,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="134"
-                            class="link-to-prism">apps/orders-service/src/orders-service.odsa.service.ts:134</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="282"
+                            class="link-to-prism">apps/orders-service/src/orders-service.service.ts:282</a></div>
                 </td>
             </tr>
 
@@ -795,52 +1382,106 @@
         </tbody>
     </table>
 </section>
+            <section data-compodoc="block-properties">
+
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logger"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>logger</b></span>
+                        <a href="#logger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>console</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">apps/orders-service/src/orders-service.service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
 
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Inject, Injectable } from &#x27;@nestjs/common&#x27;
 
 import {
+  ExportPushNotificationClient,
   FitRpcException,
   Order,
+  OrderI, OrderInitiateCharge,
   OrderStatus,
+  OrderTypes, OrderUpdateStream, PaystackChargeResponseData,
+  PlaceOrderDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
   ResponseWithStatus,
+  ResponseWithStatusAndData,
   ServicePayload,
+  UpdateOrderStatusPaidRequestDto,
   UpdateOrderStatusRequestDto
 } from &#x27;@app/common&#x27;
-import { ClientProxy, RpcException } from &#x27;@nestjs/microservices&#x27;
-import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
+import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
+import { lastValueFrom } from &#x27;rxjs&#x27;
 import { OrderRepository } from &#x27;./order.repository&#x27;
-import { FilterQuery } from &#x27;mongoose&#x27;
+import { Aggregate, FilterQuery } from &#x27;mongoose&#x27;
+import { Cron, CronExpression } from &#x27;@nestjs/schedule&#x27;
 
 @Injectable()
 export class OrdersServiceService {
+  private readonly logger &#x3D; console
+
   constructor (
     private readonly orderRepository: OrderRepository,
+
+    private readonly expoClient: ExportPushNotificationClient,
+
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
-
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
-    private readonly userClient: ClientProxy
+    private readonly userClient: ClientProxy,
+    @Inject(QUEUE_SERVICE.DRIVER_SERVICE)
+    private readonly driverClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
+    private readonly listingsClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy
   ) {}
 
   public async placeOrder ({
     data,
     userId
-  }: ServicePayload&lt;Order&gt;): Promise&lt;ResponseWithStatus&gt; {
+  }: ServicePayload&lt;PlaceOrderDto&gt;): Promise&lt;ResponseWithStatusAndData&lt;{ order: OrderI, paymentMeta: PaystackChargeResponseData }&gt;&gt; {
     const createOrderPayload: Partial&lt;Order&gt; &#x3D; {
       ...data,
       user: userId,
       refId: RandomGen.genRandomNum(),
-      orderStatus: OrderStatus.PROCESSED
+      orderStatus: OrderStatus.PAYMENT_PENDING
     }
 
     const _newOrder &#x3D; await this.orderRepository.create(createOrderPayload)
+
+    const populatedOrder: OrderI &#x3D; await this.orderRepository.findOneAndPopulate({ _id: _newOrder._id }, [&#x27;listing&#x27;, &#x27;vendor&#x27;, &#x27;user&#x27;])
 
     if (_newOrder &#x3D;&#x3D;&#x3D; null) {
       throw new FitRpcException(
@@ -849,28 +1490,23 @@ export class OrdersServiceService {
       )
     }
 
-    try {
-      // Send order confirmation message
-      await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.ORDER_STATUS_UPDATE, {
-          phoneNumber: _newOrder.primaryContact,
-          status: OrderStatus.PROCESSED
-        })
-      )
-
-      await lastValueFrom(
-        this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, { orderId: _newOrder._id, userId })
-      )
-    } catch (error) {
-      throw new RpcException(error)
+    const chargePayload: OrderInitiateCharge &#x3D; {
+      orderId: populatedOrder._id,
+      email: populatedOrder.user.email,
+      userId: populatedOrder.user._id,
+      amount: String(populatedOrder.totalOrderValue)
     }
+    const paymentMeta &#x3D; await lastValueFrom&lt;PaystackChargeResponseData&gt;(this.paymentClient.send(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK, chargePayload))
 
-    return { status: 1 }
+    return { status: 1, data: { order: populatedOrder, paymentMeta } }
   }
 
   public async getAllVendorOrders (vendor: string): Promise&lt;Order[]&gt; {
     try {
-      const _orders &#x3D; await this.orderRepository.findAndPopulate({ vendor }, &#x27;listing vendor&#x27;) as any
+      const _orders &#x3D; (await this.orderRepository.findAndPopulate(
+        { vendor },
+        &#x27;listing vendor&#x27;
+      )) as any
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -882,7 +1518,10 @@ export class OrdersServiceService {
 
   public async getAllUserOrders (user: string): Promise&lt;Order[]&gt; {
     try {
-      return await this.orderRepository.findAndPopulate({ user }, &#x27;user listing vendor&#x27;)
+      return await this.orderRepository.findAndPopulate(
+        { user },
+        &#x27;user listing vendor&#x27;
+      )
     } catch (error) {
       throw new FitRpcException(
         &#x27;Can not process request. Try again later&#x27;,
@@ -891,9 +1530,46 @@ export class OrdersServiceService {
     }
   }
 
-  public async getAllOrderInDb (filterQuery: FilterQuery&lt;Order&gt;): Promise&lt;Order[]&gt; {
+  public async getAllFulfilledOrders (): Promise&lt;Order[]&gt; {
     try {
-      const _orders &#x3D; await this.orderRepository.findAndPopulate(filterQuery, &#x27;vendor&#x27;) as any
+      return await this.orderRepository.find({ orderStatus: OrderStatus.FULFILLED })
+    } catch (e) {
+      throw new FitRpcException(&#x27;Failed to fetch all fulfilled orders something went wrong&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllTransitOrders (): Promise&lt;Order[]&gt; {
+    try {
+      return await this.orderRepository.find({ orderStatus: OrderStatus.IN_ROUTE })
+    } catch (e) {
+      throw new FitRpcException(&#x27;Failed to fetch all fulfilled orders something went wrong&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllPaidOrder (): Promise&lt;Order[]&gt; {
+    try {
+      return await this.orderRepository.find({ orderStatus: OrderStatus.PROCESSED })
+    } catch (e) {
+      throw new FitRpcException(&#x27;Failed to fetch all fulfilled orders something went wrong&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllOrders (): Promise&lt;Order[]&gt; {
+    try {
+      return await this.orderRepository.find({ })
+    } catch (e) {
+      throw new FitRpcException(&#x27;Failed to fetch all fulfilled orders something went wrong&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  public async getAllOrderInDb (
+    filterQuery: FilterQuery&lt;Order&gt;
+  ): Promise&lt;Order[]&gt; {
+    try {
+      const _orders &#x3D; (await this.orderRepository.findAndPopulate(
+        filterQuery,
+        &#x27;vendor&#x27;
+      )) as any
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -905,7 +1581,10 @@ export class OrdersServiceService {
 
   public async getOrderByRefId (refId: number): Promise&lt;Order | null&gt; {
     try {
-      return await this.orderRepository.findOneAndPopulate({ refId }, &#x27;user listing vendor&#x27;)
+      return await this.orderRepository.findOneAndPopulate(
+        { refId },
+        &#x27;user listing vendor&#x27;
+      )
     } catch (error) {
       throw new FitRpcException(
         &#x27;Can not process request. Try again later&#x27;,
@@ -914,10 +1593,19 @@ export class OrdersServiceService {
     }
   }
 
-  public async getOrderById (_id: any): Promise&lt;Order | null&gt; {
+  public async getOrderById (_id: string): Promise&lt;Order | null&gt; {
     try {
-      return await this.orderRepository.findOneAndPopulate({ _id }, &#x27;user listing vendor&#x27;)
+      this.logger.log(&#x60;PIM -&gt; fetching single order with id: ${_id}&#x60;)
+      return await this.orderRepository.findOneAndPopulate({ _id }, [
+        &#x27;user&#x27;,
+        &#x27;listing&#x27;,
+        &#x27;vendor&#x27;
+      ])
     } catch (error) {
+      this.logger.error({
+        error,
+        message: &#x27;failed to fetch order&#x27;
+      })
       throw new FitRpcException(
         &#x27;Can not process request. Try again later&#x27;,
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -927,25 +1615,204 @@ export class OrdersServiceService {
 
   public async updateStatus ({
     status,
-    orderId
+    orderId,
+    streamUpdates
   }: UpdateOrderStatusRequestDto): Promise&lt;ResponseWithStatus&gt; {
-    await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: status })
-    return { status: 1 }
+    try {
+      const order &#x3D; await this.orderRepository.findOneAndPopulate&lt;OrderI&gt;({ _id: orderId }, [&#x27;vendor&#x27;, &#x27;listing&#x27;, &#x27;user&#x27;])
+
+      await this.orderRepository.findOneAndUpdate(
+        { _id: orderId },
+        { orderStatus: status }
+      )
+
+      this.logger.log(
+        &#x60;[PIM] - order status updated for order: ${orderId} status: ${status}&#x60;
+      )
+      await this.sendPushNotifications(status, order)
+
+      if (streamUpdates !&#x3D;&#x3D; undefined &amp;&amp; streamUpdates) {
+        const updateStream: OrderUpdateStream &#x3D; {
+          userId: order.user._id.toString(),
+          orderId: order._id.toString(),
+          status,
+          vendorName: order.vendor.businessName
+        }
+        await this.driverClient.emit(QUEUE_MESSAGE.STREAM_ORDER_UPDATES, updateStream)
+      }
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException(
+        &#x27;failed to updated order&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 
-  public async vendorAcceptOrder (orderId: string, phone: string): Promise&lt;void&gt; {
+  public async updateStatusPaid ({
+    status,
+    orderId,
+    txRefId
+  }: UpdateOrderStatusPaidRequestDto): Promise&lt;void&gt; {
     try {
-      await this.orderRepository.findOneAndUpdate({ _id: orderId }, { orderStatus: OrderStatus.ACCEPTED })
+      this.logger.log(&#x60;[PIM] - Processing and updating paid order ${orderId} &#x60;)
+
+      const order &#x3D; await this.orderRepository.findOneAndPopulate&lt;OrderI&gt;({ _id: orderId }, [&#x27;vendor&#x27;, &#x27;listing&#x27;, &#x27;user&#x27;])
+
+      await this.orderRepository.findOneAndUpdate(
+        { _id: orderId },
+        {
+          txRefId,
+          orderStatus: status
+        }
+      )
+
+      this.logger.log(
+        &#x60;[PIM] - order status updated for paid order: ${orderId}&#x60;
+      )
+      await this.sendPushNotifications(status, order)
+
       await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER, { phone })
-          .pipe(
-            catchError((error) &#x3D;&gt; {
-              throw error
-            })
-          )
+        this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, {
+          orderId: order._id,
+          userId: order.user
+        })
+      )
+
+      await lastValueFrom(
+        this.listingsClient.emit(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY, {
+          listingsId: order.listing.map(li &#x3D;&gt; li._id),
+          quantity: order.quantity
+        })
+      )
+
+      if (order.orderType &#x3D;&#x3D;&#x3D; OrderTypes.INSTANT) {
+        // Start ODSA on instant order
+        await lastValueFrom&lt;any&gt;(
+          this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
+        )
+      }
+    } catch (error) {
+      this.logger.error(&#x60;[PIM] - Failed to process paid order ${orderId} &#x60;)
+      throw new FitRpcException(
+        &#x27;failed to process paid order&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async vendorAcceptOrder (
+    orderId: string,
+    phone: string
+  ): Promise&lt;void&gt; {
+    try {
+      await this.orderRepository.findOneAndUpdate(
+        { _id: orderId },
+        { orderStatus: OrderStatus.ACCEPTED }
+      )
+      await lastValueFrom(
+        this.notificationClient
+          .emit(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER, { phone })
       )
     } catch (error) {
-      throw new FitRpcException(&#x27;failed to process order&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        &#x27;failed to process order&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async odsaGetPreOrders (filterQuery: FilterQuery&lt;Order&gt;): Promise&lt;Order[] | null&gt; {
+    try {
+      this.logger.log(&#x27;PIM -&gt; Getting pre orders for ODSA daily cron&#x27;)
+      return await this.orderRepository.findAndPopulate(
+        {
+          ...filterQuery,
+          orderStatus: &#x27;ORDER_PLACED&#x27;,
+          orderType: OrderTypes.PRE
+        },
+        [&#x27;listing&#x27;, &#x27;user&#x27;, &#x27;vendor&#x27;]
+      )
+    } catch (error) {
+      this.logger.error({
+        message: &#x27;PIM -&gt; failed to get pre orders for ODSA daily cron&#x27;,
+        error
+      })
+      throw new FitRpcException(
+        &#x27;failed to fetched ODSA pre orders&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async adminMetrics (): Promise&lt;Aggregate&lt;any&gt;&gt; {
+    return await this.orderRepository.find({})
+  }
+
+  private async sendPushNotifications (status: OrderStatus, order: OrderI): Promise&lt;void&gt; {
+    switch (status) {
+      case OrderStatus.PROCESSED:
+        await this.expoClient.sendSingleNotification(order.vendor.expoNotificationToken, {
+          title: &#x27;You have a new Order&#x27;,
+          body: &#x60;A new ${order.orderType &#x3D;&#x3D;&#x3D; &#x27;PRE_ORDER&#x27; ? &#x27;Pre-order&#x27; : &#x27;Instant order&#x27;}&#x60;,
+          priority: &#x27;high&#x27;
+        })
+        await this.expoClient.sendSingleNotification(order?.user?.expoNotificationToken as string, {
+          title: &#x27;Your order has been processed&#x27;,
+          body: &#x27;Track the progress of your order on the mobile app&#x27;,
+          priority: &#x27;high&#x27;
+        })
+        break
+      case OrderStatus.IN_ROUTE:
+        await this.expoClient.sendSingleNotification(order?.user?.expoNotificationToken as string, {
+          title: &#x27;Your order is been delivered&#x27;,
+          body: &#x27;Our delivery person is on his way&#x27;,
+          priority: &#x27;high&#x27;
+        })
+        break
+
+      case OrderStatus.COURIER_PICKUP:
+        await this.expoClient.sendSingleNotification(order?.user?.expoNotificationToken as string, {
+          title: &#x27;Your order has been prepared&#x27;,
+          body: &#x60;${order.vendor.businessName} has finished preparing your order&#x60;,
+          priority: &#x27;high&#x27;
+        })
+    }
+  }
+
+  @Cron(CronExpression.EVERY_2_HOURS, {
+    timeZone: &#x27;Africa/Lagos&#x27;
+  })
+  async deleteUnpaidPayments (): Promise&lt;void&gt; {
+    try {
+      const now &#x3D; new Date()
+
+      const twoHoursAgo &#x3D; new Date(now)
+
+      twoHoursAgo.setHours(now.getHours() - 2)
+
+      const filter: FilterQuery&lt;Order&gt; &#x3D; {
+        createdAt: {
+          $lte: twoHoursAgo.toISOString()
+        },
+        orderStatus: OrderStatus.PAYMENT_PENDING
+      }
+
+      const orders: Order[] &#x3D; await this.orderRepository.find(filter)
+
+      if (orders !&#x3D;&#x3D; null &amp;&amp; orders.length &gt; 0) {
+        const orderIds &#x3D; orders.map(({ _id }) &#x3D;&gt; _id)
+
+        await this.orderRepository.deleteMany({
+          _id: {
+            $in: orderIds
+          }
+        })
+
+        this.logger.log(&#x60;[PIM] - Deleted ${orderIds.length} unpaid orders.&#x60;)
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 }

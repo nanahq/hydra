@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,33 +39,39 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >RmqService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >RmqService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>libs/common/src/queue/rmq.odsa.service.ts</code>
+            <code>libs/common/src/queue/rmq.service.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -96,7 +102,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -107,7 +113,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">libs/common/src/queue/rmq.odsa.service.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">libs/common/src/queue/rmq.service.ts:6</a></div>
                             </td>
                         </tr>
 
@@ -145,7 +151,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
@@ -171,7 +177,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="21"
-                            class="link-to-prism">libs/common/src/queue/rmq.odsa.service.ts:21</a></div>
+                            class="link-to-prism">libs/common/src/queue/rmq.service.ts:21</a></div>
                 </td>
             </tr>
 
@@ -232,7 +238,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>getOption(queue: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, noAck)</code>
+<code>getOption(queue: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, noAck, fallbackUri?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -240,7 +246,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="9"
-                            class="link-to-prism">libs/common/src/queue/rmq.odsa.service.ts:9</a></div>
+                            class="link-to-prism">libs/common/src/queue/rmq.service.ts:9</a></div>
                 </td>
             </tr>
 
@@ -289,6 +295,20 @@
                                     </td>
 
                                 </tr>
+                                <tr>
+                                    <td>fallbackUri</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -310,7 +330,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;
 import { ConfigService } from &#x27;@nestjs/config&#x27;
 import { RmqOptions, RmqContext, Transport } from &#x27;@nestjs/microservices&#x27;
@@ -319,11 +339,11 @@ import { RmqOptions, RmqContext, Transport } from &#x27;@nestjs/microservices&#x
 export class RmqService {
   constructor (private readonly configService: ConfigService) {}
 
-  getOption (queue: string, noAck &#x3D; false): RmqOptions {
+  getOption (queue: string, noAck &#x3D; false, fallbackUri?: string): RmqOptions {
     return {
       transport: Transport.RMQ,
       options: {
-        urls: [this.configService.get&lt;string&gt;(&#x27;RMQ_URI&#x27;) as string],
+        urls: [fallbackUri !&#x3D;&#x3D; undefined ? fallbackUri : this.configService.get&lt;string&gt;(&#x27;RMQ_URI&#x27;) as string],
         queue: this.configService.get&lt;string&gt;(&#x60;RMQ_${queue}_QUEUE&#x60;),
         noAck,
         persistent: true

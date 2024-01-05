@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -43,21 +43,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >ReviewDto</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >ReviewDto</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -83,24 +89,31 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Public</span>
-                                <a href="#listingId" >listingId</a>
+                                <a href="#listing" >listing</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Public</span>
-                                <a href="#orderId" >orderId</a>
+                                <a href="#order" >order</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Public</span>
                                 <a href="#reviewBody" >reviewBody</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Public</span>
                                 <a href="#reviewStars" >reviewStars</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Public</span>
-                                <a href="#vendorId" >vendorId</a>
+                                <a href="#vendor" >vendor</a>
                             </li>
                         </ul>
                     </td>
@@ -116,8 +129,8 @@
 </section>
 
 
-            <section>
-    
+            <section data-compodoc="block-properties">
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -125,11 +138,12 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="listingId"></a>
+                    <a name="listing"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                             <span class="modifier">Public</span>
-                        <span ><b>listingId</b></span>
-                        <a href="#listingId"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>listing</b></span>
+                        <a href="#listing"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -144,13 +158,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsUUID(4)<br />@IsNotEmpty()<br />
+                            @IsNotEmpty()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:5</a></div>
                         </td>
                     </tr>
 
@@ -161,11 +175,12 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="orderId"></a>
+                    <a name="order"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                             <span class="modifier">Public</span>
-                        <span ><b>orderId</b></span>
-                        <a href="#orderId"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>order</b></span>
+                        <a href="#order"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -180,13 +195,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsUUID(4)<br />@IsNotEmpty()<br />
+                            @IsNotEmpty()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:8</a></div>
                         </td>
                     </tr>
 
@@ -199,6 +214,8 @@
                 <td class="col-md-4">
                     <a name="reviewBody"></a>
                     <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
                             <span class="modifier">Public</span>
                         <span ><b>reviewBody</b></span>
                         <a href="#reviewBody"><span class="icon ion-ios-link"></span></a>
@@ -222,7 +239,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:12</a></div>
                         </td>
                     </tr>
 
@@ -235,6 +252,8 @@
                 <td class="col-md-4">
                     <a name="reviewStars"></a>
                     <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
                             <span class="modifier">Public</span>
                         <span ><b>reviewStars</b></span>
                         <a href="#reviewStars"><span class="icon ion-ios-link"></span></a>
@@ -258,7 +277,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:19</a></div>
                         </td>
                     </tr>
 
@@ -269,11 +288,12 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="vendorId"></a>
+                    <a name="vendor"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                             <span class="modifier">Public</span>
-                        <span ><b>vendorId</b></span>
-                        <a href="#vendorId"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>vendor</b></span>
+                        <a href="#vendor"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -288,13 +308,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsUUID(4)<br />@IsNotEmpty()<br />
+                            @IsNotEmpty()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">libs/common/src/database/dto/review.dto.ts:15</a></div>
                         </td>
                     </tr>
 
@@ -312,25 +332,22 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { IsNotEmpty, IsNumber, IsString, IsUUID } from &#x27;class-validator&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { IsNotEmpty, IsNumber, IsString } from &#x27;class-validator&#x27;
 
 export class ReviewDto {
-  @IsUUID(4)
   @IsNotEmpty()
-  public listingId: string
+  public listing: string
 
-  @IsUUID(4)
   @IsNotEmpty()
-  public orderId: string
+  public order: string
 
   @IsString()
   @IsNotEmpty()
   public reviewBody: string
 
-  @IsUUID(4)
   @IsNotEmpty()
-  public vendorId: string
+  public vendor: string
 
   @IsNumber()
   @IsNotEmpty()

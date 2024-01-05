@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -43,21 +43,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >Review</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >Review</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -76,7 +82,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -89,30 +95,39 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#createdAt" >createdAt</a>
                             </li>
                             <li>
-                                <a href="#listingId" >listingId</a>
+                                    <span class="modifier"></span>
+                                <a href="#listing" >listing</a>
                             </li>
                             <li>
-                                <a href="#orderId" >orderId</a>
+                                    <span class="modifier"></span>
+                                <a href="#order" >order</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#reviewBody" >reviewBody</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#reviewerName" >reviewerName</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#reviewStars" >reviewStars</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#updatedAt" >updatedAt</a>
                             </li>
                             <li>
-                                <a href="#vendorId" >vendorId</a>
+                                    <span class="modifier"></span>
+                                <a href="#vendor" >vendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#_id" >_id</a>
                             </li>
                         </ul>
@@ -129,8 +144,8 @@
 </section>
 
 
-            <section>
-    
+            <section data-compodoc="block-properties">
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -140,6 +155,7 @@
                 <td class="col-md-4">
                     <a name="createdAt"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>createdAt</b></span>
                         <a href="#createdAt"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -173,10 +189,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="listingId"></a>
+                    <a name="listing"></a>
                     <span class="name">
-                        <span ><b>listingId</b></span>
-                        <a href="#listingId"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>listing</b></span>
+                        <a href="#listing"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -208,10 +225,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="orderId"></a>
+                    <a name="order"></a>
                     <span class="name">
-                        <span ><b>orderId</b></span>
-                        <a href="#orderId"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>order</b></span>
+                        <a href="#order"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -245,6 +263,7 @@
                 <td class="col-md-4">
                     <a name="reviewBody"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>reviewBody</b></span>
                         <a href="#reviewBody"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -280,6 +299,7 @@
                 <td class="col-md-4">
                     <a name="reviewerName"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>reviewerName</b></span>
                         <a href="#reviewerName"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -315,6 +335,7 @@
                 <td class="col-md-4">
                     <a name="reviewStars"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>reviewStars</b></span>
                         <a href="#reviewStars"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -350,6 +371,7 @@
                 <td class="col-md-4">
                     <a name="updatedAt"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>updatedAt</b></span>
                         <a href="#updatedAt"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -383,10 +405,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="vendorId"></a>
+                    <a name="vendor"></a>
                     <span class="name">
-                        <span ><b>vendorId</b></span>
-                        <a href="#vendorId"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>vendor</b></span>
+                        <a href="#vendor"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -420,6 +443,7 @@
                 <td class="col-md-4">
                     <a name="_id"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>_id</b></span>
                         <a href="#_id"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -467,7 +491,7 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { SchemaTypes, Types } from &#x27;mongoose&#x27;
 import { Schema, Prop, SchemaFactory } from &#x27;@nestjs/mongoose&#x27;
 import { AbstractDocument } from &#x27;@app/common&#x27;
@@ -478,16 +502,16 @@ export class Review extends AbstractDocument {
     reviewBody: string
 
   @Prop({ type: Types.ObjectId, ref: &#x27;ListingMenu&#x27; })
-    listingId: string
+    listing: string
 
   @Prop({ type: Types.ObjectId, ref: &#x27;Vendor&#x27; })
-    vendorId: string
+    vendor: string
 
   @Prop(Number)
     reviewStars: number
 
   @Prop({ type: Types.ObjectId, ref: &#x27;Order&#x27; })
-    orderId: string
+    order: string
 
   @Prop(String)
     reviewerName: string

@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >VendorsController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >VendorsController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -64,7 +70,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -78,58 +84,92 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#approve" >approve</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createVendorSettings" >createVendorSettings</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#deleteVendorProfile" >deleteVendorProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#disapprove" >disapprove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllVendors" >getAllVendors</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllVendorsUser" >getAllVendorsUser</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getHomepageData" >getHomepageData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getNearestVendors" >getNearestVendors</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getSingleVendor" >getSingleVendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendorByEmail" >getVendorByEmail</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendorById" >getVendorById</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendorSettings" >getVendorSettings</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#registerNewVendor" >registerNewVendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateVendorImage" >updateVendorImage</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateVendorLogo" >updateVendorLogo</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateVendorProfile" >updateVendorProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateVendorSettings" >updateVendorSettings</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateVendorStatus" >updateVendorStatus</a>
                             </li>
@@ -145,8 +185,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -154,8 +194,100 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="approve"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>approve</b></span>
+                        <a href="#approve"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>approve(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.VENDOR_APPROVE)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="113"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:113</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createVendorSettings"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createVendorSettings</b></span>
                         <a href="#createVendorSettings"><span class="icon ion-ios-link"></span></a>
@@ -179,8 +311,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="183"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:183</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="205"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:205</a></div>
                 </td>
             </tr>
 
@@ -190,7 +322,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -234,7 +366,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -246,6 +378,7 @@
                 <td class="col-md-4">
                     <a name="deleteVendorProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>deleteVendorProfile</b></span>
                         <a href="#deleteVendorProfile"><span class="icon ion-ios-link"></span></a>
@@ -255,7 +388,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deleteVendorProfile(data: ServicePayload<>, context: RmqContext)</code>
+                    <code>deleteVendorProfile(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -269,8 +402,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="105"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:105</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="99"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:99</a></div>
                 </td>
             </tr>
 
@@ -280,7 +413,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -293,7 +426,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -324,7 +457,98 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="disapprove"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>disapprove</b></span>
+                        <a href="#disapprove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>disapprove(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;ReasonDto&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.VENDOR_DISAPPROVE)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:127</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;ReasonDto&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -336,6 +560,7 @@
                 <td class="col-md-4">
                     <a name="getAllVendors"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllVendors</b></span>
                         <a href="#getAllVendors"><span class="icon ion-ios-link"></span></a>
@@ -359,8 +584,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="133"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:133</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="155"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:155</a></div>
                 </td>
             </tr>
 
@@ -370,7 +595,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -402,7 +627,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -414,6 +639,7 @@
                 <td class="col-md-4">
                     <a name="getAllVendorsUser"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllVendorsUser</b></span>
                         <a href="#getAllVendorsUser"><span class="icon ion-ios-link"></span></a>
@@ -437,8 +663,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="144"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:144</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="166"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:166</a></div>
                 </td>
             </tr>
 
@@ -448,7 +674,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -480,7 +706,187 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getHomepageData"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getHomepageData</b></span>
+                        <a href="#getHomepageData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getHomepageData(undefined: literal type, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="266"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:266</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/VendorServiceHomePageResult.html" target="_self" >Promise&lt;VendorServiceHomePageResult&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNearestVendors"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getNearestVendors</b></span>
+                        <a href="#getNearestVendors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getNearestVendors(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;literal type&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_NEAREST_VENDORS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="252"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:252</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;literal type&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Vendor.html" target="_self" >Promise&lt;Vendor[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -492,6 +898,7 @@
                 <td class="col-md-4">
                     <a name="getSingleVendor"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getSingleVendor</b></span>
                         <a href="#getSingleVendor"><span class="icon ion-ios-link"></span></a>
@@ -501,7 +908,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getSingleVendor(undefined: ServicePayload<string>, context: RmqContext)</code>
+                    <code>getSingleVendor(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;string&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -515,8 +922,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="119"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:119</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="141"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:141</a></div>
                 </td>
             </tr>
 
@@ -526,7 +933,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -538,7 +945,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;string&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;string&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -569,7 +976,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -581,6 +988,7 @@
                 <td class="col-md-4">
                     <a name="getVendorByEmail"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendorByEmail</b></span>
                         <a href="#getVendorByEmail"><span class="icon ion-ios-link"></span></a>
@@ -590,7 +998,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getVendorByEmail(data: <a href="../classes/LoginVendorRequest.html" target="_self">LoginVendorRequest</a>, context: RmqContext)</code>
+                    <code>getVendorByEmail(data: <a href="../interfaces/LoginVendorRequest.html" target="_self">LoginVendorRequest</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -604,8 +1012,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="64"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:64</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="58"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:58</a></div>
                 </td>
             </tr>
 
@@ -615,7 +1023,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -628,7 +1036,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/LoginVendorRequest.html" target="_self" >LoginVendorRequest</a></code>
+                                                <code><a href="../interfaces/LoginVendorRequest.html" target="_self" >LoginVendorRequest</a></code>
                                     </td>
 
                                     <td>
@@ -659,7 +1067,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -671,6 +1079,7 @@
                 <td class="col-md-4">
                     <a name="getVendorById"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendorById</b></span>
                         <a href="#getVendorById"><span class="icon ion-ios-link"></span></a>
@@ -694,8 +1103,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="78"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:78</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:72</a></div>
                 </td>
             </tr>
 
@@ -705,7 +1114,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -749,7 +1158,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -761,6 +1170,7 @@
                 <td class="col-md-4">
                     <a name="getVendorSettings"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendorSettings</b></span>
                         <a href="#getVendorSettings"><span class="icon ion-ios-link"></span></a>
@@ -770,7 +1180,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getVendorSettings(data: ServicePayload<>, context: RmqContext)</code>
+                    <code>getVendorSettings(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -784,8 +1194,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="169"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:169</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="191"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:191</a></div>
                 </td>
             </tr>
 
@@ -795,7 +1205,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -808,7 +1218,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -839,7 +1249,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -851,6 +1261,7 @@
                 <td class="col-md-4">
                     <a name="registerNewVendor"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>registerNewVendor</b></span>
                         <a href="#registerNewVendor"><span class="icon ion-ios-link"></span></a>
@@ -860,7 +1271,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>registerNewVendor(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, context: RmqContext)</code>
+                    <code>registerNewVendor(data: <a href="../interfaces/CreateVendorDto.html" target="_self">CreateVendorDto</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -874,8 +1285,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="36"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:36</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:30</a></div>
                 </td>
             </tr>
 
@@ -885,7 +1296,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -898,7 +1309,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                <code><a href="../interfaces/CreateVendorDto.html" target="_self" >CreateVendorDto</a></code>
                                     </td>
 
                                     <td>
@@ -929,7 +1340,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -941,6 +1352,7 @@
                 <td class="col-md-4">
                     <a name="updateVendorImage"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateVendorImage</b></span>
                         <a href="#updateVendorImage"><span class="icon ion-ios-link"></span></a>
@@ -950,7 +1362,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateVendorImage(data: ServicePayload<string>, context: RmqContext)</code>
+                    <code>updateVendorImage(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;string&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -964,8 +1376,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="211"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:211</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="237"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:237</a></div>
                 </td>
             </tr>
 
@@ -975,7 +1387,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -988,187 +1400,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;string&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                            <code>RmqContext</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="updateVendorLogo"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>updateVendorLogo</b></span>
-                        <a href="#updateVendorLogo"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateVendorLogo(data: ServicePayload<string>, context: RmqContext)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.UPDATE_VENDOR_LOGO)<br /></code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="197"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:197</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>data</td>
-                                    <td>
-                                            <code>ServicePayload&lt;string&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                            <code>RmqContext</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="updateVendorProfile"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>updateVendorProfile</b></span>
-                        <a href="#updateVendorProfile"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateVendorProfile(data: <a href="../classes/Vendor.html" target="_self">ServicePayload&lt;Partial&lt;Vendor&gt;&gt;</a>, context: RmqContext)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE)<br /></code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="91"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:91</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>data</td>
-                                    <td>
-                                                <code><a href="../classes/Vendor.html" target="_self" >ServicePayload&lt;Partial&lt;Vendor&gt;&gt;</a></code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;string&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -1199,7 +1431,189 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateVendorLogo"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>updateVendorLogo</b></span>
+                        <a href="#updateVendorLogo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateVendorLogo(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;string&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.UPDATE_VENDOR_LOGO)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="222"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:222</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;string&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateVendorProfile"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>updateVendorProfile</b></span>
+                        <a href="#updateVendorProfile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateVendorProfile(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;Partial&lt;Vendor&gt;&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.UPDATE_VENDOR_PROFILE)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="85"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:85</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;Partial&lt;Vendor&gt;&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -1211,6 +1625,7 @@
                 <td class="col-md-4">
                     <a name="updateVendorSettings"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateVendorSettings</b></span>
                         <a href="#updateVendorSettings"><span class="icon ion-ios-link"></span></a>
@@ -1234,8 +1649,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="155"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:155</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="177"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:177</a></div>
                 </td>
             </tr>
 
@@ -1245,7 +1660,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1289,7 +1704,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1301,6 +1716,7 @@
                 <td class="col-md-4">
                     <a name="updateVendorStatus"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateVendorStatus</b></span>
                         <a href="#updateVendorStatus"><span class="icon ion-ios-link"></span></a>
@@ -1310,7 +1726,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateVendorStatus(data: <a href="../classes/UpdateVendorStatus.html" target="_self">UpdateVendorStatus</a>, ctx: RmqContext)</code>
+                    <code>updateVendorStatus(data: <a href="../interfaces/UpdateVendorStatus.html" target="_self">UpdateVendorStatus</a>, ctx: RmqContext)</code>
                 </td>
             </tr>
 
@@ -1324,8 +1740,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="50"
-                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:50</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="44"
+                            class="link-to-prism">apps/vendors-service/src/vendors.controller.ts:44</a></div>
                 </td>
             </tr>
 
@@ -1335,7 +1751,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1348,7 +1764,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/UpdateVendorStatus.html" target="_self" >UpdateVendorStatus</a></code>
+                                                <code><a href="../interfaces/UpdateVendorStatus.html" target="_self" >UpdateVendorStatus</a></code>
                                     </td>
 
                                     <td>
@@ -1379,7 +1795,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1388,32 +1804,26 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException
-} from &#x27;@nestjs/microservices&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from &#x27;@nestjs/microservices&#x27;
 import { Controller, UseFilters } from &#x27;@nestjs/common&#x27;
 
 import {
-  RmqService,
-  QUEUE_MESSAGE,
-  ExceptionFilterRpc,
-  ServicePayload,
-  ResponseWithStatus,
+  CreateVendorDto,
+  ExceptionFilterRpc, LocationCoordinates,
   LoginVendorRequest,
-  UpdateVendorStatus,
+  QUEUE_MESSAGE,
+  ResponseWithStatus,
+  RmqService,
+  ServicePayload,
+  UpdateVendorStatus, VendorServiceHomePageResult,
   VendorUserI
 } from &#x27;@app/common&#x27;
 import { VendorsService } from &#x27;./vendors.service&#x27;
 import { Vendor } from &#x27;@app/common/database/schemas/vendor.schema&#x27;
-import {
-  UpdateVendorSettingsDto
-} from &#x27;@app/common/database/dto/vendor.dto&#x27;
+import { UpdateVendorSettingsDto } from &#x27;@app/common/database/dto/vendor.dto&#x27;
 import { VendorSettings } from &#x27;@app/common/database/schemas/vendor-settings.schema&#x27;
+import { ReasonDto } from &#x27;@app/common/database/dto/reason.dto&#x27;
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -1425,7 +1835,7 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_VENDOR)
   async registerNewVendor (
-    @Payload() data: any,
+    @Payload() data: CreateVendorDto,
       @Ctx() context: RmqContext
   ): Promise&lt;ResponseWithStatus&gt; {
     try {
@@ -1506,6 +1916,34 @@ export class VendorsController {
     }
   }
 
+  @MessagePattern(QUEUE_MESSAGE.VENDOR_APPROVE)
+  async approve (
+    @Payload() data: ServicePayload&lt;null&gt;,
+      @Ctx() context: RmqContext
+  ): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      return await this.vendorsService.approve(data.userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.VENDOR_DISAPPROVE)
+  async disapprove (
+    @Payload() data: ServicePayload&lt;ReasonDto&gt;,
+      @Ctx() context: RmqContext
+  ): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      return await this.vendorsService.disapprove(data.userId, data.data.reason)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR)
   async getSingleVendor (
     @Payload() { data }: ServicePayload&lt;string&gt;,
@@ -1576,7 +2014,10 @@ export class VendorsController {
       @Ctx() context: RmqContext
   ): Promise&lt;ResponseWithStatus&gt; {
     try {
-      return await this.vendorsService.createVendorSettings(data.data, data.userId)
+      return await this.vendorsService.createVendorSettings(
+        data.data,
+        data.userId
+      )
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -1588,9 +2029,10 @@ export class VendorsController {
   async updateVendorLogo (
     @Payload() data: ServicePayload&lt;string&gt;,
       @Ctx() context: RmqContext
-  ): Promise&lt;void&gt; {
+  ): Promise&lt;ResponseWithStatus&gt; {
     try {
       await this.vendorsService.updateVendorLogo(data.data, data.userId)
+      return { status: 1 }
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -1602,9 +2044,38 @@ export class VendorsController {
   async updateVendorImage (
     @Payload() data: ServicePayload&lt;string&gt;,
       @Ctx() context: RmqContext
-  ): Promise&lt;void&gt; {
+  ): Promise&lt;ResponseWithStatus&gt; {
     try {
       await this.vendorsService.updateVendorImage(data.data, data.userId)
+      return { status: 1 }
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_NEAREST_VENDORS)
+  async getNearestVendors (
+    @Payload() { data: { userLocation } }: ServicePayload&lt;{ userLocation: LocationCoordinates }&gt;,
+      @Ctx() context: RmqContext
+  ): Promise&lt;Vendor[]&gt; {
+    try {
+      return await this.vendorsService.getNearestVendors(userLocation)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE)
+  async getHomepageData (
+    @Payload() { userLocation }: { userLocation: LocationCoordinates },
+      @Ctx() context: RmqContext
+  ): Promise&lt;VendorServiceHomePageResult&gt; {
+    try {
+      return await this.vendorsService.getVendorsForHomepage(userLocation)
     } catch (error) {
       throw new RpcException(error)
     } finally {

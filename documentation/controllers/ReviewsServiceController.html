@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >ReviewsServiceController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >ReviewsServiceController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -64,7 +70,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -78,34 +84,57 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createReview" >createReview</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#deleteReview" >deleteReview</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllReviewsInDB" >getAllReviewsInDB</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getListingReviews" >getListingReviews</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getMostReviewedHomepage" >getMostReviewedHomepage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getMostReviewedListings" >getMostReviewedListings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getMostReviewedVendors" >getMostReviewedVendors</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getReviewInfo" >getReviewInfo</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendorReviewOverview" >getVendorReviewOverview</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendorReviews" >getVendorReviews</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#statGetListingReviews" >statGetListingReviews</a>
                             </li>
@@ -121,8 +150,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -132,6 +161,7 @@
                 <td class="col-md-4">
                     <a name="createReview"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createReview</b></span>
                         <a href="#createReview"><span class="icon ion-ios-link"></span></a>
@@ -141,7 +171,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createReview(payload: <a href="../classes/ReviewDto.html" target="_self">ReviewDto</a>, context: RmqContext)</code>
+                    <code>createReview(payload: <a href="../interfaces/ReviewDto.html" target="_self">ReviewDto</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -166,7 +196,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -179,7 +209,7 @@
                                 <tr>
                                     <td>payload</td>
                                     <td>
-                                                <code><a href="../classes/ReviewDto.html" target="_self" >ReviewDto</a></code>
+                                                <code><a href="../interfaces/ReviewDto.html" target="_self" >ReviewDto</a></code>
                                     </td>
 
                                     <td>
@@ -210,7 +240,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -222,6 +252,7 @@
                 <td class="col-md-4">
                     <a name="deleteReview"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>deleteReview</b></span>
                         <a href="#deleteReview"><span class="icon ion-ios-link"></span></a>
@@ -256,7 +287,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -299,7 +330,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -311,6 +342,7 @@
                 <td class="col-md-4">
                     <a name="getAllReviewsInDB"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllReviewsInDB</b></span>
                         <a href="#getAllReviewsInDB"><span class="icon ion-ios-link"></span></a>
@@ -345,7 +377,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -377,7 +409,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -389,6 +421,7 @@
                 <td class="col-md-4">
                     <a name="getListingReviews"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getListingReviews</b></span>
                         <a href="#getListingReviews"><span class="icon ion-ios-link"></span></a>
@@ -398,7 +431,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getListingReviews(context: RmqContext, undefined: <a href="../interfaces/ReviewToken.html" target="_self">ReviewToken</a>)</code>
+                    <code>getListingReviews(undefined: <a href="../interfaces/ReviewToken.html" target="_self">ReviewToken</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -423,7 +456,97 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../interfaces/ReviewToken.html" target="_self" >ReviewToken</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Review.html" target="_self" >Promise&lt;Review[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMostReviewedHomepage"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getMostReviewedHomepage</b></span>
+                        <a href="#getMostReviewedHomepage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getMostReviewedHomepage(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="166"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.controller.ts:166</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -445,9 +568,77 @@
 
 
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/ReviewServiceGetMostReviewed.html" target="_self" >Promise&lt;ReviewServiceGetMostReviewed&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMostReviewedListings"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getMostReviewedListings</b></span>
+                        <a href="#getMostReviewedListings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getMostReviewedListings(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.REVIEW_GET_TOP_REVIEWED_LISTINGS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="153"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.controller.ts:153</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
                                 <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
                                     <td>
-                                                <code><a href="../interfaces/ReviewToken.html" target="_self" >ReviewToken</a></code>
+                                            <code>RmqContext</code>
                                     </td>
 
                                     <td>
@@ -462,11 +653,90 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Review.html" target="_self" >Promise&lt;Review[]&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMostReviewedVendors"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getMostReviewedVendors</b></span>
+                        <a href="#getMostReviewedVendors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getMostReviewedVendors(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.REVIEW_GET_TOP_REVIEWED_VENDORS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="140"
+                            class="link-to-prism">apps/reviews-service/src/reviews-service.controller.ts:140</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Vendor.html" target="_self" >Promise&lt;Vendor[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -478,6 +748,7 @@
                 <td class="col-md-4">
                     <a name="getReviewInfo"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getReviewInfo</b></span>
                         <a href="#getReviewInfo"><span class="icon ion-ios-link"></span></a>
@@ -512,7 +783,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -555,7 +826,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -567,6 +838,7 @@
                 <td class="col-md-4">
                     <a name="getVendorReviewOverview"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendorReviewOverview</b></span>
                         <a href="#getVendorReviewOverview"><span class="icon ion-ios-link"></span></a>
@@ -601,7 +873,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -644,7 +916,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -656,6 +928,7 @@
                 <td class="col-md-4">
                     <a name="getVendorReviews"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendorReviews</b></span>
                         <a href="#getVendorReviews"><span class="icon ion-ios-link"></span></a>
@@ -665,7 +938,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getVendorReviews(context: RmqContext, undefined: literal type)</code>
+                    <code>getVendorReviews(undefined: literal type, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -690,7 +963,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -701,9 +974,8 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>context</td>
                                     <td>
-                                            <code>RmqContext</code>
+                                            <code>literal type</code>
                                     </td>
 
                                     <td>
@@ -713,8 +985,9 @@
 
                                 </tr>
                                 <tr>
+                                    <td>context</td>
                                     <td>
-                                            <code>literal type</code>
+                                            <code>RmqContext</code>
                                     </td>
 
                                     <td>
@@ -733,7 +1006,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -745,6 +1018,7 @@
                 <td class="col-md-4">
                     <a name="statGetListingReviews"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>statGetListingReviews</b></span>
                         <a href="#statGetListingReviews"><span class="icon ion-ios-link"></span></a>
@@ -754,7 +1028,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>statGetListingReviews(context: RmqContext, undefined: literal type)</code>
+                    <code>statGetListingReviews(undefined: literal type, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -779,7 +1053,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -790,9 +1064,8 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>context</td>
                                     <td>
-                                            <code>RmqContext</code>
+                                            <code>literal type</code>
                                     </td>
 
                                     <td>
@@ -802,8 +1075,9 @@
 
                                 </tr>
                                 <tr>
+                                    <td>context</td>
                                     <td>
-                                            <code>literal type</code>
+                                            <code>RmqContext</code>
                                     </td>
 
                                     <td>
@@ -822,7 +1096,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -831,7 +1105,7 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, UseFilters } from &#x27;@nestjs/common&#x27;
 import {
   Ctx,
@@ -849,9 +1123,9 @@ import {
   Review,
   ReviewToken,
   RmqService,
-  VendorReviewOverview
+  VendorReviewOverview,
+  ReviewDto, ListingMenu, ReviewServiceGetMostReviewed, Vendor
 } from &#x27;@app/common&#x27;
-import { ReviewDto } from &#x27;@app/common/database/dto/review.dto&#x27;
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -863,8 +1137,8 @@ export class ReviewsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_LISTING_REVIEWS)
   async getListingReviews (
-    @Ctx() context: RmqContext,
-      @Payload() { listingId }: ReviewToken
+    @Payload() { listingId }: ReviewToken,
+      @Ctx() context: RmqContext
   ): Promise&lt;Review[]&gt; {
     try {
       return await this.reviewService.getListingReviews(listingId)
@@ -877,8 +1151,8 @@ export class ReviewsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_VENDOR_REVIEWS)
   async getVendorReviews (
-    @Ctx() context: RmqContext,
-      @Payload() { vendorId }: { vendorId: string }
+    @Payload() { vendorId }: { vendorId: string },
+      @Ctx() context: RmqContext
   ): Promise&lt;Review[]&gt; {
     try {
       return await this.reviewService.getVendorReviews(vendorId)
@@ -944,8 +1218,8 @@ export class ReviewsServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_STATS_GET_LISTING_REVIEWS)
   async statGetListingReviews (
-    @Ctx() context: RmqContext,
-      @Payload() { listingId }: { listingId: string }
+    @Payload() { listingId }: { listingId: string },
+      @Ctx() context: RmqContext
   ): Promise&lt;{ sum_listing_reviews: string }&gt; {
     try {
       return await this.reviewService.statGetListingReviews(listingId)
@@ -963,6 +1237,45 @@ export class ReviewsServiceController {
   ): Promise&lt;VendorReviewOverview&gt; {
     try {
       return await this.reviewService.getVendorReviewOverview(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_TOP_REVIEWED_VENDORS)
+  async getMostReviewedVendors (
+    @Ctx() context: RmqContext
+  ): Promise&lt;Vendor[]&gt; {
+    try {
+      return this.reviewService.getTopVendors()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_TOP_REVIEWED_LISTINGS)
+  async getMostReviewedListings (
+    @Ctx() context: RmqContext
+  ): Promise&lt;ListingMenu[]&gt; {
+    try {
+      return this.reviewService.getTopListings()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE)
+  async getMostReviewedHomepage (
+    @Ctx() context: RmqContext
+  ): Promise&lt;ReviewServiceGetMostReviewed&gt; {
+    try {
+      return this.reviewService.getTopHomepage()
     } catch (error) {
       throw new RpcException(error)
     } finally {

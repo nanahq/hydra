@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >ListingsController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >ListingsController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -64,7 +70,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -78,68 +84,169 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#adminListAll" >adminListAll</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#adminListApproved" >adminListApproved</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#adminListPending" >adminListPending</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#adminListRejected" >adminListRejected</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#approve" >approve</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createListingCategory" >createListingCategory</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createListingMenu" >createListingMenu</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createListingOption" >createListingOption</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createScheduledListing" >createScheduledListing</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOneById" >findOneById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllCategoriesUser" >getAllCategoriesUser</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllCatVendor" >getAllCatVendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllListings" >getAllListings</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllMenuUser" >getAllMenuUser</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllOptionVendor" >getAllOptionVendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getListingMenu" >getListingMenu</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getScheduledListings" >getScheduledListings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getScheduledListingsUser" >getScheduledListingsUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getSingleCategoriesUser" >getSingleCategoriesUser</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getSingleListingCat" >getSingleListingCat</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getSingleListingOption" >getSingleListingOption</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getSingleMenuUser" >getSingleMenuUser</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getVendorCategories" >getVendorCategories</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getVendorListings" >getVendorListings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#reject" >reject</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateListingCategory" >updateListingCategory</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateListingMenu" >updateListingMenu</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateListingOption" >updateListingOption</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateScheduledListing" >updateScheduledListing</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#userHomePage" >userHomePage</a>
                             </li>
                         </ul>
                     </td>
@@ -153,8 +260,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -162,8 +269,416 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="adminListAll"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>adminListAll</b></span>
+                        <a href="#adminListAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adminListAll(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_ALL)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="277"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:277</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="adminListApproved"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>adminListApproved</b></span>
+                        <a href="#adminListApproved"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adminListApproved(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_APPROVED)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="299"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:299</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="adminListPending"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>adminListPending</b></span>
+                        <a href="#adminListPending"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adminListPending(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_PENDING)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="288"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:288</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="adminListRejected"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>adminListRejected</b></span>
+                        <a href="#adminListRejected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>adminListRejected(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_REJECTED)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="310"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:310</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="approve"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>approve</b></span>
+                        <a href="#approve"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>approve(data: MultiPurposeServicePayload<>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.LISTING_MENU_APPROVE)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="321"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:321</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                            <code>MultiPurposeServicePayload&lt;&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createListingCategory"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createListingCategory</b></span>
                         <a href="#createListingCategory"><span class="icon ion-ios-link"></span></a>
@@ -187,8 +702,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:79</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="91"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:91</a></div>
                 </td>
             </tr>
 
@@ -198,7 +713,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -242,7 +757,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -254,6 +769,7 @@
                 <td class="col-md-4">
                     <a name="createListingMenu"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createListingMenu</b></span>
                         <a href="#createListingMenu"><span class="icon ion-ios-link"></span></a>
@@ -263,7 +779,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createListingMenu(data: ServicePayload<any>, context: RmqContext)</code>
+                    <code>createListingMenu(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;any&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -277,8 +793,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="191"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:191</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="203"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:203</a></div>
                 </td>
             </tr>
 
@@ -288,7 +804,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -301,7 +817,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;any&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;any&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -332,7 +848,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -344,6 +860,7 @@
                 <td class="col-md-4">
                     <a name="createListingOption"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createListingOption</b></span>
                         <a href="#createListingOption"><span class="icon ion-ios-link"></span></a>
@@ -367,8 +884,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="135"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:135</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="147"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:147</a></div>
                 </td>
             </tr>
 
@@ -378,7 +895,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -422,7 +939,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -432,18 +949,19 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getAllCategoriesUser"></a>
+                    <a name="createScheduledListing"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>getAllCategoriesUser</b></span>
-                        <a href="#getAllCategoriesUser"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>createScheduledListing</b></span>
+                        <a href="#createScheduledListing"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllCategoriesUser(context: RmqContext)</code>
+                    <code>createScheduledListing(data: <a href="../interfaces/ScheduledListingDto.html" target="_self">ScheduledListingDto</a>, context)</code>
                 </td>
             </tr>
 
@@ -451,14 +969,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_CAT_USER)<br /></code>
+                    <code>@MessagePattern(QUEUE_MESSAGE.CREATE_SCHEDULED_LISTING)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="220"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:220</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="349"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:349</a></div>
                 </td>
             </tr>
 
@@ -468,85 +986,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                            <code>RmqContext</code>
-                                    </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategory[]&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getAllCatVendor"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>getAllCatVendor</b></span>
-                        <a href="#getAllCatVendor"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllCatVendor(data: ServicePayload<>, context: RmqContext)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_CAT)<br /></code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="107"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:107</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -559,7 +999,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;&gt;</code>
+                                                <code><a href="../interfaces/ScheduledListingDto.html" target="_self" >ScheduledListingDto</a></code>
                                     </td>
 
                                     <td>
@@ -571,7 +1011,6 @@
                                 <tr>
                                     <td>context</td>
                                     <td>
-                                            <code>RmqContext</code>
                                     </td>
 
                                     <td>
@@ -586,11 +1025,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategory[]&gt;</a></code>
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -600,18 +1039,19 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getAllListings"></a>
+                    <a name="findOneById"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>getAllListings</b></span>
-                        <a href="#getAllListings"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findOneById</b></span>
+                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllListings(undefined: ServicePayload<>, context: RmqContext)</code>
+                    <code>findOneById(data: <a href="../interfaces/IdPayload.html" target="_self">IdPayload</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -619,14 +1059,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.GET__ALL_LISTING_MENU)<br /></code>
+                    <code>@MessagePattern(QUEUE_MESSAGE.LISTING_READ)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:37</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:77</a></div>
                 </td>
             </tr>
 
@@ -636,174 +1076,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                            <code>ServicePayload&lt;&gt;</code>
-                                    </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                            <code>RmqContext</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getAllMenuUser"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>getAllMenuUser</b></span>
-                        <a href="#getAllMenuUser"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllMenuUser(context: RmqContext)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER)<br /></code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="207"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:207</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                            <code>RmqContext</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getAllOptionVendor"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>getAllOptionVendor</b></span>
-                        <a href="#getAllOptionVendor"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllOptionVendor(data: ServicePayload<>, context: RmqContext)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_OP)<br /></code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="163"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:163</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -816,97 +1089,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;&gt;</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>context</td>
-                                    <td>
-                                            <code>RmqContext</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/ListingOptionGroup.html" target="_self" >Promise&lt;ListingOptionGroup[]&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getListingMenu"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>getListingMenu</b></span>
-                        <a href="#getListingMenu"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getListingMenu(data: ServicePayload<string>, context: RmqContext)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.GET_LISTING_MENU)<br /></code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="65"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:65</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>data</td>
-                                    <td>
-                                            <code>ServicePayload&lt;string&gt;</code>
+                                                <code><a href="../interfaces/IdPayload.html" target="_self" >IdPayload</a></code>
                                     </td>
 
                                     <td>
@@ -937,7 +1120,698 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllCategoriesUser"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllCategoriesUser</b></span>
+                        <a href="#getAllCategoriesUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllCategoriesUser(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_CAT_USER)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="233"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:233</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategory[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllCatVendor"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllCatVendor</b></span>
+                        <a href="#getAllCatVendor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllCatVendor(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_CAT)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="119"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:119</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategory[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllListings"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllListings</b></span>
+                        <a href="#getAllListings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllListings(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDOR_LISTING_MENU)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:35</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllMenuUser"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllMenuUser</b></span>
+                        <a href="#getAllMenuUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllMenuUser(context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@CacheKey(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER)<br />@UseInterceptors(CacheInterceptor)<br />@CacheTTL(60)<br />@MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="222"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:222</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllOptionVendor"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllOptionVendor</b></span>
+                        <a href="#getAllOptionVendor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllOptionVendor(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_OP)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="175"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:175</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingOptionGroup.html" target="_self" >Promise&lt;ListingOptionGroup[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getListingMenu"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getListingMenu</b></span>
+                        <a href="#getListingMenu"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getListingMenu(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;string&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_LISTING_MENU)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="63"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:63</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;string&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingMenu.html" target="_self" >Promise&lt;ListingMenu&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getScheduledListings"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getScheduledListings</b></span>
+                        <a href="#getScheduledListings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getScheduledListings(undefined: MultiPurposeServicePayload<>, context)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@CacheKey(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS)<br />@UseInterceptors(CacheInterceptor)<br />@CacheTTL(60)<br />@MessagePattern(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="380"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:380</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>MultiPurposeServicePayload&lt;&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ScheduledListing.html" target="_self" >Promise&lt;ScheduledListing[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getScheduledListingsUser"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getScheduledListingsUser</b></span>
+                        <a href="#getScheduledListingsUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getScheduledListingsUser(context)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS_USER)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="394"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:394</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>context</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ScheduledListing.html" target="_self" >Promise&lt;ScheduledListing[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -949,6 +1823,7 @@
                 <td class="col-md-4">
                     <a name="getSingleCategoriesUser"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getSingleCategoriesUser</b></span>
                         <a href="#getSingleCategoriesUser"><span class="icon ion-ios-link"></span></a>
@@ -972,8 +1847,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="233"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:233</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="246"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:246</a></div>
                 </td>
             </tr>
 
@@ -983,7 +1858,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1027,7 +1902,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1039,6 +1914,7 @@
                 <td class="col-md-4">
                     <a name="getSingleListingCat"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getSingleListingCat</b></span>
                         <a href="#getSingleListingCat"><span class="icon ion-ios-link"></span></a>
@@ -1048,7 +1924,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getSingleListingCat(data: ServicePayload<string>, context: RmqContext)</code>
+                    <code>getSingleListingCat(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;string&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -1062,8 +1938,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="93"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:93</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="105"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:105</a></div>
                 </td>
             </tr>
 
@@ -1073,7 +1949,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1086,7 +1962,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;string&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;string&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -1117,7 +1993,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1129,6 +2005,7 @@
                 <td class="col-md-4">
                     <a name="getSingleListingOption"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getSingleListingOption</b></span>
                         <a href="#getSingleListingOption"><span class="icon ion-ios-link"></span></a>
@@ -1138,7 +2015,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getSingleListingOption(data: ServicePayload<string>, context: RmqContext)</code>
+                    <code>getSingleListingOption(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;string&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -1152,8 +2029,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="149"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:149</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="161"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:161</a></div>
                 </td>
             </tr>
 
@@ -1163,7 +2040,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1176,7 +2053,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;string&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;string&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -1207,7 +2084,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1219,6 +2096,10 @@
                 <td class="col-md-4">
                     <a name="getSingleMenuUser"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getSingleMenuUser</b></span>
                         <a href="#getSingleMenuUser"><span class="icon ion-ios-link"></span></a>
@@ -1236,14 +2117,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER)<br /></code>
+                    <code>@CacheKey(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER)<br />@UseInterceptors(CacheInterceptor)<br />@CacheTTL(60)<br />@MessagePattern(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="247"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:247</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="263"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:263</a></div>
                 </td>
             </tr>
 
@@ -1253,7 +2134,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1297,7 +2178,278 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getVendorCategories"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getVendorCategories</b></span>
+                        <a href="#getVendorCategories"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getVendorCategories(undefined: literal type, context)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@CacheKey(QUEUE_MESSAGE.GET_VENDOR_CAT_USER)<br />@UseInterceptors(CacheInterceptor)<br />@CacheTTL(60)<br />@MessagePattern(QUEUE_MESSAGE.GET_VENDOR_CAT_USER)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="424"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:424</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategory[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getVendorListings"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getVendorListings</b></span>
+                        <a href="#getVendorListings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getVendorListings(undefined: literal type, context)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.GET_VENDOR_WITH_LISTING)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="407"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:407</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategoryI[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reject"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>reject</b></span>
+                        <a href="#reject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>reject(undefined: <a href="../classes/ReasonDto.html" target="_self">MultiPurposeServicePayload&lt;ReasonDto&gt;</a>, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.LISTING_MENU_REJECT)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="335"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:335</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/ReasonDto.html" target="_self" >MultiPurposeServicePayload&lt;ReasonDto&gt;</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -1309,6 +2461,7 @@
                 <td class="col-md-4">
                     <a name="updateListingCategory"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateListingCategory</b></span>
                         <a href="#updateListingCategory"><span class="icon ion-ios-link"></span></a>
@@ -1332,8 +2485,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="121"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:121</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="133"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:133</a></div>
                 </td>
             </tr>
 
@@ -1343,7 +2496,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1386,7 +2539,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1398,6 +2551,7 @@
                 <td class="col-md-4">
                     <a name="updateListingMenu"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateListingMenu</b></span>
                         <a href="#updateListingMenu"><span class="icon ion-ios-link"></span></a>
@@ -1407,7 +2561,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateListingMenu(data: ServicePayload<any>, context: RmqContext)</code>
+                    <code>updateListingMenu(data: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;any&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -1421,8 +2575,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="51"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:51</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:49</a></div>
                 </td>
             </tr>
 
@@ -1432,7 +2586,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1445,7 +2599,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                            <code>ServicePayload&lt;any&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;any&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -1476,7 +2630,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1488,6 +2642,7 @@
                 <td class="col-md-4">
                     <a name="updateListingOption"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateListingOption</b></span>
                         <a href="#updateListingOption"><span class="icon ion-ios-link"></span></a>
@@ -1511,8 +2666,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="177"
-                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:177</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="189"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:189</a></div>
                 </td>
             </tr>
 
@@ -1522,7 +2677,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1565,7 +2720,189 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateScheduledListing"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>updateScheduledListing</b></span>
+                        <a href="#updateScheduledListing"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateScheduledListing(undefined: literal type, context)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="363"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:363</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userHomePage"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>userHomePage</b></span>
+                        <a href="#userHomePage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>userHomePage(undefined: literal type, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@CacheKey(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)<br />@UseInterceptors(CacheInterceptor)<br />@CacheTTL(1000)<br />@MessagePattern(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="441"
+                            class="link-to-prism">apps/listings-service/src/listings.controller.ts:441</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;UserHomePage&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -1574,33 +2911,30 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, UseFilters } from &#x27;@nestjs/common&#x27;
-import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException
-} from &#x27;@nestjs/microservices&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, UseFilters, UseInterceptors } from &#x27;@nestjs/common&#x27;
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from &#x27;@nestjs/microservices&#x27;
 
 import { ListingsService } from &#x27;./listings.service&#x27;
 import {
-  ResponseWithStatus,
-  RmqService,
-  ServicePayload,
-  QUEUE_MESSAGE,
-  ExceptionFilterRpc,
-  ListingMenu,
-  ListingCategory,
-  ListingOptionGroup
-} from &#x27;@app/common&#x27;
-import {
   CreateListingCategoryDto,
   CreateOptionGroupDto,
+  ExceptionFilterRpc,
+  IdPayload,
+  ListingCategory,
+  ListingMenu,
+  ListingOptionGroup,
+  MultiPurposeServicePayload,
+  QUEUE_MESSAGE,
+  ResponseWithStatus,
+  RmqService, ScheduledListing,
+  ServicePayload,
   UpdateListingCategoryDto,
   UpdateOptionGroupDto
-} from &#x27;@app/common/database/dto/listing.dto&#x27;
+  , ScheduledListingDto, ListingCategoryI, UserHomePage, LocationCoordinates
+} from &#x27;@app/common&#x27;
+import { ReasonDto } from &#x27;@app/common/database/dto/reason.dto&#x27;
+import { CacheInterceptor, CacheKey, CacheTTL } from &#x27;@nestjs/cache-manager&#x27;
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -1608,15 +2942,16 @@ export class ListingsController {
   constructor (
     private readonly listingService: ListingsService,
     private readonly rmqService: RmqService
-  ) {}
+  ) {
+  }
 
-  @MessagePattern(QUEUE_MESSAGE.GET__ALL_LISTING_MENU)
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDOR_LISTING_MENU)
   async getAllListings (
     @Payload() { userId }: ServicePayload&lt;null&gt;,
       @Ctx() context: RmqContext
   ): Promise&lt;ListingMenu[]&gt; {
     try {
-      return await this.listingService.getAllListingMenu(userId)
+      return await this.listingService.getAllVendorListingMenu(userId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -1645,6 +2980,20 @@ export class ListingsController {
   ): Promise&lt;ListingMenu&gt; {
     try {
       return await this.listingService.getSingleListingMenu(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_READ)
+  async findOneById (
+    @Payload() data: IdPayload,
+      @Ctx() context: RmqContext
+  ): Promise&lt;ListingMenu&gt; {
+    try {
+      return await this.listingService.findOneById(data.id)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -1780,10 +3129,11 @@ export class ListingsController {
 
   // User and Admin query
 
+  @CacheKey(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER)
-  async getAllMenuUser (
-    @Ctx() context: RmqContext
-  ): Promise&lt;ListingMenu[]&gt; {
+  async getAllMenuUser (@Ctx() context: RmqContext): Promise&lt;ListingMenu[]&gt; {
     try {
       return await this.listingService.getAllMenuUser()
     } catch (error) {
@@ -1820,6 +3170,9 @@ export class ListingsController {
     }
   }
 
+  @CacheKey(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
   @MessagePattern(QUEUE_MESSAGE.GET_SINGLE_LISTING_MENU_USER)
   async getSingleMenuUser (
     @Payload() mid: string,
@@ -1827,6 +3180,184 @@ export class ListingsController {
   ): Promise&lt;ListingMenu&gt; {
     try {
       return await this.listingService.getSingleUserMenu(mid)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_ALL)
+  async adminListAll (@Ctx() context: RmqContext): Promise&lt;ListingMenu[]&gt; {
+    try {
+      return await this.listingService.getAllListingMenu()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_PENDING)
+  async adminListPending (@Ctx() context: RmqContext): Promise&lt;ListingMenu[]&gt; {
+    try {
+      return await this.listingService.getAllPendingListingMenu()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_APPROVED)
+  async adminListApproved (@Ctx() context: RmqContext): Promise&lt;ListingMenu[]&gt; {
+    try {
+      return await this.listingService.getAllApprovedListingMenu()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_ADMIN_LIST_REJECTED)
+  async adminListRejected (@Ctx() context: RmqContext): Promise&lt;ListingMenu[]&gt; {
+    try {
+      return await this.listingService.getAllRejectedListingMenu()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_MENU_APPROVE)
+  async approve (
+    @Payload() data: MultiPurposeServicePayload&lt;null&gt;,
+      @Ctx() context: RmqContext
+  ): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      return await this.listingService.approve(data.id)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_MENU_REJECT)
+  async reject (
+    @Payload() { data: { reason }, id }: MultiPurposeServicePayload&lt;ReasonDto&gt;,
+      @Ctx() context: RmqContext
+  ): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      return await this.listingService.disapprove(id, reason)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.CREATE_SCHEDULED_LISTING)
+  async createScheduledListing (
+    @Payload() data: ScheduledListingDto,
+      @Ctx() context
+  ): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      return await this.listingService.createScheduledListing(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY)
+  async updateScheduledListing (
+    @Payload() { listingsId, quantity }: { listingsId: string[], quantity: Array&lt;{ listing: string, quantity: number }&gt; },
+      @Ctx() context
+  ): Promise&lt;void&gt; {
+    try {
+      return await this.listingService.updateScheduledListingCount(listingsId, quantity)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @CacheKey(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
+  @MessagePattern(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS)
+  async getScheduledListings (
+    @Payload() { id }: MultiPurposeServicePayload&lt;null&gt;,
+      @Ctx() context
+  ): Promise&lt;ScheduledListing[]&gt; {
+    try {
+      return await this.listingService.getAllScheduledListing(id)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS_USER)
+  async getScheduledListingsUser (
+    @Ctx() context
+  ): Promise&lt;ScheduledListing[]&gt; {
+    try {
+      return await this.listingService.getAllScheduledListingUser()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_WITH_LISTING)
+  async getVendorListings (
+    @Payload() { vendorId }: { vendorId: string },
+      @Ctx() context
+  ): Promise&lt;ListingCategoryI[]&gt; {
+    try {
+      return await this.listingService.getVendorListings(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @CacheKey(QUEUE_MESSAGE.GET_VENDOR_CAT_USER)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60)
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_CAT_USER)
+  async getVendorCategories (
+    @Payload() { vendorId }: { vendorId: string },
+      @Ctx() context
+  ): Promise&lt;ListingCategory[]&gt; {
+    try {
+      return await this.listingService.getVendorCategories(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @CacheKey(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(1000)
+  @MessagePattern(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)
+  async userHomePage (
+    @Payload() { userLocation }: { userLocation: LocationCoordinates },
+      @Ctx() context: RmqContext
+  ): Promise&lt;UserHomePage&gt; {
+    try {
+      return await this.listingService.getHomePageData(userLocation)
     } catch (error) {
       throw new RpcException(error)
     } finally {

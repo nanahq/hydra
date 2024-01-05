@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,33 +39,39 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >AuthService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >AuthService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/admin-gateway/src/module.api/auth.odsa.service.ts</code>
+            <code>apps/api-gateway/src/module.api/auth.service.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -97,7 +103,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -108,7 +114,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">apps/admin-gateway/src/module.api/auth.odsa.service.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">apps/api-gateway/src/module.api/auth.service.ts:9</a></div>
                             </td>
                         </tr>
 
@@ -158,7 +164,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
@@ -178,7 +184,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>login(admin: <a href="../classes/Admin.html" target="_self">Admin</a>, response: Response)</code>
+                    <code>login(user: <a href="../classes/User.html" target="_self">User</a>, response: Response)</code>
                 </td>
             </tr>
 
@@ -186,7 +192,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/auth.odsa.service.ts:15</a></div>
+                            class="link-to-prism">apps/api-gateway/src/module.api/auth.service.ts:15</a></div>
                 </td>
             </tr>
 
@@ -207,9 +213,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>admin</td>
+                                    <td>user</td>
                                     <td>
-                                                <code><a href="../classes/Admin.html" target="_self" >Admin</a></code>
+                                                <code><a href="../classes/User.html" target="_self" >User</a></code>
                                     </td>
 
                                     <td>
@@ -266,8 +272,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="34"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/auth.odsa.service.ts:34</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">apps/api-gateway/src/module.api/auth.service.ts:32</a></div>
                 </td>
             </tr>
 
@@ -320,13 +326,13 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;
 import { ConfigService } from &#x27;@nestjs/config&#x27;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;
 import { Response } from &#x27;express&#x27;
 
-import { Admin, TokenPayload } from &#x27;@app/common&#x27;
+import { TokenPayload, User } from &#x27;@app/common&#x27;
 
 @Injectable()
 export class AuthService {
@@ -335,9 +341,9 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async login (admin: Admin, response: Response): Promise&lt;void&gt; {
+  async login (user: User, response: Response): Promise&lt;void&gt; {
     const payload: TokenPayload &#x3D; {
-      userId: admin._id as any
+      userId: user._id as any
     }
 
     const expires &#x3D; new Date()
@@ -350,8 +356,6 @@ export class AuthService {
       httpOnly: true,
       expires
     })
-
-    response.send()
   }
 
   logout (response: Response): void {
@@ -359,8 +363,6 @@ export class AuthService {
       httpOnly: true,
       expires: new Date()
     })
-
-    response.send()
   }
 }
 </code></pre>

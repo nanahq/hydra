@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >ReviewController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >ReviewController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,26 +90,32 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#create" >create</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#findOne" >findOne</a>
                             </li>
                             <li>
-                                    <span class="modifier">Async</span>
-                                <a href="#getAll" >getAll</a>
-                            </li>
-                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getListingReviews" >getListingReviews</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#statGetListingReviews" >statGetListingReviews</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#statGetVendorReviews" >statGetVendorReviews</a>
                             </li>
@@ -119,8 +131,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -130,6 +142,8 @@
                 <td class="col-md-4">
                     <a name="create"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>create</b></span>
                         <a href="#create"><span class="icon ion-ios-link"></span></a>
@@ -139,7 +153,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>create(data: <a href="../classes/ReviewDto.html" target="_self">ReviewDto</a>, user: <a href="../classes/User.html" target="_self">User</a>)</code>
+                    <code>create(data: <a href="../interfaces/ReviewDto.html" target="_self">ReviewDto</a>, user: <a href="../classes/User.html" target="_self">User</a>)</code>
                 </td>
             </tr>
 
@@ -164,7 +178,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -177,7 +191,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/ReviewDto.html" target="_self" >ReviewDto</a></code>
+                                                <code><a href="../interfaces/ReviewDto.html" target="_self" >ReviewDto</a></code>
                                     </td>
 
                                     <td>
@@ -208,7 +222,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -220,6 +234,8 @@
                 <td class="col-md-4">
                     <a name="findOne"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>findOne</b></span>
                         <a href="#findOne"><span class="icon ion-ios-link"></span></a>
@@ -254,7 +270,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -286,52 +302,6 @@
 
                     </div>
                     <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="getAll"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>getAll</b></span>
-                        <a href="#getAll"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAll()</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@Get(&#x27;reviews&#x27;)<br />@UseGuards(JwtAuthGuard)<br /></code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="77"
-                            class="link-to-prism">apps/api-gateway/src/module.api/review.controller.ts:77</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Review.html" target="_self" >Promise&lt;Review[]&gt;</a></code>
 
                     </div>
                 </td>
@@ -344,6 +314,8 @@
                 <td class="col-md-4">
                     <a name="getListingReviews"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getListingReviews</b></span>
                         <a href="#getListingReviews"><span class="icon ion-ios-link"></span></a>
@@ -378,7 +350,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -410,7 +382,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -422,6 +394,8 @@
                 <td class="col-md-4">
                     <a name="statGetListingReviews"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>statGetListingReviews</b></span>
                         <a href="#statGetListingReviews"><span class="icon ion-ios-link"></span></a>
@@ -445,8 +419,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="105"
-                            class="link-to-prism">apps/api-gateway/src/module.api/review.controller.ts:105</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">apps/api-gateway/src/module.api/review.controller.ts:93</a></div>
                 </td>
             </tr>
 
@@ -456,7 +430,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -488,7 +462,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -500,6 +474,8 @@
                 <td class="col-md-4">
                     <a name="statGetVendorReviews"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>statGetVendorReviews</b></span>
                         <a href="#statGetVendorReviews"><span class="icon ion-ios-link"></span></a>
@@ -523,8 +499,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="89"
-                            class="link-to-prism">apps/api-gateway/src/module.api/review.controller.ts:89</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">apps/api-gateway/src/module.api/review.controller.ts:77</a></div>
                 </td>
             </tr>
 
@@ -534,7 +510,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -566,7 +542,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -575,7 +551,7 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Body,
   Controller,
@@ -587,7 +563,9 @@
   UseGuards
 } from &#x27;@nestjs/common&#x27;
 import {
+  CurrentUser,
   IRpcException,
+  ReviewDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
@@ -596,14 +574,12 @@ import {
 } from &#x27;@app/common&#x27;
 import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
 import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
-import { CurrentUser } from &#x27;./current-user.decorator&#x27;
 import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
-import { ReviewDto } from &#x27;@app/common/database/dto/review.dto&#x27;
 
 @Controller(&#x27;review&#x27;)
 export class ReviewController {
   constructor (
-    @Inject(QUEUE_SERVICE.REVIEWS_SERVICE)
+    @Inject(QUEUE_SERVICE.REVIEW_SERVICE)
     private readonly reviewClient: ClientProxy
   ) {}
 
@@ -647,18 +623,6 @@ export class ReviewController {
             throw new HttpException(error.message, error.status)
           })
         )
-    )
-  }
-
-  @Get(&#x27;reviews&#x27;)
-  @UseGuards(JwtAuthGuard)
-  async getAll (): Promise&lt;Review[]&gt; {
-    return await lastValueFrom&lt;Review[]&gt;(
-      this.reviewClient.send(QUEUE_MESSAGE.REVIEW_ADMIN_GET_ALL_IN_DB, {}).pipe(
-        catchError((error: IRpcException) &#x3D;&gt; {
-          throw new HttpException(error.message, error.status)
-        })
-      )
     )
   }
 

@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,33 +39,39 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >TransactionEmails</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >TransactionEmails</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/notification-service/src/email/transactional.odsa.service.ts</code>
+            <code>apps/notification-service/src/email/transactional.service.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -77,11 +83,6 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
-                            <li>
-                                    <span class="modifier">Private</span>
-                                    <span class="modifier">Readonly</span>
-                                <a href="#apiInstance" >apiInstance</a>
-                            </li>
                             <li>
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Readonly</span>
@@ -119,7 +120,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -130,7 +131,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">apps/notification-service/src/email/transactional.odsa.service.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">apps/notification-service/src/email/transactional.service.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -168,7 +169,7 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
@@ -188,7 +189,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendVendorPayoutEmail(payload: <a href="../interfaces/SendPayoutEmail.html" target="_self">SendPayoutEmail[]</a>)</code>
+                    <code>sendVendorPayoutEmail(payload: SendPayoutEmail[])</code>
                 </td>
             </tr>
 
@@ -196,7 +197,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="16"
-                            class="link-to-prism">apps/notification-service/src/email/transactional.odsa.service.ts:16</a></div>
+                            class="link-to-prism">apps/notification-service/src/email/transactional.service.ts:16</a></div>
                 </td>
             </tr>
 
@@ -219,7 +220,7 @@
                                 <tr>
                                     <td>payload</td>
                                     <td>
-                                                <code><a href="../interfaces/SendPayoutEmail.html" target="_self" >SendPayoutEmail[]</a></code>
+                                            <code>SendPayoutEmail[]</code>
                                     </td>
 
                                     <td>
@@ -266,8 +267,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">apps/notification-service/src/email/transactional.odsa.service.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">apps/notification-service/src/email/transactional.service.ts:31</a></div>
                 </td>
             </tr>
 
@@ -284,38 +285,11 @@
         </tbody>
     </table>
 </section>
-            <section>
+            <section data-compodoc="block-properties">
 
     <h3 id="inputs">
         Properties
     </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="apiInstance"></a>
-                    <span class="name">
-                            <span class="modifier">Private</span>
-                            <span class="modifier">Readonly</span>
-                        <span ><b>apiInstance</b></span>
-                        <a href="#apiInstance"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>new SibApiV3Sdk.TransactionalEmailsApi()</code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">apps/notification-service/src/email/transactional.odsa.service.ts:8</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -336,7 +310,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">apps/notification-service/src/email/transactional.odsa.service.ts:9</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">apps/notification-service/src/email/transactional.service.ts:8</a></div>
                         </td>
                     </tr>
 
@@ -348,39 +322,38 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { SendPayoutEmail } from &#x27;@app/common&#x27;
 import { Injectable, Logger } from &#x27;@nestjs/common&#x27;
 import { ConfigService } from &#x27;@nestjs/config&#x27;
-import * as SibApiV3Sdk from &#x27;@sendinblue/client&#x27;
 
 @Injectable()
 export class TransactionEmails {
-  private readonly apiInstance &#x3D; new SibApiV3Sdk.TransactionalEmailsApi()
+  // private readonly apiInstance &#x3D; new SibApiV3Sdk.TransactionalEmailsApi()
   private readonly logger &#x3D; new Logger(TransactionEmails.name)
-  constructor (
-    private readonly configService: ConfigService
-  ) {
-    this.apiInstance.setApiKey(SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey, this.configService.get&lt;string&gt;(&#x27;SEND_IN_BLUE_API&#x27;) ?? &#x27;&#x27;)
+  constructor (private readonly configService: ConfigService) {
+    // this.apiInstance.setApiKey(
+    //   SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey,
+    //   this.configService.get&lt;string&gt;(&#x27;SEND_IN_BLUE_API&#x27;) ?? &#x27;&#x27;
+    // )
   }
 
   async sendVendorPayoutEmail (payload: SendPayoutEmail[]): Promise&lt;void&gt; {
     this.logger.log(payload)
-    for (const data of payload) {
-      await this.apiInstance.sendTransacEmail({
-        subject: &#x27;EatLater Payout&#x27;,
-        sender: { email: &#x27;notifications@eatlater.ng&#x27;, name: &#x27;EatLater&#x27; },
-        replyTo: { email: &#x27;notifications@eatlater.ng&#x27;, name: &#x27;EatLater&#x27; },
-        to: [{ email: &#x60;${data.vendorEmail}&#x60; }],
-        htmlContent: &#x27;&lt;html&gt;&lt;body&gt;&lt;h1&gt;This is a transactional email {{params.bodyMessage}}&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#x27;,
-        params: { bodyMessage: &#x27;Made just for you!&#x27; }
-      })
-    }
+    // for (const data of payload) {
+    //   await this.apiInstance.sendTransacEmail({
+    //     subject: &#x27;EatLater Payout&#x27;,
+    //     sender: { email: &#x27;notifications@eatlater.ng&#x27;, name: &#x27;EatLater&#x27; },
+    //     replyTo: { email: &#x27;notifications@eatlater.ng&#x27;, name: &#x27;EatLater&#x27; },
+    //     to: [{ email: &#x60;${data.vendorEmail}&#x60; }],
+    //     htmlContent:
+    //       &#x27;&lt;html&gt;&lt;body&gt;&lt;h1&gt;This is a transactional email {{params.bodyMessage}}&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#x27;,
+    //     params: { bodyMessage: &#x27;Made just for you!&#x27; }
+    //   })
+    // }
   }
 
-  async sendVendorSignupMail (): Promise&lt;void&gt; {
-
-  }
+  async sendVendorSignupMail (): Promise&lt;void&gt; {}
 }
 </code></pre>
     </div>

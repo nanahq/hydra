@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -43,21 +43,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >VendorSettings</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >VendorSettings</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -76,7 +82,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -89,15 +95,19 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#operations" >operations</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#payment" >payment</a>
                             </li>
                             <li>
-                                <a href="#vendorId" >vendorId</a>
+                                    <span class="modifier"></span>
+                                <a href="#vendor" >vendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#_id" >_id</a>
                             </li>
                         </ul>
@@ -114,8 +124,8 @@
 </section>
 
 
-            <section>
-    
+            <section data-compodoc="block-properties">
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -125,6 +135,7 @@
                 <td class="col-md-4">
                     <a name="operations"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>operations</b></span>
                         <a href="#operations"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -147,7 +158,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">libs/common/src/database/schemas/vendor-settings.schema.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">libs/common/src/database/schemas/vendor-settings.schema.ts:25</a></div>
                         </td>
                     </tr>
 
@@ -160,6 +171,7 @@
                 <td class="col-md-4">
                     <a name="payment"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>payment</b></span>
                         <a href="#payment"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -182,7 +194,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">libs/common/src/database/schemas/vendor-settings.schema.ts:34</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">libs/common/src/database/schemas/vendor-settings.schema.ts:35</a></div>
                         </td>
                     </tr>
 
@@ -193,10 +205,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="vendorId"></a>
+                    <a name="vendor"></a>
                     <span class="name">
-                        <span ><b>vendorId</b></span>
-                        <a href="#vendorId"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>vendor</b></span>
+                        <a href="#vendor"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -217,7 +230,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">libs/common/src/database/schemas/vendor-settings.schema.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">libs/common/src/database/schemas/vendor-settings.schema.ts:12</a></div>
                         </td>
                     </tr>
 
@@ -230,6 +243,7 @@
                 <td class="col-md-4">
                     <a name="_id"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>_id</b></span>
                         <a href="#_id"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -277,18 +291,19 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Types } from &#x27;mongoose&#x27;
 import { Schema, Prop, SchemaFactory } from &#x27;@nestjs/mongoose&#x27;
-import { AbstractDocument } from &#x27;@app/common&#x27;
 import {
+  AbstractDocument,
   PaymentInfo,
   VendorOperationSetting
-} from &#x27;@app/common/database/types/common&#x27;
+} from &#x27;@app/common&#x27;
+
 @Schema({ versionKey: false, timestamps: true })
 export class VendorSettings extends AbstractDocument {
   @Prop({ type: Types.ObjectId, ref: &#x27;Vendor&#x27; })
-    vendorId: string
+    vendor: string
 
   @Prop({
     type: {

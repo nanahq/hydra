@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -43,21 +43,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >AbstractRepository</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >AbstractRepository</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -110,11 +116,19 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#deleteMany" >deleteMany</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#find" >find</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#findAndPopulate" >findAndPopulate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findAndUpdate" >findAndUpdate</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -129,12 +143,19 @@
                                 <a href="#findOneAndUpdate" >findOneAndUpdate</a>
                             </li>
                             <li>
+                                <a href="#findRaw" >findRaw</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#insertMany" >insertMany</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#startTransaction" >startTransaction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#update" >update</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -152,18 +173,19 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(model: Model<TDocument>, connection?: Connection)</code>
+                                <span class="modifier">Protected</span>
+                        <code>constructor(model: Model<TDocument>, connection?: Connection)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">libs/common/src/database/abstract.repository.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">libs/common/src/database/abstract.repository.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -182,27 +204,27 @@
                                         <tbody>
                                                 <tr>
                                                         <td>model</td>
-                                                  
+
                                                         <td>
                                                                     <code>Model&lt;TDocument&gt;</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                                 <tr>
                                                         <td>connection</td>
-                                                  
+
                                                         <td>
                                                                     <code>Connection</code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             Yes
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -213,8 +235,8 @@
         </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-properties">
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -240,7 +262,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">libs/common/src/database/abstract.repository.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">libs/common/src/database/abstract.repository.ts:14</a></div>
                         </td>
                     </tr>
 
@@ -249,8 +271,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -276,8 +298,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="22"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:22</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="21"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:21</a></div>
                 </td>
             </tr>
 
@@ -287,7 +309,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -331,7 +353,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -359,8 +381,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="102"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:102</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="138"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:138</a></div>
                 </td>
             </tr>
 
@@ -370,7 +392,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -402,7 +424,78 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteMany"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>deleteMany</b></span>
+                        <a href="#deleteMany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteMany(filterQuery?: FilterQuery<TDocument>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:93</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterQuery</td>
+                                    <td>
+                                            <code>FilterQuery&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;HydratedDocument | any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -430,8 +523,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="96"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:96</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="110"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:110</a></div>
                 </td>
             </tr>
 
@@ -441,7 +534,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -473,7 +566,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -501,8 +594,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="50"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:50</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:48</a></div>
                 </td>
             </tr>
 
@@ -520,7 +613,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -564,7 +657,90 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAndUpdate"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findAndUpdate</b></span>
+                        <a href="#findAndUpdate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAndUpdate(filterQuery: FilterQuery<TDocument>, update: Partial<TDocument>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="129"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:129</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterQuery</td>
+                                    <td>
+                                            <code>FilterQuery&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>update</td>
+                                    <td>
+                                            <code>Partial&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -592,8 +768,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="43"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:43</a></div>
                 </td>
             </tr>
 
@@ -603,7 +779,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -631,11 +807,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;TDocument | null&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;TDocument | any&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -663,18 +839,26 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="35"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:35</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="34"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:34</a></div>
                 </td>
             </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <b>Type parameters :</b>
+                    <ul class="type-parameters">
+                        <li>T</li>
+                    </ul>
+                </td>
+            </tr>
 
             <tr>
                 <td class="col-md-4">
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -714,11 +898,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;T&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -739,15 +923,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findOneAndUpdate(filterQuery: FilterQuery<TDocument>, update: UpdateQuery<TDocument>)</code>
+                    <code>findOneAndUpdate(filterQuery: FilterQuery<TDocument>, update: FilterQuery<TDocument>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="57"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:57</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:62</a></div>
                 </td>
             </tr>
 
@@ -757,7 +941,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -782,7 +966,7 @@
                                 <tr>
                                     <td>update</td>
                                     <td>
-                                            <code>UpdateQuery&lt;TDocument&gt;</code>
+                                            <code>FilterQuery&lt;TDocument&gt;</code>
                                     </td>
 
                                     <td>
@@ -797,11 +981,48 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;HydratedDocument&lt;TDocument&gt;&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findRaw"></a>
+                    <span class="name">
+                        <span ><b>findRaw</b></span>
+                        <a href="#findRaw"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>findRaw()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="58"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:58</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Model&lt;TDocument&gt;</code>
+
                     </div>
                 </td>
             </tr>
@@ -829,8 +1050,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="89"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:89</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="103"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:103</a></div>
                 </td>
             </tr>
 
@@ -840,7 +1061,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -880,11 +1101,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;TDocument[]&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -912,8 +1133,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="108"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:108</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:144</a></div>
                 </td>
             </tr>
 
@@ -923,6 +1144,89 @@
 
                     <div class="io-description">
                         <b>Returns : </b>    <code>Promise&lt;ClientSession | any&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>update(filterQuery: FilterQuery<TDocument>, update: Partial<TDocument>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="120"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:120</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterQuery</td>
+                                    <td>
+                                            <code>FilterQuery&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>update</td>
+                                    <td>
+                                            <code>Partial&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
 
                     </div>
                 </td>
@@ -951,8 +1255,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="74"
-                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:74</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="78"
+                            class="link-to-prism">libs/common/src/database/abstract.repository.ts:78</a></div>
                 </td>
             </tr>
 
@@ -962,7 +1266,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1006,7 +1310,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -1021,13 +1325,12 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { type Logger, NotFoundException } from &#x27;@nestjs/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { type Logger } from &#x27;@nestjs/common&#x27;
 import {
   type FilterQuery,
   type Model,
   Types,
-  type UpdateQuery,
   type SaveOptions,
   type Connection,
   type HydratedDocument,
@@ -1038,7 +1341,7 @@ import { type AbstractDocument } from &#x27;./abstract.schema&#x27;
 export abstract class AbstractRepository&lt;TDocument extends AbstractDocument&gt; {
   protected abstract readonly logger: Logger
 
-  constructor (
+  protected constructor (
     protected readonly model: Model&lt;TDocument&gt;,
     private readonly connection?: Connection
   ) {}
@@ -1053,35 +1356,41 @@ export abstract class AbstractRepository&lt;TDocument extends AbstractDocument&g
     })
     return (
       await createdDocument.save(options as SaveOptions)
-    ).toJSON() as unknown as TDocument
+    )
   }
 
-  async findOneAndPopulate (
+  async findOneAndPopulate&lt;T&gt; (
     filterQuery: FilterQuery&lt;TDocument&gt;,
     populatePath: string | string[]
-  ): Promise&lt;any&gt; {
+  ): Promise&lt;T&gt; {
     return await this.model
       .findOne(filterQuery, {}, { lean: true })
-      .populate(populatePath as any)
+      .populate(populatePath as any) as any
   }
 
-  async findOne (
-    filterQuery: FilterQuery&lt;TDocument&gt;
-  ): Promise&lt;TDocument | null&gt; {
-    return await this.model.findOne(filterQuery, {}, { lean: true }).sort({ createdAt: &#x27;desc&#x27; })
+  async findOne (filterQuery: FilterQuery&lt;TDocument&gt;): Promise&lt;TDocument | any&gt; {
+    return await this.model
+      .findOne(filterQuery, {}, { lean: true })
   }
 
-  async findAndPopulate&lt;T&gt; (
+  async findAndPopulate&lt;T&gt;(
     filterQuery: FilterQuery&lt;TDocument&gt;,
     populatePath: string | string[]
   ): Promise&lt;T[]&gt; {
-    return await this.model.find(filterQuery).populate(populatePath as any).sort({ createdAt: &#x27;desc&#x27; }) as any
+    return await this.model
+      .find(filterQuery)
+      .sort({ createdAt: &#x27;desc&#x27; })
+      .populate(populatePath as any) as any
+  }
+
+  findRaw (): Model&lt;TDocument&gt; {
+    return this.model
   }
 
   async findOneAndUpdate (
     filterQuery: FilterQuery&lt;TDocument&gt;,
-    update: UpdateQuery&lt;TDocument&gt;
-  ): Promise&lt;HydratedDocument&lt;TDocument&gt;&gt; {
+    update: FilterQuery&lt;TDocument&gt;
+  ): Promise&lt;any&gt; {
     const document &#x3D; await this.model.findOneAndUpdate(filterQuery, update, {
       lean: true,
       new: true
@@ -1089,7 +1398,6 @@ export abstract class AbstractRepository&lt;TDocument extends AbstractDocument&g
 
     if (document &#x3D;&#x3D;&#x3D; null) {
       this.logger.warn(&#x27;Document not found with filterQuery:&#x27;, filterQuery)
-      throw new NotFoundException(&#x27;Document not found.&#x27;)
     }
 
     return document
@@ -1110,17 +1418,49 @@ export abstract class AbstractRepository&lt;TDocument extends AbstractDocument&g
     )
   }
 
+  async deleteMany (
+    filterQuery?: FilterQuery&lt;TDocument&gt;
+  ): Promise&lt;HydratedDocument&lt;TDocument&gt; | any&gt; {
+    return await new Promise((resolve) &#x3D;&gt;
+      resolve(
+        this.model.deleteMany(filterQuery)
+      )
+    )
+  }
+
   async insertMany (
     documents: Array&lt;Omit&lt;TDocument, &#x27;_id&#x27;&gt;&gt; | Array&lt;Partial&lt;TDocument&gt;&gt;,
     options?: SaveOptions
-  ): Promise&lt;TDocument[]&gt; {
+  ): Promise&lt;any&gt; {
     return await this.model.insertMany(documents)
   }
 
   async find (filterQuery: FilterQuery&lt;TDocument&gt;): Promise&lt;any&gt; {
     return await new Promise((resolve) &#x3D;&gt;
-      resolve(this.model.find(filterQuery, {}, { lean: true }).sort({ createdAt: &#x27;desc&#x27; }))
+      resolve(
+        this.model
+          .find(filterQuery, {}, { lean: true })
+          .sort({ createdAt: &#x27;desc&#x27; })
+      )
     )
+  }
+
+  async update (
+    filterQuery: FilterQuery&lt;TDocument&gt;,
+    update: Partial&lt;TDocument&gt;
+  ): Promise&lt;any&gt; {
+    return await new Promise((resolve) &#x3D;&gt;
+      resolve(this.model.updateOne(filterQuery, update))
+    )
+  }
+
+  async findAndUpdate (
+    filterQuery: FilterQuery&lt;TDocument&gt;,
+    update: Partial&lt;TDocument&gt;
+  ): Promise&lt;any&gt; {
+    return await new Promise((resolve) &#x3D;&gt; {
+      resolve(this.model.updateMany(filterQuery, update).sort({ createdAt: &#x27;desc&#x27; }))
+    })
   }
 
   async delete (id: Types.ObjectId): Promise&lt;any&gt; {

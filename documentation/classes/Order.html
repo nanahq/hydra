@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -43,21 +43,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >Order</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >Order</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -76,7 +82,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -89,63 +95,92 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#createdAt" >createdAt</a>
                             </li>
                             <li>
-                                <a href="#deliveryAddess" >deliveryAddess</a>
+                                    <span class="modifier"></span>
+                                <a href="#deliveryAddress" >deliveryAddress</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#isThirdParty" >isThirdParty</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#listing" >listing</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#options" >options</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#orderBreakDown" >orderBreakDown</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#orderDeliveryScheduledTime" >orderDeliveryScheduledTime</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#orderStatus" >orderStatus</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#orderType" >orderType</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#orderValuePayable" >orderValuePayable</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#preciseLocation" >preciseLocation</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#primaryContact" >primaryContact</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#quantity" >quantity</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#refId" >refId</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#specialNote" >specialNote</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#thirdPartyName" >thirdPartyName</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                 <a href="#totalOrderValue" >totalOrderValue</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                <a href="#txRefId" >txRefId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                 <a href="#updatedAt" >updatedAt</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#user" >user</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#vendor" >vendor</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                 <a href="#_id" >_id</a>
                             </li>
                         </ul>
@@ -162,8 +197,8 @@
 </section>
 
 
-            <section>
-    
+            <section data-compodoc="block-properties">
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -173,6 +208,7 @@
                 <td class="col-md-4">
                     <a name="createdAt"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>createdAt</b></span>
                         <a href="#createdAt"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -195,7 +231,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:55</a></div>
                         </td>
                     </tr>
 
@@ -206,10 +242,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="deliveryAddess"></a>
+                    <a name="deliveryAddress"></a>
                     <span class="name">
-                        <span ><b>deliveryAddess</b></span>
-                        <a href="#deliveryAddess"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>deliveryAddress</b></span>
+                        <a href="#deliveryAddress"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -230,7 +267,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:38</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:43</a></div>
                         </td>
                     </tr>
 
@@ -243,6 +280,7 @@
                 <td class="col-md-4">
                     <a name="isThirdParty"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>isThirdParty</b></span>
                         <a href="#isThirdParty"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -265,7 +303,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:44</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -278,43 +316,9 @@
                 <td class="col-md-4">
                     <a name="listing"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>listing</b></span>
                         <a href="#listing"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @Prop({type: undefined, ref: &#x27;ListingMenu&#x27;})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:17</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="options"></a>
-                    <span class="name">
-                        <span ><b>options</b></span>
-                        <a href="#options"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -329,13 +333,49 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @Prop([&#x27;String&#x27;])<br />
+                            @Prop({type: undefined, ref: &#x27;ListingMenu&#x27;})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:56</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="options"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>options</b></span>
+                        <a href="#options"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Order.html" target="_self" >OrderOptions[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: undefined})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:69</a></div>
                         </td>
                     </tr>
 
@@ -348,6 +388,7 @@
                 <td class="col-md-4">
                     <a name="orderBreakDown"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>orderBreakDown</b></span>
                         <a href="#orderBreakDown"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -356,6 +397,258 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Type : </i>        <code><a href="../interfaces/OrderBreakDown.html" target="_self" >OrderBreakDown</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: undefined})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="116" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:116</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="orderDeliveryScheduledTime"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>orderDeliveryScheduledTime</b></span>
+                        <a href="#orderDeliveryScheduledTime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop(Date)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="106" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="orderStatus"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>orderStatus</b></span>
+                        <a href="#orderStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#OrderStatus" target="_self" >OrderStatus</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: String})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="103" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:103</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="orderType"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>orderType</b></span>
+                        <a href="#orderType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#OrderType" target="_self" >OrderType</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop(String)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="orderValuePayable"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>orderValuePayable</b></span>
+                        <a href="#orderValuePayable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: Number})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="preciseLocation"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>preciseLocation</b></span>
+                        <a href="#preciseLocation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/LocationCoordinates.html" target="_self" >LocationCoordinates</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: undefined, coordinates: undefined})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="primaryContact"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>primaryContact</b></span>
+                        <a href="#primaryContact"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop({type: String})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="quantity"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>quantity</b></span>
+                        <a href="#quantity"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[literal type]</code>
 
                     </td>
                 </tr>
@@ -381,10 +674,47 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="orderDeliveryScheduledTime"></a>
+                    <a name="refId"></a>
                     <span class="name">
-                        <span ><b>orderDeliveryScheduledTime</b></span>
-                        <a href="#orderDeliveryScheduledTime"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>refId</b></span>
+                        <a href="#refId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Prop(Number)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="specialNote"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>specialNote</b></span>
+                        <a href="#specialNote"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -405,7 +735,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:82</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="98" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:98</a></div>
                         </td>
                     </tr>
 
@@ -416,16 +746,18 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="orderStatus"></a>
+                    <a name="thirdPartyName"></a>
                     <span class="name">
-                        <span ><b>orderStatus</b></span>
-                        <a href="#orderStatus"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>thirdPartyName</b></span>
+                        <a href="#thirdPartyName"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../classes/Order.html" target="_self" >OrderStatus</a></code>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                     </td>
                 </tr>
@@ -434,13 +766,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @Prop({type: String})<br />
+                            @Prop({default: &#x27;&#x27;, type: String})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:79</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:52</a></div>
                         </td>
                     </tr>
 
@@ -451,45 +783,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="orderType"></a>
+                    <a name="totalOrderValue"></a>
                     <span class="name">
-                        <span ><b>orderType</b></span>
-                        <a href="#orderType"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="../classes/Order.html" target="_self" >OrderType</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @Prop(String)<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:59</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="orderValuePayable"></a>
-                    <span class="name">
-                        <span ><b>orderValuePayable</b></span>
-                        <a href="#orderValuePayable"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>totalOrderValue</b></span>
+                        <a href="#totalOrderValue"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -521,80 +819,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="preciseLocation"></a>
+                    <a name="txRefId"></a>
                     <span class="name">
-                        <span ><b>preciseLocation</b></span>
-                        <a href="#preciseLocation"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>    <code>literal type</code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @Prop({type: undefined})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:66</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="primaryContact"></a>
-                    <span class="name">
-                        <span ><b>primaryContact</b></span>
-                        <a href="#primaryContact"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @Prop({type: String})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:41</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="quantity"></a>
-                    <span class="name">
-                        <span ><b>quantity</b></span>
-                        <a href="#quantity"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                        <span ><b>txRefId</b></span>
+                        <a href="#txRefId"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -615,112 +844,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:71</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="refId"></a>
-                    <span class="name">
-                        <span ><b>refId</b></span>
-                        <a href="#refId"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @Prop(Number)<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:53</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="specialNote"></a>
-                    <span class="name">
-                        <span ><b>specialNote</b></span>
-                        <a href="#specialNote"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @Prop(String)<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:74</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="totalOrderValue"></a>
-                    <span class="name">
-                        <span ><b>totalOrderValue</b></span>
-                        <a href="#totalOrderValue"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @Prop({type: Number})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:119</a></div>
                         </td>
                     </tr>
 
@@ -733,6 +857,7 @@
                 <td class="col-md-4">
                     <a name="updatedAt"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>updatedAt</b></span>
                         <a href="#updatedAt"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -755,7 +880,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:58</a></div>
                         </td>
                     </tr>
 
@@ -768,6 +893,7 @@
                 <td class="col-md-4">
                     <a name="user"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>user</b></span>
                         <a href="#user"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -790,7 +916,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:16</a></div>
                         </td>
                     </tr>
 
@@ -803,6 +929,7 @@
                 <td class="col-md-4">
                     <a name="vendor"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>vendor</b></span>
                         <a href="#vendor"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -825,7 +952,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">libs/common/src/database/schemas/order.schema.ts:28</a></div>
                         </td>
                     </tr>
 
@@ -838,6 +965,7 @@
                 <td class="col-md-4">
                     <a name="_id"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                         <span ><b>_id</b></span>
                         <a href="#_id"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -885,10 +1013,15 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { SchemaTypes, Types } from &#x27;mongoose&#x27;
 import { Schema, Prop, SchemaFactory } from &#x27;@nestjs/mongoose&#x27;
-import { AbstractDocument, OrderStatus, OrderBreakDown, OrderType } from &#x27;@app/common&#x27;
+import {
+  AbstractDocument,
+  OrderStatus,
+  OrderBreakDown,
+  OrderType, LocationCoordinates, OrderOptions
+} from &#x27;@app/common&#x27;
 
 @Schema({ versionKey: false, timestamps: true })
 export class Order extends AbstractDocument {
@@ -899,10 +1032,10 @@ export class Order extends AbstractDocument {
     user: string
 
   @Prop({
-    type: Types.ObjectId,
+    type: [Types.ObjectId],
     ref: &#x27;ListingMenu&#x27;
   })
-    listing: string
+    listing: string[]
 
   @Prop({
     type: Types.ObjectId,
@@ -923,13 +1056,16 @@ export class Order extends AbstractDocument {
   @Prop({
     type: String
   })
-    deliveryAddess: string
+    deliveryAddress: string
 
   @Prop({ type: String })
     primaryContact: string
 
   @Prop({ default: false, type: Boolean })
     isThirdParty: boolean
+
+  @Prop({ default: &#x27;&#x27;, type: String })
+    thirdPartyName?: string
 
   @Prop(SchemaTypes.Date)
     createdAt: string
@@ -940,23 +1076,39 @@ export class Order extends AbstractDocument {
   @Prop(Number)
     refId: number
 
-  @Prop([String])
-    options: string[]
+  @Prop({
+    type: [{
+      listing: Types.ObjectId,
+      options: [String]
+    }]
+  })
+    options: OrderOptions[]
 
   @Prop(String)
     orderType: OrderType
 
   @Prop({
     type: {
-      coordinates: [String]
+      type: String,
+      default: &#x27;Point&#x27;
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0] // Default coordinates here
     }
   })
-    preciseLocation: {
-    coordinates: [string, string]
-  }
+    preciseLocation: LocationCoordinates
 
-  @Prop(String)
-    quantity: string
+  @Prop({
+    type: [{
+      listing: Types.ObjectId,
+      quantity: Number
+    }]
+  })
+    quantity: [{
+    listing: string
+    quantity: number
+  }]
 
   @Prop(String)
     specialNote: string
@@ -966,7 +1118,7 @@ export class Order extends AbstractDocument {
   })
     orderStatus: OrderStatus
 
-  @Prop(String)
+  @Prop(Date)
     orderDeliveryScheduledTime: string
 
   @Prop({
@@ -978,6 +1130,9 @@ export class Order extends AbstractDocument {
     }
   })
     orderBreakDown: OrderBreakDown
+
+  @Prop(String)
+    txRefId: string
 }
 
 export const OrderSchema &#x3D; SchemaFactory.createForClass(Order)

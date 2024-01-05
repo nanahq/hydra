@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -43,21 +43,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li >UpdateListingCategoryDto</li>
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >UpdateListingCategoryDto</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -83,23 +89,29 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Optional</span>
                                 <a href="#catId" >catId</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Optional</span>
                                 <a href="#isDeleted" >isDeleted</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Optional</span>
                                 <a href="#isLive" >isLive</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Optional</span>
                                 <a href="#name" >name</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Optional</span>
                                 <a href="#tags" >tags</a>
@@ -118,8 +130,8 @@
 </section>
 
 
-            <section>
-    
+            <section data-compodoc="block-properties">
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -129,6 +141,7 @@
                 <td class="col-md-4">
                     <a name="catId"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                             <span class="modifier">Optional</span>
                         <span ><b>catId</b></span>
                         <a href="#catId"><span class="icon ion-ios-link"></span></a>
@@ -152,7 +165,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:58</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:60</a></div>
                         </td>
                     </tr>
 
@@ -165,6 +178,7 @@
                 <td class="col-md-4">
                     <a name="isDeleted"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                             <span class="modifier">Optional</span>
                         <span ><b>isDeleted</b></span>
                         <a href="#isDeleted"><span class="icon ion-ios-link"></span></a>
@@ -188,7 +202,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:55</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:57</a></div>
                         </td>
                     </tr>
 
@@ -201,6 +215,7 @@
                 <td class="col-md-4">
                     <a name="isLive"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                             <span class="modifier">Optional</span>
                         <span ><b>isLive</b></span>
                         <a href="#isLive"><span class="icon ion-ios-link"></span></a>
@@ -224,7 +239,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:52</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:54</a></div>
                         </td>
                     </tr>
 
@@ -237,6 +252,7 @@
                 <td class="col-md-4">
                     <a name="name"></a>
                     <span class="name">
+                            <span class="modifier"></span>
                             <span class="modifier">Public</span>
                             <span class="modifier">Optional</span>
                         <span ><b>name</b></span>
@@ -261,7 +277,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:45</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -274,6 +290,8 @@
                 <td class="col-md-4">
                     <a name="tags"></a>
                     <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
                             <span class="modifier">Public</span>
                             <span class="modifier">Optional</span>
                         <span ><b>tags</b></span>
@@ -298,7 +316,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:49</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">libs/common/src/database/dto/listing.dto.ts:51</a></div>
                         </td>
                     </tr>
 
@@ -316,18 +334,17 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   IsArray,
   IsBoolean,
   IsEnum,
-  IsNotEmpty,
+  IsNotEmpty, IsNumber,
   IsOptional,
   IsString
 } from &#x27;class-validator&#x27;
 
-import { CustomisationOptionTypeEnum } from &#x27;@app/common&#x27;
-import { ListingOption } from &#x27;@app/common/database/types/common&#x27;
+import { CustomisationOptionTypeEnum, ListingOption } from &#x27;@app/common&#x27;
 
 export class ListingOptionEntityDto {
   @IsNotEmpty()
@@ -354,6 +371,9 @@ export class CreateListingCategoryDto {
   @IsBoolean()
   @IsNotEmpty()
     isLive: boolean
+
+  @IsNotEmpty()
+    type: &#x27;PRE_ORDER&#x27; | &#x27;ON_DEMAND&#x27;
 
   @IsOptional()
   public menu?: string
@@ -436,6 +456,17 @@ export class UpdateOptionGroupDto {
 
   @IsNotEmpty()
     optionId?: string
+}
+
+export class CreateScheduledListingDto {
+  @IsNotEmpty()
+    listing: string
+
+  @IsNumber()
+    quantity: number
+
+  @IsNotEmpty()
+    availableDate: number
 }
 
 // Interfaces

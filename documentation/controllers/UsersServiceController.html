@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >UsersServiceController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >UsersServiceController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -64,7 +70,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -78,34 +84,52 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#checkUserAccount" >checkUserAccount</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#deleteUserProfile" >deleteUserProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getUserById" >getUserById</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getUserByPhone" >getUserByPhone</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getUserWithPhone" >getUserWithPhone</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#registerNewUser" >registerNewUser</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#resendPhoneVerification" >resendPhoneVerification</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateUserOrderCount" >updateUserOrderCount</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateUserProfile" >updateUserProfile</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateUserStatus" >updateUserStatus</a>
                             </li>
@@ -121,8 +145,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -130,8 +154,99 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="checkUserAccount"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>checkUserAccount</b></span>
+                        <a href="#checkUserAccount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkUserAccount(undefined: literal type, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.CHECK_PHONE_NUMBER)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="148"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:148</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/CheckUserAccountI.html" target="_self" >Promise&lt;CheckUserAccountI&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="deleteUserProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>deleteUserProfile</b></span>
                         <a href="#deleteUserProfile"><span class="icon ion-ios-link"></span></a>
@@ -141,7 +256,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deleteUserProfile(undefined: ServicePayload<>, context: RmqContext)</code>
+                    <code>deleteUserProfile(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -155,8 +270,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="123"
-                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:123</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="106"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:106</a></div>
                 </td>
             </tr>
 
@@ -166,7 +281,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -178,7 +293,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -209,7 +324,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -221,6 +336,7 @@
                 <td class="col-md-4">
                     <a name="getUserById"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getUserById</b></span>
                         <a href="#getUserById"><span class="icon ion-ios-link"></span></a>
@@ -244,8 +360,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="95"
-                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:95</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="78"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:78</a></div>
                 </td>
             </tr>
 
@@ -255,7 +371,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -299,7 +415,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -311,6 +427,7 @@
                 <td class="col-md-4">
                     <a name="getUserByPhone"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getUserByPhone</b></span>
                         <a href="#getUserByPhone"><span class="icon ion-ios-link"></span></a>
@@ -320,7 +437,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getUserByPhone(data: <a href="../classes/loginUserRequest.html" target="_self">loginUserRequest</a>, context: RmqContext)</code>
+                    <code>getUserByPhone(data: <a href="../interfaces/loginUserRequest.html" target="_self">loginUserRequest</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -334,8 +451,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="71"
-                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:71</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="63"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:63</a></div>
                 </td>
             </tr>
 
@@ -345,7 +462,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -358,7 +475,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/loginUserRequest.html" target="_self" >loginUserRequest</a></code>
+                                                <code><a href="../interfaces/loginUserRequest.html" target="_self" >loginUserRequest</a></code>
                                     </td>
 
                                     <td>
@@ -389,7 +506,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -401,6 +518,7 @@
                 <td class="col-md-4">
                     <a name="getUserWithPhone"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getUserWithPhone</b></span>
                         <a href="#getUserWithPhone"><span class="icon ion-ios-link"></span></a>
@@ -424,8 +542,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="137"
-                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:137</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="120"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:120</a></div>
                 </td>
             </tr>
 
@@ -435,7 +553,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -478,7 +596,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -490,6 +608,7 @@
                 <td class="col-md-4">
                     <a name="registerNewUser"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>registerNewUser</b></span>
                         <a href="#registerNewUser"><span class="icon ion-ios-link"></span></a>
@@ -499,7 +618,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>registerNewUser(data: <a href="../classes/registerUserRequest.html" target="_self">registerUserRequest</a>, context: RmqContext)</code>
+                    <code>registerNewUser(data: <a href="../interfaces/registerUserRequest.html" target="_self">registerUserRequest</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -513,8 +632,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:35</a></div>
                 </td>
             </tr>
 
@@ -524,7 +643,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -537,7 +656,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/registerUserRequest.html" target="_self" >registerUserRequest</a></code>
+                                                <code><a href="../interfaces/registerUserRequest.html" target="_self" >registerUserRequest</a></code>
                                     </td>
 
                                     <td>
@@ -564,11 +683,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -578,18 +697,19 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="updateUserOrderCount"></a>
+                    <a name="resendPhoneVerification"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>updateUserOrderCount</b></span>
-                        <a href="#updateUserOrderCount"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>resendPhoneVerification</b></span>
+                        <a href="#resendPhoneVerification"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateUserOrderCount(undefined: literal type, context: RmqContext)</code>
+                    <code>resendPhoneVerification(undefined: literal type, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -597,14 +717,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@MessagePattern(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT)<br /></code>
+                    <code>@MessagePattern(QUEUE_MESSAGE.RESEND_PHONE_VERIFICATION)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="151"
-                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:151</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="162"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:162</a></div>
                 </td>
             </tr>
 
@@ -614,7 +734,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -657,7 +777,97 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateUserOrderCount"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>updateUserOrderCount</b></span>
+                        <a href="#updateUserOrderCount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateUserOrderCount(undefined: literal type, context: RmqContext)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@MessagePattern(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="134"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:134</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>context</td>
+                                    <td>
+                                            <code>RmqContext</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -669,6 +879,7 @@
                 <td class="col-md-4">
                     <a name="updateUserProfile"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateUserProfile</b></span>
                         <a href="#updateUserProfile"><span class="icon ion-ios-link"></span></a>
@@ -678,7 +889,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateUserProfile(payload: ServicePayload<UpdateUserDto>, context: RmqContext)</code>
+                    <code>updateUserProfile(payload: ServicePayload<Partial<UpdateUserDto>>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -692,8 +903,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="109"
-                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:109</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:92</a></div>
                 </td>
             </tr>
 
@@ -703,7 +914,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -716,7 +927,7 @@
                                 <tr>
                                     <td>payload</td>
                                     <td>
-                                            <code>ServicePayload&lt;UpdateUserDto&gt;</code>
+                                            <code>ServicePayload&lt;Partial&lt;UpdateUserDto&gt;&gt;</code>
                                     </td>
 
                                     <td>
@@ -747,7 +958,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -759,6 +970,7 @@
                 <td class="col-md-4">
                     <a name="updateUserStatus"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateUserStatus</b></span>
                         <a href="#updateUserStatus"><span class="icon ion-ios-link"></span></a>
@@ -768,7 +980,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateUserStatus(data: <a href="../classes/verifyPhoneRequest.html" target="_self">verifyPhoneRequest</a>, context: RmqContext)</code>
+                    <code>updateUserStatus(data: <a href="../interfaces/verifyPhoneRequest.html" target="_self">verifyPhoneRequest</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -782,8 +994,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="57"
-                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:57</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">apps/users-service/src/users-service.controller.ts:49</a></div>
                 </td>
             </tr>
 
@@ -793,7 +1005,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -806,7 +1018,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/verifyPhoneRequest.html" target="_self" >verifyPhoneRequest</a></code>
+                                                <code><a href="../interfaces/verifyPhoneRequest.html" target="_self" >verifyPhoneRequest</a></code>
                                     </td>
 
                                     <td>
@@ -833,11 +1045,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -846,22 +1058,21 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  ClientProxy,
   Ctx,
   MessagePattern,
   Payload,
   RmqContext,
   RpcException
 } from &#x27;@nestjs/microservices&#x27;
-import { Controller, Inject, UseFilters } from &#x27;@nestjs/common&#x27;
+import { Controller, UseFilters } from &#x27;@nestjs/common&#x27;
 
 import {
+  CheckUserAccountI,
   ExceptionFilterRpc,
   loginUserRequest,
   QUEUE_MESSAGE,
-  QUEUE_SERVICE,
   registerUserRequest,
   ResponseWithStatus,
   RmqService,
@@ -871,7 +1082,6 @@ import {
   verifyPhoneRequest
 } from &#x27;@app/common&#x27;
 import { UsersService } from &#x27;./users-service.service&#x27;
-import { lastValueFrom } from &#x27;rxjs&#x27;
 import { UpdateUserDto } from &#x27;@app/common/dto/UpdateUserDto&#x27;
 
 @UseFilters(new ExceptionFilterRpc())
@@ -879,22 +1089,16 @@ import { UpdateUserDto } from &#x27;@app/common/dto/UpdateUserDto&#x27;
 export class UsersServiceController {
   constructor (
     private readonly usersService: UsersService,
-    private readonly rmqService: RmqService,
-    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
+    private readonly rmqService: RmqService
   ) {}
 
   @MessagePattern(QUEUE_MESSAGE.CREATE_USER)
   async registerNewUser (
     @Payload() data: registerUserRequest,
       @Ctx() context: RmqContext
-  ): Promise&lt;ResponseWithStatus&gt; {
+  ): Promise&lt;User&gt; {
     try {
-      const res &#x3D; await this.usersService.register(data)
-      await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, data)
-      )
-      return res
+      return await this.usersService.register(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -906,7 +1110,7 @@ export class UsersServiceController {
   async updateUserStatus (
     @Payload() data: verifyPhoneRequest,
       @Ctx() context: RmqContext
-  ): Promise&lt;ResponseWithStatus&gt; {
+  ): Promise&lt;User&gt; {
     try {
       return await this.usersService.updateUserStatus(data)
     } catch (error) {
@@ -923,15 +1127,6 @@ export class UsersServiceController {
   ): Promise&lt;User&gt; {
     try {
       const res &#x3D; await this.usersService.validateUser(data)
-
-      // send a verification SMS when user is created
-      if (res.status &#x3D;&#x3D;&#x3D; 1) {
-        await lastValueFrom(
-          this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
-            phoneNumber: data.phone
-          })
-        )
-      }
       return res.data
     } catch (error) {
       throw new RpcException(error)
@@ -956,7 +1151,7 @@ export class UsersServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_PROFILE)
   async updateUserProfile (
-    @Payload() payload: ServicePayload&lt;UpdateUserDto&gt;,
+    @Payload() payload: ServicePayload&lt;Partial&lt;UpdateUserDto&gt;&gt;,
       @Ctx() context: RmqContext
   ): Promise&lt;ResponseWithStatus&gt; {
     try {
@@ -1003,6 +1198,34 @@ export class UsersServiceController {
   ): Promise&lt;ResponseWithStatus&gt; {
     try {
       return await this.usersService.updateUserOrderCount(orderId, userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.CHECK_PHONE_NUMBER)
+  async checkUserAccount (
+    @Payload() { phone }: { phone: string },
+      @Ctx() context: RmqContext
+  ): Promise&lt;CheckUserAccountI&gt; {
+    try {
+      return await this.usersService.checkUserAccount(phone)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.RESEND_PHONE_VERIFICATION)
+  async resendPhoneVerification (
+    @Payload() { phone }: { phone: string },
+      @Ctx() context: RmqContext
+  ): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      return await this.usersService.resendPhoneNumberRequest(phone)
     } catch (error) {
       throw new RpcException(error)
     } finally {

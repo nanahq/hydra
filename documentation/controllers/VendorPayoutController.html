@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >VendorPayoutController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >VendorPayoutController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,22 +90,27 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createPayout" >createPayout</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllPayout" >getAllPayout</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendorPayout" >getVendorPayout</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#payoutOverview" >payoutOverview</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updatePayoutStatus" >updatePayoutStatus</a>
                             </li>
@@ -115,8 +126,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -126,6 +137,7 @@
                 <td class="col-md-4">
                     <a name="createPayout"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createPayout</b></span>
                         <a href="#createPayout"><span class="icon ion-ios-link"></span></a>
@@ -135,7 +147,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createPayout(undefined: ServicePayload<Partial<VendorPayout>>, context: RmqContext)</code>
+                    <code>createPayout(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;Partial&lt;VendorPayout&gt;&gt;</a>, context: RmqContext)</code>
                 </td>
             </tr>
 
@@ -149,8 +161,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:66</a></div>
                 </td>
             </tr>
 
@@ -160,7 +172,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -172,7 +184,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                            <code>ServicePayload&lt;Partial&lt;VendorPayout&gt;&gt;</code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;Partial&lt;VendorPayout&gt;&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -203,7 +215,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -215,6 +227,7 @@
                 <td class="col-md-4">
                     <a name="getAllPayout"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllPayout</b></span>
                         <a href="#getAllPayout"><span class="icon ion-ios-link"></span></a>
@@ -238,8 +251,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="41"
+                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:41</a></div>
                 </td>
             </tr>
 
@@ -249,7 +262,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -281,7 +294,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -293,6 +306,7 @@
                 <td class="col-md-4">
                     <a name="getVendorPayout"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getVendorPayout</b></span>
                         <a href="#getVendorPayout"><span class="icon ion-ios-link"></span></a>
@@ -316,8 +330,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:15</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="27"
+                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:27</a></div>
                 </td>
             </tr>
 
@@ -327,7 +341,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -366,11 +380,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;VendorPayout[]&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -382,6 +396,7 @@
                 <td class="col-md-4">
                     <a name="payoutOverview"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>payoutOverview</b></span>
                         <a href="#payoutOverview"><span class="icon ion-ios-link"></span></a>
@@ -405,8 +420,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="74"
-                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:74</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="84"
+                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:84</a></div>
                 </td>
             </tr>
 
@@ -416,7 +431,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -459,7 +474,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -471,6 +486,7 @@
                 <td class="col-md-4">
                     <a name="updatePayoutStatus"></a>
                     <span class="name">
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updatePayoutStatus</b></span>
                         <a href="#updatePayoutStatus"><span class="icon ion-ios-link"></span></a>
@@ -494,8 +510,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="42"
-                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:42</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="52"
+                            class="link-to-prism">apps/payment-service/src/payout/payout.controller.ts:52</a></div>
                 </td>
             </tr>
 
@@ -505,7 +521,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -548,7 +564,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -557,25 +573,37 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { PayoutOverview, QUEUE_MESSAGE, ResponseWithStatus, RmqService, ServicePayload, VendorPayout } from &#x27;@app/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  PayoutOverview,
+  QUEUE_MESSAGE,
+  ResponseWithStatus,
+  RmqService,
+  ServicePayload,
+  VendorPayout
+} from &#x27;@app/common&#x27;
 import { Controller } from &#x27;@nestjs/common&#x27;
 import { VendorPayoutService } from &#x27;./payout.service&#x27;
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from &#x27;@nestjs/microservices&#x27;
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from &#x27;@nestjs/microservices&#x27;
 
 @Controller(&#x27;wallet/vendor&#x27;)
 export class VendorPayoutController {
   constructor (
     private readonly payoutService: VendorPayoutService,
     private readonly rmqService: RmqService
-
   ) {}
 
   @MessagePattern(QUEUE_MESSAGE.WALLET_GET_PAYOUT_VENDOR)
   async getVendorPayout (
     @Payload() { vendorId }: { vendorId: string },
       @Ctx() context: RmqContext
-  ): Promise&lt;VendorPayout[]&gt; {
+  ): Promise&lt;any&gt; {
     try {
       return await this.payoutService.getVendorPayout(vendorId)
     } catch (error) {
@@ -586,9 +614,7 @@ export class VendorPayoutController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.WALLET_GET_PAYOUT_ALL)
-  async getAllPayout (
-    @Ctx() context: RmqContext
-  ): Promise&lt;VendorPayout[]&gt; {
+  async getAllPayout (@Ctx() context: RmqContext): Promise&lt;VendorPayout[]&gt; {
     try {
       return await this.payoutService.getAllPayout()
     } catch (error) {

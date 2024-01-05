@@ -1,0 +1,2261 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>EatLater Docs</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">EatLater Docs</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >ODSA</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>apps/drivers-service/src/ODSA/odsa.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#logger" >logger</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#MAX_ORDER_EXPIRY" >MAX_ORDER_EXPIRY</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#assignDemandOrders" >assignDemandOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#assignPreOrdersDelivery" >assignPreOrdersDelivery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getDriverStats" >getDriverStats</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleAcceptDelivery" >handleAcceptDelivery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleFindNearestDeliveryDriver" >handleFindNearestDeliveryDriver</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleProcessOrder" >handleProcessOrder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleRejectDelivery" >handleRejectDelivery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#handleUpdateDeliveryStatus" >handleUpdateDeliveryStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#queryAllDeliveries" >queryAllDeliveries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#queryDayDeliveries" >queryDayDeliveries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#queryFulfilledDeliveries" >queryFulfilledDeliveries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#queryOrderDelivery" >queryOrderDelivery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#queryPendingDeliveries" >queryPendingDeliveries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#queryVendorDeliveries" >queryVendorDeliveries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sortAndAssignPreOrders" >sortAndAssignPreOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#streamOrderUpdatesViaSocket" >streamOrderUpdatesViaSocket</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(orderClient: ClientProxy, locationClient: ClientProxy, paymentClient: ClientProxy, driversRepository: <a href="../injectables/DriverRepository.html" target="_self">DriverRepository</a>, odsaRepository: <a href="../injectables/OdsaRepository.html" target="_self">OdsaRepository</a>, eventsGateway: <a href="../classes/EventsGateway.html" target="_self">EventsGateway</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:37</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>orderClient</td>
+                                                  
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>locationClient</td>
+                                                  
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>paymentClient</td>
+                                                  
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>driversRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DriverRepository.html" target="_self" >DriverRepository</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>odsaRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OdsaRepository.html" target="_self" >OdsaRepository</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>eventsGateway</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/EventsGateway.html" target="_self" >EventsGateway</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="assignDemandOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>assignDemandOrders</b></span>
+                        <a href="#assignDemandOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>assignDemandOrders()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Cron(CronExpression.EVERY_5_MINUTES, {timeZone: &#x27;Africa/Lagos&#x27;})<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="404"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:404</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="assignPreOrdersDelivery"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>assignPreOrdersDelivery</b></span>
+                        <a href="#assignPreOrdersDelivery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>assignPreOrdersDelivery(groupedOrders: any[], drivers: any[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="481"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:481</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>groupedOrders</td>
+                                    <td>
+                                            <code>any[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>drivers</td>
+                                    <td>
+                                            <code>any[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getDriverStats"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getDriverStats</b></span>
+                        <a href="#getDriverStats"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getDriverStats(driverId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="567"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:567</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>driverId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Driver.html" target="_self" >Promise&lt;DriverStatGroup&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleAcceptDelivery"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>handleAcceptDelivery</b></span>
+                        <a href="#handleAcceptDelivery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleAcceptDelivery(opts: literal type)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="273"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:273</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>opts</td>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleFindNearestDeliveryDriver"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>handleFindNearestDeliveryDriver</b></span>
+                        <a href="#handleFindNearestDeliveryDriver"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleFindNearestDeliveryDriver(targetCoord: number[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="523"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:523</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>targetCoord</td>
+                                    <td>
+                                            <code>number[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Driver.html" target="_self" >Promise&lt;DriverWithLocation | null&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleProcessOrder"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>handleProcessOrder</b></span>
+                        <a href="#handleProcessOrder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleProcessOrder(_order: <a href="../classes/Order.html" target="_self">Order | string</a>, existingDeliver?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, deliveryId?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="299"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:299</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>_order</td>
+                                    <td>
+                                                <code><a href="../classes/Order.html" target="_self" >Order | string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>existingDeliver</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>deliveryId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleRejectDelivery"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>handleRejectDelivery</b></span>
+                        <a href="#handleRejectDelivery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleRejectDelivery(opts: literal type)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="286"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:286</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>opts</td>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleUpdateDeliveryStatus"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>handleUpdateDeliveryStatus</b></span>
+                        <a href="#handleUpdateDeliveryStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleUpdateDeliveryStatus(data: literal type)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="177"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:177</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                            <code>literal type</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="queryAllDeliveries"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>queryAllDeliveries</b></span>
+                        <a href="#queryAllDeliveries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>queryAllDeliveries()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="139"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:139</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;[] | undefined&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="queryDayDeliveries"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>queryDayDeliveries</b></span>
+                        <a href="#queryDayDeliveries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>queryDayDeliveries(driverId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="90"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:90</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>driverId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;[] | undefined&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="queryFulfilledDeliveries"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>queryFulfilledDeliveries</b></span>
+                        <a href="#queryFulfilledDeliveries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>queryFulfilledDeliveries(driverId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="156"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:156</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>driverId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;[] | undefined&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="queryOrderDelivery"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>queryOrderDelivery</b></span>
+                        <a href="#queryOrderDelivery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>queryOrderDelivery(orderId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="73"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:73</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>orderId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Delivery.html" target="_self" >Promise&lt;DeliveryI | undefined&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="queryPendingDeliveries"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>queryPendingDeliveries</b></span>
+                        <a href="#queryPendingDeliveries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>queryPendingDeliveries(driverId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="53"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:53</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>driverId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;[] | undefined&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="queryVendorDeliveries"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>queryVendorDeliveries</b></span>
+                        <a href="#queryVendorDeliveries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>queryVendorDeliveries(vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="124"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:124</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>vendor</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;[] | undefined&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sortAndAssignPreOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>sortAndAssignPreOrders</b></span>
+                        <a href="#sortAndAssignPreOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sortAndAssignPreOrders()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Cron(CronExpression.EVERY_DAY_AT_6AM, {timeZone: &#x27;Africa/Lagos&#x27;})<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="427"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:427</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Odsa Cron for pre-order. Runs daily @ 6AM WAT to assign orders to drivers</p>
+</div>
+
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="streamOrderUpdatesViaSocket"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>streamOrderUpdatesViaSocket</b></span>
+                        <a href="#streamOrderUpdatesViaSocket"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>streamOrderUpdatesViaSocket(updates: <a href="../interfaces/OrderUpdateStream.html" target="_self">OrderUpdateStream</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="561"
+                            class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:561</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>updates</td>
+                                    <td>
+                                                <code><a href="../interfaces/OrderUpdateStream.html" target="_self" >OrderUpdateStream</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logger"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>logger</b></span>
+                        <a href="#logger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Logger(ODSA.name)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MAX_ORDER_EXPIRY"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>MAX_ORDER_EXPIRY</b></span>
+                        <a href="#MAX_ORDER_EXPIRY"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>2</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">apps/drivers-service/src/ODSA/odsa.service.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Inject, Injectable, Logger } from &#x27;@nestjs/common&#x27;
+import { Cron, CronExpression } from &#x27;@nestjs/schedule&#x27;
+import { ClientProxy, RpcException } from &#x27;@nestjs/microservices&#x27;
+import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
+import {
+  Delivery,
+  DeliveryI,
+  DeliveryTaskStream,
+  Driver,
+  DriverStatGroup,
+  DriverStats,
+  DriverWithLocation,
+  FitRpcException,
+  Order,
+  OrderI,
+  OrderStatus,
+  OrderUpdateStream,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus,
+  SOCKET_MESSAGE,
+  TravelDistanceResult,
+  VendorApprovalStatus,
+  WalletTransactionStatus
+} from &#x27;@app/common&#x27;
+import { groupOrdersByDeliveryTime } from &#x27;./algo/groupOrdersByDeliveryTime&#x27;
+import { DriverRepository } from &#x27;../drivers-service.repository&#x27;
+import { OdsaRepository } from &#x27;./odsa.repository&#x27;
+import * as moment from &#x27;moment&#x27;
+import { FilterQuery } from &#x27;mongoose&#x27;
+import { EventsGateway } from &#x27;../websockets/events.gateway&#x27;
+import { CreditWallet } from &#x27;@app/common/dto/General.dto&#x27;
+
+@Injectable()
+export class ODSA {
+  private readonly logger &#x3D; new Logger(ODSA.name)
+  private readonly MAX_ORDER_EXPIRY &#x3D; 2
+  constructor (
+    @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
+    private readonly orderClient: ClientProxy,
+    @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
+    private readonly locationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy,
+    private readonly driversRepository: DriverRepository,
+    private readonly odsaRepository: OdsaRepository,
+
+    //   Websocket gateway injection for order status updates
+    private readonly eventsGateway: EventsGateway
+  ) {}
+
+  public async queryPendingDeliveries (
+    driverId: string
+  ): Promise&lt;Delivery[] | undefined&gt; {
+    try {
+      const deliveries: Delivery[] | null &#x3D;
+        await this.odsaRepository.findAndPopulate({ driver: driverId.toString(), status: { $ne: OrderStatus.FULFILLED } }, [
+          &#x27;listing&#x27;,
+          &#x27;vendor&#x27;,
+          &#x27;user&#x27;,
+          &#x27;order&#x27;
+        ])
+      return deliveries
+    } catch (error) {
+      this.logger.error(
+        &#x60;PIM -&gt; Failed to query pending deliveries for driver ${driverId}&#x60;
+      )
+      this.logger.error(JSON.stringify(error))
+    }
+  }
+
+  public async queryOrderDelivery (orderId: string): Promise&lt;DeliveryI | undefined&gt; {
+    try {
+      return await this.odsaRepository.findOneAndPopulate&lt;DeliveryI&gt;({ order: orderId }, [
+        &#x27;order&#x27;,
+        &#x27;driver&#x27;,
+        &#x27;listing&#x27;,
+        &#x27;vendor&#x27;,
+        &#x27;user&#x27;
+      ])
+    } catch (error) {
+      this.logger.error({
+        message: &#x27;PIM -&gt; Failed to query all deliveries&#x27;,
+        error
+      })
+    }
+  }
+
+  public async queryDayDeliveries (driverId: string): Promise&lt;DeliveryI[] | undefined&gt; {
+    const today &#x3D; new Date()
+
+    this.logger.log(&#x60;PIM -&gt; Getting today&#x27;s delivery ${today.toISOString()}&#x60;)
+
+    const start &#x3D; new Date(today)
+    start.setHours(0, 0, 0, 0)
+
+    const end &#x3D; new Date(today)
+    end.setHours(23, 59, 59, 999)
+
+    const filters: FilterQuery&lt;Delivery&gt; &#x3D; {
+      driver: driverId.toString(),
+      deliveryType: &#x27;PRE_ORDER&#x27;,
+      deliveryTime: {
+        $gte: start.toISOString(),
+        $lte: end.toISOString()
+      }
+    }
+
+    try {
+      return (await this.odsaRepository.findAndPopulate(filters, [
+        &#x27;order&#x27;,
+        &#x27;driver&#x27;,
+        &#x27;listing&#x27;
+      ]))
+    } catch (error) {
+      this.logger.error({
+        message: &#x27;PIM -&gt; Failed to query all deliveries&#x27;,
+        error
+      })
+    }
+  }
+
+  public async queryVendorDeliveries (vendor: string): Promise&lt;DeliveryI[] | undefined&gt; {
+    try {
+      return (await this.odsaRepository.findAndPopulate({ vendor }, [
+        &#x27;listing&#x27;,
+        &#x27;order&#x27;,
+        &#x27;driver&#x27;
+      ]))
+    } catch (error) {
+      this.logger.error({
+        message: &#x27;PIM -&gt; Failed to query all deliveries&#x27;,
+        error
+      })
+    }
+  }
+
+  public async queryAllDeliveries (
+  ): Promise&lt;Delivery[] | undefined&gt; {
+    try {
+      return await this.odsaRepository.findAndPopulate({}, [
+        &#x27;listing&#x27;,
+        &#x27;vendor&#x27;,
+        &#x27;user&#x27;,
+        &#x27;order&#x27;
+      ])
+    } catch (error) {
+      this.logger.error({
+        message: &#x27;PIM -&gt; Failed to query all deliveries&#x27;,
+        error
+      })
+    }
+  }
+
+  public async queryFulfilledDeliveries (
+    driverId: string
+  ): Promise&lt;Delivery[] | undefined&gt; {
+    try {
+      const deliveries: Delivery[] | null &#x3D;
+        await this.odsaRepository.findAndPopulate({ driver: driverId.toString() }, [
+          &#x27;listing&#x27;,
+          &#x27;vendor&#x27;,
+          &#x27;user&#x27;,
+          &#x27;order&#x27;
+        ])
+
+      return deliveries
+    } catch (error) {
+      this.logger.error({
+        message: &#x60;PIM -&gt; Failed to query pending deliveries for driver ${driverId}&#x60;,
+        error
+      })
+    }
+  }
+
+  public async handleUpdateDeliveryStatus (data: {
+    status: OrderStatus
+    driverId: string
+    deliveryId: string
+  }): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      this.logger.log(&#x27;PIM -&gt; Updating delivery status&#x27;)
+
+      const delivery &#x3D; await this.odsaRepository.findOneAndPopulate&lt;DeliveryI&gt;({
+        _id: data.deliveryId
+      }, [&#x27;order&#x27;, &#x27;vendor&#x27;, &#x27;user&#x27;])
+
+      await lastValueFrom(
+        this.orderClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
+          orderId: delivery.order,
+          status: data.status
+        })
+      )
+
+      const updates: Partial&lt;Delivery&gt; &#x3D; { status: data.status }
+
+      // Check if it is a pickup update
+      const pickedUp &#x3D; data.status &#x3D;&#x3D;&#x3D; OrderStatus.COLLECTED
+
+      if (pickedUp) {
+        const deliveryTime &#x3D; new Date()
+        const travelDistance &#x3D; await lastValueFrom&lt;TravelDistanceResult&gt;(
+          this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { vendorCoords: delivery.pickupLocation.coordinates, userCoords: delivery.dropOffLocation.coordinates })
+        )
+
+        deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
+        updates.deliveryTime &#x3D; moment(deliveryTime).toISOString()
+        updates.travelMeta &#x3D; {
+          distance: travelDistance?.distance ?? 0,
+          travelTime: travelDistance?.duration ?? 0
+        }
+      }
+
+      const delivered &#x3D; data.status &#x3D;&#x3D;&#x3D; OrderStatus.FULFILLED
+
+      let deliveredWithinTime: boolean &#x3D; false
+
+      if (delivered) {
+        deliveredWithinTime &#x3D; moment().isSameOrBefore(new Date(delivery.deliveryTime))
+        updates.deliveredWithinTime &#x3D; deliveredWithinTime
+        updates.completed &#x3D; true
+      }
+
+      await this.odsaRepository.findOneAndUpdate(
+        { _id: delivery._id },
+        updates
+      )
+
+      if (delivered) {
+        const driver &#x3D; await this.driversRepository.findOne({ _id: delivery.driver, type: &#x27;DELIVER_ON_DEMAND&#x27; }) as Driver
+
+        const deliveries &#x3D; [...driver.deliveries, delivery._id]
+        const totalTrips &#x3D; driver.totalTrips + 1
+
+        await this.driversRepository.findOneAndUpdate({ _id: driver._id }, { available: true, deliveries, totalTrips })
+
+        const creditPayload: CreditWallet &#x3D; {
+          status: WalletTransactionStatus.PROCESSED,
+          withTransaction: false,
+          driver: data.driverId,
+          amount: Math.floor((delivery?.travelMeta?.distance ?? 0) * 25)
+        }
+        await lastValueFrom(
+          this.paymentClient.send(QUEUE_MESSAGE.DRIVER_WALLET_ADD_BALANCE, creditPayload)
+        )
+      }
+
+      this.logger.log(&#x27;PIM -&gt; Success: Updated delivery status&#x27;)
+
+      const streamPayload: OrderUpdateStream &#x3D; {
+        userId: delivery.user._id,
+        orderId: delivery.order._id,
+        status: data.status,
+        driver: delivery.driver,
+        vendorName: delivery.vendor.businessName
+      }
+
+      // Emit socket event -&gt; Order Status update
+      this.streamOrderUpdatesViaSocket(streamPayload)
+
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      this.logger.error(&#x60;Failed to update delivery status for id: ${data.deliveryId}&#x60;)
+      throw new FitRpcException(
+        &#x27;Failed to update delivery status&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async handleAcceptDelivery (opts: { deliveryId: string, orderId: string, driverId: string }): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      await this.odsaRepository.findOneAndUpdate({ _id: opts.deliveryId, order: opts.orderId, driver: opts.driverId }, { driverAccepted: true })
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      throw new FitRpcException(
+        &#x27;Can not accept delivery  right now&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async handleRejectDelivery (opts: { deliveryId: string, orderId: string, driverId: string }): Promise&lt;ResponseWithStatus&gt; {
+    try {
+      await this.odsaRepository.findOneAndUpdate({ _id: opts.deliveryId, order: opts.orderId, driver: opts.driverId }, { assignedToDriver: false, driver: &#x27;&#x27; })
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      throw new FitRpcException(
+        &#x27;Can not reject delivery  right now&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  public async handleProcessOrder (
+    _order: Order | string,
+    existingDeliver?: boolean,
+    deliveryId?: string
+  ): Promise&lt;void&gt; {
+    this.logger.log(&#x60;PIM -&gt; started processing instant order: ${typeof _order !&#x3D;&#x3D; &#x27;string&#x27; ? _order?._id.toString() : _order}&#x60;)
+    try {
+      if ((existingDeliver &#x3D;&#x3D;&#x3D; true) &amp;&amp; typeof _order !&#x3D;&#x3D; &#x27;string&#x27;) {
+        const createdAt &#x3D; moment(_order.createdAt)
+        const currentTime &#x3D; moment()
+        const timeDiff &#x3D; currentTime.diff(createdAt, &#x27;hours&#x27;)
+
+        // TODO(@siradji) update order status to &#x27;UNDELIVERABLE&#x27; and send email to user.
+        if (timeDiff &gt; this.MAX_ORDER_EXPIRY) {
+          await this.odsaRepository.delete(deliveryId as any)
+          this.logger.log(&#x27;[FORWARD_ADMIN]: Order has exceeded 2 hours&#x27;)
+          return
+        }
+      }
+
+      const order &#x3D; await lastValueFrom&lt;OrderI&gt;(
+        this.orderClient
+          .send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, {
+            userId: &#x27;&#x27;,
+            data: { orderId: typeof _order !&#x3D;&#x3D; &#x27;string&#x27; ? _order?._id.toString() : _order }
+          })
+          .pipe(
+            catchError((error) &#x3D;&gt; {
+              this.logger.error(JSON.stringify(error))
+              throw new RpcException(error)
+            })
+          )
+      )
+
+      const collectionLocation &#x3D; order?.vendor?.location?.coordinates as [number, number] // address for the vendor/restaurant
+      const driverToBeAssigned &#x3D; await this.handleFindNearestDeliveryDriver(
+        collectionLocation
+      )
+
+      if (driverToBeAssigned &#x3D;&#x3D;&#x3D; null) {
+        if (existingDeliver &#x3D;&#x3D;&#x3D; undefined) {
+          await this.odsaRepository.create({
+            listing: order.listing.map(li &#x3D;&gt; li._id),
+            order: order._id,
+            vendor: order.vendor?._id,
+            user: order.user._id,
+            dropOffLocation: order.preciseLocation,
+            pickupLocation: order.vendor.location,
+            assignedToDriver: false,
+            status: OrderStatus.PROCESSED,
+            deliveryType: &#x27;ON_DEMAND&#x27;
+          })
+        }
+        return
+      }
+
+      if (existingDeliver !&#x3D;&#x3D; undefined &amp;&amp; existingDeliver) {
+        await this.odsaRepository.findOneAndUpdate(
+          { order: typeof _order !&#x3D;&#x3D; &#x27;string&#x27; ? _order?._id.toString() : _order },
+          {
+            driver: driverToBeAssigned?.driverId,
+            assignedToDriver: true
+          }
+        )
+      } else {
+        await this.odsaRepository.create({
+          driver: driverToBeAssigned?.driverId,
+          listing: order.listing.map(li &#x3D;&gt; li._id),
+          order: order._id,
+          vendor: order.vendor?._id,
+          user: order.user._id,
+          dropOffLocation: order.preciseLocation,
+          pickupLocation: order.vendor.location,
+          assignedToDriver: true,
+          status: OrderStatus.PROCESSED,
+          deliveryType: &#x27;ON_DEMAND&#x27;
+        })
+      }
+      await this.driversRepository.findOneAndUpdate(
+        { _id: driverToBeAssigned?.driverId },
+        { available: false }
+      )
+
+      const deliveryStream: DeliveryTaskStream &#x3D; {
+        driverId: driverToBeAssigned?.driverId,
+        orderId: order._id.toString(),
+        vendorName: order.vendor.businessName
+      }
+
+      this.eventsGateway.server.emit(SOCKET_MESSAGE.NEW_DELIVERY_TASK, deliveryStream)
+    } catch (error) {
+      this.logger.error(
+        &#x60;Something went wrong processing order ${typeof _order !&#x3D;&#x3D; &#x27;string&#x27; ? _order?._id.toString() : _order}&#x60;
+      )
+      this.logger.error(JSON.stringify(error))
+      throw new FitRpcException(
+        &#x27;Can not process order right now&#x27;,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  @Cron(CronExpression.EVERY_5_MINUTES, {
+    timeZone: &#x27;Africa/Lagos&#x27;
+  })
+  private async assignDemandOrders (): Promise&lt;void&gt; {
+    const unassignedDeliveries &#x3D; await this.odsaRepository.findAndPopulate({
+      assignedToDriver: false,
+      deliveryType: &#x27;ON_DEMAND&#x27;
+    }, [&#x27;order&#x27;]) as any
+
+    try {
+      for (const delivery of unassignedDeliveries) {
+        await this.handleProcessOrder(delivery.order, true, delivery._id)
+      }
+    } catch (error) {
+      this.logger.error(&#x27;failed to assign orders&#x27;)
+      this.logger.error(JSON.stringify(error))
+    }
+  }
+
+  /**
+   * Odsa Cron for pre-order. Runs daily @ 6AM WAT to assign orders to drivers
+   * @private
+   */
+  @Cron(CronExpression.EVERY_DAY_AT_6AM, {
+    timeZone: &#x27;Africa/Lagos&#x27;
+  })
+  private async sortAndAssignPreOrders (): Promise&lt;void&gt; {
+    const today &#x3D; new Date()
+
+    this.logger.log(&#x60;PIM -&gt; sorting and processing pre orders for ${today.toISOString()}&#x60;)
+
+    const start &#x3D; new Date(today)
+    start.setHours(0, 0, 0, 0)
+
+    const end &#x3D; new Date(today)
+    end.setHours(23, 59, 59, 999)
+
+    const filter: FilterQuery&lt;Order&gt; &#x3D; {
+      orderDeliveryScheduledTime: {
+        $gte: start.toISOString(),
+        $lt: end.toISOString()
+      }
+    }
+    const orders &#x3D; await lastValueFrom&lt;OrderI[]&gt;(
+      this.orderClient.send(QUEUE_MESSAGE.ODSA_GET_ORDERS_PRE, { filter }).pipe(
+        catchError((error) &#x3D;&gt; {
+          throw new RpcException(error)
+        })
+      )
+    )
+
+    if (orders.length &lt; 1) {
+      return
+    }
+
+    const drivers &#x3D; await this.driversRepository.find({
+      // isValidated: true,
+      type: &#x27;DELIVER_PRE_ORDER&#x27;,
+      acc_status: VendorApprovalStatus.APPROVED,
+      available: true
+    })
+
+    const ordersForToday &#x3D; filterOrdersForDay(orders)
+
+    this.logger.log(
+      &#x60;PIM -&gt; Found ${ordersForToday.length} orders scheduled for delivery today&#x60;
+    )
+
+    const groupedOrders &#x3D; groupOrdersByDeliveryTime(
+      orders,
+      drivers !&#x3D;&#x3D; null ? drivers?.length : 0
+    )
+
+    this.logger.log(
+      &#x60;PIM -&gt; Grouped ${ordersForToday.length} orders scheduled for delivery today&#x60;
+    )
+
+    await this.assignPreOrdersDelivery(groupedOrders, drivers)
+  }
+
+  private async assignPreOrdersDelivery (
+    groupedOrders: any[],
+    drivers: any[]
+  ): Promise&lt;void&gt; {
+    if (drivers?.length &lt;&#x3D; 0 || groupedOrders?.length &lt;&#x3D; 0) {
+      return
+    }
+
+    this.logger.log(
+      &#x60;PIM -&gt; Assigning ${groupedOrders.length} grouped orders to ${drivers.length}&#x60;
+    )
+    const newDeliveries: Array&lt;Partial&lt;Delivery&gt;&gt; &#x3D; []
+    groupedOrders.forEach((group) &#x3D;&gt; {
+      group.orders.forEach((order) &#x3D;&gt; {
+        drivers.forEach((driver) &#x3D;&gt; {
+          newDeliveries.push({
+            listing: order.listing.map(li &#x3D;&gt; li._id.toString()),
+            order: order._id.toString(),
+            vendor: order.vendor._id.toString(),
+            user: order.user._id.toString(),
+            driver: driver._id.toString(),
+            deliveryTime: order.orderDeliveryScheduledTime,
+            dropOffLocation: order.preciseLocation,
+            pickupLocation: order.vendor.location,
+            assignedToDriver: true,
+            deliveryType: &#x27;PRE_ORDER&#x27;
+          })
+        })
+      })
+    })
+
+    const driverIds &#x3D; drivers.map(driver &#x3D;&gt; driver._id)
+
+    await this.odsaRepository.insertMany(newDeliveries)
+
+    await this.driversRepository.findAndUpdate({ _id: { $in: driverIds } }, { available: false })
+
+    this.logger.log(
+      &#x60;PIM -&gt; Success: Assigned ${groupedOrders.length} grouped orders to ${drivers.length} drivers&#x60;
+    )
+  }
+
+  private async handleFindNearestDeliveryDriver (
+    targetCoord: number[]
+  ): Promise&lt;DriverWithLocation | null&gt; {
+    this.logger.log(&#x27;PIM -&gt; Assign order to the nearest delivery person&#x27;)
+
+    const availableOnDemandDrivers &#x3D; (await this.driversRepository.find({
+      type: &#x27;DELIVER_ON_DEMAND&#x27;,
+      status: &#x27;ONLINE&#x27;,
+      // isValidated: true,
+      isDeleted: false,
+      available: true,
+      acc_status: VendorApprovalStatus.APPROVED
+    })) as Driver[]
+
+    this.logger.log(
+      &#x60;PIM -&gt; ${availableOnDemandDrivers.length} drivers are open to taking the delivery&#x60;
+    )
+    if (availableOnDemandDrivers.length &#x3D;&#x3D;&#x3D; 0) {
+      return null
+    }
+    const driversCoordinates: DriverWithLocation[] &#x3D;
+      availableOnDemandDrivers.map((driver) &#x3D;&gt; {
+        return {
+          driverId: driver._id,
+          coordinates: driver.location.coordinates
+        }
+      })
+
+    this.logger.log(&#x27;PIM -&gt; finding the ideal  driver for this order&#x27;)
+
+    return await lastValueFrom&lt;DriverWithLocation&gt;(
+      this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_NEAREST_COORD, {
+        target: targetCoord,
+        coordinates: driversCoordinates
+      })
+    )
+  }
+
+  public streamOrderUpdatesViaSocket (updates: OrderUpdateStream): void {
+    this.eventsGateway.server.emit(SOCKET_MESSAGE.UPDATE_ORDER_STATUS, {
+      ...updates
+    })
+  }
+
+  public async getDriverStats (driverId: string): Promise&lt;DriverStatGroup&gt; {
+    const today &#x3D; new Date()
+    const yesterday &#x3D; new Date(today.getTime() - 24 * 60 * 60 * 1000)
+    const week &#x3D; new Date(today.getTime() - 168 * 60 * 60 * 1000)
+    const month &#x3D; new Date(today.getTime() - 1020 * 60 * 60 * 1000)
+
+    const todayStart &#x3D; new Date(today)
+    todayStart.setHours(0, 0, 0, 0)
+
+    const todayEnd &#x3D; new Date(today)
+    todayEnd.setHours(23, 59, 59, 999)
+
+    const yesterdayStart &#x3D; new Date(yesterday)
+    yesterdayStart.setHours(0, 0, 0, 0)
+
+    const yesterdayEnd &#x3D; new Date(yesterday)
+    yesterdayEnd.setHours(23, 59, 59, 999)
+
+    const weekStart &#x3D; new Date(week)
+    weekStart.setHours(0, 0, 0, 0)
+
+    const weekEnd &#x3D; new Date(week)
+    weekEnd.setHours(23, 59, 59, 999)
+
+    const monthStart &#x3D; new Date(month)
+    monthStart.setHours(0, 0, 0, 0)
+
+    const monthEnd &#x3D; new Date(month)
+    monthEnd.setHours(23, 59, 59, 999)
+
+    const todayCompletedDelivery: Delivery[] &#x3D; await this.odsaRepository.find({
+      createdAt: {
+        $gte: todayStart.toISOString(),
+        $lt: todayEnd.toISOString()
+      },
+      driver: driverId.toString(),
+      completed: true
+    })
+
+    const yesterdayCompletedDelivery: Delivery[] &#x3D; await this.odsaRepository.find({
+      createdAt: {
+        $gte: yesterdayStart.toISOString(),
+        $lt: yesterdayEnd.toISOString()
+      },
+      driver: driverId.toString(),
+      completed: true
+    })
+
+    const weekCompletedDelivery: Delivery[] &#x3D; await this.odsaRepository.find({
+      createdAt: {
+        $gte: weekStart.toISOString(),
+        $lt: today.toISOString()
+      },
+      driver: driverId.toString(),
+      completed: true
+    })
+
+    const monthCompletedDelivery: Delivery[] &#x3D; await this.odsaRepository.find({
+      createdAt: {
+        $gte: monthStart.toISOString(),
+        $lt: today.toISOString()
+      },
+      driver: driverId.toString(),
+      completed: true
+    })
+
+    const dailyStats: DriverStats &#x3D; todayCompletedDelivery.reduce((acc, delivery) &#x3D;&gt; {
+      return {
+        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+        earnings: acc.earnings + 100
+      }
+    }, { distance: 0, time: 0, earnings: 0 })
+
+    const previousDayStats: DriverStats &#x3D; yesterdayCompletedDelivery.reduce((acc, delivery) &#x3D;&gt; {
+      return {
+        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+        earnings: acc.earnings + 100
+      }
+    }, { distance: 0, time: 0, earnings: 0 })
+
+    const weeklyStats: DriverStats &#x3D; weekCompletedDelivery.reduce((acc, delivery) &#x3D;&gt; {
+      return {
+        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+        earnings: acc.earnings + 100
+      }
+    }, { distance: 0, time: 0, earnings: 0 })
+
+    const monthlyStats: DriverStats &#x3D; monthCompletedDelivery.reduce((acc, delivery) &#x3D;&gt; {
+      return {
+        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+        earnings: acc.earnings + 100
+      }
+    }, { distance: 0, time: 0, earnings: 0 })
+    return {
+      today: dailyStats,
+      yesterday: previousDayStats,
+      week: weeklyStats,
+      month: monthlyStats
+    }
+  }
+}
+
+function filterOrdersForDay (orders: OrderI[]): OrderI[] {
+  const targetDate &#x3D; moment()
+
+  return orders.filter((order) &#x3D;&gt; {
+    const orderDate &#x3D; moment(order.orderDeliveryScheduledTime)
+
+    return (
+      targetDate.isSame(orderDate, &#x27;year&#x27;) &amp;&amp;
+        targetDate.isSame(orderDate, &#x27;month&#x27;) &amp;&amp;
+        targetDate.isSame(orderDate, &#x27;day&#x27;)
+    )
+  })
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ODSA.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

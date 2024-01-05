@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,36 +39,58 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >VendorsService</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >VendorsService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/vendors-service/src/vendors.odsa.service.ts</code>
+            <code>apps/vendors-service/src/vendors.service.ts</code>
         </p>
 
 
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#logger" >logger</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -80,11 +102,19 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#approve" >approve</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#createVendorSettings" >createVendorSettings</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#deleteVendorProfile" >deleteVendorProfile</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#disapprove" >disapprove</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -96,11 +126,19 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#getNearestVendors" >getNearestVendors</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#getVendor" >getVendor</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#getVendorSettings" >getVendorSettings</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getVendorsForHomepage" >getVendorsForHomepage</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -142,18 +180,18 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(vendorRepository: <a href="../injectables/VendorRepository.html" target="_self">VendorRepository</a>, vendorSettingsRepository: <a href="../injectables/VendorSettingsRepository.html" target="_self">VendorSettingsRepository</a>)</code>
+<code>constructor(vendorRepository: <a href="../injectables/VendorRepository.html" target="_self">VendorRepository</a>, vendorSettingsRepository: <a href="../injectables/VendorSettingsRepository.html" target="_self">VendorSettingsRepository</a>, notificationClient: ClientProxy)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">apps/vendors-service/src/vendors.service.ts:28</a></div>
                             </td>
                         </tr>
 
@@ -194,6 +232,18 @@
                                                     </td>
 
                                                 </tr>
+                                                <tr>
+                                                        <td>notificationClient</td>
+
+                                                        <td>
+                                                                    <code>ClientProxy</code>
+                                                        </td>
+
+                                                    <td>
+                                                            No
+                                                    </td>
+
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -203,11 +253,82 @@
         </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="approve"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>approve</b></span>
+                        <a href="#approve"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>approve(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="136"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:136</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -223,15 +344,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createVendorSettings(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, vendorId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>createVendorSettings(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="218"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:218</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="289"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:289</a></div>
                 </td>
             </tr>
 
@@ -264,7 +385,7 @@
 
                                 </tr>
                                 <tr>
-                                    <td>vendorId</td>
+                                    <td>vendor</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -313,8 +434,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="144"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:144</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="215"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:215</a></div>
                 </td>
             </tr>
 
@@ -366,6 +487,89 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="disapprove"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>disapprove</b></span>
+                        <a href="#disapprove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>disapprove(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, reason: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="159"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:159</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>reason</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getAllVendors"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -384,8 +588,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="160"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:160</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="231"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:231</a></div>
                 </td>
             </tr>
 
@@ -423,8 +627,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="172"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:172</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="243"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:243</a></div>
                 </td>
             </tr>
 
@@ -434,6 +638,76 @@
 
                     <div class="io-description">
                         <b>Returns : </b>    <code>Promise&lt;VendorUserI[]&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNearestVendors"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getNearestVendors</b></span>
+                        <a href="#getNearestVendors"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getNearestVendors(undefined: <a href="../interfaces/LocationCoordinates.html" target="_self">LocationCoordinates</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="344"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:344</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../interfaces/LocationCoordinates.html" target="_self" >LocationCoordinates</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any[]&gt;</code>
+
+                    </div>
+                    <div class="io-description">
 
                     </div>
                 </td>
@@ -462,8 +736,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="109"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:109</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="177"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:177</a></div>
                 </td>
             </tr>
 
@@ -533,8 +807,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="203"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:203</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="277"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:277</a></div>
                 </td>
             </tr>
 
@@ -586,6 +860,77 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getVendorsForHomepage"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>getVendorsForHomepage</b></span>
+                        <a href="#getVendorsForHomepage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getVendorsForHomepage(userLocation: <a href="../interfaces/LocationCoordinates.html" target="_self">LocationCoordinates</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="375"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:375</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userLocation</td>
+                                    <td>
+                                                <code><a href="../interfaces/LocationCoordinates.html" target="_self" >LocationCoordinates</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../interfaces/VendorServiceHomePageResult.html" target="_self" >Promise&lt;VendorServiceHomePageResult&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="register"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -597,15 +942,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>register(data: <a href="../classes/CreateVendorDto.html" target="_self">CreateVendorDto</a>)</code>
+                    <code>register(data: <a href="../interfaces/CreateVendorDto.html" target="_self">CreateVendorDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:39</a></div>
                 </td>
             </tr>
 
@@ -628,7 +973,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/CreateVendorDto.html" target="_self" >CreateVendorDto</a></code>
+                                                <code><a href="../interfaces/CreateVendorDto.html" target="_self" >CreateVendorDto</a></code>
                                     </td>
 
                                     <td>
@@ -668,15 +1013,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateSettings(data: <a href="../classes/UpdateVendorSettingsDto.html" target="_self">UpdateVendorSettingsDto</a>, _id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>updateSettings(data: <a href="../interfaces/UpdateVendorSettingsDto.html" target="_self">UpdateVendorSettingsDto</a>, vendor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="185"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:185</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="255"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:255</a></div>
                 </td>
             </tr>
 
@@ -699,7 +1044,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/UpdateVendorSettingsDto.html" target="_self" >UpdateVendorSettingsDto</a></code>
+                                                <code><a href="../interfaces/UpdateVendorSettingsDto.html" target="_self" >UpdateVendorSettingsDto</a></code>
                                     </td>
 
                                     <td>
@@ -709,7 +1054,7 @@
 
                                 </tr>
                                 <tr>
-                                    <td>_id</td>
+                                    <td>vendor</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -758,8 +1103,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="242"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:242</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="330"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:330</a></div>
                 </td>
             </tr>
 
@@ -841,8 +1186,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="231"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:231</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="316"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:316</a></div>
                 </td>
             </tr>
 
@@ -917,15 +1262,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateVendorProfile(undefined: <a href="../classes/Vendor.html" target="_self">ServicePayload&lt;Partial&lt;Vendor&gt;&gt;</a>)</code>
+                    <code>updateVendorProfile(undefined: <a href="../interfaces/ServicePayload.html" target="_self">ServicePayload&lt;Partial&lt;Vendor&gt;&gt;</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="125"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:125</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="196"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:196</a></div>
                 </td>
             </tr>
 
@@ -947,7 +1292,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/Vendor.html" target="_self" >ServicePayload&lt;Partial&lt;Vendor&gt;&gt;</a></code>
+                                                <code><a href="../interfaces/ServicePayload.html" target="_self" >ServicePayload&lt;Partial&lt;Vendor&gt;&gt;</a></code>
                                     </td>
 
                                     <td>
@@ -987,15 +1332,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateVendorStatus(undefined: <a href="../classes/UpdateVendorStatus.html" target="_self">UpdateVendorStatus</a>)</code>
+                    <code>updateVendorStatus(undefined: <a href="../interfaces/UpdateVendorStatus.html" target="_self">UpdateVendorStatus</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="91"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:91</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:118</a></div>
                 </td>
             </tr>
 
@@ -1017,7 +1362,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/UpdateVendorStatus.html" target="_self" >UpdateVendorStatus</a></code>
+                                                <code><a href="../interfaces/UpdateVendorStatus.html" target="_self" >UpdateVendorStatus</a></code>
                                     </td>
 
                                     <td>
@@ -1057,15 +1402,15 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>validateVendor(undefined: <a href="../classes/LoginVendorRequest.html" target="_self">LoginVendorRequest</a>)</code>
+                    <code>validateVendor(undefined: <a href="../interfaces/LoginVendorRequest.html" target="_self">LoginVendorRequest</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="60"
-                            class="link-to-prism">apps/vendors-service/src/vendors.odsa.service.ts:60</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="84"
+                            class="link-to-prism">apps/vendors-service/src/vendors.service.ts:84</a></div>
                 </td>
             </tr>
 
@@ -1087,7 +1432,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                                <code><a href="../classes/LoginVendorRequest.html" target="_self" >LoginVendorRequest</a></code>
+                                                <code><a href="../interfaces/LoginVendorRequest.html" target="_self" >LoginVendorRequest</a></code>
                                     </td>
 
                                     <td>
@@ -1113,63 +1458,120 @@
         </tbody>
     </table>
 </section>
+            <section data-compodoc="block-properties">
+
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logger"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>logger</b></span>
+                        <a href="#logger"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Logger(VendorsService.name)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">apps/vendors-service/src/vendors.service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
 
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Injectable } from &#x27;@nestjs/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { HttpStatus, Inject, Injectable, Logger } from &#x27;@nestjs/common&#x27;
 import * as bcrypt from &#x27;bcryptjs&#x27;
 import {
   FitRpcException,
+  LocationCoordinates,
   LoginVendorRequest,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
   ResponseWithStatus,
+  SendApprovalPushNotification,
   ServicePayload,
   UpdateVendorStatus,
+  VendorApprovalStatus,
+  VendorServiceHomePageResult,
   VendorUserI
 } from &#x27;@app/common&#x27;
-import {
-  CreateVendorDto,
-  UpdateVendorSettingsDto
-} from &#x27;@app/common/database/dto/vendor.dto&#x27;
+import { CreateVendorDto, UpdateVendorSettingsDto } from &#x27;@app/common/database/dto/vendor.dto&#x27;
 
-import {
-  VendorRepository,
-  VendorSettingsRepository
-} from &#x27;./vendors.repository&#x27;
+import { VendorRepository, VendorSettingsRepository } from &#x27;./vendors.repository&#x27;
 import { Vendor } from &#x27;@app/common/database/schemas/vendor.schema&#x27;
 import { VendorSettings } from &#x27;@app/common/database/schemas/vendor-settings.schema&#x27;
+import { internationalisePhoneNumber } from &#x27;@app/common/utils/phone.number&#x27;
+import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
+import { lastValueFrom } from &#x27;rxjs&#x27;
 
 @Injectable()
 export class VendorsService {
+  private readonly logger &#x3D; new Logger(VendorsService.name)
+
   constructor (
     private readonly vendorRepository: VendorRepository,
-    private readonly vendorSettingsRepository: VendorSettingsRepository
-  ) {}
+    private readonly vendorSettingsRepository: VendorSettingsRepository,
+
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy
+  ) {
+  }
 
   async register (data: CreateVendorDto): Promise&lt;ResponseWithStatus&gt; {
-    // Validation gate to check if vendor with the requet phone is already exist
-    const existingUser &#x3D; await this.vendorRepository.findOne({
-      businessEmail: data.businessEmail
+    data.phone &#x3D; internationalisePhoneNumber(data.phone)
+    // Validation gate to check if vendor with the request phone is already exist
+    const existingUser: Vendor | null &#x3D; await this.vendorRepository.findOne({
+      $or: [{ phone: data.phone }, { email: data.email }]
     })
 
     if (existingUser !&#x3D;&#x3D; null) {
-      throw new FitRpcException(
-        &#x27;Email already registered. You can reset your password if forgotten&#x27;,
-        HttpStatus.CONFLICT
-      )
+      if (existingUser.email.toLowerCase() &#x3D;&#x3D;&#x3D; data.email.toLowerCase()) {
+        throw new FitRpcException(
+          &#x27;Email already registered. You can reset your password if forgotten&#x27;,
+          HttpStatus.CONFLICT
+        )
+      }
+
+      if (existingUser.phone &#x3D;&#x3D;&#x3D; data.phone) {
+        throw new FitRpcException(
+          &#x27;Phone number already registered. You can reset your password if forgotten&#x27;,
+          HttpStatus.CONFLICT
+        )
+      }
     }
 
     const payload: Partial&lt;Vendor&gt; &#x3D; {
       ...data,
       password: await bcrypt.hash(data.password, 10),
-      status: &#x27;ONLINE&#x27;
+      status: &#x27;ONLINE&#x27;,
+      acc_status: VendorApprovalStatus.PENDING
     }
 
     try {
       await this.vendorRepository.create(payload)
       return { status: 1 }
     } catch (error) {
+      this.logger.error({
+        message: &#x27;Failed to register you at this moment&#x27;,
+        error
+      })
       throw new FitRpcException(
         &#x27;Failed to register you at this moment. please check your input values&#x27;,
         HttpStatus.BAD_REQUEST
@@ -1181,15 +1583,18 @@ export class VendorsService {
     businessEmail,
     password
   }: LoginVendorRequest): Promise&lt;Vendor&gt; {
-    const vendor &#x3D; await this.vendorRepository.findOneAndPopulate({
-      businessEmail,
-      isDeleted: false
-    }, &#x27;settings&#x27;)
+    const vendor &#x3D; await this.vendorRepository.findOneAndPopulate&lt;Vendor&gt;(
+      {
+        businessEmail,
+        isDeleted: false
+      },
+      &#x27;settings&#x27;
+    )
 
     if (vendor &#x3D;&#x3D;&#x3D; null) {
       throw new FitRpcException(
         &#x27;Incorrect email address. Please recheck and try again&#x27;,
-        HttpStatus.CONFLICT
+        HttpStatus.UNAUTHORIZED
       )
     }
     const isCorrectPassword: boolean &#x3D; await bcrypt.compare(
@@ -1226,15 +1631,59 @@ export class VendorsService {
     return { status: 1 }
   }
 
+  async approve (id: string): Promise&lt;ResponseWithStatus&gt; {
+    const updateRequest: Vendor &#x3D; await this.vendorRepository.findOneAndUpdate(
+      { _id: id },
+      { acc_status: VendorApprovalStatus.APPROVED, rejection_reason: &#x27;&#x27; }
+    )
+
+    if (updateRequest &#x3D;&#x3D;&#x3D; null) {
+      throw new FitRpcException(
+        &#x27;Failed to approve vendor&#x27;,
+        HttpStatus.BAD_REQUEST
+      )
+    }
+
+    const notificationSubCreatePayload: SendApprovalPushNotification &#x3D; {
+      vendor: id,
+      token: updateRequest.expoNotificationToken
+    }
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.CREATE_VENDOR_NOTIFICATION, notificationSubCreatePayload)
+    )
+    return { status: 1 }
+  }
+
+  async disapprove (id: string, reason: string): Promise&lt;ResponseWithStatus&gt; {
+    const updateRequest &#x3D; await this.vendorRepository.findOneAndUpdate(
+      { _id: id },
+      {
+        rejection_reason: reason,
+        acc_status: VendorApprovalStatus.DISAPPROVED
+      }
+    )
+
+    if (updateRequest &#x3D;&#x3D;&#x3D; null) {
+      throw new FitRpcException(
+        &#x27;Failed to reject vendor&#x27;,
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return { status: 1 }
+  }
+
   async getVendor (_id: string): Promise&lt;Vendor&gt; {
-    const _vendor &#x3D; await this.vendorRepository.findOneAndPopulate({
-      _id,
-      isDeleted: false
-    }, &#x27;settings&#x27;)
+    const _vendor &#x3D; await this.vendorRepository.findOneAndPopulate&lt;Vendor&gt;(
+      {
+        _id,
+        isDeleted: false
+      },
+      &#x27;settings&#x27;
+    )
 
     if (_vendor &#x3D;&#x3D;&#x3D; null) {
       throw new FitRpcException(
-        &#x27;Provided vendor id is not found&#x27;,
+        &#x60;Provided vendor id is not found: ${_id}&#x60;,
         HttpStatus.UNAUTHORIZED
       )
     }
@@ -1290,8 +1739,7 @@ export class VendorsService {
   }
 
   async getAllVendorsUser (): Promise&lt;VendorUserI[]&gt; {
-    const _vendors &#x3D; await this.vendorRepository.find({ isDeleted: false })
-
+    const _vendors: any &#x3D; await this.vendorRepository.findAndPopulate({ isDeleted: false, acc_status: VendorApprovalStatus.APPROVED }, [&#x27;settings&#x27;])
     if (_vendors &#x3D;&#x3D;&#x3D; null) {
       throw new FitRpcException(
         &#x27;Something went wrong fetching all vendors.&#x27;,
@@ -1304,15 +1752,19 @@ export class VendorsService {
 
   async updateSettings (
     data: UpdateVendorSettingsDto,
-    _id: string
+    vendor: string
   ): Promise&lt;ResponseWithStatus&gt; {
     try {
       await this.vendorSettingsRepository.findOneAndUpdate(
-        { vendorId: _id },
+        { vendor },
         { ...data }
       )
       return { status: 1 }
     } catch (error) {
+      this.logger.error({
+        error,
+        message: &#x27;Failed to update vendor settings&#x27;
+      })
       throw new FitRpcException(
         &#x27;Can not update settings at this time. Something went wrong&#x27;,
         HttpStatus.BAD_REQUEST
@@ -1321,26 +1773,37 @@ export class VendorsService {
   }
 
   async getVendorSettings (vendorId: string): Promise&lt;VendorSettings&gt; {
+    this.logger.log(&#x27;PIM -&gt; Fetching vendors settings&#x27;)
     try {
-      const req &#x3D; await this.vendorSettingsRepository.findOne({ vendorId })
-      if (req &#x3D;&#x3D;&#x3D; null) {
-        throw new Error()
-      }
-      return req
+      return await this.vendorSettingsRepository.findOne({ vendor: vendorId })
     } catch (e) {
       throw new FitRpcException(
         &#x27;can not fetch vendors settings at this time&#x27;,
-        HttpStatus.BAD_GATEWAY
+        HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
   }
 
-  async createVendorSettings (data: any, vendorId: string): Promise&lt;ResponseWithStatus&gt; {
+  async createVendorSettings (
+    data: any,
+    vendor: string
+  ): Promise&lt;ResponseWithStatus&gt; {
     try {
-      const newSettings &#x3D; await this.vendorSettingsRepository.create({ ...data, vendorId })
-      await this.vendorRepository.findOneAndUpdate({ _id: newSettings.vendorId }, { settings: newSettings._id })
+      const newSettings &#x3D; await this.vendorSettingsRepository.create({
+        ...data,
+        vendor
+      })
+
+      await this.vendorRepository.findOneAndUpdate(
+        { _id: newSettings.vendor },
+        { settings: newSettings._id }
+      )
       return { status: 1 }
-    } catch (e) {
+    } catch (error) {
+      this.logger.error({
+        error,
+        message: &#x60;failed to create vendor settings for vendor ${vendor}&#x60;
+      })
       throw new FitRpcException(
         &#x27;Failed to create  settings&#x27;,
         HttpStatus.BAD_GATEWAY
@@ -1350,7 +1813,10 @@ export class VendorsService {
 
   async updateVendorLogo (data: any, _id: string): Promise&lt;void&gt; {
     try {
-      await this.vendorRepository.findOneAndUpdate({ _id }, { businessLogo: data })
+      await this.vendorRepository.findOneAndUpdate(
+        { _id },
+        { businessLogo: data }
+      )
     } catch (e) {
       throw new FitRpcException(
         &#x27;Failed to create  settings&#x27;,
@@ -1361,7 +1827,10 @@ export class VendorsService {
 
   async updateVendorImage (data: any, _id: string): Promise&lt;void&gt; {
     try {
-      await this.vendorRepository.findOneAndUpdate({ _id }, { restaurantImage: data })
+      await this.vendorRepository.findOneAndUpdate(
+        { _id },
+        { restaurantImage: data }
+      )
     } catch (e) {
       throw new FitRpcException(
         &#x27;Failed to create  settings&#x27;,
@@ -1369,18 +1838,70 @@ export class VendorsService {
       )
     }
   }
+
+  async getNearestVendors ({
+    type,
+    coordinates
+  }: LocationCoordinates): Promise&lt;any[]&gt; {
+    this.logger.log(&#x27;PIM -&gt; fetching nearest vendors&#x27;)
+    try {
+      const vendors: any &#x3D; this.vendorRepository.findAndPopulate({
+        location: {
+          $near: {
+            $geometry: {
+              type,
+              coordinates
+            },
+            $minDistance: 200,
+            $maxDistance: 4000
+          }
+        }
+      }, [&#x27;settings&#x27;])
+      return vendors
+    } catch (error) {
+      this.logger.log({
+        error,
+        message: &#x27;Failed to fetch nearest location for user&#x27;
+      })
+      throw new FitRpcException(
+        &#x27;Failed to create  settings&#x27;,
+        HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
+
+  async getVendorsForHomepage (userLocation: LocationCoordinates): Promise&lt;VendorServiceHomePageResult&gt; {
+    try {
+      console.log(userLocation)
+      // const nearest &#x3D; await this.getNearestVendors(userLocation)
+      const allVendors: any &#x3D; await this.vendorRepository.findAndPopulate({ acc_status: VendorApprovalStatus.APPROVED }, [&#x27;settings&#x27;])
+      return {
+        nearest: [],
+        allVendors
+      }
+    } catch (error) {
+      this.logger.log(error)
+      throw new FitRpcException(&#x27;Something went wrong fetching vendors for homepage&#x27;, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
 }
 
-function getVendorsMapper (vendors: Vendor[]): VendorUserI[] {
-  return vendors.map((vendor) &#x3D;&gt; {
+function getVendorsMapper (vendors: any[]): VendorUserI[] {
+  return vendors.map((vendor: any) &#x3D;&gt; {
     return {
-      _id: vendor._id as any,
+      _id: vendor._id,
       businessName: vendor.businessName,
       businessAddress: vendor.businessAddress,
       businessLogo: vendor.businessLogo,
       isValidated: vendor.isValidated,
       status: vendor.status,
-      location: vendor.location
+      location: vendor.location,
+      businessImage: vendor.restaurantImage,
+      settings: vendor.settings.operations,
+      ratings: {
+        rating: 0,
+        totalReviews: 0
+      }
     }
   })
 }

@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -39,21 +39,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >ListingMenuRepository</li>
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >ListingMenuRepository</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -71,7 +77,7 @@
             </p>
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -110,11 +116,19 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#deleteMany" >deleteMany</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#find" >find</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#findAndPopulate" >findAndPopulate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findAndUpdate" >findAndUpdate</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -129,12 +143,19 @@
                                 <a href="#findOneAndUpdate" >findOneAndUpdate</a>
                             </li>
                             <li>
+                                <a href="#findRaw" >findRaw</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#insertMany" >insertMany</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#startTransaction" >startTransaction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#update" >update</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -152,7 +173,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-constructor">
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
@@ -163,7 +184,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">apps/listings-service/src/listings.repository.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">apps/listings-service/src/listings.repository.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -182,15 +203,15 @@
                                         <tbody>
                                                 <tr>
                                                         <td>listingMenuModel</td>
-                                                  
+
                                                         <td>
                                                                         <code><a href="../classes/ListingMenu.html" target="_self" >Model&lt;ListingMenu&gt;</a></code>
                                                         </td>
-                                                  
+
                                                     <td>
                                                             No
                                                     </td>
-                                                    
+
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -201,8 +222,8 @@
         </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -234,7 +255,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:22</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:21</a></code>
 </div>
                 </td>
             </tr>
@@ -245,7 +266,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -289,7 +310,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -323,7 +344,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:102</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:138</a></code>
 </div>
                 </td>
             </tr>
@@ -334,7 +355,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -366,7 +387,84 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteMany"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>deleteMany</b></span>
+                        <a href="#deleteMany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteMany(filterQuery?: FilterQuery<TDocument>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/AbstractRepository.html" target="_self" >AbstractRepository</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:93</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterQuery</td>
+                                    <td>
+                                            <code>FilterQuery&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;HydratedDocument | any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -400,7 +498,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:96</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:110</a></code>
 </div>
                 </td>
             </tr>
@@ -411,7 +509,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -443,7 +541,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -477,7 +575,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:50</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:48</a></code>
 </div>
                 </td>
             </tr>
@@ -496,7 +594,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -540,7 +638,96 @@
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAndUpdate"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findAndUpdate</b></span>
+                        <a href="#findAndUpdate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAndUpdate(filterQuery: FilterQuery<TDocument>, update: Partial<TDocument>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/AbstractRepository.html" target="_self" >AbstractRepository</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:129</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterQuery</td>
+                                    <td>
+                                            <code>FilterQuery&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>update</td>
+                                    <td>
+                                            <code>Partial&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
                     </div>
                 </td>
             </tr>
@@ -574,7 +761,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:44</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:43</a></code>
 </div>
                 </td>
             </tr>
@@ -585,7 +772,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -613,11 +800,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;TDocument | null&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;TDocument | any&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -651,18 +838,26 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:35</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:34</a></code>
 </div>
                 </td>
             </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <b>Type parameters :</b>
+                    <ul class="type-parameters">
+                        <li>T</li>
+                    </ul>
+                </td>
+            </tr>
 
             <tr>
                 <td class="col-md-4">
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -702,11 +897,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;T&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -727,7 +922,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findOneAndUpdate(filterQuery: FilterQuery<TDocument>, update: UpdateQuery<TDocument>)</code>
+                    <code>findOneAndUpdate(filterQuery: FilterQuery<TDocument>, update: FilterQuery<TDocument>)</code>
                 </td>
             </tr>
 
@@ -740,7 +935,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:57</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:62</a></code>
 </div>
                 </td>
             </tr>
@@ -751,7 +946,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -776,7 +971,7 @@
                                 <tr>
                                     <td>update</td>
                                     <td>
-                                            <code>UpdateQuery&lt;TDocument&gt;</code>
+                                            <code>FilterQuery&lt;TDocument&gt;</code>
                                     </td>
 
                                     <td>
@@ -791,11 +986,54 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;HydratedDocument&lt;TDocument&gt;&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findRaw"></a>
+                    <span class="name">
+                        <span ><b>findRaw</b></span>
+                        <a href="#findRaw"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>findRaw()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/AbstractRepository.html" target="_self" >AbstractRepository</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:58</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Model&lt;TDocument&gt;</code>
+
                     </div>
                 </td>
             </tr>
@@ -829,7 +1067,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:89</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:103</a></code>
 </div>
                 </td>
             </tr>
@@ -840,7 +1078,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -880,11 +1118,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;TDocument[]&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -918,7 +1156,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:108</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:144</a></code>
 </div>
                 </td>
             </tr>
@@ -929,6 +1167,95 @@
 
                     <div class="io-description">
                         <b>Returns : </b>    <code>Promise&lt;ClientSession | any&gt;</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>update(filterQuery: FilterQuery<TDocument>, update: Partial<TDocument>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Inherited from         <code><a href="../classes/AbstractRepository.html" target="_self" >AbstractRepository</a></code>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:120</a></code>
+</div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>filterQuery</td>
+                                    <td>
+                                            <code>FilterQuery&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>update</td>
+                                    <td>
+                                            <code>Partial&lt;TDocument&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                    </div>
+                    <div class="io-description">
 
                     </div>
                 </td>
@@ -963,7 +1290,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:74</a></code>
+                        <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:78</a></code>
 </div>
                 </td>
             </tr>
@@ -974,7 +1301,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -1018,15 +1345,15 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </section>
-            <section>
-    
+            <section data-compodoc="block-properties">
+
     <h3 id="inputs">
         Properties
     </h3>
@@ -1056,7 +1383,7 @@
                         </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:13</a></code>
+                                <div class="io-line">Defined in         <code><a href="../classes/AbstractRepository.html#source" target="_self" >AbstractRepository:14</a></code>
 </div>
                         </td>
                     </tr>
@@ -1069,13 +1396,14 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, Logger } from &#x27;@nestjs/common&#x27;
 import {
   AbstractRepository,
   ListingOptionGroup,
   ListingCategory,
-  ListingMenu
+  ListingMenu,
+  ScheduledListing
 } from &#x27;@app/common&#x27;
 import { InjectModel } from &#x27;@nestjs/mongoose&#x27;
 import { Model } from &#x27;mongoose&#x27;
@@ -1110,6 +1438,18 @@ export class ListingCategoryRepository extends AbstractRepository&lt;ListingCate
   constructor (
   @InjectModel(ListingCategory.name)
     listingCategoryModel: Model&lt;ListingCategory&gt;
+  ) {
+    super(listingCategoryModel)
+  }
+}
+
+@Injectable()
+export class ScheduledListingRepository extends AbstractRepository&lt;ScheduledListing&gt; {
+  protected readonly logger &#x3D; new Logger(ScheduledListing.name)
+
+  constructor (
+  @InjectModel(ScheduledListing.name)
+    listingCategoryModel: Model&lt;ScheduledListing&gt;
   ) {
     super(listingCategoryModel)
   }

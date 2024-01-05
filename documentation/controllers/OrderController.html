@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >OrderController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >OrderController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,14 +90,20 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#createNewOrder" >createNewOrder</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllOrders" >getAllOrders</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getOrderById" >getOrderById</a>
                             </li>
@@ -107,8 +119,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -118,6 +130,8 @@
                 <td class="col-md-4">
                     <a name="createNewOrder"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>createNewOrder</b></span>
                         <a href="#createNewOrder"><span class="icon ion-ios-link"></span></a>
@@ -127,7 +141,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createNewOrder(data: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, user: <a href="../classes/User.html" target="_self">User</a>)</code>
+                    <code>createNewOrder(data: <a href="../interfaces/PlaceOrderDto.html" target="_self">PlaceOrderDto</a>, user: <a href="../classes/User.html" target="_self">User</a>)</code>
                 </td>
             </tr>
 
@@ -152,7 +166,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -165,7 +179,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                <code><a href="../interfaces/PlaceOrderDto.html" target="_self" >PlaceOrderDto</a></code>
                                     </td>
 
                                     <td>
@@ -192,11 +206,11 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatusAndData&lt;literal type&gt;&gt;</code>
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -208,6 +222,8 @@
                 <td class="col-md-4">
                     <a name="getAllOrders"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllOrders</b></span>
                         <a href="#getAllOrders"><span class="icon ion-ios-link"></span></a>
@@ -242,7 +258,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -274,7 +290,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -286,6 +302,8 @@
                 <td class="col-md-4">
                     <a name="getOrderById"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getOrderById</b></span>
                         <a href="#getOrderById"><span class="icon ion-ios-link"></span></a>
@@ -320,7 +338,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -352,7 +370,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -361,29 +379,29 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Controller,
-  Inject,
-  Post,
-  Get,
   Body,
-  UseGuards,
+  Controller,
+  Get,
   HttpException,
-  Param
+  Inject,
+  Param,
+  Post,
+  UseGuards
 } from &#x27;@nestjs/common&#x27;
 import {
+  CurrentUser,
+  IRpcException,
+  Order, OrderI, PaystackChargeResponseData, PlaceOrderDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus,
-  IRpcException,
+  ResponseWithStatusAndData,
   ServicePayload,
-  User,
-  Order
+  User
 } from &#x27;@app/common&#x27;
 import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
 import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
-import { CurrentUser } from &#x27;./current-user.decorator&#x27;
 import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
 
 @Controller(&#x27;order&#x27;)
@@ -396,14 +414,14 @@ export class OrderController {
   @Post(&#x27;create&#x27;)
   @UseGuards(JwtAuthGuard)
   async createNewOrder (
-    @Body() data: any,
+    @Body() data: PlaceOrderDto,
       @CurrentUser() user: User
-  ): Promise&lt;ResponseWithStatus&gt; {
+  ): Promise&lt;ResponseWithStatusAndData&lt;{ order: OrderI, paymentMeta: PaystackChargeResponseData }&gt;&gt; {
     const payload: ServicePayload&lt;any&gt; &#x3D; {
       userId: user._id as any,
       data
     }
-    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+    return await lastValueFrom&lt;ResponseWithStatusAndData&lt;{ order: OrderI, paymentMeta: PaystackChargeResponseData }&gt;&gt;(
       this.orderClient.send(QUEUE_MESSAGE.CREATE_ORDER, payload).pipe(
         catchError((error: IRpcException) &#x3D;&gt; {
           throw new HttpException(error.message, error.status)

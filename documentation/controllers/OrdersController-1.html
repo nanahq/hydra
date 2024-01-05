@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,26 +36,32 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >OrdersController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >OrdersController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/vendor-gateway/src/module.api/orders.controller.spec.ts</code>
+            <code>apps/vendor-gateway/src/module.api/orders.controller.ts</code>
         </p>
 
             <p class="comment">
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,14 +90,20 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getOrder" >getOrder</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getOrders" >getOrders</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateOrderStatus" >updateOrderStatus</a>
                             </li>
@@ -107,7 +119,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
@@ -118,6 +130,8 @@
                 <td class="col-md-4">
                     <a name="getOrder"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getOrder</b></span>
                         <a href="#getOrder"><span class="icon ion-ios-link"></span></a>
@@ -141,8 +155,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="70"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/orders.controller.spec.ts:70</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/orders.controller.ts:66</a></div>
                 </td>
             </tr>
 
@@ -196,6 +210,8 @@
                 <td class="col-md-4">
                     <a name="getOrders"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getOrders</b></span>
                         <a href="#getOrders"><span class="icon ion-ios-link"></span></a>
@@ -220,7 +236,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="35"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/orders.controller.spec.ts:35</a></div>
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/orders.controller.ts:35</a></div>
                 </td>
             </tr>
 
@@ -274,6 +290,8 @@
                 <td class="col-md-4">
                     <a name="updateOrderStatus"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateOrderStatus</b></span>
                         <a href="#updateOrderStatus"><span class="icon ion-ios-link"></span></a>
@@ -283,7 +301,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateOrderStatus(data: <a href="../classes/UpdateOrderStatusRequestDto.html" target="_self">UpdateOrderStatusRequestDto</a>)</code>
+                    <code>updateOrderStatus(data: <a href="../interfaces/UpdateOrderStatusRequestDto.html" target="_self">UpdateOrderStatusRequestDto</a>)</code>
                 </td>
             </tr>
 
@@ -298,7 +316,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="52"
-                            class="link-to-prism">apps/vendor-gateway/src/module.api/orders.controller.spec.ts:52</a></div>
+                            class="link-to-prism">apps/vendor-gateway/src/module.api/orders.controller.ts:52</a></div>
                 </td>
             </tr>
 
@@ -321,7 +339,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/UpdateOrderStatusRequestDto.html" target="_self" >UpdateOrderStatusRequestDto</a></code>
+                                                <code><a href="../interfaces/UpdateOrderStatusRequestDto.html" target="_self" >UpdateOrderStatusRequestDto</a></code>
                                     </td>
 
                                     <td>
@@ -349,7 +367,7 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Body,
   Controller,
@@ -361,6 +379,7 @@
   UseGuards
 } from &#x27;@nestjs/common&#x27;
 import {
+  CurrentUser,
   IRpcException,
   Order,
   QUEUE_MESSAGE,
@@ -372,7 +391,6 @@ import {
 } from &#x27;@app/common&#x27;
 import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
 import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
-import { CurrentUser } from &#x27;./current-user.decorator&#x27;
 import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
 
 @Controller(&#x27;order&#x27;)
@@ -404,12 +422,8 @@ export class OrdersController {
   async updateOrderStatus (
     @Body() data: UpdateOrderStatusRequestDto
   ): Promise&lt;ResponseWithStatus&gt; {
-    const payload: ServicePayload&lt;UpdateOrderStatusRequestDto&gt; &#x3D; {
-      userId: &#x27;&#x27;,
-      data
-    }
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
-      this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, payload).pipe(
+      this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, { ...data, streamUpdates: true }).pipe(
         catchError((error: IRpcException) &#x3D;&gt; {
           throw new HttpException(error.message, error.status)
         })

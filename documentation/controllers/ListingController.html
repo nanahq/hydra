@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,21 +36,27 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >ListingController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >ListingController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
@@ -62,7 +68,7 @@
                 <h3>Prefix</h3>
             </p>
             <p class="comment">
-                <code>listing</code>
+                <code>listings</code>
             </p>
 
 
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,16 +90,54 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
-                                <a href="#deleteVendorProfile" >deleteVendorProfile</a>
+                                <a href="#approve" >approve</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
-                                <a href="#getAllVendors" >getAllVendors</a>
+                                <a href="#approved" >approved</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
-                                <a href="#getVendor" >getVendor</a>
+                                <a href="#delete" >delete</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#disapprove" >disapprove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#index" >index</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#pending" >pending</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#rejected" >rejected</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#show" >show</a>
                             </li>
                         </ul>
                     </td>
@@ -107,8 +151,8 @@
     </table>
 </section>
 
-            <section>
-    
+            <section data-compodoc="block-methods">
+
     <h3 id="methods">
         Methods
     </h3>
@@ -116,18 +160,149 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="deleteVendorProfile"></a>
+                    <a name="approve"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>deleteVendorProfile</b></span>
-                        <a href="#deleteVendorProfile"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>approve</b></span>
+                        <a href="#approve"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deleteVendorProfile(listingId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>approve(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@UseGuards(JwtAuthGuard)<br />@Patch(&#x27;/:id/approve&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="107"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:107</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="approved"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>approved</b></span>
+                        <a href="#approved"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>approved()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;approved&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:50</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategory[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="delete"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>delete</b></span>
+                        <a href="#delete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>delete(listingId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -141,8 +316,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="62"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:62</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="86"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:86</a></div>
                 </td>
             </tr>
 
@@ -152,7 +327,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -184,7 +359,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -194,18 +369,21 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getAllVendors"></a>
+                    <a name="disapprove"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>getAllVendors</b></span>
-                        <a href="#getAllVendors"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>disapprove</b></span>
+                        <a href="#disapprove"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getAllVendors()</code>
+                    <code>disapprove(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, req: <a href="../classes/ReasonDto.html" target="_self">ReasonDto</a>)</code>
                 </td>
             </tr>
 
@@ -213,14 +391,106 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;listings&#x27;)<br /></code>
+                    <code>@UseGuards(JwtAuthGuard)<br />@UseGuards(JwtAuthGuard)<br />@Patch(&#x27;/:id/disapprove&#x27;)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="32"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:32</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="124"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:124</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>req</td>
+                                    <td>
+                                                <code><a href="../classes/ReasonDto.html" target="_self" >ReasonDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;ResponseWithStatus&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="index"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>index</b></span>
+                        <a href="#index"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>index()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:26</a></div>
                 </td>
             </tr>
 
@@ -240,18 +510,116 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getVendor"></a>
+                    <a name="pending"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
-                        <span ><b>getVendor</b></span>
-                        <a href="#getVendor"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>pending</b></span>
+                        <a href="#pending"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getVendor(listingId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>pending()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;pending&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:38</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategory[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rejected"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>rejected</b></span>
+                        <a href="#rejected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>rejected()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@UseGuards(JwtAuthGuard)<br />@Get(&#x27;rejected&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="62"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:62</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/ListingCategory.html" target="_self" >Promise&lt;ListingCategory[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="show"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>show</b></span>
+                        <a href="#show"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>show(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -265,8 +633,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/listing.controller.ts:74</a></div>
                 </td>
             </tr>
 
@@ -276,7 +644,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
-                        
+
                         <table class="params">
                             <thead>
                                 <tr>
@@ -287,7 +655,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>listingId</td>
+                                    <td>id</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -308,7 +676,7 @@
 
                     </div>
                     <div class="io-description">
-                        
+
                     </div>
                 </td>
             </tr>
@@ -317,41 +685,71 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Controller,
-  Delete,
-  Get,
-  HttpException,
-  Inject,
-  Param,
-  UseGuards
-} from &#x27;@nestjs/common&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Body, Controller, Delete, Get, HttpException, Inject, Param, Patch, UseGuards } from &#x27;@nestjs/common&#x27;
 import { ClientProxy } from &#x27;@nestjs/microservices&#x27;
 import { catchError, lastValueFrom } from &#x27;rxjs&#x27;
 
 import {
+  IRpcException,
+  ListingCategory,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
-  ServicePayload,
-  IRpcException,
-  ListingCategory
+  ServicePayload
 } from &#x27;@app/common&#x27;
 import { JwtAuthGuard } from &#x27;../auth/guards/jwt.guard&#x27;
+import { ReasonDto } from &#x27;@app/common/database/dto/reason.dto&#x27;
 
-@Controller(&#x27;listing&#x27;)
+@Controller(&#x27;listings&#x27;)
 export class ListingController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
-    private readonly vendorsClient: ClientProxy
-  ) {}
+    private readonly listingsClient: ClientProxy
+  ) {
+  }
 
   @UseGuards(JwtAuthGuard)
-  @Get(&#x27;listings&#x27;)
-  async getAllVendors (): Promise&lt;ListingCategory[]&gt; {
+  @Get(&#x27;&#x27;)
+  async index (): Promise&lt;ListingCategory[]&gt; {
     return await lastValueFrom&lt;ListingCategory[]&gt;(
-      this.vendorsClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_ADMIN, {}).pipe(
+      this.listingsClient.send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_ALL, {}).pipe(
+        catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(&#x27;pending&#x27;)
+  async pending (): Promise&lt;ListingCategory[]&gt; {
+    return await lastValueFrom&lt;ListingCategory[]&gt;(
+      this.listingsClient.send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_PENDING, {}).pipe(
+        catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(&#x27;approved&#x27;)
+  async approved (): Promise&lt;ListingCategory[]&gt; {
+    return await lastValueFrom&lt;ListingCategory[]&gt;(
+      this.listingsClient.send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_APPROVED, {}).pipe(
+        catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(&#x27;rejected&#x27;)
+  async rejected (): Promise&lt;ListingCategory[]&gt; {
+    return await lastValueFrom&lt;ListingCategory[]&gt;(
+      this.listingsClient.send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_REJECTED, {}).pipe(
         catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
           throw new HttpException(error.message, error.status)
         })
@@ -361,15 +759,9 @@ export class ListingController {
 
   @UseGuards(JwtAuthGuard)
   @Get(&#x27;/:id&#x27;)
-  async getVendor (@Param(&#x27;id&#x27;) listingId: string): Promise&lt;ListingCategory&gt; {
-    const payload: ServicePayload&lt;{ listingId: string }&gt; &#x3D; {
-      userId: &#x27;&#x27;,
-      data: {
-        listingId
-      }
-    }
+  async show (@Param(&#x27;id&#x27;) id: string): Promise&lt;ListingCategory&gt; {
     return await lastValueFrom&lt;ListingCategory&gt;(
-      this.vendorsClient.send(QUEUE_MESSAGE.GET_LISTING_INFO, payload).pipe(
+      this.listingsClient.send(QUEUE_MESSAGE.LISTING_READ, { id }).pipe(
         catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
           throw new HttpException(error.message, error.status)
         })
@@ -379,7 +771,7 @@ export class ListingController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(&#x27;/:id&#x27;)
-  async deleteVendorProfile (
+  async delete (
     @Param(&#x27;id&#x27;) listingId: string
   ): Promise&lt;ResponseWithStatus&gt; {
     const payload: ServicePayload&lt;{ listingId: string }&gt; &#x3D; {
@@ -389,11 +781,49 @@ export class ListingController {
       }
     }
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
-      this.vendorsClient.send(QUEUE_MESSAGE.DELETE_LISTING, payload).pipe(
+      this.listingsClient.send(QUEUE_MESSAGE.DELETE_LISTING, payload).pipe(
         catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
           throw new HttpException(error.message, error.status)
         })
       )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
+  @Patch(&#x27;/:id/approve&#x27;)
+  async approve (
+    @Param(&#x27;id&#x27;) id: string
+  ): Promise&lt;ResponseWithStatus&gt; {
+    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+      this.listingsClient
+        .send(QUEUE_MESSAGE.LISTING_MENU_APPROVE, { id })
+        .pipe(
+          catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
+  @Patch(&#x27;/:id/disapprove&#x27;)
+  async disapprove (
+    @Param(&#x27;id&#x27;) id: string,
+      @Body() req: ReasonDto
+  ): Promise&lt;ResponseWithStatus&gt; {
+    return await lastValueFrom&lt;ResponseWithStatus&gt;(
+      this.listingsClient
+        .send(QUEUE_MESSAGE.LISTING_MENU_REJECT, {
+          id,
+          data: req
+        })
+        .pipe(
+          catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 }

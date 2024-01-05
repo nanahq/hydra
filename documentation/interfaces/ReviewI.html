@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -44,34 +44,40 @@
 
 
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
   >
   ReviewI</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>packages/eatlater-types/libs/typings/common.ts</code>
+            <code>libs/common/src/database/types/common.ts</code>
         </p>
 
 
 
 
-        <section>
+        <section data-compodoc="block-index">
             <h3 id="index">Index</h3>
             <table class="table table-sm table-bordered index-table">
                 <tbody>
@@ -84,57 +90,57 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#_id" 
+                                        <a href="#_id"
 >
                                             _id
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#createdAt" 
+                                        <a href="#createdAt"
 >
                                             createdAt
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#listingId" 
+                                        <a href="#listing"
 >
-                                            listingId
+                                            listing
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#orderId" 
+                                        <a href="#order"
 >
-                                            orderId
+                                            order
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#reviewBody" 
+                                        <a href="#reviewBody"
 >
                                             reviewBody
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#reviewerName" 
+                                        <a href="#reviewerName"
 >
                                             reviewerName
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#reviewStars" 
+                                        <a href="#reviewStars"
 >
                                             reviewStars
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#updatedAt" 
+                                        <a href="#updatedAt"
 >
                                             updatedAt
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#vendorId" 
+                                        <a href="#vendor"
 >
-                                            vendorId
+                                            vendor
                                         </a>
                                 </li>
                             </ul>
@@ -146,7 +152,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-properties">
                 <h3 id="inputs">Properties</h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
@@ -218,9 +224,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="listingId"></a>
-                                        <span class="name "><b>listingId</b>
-                                            <a href="#listingId">
+                                        <a name="listing"></a>
+                                        <span class="name "><b>listing</b>
+                                            <a href="#listing">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -228,7 +234,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>listingId:         <code><a href="../interfaces/ListingMenuI.html" target="_self" >ListingMenuI</a></code>
+                                        <code>listing:         <code><a href="../interfaces/ListingMenuI.html" target="_self" >ListingMenuI</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -251,9 +257,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="orderId"></a>
-                                        <span class="name "><b>orderId</b>
-                                            <a href="#orderId">
+                                        <a name="order"></a>
+                                        <span class="name "><b>order</b>
+                                            <a href="#order">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -261,7 +267,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>orderId:         <code><a href="../interfaces/OrderI.html" target="_self" >OrderI</a></code>
+                                        <code>order:         <code><a href="../interfaces/OrderI.html" target="_self" >OrderI</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -416,9 +422,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="vendorId"></a>
-                                        <span class="name "><b>vendorId</b>
-                                            <a href="#vendorId">
+                                        <a name="vendor"></a>
+                                        <span class="name "><b>vendor</b>
+                                            <a href="#vendor">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -426,7 +432,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>vendorId:         <code><a href="../interfaces/VendorI.html" target="_self" >VendorI</a></code>
+                                        <code>vendor:         <code><a href="../interfaces/VendorI.html" target="_self" >VendorI</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -449,16 +455,10 @@
     </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { OrderStatus } from &#x27;./OrderStatus.enum&#x27;
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { OrderType, VendorOperationType, OrderStatus, DriverI } from &#x27;@app/common&#x27;
 
-export interface TokenPayload {
-  userId: string
-}
-
-export interface ReviewToken {
-  listingId: string
-}
+import { ListingApprovalStatus } from &#x27;@app/common/typings/ListingApprovalStatus.enum&#x27;
 
 export interface ListingOption {
   name: string
@@ -477,11 +477,12 @@ export interface VendorOperationSetting {
   placementTime?: string
   minOrder?: number
   preparationTime?: number
-  deliveryType: VendorOperationType
+  deliveryType?: VendorOperationType
 }
 
 export interface LocationCoordinates {
-  coordinates: [string, string]
+  type: &#x27;Point&#x27;
+  coordinates: [number, number]
 }
 
 export interface ListingCategoryI {
@@ -506,7 +507,7 @@ export interface ListingOptionGroupI {
 
 export interface ListingMenuI {
   _id: string
-  vendorId: string
+  vendor: VendorI
   name: string
   desc: string
   price: string
@@ -515,9 +516,11 @@ export interface ListingMenuI {
   isLive: boolean
   isAvailable: boolean
   isDeleted: boolean
-  optionGroups: ListingOption[]
+  optionGroups: ListingOptionGroupI[]
   createdAt: string
   updatedAt: string
+
+  status: ListingApprovalStatus
 }
 
 export interface OrderBreakDown {
@@ -541,11 +544,11 @@ export interface VendorI {
   businessLogo?: string
   businessAddress: string
   settings?: VendorSettingsI
-  location?: {
-    coordinates: [string, string]
-  }
+  location?: LocationCoordinates
   createdAt?: string
   updatedAt?: string
+
+  expoNotificationToken: string
 }
 
 export interface VendorSettingsI {
@@ -561,8 +564,15 @@ export interface VendorUserI {
   status: &#x27;ONLINE&#x27; | &#x27;OFFLINE&#x27;
   businessName: string
   businessLogo: string
+
+  businessImage: string
   businessAddress: string
   location: LocationCoordinates
+  settings: VendorOperationSetting
+  ratings: {
+    totalReviews: number
+    rating: number
+  }
 }
 
 export interface UserI {
@@ -570,7 +580,7 @@ export interface UserI {
   firstName: string
   lastName: string
   email: string
-  password: string
+  password?: string
   phone: string
   isValidated: boolean
   createdAt: string
@@ -578,65 +588,125 @@ export interface UserI {
   status: &#x27;ONLINE&#x27; | &#x27;OFFLINE&#x27;
   isDeleted: boolean
   orders: OrderI[]
-  location: LocationCoordinates
-
+  location?: LocationCoordinates
+  expoNotificationToken?: string
 }
 
 export interface ReviewI {
   _id: string
   reviewBody: string
-  listingId: ListingMenuI
-  vendorId: VendorI
+  listing: ListingMenuI
+  vendor: VendorI
   reviewStars: number
-  orderId: OrderI
+  order: OrderI
   reviewerName: string
   createdAt: string
   updatedAt: string
 }
 export interface OrderI {
-_id: string
+  _id: string
   user: UserI
-  listing: ListingMenuI
+  listing: [ListingMenuI]
   vendor: VendorI
   totalOrderValue: number
   orderValuePayable: number
-  deliveryAddess: string
+  deliveryAddress: string
   primaryContact: string
   isThirdParty: boolean
   createdAt: string
   updatedAt: string
   refId: number
-  options: string[]
+  options: OrderOptions[]
   orderStatus: OrderStatus
   orderBreakDown: OrderBreakDown
   orderType: OrderType
   orderDeliveryScheduledTime: string
   preciseLocation: LocationCoordinates
-  quantity: string
+  quantity: [{
+    listing: string
+    quantity: number
+  }]
   specialNote?: string
+  txRefId?: string
 }
 
-export type OrderType &#x3D; &#x27;PRE_ORDER&#x27; | &#x27;ON_DEMAND&#x27;
-export type VendorOperationType &#x3D; &#x27;PRE_ORDER&#x27; | &#x27;ON_DEMAND&#x27; | &#x27;PRE_AND_INSTANT&#x27;
-
-export interface ListingMenuReview { 
+export interface ListingMenuReview {
   rating: string
   numberOfReviews: number
   reviews: ReviewI[]
 }
 
-export interface VendorReviewOverview { 
+export interface VendorReviewOverview {
   rating: string
   numberOfReviews: number
   riskFactor: &#x27;HIGH&#x27; | &#x27;MEDIUM&#x27; | &#x27;LOW&#x27;
 }
 
+export interface OrderOptions {
+  listing: string
+  options: string[]
+}
 
-export interface PayoutOverview {
-  &#x27;24_hours&#x27;: number
-  &#x27;7_days&#x27;: number
-  &#x27;30_days&#x27;: number
-}</code></pre>
+export interface SubscriptionNotification {
+  _id: string
+  subscribers: UserI[]
+  vendor: VendorI
+
+  enabledByVendor: boolean
+
+  createdAt: string
+
+  updatedAt: string
+}
+
+export interface OrderUpdateStream {
+  userId: string
+  orderId: string
+  status: OrderStatus
+  driver?: string
+  vendorName?: string
+}
+
+export type WalletTransactionType &#x3D; &#x27;CREDIT&#x27; | &#x27;DEBIT&#x27;
+
+export enum WalletTransactionStatus {
+  PENDING &#x3D; &#x27;PENDING&#x27;,
+  PROCESSED &#x3D; &#x27;PROCESSED&#x27;,
+
+  REJECTED &#x3D; &#x27;REJECTED&#x27;
+}
+export interface DriverWalletTransactionI {
+  driver: DriverI
+
+  wallet: DriverWalletI
+
+  amount: number
+
+  refid: number
+
+  createdAt: string
+
+  updatedAt: string
+
+  txType: WalletTransactionType
+
+  status: WalletTransactionStatus
+  transaction: string
+}
+export interface DriverWalletI {
+  driver: DriverI
+
+  transactions: DriverWalletTransactionI[]
+
+  createdAt: string
+
+  updatedAt: string
+
+  balance: number
+
+  logs: string[]
+}
+</code></pre>
     </div>
 </div>
 

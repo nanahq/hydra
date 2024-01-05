@@ -13,7 +13,7 @@
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">EatLater Docs</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -36,26 +36,32 @@
 
 
 <ol class="breadcrumb">
-  <li>Controllers</li>
-  <li >OrdersController</li>
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >OrdersController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        <li class="nav-item">
+            <a href="#info"
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
         </li>
-        <li >
-            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        <li class="nav-item">
+            <a href="#source"
+                class="nav-link"
+
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
         </li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
+    <div class="tab-pane fade active in" id="info">
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>apps/admin-gateway/src/module.api/orders.controller.spec.ts</code>
+            <code>apps/admin-gateway/src/module.api/orders.controller.ts</code>
         </p>
 
             <p class="comment">
@@ -70,7 +76,7 @@
 
 
 
-            <section>
+            <section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -84,14 +90,44 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllFulfilledOrders" >getAllFulfilledOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getAllOrders" >getAllOrders</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllPaidOrders" >getAllPaidOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllTransitOrders" >getAllTransitOrders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#getAllUserOrder" >getAllUserOrder</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#getOrder" >getOrder</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#updateOrderStatus" >updateOrderStatus</a>
                             </li>
@@ -107,7 +143,7 @@
     </table>
 </section>
 
-            <section>
+            <section data-compodoc="block-methods">
 
     <h3 id="methods">
         Methods
@@ -116,8 +152,58 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getAllFulfilledOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllFulfilledOrders</b></span>
+                        <a href="#getAllFulfilledOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllFulfilledOrders()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;fulfilled&#x27;)<br />@UseGuards(JwtAuthGuard)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="57"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.ts:57</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getAllOrders"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getAllOrders</b></span>
                         <a href="#getAllOrders"><span class="icon ion-ios-link"></span></a>
@@ -142,7 +228,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="33"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.spec.ts:33</a></div>
+                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.ts:33</a></div>
                 </td>
             </tr>
 
@@ -162,8 +248,186 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="getAllPaidOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllPaidOrders</b></span>
+                        <a href="#getAllPaidOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllPaidOrders()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;paid&#x27;)<br />@UseGuards(JwtAuthGuard)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.ts:45</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllTransitOrders"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllTransitOrders</b></span>
+                        <a href="#getAllTransitOrders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllTransitOrders()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;transit&#x27;)<br />@UseGuards(JwtAuthGuard)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.ts:69</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAllUserOrder"></a>
+                    <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
+                        <span class="modifier">Async</span>
+                        <span ><b>getAllUserOrder</b></span>
+                        <a href="#getAllUserOrder"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAllUserOrder(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;user/:id&#x27;)<br />@UseGuards(JwtAuthGuard)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Order.html" target="_self" >Promise&lt;Order[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="getOrder"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>getOrder</b></span>
                         <a href="#getOrder"><span class="icon ion-ios-link"></span></a>
@@ -187,8 +451,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.spec.ts:45</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="95"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.ts:95</a></div>
                 </td>
             </tr>
 
@@ -242,6 +506,8 @@
                 <td class="col-md-4">
                     <a name="updateOrderStatus"></a>
                     <span class="name">
+                        <span class="modifier"></span>
+                        <span class="modifier"></span>
                         <span class="modifier">Async</span>
                         <span ><b>updateOrderStatus</b></span>
                         <a href="#updateOrderStatus"><span class="icon ion-ios-link"></span></a>
@@ -251,7 +517,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateOrderStatus(data: <a href="../classes/UpdateOrderStatusRequestDto.html" target="_self">UpdateOrderStatusRequestDto</a>)</code>
+                    <code>updateOrderStatus(data: <a href="../interfaces/UpdateOrderStatusRequestDto.html" target="_self">UpdateOrderStatusRequestDto</a>)</code>
                 </td>
             </tr>
 
@@ -265,8 +531,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="64"
-                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.spec.ts:64</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="114"
+                            class="link-to-prism">apps/admin-gateway/src/module.api/orders.controller.ts:114</a></div>
                 </td>
             </tr>
 
@@ -289,7 +555,7 @@
                                 <tr>
                                     <td>data</td>
                                     <td>
-                                                <code><a href="../classes/UpdateOrderStatusRequestDto.html" target="_self" >UpdateOrderStatusRequestDto</a></code>
+                                                <code><a href="../interfaces/UpdateOrderStatusRequestDto.html" target="_self" >UpdateOrderStatusRequestDto</a></code>
                                     </td>
 
                                     <td>
@@ -317,7 +583,7 @@
 </section>    </div>
 
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
+    <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Body,
   Controller,
@@ -352,7 +618,57 @@ export class OrdersController {
   @UseGuards(JwtAuthGuard)
   async getAllOrders (): Promise&lt;Order[]&gt; {
     return await lastValueFrom(
-      this.ordersClient.send(QUEUE_MESSAGE.GET_ALL_ORDERS, {}).pipe(
+      this.ordersClient.send(QUEUE_MESSAGE.ADMIN_GET_ALL_ORDERS, {}).pipe(
+        catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get(&#x27;paid&#x27;)
+  @UseGuards(JwtAuthGuard)
+  async getAllPaidOrders (): Promise&lt;Order[]&gt; {
+    return await lastValueFrom(
+      this.ordersClient.send&lt;Order[]&gt;(QUEUE_MESSAGE.ADMIN_GET_ALL_PAID_ORDERS, {}).pipe(
+        catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get(&#x27;fulfilled&#x27;)
+  @UseGuards(JwtAuthGuard)
+  async getAllFulfilledOrders (): Promise&lt;Order[]&gt; {
+    return await lastValueFrom(
+      this.ordersClient.send&lt;Order[]&gt;(QUEUE_MESSAGE.ADMIN_GET_ALL_FULFILLED_ORDERS, {}).pipe(
+        catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get(&#x27;transit&#x27;)
+  @UseGuards(JwtAuthGuard)
+  async getAllTransitOrders (): Promise&lt;Order[]&gt; {
+    return await lastValueFrom(
+      this.ordersClient.send&lt;Order[]&gt;(QUEUE_MESSAGE.ADMIN_GET_ALL_TRANSIT_ORDERS, {}).pipe(
+        catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get(&#x27;user/:id&#x27;)
+  @UseGuards(JwtAuthGuard)
+  async getAllUserOrder (
+    @Param(&#x27;id&#x27;) userId: string
+  ): Promise&lt;Order[]&gt; {
+    return await lastValueFrom(
+      this.ordersClient.send&lt;Order[]&gt;(QUEUE_MESSAGE.ADMIN_GET_USER_ORDERS, { userId }).pipe(
         catchError&lt;any, any&gt;((error: IRpcException) &#x3D;&gt; {
           throw new HttpException(error.message, error.status)
         })
@@ -384,9 +700,9 @@ export class OrdersController {
   async updateOrderStatus (
     @Body() data: UpdateOrderStatusRequestDto
   ): Promise&lt;ResponseWithStatus&gt; {
-    const payload: ServicePayload&lt;UpdateOrderStatusRequestDto&gt; &#x3D; {
-      userId: &#x27;&#x27;,
-      data
+    const payload: UpdateOrderStatusRequestDto &#x3D; {
+      ...data,
+      streamUpdates: true
     }
     return await lastValueFrom&lt;ResponseWithStatus&gt;(
       this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, payload).pipe(
