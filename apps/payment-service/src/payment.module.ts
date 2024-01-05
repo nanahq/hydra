@@ -96,7 +96,7 @@ import { DriverWalletController } from './wallet/driver/wallet.controller'
     DatabaseModule,
     HttpModule
   ],
-  controllers: [VendorPayoutController, PaymentController],
+  controllers: [VendorPayoutController, PaymentController, DriverWalletController],
   providers: [
     VendorPayoutService,
     VendorPayoutRepository,
@@ -107,8 +107,7 @@ import { DriverWalletController } from './wallet/driver/wallet.controller'
     PaystackService,
     DriverWalletRepository,
     DriverWalletTransactionRepository,
-    DriverWalletService,
-    DriverWalletController
+    DriverWalletService
   ]
 })
 export class PaymentServiceModule {}
