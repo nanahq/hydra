@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { CurrentUser } from './current-user.decorator'
+import { CurrentUser } from './decorators/current-user.decorator'
 
 import {
   Admin,
