@@ -30,6 +30,7 @@ import { DashboardController } from './module.api/dashboard.controller'
 import { AddressBookLabelController } from './module.api/address-book-label.controller'
 import { DriversController } from './module.api/drivers.controller'
 import { DriverTransactionController } from './module.api/driver-transaction.controller'
+import { CouponController } from './module.api/coupon.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -89,7 +90,8 @@ export class AppModule implements NestModule {
         ReviewsController,
         AddressBookLabelController,
         DriversController,
-        DriverTransactionController
+        DriverTransactionController,
+        CouponController
       ],
       providers: [
         AuthService,

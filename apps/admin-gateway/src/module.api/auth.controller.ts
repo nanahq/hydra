@@ -3,7 +3,7 @@ import { Response } from 'express'
 
 import { LocalGuard } from '../auth/guards/local.guard'
 import { AuthService } from './auth.service'
-import { CurrentUser } from './current-user.decorator'
+import { CurrentUser } from './decorators/current-user.decorator'
 import { Admin } from '@app/common'
 
 @Controller('auth')

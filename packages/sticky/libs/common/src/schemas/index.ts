@@ -374,8 +374,6 @@ export interface SubscriptionNotificationI {
   updatedAt: string
 }
 
-
-
 export type WalletTransactionType = 'CREDIT' | 'DEBIT'
 
 export interface DriverWalletTransactionI {
@@ -414,4 +412,30 @@ export enum WalletTransactionStatus {
   PROCESSED = 'PROCESSED',
 
   REJECTED = 'REJECTED'
+}
+
+export type CouponType = 'CASH' | 'FREE_SHIPPING' | 'PERCENTAGE'
+
+export interface CouponI {
+  _id: string
+
+  code: number
+
+  useOnce: boolean
+
+  users: string[]
+
+  type: CouponType
+
+  value?: number
+
+  percentage?: number
+
+  validFrom: string
+
+  validTill: string
+
+  createdAt: string
+
+  updatedAt: string
 }

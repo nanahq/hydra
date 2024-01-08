@@ -32,6 +32,11 @@ export class DriverWalletService {
       return wallet
     }
 
+    const canTransact = this.balanceCheck(wallet.balance, payload.amount, payload.type)
+
+    if (!canTransact) {
+      throw new FitRpcException('Insufficient balance!', HttpStatus.FORBIDDEN)
+    }
     const transaction = await this.driverWalletTransactionRepository.create({
       driver: payload.driver,
       transaction: payload.transaction,
@@ -53,9 +58,10 @@ export class DriverWalletService {
   public async creditWallet (payload: CreditWallet): Promise<ResponseWithStatus> {
     try {
       const wallet = await this.createTransactionCommon(payload as any, 'CREDIT', payload.withTransaction) as any
-      const creditedAmount = payload.withTransaction ? wallet.balance : Number(wallet.balance) + payload.amount
 
-      await this.driverWalletRepository.findOneAndUpdate({ driver: payload.driver }, { balance: creditedAmount })
+      const amountToCredit = Number(wallet.balance) + payload.amount
+
+      await this.driverWalletRepository.findOneAndUpdate({ driver: payload.driver }, { balance: amountToCredit })
 
       return { status: 1 }
     } catch (error) {
@@ -67,9 +73,9 @@ export class DriverWalletService {
   public async debitWallet (payload: DebitWallet): Promise<ResponseWithStatus> {
     try {
       const wallet = await this.createTransactionCommon(payload as any, 'DEBIT', payload.withTransaction) as any
-      const creditedAmount = payload.withTransaction ? wallet.balance : Number(wallet.balance) - payload.amount
+      const amountToDebit = Number(wallet.balance) - payload.amount
 
-      await this.driverWalletRepository.findOneAndUpdate({ driver: payload.driver }, { balance: creditedAmount })
+      await this.driverWalletRepository.findOneAndUpdate({ driver: payload.driver }, { balance: amountToDebit })
 
       return { status: 1 }
     } catch (error) {
@@ -97,6 +103,7 @@ export class DriverWalletService {
     try {
       return await this.driverWalletTransactionRepository.findAndPopulate<DriverWalletTransactionI>(filter, ['wallet', 'driver'])
     } catch (error) {
+      console.log(error)
       throw new FitRpcException('failed to fetch transactions', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
@@ -104,6 +111,7 @@ export class DriverWalletService {
   public async createTransaction (payload: createTransaction): Promise<ResponseWithStatus> {
     try {
       const wallet = await this.driverWalletRepository.findOne({ driver: payload.driver })
+
       if (wallet == null) {
         throw new Error('Can not find wallet with that ID')
       }
@@ -118,13 +126,23 @@ export class DriverWalletService {
         status: payload.status ?? WalletTransactionStatus.PENDING
       })
 
+      let newBalance = wallet.balance as number
+
+      if (payload.type === 'CREDIT') {
+        newBalance = newBalance + payload.amount
+      } else {
+        newBalance = newBalance - payload.amount
+      }
+
       const txIds = [...wallet.transactions, transaction._id.toString()]
+
       await this.driverWalletRepository.findOneAndUpdate(
         {
           driver: payload.driver.toString()
         },
         {
-          transactions: txIds
+          transactions: txIds,
+          balance: newBalance
         }
       )
 
@@ -148,23 +166,8 @@ export class DriverWalletService {
   }
 
   public async updateTransactionStatus (payload: UpdateTransaction): Promise<ResponseWithStatus> {
-    const wallet = await this.driverWalletRepository.findOne({ driver: payload.driverId }) as DriverWallet
+    await this.driverWalletTransactionRepository.findOneAndUpdate({ _id: payload.txId }, { status: payload.status })
 
-    const transaction = await this.driverWalletTransactionRepository.findOneAndUpdate({ _id: payload.txId }, { status: payload.status }) as DriverWalletTransaction
-
-    const canMakeTransfer = this.balanceCheck(wallet.balance, transaction.amount, transaction.txType)
-
-    if (!canMakeTransfer) {
-      throw new FitRpcException('Insufficient balance', HttpStatus.UNAUTHORIZED)
-    }
-
-    if (payload.status === 'PROCESSED') {
-      const balance = transaction.txType === 'CREDIT' ? wallet.balance + transaction.amount : wallet.balance - transaction.amount
-
-      await this.driverWalletRepository.findOneAndUpdate({
-        driver: payload.driverId
-      }, { balance })
-    }
     return { status: 1 }
   }
 
