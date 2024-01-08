@@ -48,6 +48,10 @@ export class CouponService {
     return { status: 1 }
   }
 
+  public async getAllCoupons (): Promise<Coupon[]> {
+    return await this.couponRepository.find({})
+  }
+
   public async getCoupon ({ code }: GetCoupon): Promise<Coupon> {
     const coupon = await this.couponRepository.findOne({ code })
 

@@ -61,7 +61,20 @@ export class CouponController {
     }
   }
 
-  @EventPattern(QUEUE_MESSAGE.UPDATE_COUPON)
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_COUPONS)
+  async getAllCoupons (
+    @Ctx() context: RmqContext
+  ): Promise<Coupon[]> {
+    try {
+      return await this.couponService.getAllCoupons()
+    } catch (e) {
+      throw new RpcException(e)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.UPDATE_COUPON_USAGE)
   async updateCouponUsage (
     @Payload() data: UpdateCouponUsage,
       @Ctx() context: RmqContext
