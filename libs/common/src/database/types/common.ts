@@ -1,4 +1,4 @@
-import { OrderType, VendorOperationType, OrderStatus, DriverI } from '@app/common'
+import { OrderType, VendorOperationType, OrderStatus, DriverI, CouponType } from '@app/common'
 
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 
@@ -247,4 +247,29 @@ export interface DriverWalletI {
   balance: number
 
   logs: string[]
+}
+
+export interface CouponI {
+  expired: boolean
+  _id: string
+
+  code: number
+
+  useOnce: boolean
+
+  users: string[]
+
+  type: CouponType
+
+  value?: number
+
+  percentage?: number
+
+  validFrom: string
+
+  validTill: string
+
+  createdAt: string
+
+  updatedAt: string
 }
