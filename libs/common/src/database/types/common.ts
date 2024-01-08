@@ -132,6 +132,10 @@ export interface UserI {
   orders: OrderI[]
   location?: LocationCoordinates
   expoNotificationToken?: string
+
+  paystack_customer_id?: string
+
+  paystack_titan?: string
 }
 
 export interface ReviewI {

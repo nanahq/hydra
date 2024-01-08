@@ -4,19 +4,19 @@ import { AbstractDocument, LocationCoordinates, Order } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
 export class User extends AbstractDocument {
-  @Prop()
+  @Prop(String)
     firstName: string
 
-  @Prop()
+  @Prop(String)
     lastName: string
 
-  @Prop()
+  @Prop({ type: String, unique: true })
     email: string
 
   @Prop(String)
     password: string
 
-  @Prop()
+  @Prop({ type: String, unique: true })
     phone: string
 
   @Prop({ default: false })
@@ -51,6 +51,12 @@ export class User extends AbstractDocument {
 
   @Prop({ type: String })
     expoNotificationToken: string
+
+  @Prop({ type: String })
+    paystack_customer_id?: string
+
+  @Prop({ type: String })
+    paystack_titan?: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
