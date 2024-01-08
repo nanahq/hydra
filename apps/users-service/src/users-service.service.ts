@@ -298,7 +298,7 @@ export class UsersService {
   public async createVirtualAccount (paystack_customer_id: string): Promise<void> {
     try {
       const { data } = await firstValueFrom(this.httpService.post(
-        this.PAYSTACK_CREATE_CUSTOMER_URL,
+        this.PAYSTACK_DEDICATED_ACCOUNT,
         {
           customer: paystack_customer_id,
           preferred_bank: 'titan-paystack'
