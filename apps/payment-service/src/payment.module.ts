@@ -19,7 +19,7 @@ import {
   VendorPayoutSchema,
   VendorSchema,
   DatabaseModule,
-  PaystackService
+  PaystackService, Coupon, CouponSchema
 } from '@app/common'
 import { ScheduleModule } from '@nestjs/schedule'
 import { PaymentRepository } from './charge/charge.repository'
@@ -35,6 +35,9 @@ import {
 import { DriverWalletRepository, DriverWalletTransactionRepository } from './wallet/driver/wallet.repository'
 import { DriverWalletService } from './wallet/driver/wallet.service'
 import { DriverWalletController } from './wallet/driver/wallet.controller'
+import { CouponService } from './coupons/coupon.service'
+import { CouponRepository } from './coupons/coupon.repository'
+import { CouponController } from './coupons/coupon.controller'
 
 @Module({
   imports: [
@@ -85,6 +88,10 @@ import { DriverWalletController } from './wallet/driver/wallet.controller'
       {
         name: DriverWalletTransaction.name,
         schema: DriverWalletTransactionSchema
+      },
+      {
+        name: Coupon.name,
+        schema: CouponSchema
       }
     ]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
@@ -96,7 +103,7 @@ import { DriverWalletController } from './wallet/driver/wallet.controller'
     DatabaseModule,
     HttpModule
   ],
-  controllers: [VendorPayoutController, PaymentController, DriverWalletController],
+  controllers: [VendorPayoutController, PaymentController, DriverWalletController, CouponController],
   providers: [
     VendorPayoutService,
     VendorPayoutRepository,
@@ -107,7 +114,9 @@ import { DriverWalletController } from './wallet/driver/wallet.controller'
     PaystackService,
     DriverWalletRepository,
     DriverWalletTransactionRepository,
-    DriverWalletService
+    DriverWalletService,
+    CouponService,
+    CouponRepository
   ]
 })
 export class PaymentServiceModule {}

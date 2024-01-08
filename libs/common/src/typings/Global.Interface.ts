@@ -290,3 +290,5 @@ export interface DeliveryTaskStream {
 
   orderId: string
 }
+
+export type CouponType = 'CASH' | 'FREE_SHIPPING' | 'PERCENTAGE'
