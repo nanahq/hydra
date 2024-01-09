@@ -37,7 +37,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   ): Promise<T> {
     return await this.model
       .findOne(filterQuery, {}, { lean: true })
-        .populate({ path: populatePath, options: { createdAt: 'desc' } } as any) as any
+      .populate({ path: populatePath, options: { createdAt: 'desc' } } as any) as any
   }
 
   async findOne (filterQuery: FilterQuery<TDocument>): Promise<TDocument | any> {
