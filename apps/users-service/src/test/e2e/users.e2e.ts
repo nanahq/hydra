@@ -85,7 +85,9 @@ describe('users service e2e', () => {
       payload = {
         password: '123456',
         email: 'suraj@gmail.com',
-        phone: '+2348107641913'
+        phone: '+2348107641913',
+        firstName: 'Suraj',
+        lastName: 'Auwal'
       }
     })
     it('should create a new user', async () => {
