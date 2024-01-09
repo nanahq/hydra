@@ -52,7 +52,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     return await this.model
       .find(filterQuery)
       .sort({ createdAt: 'desc' })
-      .populate(populatePath as any) as any
+      .populate({ path: populatePath, options: { createdAt: 'desc' } } as any) as any
   }
 
   findRaw (): Model<TDocument> {
