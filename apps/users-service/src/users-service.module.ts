@@ -19,6 +19,7 @@ import { UserRepository } from './users.repository'
 import { AddressBookServiceController } from './address-book-service.controller'
 import { AddressBookRepository } from './address.book.repository'
 import { AddressBookService } from './address-book-service.service'
+import { HttpModule } from '@nestjs/axios'
 
 @Module({
   imports: [
@@ -46,7 +47,8 @@ import { AddressBookService } from './address-book-service.service'
     ]),
     DatabaseModule,
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-    RmqModule
+    RmqModule,
+    HttpModule
   ],
   controllers: [UsersServiceController, AddressBookServiceController],
 
