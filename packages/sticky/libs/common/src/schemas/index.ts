@@ -116,6 +116,12 @@ export interface UserI {
   isDeleted: boolean
   orders: OrderI[]
   location: LocationCoordinates
+
+  paystack_customer_id?: string
+
+  paystack_titan?: string
+
+  expoNotificationToken?: string
 }
 
 export interface ReviewI {

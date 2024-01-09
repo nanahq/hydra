@@ -14,22 +14,40 @@ import {
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
+import { HttpService } from '@nestjs/axios'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class UsersService {
+  private readonly PAYSTACK_CREATE_CUSTOMER_URL = 'https://api.paystack.co/customer'
+
+  private readonly PAYSTACK_DEDICATED_ACCOUNT = 'https://api.paystack.co/dedicated_account'
+  private readonly HEADERS: { ContentType: string, Authorization: string }
   private readonly logger = new Logger()
   constructor (
     private readonly usersRepository: UserRepository,
+
+    private readonly configService: ConfigService,
+
+    private readonly httpService: HttpService,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy
-  ) {}
+  ) {
+    const paystackSecret = configService.get<string>('PAY_STACK_SECRET', '')
+    this.HEADERS = {
+      ContentType: 'application/json',
+      Authorization: `Bearer ${paystackSecret}`
+    }
+  }
 
   async register ({
     email,
     phone,
-    password
+    password,
+    firstName,
+    lastName
   }: registerUserRequest): Promise<User> {
     const formattedPhone = internationalisePhoneNumber(phone)
     await this.checkExistingUser(formattedPhone, email) // Gate to check if phone has already been registered
@@ -38,7 +56,9 @@ export class UsersService {
       email,
       phone: formattedPhone,
       password: await bcrypt.hash(password, 10),
-      isValidated: false
+      isValidated: false,
+      lastName,
+      firstName
     }
 
     try {
@@ -53,6 +73,17 @@ export class UsersService {
           }
         )
       )
+
+      const csId = await this.createPaystackCustomerInstance({
+        email,
+        phone,
+        firstName,
+        lastName
+      })
+      if (csId !== undefined) {
+        await this.createVirtualAccount(csId)
+      }
+
       return user
     } catch (error) {
       throw new FitRpcException(
@@ -228,6 +259,64 @@ export class UsersService {
     return {
       hasAccount: true,
       firstName: user.firstName
+    }
+  }
+
+  public async createPaystackCustomerInstance (payload: Omit<registerUserRequest, 'password'>): Promise<string | undefined> {
+    try {
+      const phone = internationalisePhoneNumber(payload.phone)
+      const { data } = await firstValueFrom(this.httpService.post(
+        this.PAYSTACK_CREATE_CUSTOMER_URL,
+        {
+          email: payload.email,
+          phone,
+          first_name: payload.firstName,
+          last_name: payload.lastName
+        },
+        {
+          headers: this.HEADERS
+        }
+      ))
+
+      if (data?.status === true) {
+        const customerId = data?.data?.customer_code
+        await this.usersRepository.findOneAndUpdate({ phone }, { paystack_customer_id: customerId })
+
+        return customerId as string
+      }
+
+      return undefined
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not create a new customer on paystack',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  public async createVirtualAccount (paystack_customer_id: string): Promise<void> {
+    try {
+      const { data } = await firstValueFrom(this.httpService.post(
+        this.PAYSTACK_CREATE_CUSTOMER_URL,
+        {
+          customer: paystack_customer_id,
+          preferred_bank: 'titan-paystack'
+
+        },
+        {
+          headers: this.HEADERS
+        }
+      ))
+
+      if (data?.status === true) {
+        await this.usersRepository.findOneAndUpdate({ paystack_customer_id }, { paystack_titan: data?.data?.account_number })
+      }
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not create a new virtual account a paystack on paystack',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
