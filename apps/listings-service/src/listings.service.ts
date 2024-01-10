@@ -172,7 +172,7 @@ export class ListingsService {
     const getRequest = await this.listingMenuRepository.findAndPopulate({
       vendor,
       isDeleted: false
-    }, 'optionGroups') as any
+    }, ['optionGroups']) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -253,7 +253,7 @@ export class ListingsService {
     try {
       const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
         { _id: data },
-        'optionGroups'
+        ['optionGroups']
       )
       if (listing === null) {
         throw new FitRpcException(
@@ -274,7 +274,7 @@ export class ListingsService {
     try {
       const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
         { _id: id },
-        'optionGroups'
+        ['optionGroups']
       )
 
       if (listing === null) {
@@ -462,7 +462,7 @@ export class ListingsService {
   }
 
   async getSingleUserMenu (mid: string): Promise<ListingMenu> {
-    const menu = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>({ _id: mid }, 'optionGroups')
+    const menu = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>({ _id: mid }, ['optionGroups'])
 
     if (menu === null) {
       throw new FitRpcException('Can not find menu with that ID', HttpStatus.NOT_FOUND)

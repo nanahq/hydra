@@ -38,6 +38,8 @@ import { DriverWalletController } from './wallet/driver/wallet.controller'
 import { CouponService } from './coupons/coupon.service'
 import { CouponRepository } from './coupons/coupon.repository'
 import { CouponController } from './coupons/coupon.controller'
+import { UserWalletController } from './wallet/user/wallet.controller'
+import { UserWalletService } from './wallet/user/wallet.service'
 
 @Module({
   imports: [
@@ -95,6 +97,7 @@ import { CouponController } from './coupons/coupon.controller'
       }
     ]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
@@ -103,7 +106,7 @@ import { CouponController } from './coupons/coupon.controller'
     DatabaseModule,
     HttpModule
   ],
-  controllers: [VendorPayoutController, PaymentController, DriverWalletController, CouponController],
+  controllers: [VendorPayoutController, PaymentController, DriverWalletController, UserWalletController, CouponController],
   providers: [
     VendorPayoutService,
     VendorPayoutRepository,
@@ -116,7 +119,8 @@ import { CouponController } from './coupons/coupon.controller'
     DriverWalletTransactionRepository,
     DriverWalletService,
     CouponService,
-    CouponRepository
+    CouponRepository,
+    UserWalletService
   ]
 })
 export class PaymentServiceModule {}

@@ -47,6 +47,7 @@ import { HttpModule } from '@nestjs/axios'
     ]),
     DatabaseModule,
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
     RmqModule,
     HttpModule
   ],

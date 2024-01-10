@@ -205,7 +205,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
 
     const todayPayouts = (await this.payoutRepository.findAndPopulate(
       filter,
-      'vendor'
+      ['vendor']
     )) as any
 
     if (todayPayouts.length < 1) {

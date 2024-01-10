@@ -170,7 +170,7 @@ describe('Vendors - E2E', () => {
         }
       })
       it('should create vendors settings', async () => {
-        let _vendor: Vendor = await repository.findOneAndPopulate({ _id: vendor._id }, 'settings')
+        let _vendor: Vendor = await repository.findOneAndPopulate({ _id: vendor._id }, ['settings'])
 
         expect(_vendor.settings).toStrictEqual(undefined)
 
@@ -185,7 +185,7 @@ describe('Vendors - E2E', () => {
 
         expect(response).toStrictEqual({ status: 1 })
 
-        _vendor = await repository.findOneAndPopulate({ _id: vendor._id }, 'settings')
+        _vendor = await repository.findOneAndPopulate({ _id: vendor._id }, ['settings'])
 
         expect(_vendor.settings.payment).toStrictEqual({
           _id: expect.anything(),
@@ -351,7 +351,7 @@ describe('Vendors - E2E', () => {
     })
 
     it('should get vendor settings', async () => {
-      const vendorWithNoSetting: Vendor = await repository.findOneAndPopulate({ _id: vendor._id }, 'settings')
+      const vendorWithNoSetting: Vendor = await repository.findOneAndPopulate({ _id: vendor._id }, ['settings'])
       expect(vendorWithNoSetting.settings).toBeUndefined()
 
       const vendorSetting = await lastValueFrom<VendorSettings>(
