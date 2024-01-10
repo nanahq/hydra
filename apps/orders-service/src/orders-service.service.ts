@@ -83,7 +83,7 @@ export class OrdersServiceService {
     try {
       const _orders = (await this.orderRepository.findAndPopulate(
         { vendor },
-        'listing vendor'
+        ['listing', 'vendor']
       )) as any
       return _orders
     } catch (error) {
@@ -98,7 +98,7 @@ export class OrdersServiceService {
     try {
       return await this.orderRepository.findAndPopulate(
         { user },
-        'user listing vendor'
+          ['listing', 'user', 'vendor']
       )
     } catch (error) {
       throw new FitRpcException(
@@ -146,7 +146,7 @@ export class OrdersServiceService {
     try {
       const _orders = (await this.orderRepository.findAndPopulate(
         filterQuery,
-        'vendor'
+        ['vendor']
       )) as any
       return _orders
     } catch (error) {
@@ -161,7 +161,7 @@ export class OrdersServiceService {
     try {
       return await this.orderRepository.findOneAndPopulate(
         { refId },
-        'user listing vendor'
+        ['user', 'listing', 'vendor']
       )
     } catch (error) {
       throw new FitRpcException(

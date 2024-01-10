@@ -90,7 +90,7 @@ export class VendorsService {
         businessEmail,
         isDeleted: false
       },
-      'settings'
+      ['settings']
     )
 
     if (vendor === null) {
@@ -180,7 +180,7 @@ export class VendorsService {
         _id,
         isDeleted: false
       },
-      'settings'
+      ['settings']
     )
 
     if (_vendor === null) {
