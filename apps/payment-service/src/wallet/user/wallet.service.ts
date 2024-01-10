@@ -10,6 +10,7 @@ import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
 import { firstValueFrom, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
+import { PaystackInstancePayload } from '@app/common/dto/UpdateUserDto'
 
 @Injectable()
 export class UserWalletService {
@@ -48,7 +49,7 @@ export class UserWalletService {
     }
 
     await lastValueFrom(
-      this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_PAYSTACK_INFO, { customerId, virtualAccountNumber })
+      this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_PAYSTACK_INFO, { customerId, virtualAccountNumber, phone: internationalisePhoneNumber(data.phone) } satisfies PaystackInstancePayload)
     )
   }
 

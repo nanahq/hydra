@@ -252,7 +252,9 @@ export class UsersService {
   }
 
   public async updateUserPaystackDetails (data: PaystackInstancePayload): Promise<void> {
-    await this.usersRepository.findOneAndUpdate({ phone: data.phone }, { paystack_titan: data.virtualAccountNumber, paystack_customer_id: data.customerId })
+    this.logger.log(`[PIM] -> paystack instance received for ${data.phone}`)
+    this.logger.log(JSON.stringify(data))
+    await this.usersRepository.findOneAndUpdate({ phone: data.phone }, { paystack_titan: data?.virtualAccountNumber, paystack_customer_id: data?.customerId })
   }
 
   private async checkExistingUser (phone: string, email: string): Promise<User> {
