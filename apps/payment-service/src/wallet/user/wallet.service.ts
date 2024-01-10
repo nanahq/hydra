@@ -8,7 +8,7 @@ import {
 } from '@app/common'
 import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
-import { firstValueFrom } from 'rxjs'
+import { firstValueFrom, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
 
 @Injectable()
@@ -30,7 +30,6 @@ export class UserWalletService {
 
   ) {
     const paystackSecret = this.configService.get<string>('PAY_STACK_SECRET', '')
-    console.log({ paystackSecret })
     this.HEADERS = {
       ContentType: 'application/json',
       Authorization: `Bearer ${paystackSecret}`
@@ -38,6 +37,8 @@ export class UserWalletService {
   }
 
   public async createPaystackInstances (data: Omit<registerUserRequest, 'password'>): Promise<void> {
+    this.logger.log(`[PIM] -> Creating customer on paystack for ${data.phone}`)
+
     let virtualAccountNumber: string | undefined
 
     const customerId = await this.createPaystackCustomerInstance(data)
@@ -46,12 +47,13 @@ export class UserWalletService {
       virtualAccountNumber = await this.createVirtualAccount(customerId)
     }
 
-    await firstValueFrom(
+    await lastValueFrom(
       this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_PAYSTACK_INFO, { customerId, virtualAccountNumber })
     )
   }
 
   private async createPaystackCustomerInstance (payload: Omit<registerUserRequest, 'password'>): Promise<string | undefined> {
+    this.logger.log(`[PIM] -> Creating customer on paystack for ${payload.phone}`)
     try {
       const phone = internationalisePhoneNumber(payload.phone)
       const { data } = await firstValueFrom(this.httpService.post(
@@ -83,6 +85,7 @@ export class UserWalletService {
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   private async createVirtualAccount (paystack_customer_id: string): Promise<string | undefined> {
+    this.logger.log(`[PIM] -> Creating virtual account on paystack for ${paystack_customer_id}`)
     try {
       const { data } = await firstValueFrom(this.httpService.post(
         this.PAYSTACK_DEDICATED_ACCOUNT,

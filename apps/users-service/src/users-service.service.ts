@@ -14,7 +14,7 @@ import {
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import { UpdateUserDto, PaystackInstancePayload } from '@app/common/dto/UpdateUserDto'
-import { firstValueFrom, lastValueFrom } from 'rxjs'
+import { lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
 
 @Injectable()
@@ -68,7 +68,8 @@ export class UsersService {
         lastName
       }
 
-      await firstValueFrom(
+      this.logger.log('[PIM] -> Account created. Emitting events for paystack instance creation')
+      await lastValueFrom(
         this.paymentClient.emit(QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED, paystackInstancePayload)
       )
 
