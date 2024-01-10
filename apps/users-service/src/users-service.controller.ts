@@ -1,5 +1,5 @@
 import {
-  Ctx,
+  Ctx, EventPattern,
   MessagePattern,
   Payload,
   RmqContext,
@@ -21,7 +21,7 @@ import {
   verifyPhoneRequest
 } from '@app/common'
 import { UsersService } from './users-service.service'
-import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
+import { PaystackInstancePayload, UpdateUserDto } from '@app/common/dto/UpdateUserDto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -165,6 +165,20 @@ export class UsersServiceController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.usersService.resendPhoneNumberRequest(phone)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.UPDATE_USER_PAYSTACK_INFO)
+  async handleUpdateCustomerPaystackInfo (
+    @Payload() data: PaystackInstancePayload,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.usersService.updateUserPaystackDetails(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

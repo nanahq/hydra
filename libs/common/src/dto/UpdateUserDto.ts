@@ -1,5 +1,5 @@
-import { IsOptional } from 'class-validator'
-import { LocationCoordinates } from '../database/types/common'
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import { LocationCoordinates } from '@app/common'
 
 export class UpdateUserDto {
   @IsOptional()
@@ -22,4 +22,18 @@ export class UpdateUserDto {
 
   @IsOptional()
     expoNotificationToken: string
+}
+
+export class PaystackInstancePayload {
+  @IsNotEmpty()
+  @IsString()
+    customerId: string
+
+  @IsNotEmpty()
+  @IsString()
+    phone: string
+
+  @IsNotEmpty()
+  @IsString()
+    virtualAccountNumber: string
 }

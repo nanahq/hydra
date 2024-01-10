@@ -13,34 +13,21 @@ import {
   verifyPhoneRequest
 } from '@app/common'
 import { UserRepository } from './users.repository'
-import { UpdateUserDto } from '@app/common/dto/UpdateUserDto'
+import { UpdateUserDto, PaystackInstancePayload } from '@app/common/dto/UpdateUserDto'
 import { firstValueFrom, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
-import { HttpService } from '@nestjs/axios'
-import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class UsersService {
-  private readonly PAYSTACK_CREATE_CUSTOMER_URL = 'https://api.paystack.co/customer'
-
-  private readonly PAYSTACK_DEDICATED_ACCOUNT = 'https://api.paystack.co/dedicated_account'
-  private readonly HEADERS: { ContentType: string, Authorization: string }
   private readonly logger = new Logger()
   constructor (
     private readonly usersRepository: UserRepository,
-
-    private readonly configService: ConfigService,
-
-    private readonly httpService: HttpService,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
-  ) {
-    const paystackSecret = configService.get<string>('PAY_STACK_SECRET', '')
-    this.HEADERS = {
-      ContentType: 'application/json',
-      Authorization: `Bearer ${paystackSecret}`
-    }
-  }
+    private readonly notificationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy
+  ) {}
 
   async register ({
     email,
@@ -74,15 +61,16 @@ export class UsersService {
         )
       )
 
-      const csId = await this.createPaystackCustomerInstance({
+      const paystackInstancePayload: Omit<registerUserRequest, 'password'> = {
         email,
-        phone,
+        phone: formattedPhone,
         firstName,
         lastName
-      })
-      if (csId !== undefined) {
-        await this.createVirtualAccount(csId)
       }
+
+      await firstValueFrom(
+        this.paymentClient.emit(QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED, paystackInstancePayload)
+      )
 
       return user
     } catch (error) {
@@ -262,62 +250,8 @@ export class UsersService {
     }
   }
 
-  public async createPaystackCustomerInstance (payload: Omit<registerUserRequest, 'password'>): Promise<string | undefined> {
-    try {
-      const phone = internationalisePhoneNumber(payload.phone)
-      const { data } = await firstValueFrom(this.httpService.post(
-        this.PAYSTACK_CREATE_CUSTOMER_URL,
-        {
-          email: payload.email,
-          phone,
-          first_name: payload.firstName,
-          last_name: payload.lastName
-        },
-        {
-          headers: this.HEADERS
-        }
-      ))
-
-      if (data?.status === true) {
-        const customerId = data?.data?.customer_code
-        await this.usersRepository.findOneAndUpdate({ phone }, { paystack_customer_id: customerId })
-
-        return customerId as string
-      }
-
-      return undefined
-    } catch (error) {
-      throw new FitRpcException(
-        'Can not create a new customer on paystack',
-        HttpStatus.INTERNAL_SERVER_ERROR
-      )
-    }
-  }
-
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  public async createVirtualAccount (paystack_customer_id: string): Promise<void> {
-    try {
-      const { data } = await firstValueFrom(this.httpService.post(
-        this.PAYSTACK_DEDICATED_ACCOUNT,
-        {
-          customer: paystack_customer_id,
-          preferred_bank: 'titan-paystack'
-
-        },
-        {
-          headers: this.HEADERS
-        }
-      ))
-
-      if (data?.status === true) {
-        await this.usersRepository.findOneAndUpdate({ paystack_customer_id }, { paystack_titan: data?.data?.account_number })
-      }
-    } catch (error) {
-      throw new FitRpcException(
-        'Can not create a new virtual account a paystack on paystack',
-        HttpStatus.INTERNAL_SERVER_ERROR
-      )
-    }
+  public async updateUserPaystackDetails (data: PaystackInstancePayload): Promise<void> {
+    await this.usersRepository.findOneAndUpdate({ phone: data.phone }, { paystack_titan: data.virtualAccountNumber, paystack_customer_id: data.customerId })
   }
 
   private async checkExistingUser (phone: string, email: string): Promise<User> {

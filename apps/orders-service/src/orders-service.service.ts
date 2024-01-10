@@ -98,7 +98,7 @@ export class OrdersServiceService {
     try {
       return await this.orderRepository.findAndPopulate(
         { user },
-          ['listing', 'user', 'vendor']
+        ['listing', 'user', 'vendor']
       )
     } catch (error) {
       throw new FitRpcException(
