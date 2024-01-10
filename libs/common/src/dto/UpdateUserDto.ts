@@ -25,15 +25,15 @@ export class UpdateUserDto {
 }
 
 export class PaystackInstancePayload {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-    customerId: string
+    customerId?: string
 
   @IsNotEmpty()
   @IsString()
     phone: string
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-    virtualAccountNumber: string
+    virtualAccountNumber?: string
 }
