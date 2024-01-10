@@ -6,7 +6,7 @@ import {
   type SaveOptions,
   type Connection,
   type HydratedDocument,
-  type ClientSession
+  type ClientSession, PopulateOptions
 } from 'mongoose'
 import { type AbstractDocument } from './abstract.schema'
 
@@ -33,11 +33,19 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   async findOneAndPopulate<T> (
     filterQuery: FilterQuery<TDocument>,
-    populatePath: string | string[]
+    populatePaths: string[]
   ): Promise<T> {
+    const paths = populatePaths.map<PopulateOptions>(path => ({
+      path,
+      options: {
+        sort: {
+          createdAt: 'desc'
+        }
+      }
+    }))
     return await this.model
       .findOne(filterQuery, {}, { lean: true })
-      .populate({ path: populatePath, options: { createdAt: 'desc' } } as any) as any
+      .populate(paths) as any
   }
 
   async findOne (filterQuery: FilterQuery<TDocument>): Promise<TDocument | any> {
@@ -47,12 +55,20 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
 
   async findAndPopulate<T>(
     filterQuery: FilterQuery<TDocument>,
-    populatePath: string | string[]
+    populatePaths: string[]
   ): Promise<T[]> {
+    const paths = populatePaths.map<PopulateOptions>(path => ({
+      path,
+      options: {
+        sort: {
+          createdAt: 'desc'
+        }
+      }
+    }))
     return await this.model
       .find(filterQuery)
       .sort({ createdAt: 'desc' })
-      .populate({ path: populatePath, options: { createdAt: 'desc' } } as any) as any
+      .populate(paths) as any
   }
 
   findRaw (): Model<TDocument> {
