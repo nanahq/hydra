@@ -22,20 +22,6 @@ export class OdsaController {
     private readonly rmqService: RmqService
   ) {}
 
-  @MessagePattern(QUEUE_MESSAGE.ODSA_PROCESS_ORDER)
-  async processIncomingOrder (
-    @Payload() { orderId }: { orderId: string },
-      @Ctx() context: RmqContext
-  ): Promise<any> {
-    try {
-      return await this.odsa.handleProcessOrder(orderId)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
-
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DELIVERIES)
   async getDeliveries (@Ctx() context: RmqContext): Promise<Delivery[] | undefined> {
     try {
@@ -110,6 +96,39 @@ export class OdsaController {
   ): Promise<void> {
     try {
       this.odsa.streamOrderUpdatesViaSocket(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.ODSA_PROCESS_ORDER)
+  async processIncomingOrder (
+    @Payload() { orderId }: { orderId: string },
+      @Ctx() context: RmqContext
+  ): Promise<any> {
+    try {
+      return await this.odsa.handleProcessOrder(orderId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  /**
+   * Processes Pre Order by creating delivery instance
+   * @param orderId
+   * @param context
+   */
+  @EventPattern(QUEUE_MESSAGE.ODSA_PROCESS_PRE_ORDER)
+  async processIncomingPreOrder (
+    @Payload() { orderId }: { orderId: string },
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.odsa.handleProcessPreOrder(orderId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

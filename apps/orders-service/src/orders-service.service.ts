@@ -81,11 +81,10 @@ export class OrdersServiceService {
 
   public async getAllVendorOrders (vendor: string): Promise<Order[]> {
     try {
-      const _orders = (await this.orderRepository.findAndPopulate(
+      return (await this.orderRepository.findAndPopulate(
         { vendor },
         ['listing', 'vendor']
       )) as any
-      return _orders
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -265,9 +264,12 @@ export class OrdersServiceService {
       )
 
       if (order.orderType === OrderTypes.INSTANT) {
-        // Start ODSA on instant order
         await lastValueFrom<any>(
           this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
+        )
+      } else {
+        await lastValueFrom<any>(
+          this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_PRE_ORDER, { orderId })
         )
       }
     } catch (error) {
