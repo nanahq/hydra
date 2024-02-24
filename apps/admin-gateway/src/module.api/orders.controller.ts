@@ -10,6 +10,8 @@ import {
 } from '@nestjs/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import {
+  Admin,
+  AdminLevel,
   IRpcException,
   Order,
   QUEUE_MESSAGE,
@@ -20,6 +22,7 @@ import {
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
+import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('order')
 export class OrdersController {
@@ -112,7 +115,8 @@ export class OrdersController {
   @Put('status')
   @UseGuards(JwtAuthGuard)
   async updateOrderStatus (
-    @Body() data: UpdateOrderStatusRequestDto
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Body() data: UpdateOrderStatusRequestDto
   ): Promise<ResponseWithStatus> {
     const payload: UpdateOrderStatusRequestDto = {
       ...data,

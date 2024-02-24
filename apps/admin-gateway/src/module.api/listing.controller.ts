@@ -3,6 +3,8 @@ import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
+  Admin,
+  AdminLevel,
   IRpcException,
   ListingCategory,
   QUEUE_MESSAGE,
@@ -12,6 +14,7 @@ import {
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
+import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('listings')
 export class ListingController {
@@ -105,7 +108,8 @@ export class ListingController {
   @UseGuards(JwtAuthGuard)
   @Patch('/:id/approve')
   async approve (
-    @Param('id') id: string
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Param('id') id: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
       this.listingsClient
@@ -122,7 +126,8 @@ export class ListingController {
   @UseGuards(JwtAuthGuard)
   @Patch('/:id/disapprove')
   async disapprove (
-    @Param('id') id: string,
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Param('id') id: string,
       @Body() req: ReasonDto
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(

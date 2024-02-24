@@ -11,6 +11,8 @@ import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
+  Admin,
+  AdminLevel,
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -18,6 +20,7 @@ import {
   Review
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('review')
 export class ReviewsController {
@@ -87,7 +90,8 @@ export class ReviewsController {
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   async deleteReview (
-    @Param('id') reviewId: string
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
+      @Param('id') reviewId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
       this.reviewsClient
