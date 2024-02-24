@@ -7,12 +7,15 @@ export function getCurrentUserByContext (context: ExecutionContext): Admin | und
   }
   return context.switchToRpc().getData()?.user as Admin
 }
-export const UserLevel = createParamDecorator(
-  (level: AdminLevel, ctx: ExecutionContext) => {
+export const AdminClearance = createParamDecorator(
+  (level: AdminLevel[], ctx: ExecutionContext) => {
     const admin = getCurrentUserByContext(ctx)
 
-    if (admin === undefined || admin.level !== level) {
-      throw new ForbiddenException('You do not have the required level to access this resource')
+    if (admin?.level === AdminLevel.SUPER_ADMIN) {
+      return admin
+    }
+    if (admin === undefined || !level.includes(admin.level)) {
+      throw new ForbiddenException('You do not have the required clearance to access this resource')
     }
     return admin
   }

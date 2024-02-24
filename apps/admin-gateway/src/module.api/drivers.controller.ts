@@ -1,7 +1,17 @@
 import { Controller, Delete, Get, HttpException, Inject, Param, Patch } from '@nestjs/common'
-import { Delivery, Driver, IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus } from '@app/common'
+import {
+  Admin,
+  AdminLevel,
+  Delivery,
+  Driver,
+  IRpcException,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus
+} from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
+import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('driver')
 export class DriversController {
@@ -32,7 +42,8 @@ export class DriversController {
 
   @Patch('approve/:id')
   public async approveDriver (
-    @Param('id') driverId: string
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Param('id') driverId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
       this.driversClient.send(QUEUE_MESSAGE.ADMIN_APPROVE_DRIVER, { driverId })
@@ -44,7 +55,8 @@ export class DriversController {
 
   @Patch('reject/:id')
   public async rejectDriver (
-    @Param('id') driverId: string
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Param('id') driverId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
       this.driversClient.send(QUEUE_MESSAGE.ADMIN_REJECT_DRIVER, { driverId })
@@ -56,7 +68,8 @@ export class DriversController {
 
   @Delete('delete/:id')
   public async deleteDriver (
-    @Param('id') driverId: string
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Param('id') driverId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
       this.driversClient.send(QUEUE_MESSAGE.ADMIN_DELETE_DRIVER, { driverId })

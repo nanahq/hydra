@@ -10,7 +10,7 @@ import {
   ResponseWithStatusAndData, UpdateCoupon
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { UserLevel } from './decorators/user-level.decorator'
+import { AdminClearance } from './decorators/user-level.decorator'
 import { catchError, lastValueFrom } from 'rxjs'
 
 @Controller('coupon')
@@ -25,7 +25,7 @@ export class CouponController {
   @UseGuards(JwtAuthGuard)
   @Post('create')
   public async createCoupon (
-    @UserLevel(AdminLevel.DIAMOND) admin: Admin,
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
       @Body() data: CreateCouponDto
   ): Promise<ResponseWithStatusAndData<string>> {
     return await lastValueFrom<ResponseWithStatusAndData<string>>(
@@ -41,7 +41,7 @@ export class CouponController {
   @UseGuards(JwtAuthGuard)
   @Put('update')
   public async updateCoupon (
-    @UserLevel(AdminLevel.DIAMOND) admin: Admin,
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
       @Body() data: UpdateCoupon
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
@@ -57,7 +57,7 @@ export class CouponController {
   @UseGuards(JwtAuthGuard)
   @Get('all')
   public async getAllCoupons (
-    @UserLevel(AdminLevel.DIAMOND) admin: Admin
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin
   ): Promise<ResponseWithStatusAndData<string>> {
     return await lastValueFrom<ResponseWithStatusAndData<string>>(
       this.paymentClient.send(QUEUE_MESSAGE.GET_ALL_COUPONS, {})

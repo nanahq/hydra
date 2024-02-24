@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpException, Inject, Logger, Post, Put, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Logger,
+  Param,
+  Post,
+  Put,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -16,6 +28,7 @@ import {
   ServicePayload,
   UpdateAdminLevelRequestDto
 } from '@app/common'
+import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('admin')
 export class AdminController {
@@ -29,7 +42,9 @@ export class AdminController {
 
   @UseGuards(JwtAuthGuard)
   @Get('list')
-  async getAll (): Promise<ResponseWithStatus> {
+  async getAll (
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin
+  ): Promise<ResponseWithStatus> {
     const payload: {} = {}
     this.logger.debug('Getting all admin')
     return await lastValueFrom<ResponseWithStatus>(
@@ -47,7 +62,8 @@ export class AdminController {
 
   @Post('register')
   async registerNewUser (
-    @Body() request: RegisterAdminDTO
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
+      @Body() request: RegisterAdminDTO
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<RegisterAdminDTO> = {
       userId: '',
@@ -66,17 +82,16 @@ export class AdminController {
   @UseGuards(JwtAuthGuard)
   @Put('')
   async updateAdminProfile (
-    @Body() { level }: { level: string },
-      @CurrentUser() admin: Admin
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
+      @Body() { level, adminId }: { level: string, adminId: string }
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateAdminLevelRequestDto> = {
-      userId: admin._id as any,
+      userId: adminId as any,
       data: {
-        id: admin._id as any,
+        id: adminId as any,
         level: AdminLevel[level]
       }
     }
-
     return await lastValueFrom<ResponseWithStatus>(
       this.adminClient.send(QUEUE_MESSAGE.UPDATE_ADMIN_STATUS, payload).pipe(
         catchError<any, any>((error: IRpcException) => {
@@ -87,12 +102,13 @@ export class AdminController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('')
+  @Delete('/:id')
   async deleteAdminProfile (
-    @CurrentUser() admin: Admin
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
+      @Param('id') id: string
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<null> = {
-      userId: admin._id as any,
+      userId: id as any,
       data: null
     }
 
