@@ -1,15 +1,15 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { CouponRepository } from './coupon.repository'
 import {
-  Coupon,
+  Coupon, CouponI, CouponRedeemResponse,
   CreateCouponDto,
   FitRpcException,
   GetCoupon,
   RandomGen,
   ResponseWithStatus,
-  ResponseWithStatusAndData, UpdateCoupon, UpdateCouponUsage
+  ResponseWithStatusAndData, ServicePayload, UpdateCoupon, UpdateCouponUsage
 } from '@app/common'
-
+import * as moment from 'moment'
 @Injectable()
 export class CouponService {
   private readonly MAX_COUPON_LENGTH = 7
@@ -69,5 +69,53 @@ export class CouponService {
       throw new FitRpcException('Invalid Coupon', HttpStatus.NOT_FOUND)
     }
     await this.couponRepository.findOneAndUpdate({ _id: coupon._id }, { users: [...coupon.users, data.user] })
+  }
+
+  public async redeemCoupon ({ data, userId }: ServicePayload<{ couponCode: string }>): Promise<CouponRedeemResponse> {
+    const genericError = {
+      coupon: undefined,
+      status: 'ERROR'
+    } as any
+
+    const coupon = await this.couponRepository.findOne({ code: data.couponCode }) as CouponI | null
+
+    if (coupon === null) {
+      return {
+        ...genericError,
+        message: 'This is not a valid coupon'
+      }
+    }
+
+    const today = moment()
+
+    const validFrom = moment(coupon.validFrom)
+    const validTill = moment(coupon.validTill)
+
+    if (today.isBefore(validFrom)) {
+      return {
+        ...genericError,
+        message: `This coupon is redeemable from ${validFrom.format('DDD MM YYYY')}`
+      }
+    }
+
+    if (today.isAfter(validTill) || coupon.expired) {
+      return {
+        ...genericError,
+        message: 'This coupon has expired'
+      }
+    }
+
+    if (coupon.useOnce && coupon.users.includes(userId.toString())) {
+      return {
+        ...genericError,
+        message: 'You have already use this coupon. It can not be used twice'
+      }
+    }
+
+    return {
+      coupon,
+      status: 'OK',
+      message: 'success!'
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI, VendorUserI } from '../schemas'
+import { CouponI } from '../../../../../../libs/common/src'
 
 export interface TokenPayload {
   userId: string
@@ -567,6 +568,8 @@ export interface OrderOptions {
 export interface CartConstants {
   SERVICE_FEE: number
   VAT_FEE: number
+
+  MAX_SERVICE_FEE_PAYABLE
 }
 
 export interface DeliveryPriceMeta {
@@ -678,4 +681,10 @@ export interface DeliveryTaskStream {
   driverId: string
   vendorName: string
   orderId: string
+}
+
+export interface CouponRedeemResponse {
+  coupon?: CouponI
+  status: 'OK' | 'ERROR'
+  message: string
 }
