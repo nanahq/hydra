@@ -1,4 +1,5 @@
 import {
+  CouponI,
   ListingCategory,
   ListingMenu,
   ListingMenuI,
@@ -292,3 +293,9 @@ export interface DeliveryTaskStream {
 }
 
 export type CouponType = 'CASH' | 'FREE_SHIPPING' | 'PERCENTAGE'
+
+export interface CouponRedeemResponse {
+  coupon?: CouponI
+  status: 'OK' | 'ERROR'
+  message: string
+}

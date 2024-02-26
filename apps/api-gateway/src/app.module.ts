@@ -31,6 +31,7 @@ import { AddressBookController } from './module.api/address-book.controller'
 import { LocationController } from './module.api/location.controller'
 import { GeneralController } from './module.api/general.controller'
 import { DeliveriesController } from './module.api/deliveries.controller'
+import { CouponController } from './module.api/coupon.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -92,7 +93,8 @@ export class AppModule implements NestModule {
         AddressBookController,
         LocationController,
         GeneralController,
-        DeliveriesController
+        DeliveriesController,
+          CouponController
       ],
       providers: [
         AuthService,
