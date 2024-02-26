@@ -94,7 +94,7 @@ export class AppModule implements NestModule {
         LocationController,
         GeneralController,
         DeliveriesController,
-          CouponController
+        CouponController
       ],
       providers: [
         AuthService,
