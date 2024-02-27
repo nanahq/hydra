@@ -14,7 +14,7 @@ import { catchError, lastValueFrom } from 'rxjs'
 
 import {
   CheckUserAccountI,
-  CurrentUser,
+  CurrentUser, internationalisePhoneNumber,
   IRpcException,
   PhoneVerificationPayload,
   QUEUE_MESSAGE,
@@ -139,5 +139,11 @@ export class UsersController {
         })
       )
     )
+  }
+
+  @Get('delete-request/:phone')
+  async deleteAccountRequest (@Param('phone') phone: string): Promise<void> {
+    const formattedPhone = internationalisePhoneNumber(phone)
+    return await lastValueFrom<any>(this.usersClient.emit(QUEUE_MESSAGE.ACCOUNT_DELETE_REQUEST, { phone: formattedPhone }))
   }
 }

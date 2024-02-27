@@ -83,4 +83,7 @@ export class PlaceOrderDto {
 
   @IsOptional()
     thirdPartyName: string
+
+  @IsOptional()
+    coupon?: string
 }

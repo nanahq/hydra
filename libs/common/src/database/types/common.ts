@@ -174,6 +174,8 @@ export interface OrderI {
   }]
   specialNote?: string
   txRefId?: string
+
+  coupon?: string
 }
 
 export interface ListingMenuReview {

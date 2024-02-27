@@ -90,7 +90,7 @@ export class CouponController {
 
   @MessagePattern(QUEUE_MESSAGE.REDEEM_COUPON)
   async redeemCoupon (
-    @Payload() data: ServicePayload<{ couponCode: string}>,
+    @Payload() data: ServicePayload<{ couponCode: string }>,
       @Ctx() context: RmqContext
   ): Promise<CouponRedeemResponse> {
     try {
