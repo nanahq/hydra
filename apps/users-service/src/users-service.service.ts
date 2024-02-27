@@ -277,4 +277,8 @@ export class UsersService {
     }
     return _phone as unknown as User
   }
+
+  public async accountRemovalRequest (data: { phone: string }): Promise<void> {
+    await this.usersRepository.findOneAndUpdate({ phone: data.phone }, { isDeleted: true })
+  }
 }

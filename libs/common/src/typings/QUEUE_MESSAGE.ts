@@ -13,6 +13,8 @@ export enum QUEUE_MESSAGE {
 
   RESEND_PHONE_VERIFICATION = 'RESEND_PHONE_VERIFICATION',
 
+  ACCOUNT_DELETE_REQUEST = 'ACCOUNT_DELETE_REQUEST',
+
   // ADMIN
   GET_ADMIN_LOCAL = 'get_admin_with_username_password',
   GET_ADMIN_JWT = 'get_admin_with_id',

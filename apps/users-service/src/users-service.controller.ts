@@ -185,4 +185,18 @@ export class UsersServiceController {
       this.rmqService.ack(context)
     }
   }
+
+  @EventPattern(QUEUE_MESSAGE.ACCOUNT_DELETE_REQUEST)
+  async accountRemovalRequest (
+    @Payload() data: { phone: string },
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.usersService.accountRemovalRequest(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }
