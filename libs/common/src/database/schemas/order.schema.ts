@@ -4,7 +4,9 @@ import {
   AbstractDocument,
   OrderStatus,
   OrderBreakDown,
-  OrderType, LocationCoordinates, OrderOptions
+  OrderType,
+  LocationCoordinates,
+  OrderOptions
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -78,7 +80,7 @@ export class Order extends AbstractDocument {
     },
     coordinates: {
       type: [Number],
-      default: [0, 0] // Default coordinates here
+      default: [0, 0]
     }
   })
     preciseLocation: LocationCoordinates
@@ -117,6 +119,9 @@ export class Order extends AbstractDocument {
 
   @Prop(String)
     txRefId: string
+
+  @Prop({ type: String, nullable: true })
+    coupon?: string
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order)

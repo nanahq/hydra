@@ -13,7 +13,7 @@ import {
   RandomGen,
   ResponseWithStatus,
   ResponseWithStatusAndData,
-  ServicePayload,
+  ServicePayload, UpdateCouponUsage,
   UpdateOrderStatusPaidRequestDto,
   UpdateOrderStatusRequestDto
 } from '@app/common'
@@ -75,6 +75,14 @@ export class OrdersServiceService {
       amount: String(populatedOrder.totalOrderValue)
     }
     const paymentMeta = await lastValueFrom<PaystackChargeResponseData>(this.paymentClient.send(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK, chargePayload))
+
+    if (data.coupon !== undefined) {
+      const updateCouponUsage: UpdateCouponUsage = {
+        code: data.coupon,
+        user: userId.toString()
+      }
+      await lastValueFrom(this.paymentClient.emit(QUEUE_MESSAGE.UPDATE_COUPON_USAGE, updateCouponUsage))
+    }
 
     return { status: 1, data: { order: populatedOrder, paymentMeta } }
   }
