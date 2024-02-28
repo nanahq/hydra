@@ -1,5 +1,4 @@
-import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI, VendorUserI } from '../schemas'
-import { CouponI } from '../../../../../../libs/common/src'
+import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI, VendorUserI, CouponI } from '../schemas'
 
 export interface TokenPayload {
   userId: string
