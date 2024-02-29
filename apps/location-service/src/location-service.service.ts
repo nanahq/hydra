@@ -29,7 +29,10 @@ export class LocationService {
     let minDistance = Number.POSITIVE_INFINITY
 
     for (const coord of coordinates) {
-      const { duration } = await this.getTravelDistance(target, coord.coordinates)
+      const { duration } = await this.getTravelDistance(
+        target,
+        coord.coordinates
+      )
       if (duration !== undefined) {
         if (duration < minDistance) {
           minDistance = duration
@@ -73,7 +76,10 @@ export class LocationService {
   ): Promise<DeliveryFeeResult> {
     try {
       const travelDistance = await this.getTravelDistance(origin, destination)
-      const fee = calculateDeliveryPrice(travelDistance.distance ?? 0, DELIVERY_PRICE_META)
+      const fee = calculateDeliveryPrice(
+        travelDistance.distance ?? 0,
+        DELIVERY_PRICE_META
+      )
 
       return {
         ...travelDistance,

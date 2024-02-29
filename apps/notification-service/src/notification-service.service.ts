@@ -15,7 +15,8 @@ import {
   ExportPushNotificationClient,
   PushMessage,
   ListingApprovePush,
-  ListingRejectPush, VendorApprovedPush
+  ListingRejectPush,
+  VendorApprovedPush
 } from '@app/common'
 
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
@@ -150,12 +151,12 @@ export class NotificationServiceService {
         body: `${data.vendorName}, ${data.listingQuantity} of the available ${data.listingName} have been order!`
       }
       return await this.pushClient.sendSingleNotification(data.token, message)
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
-  public async sendListingApprovedPush (data: ListingApprovePush): Promise<void> {
+  public async sendListingApprovedPush (
+    data: ListingApprovePush
+  ): Promise<void> {
     try {
       const message: PushMessage = {
         priority: 'high',
@@ -163,9 +164,7 @@ export class NotificationServiceService {
         body: 'Your listing is now visible on Nana '
       }
       return await this.pushClient.sendSingleNotification(data.token, message)
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   public async sendListingRejectedPush (data: ListingRejectPush): Promise<void> {
@@ -176,9 +175,7 @@ export class NotificationServiceService {
         body: 'Go to the listing and check the rejection reason'
       }
       return await this.pushClient.sendSingleNotification(data.token, message)
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   public async sendVendorApprovedPush (data: VendorApprovedPush): Promise<void> {
@@ -189,8 +186,6 @@ export class NotificationServiceService {
         body: 'A warm welcome to Nana. Add listings to start selling'
       }
       return await this.pushClient.sendSingleNotification(data.token, message)
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 }

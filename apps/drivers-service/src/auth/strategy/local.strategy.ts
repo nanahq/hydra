@@ -13,7 +13,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   async validate (phone: string, password: string): Promise<Driver> {
     try {
-      return await this.driversService.validateDriver(internationalisePhoneNumber(phone), password)
+      return await this.driversService.validateDriver(
+        internationalisePhoneNumber(phone),
+        password
+      )
     } catch (error) {
       throw new UnauthorizedException(error)
     }

@@ -10,7 +10,11 @@ import {
   UserSchema,
   DatabaseModule,
   AddressBook,
-  AddressBookSchema, AddressBookLabel, AddressBookLabelSchema
+  AddressBookSchema,
+  AddressBookLabel,
+  AddressBookLabelSchema,
+  Coupon,
+  CouponSchema
 } from '@app/common'
 import { UsersServiceController } from './users-service.controller'
 import { UsersService } from './users-service.service'
@@ -43,6 +47,10 @@ import { HttpModule } from '@nestjs/axios'
       {
         name: AddressBookLabel.name,
         schema: AddressBookLabelSchema
+      },
+      {
+        name: Coupon.name,
+        schema: CouponSchema
       }
     ]),
     DatabaseModule,

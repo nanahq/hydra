@@ -2,7 +2,10 @@ import { INestApplication } from '@nestjs/common'
 import { StartedTestContainer } from 'testcontainers'
 import Docker from 'dockerode'
 import { ClientProxy } from '@nestjs/microservices'
-import { RabbitmqInstance, stopRabbitmqContainer } from '@app/common/test/utils/rabbitmq.instace'
+import {
+  RabbitmqInstance,
+  stopRabbitmqContainer
+} from '@app/common/test/utils/rabbitmq.instace'
 import { MongodbInstance } from '@app/common/test/utils/mongodb.instance'
 import { Test, TestingModule } from '@nestjs/testing'
 import {
@@ -11,7 +14,8 @@ import {
   RmqModule,
   RmqService,
   ServicePayload,
-  QUEUE_MESSAGE, ResponseWithStatus
+  QUEUE_MESSAGE,
+  ResponseWithStatus
 } from '@app/common'
 import { OrderRepository } from '../../order.repository'
 import { OrdersServiceModule } from '../../orders-service.module'
@@ -35,7 +39,10 @@ describe('Orders - E2E', () => {
       const moduleFixture: TestingModule = await Test.createTestingModule({
         imports: [
           OrdersServiceModule,
-          RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE, fallbackUri: rmqConnectionUri })
+          RmqModule.register({
+            name: QUEUE_SERVICE.ORDERS_SERVICE,
+            fallbackUri: rmqConnectionUri
+          })
         ]
       })
         .overrideProvider(QUEUE_SERVICE.NOTIFICATION_SERVICE)
@@ -48,7 +55,9 @@ describe('Orders - E2E', () => {
 
       app = moduleFixture.createNestApplication()
       const rmq = app.get<RmqService>(RmqService)
-      app.connectMicroservice(rmq.getOption(QUEUE_SERVICE.ORDERS_SERVICE, false, rmqConnectionUri))
+      app.connectMicroservice(
+        rmq.getOption(QUEUE_SERVICE.ORDERS_SERVICE, false, rmqConnectionUri)
+      )
       await app.startAllMicroservices()
       await app.init()
 
@@ -88,7 +97,7 @@ describe('Orders - E2E', () => {
         data: {
           user: listingId,
           deliveryAddress: 'Suite c22 ummiplaxa zoo road kano',
-          orderDeliveryScheduledTime: (new Date()).toLocaleDateString(),
+          orderDeliveryScheduledTime: new Date().toLocaleDateString(),
           isThirdParty: false,
           listing: listingId,
           options: ['zobo', 'fura'],
@@ -104,7 +113,6 @@ describe('Orders - E2E', () => {
           preciseLocation: {
             type: 'Point',
             coordinates: [0.0, 200]
-
           },
           primaryContact: '+2348107641933',
           quantity: '3',
@@ -119,12 +127,11 @@ describe('Orders - E2E', () => {
       expect(beforePlacement.length).toStrictEqual(0)
 
       const response = await lastValueFrom<ResponseWithStatus>(
-        client.send(QUEUE_MESSAGE.CREATE_ORDER, payload)
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
+        client.send(QUEUE_MESSAGE.CREATE_ORDER, payload).pipe(
+          catchError((error) => {
+            throw error
+          })
+        )
       )
       expect(response).toStrictEqual({ status: 1 })
 

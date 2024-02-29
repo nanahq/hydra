@@ -1,5 +1,6 @@
 import {
-  Ctx, EventPattern,
+  Ctx,
+  EventPattern,
   MessagePattern,
   Payload,
   RmqContext,
@@ -21,7 +22,10 @@ import {
   verifyPhoneRequest
 } from '@app/common'
 import { UsersService } from './users-service.service'
-import { PaystackInstancePayload, UpdateUserDto } from '@app/common/dto/UpdateUserDto'
+import {
+  PaystackInstancePayload,
+  UpdateUserDto
+} from '@app/common/dto/UpdateUserDto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -193,6 +197,34 @@ export class UsersServiceController {
   ): Promise<void> {
     try {
       return await this.usersService.accountRemovalRequest(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.USER_ADD_COUPON)
+  async addCouponToUserAccount (
+    @Payload() data: ServicePayload<{ couponId: string }>,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.usersService.addUserCoupon(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.USER_REMOVE_COUPON)
+  async removeCouponUserAccount (
+    @Payload() data: ServicePayload<{ couponCode: string }>,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.usersService.removeUserCoupon(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

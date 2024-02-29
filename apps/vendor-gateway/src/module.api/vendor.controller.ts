@@ -2,12 +2,14 @@ import {
   Body,
   Controller,
   Get,
-  HttpException, HttpStatus,
+  HttpException,
+  HttpStatus,
   Inject,
   Logger,
   Param,
   Post,
-  Put, Res,
+  Put,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors
@@ -25,7 +27,9 @@ import {
   ServicePayload,
   Vendor,
   UpdateVendorSettingsDto,
-  CreateVendorDto, UpdateSubscriptionByVendorDto, ScheduledListingNotification
+  CreateVendorDto,
+  UpdateSubscriptionByVendorDto,
+  ScheduledListingNotification
 } from '@app/common'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -91,10 +95,11 @@ export class VendorController {
       data: photo
     }
     await lastValueFrom(
-      this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_LOGO, payload)
-        .pipe(catchError((error) => {
+      this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_LOGO, payload).pipe(
+        catchError((error) => {
           throw new HttpException(error.message, error.status)
-        }))
+        })
+      )
     )
     return photo
   }
@@ -211,11 +216,13 @@ export class VendorController {
       @Res() response: Response
   ): Promise<void> {
     await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.VENDOR_UPDATE_NOTIFICATION_SETTINGS, data).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.notificationClient
+        .emit(QUEUE_MESSAGE.VENDOR_UPDATE_NOTIFICATION_SETTINGS, data)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
 
     response.status(HttpStatus.OK).end()
@@ -231,11 +238,13 @@ export class VendorController {
       data: null
     }
     return await lastValueFrom(
-      this.notificationClient.send(QUEUE_MESSAGE.GET_VENDOR_SUBSCRIPTION, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.notificationClient
+        .send(QUEUE_MESSAGE.GET_VENDOR_SUBSCRIPTION, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 }

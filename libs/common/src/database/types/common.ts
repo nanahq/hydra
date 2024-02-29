@@ -1,4 +1,10 @@
-import { OrderType, VendorOperationType, OrderStatus, DriverI, CouponType } from '@app/common'
+import {
+  OrderType,
+  VendorOperationType,
+  OrderStatus,
+  DriverI,
+  CouponType
+} from '@app/common'
 
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 
@@ -168,10 +174,12 @@ export interface OrderI {
   orderType: OrderType
   orderDeliveryScheduledTime: string
   preciseLocation: LocationCoordinates
-  quantity: [{
-    listing: string
-    quantity: number
-  }]
+  quantity: [
+    {
+      listing: string
+      quantity: number
+    },
+  ]
   specialNote?: string
   txRefId?: string
 
@@ -221,7 +229,7 @@ export enum WalletTransactionStatus {
   PENDING = 'PENDING',
   PROCESSED = 'PROCESSED',
 
-  REJECTED = 'REJECTED'
+  REJECTED = 'REJECTED',
 }
 export interface DriverWalletTransactionI {
   driver: DriverI

@@ -74,7 +74,7 @@ export interface PaystackChargeResponseData {
 }
 
 export enum PaystackEvents {
-  PAYMENT_SUCCESS = 'charge.success'
+  PAYMENT_SUCCESS = 'charge.success',
 }
 
 interface TransactionData {
@@ -222,7 +222,7 @@ export interface BaseChargeRequest {
 
 export enum PAYSTACK_URLS {
   INITIATE_CHARGE = 'transaction/initialize',
-  VERIFY_TRANSACTION = 'transaction/verify'
+  VERIFY_TRANSACTION = 'transaction/verify',
 }
 
 export interface BankTransferAccountDetails {

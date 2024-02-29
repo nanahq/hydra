@@ -1,15 +1,27 @@
 import { Controller, UseFilters } from '@nestjs/common'
 import {
-  Coupon, CouponRedeemResponse,
+  Coupon,
+  CouponRedeemResponse,
   CreateCouponDto,
-  ExceptionFilterRpc, GetCoupon,
+  ExceptionFilterRpc,
+  GetCoupon,
   QUEUE_MESSAGE,
   ResponseWithStatus,
   ResponseWithStatusAndData,
-  RmqService, ServicePayload, UpdateCoupon, UpdateCouponUsage
+  RmqService,
+  ServicePayload,
+  UpdateCoupon,
+  UpdateCouponUsage
 } from '@app/common'
 import { CouponService } from './coupon.service'
-import { Ctx, EventPattern, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  EventPattern,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller('coupon')
@@ -62,9 +74,7 @@ export class CouponController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_COUPONS)
-  async getAllCoupons (
-    @Ctx() context: RmqContext
-  ): Promise<Coupon[]> {
+  async getAllCoupons (@Ctx() context: RmqContext): Promise<Coupon[]> {
     try {
       return await this.couponService.getAllCoupons()
     } catch (e) {

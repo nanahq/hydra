@@ -1,4 +1,8 @@
-import { ResponseWithStatus, Payment, BankTransferAccountDetails } from '@app/common'
+import {
+  ResponseWithStatus,
+  Payment,
+  BankTransferAccountDetails
+} from '@app/common'
 import { type Types } from 'mongoose'
 
 export function PaymentStub (): Payment {

@@ -1,9 +1,12 @@
 import {
   Body,
-  Controller, Get,
+  Controller,
+  Get,
   HttpException,
   HttpStatus,
-  Inject, Ip, Param,
+  Inject,
+  Ip,
+  Param,
   Post,
   Res,
   UseGuards
@@ -112,9 +115,7 @@ export class PaymentController {
 
   @Get('payments')
   @UseGuards(JwtAuthGuard)
-  async getAllPaymentInfo (
-    @CurrentUser() user: User
-  ): Promise<Payment[]> {
+  async getAllPaymentInfo (@CurrentUser() user: User): Promise<Payment[]> {
     return await lastValueFrom<Payment[]>(
       this.paymentClient
         .send(QUEUE_MESSAGE.GET_ALL_PAYMENT_USER, {
@@ -129,7 +130,10 @@ export class PaymentController {
   }
 
   @Post('flw-webhook')
-  async flutterwavePaymentWebhook (@Body() body: any, @Res() res: Response): Promise<any> {
+  async flutterwavePaymentWebhook (
+    @Body() body: any,
+      @Res() res: Response
+  ): Promise<any> {
     if (body?.data?.status === 'successful') {
       await lastValueFrom<any>(
         this.paymentClient.emit(QUEUE_MESSAGE.VERIFY_PAYMENT, {
@@ -142,7 +146,11 @@ export class PaymentController {
   }
 
   @Post('paystack-webhook')
-  async paystackPaymentWebhook (@Body() body: ChargeSuccessEvent, @Res() res: Response, @Ip() ip: string): Promise<any> {
+  async paystackPaymentWebhook (
+    @Body() body: ChargeSuccessEvent,
+      @Res() res: Response,
+      @Ip() ip: string
+  ): Promise<any> {
     //     @Todo(siradji) improve ip whitelisting for paystack
     // if (!PaystackWebhookIps.includes(ip)) {
     //   return res.status(HttpStatus.UNAUTHORIZED).end()
@@ -150,7 +158,9 @@ export class PaymentController {
     switch (body.event) {
       case PaystackEvents.PAYMENT_SUCCESS:
         await lastValueFrom(
-          this.paymentClient.emit(QUEUE_MESSAGE.VERIFY_PAYMENT_PAYSTACK, { reference: body.data.reference })
+          this.paymentClient.emit(QUEUE_MESSAGE.VERIFY_PAYMENT_PAYSTACK, {
+            reference: body.data.reference
+          })
         )
     }
     return res.status(HttpStatus.OK).end()

@@ -1,15 +1,23 @@
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 import { Controller, UseFilters } from '@nestjs/common'
 
 import {
   CreateVendorDto,
-  ExceptionFilterRpc, LocationCoordinates,
+  ExceptionFilterRpc,
+  LocationCoordinates,
   LoginVendorRequest,
   QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
   ServicePayload,
-  UpdateVendorStatus, VendorServiceHomePageResult,
+  UpdateVendorStatus,
+  VendorServiceHomePageResult,
   VendorUserI
 } from '@app/common'
 import { VendorsService } from './vendors.service'
@@ -129,7 +137,10 @@ export class VendorsController {
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.vendorsService.disapprove(data.userId, data.data.reason)
+      return await this.vendorsService.disapprove(
+        data.userId,
+        data.data.reason
+      )
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -250,7 +261,10 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_NEAREST_VENDORS)
   async getNearestVendors (
-    @Payload() { data: { userLocation } }: ServicePayload<{ userLocation: LocationCoordinates }>,
+    @Payload()
+      {
+        data: { userLocation }
+      }: ServicePayload<{ userLocation: LocationCoordinates }>,
       @Ctx() context: RmqContext
   ): Promise<Vendor[]> {
     try {

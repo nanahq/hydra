@@ -23,7 +23,8 @@ import {
   CreateOptionGroupDto,
   CurrentUser,
   IRpcException,
-  ListingMenu, MultiPurposeServicePayload,
+  ListingMenu,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
@@ -31,7 +32,8 @@ import {
   UpdateListingCategoryDto,
   UpdateOptionGroupDto,
   Vendor,
-  CreateScheduledListingDto, ScheduledListingDto
+  CreateScheduledListingDto,
+  ScheduledListingDto
 } from '@app/common'
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
@@ -47,8 +49,7 @@ export class ListingsController {
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy,
     private readonly awsService: AwsService
-  ) {
-  }
+  ) {}
 
   @Get('menus')
   @UseGuards(JwtAuthGuard)

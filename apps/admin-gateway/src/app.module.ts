@@ -75,9 +75,15 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE, fallback: 'REVIEW' }),
+        RmqModule.register({
+          name: QUEUE_SERVICE.REVIEW_SERVICE,
+          fallback: 'REVIEW'
+        }),
         RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE, fallback: 'RMQ_DRIVER_QUEUE' }),
+        RmqModule.register({
+          name: QUEUE_SERVICE.DRIVER_SERVICE,
+          fallback: 'RMQ_DRIVER_QUEUE'
+        }),
         AppModule
       ],
       controllers: [

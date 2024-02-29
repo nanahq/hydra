@@ -4,9 +4,11 @@ import {
   Delete,
   Get,
   HttpException,
-  Inject, Param,
+  Inject,
+  Param,
   Post,
-  Put, Res,
+  Put,
+  Res,
   UseGuards
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
@@ -14,7 +16,8 @@ import { catchError, lastValueFrom } from 'rxjs'
 
 import {
   CheckUserAccountI,
-  CurrentUser, internationalisePhoneNumber,
+  CurrentUser,
+  internationalisePhoneNumber,
   IRpcException,
   PhoneVerificationPayload,
   QUEUE_MESSAGE,
@@ -37,13 +40,10 @@ export class UsersController {
     private readonly notificationClient: ClientProxy,
 
     private readonly authService: AuthService
-
   ) {}
 
   @Post('register')
-  async registerNewUser (
-    @Body() request: registerUserRequest
-  ): Promise<User> {
+  async registerNewUser (@Body() request: registerUserRequest): Promise<User> {
     return await lastValueFrom<User>(
       this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
         catchError((error: IRpcException) => {
@@ -81,10 +81,11 @@ export class UsersController {
     @Param('phone') phone: string
   ): Promise<CheckUserAccountI> {
     return await lastValueFrom<CheckUserAccountI>(
-      this.usersClient.send(QUEUE_MESSAGE.CHECK_PHONE_NUMBER, { phone })
-        .pipe(catchError((error) => {
+      this.usersClient.send(QUEUE_MESSAGE.CHECK_PHONE_NUMBER, { phone }).pipe(
+        catchError((error) => {
           throw new HttpException(error.message, error.status)
-        }))
+        })
+      )
     )
   }
 
@@ -131,19 +132,27 @@ export class UsersController {
   }
 
   @Get('resend-validation/:phone')
-  async resendPhoneVerification (@Param('phone') phone: string): Promise<{ status: number }> {
+  async resendPhoneVerification (
+    @Param('phone') phone: string
+  ): Promise<{ status: number }> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.usersClient.send(QUEUE_MESSAGE.RESEND_PHONE_VERIFICATION, { phone }).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.usersClient
+        .send(QUEUE_MESSAGE.RESEND_PHONE_VERIFICATION, { phone })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
   @Get('delete-request/:phone')
   async deleteAccountRequest (@Param('phone') phone: string): Promise<void> {
     const formattedPhone = internationalisePhoneNumber(phone)
-    return await lastValueFrom<any>(this.usersClient.emit(QUEUE_MESSAGE.ACCOUNT_DELETE_REQUEST, { phone: formattedPhone }))
+    return await lastValueFrom<any>(
+      this.usersClient.emit(QUEUE_MESSAGE.ACCOUNT_DELETE_REQUEST, {
+        phone: formattedPhone
+      })
+    )
   }
 }

@@ -11,7 +11,10 @@ import {
 import {
   CurrentUser,
   IRpcException,
-  Order, OrderI, PaystackChargeResponseData, PlaceOrderDto,
+  Order,
+  OrderI,
+  PaystackChargeResponseData,
+  PlaceOrderDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatusAndData,
@@ -34,12 +37,22 @@ export class OrderController {
   async createNewOrder (
     @Body() data: PlaceOrderDto,
       @CurrentUser() user: User
-  ): Promise<ResponseWithStatusAndData<{ order: OrderI, paymentMeta: PaystackChargeResponseData }>> {
+  ): Promise<
+      ResponseWithStatusAndData<{
+        order: OrderI
+        paymentMeta: PaystackChargeResponseData
+      }>
+      > {
     const payload: ServicePayload<any> = {
       userId: user._id as any,
       data
     }
-    return await lastValueFrom<ResponseWithStatusAndData<{ order: OrderI, paymentMeta: PaystackChargeResponseData }>>(
+    return await lastValueFrom<
+    ResponseWithStatusAndData<{
+      order: OrderI
+      paymentMeta: PaystackChargeResponseData
+    }>
+    >(
       this.orderClient.send(QUEUE_MESSAGE.CREATE_ORDER, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)

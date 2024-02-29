@@ -1,8 +1,6 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
-import {
-  AbstractDocument
-} from '@app/common'
+import { AbstractDocument } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
 export class DriverWallet extends AbstractDocument {

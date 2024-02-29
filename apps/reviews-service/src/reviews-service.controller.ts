@@ -16,7 +16,10 @@ import {
   ReviewToken,
   RmqService,
   VendorReviewOverview,
-  ReviewDto, ListingMenu, ReviewServiceGetMostReviewed, Vendor
+  ReviewDto,
+  ListingMenu,
+  ReviewServiceGetMostReviewed,
+  Vendor
 } from '@app/common'
 
 @UseFilters(new ExceptionFilterRpc())
@@ -137,9 +140,7 @@ export class ReviewsServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.REVIEW_GET_TOP_REVIEWED_VENDORS)
-  async getMostReviewedVendors (
-    @Ctx() context: RmqContext
-  ): Promise<Vendor[]> {
+  async getMostReviewedVendors (@Ctx() context: RmqContext): Promise<Vendor[]> {
     try {
       return this.reviewService.getTopVendors()
     } catch (error) {

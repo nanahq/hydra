@@ -15,7 +15,10 @@ export class ExportPushNotificationClient {
     this.expoClient = new Expo({ accessToken: '' })
   }
 
-  public async sendSingleNotification (token: string, message: PushMessage): Promise<void> {
+  public async sendSingleNotification (
+    token: string,
+    message: PushMessage
+  ): Promise<void> {
     try {
       await this.checkTokenValidity(token)
 
@@ -33,12 +36,17 @@ export class ExportPushNotificationClient {
     }
   }
 
-  public async sendMultipleNotifications (tokens: string[], message: Omit<ExpoPushMessage, 'to'>): Promise<void> {
+  public async sendMultipleNotifications (
+    tokens: string[],
+    message: Omit<ExpoPushMessage, 'to'>
+  ): Promise<void> {
     try {
       const messages: ExpoPushMessage[] = []
       for (const pushToken of tokens) {
         if (!Expo.isExpoPushToken(pushToken)) {
-          console.error(`Push token ${pushToken as string} is not a valid Expo push token`)
+          console.error(
+            `Push token ${pushToken as string} is not a valid Expo push token`
+          )
           continue
         }
         messages.push({
@@ -65,9 +73,13 @@ export class ExportPushNotificationClient {
     return new Promise((resolve) => {
       if (!Expo.isExpoPushToken(pushToken)) {
         this.logger.error({
-          message: `Push token ${pushToken as string} is not a valid Expo push token`
+          message: `Push token ${
+            pushToken as string
+          } is not a valid Expo push token`
         })
-        throw new Error(`Push token ${pushToken as string} is not a valid Expo push token`)
+        throw new Error(
+          `Push token ${pushToken as string} is not a valid Expo push token`
+        )
       } else {
         resolve()
       }

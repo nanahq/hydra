@@ -1,10 +1,21 @@
-import { HttpException, HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import {
-  Driver, DriverWalletI,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  Logger
+} from '@nestjs/common'
+import {
+  Driver,
+  DriverWalletI,
   FitRpcException,
-  internationalisePhoneNumber, IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE,
+  internationalisePhoneNumber,
+  IRpcException,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
   RegisterDriverDto,
-  ResponseWithStatus, VendorApprovalStatus
+  ResponseWithStatus,
+  VendorApprovalStatus
 } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
@@ -51,7 +62,9 @@ export class DriversServiceService {
       this.logger.log(`Driver ${payload.email} registered`)
 
       await lastValueFrom(
-        this.paymentClient.emit(QUEUE_MESSAGE.DRIVER_WALLET_CREATE_WALLET, { driverId: driver._id.toString() })
+        this.paymentClient.emit(QUEUE_MESSAGE.DRIVER_WALLET_CREATE_WALLET, {
+          driverId: driver._id.toString()
+        })
       )
       return { status: 1 }
     } catch (error) {
@@ -66,9 +79,15 @@ export class DriversServiceService {
     }
   }
 
-  public async updateDriver (payload: Partial<Driver>, driverId: string): Promise<ResponseWithStatus> {
+  public async updateDriver (
+    payload: Partial<Driver>,
+    driverId: string
+  ): Promise<ResponseWithStatus> {
     try {
-      await this.driverRepository.findOneAndUpdate({ _id: driverId.toString() }, { ...payload })
+      await this.driverRepository.findOneAndUpdate(
+        { _id: driverId.toString() },
+        { ...payload }
+      )
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
@@ -118,9 +137,9 @@ export class DriversServiceService {
     phone: string,
     password: string
   ): Promise<Driver> {
-    const driver = (await this.driverRepository.findOne({
+    const driver = await this.driverRepository.findOne({
       phone
-    }))
+    })
 
     if (driver === null) {
       this.logger.error({
@@ -149,7 +168,10 @@ export class DriversServiceService {
     try {
       return await this.driverRepository.find({})
     } catch (error) {
-      throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong fetching driver',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -157,52 +179,83 @@ export class DriversServiceService {
     try {
       return await this.driverRepository.find({ available: true })
     } catch (error) {
-      throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong fetching driver',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   public async approveDriver (_id: string): Promise<ResponseWithStatus> {
     try {
-      await this.driverRepository.findOneAndUpdate({ _id }, { acc_status: VendorApprovalStatus.APPROVED })
+      await this.driverRepository.findOneAndUpdate(
+        { _id },
+        { acc_status: VendorApprovalStatus.APPROVED }
+      )
       return { status: 1 }
     } catch (error) {
-      throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong fetching driver',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   public async rejectDriver (_id: string): Promise<ResponseWithStatus> {
     try {
-      await this.driverRepository.findOneAndUpdate({ _id }, { acc_status: VendorApprovalStatus.DISAPPROVED })
+      await this.driverRepository.findOneAndUpdate(
+        { _id },
+        { acc_status: VendorApprovalStatus.DISAPPROVED }
+      )
       return { status: 1 }
     } catch (error) {
-      throw new FitRpcException('Something went wrong fetching driver', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong fetching driver',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  public async withdrawal (payload: createTransaction): Promise<ResponseWithStatus> {
+  public async withdrawal (
+    payload: createTransaction
+  ): Promise<ResponseWithStatus> {
     return lastValueFrom(
-      this.paymentClient.send<ResponseWithStatus>(QUEUE_MESSAGE.DRIVER_WALLET_CREATE_TRANSACTION, payload)
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.paymentClient
+        .send<ResponseWithStatus>(
+        QUEUE_MESSAGE.DRIVER_WALLET_CREATE_TRANSACTION,
+        payload
+      )
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
   public async fetchWallet (driverId: string): Promise<DriverWalletI> {
     return lastValueFrom(
-      this.paymentClient.send<DriverWalletI>(QUEUE_MESSAGE.DRIVER_WALLET_FETCH, { driverId })
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.paymentClient
+        .send<DriverWalletI>(QUEUE_MESSAGE.DRIVER_WALLET_FETCH, { driverId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
   public async fetchTransactions (driverId: string): Promise<DriverWalletI[]> {
     return lastValueFrom(
-      this.paymentClient.send<DriverWalletI[]>(QUEUE_MESSAGE.DRIVER_WALLET_FETCH_TRANSACTIONS, { driverId })
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.paymentClient
+        .send<DriverWalletI[]>(QUEUE_MESSAGE.DRIVER_WALLET_FETCH_TRANSACTIONS, {
+        driverId
+      })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -218,24 +271,36 @@ export class DriversServiceService {
       const date = new Date()
       const pastTwoMinutes = new Date(date.getTime() - 2 * 60 * 1000)
 
-      const driversThatWentOffline: Driver[] = await this.driverRepository.find({
-        updatedAt: {
-          $lt: pastTwoMinutes.toISOString()
-        },
-        status: 'ONLINE',
-        // isValidated: true,
-        available: true
-      })
+      const driversThatWentOffline: Driver[] = await this.driverRepository.find(
+        {
+          updatedAt: {
+            $lt: pastTwoMinutes.toISOString()
+          },
+          status: 'ONLINE',
+          // isValidated: true,
+          available: true
+        }
+      )
 
       if (driversThatWentOffline?.length < 1) {
         return
       }
 
-      const driverIds = driversThatWentOffline.map(driver => driver._id.toString())
+      const driverIds = driversThatWentOffline.map((driver) =>
+        driver._id.toString()
+      )
 
-      await this.driverRepository.findAndUpdate({ _id: { $in: driverIds } }, { status: 'OFFLINE' })
+      await this.driverRepository.findAndUpdate(
+        { _id: { $in: driverIds } },
+        { status: 'OFFLINE' }
+      )
     } catch (error) {
-      this.logger.error(JSON.stringify({ message: 'Something went wrong flagging drivers offline', error }))
+      this.logger.error(
+        JSON.stringify({
+          message: 'Something went wrong flagging drivers offline',
+          error
+        })
+      )
     }
   }
 }

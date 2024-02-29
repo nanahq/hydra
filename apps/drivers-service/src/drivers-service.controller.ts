@@ -2,8 +2,10 @@ import {
   Body,
   Controller,
   Get,
-  HttpException, Param,
-  Post, Put,
+  HttpException,
+  Param,
+  Post,
+  Put,
   UseGuards
 } from '@nestjs/common'
 import { DriversServiceService } from './drivers-service.service'
@@ -12,11 +14,23 @@ import {
   Delivery,
   Driver,
   ResponseWithStatus,
-  RegisterDriverDto, QUEUE_MESSAGE, RmqService, UpdateDeliveryStatusDto, DeliveryI, DriverStatGroup, DriverWalletI
+  RegisterDriverDto,
+  QUEUE_MESSAGE,
+  RmqService,
+  UpdateDeliveryStatusDto,
+  DeliveryI,
+  DriverStatGroup,
+  DriverWalletI
 } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { ODSA } from './ODSA/odsa.service'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 import { createTransaction } from '@app/common/dto/General.dto'
 
 @Controller('driver')
@@ -46,9 +60,15 @@ export class DriversServiceController {
 
   @Put('update')
   @UseGuards(JwtAuthGuard)
-  async updateProfile (@CurrentUser() driver: Driver, @Body() payload: Partial<Driver>): Promise<ResponseWithStatus> {
+  async updateProfile (
+    @CurrentUser() driver: Driver,
+      @Body() payload: Partial<Driver>
+  ): Promise<ResponseWithStatus> {
     try {
-      return await this.driversServiceService.updateDriver(payload, driver._id.toString())
+      return await this.driversServiceService.updateDriver(
+        payload,
+        driver._id.toString()
+      )
     } catch (error) {
       throw new HttpException(error, 500)
     }
@@ -76,9 +96,7 @@ export class DriversServiceController {
     @CurrentUser() driver: Driver
   ): Promise<Delivery[] | undefined> {
     try {
-      return await this.odsaService.queryPendingDeliveries(
-        driver._id as any
-      )
+      return await this.odsaService.queryPendingDeliveries(driver._id as any)
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
@@ -176,7 +194,9 @@ export class DriversServiceController {
     @CurrentUser() driver: Driver
   ): Promise<DriverWalletI> {
     try {
-      return await this.driversServiceService.fetchWallet(driver._id.toString())
+      return await this.driversServiceService.fetchWallet(
+        driver._id.toString()
+      )
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
@@ -201,16 +221,16 @@ export class DriversServiceController {
     @CurrentUser() driver: Driver
   ): Promise<DriverWalletI[]> {
     try {
-      return await this.driversServiceService.fetchTransactions(driver._id.toString())
+      return await this.driversServiceService.fetchTransactions(
+        driver._id.toString()
+      )
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
   }
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DRIVERS)
-  async getDrivers (
-    @Ctx() context: RmqContext
-  ): Promise<Driver[]> {
+  async getDrivers (@Ctx() context: RmqContext): Promise<Driver[]> {
     try {
       return this.driversServiceService.getAllDrivers()
     } catch (error) {
@@ -263,9 +283,7 @@ export class DriversServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_FREE_DRIVERS)
-  async freeDrivers (
-    @Ctx() context: RmqContext
-  ): Promise<Driver[]> {
+  async freeDrivers (@Ctx() context: RmqContext): Promise<Driver[]> {
     try {
       return this.driversServiceService.getAllFreeDrivers()
     } catch (error) {

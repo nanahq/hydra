@@ -1,15 +1,18 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 
-import { Admin, FitRpcException, RegisterAdminDTO, ResponseWithStatus, UpdateAdminLevelRequestDto } from '@app/common'
+import {
+  Admin,
+  FitRpcException,
+  RegisterAdminDTO,
+  ResponseWithStatus,
+  UpdateAdminLevelRequestDto
+} from '@app/common'
 import { AdminRepository } from './admin.repository'
 
 @Injectable()
 export class AdminServiceService {
-  constructor (
-    public readonly adminRepository: AdminRepository
-  ) {
-  }
+  constructor (public readonly adminRepository: AdminRepository) {}
 
   public async createAdmin (
     data: RegisterAdminDTO
@@ -23,7 +26,10 @@ export class AdminServiceService {
       await this.adminRepository.create(payload)
       return { status: 1 }
     } catch (error) {
-      throw new FitRpcException('Something went wrong.', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -75,7 +81,11 @@ export class AdminServiceService {
   public async changeAdminAccess (
     data: UpdateAdminLevelRequestDto
   ): Promise<ResponseWithStatus> {
-    const changeAdminAccessRequest = await this.adminRepository.findOneAndUpdate({ _id: data.id }, { level: data.level })
+    const changeAdminAccessRequest =
+      await this.adminRepository.findOneAndUpdate(
+        { _id: data.id },
+        { level: data.level }
+      )
 
     if (changeAdminAccessRequest === null) {
       throw new FitRpcException(

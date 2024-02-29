@@ -1,7 +1,8 @@
 import { Controller, UseFilters } from '@nestjs/common'
 import {
   Ctx,
-  EventPattern, MessagePattern,
+  EventPattern,
+  MessagePattern,
   Payload,
   RmqContext,
   RpcException
@@ -13,7 +14,10 @@ import {
   SubscribeDto,
   ExceptionFilterRpc,
   UpdateSubscriptionByVendorDto,
-  ScheduledPushPayload, ServicePayload, ScheduledListingNotification, SendApprovalPushNotification
+  ScheduledPushPayload,
+  ServicePayload,
+  ScheduledListingNotification,
+  SendApprovalPushNotification
 } from '@app/common'
 import { SubscriptionService } from './subscription.service'
 
@@ -101,7 +105,9 @@ export class SubscriptionController {
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {
-      return await this.subscriptionService.sendPushMessageToSubscribers(payload)
+      return await this.subscriptionService.sendPushMessageToSubscribers(
+        payload
+      )
     } catch (error) {
       throw new RpcException(error)
     } finally {

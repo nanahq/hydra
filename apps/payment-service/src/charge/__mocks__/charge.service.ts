@@ -5,6 +5,5 @@ const mockValue: PaymentServiceI = {
   chargeWithBankTransfer: jest.fn().mockResolvedValue(BankTransferChargeStub()),
   chargeWithUssd: jest.fn().mockResolvedValue(null),
   verifyPayment: jest.fn().mockResolvedValue(null)
-
 }
 export const PaymentService = jest.fn().mockReturnValue(mockValue)

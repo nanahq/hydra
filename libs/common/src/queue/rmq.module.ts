@@ -8,7 +8,11 @@ import { RmqService } from './rmq.service'
   exports: [RmqService]
 })
 export class RmqModule {
-  static register ({ name, fallback, fallbackUri }: RmqModuleOptions): DynamicModule {
+  static register ({
+    name,
+    fallback,
+    fallbackUri
+  }: RmqModuleOptions): DynamicModule {
     return {
       module: RmqModule,
       imports: [
@@ -19,8 +23,15 @@ export class RmqModule {
               return {
                 transport: Transport.RMQ,
                 options: {
-                  urls: [fallbackUri !== undefined ? fallbackUri : configService.get<string>('RMQ_URI') as string],
-                  queue: configService.get<string>(`RMQ_${name}_QUEUE`) as string ?? fallback
+                  urls: [
+                    fallbackUri !== undefined
+                      ? fallbackUri
+                      : (configService.get<string>('RMQ_URI') as string)
+                  ],
+                  queue:
+                    (configService.get<string>(
+                      `RMQ_${name}_QUEUE`
+                    ) as string) ?? fallback
                 }
               }
             },

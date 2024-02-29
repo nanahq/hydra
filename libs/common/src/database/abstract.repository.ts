@@ -6,7 +6,8 @@ import {
   type SaveOptions,
   type Connection,
   type HydratedDocument,
-  type ClientSession, PopulateOptions
+  type ClientSession,
+  PopulateOptions
 } from 'mongoose'
 import { type AbstractDocument } from './abstract.schema'
 
@@ -26,16 +27,14 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
       ...document,
       _id: new Types.ObjectId()
     })
-    return (
-      await createdDocument.save(options as SaveOptions)
-    )
+    return await createdDocument.save(options as SaveOptions)
   }
 
-  async findOneAndPopulate<T> (
+  async findOneAndPopulate<T>(
     filterQuery: FilterQuery<TDocument>,
     populatePaths: string[]
   ): Promise<T> {
-    const paths = populatePaths.map<PopulateOptions>(path => ({
+    const paths = populatePaths.map<PopulateOptions>((path) => ({
       path,
       options: {
         sort: {
@@ -43,21 +42,20 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
         }
       }
     }))
-    return await this.model
+    return (await this.model
       .findOne(filterQuery, {}, { lean: true })
-      .populate(paths) as any
+      .populate(paths)) as any
   }
 
   async findOne (filterQuery: FilterQuery<TDocument>): Promise<TDocument | any> {
-    return await this.model
-      .findOne(filterQuery, {}, { lean: true })
+    return await this.model.findOne(filterQuery, {}, { lean: true })
   }
 
   async findAndPopulate<T>(
     filterQuery: FilterQuery<TDocument>,
     populatePaths: string[]
   ): Promise<T[]> {
-    const paths = populatePaths.map<PopulateOptions>(path => ({
+    const paths = populatePaths.map<PopulateOptions>((path) => ({
       path,
       options: {
         sort: {
@@ -65,10 +63,10 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
         }
       }
     }))
-    return await this.model
+    return (await this.model
       .find(filterQuery)
       .sort({ createdAt: 'desc' })
-      .populate(paths) as any
+      .populate(paths)) as any
   }
 
   findRaw (): Model<TDocument> {
@@ -110,9 +108,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     filterQuery?: FilterQuery<TDocument>
   ): Promise<HydratedDocument<TDocument> | any> {
     return await new Promise((resolve) =>
-      resolve(
-        this.model.deleteMany(filterQuery)
-      )
+      resolve(this.model.deleteMany(filterQuery))
     )
   }
 
@@ -147,7 +143,9 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     update: Partial<TDocument>
   ): Promise<any> {
     return await new Promise((resolve) => {
-      resolve(this.model.updateMany(filterQuery, update).sort({ createdAt: 'desc' }))
+      resolve(
+        this.model.updateMany(filterQuery, update).sort({ createdAt: 'desc' })
+      )
     })
   }
 

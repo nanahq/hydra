@@ -1,7 +1,9 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import {
-  AbstractDocument, WalletTransactionStatus, WalletTransactionType
+  AbstractDocument,
+  WalletTransactionStatus,
+  WalletTransactionType
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -34,4 +36,6 @@ export class DriverWalletTransaction extends AbstractDocument {
     updatedAt: string
 }
 
-export const DriverWalletTransactionSchema = SchemaFactory.createForClass(DriverWalletTransaction)
+export const DriverWalletTransactionSchema = SchemaFactory.createForClass(
+  DriverWalletTransaction
+)

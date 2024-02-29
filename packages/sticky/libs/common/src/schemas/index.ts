@@ -122,6 +122,7 @@ export interface UserI {
   paystack_titan?: string
 
   expoNotificationToken?: string
+  coupons?: CouponI[]
 }
 
 export interface ReviewI {

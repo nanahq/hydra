@@ -14,9 +14,15 @@ import {
   VendorServiceHomePageResult,
   VendorUserI
 } from '@app/common'
-import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
+import {
+  CreateVendorDto,
+  UpdateVendorSettingsDto
+} from '@app/common/database/dto/vendor.dto'
 
-import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
+import {
+  VendorRepository,
+  VendorSettingsRepository
+} from './vendors.repository'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
@@ -33,8 +39,7 @@ export class VendorsService {
 
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     data.phone = internationalisePhoneNumber(data.phone)
@@ -151,7 +156,10 @@ export class VendorsService {
       token: updateRequest.expoNotificationToken
     }
     await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.CREATE_VENDOR_NOTIFICATION, notificationSubCreatePayload)
+      this.notificationClient.emit(
+        QUEUE_MESSAGE.CREATE_VENDOR_NOTIFICATION,
+        notificationSubCreatePayload
+      )
     )
     return { status: 1 }
   }
@@ -241,7 +249,10 @@ export class VendorsService {
   }
 
   async getAllVendorsUser (): Promise<VendorUserI[]> {
-    const _vendors: any = await this.vendorRepository.findAndPopulate({ isDeleted: false, acc_status: VendorApprovalStatus.APPROVED }, ['settings'])
+    const _vendors: any = await this.vendorRepository.findAndPopulate(
+      { isDeleted: false, acc_status: VendorApprovalStatus.APPROVED },
+      ['settings']
+    )
     if (_vendors === null) {
       throw new FitRpcException(
         'Something went wrong fetching all vendors.',
@@ -347,18 +358,21 @@ export class VendorsService {
   }: LocationCoordinates): Promise<any[]> {
     this.logger.log('PIM -> fetching nearest vendors')
     try {
-      const vendors: any = this.vendorRepository.findAndPopulate({
-        location: {
-          $near: {
-            $geometry: {
-              type,
-              coordinates
-            },
-            $minDistance: 200,
-            $maxDistance: 4000
+      const vendors: any = this.vendorRepository.findAndPopulate(
+        {
+          location: {
+            $near: {
+              $geometry: {
+                type,
+                coordinates
+              },
+              $minDistance: 200,
+              $maxDistance: 4000
+            }
           }
-        }
-      }, ['settings'])
+        },
+        ['settings']
+      )
       return vendors
     } catch (error) {
       this.logger.log({
@@ -372,18 +386,26 @@ export class VendorsService {
     }
   }
 
-  async getVendorsForHomepage (userLocation: LocationCoordinates): Promise<VendorServiceHomePageResult> {
+  async getVendorsForHomepage (
+    userLocation: LocationCoordinates
+  ): Promise<VendorServiceHomePageResult> {
     try {
       console.log(userLocation)
       // const nearest = await this.getNearestVendors(userLocation)
-      const allVendors: any = await this.vendorRepository.findAndPopulate({ acc_status: VendorApprovalStatus.APPROVED }, ['settings'])
+      const allVendors: any = await this.vendorRepository.findAndPopulate(
+        { acc_status: VendorApprovalStatus.APPROVED },
+        ['settings']
+      )
       return {
         nearest: [],
         allVendors
       }
     } catch (error) {
       this.logger.log(error)
-      throw new FitRpcException('Something went wrong fetching vendors for homepage', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong fetching vendors for homepage',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 }

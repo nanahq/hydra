@@ -1,4 +1,9 @@
-import { ListingCategory, ListingMenu, ListingOptionGroup, ResponseWithStatus } from '@app/common'
+import {
+  ListingCategory,
+  ListingMenu,
+  ListingOptionGroup,
+  ResponseWithStatus
+} from '@app/common'
 import { type Types } from 'mongoose'
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 

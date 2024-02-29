@@ -1,4 +1,3 @@
-
 import * as Docker from 'dockerode'
 
 export async function waitForContainer (timeout: number): Promise<boolean> {
@@ -6,7 +5,9 @@ export async function waitForContainer (timeout: number): Promise<boolean> {
     setTimeout(() => resolve(true), timeout)
   })
 }
-export async function RabbitmqInstance (port: number): Promise<Docker.Container> {
+export async function RabbitmqInstance (
+  port: number
+): Promise<Docker.Container> {
   let rabbitmqContainer: Docker.Container
   try {
     const docker = new Docker()
@@ -29,7 +30,9 @@ export async function RabbitmqInstance (port: number): Promise<Docker.Container>
   }
 }
 
-export async function stopRabbitmqContainer (container: Docker.Container): Promise<void> {
+export async function stopRabbitmqContainer (
+  container: Docker.Container
+): Promise<void> {
   try {
     if (container !== undefined) {
       // Stop the container

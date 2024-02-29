@@ -29,4 +29,5 @@ export class ScheduledListing extends AbstractDocument {
     soldOut: boolean
 }
 
-export const ScheduledListingSchema = SchemaFactory.createForClass(ScheduledListing)
+export const ScheduledListingSchema =
+  SchemaFactory.createForClass(ScheduledListing)

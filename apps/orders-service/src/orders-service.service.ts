@@ -4,16 +4,20 @@ import {
   ExportPushNotificationClient,
   FitRpcException,
   Order,
-  OrderI, OrderInitiateCharge,
+  OrderI,
+  OrderInitiateCharge,
   OrderStatus,
-  OrderTypes, OrderUpdateStream, PaystackChargeResponseData,
+  OrderTypes,
+  OrderUpdateStream,
+  PaystackChargeResponseData,
   PlaceOrderDto,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
   ResponseWithStatus,
   ResponseWithStatusAndData,
-  ServicePayload, UpdateCouponUsage,
+  ServicePayload,
+  UpdateCouponUsage,
   UpdateOrderStatusPaidRequestDto,
   UpdateOrderStatusRequestDto
 } from '@app/common'
@@ -49,7 +53,12 @@ export class OrdersServiceService {
   public async placeOrder ({
     data,
     userId
-  }: ServicePayload<PlaceOrderDto>): Promise<ResponseWithStatusAndData<{ order: OrderI, paymentMeta: PaystackChargeResponseData }>> {
+  }: ServicePayload<PlaceOrderDto>): Promise<
+    ResponseWithStatusAndData<{
+      order: OrderI
+      paymentMeta: PaystackChargeResponseData
+    }>
+    > {
     const createOrderPayload: Partial<Order> = {
       ...data,
       user: userId,
@@ -59,7 +68,12 @@ export class OrdersServiceService {
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
 
-    const populatedOrder: OrderI = await this.orderRepository.findOneAndPopulate({ _id: _newOrder._id }, ['listing', 'vendor', 'user'])
+    const populatedOrder: OrderI =
+      await this.orderRepository.findOneAndPopulate({ _id: _newOrder._id }, [
+        'listing',
+        'vendor',
+        'user'
+      ])
 
     if (_newOrder === null) {
       throw new FitRpcException(
@@ -74,14 +88,34 @@ export class OrdersServiceService {
       userId: populatedOrder.user._id,
       amount: String(populatedOrder.totalOrderValue)
     }
-    const paymentMeta = await lastValueFrom<PaystackChargeResponseData>(this.paymentClient.send(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK, chargePayload))
+    const paymentMeta = await lastValueFrom<PaystackChargeResponseData>(
+      this.paymentClient.send(
+        QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK,
+        chargePayload
+      )
+    )
 
     if (data.coupon !== undefined) {
       const updateCouponUsage: UpdateCouponUsage = {
         code: data.coupon,
         user: userId.toString()
       }
-      await lastValueFrom(this.paymentClient.emit(QUEUE_MESSAGE.UPDATE_COUPON_USAGE, updateCouponUsage))
+      await lastValueFrom(
+        this.paymentClient.emit(
+          QUEUE_MESSAGE.UPDATE_COUPON_USAGE,
+          updateCouponUsage
+        )
+      )
+
+      const payload: ServicePayload<{ couponCode: string }> = {
+        userId,
+        data: {
+          couponCode: data.coupon
+        }
+      }
+      await lastValueFrom(
+        this.userClient.emit(QUEUE_MESSAGE.USER_REMOVE_COUPON, payload)
+      )
     }
 
     return { status: 1, data: { order: populatedOrder, paymentMeta } }
@@ -89,10 +123,10 @@ export class OrdersServiceService {
 
   public async getAllVendorOrders (vendor: string): Promise<Order[]> {
     try {
-      return (await this.orderRepository.findAndPopulate(
-        { vendor },
-        ['listing', 'vendor']
-      )) as any
+      return (await this.orderRepository.findAndPopulate({ vendor }, [
+        'listing',
+        'vendor'
+      ])) as any
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -103,10 +137,11 @@ export class OrdersServiceService {
 
   public async getAllUserOrders (user: string): Promise<Order[]> {
     try {
-      return await this.orderRepository.findAndPopulate(
-        { user },
-        ['listing', 'user', 'vendor']
-      )
+      return await this.orderRepository.findAndPopulate({ user }, [
+        'listing',
+        'user',
+        'vendor'
+      ])
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -117,33 +152,51 @@ export class OrdersServiceService {
 
   public async getAllFulfilledOrders (): Promise<Order[]> {
     try {
-      return await this.orderRepository.find({ orderStatus: OrderStatus.FULFILLED })
+      return await this.orderRepository.find({
+        orderStatus: OrderStatus.FULFILLED
+      })
     } catch (e) {
-      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Failed to fetch all fulfilled orders something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   public async getAllTransitOrders (): Promise<Order[]> {
     try {
-      return await this.orderRepository.find({ orderStatus: OrderStatus.IN_ROUTE })
+      return await this.orderRepository.find({
+        orderStatus: OrderStatus.IN_ROUTE
+      })
     } catch (e) {
-      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Failed to fetch all fulfilled orders something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   public async getAllPaidOrder (): Promise<Order[]> {
     try {
-      return await this.orderRepository.find({ orderStatus: OrderStatus.PROCESSED })
+      return await this.orderRepository.find({
+        orderStatus: OrderStatus.PROCESSED
+      })
     } catch (e) {
-      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Failed to fetch all fulfilled orders something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   public async getAllOrders (): Promise<Order[]> {
     try {
-      return await this.orderRepository.find({ })
+      return await this.orderRepository.find({})
     } catch (e) {
-      throw new FitRpcException('Failed to fetch all fulfilled orders something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Failed to fetch all fulfilled orders something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -151,10 +204,9 @@ export class OrdersServiceService {
     filterQuery: FilterQuery<Order>
   ): Promise<Order[]> {
     try {
-      const _orders = (await this.orderRepository.findAndPopulate(
-        filterQuery,
-        ['vendor']
-      )) as any
+      const _orders = (await this.orderRepository.findAndPopulate(filterQuery, [
+        'vendor'
+      ])) as any
       return _orders
     } catch (error) {
       throw new FitRpcException(
@@ -166,10 +218,11 @@ export class OrdersServiceService {
 
   public async getOrderByRefId (refId: number): Promise<Order | null> {
     try {
-      return await this.orderRepository.findOneAndPopulate(
-        { refId },
-        ['user', 'listing', 'vendor']
-      )
+      return await this.orderRepository.findOneAndPopulate({ refId }, [
+        'user',
+        'listing',
+        'vendor'
+      ])
     } catch (error) {
       throw new FitRpcException(
         'Can not process request. Try again later',
@@ -204,7 +257,10 @@ export class OrdersServiceService {
     streamUpdates
   }: UpdateOrderStatusRequestDto): Promise<ResponseWithStatus> {
     try {
-      const order = await this.orderRepository.findOneAndPopulate<OrderI>({ _id: orderId }, ['vendor', 'listing', 'user'])
+      const order = await this.orderRepository.findOneAndPopulate<OrderI>(
+        { _id: orderId },
+        ['vendor', 'listing', 'user']
+      )
 
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
@@ -223,7 +279,10 @@ export class OrdersServiceService {
           status,
           vendorName: order.vendor.businessName
         }
-        await this.driverClient.emit(QUEUE_MESSAGE.STREAM_ORDER_UPDATES, updateStream)
+        await this.driverClient.emit(
+          QUEUE_MESSAGE.STREAM_ORDER_UPDATES,
+          updateStream
+        )
       }
       return { status: 1 }
     } catch (error) {
@@ -242,7 +301,10 @@ export class OrdersServiceService {
     try {
       this.logger.log(`[PIM] - Processing and updating paid order ${orderId} `)
 
-      const order = await this.orderRepository.findOneAndPopulate<OrderI>({ _id: orderId }, ['vendor', 'listing', 'user'])
+      const order = await this.orderRepository.findOneAndPopulate<OrderI>(
+        { _id: orderId },
+        ['vendor', 'listing', 'user']
+      )
 
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
@@ -265,10 +327,13 @@ export class OrdersServiceService {
       )
 
       await lastValueFrom(
-        this.listingsClient.emit(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY, {
-          listingsId: order.listing.map(li => li._id),
-          quantity: order.quantity
-        })
+        this.listingsClient.emit(
+          QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY,
+          {
+            listingsId: order.listing.map((li) => li._id),
+            quantity: order.quantity
+          }
+        )
       )
 
       if (order.orderType === OrderTypes.INSTANT) {
@@ -277,7 +342,9 @@ export class OrdersServiceService {
         )
       } else {
         await lastValueFrom<any>(
-          this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_PRE_ORDER, { orderId })
+          this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_PRE_ORDER, {
+            orderId
+          })
         )
       }
     } catch (error) {
@@ -299,8 +366,9 @@ export class OrdersServiceService {
         { orderStatus: OrderStatus.ACCEPTED }
       )
       await lastValueFrom(
-        this.notificationClient
-          .emit(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER, { phone })
+        this.notificationClient.emit(QUEUE_MESSAGE.VENDOR_ACCEPT_ORDER, {
+          phone
+        })
       )
     } catch (error) {
       throw new FitRpcException(
@@ -310,7 +378,9 @@ export class OrdersServiceService {
     }
   }
 
-  public async odsaGetPreOrders (filterQuery: FilterQuery<Order>): Promise<Order[] | null> {
+  public async odsaGetPreOrders (
+    filterQuery: FilterQuery<Order>
+  ): Promise<Order[] | null> {
     try {
       this.logger.log('PIM -> Getting pre orders for ODSA daily cron')
       return await this.orderRepository.findAndPopulate(
@@ -337,34 +407,51 @@ export class OrdersServiceService {
     return await this.orderRepository.find({})
   }
 
-  private async sendPushNotifications (status: OrderStatus, order: OrderI): Promise<void> {
+  private async sendPushNotifications (
+    status: OrderStatus,
+    order: OrderI
+  ): Promise<void> {
     switch (status) {
       case OrderStatus.PROCESSED:
-        await this.expoClient.sendSingleNotification(order.vendor.expoNotificationToken, {
-          title: 'You have a new Order',
-          body: `A new ${order.orderType === 'PRE_ORDER' ? 'Pre-order' : 'Instant order'}`,
-          priority: 'high'
-        })
-        await this.expoClient.sendSingleNotification(order?.user?.expoNotificationToken as string, {
-          title: 'Your order has been processed',
-          body: 'Track the progress of your order on the mobile app',
-          priority: 'high'
-        })
+        await this.expoClient.sendSingleNotification(
+          order.vendor.expoNotificationToken,
+          {
+            title: 'You have a new Order',
+            body: `A new ${
+              order.orderType === 'PRE_ORDER' ? 'Pre-order' : 'Instant order'
+            }`,
+            priority: 'high'
+          }
+        )
+        await this.expoClient.sendSingleNotification(
+          order?.user?.expoNotificationToken as string,
+          {
+            title: 'Your order has been processed',
+            body: 'Track the progress of your order on the mobile app',
+            priority: 'high'
+          }
+        )
         break
       case OrderStatus.IN_ROUTE:
-        await this.expoClient.sendSingleNotification(order?.user?.expoNotificationToken as string, {
-          title: 'Your order is been delivered',
-          body: 'Our delivery person is on his way',
-          priority: 'high'
-        })
+        await this.expoClient.sendSingleNotification(
+          order?.user?.expoNotificationToken as string,
+          {
+            title: 'Your order is been delivered',
+            body: 'Our delivery person is on his way',
+            priority: 'high'
+          }
+        )
         break
 
       case OrderStatus.COURIER_PICKUP:
-        await this.expoClient.sendSingleNotification(order?.user?.expoNotificationToken as string, {
-          title: 'Your order has been prepared',
-          body: `${order.vendor.businessName} has finished preparing your order`,
-          priority: 'high'
-        })
+        await this.expoClient.sendSingleNotification(
+          order?.user?.expoNotificationToken as string,
+          {
+            title: 'Your order has been prepared',
+            body: `${order.vendor.businessName} has finished preparing your order`,
+            priority: 'high'
+          }
+        )
     }
   }
 

@@ -104,7 +104,9 @@ describe('Orders Services - Repository', () => {
           beforeEach(async () => {
             saveSpy = jest.spyOn(OrderModel.prototype, 'save')
             constructorSpy = jest.spyOn(OrderModel.prototype, 'constructorSpy')
-            order = await ordersRepository.create({ listing: OrderStub().listing })
+            order = await ordersRepository.create({
+              listing: OrderStub().listing
+            })
           })
 
           test('then it should call the orderModel', () => {

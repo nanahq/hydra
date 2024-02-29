@@ -2,7 +2,8 @@ import {
   IsArray,
   IsBoolean,
   IsEnum,
-  IsNotEmpty, IsNumber,
+  IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString
 } from 'class-validator'

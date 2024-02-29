@@ -103,7 +103,10 @@ describe('Payment Services - Repository', () => {
 
           beforeEach(async () => {
             saveSpy = jest.spyOn(PaymentModel.prototype, 'save')
-            constructorSpy = jest.spyOn(PaymentModel.prototype, 'constructorSpy')
+            constructorSpy = jest.spyOn(
+              PaymentModel.prototype,
+              'constructorSpy'
+            )
             payment = await chargeRepository.create(PaymentStub())
           })
 

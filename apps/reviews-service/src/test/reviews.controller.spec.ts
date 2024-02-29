@@ -2,12 +2,19 @@ import { Test } from '@nestjs/testing'
 import { ReviewsService } from '../reviews-service.service'
 import { ReviewsServiceController } from '../reviews-service.controller'
 import {
-  ResponseWithStatus, Review, ReviewDto, ReviewToken,
+  ResponseWithStatus,
+  Review,
+  ReviewDto,
+  ReviewToken,
   RmqService,
   VendorReviewOverview
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
-import { resStub, ReviewStub, VendorReviewOverviewsStub } from './stubs/reviews.stub'
+import {
+  resStub,
+  ReviewStub,
+  VendorReviewOverviewsStub
+} from './stubs/reviews.stub'
 
 export const RmqServiceMock = {
   ack: jest.fn()
@@ -75,7 +82,9 @@ describe('reviewsServiceController', () => {
         response = await reviewsController.getListingReviews(data, context)
       })
       test('then it should call reviewsService.getListingReviews', () => {
-        expect(reviewsService.getListingReviews).toHaveBeenCalledWith(data.listingId)
+        expect(reviewsService.getListingReviews).toHaveBeenCalledWith(
+          data.listingId
+        )
       })
 
       test('then it should return an array of reviews', () => {
@@ -98,7 +107,9 @@ describe('reviewsServiceController', () => {
         response = await reviewsController.getVendorReviews(payload, context)
       })
       test('then it should call reviewsService.getVendorReviews', () => {
-        expect(reviewsService.getVendorReviews).toHaveBeenCalledWith(payload.vendorId)
+        expect(reviewsService.getVendorReviews).toHaveBeenCalledWith(
+          payload.vendorId
+        )
       })
 
       test('then it should get all vendors reviews', () => {
@@ -141,7 +152,9 @@ describe('reviewsServiceController', () => {
         )
       })
       test('then it should call reviewsService.findOneById', () => {
-        expect(reviewsService.findOneById).toHaveBeenCalledWith(payload.reviewId)
+        expect(reviewsService.findOneById).toHaveBeenCalledWith(
+          payload.reviewId
+        )
       })
 
       test('then it should find a review', () => {
@@ -184,10 +197,15 @@ describe('reviewsServiceController', () => {
         data = {
           vendorId: '0809599696'
         }
-        response = await reviewsController.getVendorReviewOverview(data, context)
+        response = await reviewsController.getVendorReviewOverview(
+          data,
+          context
+        )
       })
       test('then it should call reviewsService.getVendorReviewOverview', () => {
-        expect(reviewsService.getVendorReviewOverview).toHaveBeenCalledWith(data.vendorId)
+        expect(reviewsService.getVendorReviewOverview).toHaveBeenCalledWith(
+          data.vendorId
+        )
       })
 
       test('then it should return a review overview', () => {
@@ -209,7 +227,9 @@ describe('reviewsServiceController', () => {
         response = await reviewsController.statGetListingReviews(data, context)
       })
       test('then it should call reviewsService.statGetListingReviews', () => {
-        expect(reviewsService.statGetListingReviews).toHaveBeenCalledWith(data.listingId)
+        expect(reviewsService.statGetListingReviews).toHaveBeenCalledWith(
+          data.listingId
+        )
       })
 
       test('then it should return a review stats', () => {

@@ -10,7 +10,12 @@ import {
   ServicePayload
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
-import { ListingCategoryStub, ListingMenuStub, ListingOptionStub, resStub } from './stubs/Listings.stub'
+import {
+  ListingCategoryStub,
+  ListingMenuStub,
+  ListingOptionStub,
+  resStub
+} from './stubs/Listings.stub'
 import {
   CreateListingCategoryDto,
   CreateListingMenuDto,

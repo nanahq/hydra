@@ -7,9 +7,7 @@ import { Model } from 'mongoose'
 export class PaymentRepository extends AbstractRepository<Payment> {
   protected readonly logger = new Logger(Payment.name)
 
-  constructor (
-  @InjectModel(Payment.name) payoutModel: Model<Payment>
-  ) {
+  constructor (@InjectModel(Payment.name) payoutModel: Model<Payment>) {
     super(payoutModel)
   }
 }

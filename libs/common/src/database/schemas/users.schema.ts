@@ -57,6 +57,9 @@ export class User extends AbstractDocument {
 
   @Prop({ type: String })
     paystack_titan?: string
+
+  @Prop({ type: [Types.ObjectId], ref: 'Coupon' })
+    coupons?: string[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

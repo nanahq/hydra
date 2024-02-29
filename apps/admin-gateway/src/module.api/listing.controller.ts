@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, HttpException, Inject, Param, Patch, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  Patch,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -21,8 +31,7 @@ export class ListingController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingsClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('')
@@ -40,11 +49,13 @@ export class ListingController {
   @Get('pending')
   async pending (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
-      this.listingsClient.send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_PENDING, {}).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.listingsClient
+        .send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_PENDING, {})
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -52,11 +63,13 @@ export class ListingController {
   @Get('approved')
   async approved (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
-      this.listingsClient.send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_APPROVED, {}).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.listingsClient
+        .send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_APPROVED, {})
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -64,11 +77,13 @@ export class ListingController {
   @Get('rejected')
   async rejected (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
-      this.listingsClient.send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_REJECTED, {}).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.listingsClient
+        .send(QUEUE_MESSAGE.LISTING_ADMIN_LIST_REJECTED, {})
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -86,9 +101,7 @@ export class ListingController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
-  async delete (
-    @Param('id') listingId: string
-  ): Promise<ResponseWithStatus> {
+  async delete (@Param('id') listingId: string): Promise<ResponseWithStatus> {
     const payload: ServicePayload<{ listingId: string }> = {
       userId: '',
       data: {
@@ -112,13 +125,11 @@ export class ListingController {
       @Param('id') id: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.listingsClient
-        .send(QUEUE_MESSAGE.LISTING_MENU_APPROVE, { id })
-        .pipe(
-          catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.listingsClient.send(QUEUE_MESSAGE.LISTING_MENU_APPROVE, { id }).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 

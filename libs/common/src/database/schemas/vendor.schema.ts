@@ -1,6 +1,10 @@
 import { SchemaTypes, Types } from 'mongoose'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { AbstractDocument, LocationCoordinates, VendorApprovalStatus } from '@app/common'
+import {
+  AbstractDocument,
+  LocationCoordinates,
+  VendorApprovalStatus
+} from '@app/common'
 
 @Schema({
   versionKey: false,

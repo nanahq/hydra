@@ -1,4 +1,10 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString
+} from 'class-validator'
 import { WalletTransactionStatus, WalletTransactionType } from '@app/common'
 
 export class CreditWallet {

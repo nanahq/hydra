@@ -1,4 +1,13 @@
-import { Body, Controller, Get, HttpException, Inject, Param, Post, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  Post,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -7,10 +16,13 @@ import {
   IRpcException,
   ListingCategory,
   ListingCategoryI,
-  ListingMenu, LocationCoordinates, MultiPurposeServicePayload,
+  ListingMenu,
+  LocationCoordinates,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ScheduledListingI, UserHomePage
+  ScheduledListingI,
+  UserHomePage
 } from '@app/common'
 
 @Controller('listing')
@@ -18,8 +30,7 @@ export class ListingsController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @Get('menus')
   @UseGuards(JwtAuthGuard)
@@ -39,11 +50,13 @@ export class ListingsController {
     @Param('vid') vendorId: string
   ): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_VENDOR_CAT_USER, { vendorId }).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_VENDOR_CAT_USER, { vendorId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -57,11 +70,13 @@ export class ListingsController {
       data: null
     }
     return await lastValueFrom<ScheduledListingI[]>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -69,11 +84,13 @@ export class ListingsController {
   @UseGuards(JwtAuthGuard)
   async getAllScheduledListings (): Promise<ScheduledListingI[]> {
     return await lastValueFrom<ScheduledListingI[]>(
-      this.listingClient.send(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS_USER, {}).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.listingClient
+        .send(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS_USER, {})
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 

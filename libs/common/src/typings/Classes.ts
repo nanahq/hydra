@@ -6,7 +6,12 @@ import {
   BankTransferAccountDetails,
   UssdRequest,
   BankTransferRequest,
-  VendorPayout, PayoutOverview, ServicePayload, Order, UpdateOrderStatusRequestDto, UpdateOrderStatusPaidRequestDto
+  VendorPayout,
+  PayoutOverview,
+  ServicePayload,
+  Order,
+  UpdateOrderStatusRequestDto,
+  UpdateOrderStatusPaidRequestDto
 } from '@app/common'
 import { Aggregate, FilterQuery } from 'mongoose'
 
@@ -23,7 +28,9 @@ export interface ReviewsServiceI {
 
 export interface PaymentServiceI {
   chargeWithUssd: (payload: UssdRequest) => Promise<any>
-  chargeWithBankTransfer: (payload: BankTransferRequest) => Promise<BankTransferAccountDetails>
+  chargeWithBankTransfer: (
+    payload: BankTransferRequest,
+  ) => Promise<BankTransferAccountDetails>
   verifyPayment: (txId: string, refId: string) => Promise<void>
 }
 
@@ -48,8 +55,12 @@ export interface OrdersServiceServiceI {
   getAllOrderInDb: (filterQuery: FilterQuery<Order>) => Promise<Order[]>
   getOrderByRefId: (refId: number) => Promise<Order | null>
   getOrderById: (_id: string) => Promise<Order | null>
-  updateStatus: (dto: UpdateOrderStatusRequestDto) => Promise<ResponseWithStatus>
-  updateStatusPaid: (dto: UpdateOrderStatusPaidRequestDto) => Promise<ResponseWithStatus>
+  updateStatus: (
+    dto: UpdateOrderStatusRequestDto,
+  ) => Promise<ResponseWithStatus>
+  updateStatusPaid: (
+    dto: UpdateOrderStatusPaidRequestDto,
+  ) => Promise<ResponseWithStatus>
   vendorAcceptOrder: (orderId: string, phone: string) => Promise<void>
   odsaGetPreOrders: () => Promise<Order[] | null>
   adminMetrics: () => Promise<Aggregate<any>>

@@ -7,9 +7,7 @@ import { Model } from 'mongoose'
 export class OrderRepository extends AbstractRepository<Order> {
   protected readonly logger = new Logger(OrderRepository.name)
 
-  constructor (
-  @InjectModel(Order.name) orderModel: Model<Order>
-  ) {
+  constructor (@InjectModel(Order.name) orderModel: Model<Order>) {
     super(orderModel)
   }
 }

@@ -55,12 +55,13 @@ export class ODSA {
   ): Promise<Delivery[] | undefined> {
     try {
       const deliveries: Delivery[] | null =
-        await this.odsaRepository.findAndPopulate({ driver: driverId.toString(), status: { $ne: OrderStatus.FULFILLED } }, [
-          'listing',
-          'vendor',
-          'user',
-          'order'
-        ])
+        await this.odsaRepository.findAndPopulate(
+          {
+            driver: driverId.toString(),
+            status: { $ne: OrderStatus.FULFILLED }
+          },
+          ['listing', 'vendor', 'user', 'order']
+        )
       return deliveries
     } catch (error) {
       this.logger.error(
@@ -70,15 +71,14 @@ export class ODSA {
     }
   }
 
-  public async queryOrderDelivery (orderId: string): Promise<DeliveryI | undefined> {
+  public async queryOrderDelivery (
+    orderId: string
+  ): Promise<DeliveryI | undefined> {
     try {
-      return await this.odsaRepository.findOneAndPopulate<DeliveryI>({ order: orderId }, [
-        'order',
-        'driver',
-        'listing',
-        'vendor',
-        'user'
-      ])
+      return await this.odsaRepository.findOneAndPopulate<DeliveryI>(
+        { order: orderId },
+        ['order', 'driver', 'listing', 'vendor', 'user']
+      )
     } catch (error) {
       this.logger.error({
         message: 'PIM -> Failed to query all deliveries',
@@ -87,7 +87,9 @@ export class ODSA {
     }
   }
 
-  public async queryDayDeliveries (driverId: string): Promise<DeliveryI[] | undefined> {
+  public async queryDayDeliveries (
+    driverId: string
+  ): Promise<DeliveryI[] | undefined> {
     const today = new Date()
 
     this.logger.log(`PIM -> Getting today's delivery ${today.toISOString()}`)
@@ -108,11 +110,11 @@ export class ODSA {
     }
 
     try {
-      return (await this.odsaRepository.findAndPopulate(filters, [
+      return await this.odsaRepository.findAndPopulate(filters, [
         'order',
         'driver',
         'listing'
-      ]))
+      ])
     } catch (error) {
       this.logger.error({
         message: 'PIM -> Failed to query all deliveries',
@@ -121,13 +123,15 @@ export class ODSA {
     }
   }
 
-  public async queryVendorDeliveries (vendor: string): Promise<DeliveryI[] | undefined> {
+  public async queryVendorDeliveries (
+    vendor: string
+  ): Promise<DeliveryI[] | undefined> {
     try {
-      return (await this.odsaRepository.findAndPopulate({ vendor }, [
+      return await this.odsaRepository.findAndPopulate({ vendor }, [
         'listing',
         'order',
         'driver'
-      ]))
+      ])
     } catch (error) {
       this.logger.error({
         message: 'PIM -> Failed to query all deliveries',
@@ -136,8 +140,7 @@ export class ODSA {
     }
   }
 
-  public async queryAllDeliveries (
-  ): Promise<Delivery[] | undefined> {
+  public async queryAllDeliveries (): Promise<Delivery[] | undefined> {
     try {
       return await this.odsaRepository.findAndPopulate({}, [
         'listing',
@@ -158,12 +161,10 @@ export class ODSA {
   ): Promise<Delivery[] | undefined> {
     try {
       const deliveries: Delivery[] | null =
-        await this.odsaRepository.findAndPopulate({ driver: driverId.toString() }, [
-          'listing',
-          'vendor',
-          'user',
-          'order'
-        ])
+        await this.odsaRepository.findAndPopulate(
+          { driver: driverId.toString() },
+          ['listing', 'vendor', 'user', 'order']
+        )
 
       return deliveries
     } catch (error) {
@@ -182,9 +183,12 @@ export class ODSA {
     try {
       this.logger.log('PIM -> Updating delivery status')
 
-      const delivery = await this.odsaRepository.findOneAndPopulate<DeliveryI>({
-        _id: data.deliveryId
-      }, ['order', 'vendor', 'user'])
+      const delivery = await this.odsaRepository.findOneAndPopulate<DeliveryI>(
+        {
+          _id: data.deliveryId
+        },
+        ['order', 'vendor', 'user']
+      )
 
       await lastValueFrom(
         this.orderClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, {
@@ -201,10 +205,15 @@ export class ODSA {
       if (pickedUp) {
         const deliveryTime = new Date()
         const travelDistance = await lastValueFrom<TravelDistanceResult>(
-          this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { vendorCoords: delivery.pickupLocation.coordinates, userCoords: delivery.dropOffLocation.coordinates })
+          this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, {
+            vendorCoords: delivery.pickupLocation.coordinates,
+            userCoords: delivery.dropOffLocation.coordinates
+          })
         )
 
-        deliveryTime.setMinutes(deliveryTime.getMinutes() + (travelDistance.duration ?? 20))
+        deliveryTime.setMinutes(
+          deliveryTime.getMinutes() + (travelDistance.duration ?? 20)
+        )
         updates.deliveryTime = moment(deliveryTime).toISOString()
         updates.travelMeta = {
           distance: travelDistance?.distance ?? 0,
@@ -217,7 +226,9 @@ export class ODSA {
       let deliveredWithinTime: boolean = false
 
       if (delivered) {
-        deliveredWithinTime = moment().isSameOrBefore(new Date(delivery.deliveryTime))
+        deliveredWithinTime = moment().isSameOrBefore(
+          new Date(delivery.deliveryTime)
+        )
         updates.deliveredWithinTime = deliveredWithinTime
         updates.completed = true
       }
@@ -228,12 +239,18 @@ export class ODSA {
       )
 
       if (delivered) {
-        const driver = await this.driversRepository.findOne({ _id: delivery.driver, type: 'DELIVER_ON_DEMAND' }) as Driver
+        const driver = (await this.driversRepository.findOne({
+          _id: delivery.driver,
+          type: 'DELIVER_ON_DEMAND'
+        })) as Driver
 
         const deliveries = [...driver.deliveries, delivery._id]
         const totalTrips = driver.totalTrips + 1
 
-        await this.driversRepository.findOneAndUpdate({ _id: driver._id }, { available: true, deliveries, totalTrips })
+        await this.driversRepository.findOneAndUpdate(
+          { _id: driver._id },
+          { available: true, deliveries, totalTrips }
+        )
 
         const creditPayload: CreditWallet = {
           status: WalletTransactionStatus.PROCESSED,
@@ -242,7 +259,10 @@ export class ODSA {
           amount: Math.floor((delivery?.travelMeta?.distance ?? 0) * 25)
         }
         await lastValueFrom(
-          this.paymentClient.send(QUEUE_MESSAGE.DRIVER_WALLET_ADD_BALANCE, creditPayload)
+          this.paymentClient.send(
+            QUEUE_MESSAGE.DRIVER_WALLET_ADD_BALANCE,
+            creditPayload
+          )
         )
       }
 
@@ -262,7 +282,9 @@ export class ODSA {
       return { status: 1 }
     } catch (error) {
       this.logger.error(JSON.stringify(error))
-      this.logger.error(`Failed to update delivery status for id: ${data.deliveryId}`)
+      this.logger.error(
+        `Failed to update delivery status for id: ${data.deliveryId}`
+      )
       throw new FitRpcException(
         'Failed to update delivery status',
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -270,9 +292,16 @@ export class ODSA {
     }
   }
 
-  public async handleAcceptDelivery (opts: { deliveryId: string, orderId: string, driverId: string }): Promise<ResponseWithStatus> {
+  public async handleAcceptDelivery (opts: {
+    deliveryId: string
+    orderId: string
+    driverId: string
+  }): Promise<ResponseWithStatus> {
     try {
-      await this.odsaRepository.findOneAndUpdate({ _id: opts.deliveryId, order: opts.orderId, driver: opts.driverId }, { driverAccepted: true })
+      await this.odsaRepository.findOneAndUpdate(
+        { _id: opts.deliveryId, order: opts.orderId, driver: opts.driverId },
+        { driverAccepted: true }
+      )
       return { status: 1 }
     } catch (error) {
       this.logger.error(JSON.stringify(error))
@@ -283,9 +312,16 @@ export class ODSA {
     }
   }
 
-  public async handleRejectDelivery (opts: { deliveryId: string, orderId: string, driverId: string }): Promise<ResponseWithStatus> {
+  public async handleRejectDelivery (opts: {
+    deliveryId: string
+    orderId: string
+    driverId: string
+  }): Promise<ResponseWithStatus> {
     try {
-      await this.odsaRepository.findOneAndUpdate({ _id: opts.deliveryId, order: opts.orderId, driver: opts.driverId }, { assignedToDriver: false, driver: undefined })
+      await this.odsaRepository.findOneAndUpdate(
+        { _id: opts.deliveryId, order: opts.orderId, driver: opts.driverId },
+        { assignedToDriver: false, driver: undefined }
+      )
       return { status: 1 }
     } catch (error) {
       this.logger.error(JSON.stringify(error))
@@ -301,10 +337,18 @@ export class ODSA {
     existingDeliver?: boolean,
     deliveryId?: string
   ): Promise<void> {
-    this.logger.log(`PIM -> started processing instant order: ${typeof _order !== 'string' ? _order?._id.toString() : _order}`)
+    this.logger.log(
+      `PIM -> started processing instant order: ${
+        typeof _order !== 'string' ? _order?._id.toString() : _order
+      }`
+    )
     try {
       // Delete a delivery instance and alert admin if driver can not be found
-      if ((existingDeliver === true) && typeof _order !== 'string' && _order.orderType !== 'PRE_ORDER') {
+      if (
+        existingDeliver === true &&
+        typeof _order !== 'string' &&
+        _order.orderType !== 'PRE_ORDER'
+      ) {
         const createdAt = moment(_order.createdAt)
         const currentTime = moment()
         const timeDiff = currentTime.diff(createdAt, 'hours')
@@ -321,7 +365,10 @@ export class ODSA {
         this.orderClient
           .send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, {
             userId: '',
-            data: { orderId: typeof _order !== 'string' ? _order?._id.toString() : _order }
+            data: {
+              orderId:
+                typeof _order !== 'string' ? _order?._id.toString() : _order
+            }
           })
           .pipe(
             catchError((error) => {
@@ -331,7 +378,10 @@ export class ODSA {
           )
       )
 
-      const collectionLocation = order?.vendor?.location?.coordinates as [number, number] // address for the vendor/restaurant
+      const collectionLocation = order?.vendor?.location?.coordinates as [
+        number,
+        number,
+      ] // address for the vendor/restaurant
       const driverToBeAssigned = await this.handleFindNearestDeliveryDriver(
         collectionLocation
       )
@@ -340,7 +390,7 @@ export class ODSA {
       if (driverToBeAssigned === null) {
         if (existingDeliver === undefined) {
           await this.odsaRepository.create({
-            listing: order.listing.map(li => li._id),
+            listing: order.listing.map((li) => li._id),
             order: order._id,
             vendor: order.vendor?._id,
             user: order.user._id,
@@ -356,7 +406,9 @@ export class ODSA {
 
       if (existingDeliver !== undefined && existingDeliver) {
         await this.odsaRepository.findOneAndUpdate(
-          { order: typeof _order !== 'string' ? _order?._id.toString() : _order },
+          {
+            order: typeof _order !== 'string' ? _order?._id.toString() : _order
+          },
           {
             driver: driverToBeAssigned?.driverId,
             assignedToDriver: true
@@ -365,7 +417,7 @@ export class ODSA {
       } else {
         await this.odsaRepository.create({
           driver: driverToBeAssigned?.driverId,
-          listing: order.listing.map(li => li._id),
+          listing: order.listing.map((li) => li._id),
           order: order._id,
           vendor: order.vendor?._id,
           user: order.user._id,
@@ -391,10 +443,15 @@ export class ODSA {
       }
 
       // stream new delivery task to driver's app
-      this.eventsGateway.server.emit(SOCKET_MESSAGE.NEW_DELIVERY_TASK, deliveryStream)
+      this.eventsGateway.server.emit(
+        SOCKET_MESSAGE.NEW_DELIVERY_TASK,
+        deliveryStream
+      )
     } catch (error) {
       this.logger.error(
-        `Something went wrong processing order ${typeof _order !== 'string' ? _order?._id.toString() : _order}`
+        `Something went wrong processing order ${
+          typeof _order !== 'string' ? _order?._id.toString() : _order
+        }`
       )
       this.logger.error(JSON.stringify(error))
       throw new FitRpcException(
@@ -421,7 +478,7 @@ export class ODSA {
       )
 
       await this.odsaRepository.create({
-        listing: order.listing.map(li => li._id),
+        listing: order.listing.map((li) => li._id),
         order: order._id,
         vendor: order.vendor?._id,
         user: order.user._id,
@@ -432,8 +489,13 @@ export class ODSA {
         deliveryType: 'PRE_ORDER'
       })
     } catch (e) {
-      this.logger.log(`PIM -> Failed to create pre-order delivery for order id: ${_orderId}`)
-      throw new FitRpcException('Can not create pre-order deliveries', HttpStatus.INTERNAL_SERVER_ERROR)
+      this.logger.log(
+        `PIM -> Failed to create pre-order delivery for order id: ${_orderId}`
+      )
+      throw new FitRpcException(
+        'Can not create pre-order deliveries',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -441,9 +503,12 @@ export class ODSA {
     timeZone: 'Africa/Lagos'
   })
   private async assignDemandOrders (): Promise<void> {
-    const unassignedDeliveries = await this.odsaRepository.findAndPopulate({
-      assignedToDriver: false
-    }, ['order']) as any
+    const unassignedDeliveries = (await this.odsaRepository.findAndPopulate(
+      {
+        assignedToDriver: false
+      },
+      ['order']
+    )) as any
 
     try {
       for (const delivery of unassignedDeliveries) {
@@ -465,14 +530,17 @@ export class ODSA {
     const currentDate = new Date()
     const thirtyMinutesLater = new Date(currentDate.getTime() + 30 * 60000)
 
-    const unassignedDeliveries = await this.odsaRepository.findAndPopulate({
-      assignedToDriver: false,
-      deliveryType: 'PRE_ORDER',
-      orderDeliveryScheduledTime: {
-        $gte: currentDate.toISOString(),
-        $lt: thirtyMinutesLater.toISOString()
-      }
-    }, ['order']) as any
+    const unassignedDeliveries = (await this.odsaRepository.findAndPopulate(
+      {
+        assignedToDriver: false,
+        deliveryType: 'PRE_ORDER',
+        orderDeliveryScheduledTime: {
+          $gte: currentDate.toISOString(),
+          $lt: thirtyMinutesLater.toISOString()
+        }
+      },
+      ['order']
+    )) as any
 
     if (unassignedDeliveries.length > 0) {
       for (const delivery of unassignedDeliveries) {
@@ -492,7 +560,9 @@ export class ODSA {
   private async sortAndAssignPreOrders (): Promise<void> {
     const today = new Date()
 
-    this.logger.log(`PIM -> sorting and processing pre orders for ${today.toISOString()}`)
+    this.logger.log(
+      `PIM -> sorting and processing pre orders for ${today.toISOString()}`
+    )
 
     const start = new Date(today)
     start.setHours(0, 0, 0, 0)
@@ -559,7 +629,7 @@ export class ODSA {
       group.orders.forEach((order) => {
         drivers.forEach((driver) => {
           newDeliveries.push({
-            listing: order.listing.map(li => li._id.toString()),
+            listing: order.listing.map((li) => li._id.toString()),
             order: order._id.toString(),
             vendor: order.vendor._id.toString(),
             user: order.user._id.toString(),
@@ -574,11 +644,14 @@ export class ODSA {
       })
     })
 
-    const driverIds = drivers.map(driver => driver._id)
+    const driverIds = drivers.map((driver) => driver._id)
 
     await this.odsaRepository.insertMany(newDeliveries)
 
-    await this.driversRepository.findAndUpdate({ _id: { $in: driverIds } }, { available: false })
+    await this.driversRepository.findAndUpdate(
+      { _id: { $in: driverIds } },
+      { available: false }
+    )
 
     this.logger.log(
       `PIM -> Success: Assigned ${groupedOrders.length} grouped orders to ${drivers.length} drivers`
@@ -667,14 +740,15 @@ export class ODSA {
       completed: true
     })
 
-    const yesterdayCompletedDelivery: Delivery[] = await this.odsaRepository.find({
-      createdAt: {
-        $gte: yesterdayStart.toISOString(),
-        $lt: yesterdayEnd.toISOString()
-      },
-      driver: driverId.toString(),
-      completed: true
-    })
+    const yesterdayCompletedDelivery: Delivery[] =
+      await this.odsaRepository.find({
+        createdAt: {
+          $gte: yesterdayStart.toISOString(),
+          $lt: yesterdayEnd.toISOString()
+        },
+        driver: driverId.toString(),
+        completed: true
+      })
 
     const weekCompletedDelivery: Delivery[] = await this.odsaRepository.find({
       createdAt: {
@@ -694,37 +768,49 @@ export class ODSA {
       completed: true
     })
 
-    const dailyStats: DriverStats = todayCompletedDelivery.reduce((acc, delivery) => {
-      return {
-        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
-        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
-        earnings: acc.earnings + 100
-      }
-    }, { distance: 0, time: 0, earnings: 0 })
+    const dailyStats: DriverStats = todayCompletedDelivery.reduce(
+      (acc, delivery) => {
+        return {
+          time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+          distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+          earnings: acc.earnings + 100
+        }
+      },
+      { distance: 0, time: 0, earnings: 0 }
+    )
 
-    const previousDayStats: DriverStats = yesterdayCompletedDelivery.reduce((acc, delivery) => {
-      return {
-        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
-        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
-        earnings: acc.earnings + 100
-      }
-    }, { distance: 0, time: 0, earnings: 0 })
+    const previousDayStats: DriverStats = yesterdayCompletedDelivery.reduce(
+      (acc, delivery) => {
+        return {
+          time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+          distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+          earnings: acc.earnings + 100
+        }
+      },
+      { distance: 0, time: 0, earnings: 0 }
+    )
 
-    const weeklyStats: DriverStats = weekCompletedDelivery.reduce((acc, delivery) => {
-      return {
-        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
-        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
-        earnings: acc.earnings + 100
-      }
-    }, { distance: 0, time: 0, earnings: 0 })
+    const weeklyStats: DriverStats = weekCompletedDelivery.reduce(
+      (acc, delivery) => {
+        return {
+          time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+          distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+          earnings: acc.earnings + 100
+        }
+      },
+      { distance: 0, time: 0, earnings: 0 }
+    )
 
-    const monthlyStats: DriverStats = monthCompletedDelivery.reduce((acc, delivery) => {
-      return {
-        time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
-        distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
-        earnings: acc.earnings + 100
-      }
-    }, { distance: 0, time: 0, earnings: 0 })
+    const monthlyStats: DriverStats = monthCompletedDelivery.reduce(
+      (acc, delivery) => {
+        return {
+          time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
+          distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+          earnings: acc.earnings + 100
+        }
+      },
+      { distance: 0, time: 0, earnings: 0 }
+    )
     return {
       today: dailyStats,
       yesterday: previousDayStats,
@@ -742,8 +828,8 @@ function filterOrdersForDay (orders: OrderI[]): OrderI[] {
 
     return (
       targetDate.isSame(orderDate, 'year') &&
-        targetDate.isSame(orderDate, 'month') &&
-        targetDate.isSame(orderDate, 'day')
+      targetDate.isSame(orderDate, 'month') &&
+      targetDate.isSame(orderDate, 'day')
     )
   })
 }

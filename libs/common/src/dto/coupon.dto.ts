@@ -1,4 +1,11 @@
-import { IsBoolean, IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
+import {
+  IsBoolean,
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString
+} from 'class-validator'
 import { Coupon, CouponType } from '@app/common'
 
 export class CreateCouponDto {

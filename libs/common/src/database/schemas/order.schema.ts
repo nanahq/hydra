@@ -63,10 +63,12 @@ export class Order extends AbstractDocument {
     refId: number
 
   @Prop({
-    type: [{
-      listing: Types.ObjectId,
-      options: [String]
-    }]
+    type: [
+      {
+        listing: Types.ObjectId,
+        options: [String]
+      }
+    ]
   })
     options: OrderOptions[]
 
@@ -86,15 +88,19 @@ export class Order extends AbstractDocument {
     preciseLocation: LocationCoordinates
 
   @Prop({
-    type: [{
-      listing: Types.ObjectId,
-      quantity: Number
-    }]
+    type: [
+      {
+        listing: Types.ObjectId,
+        quantity: Number
+      }
+    ]
   })
-    quantity: [{
-    listing: string
-    quantity: number
-  }]
+    quantity: [
+    {
+      listing: string
+      quantity: number
+    },
+  ]
 
   @Prop(String)
     specialNote: string

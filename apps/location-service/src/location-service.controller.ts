@@ -7,7 +7,13 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { RmqService, QUEUE_MESSAGE, DriverWithLocation, TravelDistanceResult, DeliveryFeeResult } from '@app/common'
+import {
+  RmqService,
+  QUEUE_MESSAGE,
+  DriverWithLocation,
+  TravelDistanceResult,
+  DeliveryFeeResult
+} from '@app/common'
 import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager'
 @Controller()
 export class LocationController {

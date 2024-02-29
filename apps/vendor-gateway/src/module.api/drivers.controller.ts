@@ -12,7 +12,8 @@ import {
   QUEUE_SERVICE,
   Delivery,
   Vendor,
-  CurrentUser, DeliveryI
+  CurrentUser,
+  DeliveryI
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -27,9 +28,7 @@ export class DriversController {
 
   @Get('order/:orderId')
   @UseGuards(JwtAuthGuard)
-  async getOrderDelivery (
-    @Param('orderId') orderId: string
-  ): Promise<Delivery> {
+  async getOrderDelivery (@Param('orderId') orderId: string): Promise<Delivery> {
     return await lastValueFrom<Delivery>(
       this.driversClient
         .send(QUEUE_MESSAGE.GET_ORDER_DELIVERY, { orderId })
@@ -43,7 +42,9 @@ export class DriversController {
 
   @Get('deliveries')
   @UseGuards(JwtAuthGuard)
-  async getVendorDeliveries (@CurrentUser() vendor: Vendor): Promise<DeliveryI[]> {
+  async getVendorDeliveries (
+    @CurrentUser() vendor: Vendor
+  ): Promise<DeliveryI[]> {
     return await lastValueFrom<DeliveryI[]>(
       this.driversClient
         .send(QUEUE_MESSAGE.GET_VENDOR_DELIVERIES, { vendorId: vendor._id })

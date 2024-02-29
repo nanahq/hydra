@@ -1,4 +1,3 @@
-
 export const RandomGen = {
   genRandomNum: (rounds: number = 9, length: number = 7): number => {
     const gen: number[] = []
@@ -28,11 +27,16 @@ export const RandomGen = {
 
     const alphanumericPart = alphabet + numbers
 
-    const result = alphaPart + Array.from({ length: length - 2 }, () => alphanumericPart[Math.floor(Math.random() * alphanumericPart.length)]).join('')
+    const result =
+      alphaPart +
+      Array.from(
+        { length: length - 2 },
+        () =>
+          alphanumericPart[Math.floor(Math.random() * alphanumericPart.length)]
+      ).join('')
 
     return result.toUpperCase()
   }
-
 }
 
 export function booleanParser (booleanString: string): boolean {

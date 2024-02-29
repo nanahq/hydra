@@ -103,7 +103,10 @@ describe('Review Services - Repository', () => {
 
           beforeEach(async () => {
             saveSpy = jest.spyOn(ReviewModel.prototype, 'save')
-            constructorSpy = jest.spyOn(ReviewModel.prototype, 'constructorSpy')
+            constructorSpy = jest.spyOn(
+              ReviewModel.prototype,
+              'constructorSpy'
+            )
             user = await reviewsRepository.create(ReviewStub())
           })
 

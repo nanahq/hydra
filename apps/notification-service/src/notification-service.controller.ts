@@ -14,7 +14,12 @@ import {
   verifyPhoneRequest,
   QUEUE_MESSAGE,
   SendPayoutEmail,
-  OrderStatusUpdateDto, ExceptionFilterRpc, VendorSoldOutPush, VendorApprovedPush, ListingApprovePush, ListingRejectPush
+  OrderStatusUpdateDto,
+  ExceptionFilterRpc,
+  VendorSoldOutPush,
+  VendorApprovedPush,
+  ListingApprovePush,
+  ListingRejectPush
 } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
 import { TransactionEmails } from './email/transactional.service'
@@ -146,7 +151,9 @@ export class NotificationServiceController {
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {
-      return await this.notificationServiceService.sendListingApprovedPush(data)
+      return await this.notificationServiceService.sendListingApprovedPush(
+        data
+      )
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -160,7 +167,9 @@ export class NotificationServiceController {
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {
-      return await this.notificationServiceService.sendListingRejectedPush(data)
+      return await this.notificationServiceService.sendListingRejectedPush(
+        data
+      )
     } catch (error) {
       throw new RpcException(error)
     } finally {

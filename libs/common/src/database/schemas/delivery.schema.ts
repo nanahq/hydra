@@ -3,7 +3,8 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import {
   AbstractDocument,
   LocationCoordinates,
-  OrderStatus, OrderType
+  OrderStatus,
+  OrderType
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -99,4 +100,7 @@ export class Delivery extends AbstractDocument {
 }
 
 export const DeliverySchema = SchemaFactory.createForClass(Delivery)
-DeliverySchema.index({ dropOffLocation: '2dsphere', pickupLocation: '2dsphere' })
+DeliverySchema.index({
+  dropOffLocation: '2dsphere',
+  pickupLocation: '2dsphere'
+})

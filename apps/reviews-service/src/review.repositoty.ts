@@ -7,9 +7,7 @@ import { Model } from 'mongoose'
 export class ReviewRepository extends AbstractRepository<Review> {
   protected readonly logger = new Logger(ReviewRepository.name)
 
-  constructor (
-  @InjectModel(Review.name) ReviewModel: Model<Review>
-  ) {
+  constructor (@InjectModel(Review.name) ReviewModel: Model<Review>) {
     super(ReviewModel)
   }
 }

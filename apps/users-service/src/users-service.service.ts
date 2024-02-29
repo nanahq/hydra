@@ -3,8 +3,12 @@ import * as bcrypt from 'bcryptjs'
 
 import {
   CheckUserAccountI,
-  FitRpcException, internationalisePhoneNumber,
-  loginUserRequest, QUEUE_MESSAGE, QUEUE_SERVICE,
+  Coupon,
+  FitRpcException,
+  internationalisePhoneNumber,
+  loginUserRequest,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
   registerUserRequest,
   ResponseWithStatus,
   ServicePayload,
@@ -13,7 +17,10 @@ import {
   verifyPhoneRequest
 } from '@app/common'
 import { UserRepository } from './users.repository'
-import { UpdateUserDto, PaystackInstancePayload } from '@app/common/dto/UpdateUserDto'
+import {
+  UpdateUserDto,
+  PaystackInstancePayload
+} from '@app/common/dto/UpdateUserDto'
 import { lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
 
@@ -51,14 +58,11 @@ export class UsersService {
     try {
       const user = await this.usersRepository.create(payload)
       await lastValueFrom(
-        this.notificationClient.emit(
-          QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
-          {
-            email,
-            phone,
-            password
-          }
-        )
+        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+          email,
+          phone,
+          password
+        })
       )
 
       const paystackInstancePayload: Omit<registerUserRequest, 'password'> = {
@@ -68,9 +72,14 @@ export class UsersService {
         lastName
       }
 
-      this.logger.log('[PIM] -> Account created. Emitting events for paystack instance creation')
+      this.logger.log(
+        '[PIM] -> Account created. Emitting events for paystack instance creation'
+      )
       await lastValueFrom(
-        this.paymentClient.emit(QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED, paystackInstancePayload)
+        this.paymentClient.emit(
+          QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED,
+          paystackInstancePayload
+        )
       )
 
       return user
@@ -86,7 +95,10 @@ export class UsersService {
     const user: User | null = await this.usersRepository.findOne({ phone })
 
     if (user === null) {
-      throw new FitRpcException('User with that phone number does not exist', HttpStatus.NOT_FOUND)
+      throw new FitRpcException(
+        'User with that phone number does not exist',
+        HttpStatus.NOT_FOUND
+      )
     }
 
     // if (user.isValidated) {
@@ -94,10 +106,9 @@ export class UsersService {
     // }
 
     await lastValueFrom(
-      this.notificationClient.emit(
-        QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
-        { phone }
-      )
+      this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+        phone
+      })
     )
 
     return { status: 1 }
@@ -107,10 +118,14 @@ export class UsersService {
     phone,
     password
   }: loginUserRequest): Promise<{ status: number, data: User }> {
-    const validateUserRequest: User = await this.usersRepository.findOne({ phone })
+    const validateUserRequest: User =
+      await this.usersRepository.findOneAndPopulate({ phone }, ['coupons'])
 
     if (validateUserRequest === null) {
-      throw new FitRpcException('User with that phone number does not exist', HttpStatus.NOT_FOUND)
+      throw new FitRpcException(
+        'User with that phone number does not exist',
+        HttpStatus.NOT_FOUND
+      )
     }
     const isCorrectPassword: boolean = await bcrypt.compare(
       password,
@@ -126,15 +141,11 @@ export class UsersService {
 
     if (!validateUserRequest.isValidated) {
       await lastValueFrom(
-        this.notificationClient.emit(
-          QUEUE_MESSAGE.SEND_PHONE_VERIFICATION,
-          { phone: validateUserRequest.phone }
-        )
+        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+          phone: validateUserRequest.phone
+        })
       )
-      throw new FitRpcException(
-        'Verify phone number',
-        HttpStatus.FORBIDDEN
-      )
+      throw new FitRpcException('Verify phone number', HttpStatus.FORBIDDEN)
     }
 
     validateUserRequest.password = ''
@@ -144,9 +155,7 @@ export class UsersService {
     }
   }
 
-  async updateUserStatus ({
-    phone
-  }: verifyPhoneRequest): Promise<User> {
+  async updateUserStatus ({ phone }: verifyPhoneRequest): Promise<User> {
     try {
       const user = await this.usersRepository.findOneAndUpdate(
         { phone },
@@ -183,12 +192,15 @@ export class UsersService {
 
   async getUser ({ userId }: TokenPayload): Promise<User> {
     try {
-      const user = await this.usersRepository.findOne({
-        _id: userId,
-        isDeleted: false
-      })
+      const user = (await this.usersRepository.findOneAndPopulate(
+        {
+          _id: userId,
+          isDeleted: false
+        },
+        ['coupons']
+      )) as any
       if (user === null) {
-        throw new Error()
+        throw new Error('Can not find user')
       }
       user.password = ''
       return user
@@ -251,10 +263,18 @@ export class UsersService {
     }
   }
 
-  public async updateUserPaystackDetails (data: PaystackInstancePayload): Promise<void> {
+  public async updateUserPaystackDetails (
+    data: PaystackInstancePayload
+  ): Promise<void> {
     this.logger.log(`[PIM] -> paystack instance received for ${data.phone}`)
     this.logger.log(JSON.stringify(data))
-    await this.usersRepository.findOneAndUpdate({ phone: data.phone }, { paystack_titan: data?.virtualAccountNumber, paystack_customer_id: data?.customerId })
+    await this.usersRepository.findOneAndUpdate(
+      { phone: data.phone },
+      {
+        paystack_titan: data?.virtualAccountNumber,
+        paystack_customer_id: data?.customerId
+      }
+    )
   }
 
   private async checkExistingUser (phone: string, email: string): Promise<User> {
@@ -279,6 +299,55 @@ export class UsersService {
   }
 
   public async accountRemovalRequest (data: { phone: string }): Promise<void> {
-    await this.usersRepository.findOneAndUpdate({ phone: data.phone }, { isDeleted: true })
+    await this.usersRepository.findOneAndUpdate(
+      { phone: data.phone },
+      { isDeleted: true }
+    )
+  }
+
+  public async addUserCoupon ({
+    data,
+    userId
+  }: ServicePayload<{ couponId: string }>): Promise<void> {
+    try {
+      const user = await this.usersRepository.findOne({ _id: userId })
+      const existingCoupons = user?.coupons ?? []
+      return await this.usersRepository.findOneAndUpdate(
+        { _id: user._id },
+        { coupons: [...existingCoupons, data.couponId] }
+      )
+    } catch (error) {
+      this.logger.log(error)
+      this.logger.log('Can not add coupon to user account')
+    }
+  }
+
+  public async removeUserCoupon ({
+    data,
+    userId
+  }: ServicePayload<{ couponCode: string }>): Promise<void> {
+    try {
+      const _coupon = await lastValueFrom<Coupon>(
+        this.paymentClient.send(QUEUE_MESSAGE.GET_COUPON_BY_CODE, {
+          code: data.couponCode
+        })
+      )
+
+      const user = await this.usersRepository.findOne({ _id: userId })
+
+      if (_coupon.useOnce) {
+        const coupons = user?.coupons.filter(
+          (coupon) => coupon.toString() !== _coupon._id.toString()
+        )
+
+        return await this.usersRepository.findOneAndUpdate(
+          { _id: user._id },
+          { coupons }
+        )
+      }
+    } catch (error) {
+      this.logger.log(error)
+      this.logger.log('Can not add coupon to user account')
+    }
   }
 }

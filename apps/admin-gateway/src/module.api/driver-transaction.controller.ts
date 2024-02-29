@@ -1,5 +1,12 @@
 import { Body, Controller, HttpException, Inject, Post } from '@nestjs/common'
-import { Admin, AdminLevel, IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus } from '@app/common'
+import {
+  Admin,
+  AdminLevel,
+  IRpcException,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus
+} from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { CreditWallet, UpdateTransaction } from '@app/common/dto/General.dto'
@@ -20,10 +27,13 @@ export class DriverTransactionController {
       @Body() filter: FilterQuery<DriverWalletTransaction>
   ): Promise<DriverWalletTransaction[]> {
     return await lastValueFrom<DriverWalletTransaction[]>(
-      this.paymentClient.send(QUEUE_MESSAGE.DRIVER_WALLET_FETCH_TRANSACTIONS, filter)
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.paymentClient
+        .send(QUEUE_MESSAGE.DRIVER_WALLET_FETCH_TRANSACTIONS, filter)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -33,10 +43,13 @@ export class DriverTransactionController {
       @Body() data: CreditWallet
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.paymentClient.send(QUEUE_MESSAGE.DRIVER_WALLET_ADD_BALANCE, data)
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.paymentClient
+        .send(QUEUE_MESSAGE.DRIVER_WALLET_ADD_BALANCE, data)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -46,10 +59,13 @@ export class DriverTransactionController {
       @Body() data: UpdateTransaction
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.paymentClient.send(QUEUE_MESSAGE.DRIVER_WALLET_UPDATE_TRANSACTION, data)
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.paymentClient
+        .send(QUEUE_MESSAGE.DRIVER_WALLET_UPDATE_TRANSACTION, data)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 }

@@ -47,11 +47,13 @@ export class OrdersController {
   @UseGuards(JwtAuthGuard)
   async getAllPaidOrders (): Promise<Order[]> {
     return await lastValueFrom(
-      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_ALL_PAID_ORDERS, {}).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.ordersClient
+        .send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_ALL_PAID_ORDERS, {})
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -59,11 +61,13 @@ export class OrdersController {
   @UseGuards(JwtAuthGuard)
   async getAllFulfilledOrders (): Promise<Order[]> {
     return await lastValueFrom(
-      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_ALL_FULFILLED_ORDERS, {}).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.ordersClient
+        .send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_ALL_FULFILLED_ORDERS, {})
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -71,25 +75,27 @@ export class OrdersController {
   @UseGuards(JwtAuthGuard)
   async getAllTransitOrders (): Promise<Order[]> {
     return await lastValueFrom(
-      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_ALL_TRANSIT_ORDERS, {}).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.ordersClient
+        .send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_ALL_TRANSIT_ORDERS, {})
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
   @Get('user/:id')
   @UseGuards(JwtAuthGuard)
-  async getAllUserOrder (
-    @Param('id') userId: string
-  ): Promise<Order[]> {
+  async getAllUserOrder (@Param('id') userId: string): Promise<Order[]> {
     return await lastValueFrom(
-      this.ordersClient.send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_USER_ORDERS, { userId }).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.ordersClient
+        .send<Order[]>(QUEUE_MESSAGE.ADMIN_GET_USER_ORDERS, { userId })
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 

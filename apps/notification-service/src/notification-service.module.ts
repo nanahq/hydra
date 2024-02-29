@@ -7,7 +7,12 @@ import {
   QUEUE_SERVICE,
   ScheduledListingNotification,
   ScheduledListingNotificationSchema,
-  Vendor, User, UserSchema, VendorSchema, ExportPushNotificationClient, DatabaseModule
+  Vendor,
+  User,
+  UserSchema,
+  VendorSchema,
+  ExportPushNotificationClient,
+  DatabaseModule
 } from '@app/common'
 import { NotificationServiceController } from './notification-service.controller'
 import { NotificationServiceService } from './notification-service.service'
@@ -40,7 +45,10 @@ import { SubscriptionRepository } from './subscription.repository'
       inject: [ConfigService]
     }),
     MongooseModule.forFeature([
-      { name: ScheduledListingNotification.name, schema: ScheduledListingNotificationSchema },
+      {
+        name: ScheduledListingNotification.name,
+        schema: ScheduledListingNotificationSchema
+      },
       { name: User.name, schema: UserSchema },
       { name: Vendor.name, schema: VendorSchema }
     ]),
@@ -51,6 +59,13 @@ import { SubscriptionRepository } from './subscription.repository'
     RmqModule
   ],
   controllers: [NotificationServiceController, SubscriptionController],
-  providers: [NotificationServiceService, ConfigService, SubscriptionService, ExportPushNotificationClient, SubscriptionRepository, TransactionEmails]
+  providers: [
+    NotificationServiceService,
+    ConfigService,
+    SubscriptionService,
+    ExportPushNotificationClient,
+    SubscriptionRepository,
+    TransactionEmails
+  ]
 })
 export class NotificationServiceModule {}

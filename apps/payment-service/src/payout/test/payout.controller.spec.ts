@@ -2,7 +2,9 @@ import { Test } from '@nestjs/testing'
 
 import {
   ResponseWithStatus,
-  RmqService, ServicePayload, VendorPayout
+  RmqService,
+  ServicePayload,
+  VendorPayout
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
 import { VendorPayoutController as PayoutController } from '../payout.controller'
@@ -30,9 +32,7 @@ describe('payoutServiceController', () => {
       .useValue(RmqServiceMock)
       .compile()
 
-    payoutController = moduleRef.get<PayoutController>(
-      PayoutController
-    )
+    payoutController = moduleRef.get<PayoutController>(PayoutController)
     payoutService = moduleRef.get<PayoutService>(PayoutService)
     jest.clearAllMocks()
   })
@@ -89,7 +89,9 @@ describe('payoutServiceController', () => {
         response = await payoutController.updatePayoutStatus(payload, context)
       })
       test('then it should call payoutService.updatePayoutStatus', () => {
-        expect(payoutService.updatePayoutStatus).toHaveBeenCalledWith(payload.refId)
+        expect(payoutService.updatePayoutStatus).toHaveBeenCalledWith(
+          payload.refId
+        )
       })
 
       test('then is should return success', () => {

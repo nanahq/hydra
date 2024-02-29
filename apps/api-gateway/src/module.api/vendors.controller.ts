@@ -6,14 +6,21 @@ import {
   Inject,
   Param,
   UseGuards,
-  Post, Body, Res, HttpStatus
+  Post,
+  Body,
+  Res,
+  HttpStatus
 } from '@nestjs/common'
 import {
   CurrentUser,
-  IRpcException, LocationCoordinates,
+  IRpcException,
+  LocationCoordinates,
   QUEUE_MESSAGE,
-  QUEUE_SERVICE, ScheduledListingNotification,
-  ServicePayload, SubscribeDto, TravelDistanceResult,
+  QUEUE_SERVICE,
+  ScheduledListingNotification,
+  ServicePayload,
+  SubscribeDto,
+  TravelDistanceResult,
   User,
   Vendor
 } from '@app/common'
@@ -80,9 +87,7 @@ export class VendorsController {
    */
   @Get('/home/nearest')
   @UseGuards(JwtAuthGuard)
-  async nearestToYou (
-    @CurrentUser() user: User
-  ): Promise<Vendor[]> {
+  async nearestToYou (@CurrentUser() user: User): Promise<Vendor[]> {
     const payload: ServicePayload<{ userLocation: LocationCoordinates }> = {
       userId: user._id as any,
       data: {
@@ -105,10 +110,16 @@ export class VendorsController {
       @CurrentUser() user: User
   ): Promise<TravelDistanceResult> {
     return await lastValueFrom<TravelDistanceResult>(
-      this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_ETA, { userCoords: user.location.coordinates, vendorCoords: data.coordinates })
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.locationClient
+        .send(QUEUE_MESSAGE.LOCATION_GET_ETA, {
+          userCoords: user.location.coordinates,
+          vendorCoords: data.coordinates
+        })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -120,10 +131,13 @@ export class VendorsController {
       @Res() response: Response
   ): Promise<void> {
     await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, payload)
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.notificationClient
+        .emit(QUEUE_MESSAGE.USER_SUBSCRIBE_TO_VENDOR, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
     response.status(HttpStatus.OK).end()
   }
@@ -138,10 +152,13 @@ export class VendorsController {
       data: null
     }
     return await lastValueFrom(
-      this.notificationClient.send(QUEUE_MESSAGE.GET_USER_SUBSCRIPTIONS, payload)
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.notificationClient
+        .send(QUEUE_MESSAGE.GET_USER_SUBSCRIPTIONS, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -155,11 +172,13 @@ export class VendorsController {
       data: null
     }
     return await lastValueFrom(
-      this.notificationClient.send(QUEUE_MESSAGE.GET_VENDOR_SUBSCRIPTION, payload).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.notificationClient
+        .send(QUEUE_MESSAGE.GET_VENDOR_SUBSCRIPTION, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 }

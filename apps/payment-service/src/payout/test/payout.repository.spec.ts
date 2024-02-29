@@ -25,7 +25,9 @@ describe('Payout Services - Repository', () => {
       }).compile()
 
       chargeRepository = moduleRef.get<PayoutRepository>(PayoutRepository)
-      payoutModel = moduleRef.get<PayoutModel>(getModelToken(VendorPayout.name))
+      payoutModel = moduleRef.get<PayoutModel>(
+        getModelToken(VendorPayout.name)
+      )
 
       paymentFilterQuery = {
         _id: PayoutStub()._id
@@ -103,7 +105,10 @@ describe('Payout Services - Repository', () => {
 
           beforeEach(async () => {
             saveSpy = jest.spyOn(PayoutModel.prototype, 'save')
-            constructorSpy = jest.spyOn(PayoutModel.prototype, 'constructorSpy')
+            constructorSpy = jest.spyOn(
+              PayoutModel.prototype,
+              'constructorSpy'
+            )
             payment = await chargeRepository.create(PayoutStub())
           })
 

@@ -1,4 +1,9 @@
-import { Order, OrderStatus, OrderTypes, ResponseWithStatus } from '@app/common'
+import {
+  Order,
+  OrderStatus,
+  OrderTypes,
+  ResponseWithStatus
+} from '@app/common'
 import { Types } from 'mongoose'
 
 export function OrderStub (): Order {
@@ -16,19 +21,23 @@ export function OrderStub (): Order {
     createdAt: '2023-01-15T10:00:00.000Z' as any,
     updatedAt: '2023-01-15T10:00:00.000Z' as any,
     refId: 12345,
-    options: [{
-      listing: 'listing_123',
-      options: ['Option1', 'Option2']
-    }],
+    options: [
+      {
+        listing: 'listing_123',
+        options: ['Option1', 'Option2']
+      }
+    ],
     orderType: OrderTypes.PRE,
     preciseLocation: {
       type: 'Point',
       coordinates: [12.34, 56.78]
     },
-    quantity: [{
-      listing: '',
-      quantity: 2
-    }],
+    quantity: [
+      {
+        listing: '',
+        quantity: 2
+      }
+    ],
     specialNote: 'Special instructions for the order',
     orderStatus: OrderStatus.PROCESSED,
     orderDeliveryScheduledTime: '2023-01-16T15:00:00.000Z',

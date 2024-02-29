@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpException, Inject, Param, Patch, Put, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  Patch,
+  Put,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
@@ -23,8 +34,7 @@ export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorsClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('vendors')
@@ -93,13 +103,11 @@ export class VendorController {
       @Param('id') userId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.vendorsClient
-        .send(QUEUE_MESSAGE.VENDOR_APPROVE, { userId })
-        .pipe(
-          catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.vendorsClient.send(QUEUE_MESSAGE.VENDOR_APPROVE, { userId }).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 

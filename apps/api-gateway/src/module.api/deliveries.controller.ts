@@ -25,9 +25,7 @@ export class DeliveriesController {
 
   @Get('order/:orderId')
   @UseGuards(JwtAuthGuard)
-  async getOrderDelivery (
-    @Param('orderId') orderId: string
-  ): Promise<Delivery> {
+  async getOrderDelivery (@Param('orderId') orderId: string): Promise<Delivery> {
     return await lastValueFrom<Delivery>(
       this.driversClient
         .send(QUEUE_MESSAGE.GET_ORDER_DELIVERY, { orderId })

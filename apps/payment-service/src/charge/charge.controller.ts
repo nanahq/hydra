@@ -1,7 +1,9 @@
 import {
   BankTransferAccountDetails,
   BankTransferRequest,
-  ExceptionFilterRpc, OrderInitiateCharge, PaystackChargeResponseData,
+  ExceptionFilterRpc,
+  OrderInitiateCharge,
+  PaystackChargeResponseData,
   QUEUE_MESSAGE,
   RmqService,
   UssdRequest

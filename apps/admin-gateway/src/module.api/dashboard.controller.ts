@@ -1,10 +1,23 @@
-import { Controller, Get, HttpException, Inject, Logger, UseGuards } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  HttpException,
+  Inject,
+  Logger,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
-import { Admin, IRpcException, QUEUE_MESSAGE, QUEUE_SERVICE, ResponseWithStatus } from '@app/common'
+import {
+  Admin,
+  IRpcException,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  ResponseWithStatus
+} from '@app/common'
 
 @Controller('dashboard')
 export class DashboardController {
@@ -15,8 +28,7 @@ export class DashboardController {
     private readonly adminClient: ClientProxy,
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly orderClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('')
@@ -28,7 +40,9 @@ export class DashboardController {
         .pipe(
           catchError((error: IRpcException) => {
             console.log(error)
-            this.logger.error(`Failed to fetch order aggregates. Reason: ${error.message}`)
+            this.logger.error(
+              `Failed to fetch order aggregates. Reason: ${error.message}`
+            )
             throw new HttpException(error.message, error.status)
           })
         )

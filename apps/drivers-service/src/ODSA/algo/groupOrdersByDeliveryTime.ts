@@ -43,7 +43,9 @@ export function groupOrdersByDeliveryTime (
         const groupMaxDelivery = moment(currentGroup.maxDeliveryTime)
         const scheduleTime = moment(order.orderDeliveryScheduledTime)
         currentGroup.orders.push(order)
-        currentGroup.maxDeliveryTime = moment.max(groupMaxDelivery, scheduleTime).toISOString()
+        currentGroup.maxDeliveryTime = moment
+          .max(groupMaxDelivery, scheduleTime)
+          .toISOString()
 
         currentDriverCount++
       } else {

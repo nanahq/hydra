@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, HttpException, Inject, Param, Patch } from '@nestjs/common'
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  Inject,
+  Param,
+  Patch
+} from '@nestjs/common'
 import {
   Admin,
   AdminLevel,
@@ -23,20 +31,22 @@ export class DriversController {
   @Get('drivers')
   public async getDrivers (): Promise<Driver[]> {
     return await lastValueFrom<Driver[]>(
-      this.driversClient.send(QUEUE_MESSAGE.ADMIN_GET_DRIVERS, {})
-        .pipe(catchError((error: IRpcException) => {
+      this.driversClient.send(QUEUE_MESSAGE.ADMIN_GET_DRIVERS, {}).pipe(
+        catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
-        }))
+        })
+      )
     )
   }
 
   @Get('drivers/free')
   public async getFreeDrivers (): Promise<Driver[]> {
     return await lastValueFrom<Driver[]>(
-      this.driversClient.send(QUEUE_MESSAGE.ADMIN_GET_FREE_DRIVERS, {})
-        .pipe(catchError((error: IRpcException) => {
+      this.driversClient.send(QUEUE_MESSAGE.ADMIN_GET_FREE_DRIVERS, {}).pipe(
+        catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
-        }))
+        })
+      )
     )
   }
 
@@ -46,10 +56,13 @@ export class DriversController {
       @Param('id') driverId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.driversClient.send(QUEUE_MESSAGE.ADMIN_APPROVE_DRIVER, { driverId })
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.driversClient
+        .send(QUEUE_MESSAGE.ADMIN_APPROVE_DRIVER, { driverId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -59,10 +72,13 @@ export class DriversController {
       @Param('id') driverId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.driversClient.send(QUEUE_MESSAGE.ADMIN_REJECT_DRIVER, { driverId })
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.driversClient
+        .send(QUEUE_MESSAGE.ADMIN_REJECT_DRIVER, { driverId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
@@ -72,40 +88,54 @@ export class DriversController {
       @Param('id') driverId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
-      this.driversClient.send(QUEUE_MESSAGE.ADMIN_DELETE_DRIVER, { driverId })
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.driversClient
+        .send(QUEUE_MESSAGE.ADMIN_DELETE_DRIVER, { driverId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
   @Get('deliveries')
   public async getAllDeliveries (): Promise<Delivery[]> {
     return await lastValueFrom<Delivery[]>(
-      this.driversClient.send(QUEUE_MESSAGE.ADMIN_GET_DELIVERIES, { })
-        .pipe(catchError((error: IRpcException) => {
+      this.driversClient.send(QUEUE_MESSAGE.ADMIN_GET_DELIVERIES, {}).pipe(
+        catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
-        }))
+        })
+      )
     )
   }
 
   @Get('deliveries/pending/:id')
-  public async getPendingDeliveries (@Param('id') driverId: string): Promise<Delivery[]> {
+  public async getPendingDeliveries (
+    @Param('id') driverId: string
+  ): Promise<Delivery[]> {
     return await lastValueFrom<Delivery[]>(
-      this.driversClient.send(QUEUE_MESSAGE.ADMIN_GET_DRIVER_PENDING_DELIVERIES, { driverId })
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.driversClient
+        .send(QUEUE_MESSAGE.ADMIN_GET_DRIVER_PENDING_DELIVERIES, { driverId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 
   @Get('deliveries/fulfilled/:id')
-  public async getAllFulfilledDeliveries (@Param('id') driverId: string): Promise<Delivery[]> {
+  public async getAllFulfilledDeliveries (
+    @Param('id') driverId: string
+  ): Promise<Delivery[]> {
     return await lastValueFrom<Delivery[]>(
-      this.driversClient.send(QUEUE_MESSAGE.ADMIN_GET_DRIVER_FULFILLED_DELIVERIES, { driverId })
-        .pipe(catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        }))
+      this.driversClient
+        .send(QUEUE_MESSAGE.ADMIN_GET_DRIVER_FULFILLED_DELIVERIES, { driverId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 }

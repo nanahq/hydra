@@ -1,5 +1,8 @@
 import { HttpStatus, Injectable, Logger } from '@nestjs/common'
-import { DriverWalletRepository, DriverWalletTransactionRepository } from './wallet.repository'
+import {
+  DriverWalletRepository,
+  DriverWalletTransactionRepository
+} from './wallet.repository'
 import {
   DriverWalletI,
   DriverWalletTransactionI,
@@ -9,7 +12,12 @@ import {
   WalletTransactionStatus,
   WalletTransactionType
 } from '@app/common'
-import { createTransaction, CreditWallet, DebitWallet, UpdateTransaction } from '@app/common/dto/General.dto'
+import {
+  createTransaction,
+  CreditWallet,
+  DebitWallet,
+  UpdateTransaction
+} from '@app/common/dto/General.dto'
 import { DriverWallet } from '@app/common/database/schemas/driver-wallet.schema'
 import { DriverWalletTransaction } from '@app/common/database/schemas/driver-wallet-transactions.schema'
 import { FilterQuery } from 'mongoose'
@@ -22,17 +30,30 @@ export class DriverWalletService {
     private readonly driverWalletTransactionRepository: DriverWalletTransactionRepository
   ) {}
 
-  private async createTransactionCommon (payload: createTransaction, txType: WalletTransactionType, createTransaction: boolean): Promise<DriverWallet> {
-    const wallet = await this.driverWalletRepository.findOne({ driver: payload.driver })
+  private async createTransactionCommon (
+    payload: createTransaction,
+    txType: WalletTransactionType,
+    createTransaction: boolean
+  ): Promise<DriverWallet> {
+    const wallet = await this.driverWalletRepository.findOne({
+      driver: payload.driver
+    })
     if (wallet == null) {
-      throw new FitRpcException('Driver does not have a wallet', HttpStatus.BAD_REQUEST)
+      throw new FitRpcException(
+        'Driver does not have a wallet',
+        HttpStatus.BAD_REQUEST
+      )
     }
 
     if (!createTransaction) {
       return wallet
     }
 
-    const canTransact = this.balanceCheck(wallet.balance, payload.amount, payload.type)
+    const canTransact = this.balanceCheck(
+      wallet.balance,
+      payload.amount,
+      payload.type
+    )
 
     if (!canTransact) {
       throw new FitRpcException('Insufficient balance!', HttpStatus.FORBIDDEN)
@@ -50,18 +71,30 @@ export class DriverWalletService {
     const txId = transaction._id.toString()
     const txIds = [...wallet.transactions, txId]
 
-    await this.driverWalletRepository.findOneAndUpdate({ driver: payload.driver }, { transactions: txIds })
+    await this.driverWalletRepository.findOneAndUpdate(
+      { driver: payload.driver },
+      { transactions: txIds }
+    )
 
     return wallet
   }
 
-  public async creditWallet (payload: CreditWallet): Promise<ResponseWithStatus> {
+  public async creditWallet (
+    payload: CreditWallet
+  ): Promise<ResponseWithStatus> {
     try {
-      const wallet = await this.createTransactionCommon(payload as any, 'CREDIT', payload.withTransaction) as any
+      const wallet = (await this.createTransactionCommon(
+        payload as any,
+        'CREDIT',
+        payload.withTransaction
+      )) as any
 
       const amountToCredit = Number(wallet.balance) + payload.amount
 
-      await this.driverWalletRepository.findOneAndUpdate({ driver: payload.driver }, { balance: amountToCredit })
+      await this.driverWalletRepository.findOneAndUpdate(
+        { driver: payload.driver },
+        { balance: amountToCredit }
+      )
 
       return { status: 1 }
     } catch (error) {
@@ -72,10 +105,17 @@ export class DriverWalletService {
 
   public async debitWallet (payload: DebitWallet): Promise<ResponseWithStatus> {
     try {
-      const wallet = await this.createTransactionCommon(payload as any, 'DEBIT', payload.withTransaction) as any
+      const wallet = (await this.createTransactionCommon(
+        payload as any,
+        'DEBIT',
+        payload.withTransaction
+      )) as any
       const amountToDebit = Number(wallet.balance) - payload.amount
 
-      await this.driverWalletRepository.findOneAndUpdate({ driver: payload.driver }, { balance: amountToDebit })
+      await this.driverWalletRepository.findOneAndUpdate(
+        { driver: payload.driver },
+        { balance: amountToDebit }
+      )
 
       return { status: 1 }
     } catch (error) {
@@ -85,32 +125,58 @@ export class DriverWalletService {
 
   public async fetchWallet (driver: string): Promise<DriverWalletI> {
     try {
-      return await this.driverWalletRepository.findOneAndPopulate<DriverWalletI>({ driver }, ['transactions'])
+      return await this.driverWalletRepository.findOneAndPopulate<DriverWalletI>(
+        { driver },
+        ['transactions']
+      )
     } catch (error) {
-      throw new FitRpcException('failed to fetch wallet', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'failed to fetch wallet',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  public async fetchSingleTransaction (txId: string): Promise<DriverWalletTransactionI> {
+  public async fetchSingleTransaction (
+    txId: string
+  ): Promise<DriverWalletTransactionI> {
     try {
-      return await this.driverWalletTransactionRepository.findOneAndPopulate<DriverWalletTransactionI>({ _id: txId }, ['wallet', 'driver'])
+      return await this.driverWalletTransactionRepository.findOneAndPopulate<DriverWalletTransactionI>(
+        { _id: txId },
+        ['wallet', 'driver']
+      )
     } catch (error) {
-      throw new FitRpcException('failed to fetch transaction', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'failed to fetch transaction',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  public async fetchAllTransactions (filter: FilterQuery<DriverWalletTransaction>): Promise<DriverWalletTransactionI[]> {
+  public async fetchAllTransactions (
+    filter: FilterQuery<DriverWalletTransaction>
+  ): Promise<DriverWalletTransactionI[]> {
     try {
-      return await this.driverWalletTransactionRepository.findAndPopulate<DriverWalletTransactionI>(filter, ['wallet', 'driver'])
+      return await this.driverWalletTransactionRepository.findAndPopulate<DriverWalletTransactionI>(
+        filter,
+        ['wallet', 'driver']
+      )
     } catch (error) {
       console.log(error)
-      throw new FitRpcException('failed to fetch transactions', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'failed to fetch transactions',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  public async createTransaction (payload: createTransaction): Promise<ResponseWithStatus> {
+  public async createTransaction (
+    payload: createTransaction
+  ): Promise<ResponseWithStatus> {
     try {
-      const wallet = await this.driverWalletRepository.findOne({ driver: payload.driver })
+      const wallet = await this.driverWalletRepository.findOne({
+        driver: payload.driver
+      })
 
       if (wallet == null) {
         throw new Error('Can not find wallet with that ID')
@@ -148,7 +214,10 @@ export class DriverWalletService {
 
       return { status: 1 }
     } catch (error) {
-      throw new FitRpcException('failed to create transactions', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'failed to create transactions',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -161,17 +230,29 @@ export class DriverWalletService {
         logs: []
       })
     } catch (error) {
-      throw new FitRpcException('failed to create wallet', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'failed to create wallet',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  public async updateTransactionStatus (payload: UpdateTransaction): Promise<ResponseWithStatus> {
-    await this.driverWalletTransactionRepository.findOneAndUpdate({ _id: payload.txId }, { status: payload.status })
+  public async updateTransactionStatus (
+    payload: UpdateTransaction
+  ): Promise<ResponseWithStatus> {
+    await this.driverWalletTransactionRepository.findOneAndUpdate(
+      { _id: payload.txId },
+      { status: payload.status }
+    )
 
     return { status: 1 }
   }
 
-  private balanceCheck (balance: number, amount: number, txType: WalletTransactionType): boolean {
+  private balanceCheck (
+    balance: number,
+    amount: number,
+    txType: WalletTransactionType
+  ): boolean {
     if (txType === 'CREDIT') {
       return true
     }

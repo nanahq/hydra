@@ -16,7 +16,9 @@ export class AwsService {
   }
 
   async upload (file: Express.Multer.File): Promise<string | undefined> {
-    const Key = `vendors/${Date.now()}${RandomGen.genRandomString(100, 8)}.${file.mimetype.split('/')[1]}`
+    const Key = `vendors/${Date.now()}${RandomGen.genRandomString(100, 8)}.${
+      file.mimetype.split('/')[1]
+    }`
 
     const command = new PutObjectCommand({
       Key,

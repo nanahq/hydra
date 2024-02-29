@@ -11,7 +11,8 @@ import {
   RandomGen,
   ResponseWithStatus,
   SendPayoutEmail,
-  VendorPayout, VendorPayoutServiceI
+  VendorPayout,
+  VendorPayoutServiceI
 } from '@app/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
@@ -61,7 +62,10 @@ export class VendorPayoutService implements VendorPayoutServiceI {
   }
 
   async getAllPayout (): Promise<any> {
-    return await this.payoutRepository.findAndPopulate({}, ['vendor', 'orders'])
+    return await this.payoutRepository.findAndPopulate({}, [
+      'vendor',
+      'orders'
+    ])
   }
 
   async getVendorPayout (vendor: string): Promise<VendorPayout[]> {
@@ -155,7 +159,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
       )
     )
 
-    const ordersId = orders.map(order => order._id)
+    const ordersId = orders.map((order) => order._id)
 
     // Compute earnings for each vendor
     const vendorEarnings = new Map<string, number>()
@@ -203,10 +207,9 @@ export class VendorPayoutService implements VendorPayoutServiceI {
       paid: true
     }
 
-    const todayPayouts = (await this.payoutRepository.findAndPopulate(
-      filter,
-      ['vendor']
-    )) as any
+    const todayPayouts = (await this.payoutRepository.findAndPopulate(filter, [
+      'vendor'
+    ])) as any
 
     if (todayPayouts.length < 1) {
       return

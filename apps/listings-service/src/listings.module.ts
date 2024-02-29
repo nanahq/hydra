@@ -18,14 +18,16 @@ import {
   ListingOptionGroup,
   ListingOptionGroupSchema,
   ScheduledListing,
-  ScheduledListingSchema, QUEUE_SERVICE
+  ScheduledListingSchema,
+  QUEUE_SERVICE
 } from '@app/common'
 
 import { MongooseModule } from '@nestjs/mongoose'
 import {
   ListingMenuRepository,
   ListingCategoryRepository,
-  ListingOptionGroupRepository, ScheduledListingRepository
+  ListingOptionGroupRepository,
+  ScheduledListingRepository
 } from './listings.repository'
 import { ScheduleModule } from '@nestjs/schedule'
 import { CacheModule } from '@nestjs/cache-manager'

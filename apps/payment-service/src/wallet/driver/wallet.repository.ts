@@ -21,7 +21,8 @@ export class DriverWalletTransactionRepository extends AbstractRepository<Driver
   protected readonly logger = new Logger(DriverWalletTransaction.name)
 
   constructor (
-  @InjectModel(DriverWalletTransaction.name) payoutModel: Model<DriverWalletTransaction>
+  @InjectModel(DriverWalletTransaction.name)
+    payoutModel: Model<DriverWalletTransaction>
   ) {
     super(payoutModel)
   }

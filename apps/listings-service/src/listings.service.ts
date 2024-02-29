@@ -8,15 +8,20 @@ import {
   ListingMenu,
   ListingMenuI,
   ListingOptionGroup,
-  ListingRejectPush, LocationCoordinates,
+  ListingRejectPush,
+  LocationCoordinates,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus, ReviewServiceGetMostReviewed,
+  ResponseWithStatus,
+  ReviewServiceGetMostReviewed,
   ScheduledListing,
-  ScheduledListingDto, ScheduledListingI,
+  ScheduledListingDto,
+  ScheduledListingI,
   ScheduledPushPayload,
   ServicePayload,
-  UserHomePage, VendorServiceHomePageResult, VendorUserI
+  UserHomePage,
+  VendorServiceHomePageResult,
+  VendorUserI
 } from '@app/common'
 import {
   ListingCategoryRepository,
@@ -57,15 +62,9 @@ export class ListingsService {
     data,
     userId: vendorId
   }: ServicePayload<any>): Promise<ResponseWithStatus> {
-    const {
-      categoryId,
-      ...rest
-    } = data
+    const { categoryId, ...rest } = data
     try {
-      const {
-        _id,
-        listingsMenu
-      } =
+      const { _id, listingsMenu } =
         (await this.listingCategoryRepository.findOne({
           _id: categoryId
         })) as ListingCategory
@@ -91,28 +90,34 @@ export class ListingsService {
   }
 
   async updateListingMenu ({
-    data: {
-      menuId,
-      ...rest
-    },
+    data: { menuId, ...rest },
     userId
   }: ServicePayload<any>): Promise<ResponseWithStatus> {
     try {
-      await this.listingMenuRepository.findOneAndUpdate({
-        _id: menuId,
-        vendor: userId
-      }, { ...rest })
+      await this.listingMenuRepository.findOneAndUpdate(
+        {
+          _id: menuId,
+          vendor: userId
+        },
+        { ...rest }
+      )
       return { status: 1 }
     } catch (e) {
-      throw new FitRpcException('Failed to update listings', HttpStatus.UNPROCESSABLE_ENTITY)
+      throw new FitRpcException(
+        'Failed to update listings',
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
     }
   }
 
   async getAllPendingListingMenu (): Promise<ListingMenu[]> {
-    const getRequest = await this.listingMenuRepository.findAndPopulate({
-      isDeleted: false,
-      status: ListingApprovalStatus.PENDING
-    }, ['optionGroups', 'vendor']) as any
+    const getRequest = (await this.listingMenuRepository.findAndPopulate(
+      {
+        isDeleted: false,
+        status: ListingApprovalStatus.PENDING
+      },
+      ['optionGroups', 'vendor']
+    )) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -125,10 +130,13 @@ export class ListingsService {
   }
 
   async getAllApprovedListingMenu (): Promise<ListingMenu[]> {
-    const getRequest = await this.listingMenuRepository.findAndPopulate({
-      isDeleted: false,
-      status: ListingApprovalStatus.APPROVED
-    }, ['optionGroups', 'vendor']) as any
+    const getRequest = (await this.listingMenuRepository.findAndPopulate(
+      {
+        isDeleted: false,
+        status: ListingApprovalStatus.APPROVED
+      },
+      ['optionGroups', 'vendor']
+    )) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -140,10 +148,13 @@ export class ListingsService {
   }
 
   async getAllRejectedListingMenu (): Promise<ListingMenu[]> {
-    const getRequest = await this.listingMenuRepository.findAndPopulate({
-      isDeleted: false,
-      status: ListingApprovalStatus.DISAPPROVED
-    }, ['optionGroups', 'vendor']) as any
+    const getRequest = (await this.listingMenuRepository.findAndPopulate(
+      {
+        isDeleted: false,
+        status: ListingApprovalStatus.DISAPPROVED
+      },
+      ['optionGroups', 'vendor']
+    )) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -155,9 +166,12 @@ export class ListingsService {
   }
 
   async getAllListingMenu (): Promise<ListingMenu[]> {
-    const getRequest = await this.listingMenuRepository.findAndPopulate({
-      isDeleted: false
-    }, ['optionGroups', 'vendor']) as any
+    const getRequest = (await this.listingMenuRepository.findAndPopulate(
+      {
+        isDeleted: false
+      },
+      ['optionGroups', 'vendor']
+    )) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -169,10 +183,13 @@ export class ListingsService {
   }
 
   async getAllVendorListingMenu (vendor: string): Promise<ListingMenu[]> {
-    const getRequest = await this.listingMenuRepository.findAndPopulate({
-      vendor,
-      isDeleted: false
-    }, ['optionGroups']) as any
+    const getRequest = (await this.listingMenuRepository.findAndPopulate(
+      {
+        vendor,
+        isDeleted: false
+      },
+      ['optionGroups']
+    )) as any
 
     if (getRequest === null) {
       throw new FitRpcException(
@@ -191,7 +208,11 @@ export class ListingsService {
       }
     )
 
-    const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenuI>({ _id }, ['vendor'])
+    const listing =
+      await this.listingMenuRepository.findOneAndPopulate<ListingMenuI>(
+        { _id },
+        ['vendor']
+      )
 
     if (updateRequest === null) {
       throw new FitRpcException(
@@ -208,13 +229,19 @@ export class ListingsService {
       vendorName: listing.vendor.businessName
     }
     await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_APPROVED, payload)
+      this.notificationClient.emit(
+        QUEUE_MESSAGE.NOTIFICATION_LISTING_APPROVED,
+        payload
+      )
     )
 
     return { status: 1 }
   }
 
-  public async disapprove (_id: string, reason: string): Promise<ResponseWithStatus> {
+  public async disapprove (
+    _id: string,
+    reason: string
+  ): Promise<ResponseWithStatus> {
     const updateRequest = await this.listingMenuRepository.findOneAndUpdate(
       { _id },
       {
@@ -223,7 +250,11 @@ export class ListingsService {
       }
     )
 
-    const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenuI>({ _id }, ['vendor'])
+    const listing =
+      await this.listingMenuRepository.findOneAndPopulate<ListingMenuI>(
+        { _id },
+        ['vendor']
+      )
 
     if (updateRequest === null) {
       throw new FitRpcException(
@@ -241,7 +272,10 @@ export class ListingsService {
       rejectionReason: reason
     }
     await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.NOTIFICATION_LISTING_REJECTED, payload)
+      this.notificationClient.emit(
+        QUEUE_MESSAGE.NOTIFICATION_LISTING_REJECTED,
+        payload
+      )
     )
 
     return { status: 1 }
@@ -251,10 +285,11 @@ export class ListingsService {
     data
   }: ServicePayload<string>): Promise<ListingMenu> {
     try {
-      const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
-        { _id: data },
-        ['optionGroups']
-      )
+      const listing =
+        await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
+          { _id: data },
+          ['optionGroups']
+        )
       if (listing === null) {
         throw new FitRpcException(
           'Listing with that id can not be found',
@@ -272,10 +307,11 @@ export class ListingsService {
 
   async findOneById (id: string): Promise<ListingMenu> {
     try {
-      const listing = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
-        { _id: id },
-        ['optionGroups']
-      )
+      const listing =
+        await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
+          { _id: id },
+          ['optionGroups']
+        )
 
       if (listing === null) {
         throw new FitRpcException(
@@ -286,7 +322,7 @@ export class ListingsService {
 
       return listing
     } catch (error) {
-      if ((Boolean(error.status)) && error.status === 404) {
+      if (Boolean(error.status) && error.status === 404) {
         throw error
       }
 
@@ -320,13 +356,14 @@ export class ListingsService {
     userId: vendorId
   }: ServicePayload<string>): Promise<ListingCategory> {
     try {
-      const cat = await this.listingCategoryRepository.findOneAndPopulate<ListingCategory>(
-        {
-          _id,
-          vendorId
-        },
-        ['listingsMenu', 'vendor']
-      )
+      const cat =
+        await this.listingCategoryRepository.findOneAndPopulate<ListingCategory>(
+          {
+            _id,
+            vendorId
+          },
+          ['listingsMenu', 'vendor']
+        )
       if (cat === null) {
         throw new FitRpcException('Category not found', HttpStatus.NOT_FOUND)
       }
@@ -452,20 +489,33 @@ export class ListingsService {
 
   async getAllMenuUser (): Promise<ListingMenu[]> {
     try {
-      return await this.listingMenuRepository.findAndPopulate({
-        isDeleted: false,
-        status: ListingApprovalStatus.APPROVED
-      }, ['optionGroups', 'vendor'])
+      return await this.listingMenuRepository.findAndPopulate(
+        {
+          isDeleted: false,
+          status: ListingApprovalStatus.APPROVED
+        },
+        ['optionGroups', 'vendor']
+      )
     } catch (error) {
-      throw new FitRpcException('Can not fetch menu at this time.', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not fetch menu at this time.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   async getSingleUserMenu (mid: string): Promise<ListingMenu> {
-    const menu = await this.listingMenuRepository.findOneAndPopulate<ListingMenu>({ _id: mid }, ['optionGroups'])
+    const menu =
+      await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
+        { _id: mid },
+        ['optionGroups']
+      )
 
     if (menu === null) {
-      throw new FitRpcException('Can not find menu with that ID', HttpStatus.NOT_FOUND)
+      throw new FitRpcException(
+        'Can not find menu with that ID',
+        HttpStatus.NOT_FOUND
+      )
     }
 
     return menu
@@ -473,26 +523,48 @@ export class ListingsService {
 
   async getAllCategoriesUsers (): Promise<ListingCategory[]> {
     try {
-      return await this.listingCategoryRepository.findAndPopulate({}, ['listingsMenu', 'vendor'])
+      return await this.listingCategoryRepository.findAndPopulate({}, [
+        'listingsMenu',
+        'vendor'
+      ])
     } catch (error) {
-      throw new FitRpcException('Can not get categories at this time', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not get categories at this time',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   async getSingleUserCategory (catid: string): Promise<ListingCategory> {
-    const category = await this.listingCategoryRepository.findOneAndPopulate<ListingCategory>({ _id: catid }, ['listingsMenu', 'vendor'])
+    const category =
+      await this.listingCategoryRepository.findOneAndPopulate<ListingCategory>(
+        { _id: catid },
+        ['listingsMenu', 'vendor']
+      )
 
     if (category === null) {
-      throw new FitRpcException('Can not find category with that ID', HttpStatus.NOT_FOUND)
+      throw new FitRpcException(
+        'Can not find category with that ID',
+        HttpStatus.NOT_FOUND
+      )
     }
     return category
   }
 
-  async createScheduledListing (data: ScheduledListingDto): Promise<ResponseWithStatus> {
+  async createScheduledListing (
+    data: ScheduledListingDto
+  ): Promise<ResponseWithStatus> {
     try {
-      await this.scheduledListingRepository.create({ ...data, remainingQuantity: data.quantity })
+      await this.scheduledListingRepository.create({
+        ...data,
+        remainingQuantity: data.quantity
+      })
 
-      const listingMenu: ListingMenuI = await this.listingMenuRepository.findOneAndPopulate({ _id: data.listing }, ['vendor'])
+      const listingMenu: ListingMenuI =
+        await this.listingMenuRepository.findOneAndPopulate(
+          { _id: data.listing },
+          ['vendor']
+        )
 
       this.logger.log('sending push scheduled to subscribe')
 
@@ -502,73 +574,111 @@ export class ListingsService {
           listingName: listingMenu.name,
           listingAvailableDate: data.availableDate
         }
-        await lastValueFrom(this.notificationClient.emit(QUEUE_MESSAGE.SEND_PUSH_NOTIFICATION_LISTING, notificationPayload))
+        await lastValueFrom(
+          this.notificationClient.emit(
+            QUEUE_MESSAGE.SEND_PUSH_NOTIFICATION_LISTING,
+            notificationPayload
+          )
+        )
       }
       return { status: 1 }
     } catch (error) {
       this.logger.error({
         error
       })
-      throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not create schedule listings at this time something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   f
 
-  async updateScheduledListingCount (listingMenuIds: string[], quantity: Array<{ listing: string, quantity: number }>): Promise<void> {
+  async updateScheduledListingCount (
+    listingMenuIds: string[],
+    quantity: Array<{ listing: string, quantity: number }>
+  ): Promise<void> {
     try {
-      const listings = await this.scheduledListingRepository.find({ listing: { $in: listingMenuIds } })
+      const listings = await this.scheduledListingRepository.find({
+        listing: { $in: listingMenuIds }
+      })
 
       for (const item of quantity) {
         const listing = listings.find((l) => l.listing === item.listing)
-        const soldOut = (listing.remainingQuantity - item.quantity) === 0
+        const soldOut = listing.remainingQuantity - item.quantity === 0
         if (listing !== null) {
-          await this.scheduledListingRepository.findOneAndUpdate({ _id: listing._id }, {
-            remainingQuantity: listing.remainingQuantity - item.quantity,
-            soldOut
-          })
+          await this.scheduledListingRepository.findOneAndUpdate(
+            { _id: listing._id },
+            {
+              remainingQuantity: listing.remainingQuantity - item.quantity,
+              soldOut
+            }
+          )
         }
       }
     } catch (error) {
-      throw new FitRpcException('Cannot update scheduled listings at this time; something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Cannot update scheduled listings at this time; something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  async getAllScheduledListing (vendor: string): Promise<ScheduledListing[] > {
+  async getAllScheduledListing (vendor: string): Promise<ScheduledListing[]> {
     try {
-      return await this.scheduledListingRepository.findAndPopulate({ vendor }, ['listing', 'vendor'])
+      return await this.scheduledListingRepository.findAndPopulate({ vendor }, [
+        'listing',
+        'vendor'
+      ])
     } catch (error) {
       this.logger.error({
         error
       })
-      throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not create schedule listings at this time something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  async getAllScheduledListingUser (): Promise<ScheduledListing[] > {
+  async getAllScheduledListingUser (): Promise<ScheduledListing[]> {
     try {
-      return await this.scheduledListingRepository.findAndPopulate({ }, ['listing', 'vendor'])
+      return await this.scheduledListingRepository.findAndPopulate({}, [
+        'listing',
+        'vendor'
+      ])
     } catch (error) {
       this.logger.error({
         error
       })
-      throw new FitRpcException('Can not create schedule listings at this time something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not create schedule listings at this time something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   async getVendorCategories (vendor: string): Promise<ListingCategory[]> {
     try {
-      return await this.listingCategoryRepository.findAndPopulate({ vendor, isLive: true }, ['listingsMenu'])
+      return await this.listingCategoryRepository.findAndPopulate(
+        { vendor, isLive: true },
+        ['listingsMenu']
+      )
     } catch (error) {
       this.logger.error(error)
-      throw new FitRpcException('Can not fetch vendor listings at this time', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not fetch vendor listings at this time',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
   async getVendorListings (vendor: string): Promise<any[]> {
     try {
       const rawModel = this.listingCategoryRepository.findRaw()
-      const listings: ListingCategoryI[] = await rawModel.find({ vendor, isLive: true })
+      const listings: ListingCategoryI[] = await rawModel
+        .find({ vendor, isLive: true })
         .populate({
           path: 'listingsMenu',
           populate: {
@@ -576,32 +686,53 @@ export class ListingsService {
           }
         })
       return listings.map((li) => {
-        return li.listingsMenu.filter((menu) => menu.status === ListingApprovalStatus.APPROVED)
+        return li.listingsMenu.filter(
+          (menu) => menu.status === ListingApprovalStatus.APPROVED
+        )
       })
     } catch (error) {
       this.logger.error({
         error
       })
-      throw new FitRpcException('Can not fetch vendor listings at this time', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Can not fetch vendor listings at this time',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  async getHomePageData (userLocation: LocationCoordinates): Promise<UserHomePage> {
+  async getHomePageData (
+    userLocation: LocationCoordinates
+  ): Promise<UserHomePage> {
     try {
-      const [vendorServiceResult, reviewServiceResult, listingsCategories, scheduled] =
-          await Promise.all([
-            lastValueFrom<VendorServiceHomePageResult>(
-              this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, { userLocation })
-            ),
-            lastValueFrom<ReviewServiceGetMostReviewed>(
-              this.reviewsClient.send(QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE, {})
-            ),
-            this.listingCategoryRepository.findAndPopulate({}, ['vendor', 'listingsMenu']),
-            this.scheduledListingRepository.findAndPopulate<ScheduledListingI>({}, ['listing'])
-          ])
+      const [
+        vendorServiceResult,
+        reviewServiceResult,
+        listingsCategories,
+        scheduled
+      ] = await Promise.all([
+        lastValueFrom<VendorServiceHomePageResult>(
+          this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, {
+            userLocation
+          })
+        ),
+        lastValueFrom<ReviewServiceGetMostReviewed>(
+          this.reviewsClient.send(
+            QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE,
+            {}
+          )
+        ),
+        this.listingCategoryRepository.findAndPopulate({}, [
+          'vendor',
+          'listingsMenu'
+        ]),
+        this.scheduledListingRepository.findAndPopulate<ScheduledListingI>({}, [
+          'listing'
+        ])
+      ])
 
       const mostReviewedVendorsIds: Set<any> = new Set(
-        reviewServiceResult.vendors.map(v => v._id)
+        reviewServiceResult.vendors.map((v) => v._id)
       )
       const categoriesWithListingsMenuIds: Set<string> = new Set(
         listingsCategories
@@ -609,15 +740,21 @@ export class ListingsService {
           .map((cat: any) => cat.vendor._id.toString())
       )
 
-      const filteredVendors = vendorServiceResult.allVendors.filter(vendor => categoriesWithListingsMenuIds.has(vendor?._id.toString()))
+      const filteredVendors = vendorServiceResult.allVendors.filter((vendor) =>
+        categoriesWithListingsMenuIds.has(vendor?._id.toString())
+      )
 
-      const topVendors = filteredVendors.filter(v => mostReviewedVendorsIds.has(v._id.toString()))
+      const topVendors = filteredVendors.filter((v) =>
+        mostReviewedVendorsIds.has(v._id.toString())
+      )
 
-      const [homeMadeChefs, instantDelivery] = [
-        'PRE_ORDER',
-        'ON_DEMAND'
-      ].map(deliveryType =>
-        filteredVendors.filter(v => v.settings?.operations?.deliveryType === deliveryType).slice(0, 20)
+      const [homeMadeChefs, instantDelivery] = ['PRE_ORDER', 'ON_DEMAND'].map(
+        (deliveryType) =>
+          filteredVendors
+            .filter(
+              (v) => v.settings?.operations?.deliveryType === deliveryType
+            )
+            .slice(0, 20)
       )
 
       const tomorrowStart = moment().add(1, 'day').startOf('day')
@@ -627,7 +764,7 @@ export class ListingsService {
           const availableStart = moment(sch.availableDate).startOf('day')
           return availableStart.isSame(tomorrowStart) && !sch.soldOut
         })
-        .map(li => li.listing)
+        .map((li) => li.listing)
         .slice(0, 20)
 
       return {
@@ -640,7 +777,10 @@ export class ListingsService {
       }
     } catch (error) {
       this.logger.log({ error })
-      throw new FitRpcException('Something went wrong fetching Homepage', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong fetching Homepage',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -651,9 +791,13 @@ export class ListingsService {
     try {
       this.logger.log('[CRON] -> Deleting past day scheduled listings')
 
-      const listings = await this.scheduledListingRepository.find({}) as ScheduledListing[]
+      const listings = (await this.scheduledListingRepository.find(
+        {}
+      )) as ScheduledListing[]
 
-      this.logger.log(`[CRON] -> ${listings.length} scheduled listings to be deleted `)
+      this.logger.log(
+        `[CRON] -> ${listings.length} scheduled listings to be deleted `
+      )
 
       const idsToDelete: any[] = []
 
@@ -667,10 +811,15 @@ export class ListingsService {
       }
 
       if (idsToDelete.length > 0) {
-        await this.scheduledListingRepository.deleteMany({ _id: { $in: idsToDelete } })
+        await this.scheduledListingRepository.deleteMany({
+          _id: { $in: idsToDelete }
+        })
       }
     } catch (error) {
-      this.logger.error('[CRON] -> Failed to delete past day scheduled listings:', error)
+      this.logger.error(
+        '[CRON] -> Failed to delete past day scheduled listings:',
+        error
+      )
     }
   }
 }

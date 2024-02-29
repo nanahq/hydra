@@ -1,8 +1,11 @@
 import { Test } from '@nestjs/testing'
 
 import {
-  BankTransferAccountDetails, BankTransferRequest,
-  RmqService, SupportedBanks, UssdRequest
+  BankTransferAccountDetails,
+  BankTransferRequest,
+  RmqService,
+  SupportedBanks,
+  UssdRequest
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
 import { PaymentController } from '../../charge/charge.controller'
@@ -29,9 +32,7 @@ describe('paymentServiceController', () => {
       .useValue(RmqServiceMock)
       .compile()
 
-    paymentController = moduleRef.get<PaymentController>(
-      PaymentController
-    )
+    paymentController = moduleRef.get<PaymentController>(PaymentController)
     paymentService = moduleRef.get<PaymentService>(PaymentService)
     jest.clearAllMocks()
   })
@@ -47,7 +48,10 @@ describe('paymentServiceController', () => {
           orderId: 'fyvgubhijr5t678g9h'
         }
 
-        response = await paymentController.chargeWithBankTransfer(payload, context)
+        response = await paymentController.chargeWithBankTransfer(
+          payload,
+          context
+        )
       })
       test('then it should call paymentService.chargeWithBankTransfer', () => {
         expect(paymentService.chargeWithBankTransfer).toBeCalledWith(payload)

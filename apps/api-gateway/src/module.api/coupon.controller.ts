@@ -1,4 +1,11 @@
-import { Body, Controller, HttpException, Inject, Post, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  HttpException,
+  Inject,
+  Post,
+  UseGuards
+} from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import {
   CouponRedeemResponse,
@@ -17,8 +24,7 @@ export class CouponController {
   constructor (
     @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
     private readonly paymentServiceClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Post('redeem')
@@ -33,7 +39,8 @@ export class CouponController {
       }
     }
     return await lastValueFrom<CouponRedeemResponse>(
-      this.paymentServiceClient.send(QUEUE_MESSAGE.REDEEM_COUPON, servicePayload)
+      this.paymentServiceClient
+        .send(QUEUE_MESSAGE.REDEEM_COUPON, servicePayload)
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

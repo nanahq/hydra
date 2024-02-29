@@ -1,6 +1,14 @@
-import { Body, Controller, HttpException, Inject, Post, UseGuards } from '@nestjs/common'
 import {
-  CurrentUser, DeliveryFeeResult,
+  Body,
+  Controller,
+  HttpException,
+  Inject,
+  Post,
+  UseGuards
+} from '@nestjs/common'
+import {
+  CurrentUser,
+  DeliveryFeeResult,
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -14,7 +22,6 @@ import { catchError, lastValueFrom } from 'rxjs'
 @Controller('location')
 export class LocationController {
   constructor (
-
     @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
     private readonly locationClient: ClientProxy
   ) {}
@@ -41,11 +48,13 @@ export class LocationController {
       @Body() data: { userCoords: number[], vendorCoords: number[] }
   ): Promise<any> {
     return await lastValueFrom<DeliveryFeeResult>(
-      this.locationClient.send(QUEUE_MESSAGE.LOCATION_GET_DELIVERY_FEE, data).pipe(
-        catchError((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
+      this.locationClient
+        .send(QUEUE_MESSAGE.LOCATION_GET_DELIVERY_FEE, data)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
     )
   }
 }

@@ -3,11 +3,14 @@ import {
   BankTransferAccountDetails,
   BankTransferRequest,
   BaseChargeRequest,
-  FitRpcException, nairaToKobo,
-  OrderI, OrderInitiateCharge,
+  FitRpcException,
+  nairaToKobo,
+  OrderI,
+  OrderInitiateCharge,
   OrderStatus,
   Payment,
-  PaymentServiceI, PaystackCharge,
+  PaymentServiceI,
+  PaystackCharge,
   PaystackChargeResponseData,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -60,7 +63,9 @@ export class PaymentService implements PaymentServiceI {
           )
       )
 
-      const existingPayment = await this.paymentRepository.findOne({ order: order._id })
+      const existingPayment = await this.paymentRepository.findOne({
+        order: order._id
+      })
 
       if (existingPayment !== null) {
         return JSON.parse(existingPayment.paymentMeta)
@@ -133,7 +138,9 @@ export class PaymentService implements PaymentServiceI {
           )
       )
 
-      const existingPayment = await this.paymentRepository.findOne({ order: order._id })
+      const existingPayment = await this.paymentRepository.findOne({
+        order: order._id
+      })
 
       if (existingPayment !== null) {
         return JSON.parse(existingPayment.paymentMeta)
@@ -183,8 +190,12 @@ export class PaymentService implements PaymentServiceI {
     }
   }
 
-  async initiateChargePaystack (req: OrderInitiateCharge): Promise<PaystackChargeResponseData> {
-    this.logger.log(`[PIM] - Initiating paystack charge for order ${req.orderId}`)
+  async initiateChargePaystack (
+    req: OrderInitiateCharge
+  ): Promise<PaystackChargeResponseData> {
+    this.logger.log(
+      `[PIM] - Initiating paystack charge for order ${req.orderId}`
+    )
 
     const payload: PaystackCharge = {
       email: req.email,
@@ -279,9 +290,7 @@ export class PaymentService implements PaymentServiceI {
   }
 
   async verifyPaymentPaystack (refId: string): Promise<void> {
-    this.logger.log(
-      `[PIM] - Verifying paystack order payment ref: ${refId}`
-    )
+    this.logger.log(`[PIM] - Verifying paystack order payment ref: ${refId}`)
 
     try {
       const payment = (await this.paymentRepository.findOne({
@@ -296,9 +305,14 @@ export class PaymentService implements PaymentServiceI {
 
       const verificationStatus = await this.paystack.verify(refId)
 
-      this.logger.log(`[PIM] - fetched payment verification :${verificationStatus.data.status}`)
+      this.logger.log(
+        `[PIM] - fetched payment verification :${verificationStatus.data.status}`
+      )
 
-      if (verificationStatus.data.status.toLowerCase() !== 'success' || (verificationStatus.data.amount / 100) !== Number(payment.chargedAmount)) {
+      if (
+        verificationStatus.data.status.toLowerCase() !== 'success' ||
+        verificationStatus.data.amount / 100 !== Number(payment.chargedAmount)
+      ) {
         throw new Error('Payment not successful')
       }
 
@@ -336,19 +350,33 @@ export class PaymentService implements PaymentServiceI {
     }
   }
 
-  async getPaymentInfo (payload: { userId: string, orderId: string }): Promise<Payment | null> {
+  async getPaymentInfo (payload: {
+    userId: string
+    orderId: string
+  }): Promise<Payment | null> {
     try {
-      return await this.paymentRepository.findOne({ order: payload.orderId, user: payload.userId })
+      return await this.paymentRepository.findOne({
+        order: payload.orderId,
+        user: payload.userId
+      })
     } catch (error) {
-      throw new FitRpcException('Something went wrong getting payment info', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong getting payment info',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
-  async getAllPaymentInfo (payload: { userId: string }): Promise<Payment[] | null> {
+  async getAllPaymentInfo (payload: {
+    userId: string
+  }): Promise<Payment[] | null> {
     try {
       return await this.paymentRepository.find({ user: payload.userId })
     } catch (error) {
-      throw new FitRpcException('Something went wrong getting payment info', HttpStatus.INTERNAL_SERVER_ERROR)
+      throw new FitRpcException(
+        'Something went wrong getting payment info',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 
@@ -360,12 +388,12 @@ export class PaymentService implements PaymentServiceI {
       const date = new Date()
       const pastTenMinutes = new Date(date.getTime() - 10 * 60 * 1000)
 
-      const payments = await this.paymentRepository.find({
+      const payments = (await this.paymentRepository.find({
         createdAt: {
           $lt: pastTenMinutes.toISOString()
         },
         status: 'PENDING'
-      }) as Payment[] | null
+      })) as Payment[] | null
 
       if (payments !== null && payments.length > 0) {
         const paymentIds = payments.map(({ _id }) => _id)

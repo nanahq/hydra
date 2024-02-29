@@ -2,13 +2,20 @@ import { Controller } from '@nestjs/common'
 import { DriversServiceService } from '../drivers-service.service'
 import { ODSA } from './odsa.service'
 import {
-  Ctx, EventPattern,
+  Ctx,
+  EventPattern,
   MessagePattern,
   Payload,
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { Delivery, DeliveryI, OrderUpdateStream, QUEUE_MESSAGE, RmqService } from '@app/common'
+import {
+  Delivery,
+  DeliveryI,
+  OrderUpdateStream,
+  QUEUE_MESSAGE,
+  RmqService
+} from '@app/common'
 
 /**
  * Order Delivery Sorting and Assignation (ODSA) Service.
@@ -23,7 +30,9 @@ export class OdsaController {
   ) {}
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DELIVERIES)
-  async getDeliveries (@Ctx() context: RmqContext): Promise<Delivery[] | undefined> {
+  async getDeliveries (
+    @Ctx() context: RmqContext
+  ): Promise<Delivery[] | undefined> {
     try {
       return await this.odsa.queryAllDeliveries()
     } catch (error) {

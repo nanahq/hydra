@@ -1,5 +1,11 @@
 import { Controller, UseFilters, UseInterceptors } from '@nestjs/common'
-import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 
 import { ListingsService } from './listings.service'
 import {
@@ -13,11 +19,15 @@ import {
   MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   ResponseWithStatus,
-  RmqService, ScheduledListing,
+  RmqService,
+  ScheduledListing,
   ServicePayload,
   UpdateListingCategoryDto,
-  UpdateOptionGroupDto
-  , ScheduledListingDto, ListingCategoryI, UserHomePage, LocationCoordinates
+  UpdateOptionGroupDto,
+  ScheduledListingDto,
+  ListingCategoryI,
+  UserHomePage,
+  LocationCoordinates
 } from '@app/common'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
 import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager'
@@ -28,8 +38,7 @@ export class ListingsController {
   constructor (
     private readonly listingService: ListingsService,
     private readonly rmqService: RmqService
-  ) {
-  }
+  ) {}
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDOR_LISTING_MENU)
   async getAllListings (
@@ -361,11 +370,21 @@ export class ListingsController {
 
   @MessagePattern(QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY)
   async updateScheduledListing (
-    @Payload() { listingsId, quantity }: { listingsId: string[], quantity: Array<{ listing: string, quantity: number }> },
+    @Payload()
+      {
+        listingsId,
+        quantity
+      }: {
+        listingsId: string[]
+        quantity: Array<{ listing: string, quantity: number }>
+      },
       @Ctx() context
   ): Promise<void> {
     try {
-      return await this.listingService.updateScheduledListingCount(listingsId, quantity)
+      return await this.listingService.updateScheduledListingCount(
+        listingsId,
+        quantity
+      )
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -391,9 +410,7 @@ export class ListingsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_SCHEDULED_LISTINGS_USER)
-  async getScheduledListingsUser (
-    @Ctx() context
-  ): Promise<ScheduledListing[]> {
+  async getScheduledListingsUser (@Ctx() context): Promise<ScheduledListing[]> {
     try {
       return await this.listingService.getAllScheduledListingUser()
     } catch (error) {

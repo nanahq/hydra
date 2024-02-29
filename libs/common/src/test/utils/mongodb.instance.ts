@@ -10,7 +10,9 @@ export async function MongodbInstance (): Promise<StartedTestContainer> {
       .withEnv('MONGO_INITDB_ROOT_PASSWORD', 'secret')
       .start()
 
-    const mongoUri = `mongodb://root:secret@localhost:${mongo.getMappedPort(27017)}/`
+    const mongoUri = `mongodb://root:secret@localhost:${mongo.getMappedPort(
+      27017
+    )}/`
 
     process.env.TEST_MONGODB_URI = mongoUri
 

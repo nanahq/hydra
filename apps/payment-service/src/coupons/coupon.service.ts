@@ -1,24 +1,37 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable, Inject } from '@nestjs/common'
 import { CouponRepository } from './coupon.repository'
 import {
-  Coupon, CouponI, CouponRedeemResponse,
+  Coupon,
+  CouponI,
+  CouponRedeemResponse,
   CreateCouponDto,
   FitRpcException,
   GetCoupon,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
   RandomGen,
   ResponseWithStatus,
-  ResponseWithStatusAndData, ServicePayload, UpdateCoupon, UpdateCouponUsage
+  ResponseWithStatusAndData,
+  ServicePayload,
+  UpdateCoupon,
+  UpdateCouponUsage
 } from '@app/common'
 import * as moment from 'moment'
+import { ClientProxy } from '@nestjs/microservices'
+import { lastValueFrom } from 'rxjs'
 @Injectable()
 export class CouponService {
   private readonly MAX_COUPON_LENGTH = 7
   constructor (
-    private readonly couponRepository: CouponRepository
-  ) {
-  }
+    private readonly couponRepository: CouponRepository,
 
-  public async createNewCoupon (data: CreateCouponDto): Promise<ResponseWithStatusAndData<string>> {
+    @Inject(QUEUE_SERVICE.USERS_SERVICE)
+    private readonly userClient: ClientProxy
+  ) {}
+
+  public async createNewCoupon (
+    data: CreateCouponDto
+  ): Promise<ResponseWithStatusAndData<string>> {
     const hasSuffix = data.suffix !== undefined
 
     const length = this.MAX_COUPON_LENGTH - Number(data?.suffix?.length ?? 0)
@@ -26,9 +39,13 @@ export class CouponService {
     let couponString: string
 
     if (hasSuffix) {
-      couponString = RandomGen.genRandomString(100, length).trim() + String(data?.suffix?.trim()).toUpperCase()
+      couponString =
+        RandomGen.genRandomString(100, length).trim() +
+        String(data?.suffix?.trim()).toUpperCase()
     } else {
-      couponString = RandomGen.generateAlphanumericString(this.MAX_COUPON_LENGTH)
+      couponString = RandomGen.generateAlphanumericString(
+        this.MAX_COUPON_LENGTH
+      )
     }
 
     await this.couponRepository.create({
@@ -63,21 +80,31 @@ export class CouponService {
   }
 
   public async updateCouponUsage (data: UpdateCouponUsage): Promise<void> {
-    const coupon = await this.couponRepository.findOne({ code: data.code }) as Coupon | null
+    const coupon = (await this.couponRepository.findOne({
+      code: data.code
+    })) as Coupon | null
 
     if (coupon === null) {
       throw new FitRpcException('Invalid Coupon', HttpStatus.NOT_FOUND)
     }
-    await this.couponRepository.findOneAndUpdate({ _id: coupon._id }, { users: [...coupon.users, data.user] })
+    await this.couponRepository.findOneAndUpdate(
+      { _id: coupon._id },
+      { users: [...coupon.users, data.user] }
+    )
   }
 
-  public async redeemCoupon ({ data, userId }: ServicePayload<{ couponCode: string }>): Promise<CouponRedeemResponse> {
+  public async redeemCoupon ({
+    data,
+    userId
+  }: ServicePayload<{ couponCode: string }>): Promise<CouponRedeemResponse> {
     const genericError = {
       coupon: undefined,
       status: 'ERROR'
     } as any
 
-    const coupon = await this.couponRepository.findOne({ code: data.couponCode }) as CouponI | null
+    const coupon = (await this.couponRepository.findOne({
+      code: data.couponCode
+    })) as CouponI | null
 
     if (coupon === null) {
       return {
@@ -94,7 +121,9 @@ export class CouponService {
     if (today.isBefore(validFrom)) {
       return {
         ...genericError,
-        message: `This coupon is redeemable from ${validFrom.format('DDD MM YYYY')}`
+        message: `This coupon is redeemable from ${validFrom.format(
+          'DDD MM YYYY'
+        )}`
       }
     }
 
@@ -111,6 +140,16 @@ export class CouponService {
         message: 'You have already use this coupon. It can not be used twice'
       }
     }
+
+    const payload: ServicePayload<{ couponId: string }> = {
+      userId,
+      data: {
+        couponId: coupon._id
+      }
+    }
+    await lastValueFrom(
+      this.userClient.send(QUEUE_MESSAGE.USER_ADD_COUPON, payload)
+    )
 
     return {
       coupon,

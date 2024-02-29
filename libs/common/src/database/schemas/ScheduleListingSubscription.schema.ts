@@ -13,13 +13,11 @@ export class ScheduledListingNotification extends AbstractDocument {
   })
     subscribers: string[]
 
-  @Prop(
-    {
-      type: Types.ObjectId,
-      ref: 'Vendor',
-      unique: true
-    }
-  )
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'Vendor',
+    unique: true
+  })
     vendor: string
 
   @Prop({
@@ -35,5 +33,6 @@ export class ScheduledListingNotification extends AbstractDocument {
     updatedAt: string
 }
 
-export const ScheduledListingNotificationSchema =
-    SchemaFactory.createForClass(ScheduledListingNotification)
+export const ScheduledListingNotificationSchema = SchemaFactory.createForClass(
+  ScheduledListingNotification
+)

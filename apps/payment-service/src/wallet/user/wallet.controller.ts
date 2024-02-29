@@ -1,7 +1,18 @@
 import { Controller, UseFilters } from '@nestjs/common'
-import { ExceptionFilterRpc, QUEUE_MESSAGE, registerUserRequest, RmqService } from '@app/common'
+import {
+  ExceptionFilterRpc,
+  QUEUE_MESSAGE,
+  registerUserRequest,
+  RmqService
+} from '@app/common'
 import { UserWalletService } from './wallet.service'
-import { Ctx, EventPattern, Payload, RmqContext, RpcException } from '@nestjs/microservices'
+import {
+  Ctx,
+  EventPattern,
+  Payload,
+  RmqContext,
+  RpcException
+} from '@nestjs/microservices'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()

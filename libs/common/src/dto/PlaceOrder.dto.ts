@@ -44,10 +44,12 @@ export class PlaceOrderDto {
     listing: string[]
 
   @IsArray()
-    quantity: [{
-    listing: string
-    quantity: number
-  }]
+    quantity: [
+    {
+      listing: string
+      quantity: number
+    },
+  ]
 
   @IsNumber()
     totalOrderValue: number

@@ -37,8 +37,7 @@ export class AdminController {
   constructor (
     @Inject(QUEUE_SERVICE.ADMINS_SERVICE)
     private readonly adminClient: ClientProxy
-  ) {
-  }
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('list')
@@ -48,15 +47,13 @@ export class AdminController {
     const payload: {} = {}
     this.logger.debug('Getting all admin')
     return await lastValueFrom<ResponseWithStatus>(
-      this.adminClient
-        .send(QUEUE_MESSAGE.GET_ALL_ADMIN, payload)
-        .pipe(
-          catchError((error: IRpcException) => {
-            console.error(error)
-            this.logger.error(`Failed to fetch admins. Reason: ${error.message}`)
-            throw new HttpException(error.message, error.status)
-          })
-        )
+      this.adminClient.send(QUEUE_MESSAGE.GET_ALL_ADMIN, payload).pipe(
+        catchError((error: IRpcException) => {
+          console.error(error)
+          this.logger.error(`Failed to fetch admins. Reason: ${error.message}`)
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 

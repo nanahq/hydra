@@ -1,16 +1,21 @@
 import { Controller } from '@nestjs/common'
 import { OrdersServiceService } from './orders-service.service'
 import {
-  Ctx, EventPattern,
+  Ctx,
+  EventPattern,
   MessagePattern,
   Payload,
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
 import {
-  Order, OrderI, PaystackChargeResponseData, PlaceOrderDto,
+  Order,
+  OrderI,
+  PaystackChargeResponseData,
+  PlaceOrderDto,
   QUEUE_MESSAGE,
-  ResponseWithStatus, ResponseWithStatusAndData,
+  ResponseWithStatus,
+  ResponseWithStatusAndData,
   RmqService,
   ServicePayload,
   UpdateOrderStatusPaidRequestDto,
@@ -29,7 +34,12 @@ export class OrdersServiceController {
   async placeOrder (
     @Payload() data: ServicePayload<PlaceOrderDto>,
       @Ctx() context: RmqContext
-  ): Promise<ResponseWithStatusAndData<{ order: OrderI, paymentMeta: PaystackChargeResponseData }>> {
+  ): Promise<
+      ResponseWithStatusAndData<{
+        order: OrderI
+        paymentMeta: PaystackChargeResponseData
+      }>
+      > {
     try {
       return await this.ordersServiceService.placeOrder(data)
     } catch (error) {
@@ -141,7 +151,10 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ODSA_GET_ORDERS_PRE)
-  async getOdsaPreOrders (@Payload() { filter }: { filter: FilterQuery<Order> }, @Ctx() context: RmqContext): Promise<Order[] | null> {
+  async getOdsaPreOrders (
+    @Payload() { filter }: { filter: FilterQuery<Order> },
+      @Ctx() context: RmqContext
+  ): Promise<Order[] | null> {
     try {
       return await this.ordersServiceService.odsaGetPreOrders(filter)
     } catch (error) {
@@ -152,9 +165,7 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD_ORDER_METRICS)
-  async adminAggregates (
-    @Ctx() context: RmqContext
-  ): Promise<Order[] | null> {
+  async adminAggregates (@Ctx() context: RmqContext): Promise<Order[] | null> {
     try {
       return await this.ordersServiceService.adminMetrics()
     } catch (error) {
@@ -165,9 +176,7 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_ORDERS)
-  async getOrders (
-    @Ctx() context: RmqContext
-  ): Promise<Order[]> {
+  async getOrders (@Ctx() context: RmqContext): Promise<Order[]> {
     try {
       return await this.ordersServiceService.getAllOrders()
     } catch (error) {
@@ -178,9 +187,7 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_PAID_ORDERS)
-  async getPaidOrders (
-    @Ctx() context: RmqContext
-  ): Promise<Order[]> {
+  async getPaidOrders (@Ctx() context: RmqContext): Promise<Order[]> {
     try {
       return await this.ordersServiceService.getAllPaidOrder()
     } catch (error) {
@@ -191,9 +198,7 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_TRANSIT_ORDERS)
-  async getAllTransitOrders (
-    @Ctx() context: RmqContext
-  ): Promise<Order[]> {
+  async getAllTransitOrders (@Ctx() context: RmqContext): Promise<Order[]> {
     try {
       return await this.ordersServiceService.getAllTransitOrders()
     } catch (error) {
@@ -204,9 +209,7 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_ALL_FULFILLED_ORDERS)
-  async getAllFulfilledOrders (
-    @Ctx() context: RmqContext
-  ): Promise<Order[]> {
+  async getAllFulfilledOrders (@Ctx() context: RmqContext): Promise<Order[]> {
     try {
       return await this.ordersServiceService.getAllFulfilledOrders()
     } catch (error) {

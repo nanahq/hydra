@@ -3,7 +3,8 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import {
   AbstractDocument,
   DriverType,
-  LocationCoordinates, PaymentInfo,
+  LocationCoordinates,
+  PaymentInfo,
   VendorApprovalStatus
 } from '@app/common'
 

@@ -14,7 +14,8 @@ import {
   User,
   UserSchema,
   Vendor,
-  VendorSchema, ExportPushNotificationClient
+  VendorSchema,
+  ExportPushNotificationClient
 } from '@app/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { OrderRepository } from './order.repository'
@@ -47,6 +48,10 @@ import { ScheduleModule } from '@nestjs/schedule'
     RmqModule
   ],
   controllers: [OrdersServiceController],
-  providers: [OrdersServiceService, OrderRepository, ExportPushNotificationClient]
+  providers: [
+    OrdersServiceService,
+    OrderRepository,
+    ExportPushNotificationClient
+  ]
 })
 export class OrdersServiceModule {}

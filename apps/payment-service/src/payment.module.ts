@@ -19,7 +19,9 @@ import {
   VendorPayoutSchema,
   VendorSchema,
   DatabaseModule,
-  PaystackService, Coupon, CouponSchema
+  PaystackService,
+  Coupon,
+  CouponSchema
 } from '@app/common'
 import { ScheduleModule } from '@nestjs/schedule'
 import { PaymentRepository } from './charge/charge.repository'
@@ -27,12 +29,18 @@ import { PaymentService } from './charge/charge.service'
 import { HttpModule } from '@nestjs/axios'
 import { FlutterwaveService } from './providers/flutterwave'
 import { PaymentController } from './charge/charge.controller'
-import { DriverWallet, DriverWalletSchema } from '@app/common/database/schemas/driver-wallet.schema'
+import {
+  DriverWallet,
+  DriverWalletSchema
+} from '@app/common/database/schemas/driver-wallet.schema'
 import {
   DriverWalletTransaction,
   DriverWalletTransactionSchema
 } from '@app/common/database/schemas/driver-wallet-transactions.schema'
-import { DriverWalletRepository, DriverWalletTransactionRepository } from './wallet/driver/wallet.repository'
+import {
+  DriverWalletRepository,
+  DriverWalletTransactionRepository
+} from './wallet/driver/wallet.repository'
 import { DriverWalletService } from './wallet/driver/wallet.service'
 import { DriverWalletController } from './wallet/driver/wallet.controller'
 import { CouponService } from './coupons/coupon.service'
@@ -106,7 +114,13 @@ import { UserWalletService } from './wallet/user/wallet.service'
     DatabaseModule,
     HttpModule
   ],
-  controllers: [VendorPayoutController, PaymentController, DriverWalletController, UserWalletController, CouponController],
+  controllers: [
+    VendorPayoutController,
+    PaymentController,
+    DriverWalletController,
+    UserWalletController,
+    CouponController
+  ],
   providers: [
     VendorPayoutService,
     VendorPayoutRepository,

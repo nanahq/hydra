@@ -2,7 +2,10 @@ import { HttpStatus, INestApplication } from '@nestjs/common'
 import { StartedTestContainer } from 'testcontainers'
 import Docker from 'dockerode'
 import { ClientProxy } from '@nestjs/microservices'
-import { RabbitmqInstance, stopRabbitmqContainer } from '@app/common/test/utils/rabbitmq.instace'
+import {
+  RabbitmqInstance,
+  stopRabbitmqContainer
+} from '@app/common/test/utils/rabbitmq.instace'
 import { MongodbInstance } from '@app/common/test/utils/mongodb.instance'
 import { Test, TestingModule } from '@nestjs/testing'
 import {
@@ -12,8 +15,12 @@ import {
   registerUserRequest,
   ResponseWithStatus,
   RmqModule,
-  RmqService, ServicePayload, TokenPayload,
-  User, Vendor, verifyPhoneRequest
+  RmqService,
+  ServicePayload,
+  TokenPayload,
+  User,
+  Vendor,
+  verifyPhoneRequest
 } from '@app/common'
 import { UserRepository } from '../../users.repository'
 import { UsersServiceModule } from '../../users-service.module'
@@ -39,7 +46,10 @@ describe('users service e2e', () => {
       const moduleFixture: TestingModule = await Test.createTestingModule({
         imports: [
           UsersServiceModule,
-          RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE, fallbackUri: rmqConnectionUri })
+          RmqModule.register({
+            name: QUEUE_SERVICE.USERS_SERVICE,
+            fallbackUri: rmqConnectionUri
+          })
         ]
       })
         .overrideProvider(QUEUE_SERVICE.NOTIFICATION_SERVICE)
@@ -48,7 +58,9 @@ describe('users service e2e', () => {
 
       app = moduleFixture.createNestApplication()
       const rmq = app.get<RmqService>(RmqService)
-      app.connectMicroservice(rmq.getOption(QUEUE_SERVICE.USERS_SERVICE, false, rmqConnectionUri))
+      app.connectMicroservice(
+        rmq.getOption(QUEUE_SERVICE.USERS_SERVICE, false, rmqConnectionUri)
+      )
       await app.startAllMicroservices()
       await app.init()
 
@@ -94,12 +106,11 @@ describe('users service e2e', () => {
       expect((await repository.find({})).length).toStrictEqual(0)
 
       await lastValueFrom<User>(
-        client.send(QUEUE_MESSAGE.CREATE_USER, payload)
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
+        client.send(QUEUE_MESSAGE.CREATE_USER, payload).pipe(
+          catchError((error) => {
+            throw error
+          })
+        )
       )
 
       const users: User[] = await repository.find({})
@@ -118,10 +129,15 @@ describe('users service e2e', () => {
 
       try {
         await lastValueFrom<ResponseWithStatus>(
-          client.send(QUEUE_MESSAGE.CREATE_USER, payload))
-        fail('should throw an exception if creating account with exiting phone number')
+          client.send(QUEUE_MESSAGE.CREATE_USER, payload)
+        )
+        fail(
+          'should throw an exception if creating account with exiting phone number'
+        )
       } catch (error) {
-        expect(error.message).toStrictEqual('Phone Number is  already registered.')
+        expect(error.message).toStrictEqual(
+          'Phone Number is  already registered.'
+        )
         expect(error.status).toStrictEqual(HttpStatus.CONFLICT)
       }
     })
@@ -135,8 +151,11 @@ describe('users service e2e', () => {
 
       try {
         await lastValueFrom<ResponseWithStatus>(
-          client.send(QUEUE_MESSAGE.CREATE_USER, payload))
-        fail('should throw an exception if creating account with exiting email')
+          client.send(QUEUE_MESSAGE.CREATE_USER, payload)
+        )
+        fail(
+          'should throw an exception if creating account with exiting email'
+        )
       } catch (error) {
         expect(error.message).toStrictEqual('Email is  already registered.')
         expect(error.status).toStrictEqual(HttpStatus.CONFLICT)
@@ -165,12 +184,11 @@ describe('users service e2e', () => {
       }
 
       const response = await lastValueFrom<User>(
-        client.send(QUEUE_MESSAGE.GET_USER_JWT, tokenPayload)
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
+        client.send(QUEUE_MESSAGE.GET_USER_JWT, tokenPayload).pipe(
+          catchError((error) => {
+            throw error
+          })
+        )
       )
 
       expect(response.phone).toStrictEqual(user.phone)
@@ -184,12 +202,11 @@ describe('users service e2e', () => {
       }
 
       const response = await lastValueFrom<User>(
-        client.send(QUEUE_MESSAGE.GET_USER_LOCAL, payload)
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
+        client.send(QUEUE_MESSAGE.GET_USER_LOCAL, payload).pipe(
+          catchError((error) => {
+            throw error
+          })
+        )
       )
 
       expect(response.phone).toStrictEqual(user.phone)
@@ -198,7 +215,8 @@ describe('users service e2e', () => {
 
     it('should get user by phone', async () => {
       const response = await lastValueFrom<User>(
-        client.send(QUEUE_MESSAGE.GET_USER_BY_PHONE, { phone: user.phone })
+        client
+          .send(QUEUE_MESSAGE.GET_USER_BY_PHONE, { phone: user.phone })
           .pipe(
             catchError((error) => {
               throw error
@@ -217,7 +235,8 @@ describe('users service e2e', () => {
 
       try {
         await lastValueFrom<ResponseWithStatus>(
-          client.send(QUEUE_MESSAGE.GET_USER_JWT, fakeTokenPayload))
+          client.send(QUEUE_MESSAGE.GET_USER_JWT, fakeTokenPayload)
+        )
         fail('should throw an exception when getting user with wrong ID')
       } catch (error) {
         expect(error.message).toStrictEqual('Provided user id is not found')
@@ -233,10 +252,13 @@ describe('users service e2e', () => {
 
       try {
         await lastValueFrom<ResponseWithStatus>(
-          client.send(QUEUE_MESSAGE.GET_USER_LOCAL, payload))
+          client.send(QUEUE_MESSAGE.GET_USER_LOCAL, payload)
+        )
         fail('should throw an exception when login in with wrong phone')
       } catch (error) {
-        expect(error.message).toStrictEqual('User with that phone number does not exist')
+        expect(error.message).toStrictEqual(
+          'User with that phone number does not exist'
+        )
         expect(error.status).toStrictEqual(HttpStatus.NOT_FOUND)
       }
     })
@@ -249,7 +271,8 @@ describe('users service e2e', () => {
 
       try {
         await lastValueFrom<ResponseWithStatus>(
-          client.send(QUEUE_MESSAGE.GET_USER_LOCAL, payload))
+          client.send(QUEUE_MESSAGE.GET_USER_LOCAL, payload)
+        )
         fail('should throw an exception when login in with wrong password')
       } catch (error) {
         expect(error.message).toStrictEqual('Provided Password is incorrect')
@@ -259,11 +282,17 @@ describe('users service e2e', () => {
     it('should throw an exception when getting user with wrong phone number', async () => {
       try {
         await lastValueFrom<ResponseWithStatus>(
-          client.send(QUEUE_MESSAGE.GET_USER_BY_PHONE, { phone: '+23456789098' })
+          client.send(QUEUE_MESSAGE.GET_USER_BY_PHONE, {
+            phone: '+23456789098'
+          })
         )
-        fail('should throw an exception when getting user with wrong phone number')
+        fail(
+          'should throw an exception when getting user with wrong phone number'
+        )
       } catch (error) {
-        expect(error.message).toStrictEqual('User not with the phone number not found')
+        expect(error.message).toStrictEqual(
+          'User not with the phone number not found'
+        )
         expect(error.status).toStrictEqual(HttpStatus.NOT_FOUND)
       }
     })
@@ -285,7 +314,9 @@ describe('users service e2e', () => {
     })
 
     it('should update user status to validated', async () => {
-      const beforeUpdate: User = await repository.findOne({ phone: user.phone })
+      const beforeUpdate: User = await repository.findOne({
+        phone: user.phone
+      })
       expect(beforeUpdate.isValidated).toStrictEqual(false)
 
       const payload: verifyPhoneRequest = {
@@ -293,12 +324,11 @@ describe('users service e2e', () => {
       }
 
       const response = await lastValueFrom<ResponseWithStatus>(
-        client.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, payload)
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
+        client.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, payload).pipe(
+          catchError((error) => {
+            throw error
+          })
+        )
       )
 
       expect(response).toStrictEqual({ status: 1 })
@@ -308,7 +338,9 @@ describe('users service e2e', () => {
     })
 
     it('should update user profile', async () => {
-      const beforeUpdate: User = await repository.findOne({ phone: user.phone })
+      const beforeUpdate: User = await repository.findOne({
+        phone: user.phone
+      })
       expect(beforeUpdate?.firstName).toStrictEqual(undefined)
       expect(beforeUpdate?.lastName).toStrictEqual(undefined)
 
@@ -321,12 +353,11 @@ describe('users service e2e', () => {
       }
 
       const response = await lastValueFrom<ResponseWithStatus>(
-        client.send(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload)
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
+        client.send(QUEUE_MESSAGE.UPDATE_USER_PROFILE, payload).pipe(
+          catchError((error) => {
+            throw error
+          })
+        )
       )
 
       expect(response).toStrictEqual({ status: 1 })
@@ -337,22 +368,22 @@ describe('users service e2e', () => {
     })
 
     it('should update user order count', async () => {
-      const beforeUpdate: User = await repository.findOne({ phone: user.phone })
+      const beforeUpdate: User = await repository.findOne({
+        phone: user.phone
+      })
       expect(beforeUpdate?.orders.length).toStrictEqual(0)
 
       const payload = {
         userId: user._id.toString(),
         orderId: user._id.toString()
-
       }
 
       const response = await lastValueFrom<ResponseWithStatus>(
-        client.send(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, payload)
-          .pipe(
-            catchError((error) => {
-              throw error
-            })
-          )
+        client.send(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, payload).pipe(
+          catchError((error) => {
+            throw error
+          })
+        )
       )
 
       expect(response).toStrictEqual({ status: 1 })
@@ -378,13 +409,19 @@ describe('users service e2e', () => {
     })
 
     it('should delete user', async () => {
-      const beforeUpdate = await repository.findOne({ _id: user._id.toString() })
+      const beforeUpdate = await repository.findOne({
+        _id: user._id.toString()
+      })
 
       expect(beforeUpdate).toBeDefined() // Assert default
       expect(beforeUpdate.isDeleted).toStrictEqual(false) // Assert default
 
       const response = await lastValueFrom<ResponseWithStatus>(
-        client.send(QUEUE_MESSAGE.DELETE_USER_PROFILE, { userId: user._id.toString(), data: null })
+        client
+          .send(QUEUE_MESSAGE.DELETE_USER_PROFILE, {
+            userId: user._id.toString(),
+            data: null
+          })
           .pipe(
             catchError((error) => {
               throw error

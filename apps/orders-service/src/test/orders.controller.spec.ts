@@ -1,8 +1,13 @@
 import { Test } from '@nestjs/testing'
 import {
-  Order, OrderStatus,
-  PlaceOrderDto, ResponseWithStatus,
-  RmqService, ServicePayload, UpdateOrderStatusPaidRequestDto, UpdateOrderStatusRequestDto
+  Order,
+  OrderStatus,
+  PlaceOrderDto,
+  ResponseWithStatus,
+  RmqService,
+  ServicePayload,
+  UpdateOrderStatusPaidRequestDto,
+  UpdateOrderStatusRequestDto
 } from '@app/common'
 import { RmqContext } from '@nestjs/microservices'
 import { OrdersServiceController } from '../orders-service.controller'
@@ -57,10 +62,7 @@ describe('ordersServiceController', () => {
             isThirdParty: false,
             preciseLocation: {
               type: 'Point',
-              coordinates: [
-                11.982310162127954,
-                8.535510571613452
-              ]
+              coordinates: [11.982310162127954, 8.535510571613452]
             },
             options: ['Zobo', 'Kunun Aya'],
             orderDeliveryScheduledTime: '1694032653748',
@@ -253,7 +255,9 @@ describe('ordersServiceController', () => {
       })
 
       test('then it should call ordersService.getOrderById', () => {
-        expect(ordersService.getOrderById).toHaveBeenCalledWith(payload.data.orderId)
+        expect(ordersService.getOrderById).toHaveBeenCalledWith(
+          payload.data.orderId
+        )
       })
 
       test('then is should return array of orders', () => {
@@ -275,7 +279,9 @@ describe('ordersServiceController', () => {
       })
 
       test('then it should call ordersService.getOrderByRefId', () => {
-        expect(ordersService.getOrderByRefId).toHaveBeenCalledWith(payload.data.ref)
+        expect(ordersService.getOrderByRefId).toHaveBeenCalledWith(
+          payload.data.ref
+        )
       })
 
       test('then is should return array of orders', () => {
@@ -320,11 +326,16 @@ describe('ordersServiceController', () => {
           }
         }
 
-        response = await ordersController.updateOrderStatusWhenPaid(payload, context)
+        response = await ordersController.updateOrderStatusWhenPaid(
+          payload,
+          context
+        )
       })
 
       test('then it should call ordersService.updateStatusPaid', () => {
-        expect(ordersService.updateStatusPaid).toHaveBeenCalledWith(payload.data)
+        expect(ordersService.updateStatusPaid).toHaveBeenCalledWith(
+          payload.data
+        )
       })
 
       test('then is should return success', () => {
@@ -343,7 +354,10 @@ describe('ordersServiceController', () => {
       })
 
       test('then it should call ordersService.vendorAcceptOrder', () => {
-        expect(ordersService.vendorAcceptOrder).toHaveBeenCalledWith(payload.orderId, payload.phone)
+        expect(ordersService.vendorAcceptOrder).toHaveBeenCalledWith(
+          payload.orderId,
+          payload.phone
+        )
       })
     })
   })
