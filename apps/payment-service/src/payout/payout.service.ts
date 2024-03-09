@@ -1,10 +1,10 @@
-import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { VendorPayoutRepository } from './payout.repository'
 import {
   FitRpcException,
   IRpcException,
   Order,
-  OrderI,
+  OrderI, OrderStatus,
   PayoutOverview,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -21,7 +21,6 @@ import { FilterQuery } from 'mongoose'
 
 @Injectable()
 export class VendorPayoutService implements VendorPayoutServiceI {
-  private readonly logger = new Logger(VendorPayoutService.name)
   constructor (
     private readonly payoutRepository: VendorPayoutRepository,
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
@@ -69,7 +68,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
   }
 
   async getVendorPayout (vendor: string): Promise<VendorPayout[]> {
-    return await this.payoutRepository.find({ vendor })
+    return await this.payoutRepository.findAndPopulate({ vendor }, ["orders"])
   }
 
   async payoutOverview (vendor: string): Promise<PayoutOverview> {
@@ -149,7 +148,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
         $gte: start.toISOString(),
         $lt: end.toISOString()
       },
-      orderStatus: 'DELIVERED_TO_CUSTOMER'
+      orderStatus: OrderStatus.COLLECTED
     }
     const orders = await lastValueFrom<OrderI[]>(
       this.ordersClient.send(QUEUE_MESSAGE.GET_ALL_ORDERS, filter).pipe(
