@@ -205,7 +205,6 @@ export class PaymentService implements PaymentServiceI {
       }
     }
 
-    this.logger.log('service payload', payload)
     try {
       const chargeMeta = await this.paystack.initiateCharge(payload)
 
