@@ -5,7 +5,7 @@ import {
   OrderType,
   PaymentInfo,
   VendorOperationSetting,
-  DriverType, AdminLevel, ListingApprovalStatus, OrderOptions
+  DriverType, AdminLevel, ListingApprovalStatus, OrderOptions, VendorApprovalStatusEnum
 } from '../typings'
 export interface ListingCategoryI {
   _id: string
@@ -67,6 +67,8 @@ export interface VendorI {
   restaurantImage: string
   isDeleted: boolean
 
+  rejection_reason: string
+  acc_status: VendorApprovalStatusEnum
   expoNotificationToken: string
   settings?: VendorSettingsI
   location?: {
