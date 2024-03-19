@@ -68,7 +68,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
   }
 
   async getVendorPayout (vendor: string): Promise<VendorPayout[]> {
-    return await this.payoutRepository.findAndPopulate({ vendor }, ["orders"])
+    return await this.payoutRepository.findAndPopulate({ vendor }, ['orders'])
   }
 
   async payoutOverview (vendor: string): Promise<PayoutOverview> {
