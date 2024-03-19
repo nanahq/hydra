@@ -18,12 +18,12 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: af-south-1  # Replace with your desired AWS region
+          aws-region: af-south-1
 
       - name: Login to AWS ECR
         run: aws ecr get-login-password --region af-south-1 | docker login --username AWS --password-stdin 814105780686.dkr.ecr.af-south-1.amazonaws.com
 
-      # Loop through the images and push each one
+
       - name: Build and Push Docker Images
         run: |
           IMAGES=("admin-gateway" "admin-service" "vendor-gateway" "vendors-service" "reviews-service" "payment-service" "orders-service" "notification-service" "location-service" "listings-service" "users-service" "drivers-service" "api-gateway")

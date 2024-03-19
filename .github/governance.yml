@@ -2,19 +2,6 @@ version: v1
 
 issue:
   labels:
-    - prefix: triage
-      list: [ "accepted" ]
-      multiple: false
-      author_association:
-        collaborator: true
-        member: true
-        owner: true
-      needs:
-        comment: |
-          @$AUTHOR: Thanks for opening an issue, it is currently awaiting triage.
-
-          The triage/accepted label can be added by foundation members by writing /triage accepted in a comment.
-
     - prefix: kind
       list:
         - feature
@@ -25,6 +12,7 @@ issue:
         - docs
         - refactor
         - dependencies
+        - packages
       multiple: false
       needs: true
       author_association:
@@ -36,29 +24,21 @@ issue:
     - prefix: area
       list:
         - core
-        - workflow
-        - website
-        - api
-        - assets
-        - contexts
-        - hooks
-        - store
-        - translations
-        - e2e
-        - ui-ux
-        - playground
-        - balance
-        - dex
-        - icx
-        - transactions
-        - wallet
-        - settings
+        - notification-service
+        - admin-gateway
+        - admin-service
+        - api-gateway
+        - drivers-service
+        - listings-service
+        - location-service
+        - orders-service
+        - payment-service
+        - reviews-service
+        - users-service
+        - vendor-gateway
+        - vendors-service
       multiple: true
-      needs:
-        comment: |
-          @$AUTHOR: There are no 'area' labels on this issue. Adding an appropriate label will greatly expedite the process for us. You can add as many area as you see fit. **If you are unsure what to do you can ignore this!**
-
-          You can add area labels by leaving a `/area` comment.
+      needs: true
       author_association:
         author: true
         collaborator: true
@@ -73,14 +53,6 @@ issue:
           @$AUTHOR: Thanks for opening an issue, an appropriate priority will be added soon.
           
           The priority labels can be added by foundation members by writing /priority [type] in a comment.
-      author_association:
-        collaborator: true
-        member: true
-        owner: true
-
-    - prefix: design
-      multiple: false
-      list: [ "in-progress", "ready" ]
       author_association:
         collaborator: true
         member: true
@@ -155,6 +127,7 @@ pull_request:
         - docs
         - refactor
         - dependencies
+        - packages
       needs:
         comment: |
           @$AUTHOR: There are no 'kind' label on this PR. You need a 'kind' label to generate the release automatically.
@@ -165,6 +138,7 @@ pull_request:
           * `/kind docs`
           * `/kind refactor`
           * `/kind dependencies`
+          * `/kind packages`
         status:
           context: "Governance / Kind Label"
           description:
