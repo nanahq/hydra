@@ -14,4 +14,52 @@ labels:
   - label: area/notification-service
     sync: true
     matcher:
-      files: "apps/notification-service**"
+      files: "apps/notification-service/**"
+
+  - label: area/location-service
+    sync: true
+    matcher:
+      files: "apps/location-service/**"
+  - label: area/admin-gateway
+    sync: true
+    matcher:
+      files: "apps/admin-gateway/**"
+
+  - label: area/admin-service
+    sync: true
+    matcher:
+      files: "apps/admin-service/**"
+
+  - label: area/drivers-service
+    sync: true
+    matcher:
+      files: "apps/drivers-service/**"
+
+  - label: area/orders-service
+    sync: true
+    matcher:
+      files: "apps/orders-service/**"
+
+  - label: area/payment-service
+    sync: true
+    matcher:
+      files: "apps/payment-service/**"
+
+  - label: area/reviews-service
+    sync: true
+    matcher:
+      files: "apps/reviews-service/**"
+  - label: area/users-service
+    sync: true
+    matcher:
+      files: "apps/users-service/**"
+
+  - label: area/vendor-gateway
+    sync: true
+    matcher:
+      files: "apps/vendor-gateway/**"
+
+  - label: area/vendors-service
+    sync: true
+    matcher:
+      files: "apps/vendors-service/**"
