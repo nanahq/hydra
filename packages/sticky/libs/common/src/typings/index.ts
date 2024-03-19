@@ -53,9 +53,11 @@ export enum CustomisationOptionTypeEnum {
 }
 
 export enum AdminLevel {
-  DIAMOND = 'DIAMOND',
-  GOLD = 'GOLD',
-  SILVER = 'SILVER',
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  FINANCE = 'FINANCE',
+  OPERATIONS = 'OPERATIONS',
+  CUSTOMER_SERVICE = 'CUSTOMER_SERVICE',
+  MARKETING = 'MARKETING',
 }
 
 export enum AvailableDate {
