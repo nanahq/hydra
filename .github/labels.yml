@@ -54,10 +54,9 @@
 - color: e7e9eb
   name: kind/dependencies
   description: Pull requests that update a dependency file
-
 - color: e7e9eb
-  name: kind/dependencies
-  description: Pull requests that update a dependency file
+  name: kind/packages
+  description: Pull requests that update @nana/sticky package
 
 # Area - Directory
 - color: fbca04

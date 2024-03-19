@@ -8,6 +8,7 @@
 /kind docs
 /kind refactor
 /kind dependencies
+/kind packages
 -->
 
 /kind
