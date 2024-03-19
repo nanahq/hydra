@@ -55,57 +55,42 @@
   name: kind/dependencies
   description: Pull requests that update a dependency file
 
+- color: e7e9eb
+  name: kind/dependencies
+  description: Pull requests that update a dependency file
+
 # Area - Directory
 - color: fbca04
   name: area/core
 - color: fbca04
-  name: area/workflow
+  name: area/orders-service
 - color: fbca04
   name: area/api
 - color: fbca04
-  name: area/assets
+  name: area/listings-service
 - color: fbca04
-  name: area/contexts
+  name: area/drivers-service
 - color: fbca04
-  name: area/hooks
+  name: area/payment-service
 - color: fbca04
-  name: area/store
+  name: area/notification-service
 - color: fbca04
-  name: area/translations
+  name: area/location-service
 - color: fbca04
-  name: area/e2e
+  name: area/admin-gateway
 - color: fbca04
-  name: area/ui-ux
+  name: area/admin-service
 - color: fbca04
-  name: area/playground
+  name: area/api-gateway
+- color: fbca04
+  name: area/reviews-service
+- color: fbca04
+  name: area/vendors-service
+- color: fbca04
+  name: area/vendor-gateway
+- color: fbca04
+  name: area/users-gateway
 
-# Area - Contextual
-- color: fbca04
-  name: area/balance
-- color: fbca04
-  name: area/dex
-- color: fbca04
-  name: area/icx
-- color: fbca04
-  name: area/transactions
-- color: fbca04
-  name: area/wallet
-- color: fbca04
-  name: area/settings
-- color: fbca04
-  name: area/loans
-
-# Area - Website
-- color: fbca04
-  name: area/website
-- color: fbca04
-  name: area/website-api
-
-# Platform
-- color: 0d1d49
-  name: platform/ios
-- color: 0d1d49
-  name: platform/android
 
 # Priority
 - color: da0b0b
@@ -125,11 +110,6 @@
 - color: 137fdd
   name: design/ready
   description: Design is ready
-
-# Triage
-- color: b1f488
-  name: triage/accepted
-  description: Triage has been accepted
 
 # Bug
 - color: ffb638

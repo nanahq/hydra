@@ -15,6 +15,9 @@ categories:
   - title: 'Dependencies'
     labels:
       - 'kind/dependencies'
+  - title: 'Packages'
+    labels:
+      - 'kind/packages'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&'
 version-resolver:
