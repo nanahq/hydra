@@ -31,6 +31,7 @@ import {
 import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('admin')
+@UseGuards(JwtAuthGuard)
 export class AdminController {
   private readonly logger = new Logger(Admin.name)
 
@@ -39,7 +40,6 @@ export class AdminController {
     private readonly adminClient: ClientProxy
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('list')
   async getAll (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin
@@ -76,7 +76,6 @@ export class AdminController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put('')
   async updateAdminProfile (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
@@ -98,7 +97,6 @@ export class AdminController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   async deleteAdminProfile (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
@@ -118,7 +116,6 @@ export class AdminController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('admin')
   async getUserProfile (@CurrentUser() admin: Admin): Promise<Admin> {
     return admin

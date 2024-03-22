@@ -23,10 +23,12 @@ import {
   ServicePayload,
   User,
   AddressBookLabelDto,
-  AddressBookLabel
+  AddressBookLabel, AdminLevel, Admin
 } from '@app/common'
+import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('address-book-labels')
+@UseGuards(JwtAuthGuard)
 export class AddressBookLabelController {
   constructor (
     @Inject(QUEUE_SERVICE.ADMINS_SERVICE)
@@ -34,7 +36,6 @@ export class AddressBookLabelController {
   ) {}
 
   @Get('')
-  @UseGuards(JwtAuthGuard)
   async list (): Promise<AddressBookLabel[]> {
     return await lastValueFrom<AddressBookLabel[]>(
       this.addressBookLabelClient
@@ -48,9 +49,9 @@ export class AddressBookLabelController {
   }
 
   @Post('')
-  @UseGuards(JwtAuthGuard)
   async create (
-    @Body() data: AddressBookLabelDto,
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Body() data: AddressBookLabelDto,
       @CurrentUser() user: User
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<AddressBookLabelDto> = {
@@ -69,7 +70,6 @@ export class AddressBookLabelController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
   async getById (@Param('id') id: string): Promise<AddressBookLabel | null> {
     return await lastValueFrom<AddressBookLabel | null>(
       this.addressBookLabelClient
@@ -85,7 +85,8 @@ export class AddressBookLabelController {
   @Put(':id')
   @UseGuards(JwtAuthGuard)
   async update (
-    @Body() data: AddressBookLabelDto,
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Body() data: AddressBookLabelDto,
       @Param('id') id: string
   ): Promise<AddressBookLabel | null> {
     const payload: ServicePayload<AddressBookLabelDto> = {
@@ -106,7 +107,9 @@ export class AddressBookLabelController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
-  async delete (@Param('id') id: string): Promise<ResponseWithStatus> {
+  async delete (
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Param('id') id: string): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
       this.addressBookLabelClient
         .send(QUEUE_MESSAGE.ADDRESS_BOOK_DELETE_BY_USER, { id })

@@ -25,6 +25,7 @@ import { catchError, lastValueFrom } from 'rxjs'
 import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('order')
+@UseGuards(JwtAuthGuard)
 export class OrdersController {
   constructor (
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
@@ -44,7 +45,6 @@ export class OrdersController {
   }
 
   @Get('paid')
-  @UseGuards(JwtAuthGuard)
   async getAllPaidOrders (): Promise<Order[]> {
     return await lastValueFrom(
       this.ordersClient
@@ -58,7 +58,6 @@ export class OrdersController {
   }
 
   @Get('fulfilled')
-  @UseGuards(JwtAuthGuard)
   async getAllFulfilledOrders (): Promise<Order[]> {
     return await lastValueFrom(
       this.ordersClient
@@ -72,7 +71,6 @@ export class OrdersController {
   }
 
   @Get('transit')
-  @UseGuards(JwtAuthGuard)
   async getAllTransitOrders (): Promise<Order[]> {
     return await lastValueFrom(
       this.ordersClient
@@ -86,7 +84,6 @@ export class OrdersController {
   }
 
   @Get('user/:id')
-  @UseGuards(JwtAuthGuard)
   async getAllUserOrder (@Param('id') userId: string): Promise<Order[]> {
     return await lastValueFrom(
       this.ordersClient
@@ -100,7 +97,6 @@ export class OrdersController {
   }
 
   @Get('/:id')
-  @UseGuards(JwtAuthGuard)
   async getOrder (@Param('id') orderId: string): Promise<Order> {
     const payload: ServicePayload<{ orderId: string }> = {
       userId: '',
@@ -119,7 +115,6 @@ export class OrdersController {
   }
 
   @Put('status')
-  @UseGuards(JwtAuthGuard)
   async updateOrderStatus (
     @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
       @Body() data: UpdateOrderStatusRequestDto

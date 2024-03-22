@@ -23,13 +23,13 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('review')
+@UseGuards(JwtAuthGuard)
 export class ReviewsController {
   constructor (
     @Inject(QUEUE_SERVICE.REVIEW_SERVICE)
     private readonly reviewsClient: ClientProxy
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('reviews')
   async getAllReviews (): Promise<Review[]> {
     return await lastValueFrom<Review[]>(
@@ -56,7 +56,6 @@ export class ReviewsController {
   }
 
   @Get('vendor/:vendorId')
-  @UseGuards(JwtAuthGuard)
   async getVendorReviews (
     @Param('vendorId') vendorId: string
   ): Promise<Review[]> {
@@ -72,7 +71,6 @@ export class ReviewsController {
   }
 
   @Get('listing/:listingId')
-  @UseGuards(JwtAuthGuard)
   async getListingReviews (
     @Param('listingId') listingId: string
   ): Promise<Review[]> {
@@ -87,7 +85,6 @@ export class ReviewsController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   async deleteReview (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,

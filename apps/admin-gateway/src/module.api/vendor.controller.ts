@@ -31,13 +31,13 @@ import { ReasonDto } from '@app/common/database/dto/reason.dto'
 import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('vendor')
+@UseGuards(JwtAuthGuard)
 export class VendorController {
   constructor (
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorsClient: ClientProxy
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('vendors')
   async getAllVendors (): Promise<VendorI[]> {
     return await lastValueFrom<VendorI[]>(
@@ -49,7 +49,6 @@ export class VendorController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('/:id')
   async getVendor (@Param('id') vendorId: string): Promise<Vendor> {
     const payload: ServicePayload<string> = {
@@ -65,7 +64,6 @@ export class VendorController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put('status')
   async updateVendorStatus (
     @Body() data: UpdateVendorStatus
@@ -79,11 +77,10 @@ export class VendorController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   async deleteVendorProfile (
-    @Param('id') userId: string
+    @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
+      @Param('id') userId: string
   ): Promise<ResponseWithStatus> {
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorsClient
@@ -96,8 +93,6 @@ export class VendorController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(JwtAuthGuard)
   @Patch('/:id/approve')
   async approve (
     @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
@@ -112,8 +107,6 @@ export class VendorController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(JwtAuthGuard)
   @Patch('/:id/disapprove')
   async disapprove (
     @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
