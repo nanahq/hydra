@@ -5,7 +5,7 @@ import {
   HttpException,
   Inject,
   Param,
-  Patch
+  Patch, UseGuards
 } from '@nestjs/common'
 import {
   Admin,
@@ -20,8 +20,10 @@ import {
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { AdminClearance } from './decorators/user-level.decorator'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
 @Controller('driver')
+@UseGuards(JwtAuthGuard)
 export class DriversController {
   constructor (
     @Inject(QUEUE_SERVICE.DRIVER_SERVICE)

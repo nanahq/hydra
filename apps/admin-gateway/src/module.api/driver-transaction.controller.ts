@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, Inject, Post } from '@nestjs/common'
+import { Body, Controller, HttpException, Inject, Post, UseGuards } from '@nestjs/common'
 import {
   Admin,
   AdminLevel,
@@ -13,8 +13,10 @@ import { CreditWallet, UpdateTransaction } from '@app/common/dto/General.dto'
 import { DriverWalletTransaction } from '@app/common/database/schemas/driver-wallet-transactions.schema'
 import { FilterQuery } from 'mongoose'
 import { AdminClearance } from './decorators/user-level.decorator'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 
 @Controller('payment/driver')
+@UseGuards(JwtAuthGuard)
 export class DriverTransactionController {
   constructor (
     @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)

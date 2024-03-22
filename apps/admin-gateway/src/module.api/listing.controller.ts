@@ -27,13 +27,13 @@ import { ReasonDto } from '@app/common/database/dto/reason.dto'
 import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('listings')
+@UseGuards(JwtAuthGuard)
 export class ListingController {
   constructor (
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
     private readonly listingsClient: ClientProxy
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('')
   async index (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
@@ -45,7 +45,6 @@ export class ListingController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('pending')
   async pending (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
@@ -59,7 +58,6 @@ export class ListingController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('approved')
   async approved (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
@@ -73,7 +71,6 @@ export class ListingController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('rejected')
   async rejected (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
@@ -87,7 +84,6 @@ export class ListingController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('/:id')
   async show (@Param('id') id: string): Promise<ListingCategory> {
     return await lastValueFrom<ListingCategory>(
@@ -99,7 +95,6 @@ export class ListingController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   async delete (@Param('id') listingId: string): Promise<ResponseWithStatus> {
     const payload: ServicePayload<{ listingId: string }> = {
@@ -117,8 +112,6 @@ export class ListingController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(JwtAuthGuard)
   @Patch('/:id/approve')
   async approve (
     @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
@@ -133,8 +126,6 @@ export class ListingController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(JwtAuthGuard)
   @Patch('/:id/disapprove')
   async disapprove (
     @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,

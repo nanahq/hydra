@@ -27,6 +27,7 @@ import { AdminClearance } from './decorators/user-level.decorator'
 import { catchError, lastValueFrom } from 'rxjs'
 
 @Controller('coupon')
+@UseGuards(JwtAuthGuard)
 export class CouponController {
   private readonly logger = new Logger(CouponController.name)
   constructor (
@@ -34,7 +35,6 @@ export class CouponController {
     private readonly paymentClient: ClientProxy
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post('create')
   public async createCoupon (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
@@ -51,7 +51,6 @@ export class CouponController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put('update')
   public async updateCoupon (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
@@ -68,7 +67,6 @@ export class CouponController {
     )
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('all')
   public async getAllCoupons (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin
