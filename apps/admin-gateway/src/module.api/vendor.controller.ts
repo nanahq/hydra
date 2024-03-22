@@ -22,7 +22,8 @@ import {
   ResponseWithStatus,
   ServicePayload,
   UpdateVendorStatus,
-  Vendor
+  Vendor,
+  VendorI
 } from '@app/common'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -38,8 +39,8 @@ export class VendorController {
 
   @UseGuards(JwtAuthGuard)
   @Get('vendors')
-  async getAllVendors (): Promise<Vendor[]> {
-    return await lastValueFrom<Vendor[]>(
+  async getAllVendors (): Promise<VendorI[]> {
+    return await lastValueFrom<VendorI[]>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_ALL_VENDORS, {}).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)

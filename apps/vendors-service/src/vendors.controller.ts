@@ -17,6 +17,7 @@ import {
   RmqService,
   ServicePayload,
   UpdateVendorStatus,
+  VendorI,
   VendorServiceHomePageResult,
   VendorUserI
 } from '@app/common'
@@ -163,7 +164,7 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDORS)
-  async getAllVendors (@Ctx() context: RmqContext): Promise<Vendor[]> {
+  async getAllVendors (@Ctx() context: RmqContext): Promise<VendorI[]> {
     try {
       return await this.vendorsService.getAllVendors()
     } catch (error) {

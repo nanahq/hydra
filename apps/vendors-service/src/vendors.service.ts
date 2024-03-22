@@ -11,6 +11,7 @@ import {
   ServicePayload,
   UpdateVendorStatus,
   VendorApprovalStatus,
+  VendorI,
   VendorServiceHomePageResult,
   VendorUserI
 } from '@app/common'
@@ -236,8 +237,11 @@ export class VendorsService {
     return { status: 1 }
   }
 
-  async getAllVendors (): Promise<Vendor[]> {
-    const getRequest = await this.vendorRepository.find({ isDeleted: false })
+  async getAllVendors (): Promise<VendorI[]> {
+    const getRequest = await this.vendorRepository.findAndPopulate<VendorI>(
+      { isDeleted: false },
+      ['settings']
+    )
 
     if (getRequest === null) {
       throw new FitRpcException(
