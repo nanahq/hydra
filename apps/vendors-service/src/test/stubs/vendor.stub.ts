@@ -4,6 +4,7 @@ import { Types } from 'mongoose'
 export function VendorStub (): Vendor {
   const objectId = '63f7f2d0a0f1d5158f43cb7b' as unknown as Types.ObjectId
   return {
+    reviews: [],
     _id: objectId,
     firstName: 'John',
     lastName: 'Doe',

@@ -7,13 +7,12 @@ import {
 } from 'class-validator'
 import { WalletTransactionStatus, WalletTransactionType } from '@app/common'
 
-
 export class UpdateVendorReviewDto {
   @IsNotEmpty()
-  vendor: string
+    vendor: string
 
   @IsString()
-  reviewId: string
+    reviewId: string
 }
 export class CreditWallet {
   @IsNotEmpty()
