@@ -370,7 +370,7 @@ export class VendorsService {
             }
           }
         },
-        ['settings']
+        ['settings', 'reviews']
       )
       return vendors
     } catch (error) {
@@ -389,14 +389,13 @@ export class VendorsService {
     userLocation: LocationCoordinates
   ): Promise<VendorServiceHomePageResult> {
     try {
-      console.log(userLocation)
-      // const nearest = await this.getNearestVendors(userLocation)
+      const nearest = await this.getNearestVendors(userLocation)
       const allVendors: any = await this.vendorRepository.findAndPopulate(
         { acc_status: VendorApprovalStatus.APPROVED },
-        ['settings']
+        ['settings', 'reviews']
       )
       return {
-        nearest: [],
+        nearest,
         allVendors
       }
     } catch (error) {
