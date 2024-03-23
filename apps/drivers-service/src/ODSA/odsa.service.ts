@@ -146,7 +146,8 @@ export class ODSA {
         'listing',
         'vendor',
         'user',
-        'order'
+        'order',
+        'driver'
       ])
     } catch (error) {
       this.logger.error({
