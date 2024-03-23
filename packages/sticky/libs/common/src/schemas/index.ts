@@ -7,6 +7,7 @@ import {
   VendorOperationSetting,
   DriverType, AdminLevel, ListingApprovalStatus, OrderOptions, VendorApprovalStatusEnum
 } from '../typings'
+import { VendorApprovalStatus } from '../../../../../../libs/common/src'
 export interface ListingCategoryI {
   _id: string
   vendor: VendorI
@@ -175,7 +176,7 @@ export interface DeliveryI {
 
   order: OrderI
 
-  listing: ListingMenuI
+  listing: ListingMenuI[]
 
   vendor: VendorI
 
@@ -183,7 +184,7 @@ export interface DeliveryI {
 
   updatedAt: string
 
-  status: string
+  status: OrderStatus
 
   pickupLocation: LocationCoordinates
 
@@ -195,7 +196,7 @@ export interface DeliveryI {
 
   deliveredWithinTime: boolean
 
-  deliveryTime: number
+  deliveryTime: string
 
   driverAccepted: boolean
 
@@ -234,6 +235,8 @@ export interface DriverI {
   status: 'ONLINE' | 'OFFLINE'
 
   trips: DeliveryI[]
+
+  acc_status: VendorApprovalStatus
 
   totalTrips: number
   type: DriverType
