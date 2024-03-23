@@ -95,6 +95,13 @@ export class Vendor extends AbstractDocument {
 
   @Prop({ type: String })
     expoNotificationToken: string
+
+  @Prop({
+    type: [Types.ObjectId],
+    ref: 'Review'
+  })
+
+    reviews: string[]
 }
 
 export const VendorSchema = SchemaFactory.createForClass(Vendor)

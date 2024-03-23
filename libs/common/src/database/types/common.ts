@@ -8,6 +8,9 @@ import {
 
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
 
+export interface UserVendorI extends VendorI {
+  reviews: ReviewI[]
+}
 export interface ListingOption {
   name: string
   price: string

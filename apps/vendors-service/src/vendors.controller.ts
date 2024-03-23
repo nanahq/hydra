@@ -1,5 +1,5 @@
 import {
-  Ctx,
+  Ctx, EventPattern,
   MessagePattern,
   Payload,
   RmqContext,
@@ -26,6 +26,7 @@ import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
+import { UpdateVendorReviewDto } from '@app/common/dto/General.dto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -284,6 +285,20 @@ export class VendorsController {
   ): Promise<VendorServiceHomePageResult> {
     try {
       return await this.vendorsService.getVendorsForHomepage(userLocation)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.UPDATE_VENDOR_REVIEW)
+  async updateVendorReview (
+    @Payload() data: UpdateVendorReviewDto,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.vendorsService.updateVendorReview(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {
