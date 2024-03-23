@@ -10,7 +10,7 @@ import {
   DatabaseModule,
   ScheduledListingNotification,
   ScheduledListingNotificationSchema,
-  QUEUE_SERVICE
+  QUEUE_SERVICE, Review, ReviewSchema
 } from '@app/common'
 import { VendorsController } from './vendors.controller'
 import { VendorsService } from './vendors.service'
@@ -31,6 +31,7 @@ import {
     MongooseModule.forFeature([
       { name: Vendor.name, schema: VendorSchema },
       { name: VendorSettings.name, schema: VendorSettingsSchema },
+      { name: Review.name, schema: ReviewSchema },
       {
         name: ScheduledListingNotification.name,
         schema: ScheduledListingNotificationSchema

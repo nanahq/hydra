@@ -33,6 +33,8 @@ export enum QUEUE_MESSAGE {
   GET_VENDOR_HOMEPAGE = 'GET_VENDOR_HOMEPAGE',
   CHECK_PHONE_NUMBER = 'CHECK_PHONE_NUMBER',
   GET_VENDOR = 'get_vendor',
+
+  UPDATE_VENDOR_REVIEW= 'UPDATE_VENDOR_REVIEW',
   GET_VENDOR_SETTINGS = 'get_vendor_settings',
   CREATE_VENDOR_SETTINGS = 'create_vendor_settings',
   GET_VENDOR_LOCAL = 'get_vendor_with_email_password',

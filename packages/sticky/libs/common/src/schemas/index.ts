@@ -7,7 +7,6 @@ import {
   VendorOperationSetting,
   DriverType, AdminLevel, ListingApprovalStatus, OrderOptions, VendorApprovalStatusEnum
 } from '../typings'
-import { VendorApprovalStatus } from '../../../../../../libs/common/src'
 export interface ListingCategoryI {
   _id: string
   vendor: VendorI
@@ -77,6 +76,8 @@ export interface VendorI {
   }
   createdAt?: string
   updatedAt?: string
+
+  reviews: ReviewI[]
 }
 
 export interface VendorSettingsI {
@@ -236,7 +237,7 @@ export interface DriverI {
 
   trips: DeliveryI[]
 
-  acc_status: VendorApprovalStatus
+  acc_status: VendorApprovalStatusEnum
 
   totalTrips: number
   type: DriverType

@@ -15,20 +15,15 @@ import {
   VendorServiceHomePageResult,
   VendorUserI
 } from '@app/common'
-import {
-  CreateVendorDto,
-  UpdateVendorSettingsDto
-} from '@app/common/database/dto/vendor.dto'
+import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 
-import {
-  VendorRepository,
-  VendorSettingsRepository
-} from './vendors.repository'
+import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
+import { UpdateVendorReviewDto } from '@app/common/dto/General.dto'
 
 @Injectable()
 export class VendorsService {
@@ -255,7 +250,7 @@ export class VendorsService {
   async getAllVendorsUser (): Promise<VendorUserI[]> {
     const _vendors: any = await this.vendorRepository.findAndPopulate(
       { isDeleted: false, acc_status: VendorApprovalStatus.APPROVED },
-      ['settings']
+      ['settings', 'reviews']
     )
     if (_vendors === null) {
       throw new FitRpcException(
@@ -410,6 +405,15 @@ export class VendorsService {
         'Something went wrong fetching vendors for homepage',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
+    }
+  }
+
+  async updateVendorReview (data: UpdateVendorReviewDto): Promise<void> {
+    try {
+      const vendor = await this.vendorRepository.findOne({ _id: data.vendor })
+      await this.vendorRepository.findOneAndUpdate({ _id: vendor._id }, { reviews: [...vendor.reviews, data.reviewId] })
+    } catch (error) {
+      throw new FitRpcException('Something went wrong updating vendor review', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }

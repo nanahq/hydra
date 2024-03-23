@@ -19,6 +19,7 @@ import {
 import { ReviewRepository } from './review.repositoty'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
+import { UpdateVendorReviewDto } from '@app/common/dto/General.dto'
 
 @Injectable()
 export class ReviewsService implements ReviewsServiceI {
@@ -38,7 +39,6 @@ export class ReviewsService implements ReviewsServiceI {
         'vendor'
       ])
     } catch (error) {
-      console.log({ error })
       throw new FitRpcException(
         'Can not process request, Something went wrong',
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -100,8 +100,13 @@ export class ReviewsService implements ReviewsServiceI {
         this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR, { data: data.vendor })
       )
 
-      await this.reviewRepository.create(data)
+      const newReview = await this.reviewRepository.create(data)
 
+      const updatePayload: UpdateVendorReviewDto = { vendor: data.vendor, reviewId: newReview._id.toString() }
+
+      await lastValueFrom(
+        this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_REVIEW, updatePayload)
+      )
       // @todo(siradji) Move this push to notification service
 
       const pushMessage: PushMessage = {
