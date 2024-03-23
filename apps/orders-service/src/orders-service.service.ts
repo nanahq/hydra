@@ -191,7 +191,7 @@ export class OrdersServiceService {
 
   public async getAllOrders (): Promise<Order[]> {
     try {
-      return await this.orderRepository.find({})
+      return await this.orderRepository.findAndPopulate({}, ['listing', 'user', 'vendor'])
     } catch (e) {
       throw new FitRpcException(
         'Failed to fetch all fulfilled orders something went wrong',
