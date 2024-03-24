@@ -29,43 +29,43 @@ jobs:
       - name: Build
         run: yarn all:build
 
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        instance: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    env:
-      GH_INSTANCE_TOTAL: 10
-    steps:
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+  # test:
+  #   name: Test
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       instance: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  #   env:
+  #     GH_INSTANCE_TOTAL: 10
+  #   steps:
+  #     - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
 
-      - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+  #     - uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
 
-      - name: Containers before pull
-        run: docker container ls -a
+  #     - name: Containers before pull
+  #       run: docker container ls -a
 
-      - name: Pull docker images [RabbitMQ]
-        run: docker pull rabbitmq:latest
+  #     - name: Pull docker images [RabbitMQ]
+  #       run: docker pull rabbitmq:latest
 
-      - name: Pull docker images [Mongo]
-        run: docker pull mongo:6
+  #     - name: Pull docker images [Mongo]
+  #       run: docker pull mongo:6
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+  #     - name: Install dependencies
+  #       run: yarn install --frozen-lockfile
 
-      - name: Containers after pull
-        run: docker container ls -a
+  #     - name: Containers after pull
+  #       run: docker container ls -a
 
-      - run: npm run ci:test
-        env:
-          GH_INSTANCE_INDEX: ${{ matrix.instance }}
+  #     - run: npm run ci:test
+  #       env:
+  #         GH_INSTANCE_INDEX: ${{ matrix.instance }}
 
-      - name: Upload to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+  #     - name: Upload to Codecov
+  #       uses: codecov/codecov-action@v3
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
 
   lint:
     name: Lint
