@@ -12,8 +12,7 @@ import {
   UpdateVendorStatus,
   VendorApprovalStatus,
   VendorI,
-  VendorServiceHomePageResult,
-  VendorUserI
+  VendorServiceHomePageResult
 } from '@app/common'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 
@@ -247,7 +246,7 @@ export class VendorsService {
     return getRequest
   }
 
-  async getAllVendorsUser (): Promise<VendorUserI[]> {
+  async getAllVendorsUser (): Promise<VendorI[]> {
     const _vendors: any = await this.vendorRepository.findAndPopulate(
       { isDeleted: false, acc_status: VendorApprovalStatus.APPROVED },
       ['settings', 'reviews']
@@ -259,7 +258,7 @@ export class VendorsService {
       )
     }
 
-    return getVendorsMapper(_vendors)
+    return _vendors
   }
 
   async updateSettings (
@@ -417,23 +416,24 @@ export class VendorsService {
   }
 }
 
-function getVendorsMapper (vendors: any[]): VendorUserI[] {
-  return vendors.map((vendor: any) => {
-    return {
-      _id: vendor._id,
-      businessName: vendor.businessName,
-      businessAddress: vendor.businessAddress,
-      businessLogo: vendor.businessLogo,
-      isValidated: vendor.isValidated,
-      status: vendor.status,
-      location: vendor.location,
-      businessImage: vendor.restaurantImage,
-      settings: vendor.settings.operations,
-      reviews: vendor.reviews,
-      ratings: {
-        rating: 0,
-        totalReviews: 0
-      }
-    }
-  })
-}
+// @TODO(siradji) fully implement the mapping feature
+// function getVendorsMapper (vendors: any[]): VendorUserI[] {
+//   return vendors.map((vendor: any) => {
+//     return {
+//       _id: vendor._id,
+//       businessName: vendor.businessName,
+//       businessAddress: vendor.businessAddress,
+//       businessLogo: vendor.businessLogo,
+//       isValidated: vendor.isValidated,
+//       status: vendor.status,
+//       location: vendor.location,
+//       businessImage: vendor.restaurantImage,
+//       settings: vendor.settings.operations,
+//       reviews: vendor.reviews,
+//       ratings: {
+//         rating: 0,
+//         totalReviews: 0
+//       }
+//     }
+//   })
+// }

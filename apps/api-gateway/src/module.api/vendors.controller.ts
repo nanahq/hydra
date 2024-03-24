@@ -57,28 +57,18 @@ export class VendorsController {
   @UseGuards(JwtAuthGuard)
   async getVendor (
     @Param('vendorId') vendorId: string
-  ): Promise<Partial<Vendor>> {
+  ): Promise<Vendor> {
     const payload: ServicePayload<string> = {
       userId: '',
       data: vendorId
     }
-    const vendor = await lastValueFrom<Vendor>(
+    return await lastValueFrom<Vendor>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_VENDOR, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
       )
     )
-
-    const { _id, businessName, businessAddress, businessLogo, phone } = vendor
-
-    return {
-      _id,
-      businessName,
-      businessAddress,
-      businessLogo,
-      phone
-    }
   }
   //   Homepage/landing page endpoints
 
