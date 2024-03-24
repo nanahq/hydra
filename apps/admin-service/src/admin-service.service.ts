@@ -19,7 +19,17 @@ export class AdminServiceService {
   ): Promise<ResponseWithStatus> {
     const payload = {
       ...data,
+      userName: data.userName.toLowerCase(),
       password: await bcrypt.hash(data.password, 10)
+    }
+
+    const existingAdmin: Admin = await this.adminRepository.findOne({ userName: payload.userName })
+
+    if (existingAdmin !== null) {
+      throw new FitRpcException(
+        'Username already exists.',
+        HttpStatus.CONFLICT
+      )
     }
 
     try {
