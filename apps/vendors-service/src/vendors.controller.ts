@@ -18,8 +18,7 @@ import {
   ServicePayload,
   UpdateVendorStatus,
   VendorI,
-  VendorServiceHomePageResult,
-  VendorUserI
+  VendorServiceHomePageResult
 } from '@app/common'
 import { VendorsService } from './vendors.service'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
@@ -176,7 +175,7 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDORS_USERS)
-  async getAllVendorsUser (@Ctx() context: RmqContext): Promise<VendorUserI[]> {
+  async getAllVendorsUser (@Ctx() context: RmqContext): Promise<VendorI[]> {
     try {
       return await this.vendorsService.getAllVendorsUser()
     } catch (error) {

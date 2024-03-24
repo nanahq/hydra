@@ -120,6 +120,8 @@ export interface VendorUserI {
   businessAddress: string
   location: LocationCoordinates
   settings: VendorOperationSetting
+
+  reviews: ReviewI[]
   ratings: {
     totalReviews: number
     rating: number
