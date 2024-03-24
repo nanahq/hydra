@@ -22,6 +22,14 @@ export class AdminServiceService {
       password: await bcrypt.hash(data.password, 10)
     }
 
+    const existingAdmin: Admin = await this.adminRepository.findOne({ userName: data.userName.toLowerCase() })
+    if (existingAdmin !== null) {
+      throw new FitRpcException(
+        'Username already exists.',
+        HttpStatus.CONFLICT
+      )
+    }
+
     try {
       await this.adminRepository.create(payload)
       return { status: 1 }
