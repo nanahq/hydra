@@ -235,7 +235,7 @@ export class VendorsService {
   async getAllVendors (): Promise<VendorI[]> {
     const getRequest = await this.vendorRepository.findAndPopulate<VendorI>(
       { isDeleted: false },
-      ['settings']
+      ['settings', 'reviews']
     )
 
     if (getRequest === null) {
@@ -429,6 +429,7 @@ function getVendorsMapper (vendors: any[]): VendorUserI[] {
       location: vendor.location,
       businessImage: vendor.restaurantImage,
       settings: vendor.settings.operations,
+      reviews: vendor.reviews,
       ratings: {
         rating: 0,
         totalReviews: 0

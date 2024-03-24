@@ -100,6 +100,8 @@ export interface VendorUserI {
 
   settings: VendorOperationSetting
   ratings: VendorRatings
+
+  reviews: ReviewI[]
 }
 
 export interface VendorRatings {
