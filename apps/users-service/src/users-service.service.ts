@@ -64,7 +64,7 @@ export class UsersService {
       firstName,
       lastName,
       email,
-      phone
+      phone: formattedPhone
     }
     try {
       const user = await this.usersRepository.create(payload)
