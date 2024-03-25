@@ -2,6 +2,7 @@ import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 
 import {
+  BrevoClient,
   CheckUserAccountI,
   Coupon,
   FitRpcException,
@@ -23,12 +24,16 @@ import {
 } from '@app/common/dto/UpdateUserDto'
 import { lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
+import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 
 @Injectable()
 export class UsersService {
   private readonly logger = new Logger()
   constructor (
     private readonly usersRepository: UserRepository,
+
+    private readonly brevoClient: BrevoClient,
+
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
 
@@ -55,6 +60,12 @@ export class UsersService {
       firstName
     }
 
+    const brevoPayload: CreateBrevoContact = {
+      firstName,
+      lastName,
+      email,
+      phone
+    }
     try {
       const user = await this.usersRepository.create(payload)
       await lastValueFrom(
@@ -81,6 +92,8 @@ export class UsersService {
           paystackInstancePayload
         )
       )
+
+      await this.brevoClient.createContactUser(brevoPayload, 7)
 
       return user
     } catch (error) {

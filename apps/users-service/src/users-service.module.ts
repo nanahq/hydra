@@ -14,7 +14,7 @@ import {
   AddressBookLabel,
   AddressBookLabelSchema,
   Coupon,
-  CouponSchema
+  CouponSchema, BrevoClient
 } from '@app/common'
 import { UsersServiceController } from './users-service.controller'
 import { UsersService } from './users-service.service'
@@ -65,7 +65,8 @@ import { HttpModule } from '@nestjs/axios'
     UsersService,
     UserRepository,
     AddressBookRepository,
-    AddressBookService
+    AddressBookService,
+      BrevoClient
   ]
 })
 export class UsersServiceModule {}

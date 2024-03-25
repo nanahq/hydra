@@ -5,5 +5,5 @@ export class CreateBrevoContact {
   lastName: string
   phone: string
 
-  businessName: string
+  businessName?: string
 }

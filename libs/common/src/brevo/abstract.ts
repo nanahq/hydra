@@ -16,18 +16,37 @@ export class BrevoClient {
     this.client.setApiKey(SibApiV3Sdk.ContactsApiApiKeys.apiKey, API_KEY)
   }
 
-  async createContact (payload: CreateBrevoContact): Promise<void> {
+  async createContactVendor (payload: CreateBrevoContact, listId: number): Promise<void> {
     try {
       await this.client.createContact(
         {
           email: payload.email,
-          listIds: [5],
+          listIds: [listId],
           attributes: {
             LASTNAME: payload.lastName,
             FIRSTNAME: payload.firstName,
             SMS: payload.phone,
             WHATSAPP: payload.phone,
-            BUSINESS_NAME: payload.businessName
+            BUSINESS_NAME: payload?.businessName
+          }
+        }
+      )
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  async createContactUser (payload: CreateBrevoContact, listId: number): Promise<void> {
+    try {
+      await this.client.createContact(
+        {
+          email: payload.email,
+          listIds: [listId],
+          attributes: {
+            LASTNAME: payload.lastName,
+            FIRSTNAME: payload.firstName,
+            SMS: payload.phone,
+            WHATSAPP: payload.phone
           }
         }
       )
