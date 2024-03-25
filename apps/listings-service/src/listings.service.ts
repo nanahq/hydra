@@ -19,7 +19,7 @@ import {
   ScheduledListingI,
   ScheduledPushPayload,
   ServicePayload,
-  UserHomePage,
+  UserHomePage, VendorI,
   VendorServiceHomePageResult,
   VendorUserI
 } from '@app/common'
@@ -824,7 +824,7 @@ export class ListingsService {
   }
 }
 
-function getVendorsMapper (vendors: any[]): VendorUserI[] {
+function getVendorsMapper (vendors: VendorI[]): VendorUserI[] {
   return vendors.map((vendor: any) => {
     return {
       _id: vendor._id,
@@ -836,6 +836,7 @@ function getVendorsMapper (vendors: any[]): VendorUserI[] {
       location: vendor.location,
       businessImage: vendor.restaurantImage,
       settings: vendor.settings.operations,
+      reviews: vendor.reviews,
       ratings: {
         rating: 0,
         totalReviews: 0
