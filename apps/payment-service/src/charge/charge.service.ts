@@ -382,6 +382,23 @@ export class PaymentService implements PaymentServiceI {
   @Cron(CronExpression.EVERY_10_MINUTES, {
     timeZone: 'Africa/Lagos'
   })
+
+  async getAllUsersPayments (): Promise<Payment[] | null> {
+    try {
+      return await this.paymentRepository.findAndPopulate(
+        {},
+        ['user', 'order']
+      )
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      this.logger.error('[PIM] -> Something went wrong getting all users payments')
+      throw new FitRpcException(
+        'Something went wrong fetching users payments.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
   async deleteUnpaidPayments (): Promise<void> {
     try {
       const date = new Date()

@@ -6,7 +6,8 @@ import {
   PaystackChargeResponseData,
   QUEUE_MESSAGE,
   RmqService,
-  UssdRequest
+  UssdRequest,
+  Payment
 } from '@app/common'
 import { Controller, UseFilters } from '@nestjs/common'
 import {
@@ -118,6 +119,17 @@ export class PaymentController {
   ): Promise<void> {
     try {
       await this.paymentService.verifyPaymentPaystack(reference)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_USERS_PAYMENTS)
+  async getAllUsersPayments (@Ctx() context: RmqContext): Promise<Payment[] | null> {
+    try {
+      return this.paymentService.getAllUsersPayments()
     } catch (error) {
       throw new RpcException(error)
     } finally {
