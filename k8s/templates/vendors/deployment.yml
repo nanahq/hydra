@@ -199,3 +199,9 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: NO_COLOR
+
+            - name: BREVO_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: BREVO_API_KEY

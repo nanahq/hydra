@@ -17,23 +17,23 @@ services:
     networks:
       - nana-app
 
-#  admin-gateway:
-#    build:
-#      context: .
-#      dockerfile: ./apps/admin-gateway/Dockerfile
-#      target: development
-#    command: 'yarn start:dev admin-gateway'
-#    env_file:
-#      - ./apps/admin-gateway/.env
-#    depends_on:
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    ports:
-#      - '3002:3002'
-#    networks:
-#      - nana-app
+  admin-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/admin-gateway/Dockerfile
+      target: development
+    command: 'yarn start:dev admin-gateway'
+    env_file:
+      - ./apps/admin-gateway/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    ports:
+      - '3002:3002'
+    networks:
+      - nana-app
 
   vendor-gateway:
     build:
@@ -53,25 +53,23 @@ services:
     networks:
       - nana-app
 
-#  admin-service:
-#    build:
-#      context: .
-#      dockerfile: ./apps/admin-service/Dockerfile
-#      target: development
-#    command: 'yarn start:dev admin-service'
-#    env_file:
-#      - ./apps/admin-service/.env
-#    depends_on:
-#      - api-gateway
-#      - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
-#      - rabbitmq
-#    volumes:
-#      - '.:/usr/src/app'
-#      - /usr/src/app/node_modules
-#    networks:
-#      - nana-app
+  admin-service:
+    build:
+      context: .
+      dockerfile: ./apps/admin-service/Dockerfile
+      target: development
+    command: 'yarn start:dev admin-service'
+    env_file:
+      - ./apps/admin-service/.env
+    depends_on:
+      - api-gateway
+      - mongodb-primary
+      - rabbitmq
+    volumes:
+      - '.:/usr/src/app'
+      - /usr/src/app/node_modules
+    networks:
+      - nana-app
 
   users-service:
     build:
@@ -84,8 +82,6 @@ services:
     depends_on:
       - api-gateway
       - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
       - rabbitmq
     volumes:
       - '.:/usr/src/app'
@@ -104,8 +100,6 @@ services:
     depends_on:
       - vendor-gateway
       - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
       - rabbitmq
     volumes:
       - '.:/usr/src/app'
@@ -140,8 +134,6 @@ services:
       - apps/orders-service/.env
     depends_on:
       - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
       - api-gateway
       - rabbitmq
     volumes:
@@ -160,8 +152,6 @@ services:
       - apps/listings-service/.env
     depends_on:
       - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
       - api-gateway
       - vendor-gateway
       - rabbitmq
@@ -181,8 +171,6 @@ services:
       - apps/payment-service/.env
     depends_on:
       - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
       - api-gateway
       - vendor-gateway
       - rabbitmq
@@ -202,8 +190,6 @@ services:
       - apps/reviews-service/.env
     depends_on:
       - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
       - api-gateway
       - vendor-gateway
       - rabbitmq
@@ -223,8 +209,6 @@ services:
       - apps/drivers-service/.env
     depends_on:
       - mongodb-primary
-#      - mongodb-secondary
-#      - mongodb-arbiter
       - rabbitmq
     ports:
       - '3003:3003'
@@ -262,11 +246,8 @@ services:
   mongodb-primary:
     image: mongo:6
     environment:
-#      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
-#      - MONGODB_REPLICA_SET_MODE=primary
       - MONGO_INITDB_ROOT_PASSWORD=password123
       - MONGO_INITDB_ROOT_USERNAME=root
-#      - MONGODB_REPLICA_SET_KEY=replicasetkey123
     volumes:
       - 'db_data:/data/db'
     ports:
@@ -274,31 +255,6 @@ services:
     networks:
       - nana-app
 
-#  mongodb-secondary:
-#    image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
-#    depends_on:
-#      - mongodb-primary
-#    environment:
-#      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
-#      - MONGODB_REPLICA_SET_MODE=secondary
-#      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-#      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-#      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-#    networks:
-#      - nana-app
-#
-#  mongodb-arbiter:
-#    image: docker.io/zcube/bitnami-compat-mongodb:6.0.4
-#    depends_on:
-#      - mongodb-primary
-#    environment:
-#      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
-#      - MONGODB_REPLICA_SET_MODE=arbiter
-#      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-#      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-#      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-#    networks:
-#      - nana-app
 volumes:
   queue_data:
     driver: local
