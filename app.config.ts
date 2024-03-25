@@ -1,5 +1,5 @@
 export const AppMetadata = {
   API_VERSION: 'v1',
   APP_NAME: 'Nana Hydra',
-  APP_VERSION: '1.46.1'
+  APP_VERSION: '1.49.0'
 }
