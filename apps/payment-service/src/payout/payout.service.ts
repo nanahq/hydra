@@ -48,9 +48,9 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     }
   }
 
-  async updatePayoutStatus (refId: number): Promise<ResponseWithStatus> {
+  async updatePayoutStatus (_id: number): Promise<ResponseWithStatus> {
     try {
-      await this.payoutRepository.findOneAndUpdate({ refId }, { paid: true })
+      await this.payoutRepository.findOneAndUpdate({ _id }, { paid: true })
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
