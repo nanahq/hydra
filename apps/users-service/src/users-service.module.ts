@@ -66,7 +66,7 @@ import { HttpModule } from '@nestjs/axios'
     UserRepository,
     AddressBookRepository,
     AddressBookService,
-      BrevoClient
+    BrevoClient
   ]
 })
 export class UsersServiceModule {}
