@@ -31,6 +31,7 @@ import { AddressBookLabelController } from './module.api/address-book-label.cont
 import { DriversController } from './module.api/drivers.controller'
 import { DriverTransactionController } from './module.api/driver-transaction.controller'
 import { CouponController } from './module.api/coupon.controller'
+import { PaymentController } from './module.api/payment.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -97,7 +98,8 @@ export class AppModule implements NestModule {
         AddressBookLabelController,
         DriversController,
         DriverTransactionController,
-        CouponController
+        CouponController,
+        PaymentController
       ],
       providers: [
         AuthService,
