@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config'
 import { Injectable } from '@nestjs/common'
-import SibApiV3Sdk from '@getbrevo/brevo'
+import * as SibApiV3Sdk from '@getbrevo/brevo'
 import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 
 @Injectable()
