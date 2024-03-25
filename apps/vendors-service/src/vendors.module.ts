@@ -10,7 +10,7 @@ import {
   DatabaseModule,
   ScheduledListingNotification,
   ScheduledListingNotificationSchema,
-  QUEUE_SERVICE, Review, ReviewSchema
+  QUEUE_SERVICE, Review, ReviewSchema, BrevoClient
 } from '@app/common'
 import { VendorsController } from './vendors.controller'
 import { VendorsService } from './vendors.service'
@@ -42,6 +42,6 @@ import {
     RmqModule
   ],
   controllers: [VendorsController],
-  providers: [VendorsService, VendorRepository, VendorSettingsRepository]
+  providers: [VendorsService, VendorRepository, VendorSettingsRepository, BrevoClient]
 })
 export class VendorsModule {}

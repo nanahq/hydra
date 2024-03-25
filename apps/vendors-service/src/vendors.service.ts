@@ -1,6 +1,7 @@
 import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 import {
+  BrevoClient,
   FitRpcException,
   LocationCoordinates,
   LoginVendorRequest,
@@ -23,6 +24,7 @@ import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
 import { UpdateVendorReviewDto } from '@app/common/dto/General.dto'
+import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 
 @Injectable()
 export class VendorsService {
@@ -32,6 +34,7 @@ export class VendorsService {
     private readonly vendorRepository: VendorRepository,
     private readonly vendorSettingsRepository: VendorSettingsRepository,
 
+    private readonly brevoClient: BrevoClient,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy
   ) {}
@@ -66,10 +69,19 @@ export class VendorsService {
       acc_status: VendorApprovalStatus.PENDING
     }
 
+    const brevoPayload: CreateBrevoContact = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phone: data.phone,
+      email: data.businessEmail,
+      businessName: data.businessName
+    }
     try {
       await this.vendorRepository.create(payload)
+      await this.brevoClient.createContactVendor(brevoPayload, 5)
       return { status: 1 }
     } catch (error) {
+      this.logger.error(JSON.stringify(error))
       this.logger.error({
         message: 'Failed to register you at this moment',
         error
