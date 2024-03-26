@@ -15,7 +15,8 @@ import {
   ServicePayload,
   TokenPayload,
   User,
-  verifyPhoneRequest
+  verifyPhoneRequest,
+  UserI
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import {
@@ -223,6 +224,21 @@ export class UsersService {
         HttpStatus.UNAUTHORIZED
       )
     }
+  }
+
+  async getAllUsers (): Promise<UserI[]> {
+    const getRequest = await this.usersRepository.findAndPopulate<UserI>(
+      {},
+      ['orders', 'coupons']
+    )
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all users.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
   }
 
   async deleteUserProfile (userId: string): Promise<ResponseWithStatus> {
