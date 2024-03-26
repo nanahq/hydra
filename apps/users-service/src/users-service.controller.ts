@@ -19,6 +19,7 @@ import {
   ServicePayload,
   TokenPayload,
   User,
+  UserI,
   verifyPhoneRequest
 } from '@app/common'
 import { UsersService } from './users-service.service'
@@ -85,6 +86,17 @@ export class UsersServiceController {
   ): Promise<User> {
     try {
       return await this.usersService.getUser(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_ALL_USERS)
+  async getAllUsers (@Ctx() context: RmqContext): Promise<UserI[]> {
+    try {
+      return await this.usersService.getAllUsers()
     } catch (error) {
       throw new RpcException(error)
     } finally {

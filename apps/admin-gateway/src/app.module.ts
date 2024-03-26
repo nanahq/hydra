@@ -32,6 +32,7 @@ import { DriversController } from './module.api/drivers.controller'
 import { DriverTransactionController } from './module.api/driver-transaction.controller'
 import { CouponController } from './module.api/coupon.controller'
 import { PaymentController } from './module.api/payment.controller'
+import { UsersController } from './module.api/users.controller'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -99,7 +100,8 @@ export class AppModule implements NestModule {
         DriversController,
         DriverTransactionController,
         CouponController,
-        PaymentController
+        PaymentController,
+        UsersController
       ],
       providers: [
         AuthService,
