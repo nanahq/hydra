@@ -105,11 +105,11 @@ export class NotificationServiceController {
 
   @EventPattern(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS)
   async sendPayoutEmails (
-    @Payload() data: SendPayoutEmail[],
+    @Payload() { data }: { data: SendPayoutEmail },
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {
-      await this.transctionalEmail.sendVendorPayoutEmail(data)
+      await this.transctionalEmail.sendSinglePayoutEmail(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

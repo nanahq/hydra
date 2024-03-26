@@ -9,15 +9,15 @@ import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RandomGen,
-  ResponseWithStatus,
-  SendPayoutEmail,
+  ResponseWithStatus, SendPayoutEmail,
   VendorPayout,
   VendorPayoutServiceI
 } from '@app/common'
 import { Cron, CronExpression } from '@nestjs/schedule'
-import { ClientProxy, RpcException } from '@nestjs/microservices'
+import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { FilterQuery } from 'mongoose'
+import * as moment from 'moment'
 
 @Injectable()
 export class VendorPayoutService implements VendorPayoutServiceI {
@@ -51,6 +51,21 @@ export class VendorPayoutService implements VendorPayoutServiceI {
   async updatePayoutStatus (_id: number): Promise<ResponseWithStatus> {
     try {
       await this.payoutRepository.findOneAndUpdate({ _id }, { paid: true })
+      const payout = await this.payoutRepository.findOneAndPopulate<any>({ _id }, ['vendor'])
+      const payload: { data: SendPayoutEmail } = {
+        data: {
+          vendorName: payout.vendor.businessName,
+          payoutDate: moment(payout.updatedAt).format('MMMM Do YYYY'),
+          vendorId: payout.vendor._id.toString(),
+          vendorBankDetails: 'Default Bank Account',
+          vendorEmail: payout.vendor.businessEmail,
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          payoutAmount: `${payout.earnings}} Naira`
+        }
+      }
+      await lastValueFrom(
+        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS, { payload })
+      )
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
@@ -187,53 +202,35 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     await this.payoutRepository.insertMany(payoutsToMake)
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_NOON, {
-    timeZone: 'Africa/Lagos'
-  })
-  async sendPayoutEmails (): Promise<void> {
-    const today = new Date()
-    const start = new Date(today)
-    start.setHours(0, 0, 0, 0)
-
-    const end = new Date(today)
-    end.setHours(23, 59, 59, 999)
-
-    const filter: FilterQuery<VendorPayout> = {
-      createdAt: {
-        $gte: start.toISOString(),
-        $lt: end.toISOString()
-      },
-      paid: true
-    }
-
-    const todayPayouts = (await this.payoutRepository.findAndPopulate(filter, [
-      'vendor'
-    ])) as any
-
-    if (todayPayouts.length < 1) {
-      return
-    }
-
-    const transactionalEmailPayload = payoutMapper(todayPayouts)
-
-    await lastValueFrom(
-      this.notificationClient
-        .emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS, transactionalEmailPayload)
-        .pipe(
-          catchError((error) => {
-            throw new RpcException(error)
-          })
-        )
-    )
-  }
-}
-
-function payoutMapper (payouts: any[]): SendPayoutEmail[] {
-  return payouts.map((payout) => ({
-    payoutAmount: payout.earnings,
-    payoutDate: payout.createdAt,
-    vendorId: payout.vendor._id,
-    vendorEmail: payout.vendor.businessEmail,
-    vendorName: payout.vendor.businessName
-  }))
+  // @Cron(CronExpression.EVERY_DAY_AT_NOON, {
+  //   timeZone: 'Africa/Lagos'
+  // })
+  // async sendPayoutEmails (): Promise<void> {
+  //   const today = new Date()
+  //   const start = new Date(today)
+  //   start.setHours(0, 0, 0, 0)
+  //
+  //   const end = new Date(today)
+  //   end.setHours(23, 59, 59, 999)
+  //
+  //   const filter: FilterQuery<VendorPayout> = {
+  //     createdAt: {
+  //       $gte: start.toISOString(),
+  //       $lt: end.toISOString()
+  //     },
+  //     paid: true
+  //   }
+  //
+  //   // const transactionalEmailPayload = payoutMapper(todayPayouts)
+  //
+  //   // await lastValueFrom(
+  //   //   this.notificationClient
+  //   //     .emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS, transactionalEmailPayload)
+  //   //     .pipe(
+  //   //       catchError((error) => {
+  //   //         throw new RpcException(error)
+  //   //       })
+  //   //     )
+  //   // )
+  // }
 }

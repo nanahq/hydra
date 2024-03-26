@@ -12,7 +12,7 @@ import {
   UserSchema,
   VendorSchema,
   ExportPushNotificationClient,
-  DatabaseModule
+  DatabaseModule, BrevoClient
 } from '@app/common'
 import { NotificationServiceController } from './notification-service.controller'
 import { NotificationServiceService } from './notification-service.service'
@@ -65,7 +65,8 @@ import { SubscriptionRepository } from './subscription.repository'
     SubscriptionService,
     ExportPushNotificationClient,
     SubscriptionRepository,
-    TransactionEmails
+    TransactionEmails,
+    BrevoClient
   ]
 })
 export class NotificationServiceModule {}

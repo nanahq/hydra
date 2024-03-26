@@ -1,31 +1,35 @@
-import { SendPayoutEmail } from '@app/common'
-import { Injectable, Logger } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { BrevoClient, FitRpcException, SendPayoutEmail } from '@app/common'
+import { HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { vendorpayoutTemplate } from '../templates/vendorpayout.template'
 
 @Injectable()
 export class TransactionEmails {
-  // private readonly apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()
   private readonly logger = new Logger(TransactionEmails.name)
-  constructor (private readonly configService: ConfigService) {
-    // this.apiInstance.setApiKey(
-    //   SibApiV3Sdk.TransactionalEmailsApiApiKeys.apiKey,
-    //   this.configService.get<string>('SEND_IN_BLUE_API') ?? ''
-    // )
-  }
+  constructor (
+    private readonly brevoClient: BrevoClient
+  ) {}
 
-  async sendVendorPayoutEmail (payload: SendPayoutEmail[]): Promise<void> {
-    this.logger.log(payload)
-    // for (const data of payload) {
-    //   await this.apiInstance.sendTransacEmail({
-    //     subject: 'EatLater Payout',
-    //     sender: { email: 'notifications@eatlater.ng', name: 'EatLater' },
-    //     replyTo: { email: 'notifications@eatlater.ng', name: 'EatLater' },
-    //     to: [{ email: `${data.vendorEmail}` }],
-    //     htmlContent:
-    //       '<html><body><h1>This is a transactional email {{params.bodyMessage}}</h1></body></html>',
-    //     params: { bodyMessage: 'Made just for you!' }
-    //   })
-    // }
+  async sendSinglePayoutEmail (data: SendPayoutEmail): Promise<void> {
+    try {
+      await this.brevoClient.sendVendorPayoutEmail({
+        to: [{
+          name: data.vendorName,
+          email: data.vendorEmail
+        }],
+        htmlContent: vendorpayoutTemplate({
+          bankName: data.vendorBankDetails,
+          amount: data.payoutAmount,
+          date: data.payoutDate
+        }),
+        subject: 'Nana Payout',
+        sender: { email: 'payouts@trynanaapp.com', name: 'Nana Payouts' },
+        replyTo: { email: 'payouts@trynanaapp.com', name: 'Nana Payouts' }
+      })
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+      this.logger.error('[PIM] -> Something went wrong sending vendor payout emails ')
+      throw new FitRpcException('Something went wrong sending mails', HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
   async sendVendorSignupMail (): Promise<void> {}

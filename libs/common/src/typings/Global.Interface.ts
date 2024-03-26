@@ -41,6 +41,7 @@ export interface SendPayoutEmail {
   vendorEmail: string
   payoutDate: string
   payoutAmount: string
+  vendorBankDetails: string
 }
 
 export interface SendVendorSignUpEmail {
