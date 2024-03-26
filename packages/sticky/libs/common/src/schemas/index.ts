@@ -345,7 +345,7 @@ export interface UserWalletI {
 export interface VendorPayoutI {
   _id: string
 
-  vendor: string
+  vendor: VendorI
 
   earnings: number
 
