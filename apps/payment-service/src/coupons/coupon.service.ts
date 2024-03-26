@@ -32,26 +32,40 @@ export class CouponService {
   public async createNewCoupon (
     data: CreateCouponDto
   ): Promise<ResponseWithStatusAndData<string>> {
-    const hasSuffix = data.suffix !== undefined
-
-    const length = this.MAX_COUPON_LENGTH - Number(data?.suffix?.length ?? 0)
-
     let couponString: string
 
-    if (hasSuffix) {
-      couponString =
-        RandomGen.genRandomString(100, length).trim() +
-        String(data?.suffix?.trim()).toUpperCase()
-    } else {
-      couponString = RandomGen.generateAlphanumericString(
-        this.MAX_COUPON_LENGTH
+    const existingCode: Coupon = await this.couponRepository.findOne({ code: data.code })
+    if (existingCode !== null) {
+      throw new FitRpcException(
+        'Code has been used.',
+        HttpStatus.CONFLICT
       )
     }
+    if (data.code !== undefined) {
+      couponString = data.code
+      await this.couponRepository.create({
+        ...data,
+        code: couponString
+      })
+    } else {
+      const hasSuffix = data.suffix !== undefined
+      const length = this.MAX_COUPON_LENGTH - Number(data?.suffix?.length ?? 0)
 
-    await this.couponRepository.create({
-      ...data,
-      code: couponString
-    })
+      if (hasSuffix) {
+        couponString =
+          RandomGen.genRandomString(100, length).trim() +
+          String(data?.suffix?.trim()).toUpperCase()
+      } else {
+        couponString = RandomGen.generateAlphanumericString(
+          this.MAX_COUPON_LENGTH
+        )
+      }
+
+      await this.couponRepository.create({
+        ...data,
+        code: couponString
+      })
+    }
 
     return {
       status: 1,
