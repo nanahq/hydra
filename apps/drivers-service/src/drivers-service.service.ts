@@ -166,7 +166,7 @@ export class DriversServiceService {
 
   public async getAllDrivers (): Promise<Driver[]> {
     try {
-      return await this.driverRepository.find({})
+      return await this.driverRepository.findAndPopulate({}, ['deliveries'])
     } catch (error) {
       throw new FitRpcException(
         'Something went wrong fetching driver',
