@@ -201,3 +201,10 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: NO_COLOR
+
+
+            - name: USER_JWT_EXPIRATION
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: USER_JWT_EXPIRATION

@@ -207,3 +207,9 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: NO_COLOR
+
+            - name: DRIVER_JWT_EXPIRATION
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: DRIVER_JWT_EXPIRATION

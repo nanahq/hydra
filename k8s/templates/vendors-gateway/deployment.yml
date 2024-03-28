@@ -213,3 +213,8 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: NO_COLOR
+            - name: VENDOR_JWT_EXPIRATION
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: VENDOR_JWT_EXPIRATION
