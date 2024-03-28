@@ -1,4 +1,4 @@
-import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI, VendorUserI, CouponI } from '../schemas'
+import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI, VendorUserI, CouponI, CouponType } from '../schemas'
 
 export interface TokenPayload {
   userId: string
@@ -688,4 +688,15 @@ export interface CouponRedeemResponse {
   coupon?: CouponI
   status: 'OK' | 'ERROR'
   message: string
+}
+
+export interface CreateCouponDto {
+  validFrom: string
+  validTill: string
+  useOnce: boolean
+  percentage?: number
+  type: CouponType
+  value?: number
+  suffix?: string
+  code?: string
 }
