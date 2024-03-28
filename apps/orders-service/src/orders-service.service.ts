@@ -152,9 +152,9 @@ export class OrdersServiceService {
 
   public async getAllFulfilledOrders (): Promise<Order[]> {
     try {
-      return await this.orderRepository.find({
+      return await this.orderRepository.findAndPopulate({
         orderStatus: OrderStatus.FULFILLED
-      })
+      }, ['listing', 'user', 'vendor'])
     } catch (e) {
       throw new FitRpcException(
         'Failed to fetch all fulfilled orders something went wrong',
@@ -165,9 +165,9 @@ export class OrdersServiceService {
 
   public async getAllTransitOrders (): Promise<Order[]> {
     try {
-      return await this.orderRepository.find({
+      return await this.orderRepository.findAndPopulate({
         orderStatus: OrderStatus.IN_ROUTE
-      })
+      }, ['listing', 'user', 'vendor'])
     } catch (e) {
       throw new FitRpcException(
         'Failed to fetch all fulfilled orders something went wrong',
@@ -178,9 +178,10 @@ export class OrdersServiceService {
 
   public async getAllPaidOrder (): Promise<Order[]> {
     try {
-      return await this.orderRepository.find({
+      return await this.orderRepository.findAndPopulate({
         orderStatus: OrderStatus.PROCESSED
-      })
+      },
+      ['listing', 'user', 'vendor'])
     } catch (e) {
       throw new FitRpcException(
         'Failed to fetch all fulfilled orders something went wrong',
