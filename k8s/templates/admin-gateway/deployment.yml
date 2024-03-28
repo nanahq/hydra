@@ -195,3 +195,9 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: FLW_TEST_ENCRYPTION_KEY
+
+            - name: ADMIN_JWT_EXPIRATION
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: ADMIN_JWT_EXPIRATION
