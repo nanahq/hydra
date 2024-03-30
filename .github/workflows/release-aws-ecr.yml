@@ -9,23 +9,6 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        service:
-          - admin-gateway
-          - admin-service
-          - api-gateway
-          - drivers-service
-          - listings-service
-          - location-service
-          - notification-service
-          - orders-service
-          - payment-service
-          - reviews-service
-          - users-service
-          - vendor-gateway
-          - vendors-service
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -40,11 +23,12 @@ jobs:
       - name: Login to AWS ECR
         run: aws ecr get-login-password --region af-south-1 | docker login --username AWS --password-stdin 814105780686.dkr.ecr.af-south-1.amazonaws.com
 
-      - name: Deploy to Aptible
-        uses: aptible/aptible-deploy-action@v1
-        with:
-          username: ${{ secrets.APTIBLE_USERNAME }}
-          password: ${{ secrets.APTIBLE_PASSWORD }}
-          environment: ${{ env.APTIBLE_ENVIRONMENT }}
-          app: ${{ matrix.service }}
-          docker_img: "814105780686.dkr.ecr.af-south-1.amazonaws.com/${{ matrix.service }}-stating:latest"
+
+      - name: Build and Push Docker Images
+        run: |
+          IMAGES=("admin-gateway" "admin-service" "vendor-gateway" "vendors-service" "reviews-service" "payment-service" "orders-service" "notification-service" "location-service" "listings-service" "users-service" "drivers-service" "api-gateway")
+          for IMAGE in "${IMAGES[@]}"; do
+            docker build -t "$IMAGE" -f "./apps/$IMAGE/Dockerfile" .
+            docker tag "$IMAGE:latest" "814105780686.dkr.ecr.af-south-1.amazonaws.com/$IMAGE:latest"
+            docker push "814105780686.dkr.ecr.af-south-1.amazonaws.com/$IMAGE:latest"
+          done

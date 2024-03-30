@@ -1,16 +1,35 @@
-name: 'Publish to Aptible'
+name: Push Docker Images to AWS ECR on Release
 
 on:
-  workflow_dispatch:
-
-env:
-  APTIBLE_ENVIRONMENT: "nana-hydra-staging"
+  release:
+    types:
+      - published
 
 jobs:
-  deploy:
+  build-and-push:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        service:
+          - admin-gateway
+          - admin-service
+          - api-gateway
+          - drivers-service
+          - listings-service
+          - location-service
+          - notification-service
+          - orders-service
+          - payment-service
+          - reviews-service
+          - users-service
+          - vendor-gateway
+          - vendors-service
+
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -21,14 +40,11 @@ jobs:
       - name: Login to AWS ECR
         run: aws ecr get-login-password --region af-south-1 | docker login --username AWS --password-stdin 814105780686.dkr.ecr.af-south-1.amazonaws.com
 
-      - name: Deploy Apps To Aptible
-        run: |
-          IMAGES=("admin-gateway" "admin-service" "vendor-gateway" "vendors-service" "reviews-service" "payment-service" "orders-service" "notification-service" "location-service" "listings-service" "users-service" "drivers-service" "api-gateway")
-          for IMAGE in "${IMAGES[@]}"; do
-            docker run --rm aptible/aptible-deploy-action@v1 \
-              -u ${{ secrets.APTIBLE_USERNAME }} \
-              -p ${{ secrets.APTIBLE_PASSWORD }} \
-              -e environment=${{ env.APTIBLE_ENVIRONMENT }} \
-              -e app=$IMAGE \
-              -e docker_img="814105780686.dkr.ecr.af-south-1.amazonaws.com/$IMAGE-staging:latest"
-          done
+      - name: Deploy to Aptible
+        uses: aptible/aptible-deploy-action@v1
+        with:
+          username: ${{ secrets.APTIBLE_USERNAME }}
+          password: ${{ secrets.APTIBLE_PASSWORD }}
+          environment: ${{ env.APTIBLE_ENVIRONMENT }}
+          app: ${{ matrix.service }}
+          docker_img: "814105780686.dkr.ecr.af-south-1.amazonaws.com/${{ matrix.service }}-stating:latest"
