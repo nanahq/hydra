@@ -1,0 +1,34 @@
+name: 'Publish to Aptible'
+
+on:
+  workflow_dispatch:
+
+env:
+  APTIBLE_ENVIRONMENT: "nana-hydra-staging"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: af-south-1
+
+      - name: Login to AWS ECR
+        run: aws ecr get-login-password --region af-south-1 | docker login --username AWS --password-stdin 814105780686.dkr.ecr.af-south-1.amazonaws.com
+
+      - name: Deploy Apps To Aptible
+        run: |
+          IMAGES=("admin-gateway" "admin-service" "vendor-gateway" "vendors-service" "reviews-service" "payment-service" "orders-service" "notification-service" "location-service" "listings-service" "users-service" "drivers-service" "api-gateway")
+          for IMAGE in "${IMAGES[@]}"; do
+            docker run --rm aptible/aptible-deploy-action@v1 \
+              -u ${{ secrets.APTIBLE_USERNAME }} \
+              -p ${{ secrets.APTIBLE_PASSWORD }} \
+              -e environment=${{ env.APTIBLE_ENVIRONMENT }} \
+              -e app=$IMAGE \
+              -e docker_img="814105780686.dkr.ecr.af-south-1.amazonaws.com/${IMAGE}-staging:latest"
+          done
