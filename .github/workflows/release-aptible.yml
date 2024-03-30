@@ -1,5 +1,4 @@
 name: Publish Staging Environment to Aptible
-
 on:
   workflow_dispatch:
 jobs:
