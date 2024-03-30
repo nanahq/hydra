@@ -30,5 +30,5 @@ jobs:
               -p ${{ secrets.APTIBLE_PASSWORD }} \
               -e environment=${{ env.APTIBLE_ENVIRONMENT }} \
               -e app=$IMAGE \
-              -e docker_img="814105780686.dkr.ecr.af-south-1.amazonaws.com/${IMAGE}-staging:latest"
+              -e docker_img="814105780686.dkr.ecr.af-south-1.amazonaws.com/$IMAGE-staging:latest"
           done
