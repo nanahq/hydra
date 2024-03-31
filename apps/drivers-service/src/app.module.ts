@@ -68,7 +68,7 @@ export class AppModule implements NestModule {
             secret: configService.get<string>('JWT_SECRET'),
             signOptions: {
               expiresIn: `${
-                configService.get<string>('JWT_EXPIRATION') ?? ''
+                configService.get<string>('DRIVER_JWT_EXPIRATION') ?? ''
               }s`
             }
           }),

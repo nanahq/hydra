@@ -49,7 +49,7 @@ export class AppModule implements NestModule {
           isGlobal: true,
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
-            JWT_EXPIRATION: Joi.string().required()
+            USER_JWT_EXPIRATION: Joi.string().required()
           }),
           envFilePath: './apps/api-gateway/.env'
         }),
@@ -58,7 +58,7 @@ export class AppModule implements NestModule {
             secret: configService.get<string>('JWT_SECRET'),
             signOptions: {
               expiresIn: `${
-                configService.get<string>('JWT_EXPIRATION') ?? ''
+                configService.get<string>('USER_JWT_EXPIRATION') ?? ''
               }s`
             }
           }),

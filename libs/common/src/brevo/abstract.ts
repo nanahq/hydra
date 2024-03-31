@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config'
 import { Injectable, Logger } from '@nestjs/common'
-import SibApiV3Sdk, { SendSmtpEmail } from '@getbrevo/brevo'
+import * as SibApiV3Sdk from '@getbrevo/brevo'
 import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 
 @Injectable()
@@ -64,7 +64,7 @@ export class BrevoClient {
     }
   }
 
-  async sendVendorPayoutEmail (emailPayload: SendSmtpEmail): Promise<void> {
+  async sendVendorPayoutEmail (emailPayload: SibApiV3Sdk.SendSmtpEmail): Promise<void> {
     try {
       await this.emailClient.sendTransacEmail(emailPayload)
     } catch (error) {

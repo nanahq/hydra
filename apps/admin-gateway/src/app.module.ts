@@ -54,7 +54,7 @@ export class AppModule implements NestModule {
           isGlobal: true,
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
-            JWT_EXPIRATION: Joi.string().required(),
+            ADMIN_JWT_EXPIRATION: Joi.string().required(),
             PORT: Joi.string().required(),
             RMQ_ADMINS_QUEUE: Joi.string().required(),
             RMQ_ADMINS_API_QUEUE: Joi.string().required()
@@ -62,11 +62,12 @@ export class AppModule implements NestModule {
           envFilePath: './apps/admin-gateway/.env'
         }),
         JwtModule.registerAsync({
+          imports: undefined,
           useFactory: (configService: ConfigService) => ({
             secret: configService.get<string>('JWT_SECRET'),
             signOptions: {
               expiresIn: `${
-                configService.get<string>('JWT_EXPIRATION') ?? ''
+                configService.get<string>('ADMIN_JWT_EXPIRATION') ?? ''
               }s`
             }
           }),
