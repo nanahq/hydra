@@ -100,10 +100,10 @@ export class UsersService {
           paystackInstancePayload
         )
           .pipe(
-              catchError((error: any) => {
-                this.logger.error(JSON.stringify(error));
-                return EMPTY;
-              })
+            catchError((error: any) => {
+              this.logger.error(JSON.stringify(error))
+              return EMPTY
+            })
           )
       )
 
