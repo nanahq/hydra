@@ -1,4 +1,5 @@
 import {
+  MultiPurposeServicePayload,
   PayoutOverview,
   QUEUE_MESSAGE,
   ResponseWithStatus,
@@ -50,11 +51,11 @@ export class VendorPayoutController {
 
   @MessagePattern(QUEUE_MESSAGE.WALLET_UPDATE_PAYOUT)
   async updatePayoutStatus (
-    @Payload() { refId }: { refId: number },
+    @Payload() { id }: MultiPurposeServicePayload<undefined>,
       @Ctx() context: RmqContext
   ): Promise<ResponseWithStatus> {
     try {
-      return await this.payoutService.updatePayoutStatus(refId)
+      return await this.payoutService.updatePayoutStatus(id)
     } catch (error) {
       throw new RpcException(error)
     } finally {

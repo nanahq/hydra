@@ -48,7 +48,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     }
   }
 
-  async updatePayoutStatus (_id: number): Promise<ResponseWithStatus> {
+  async updatePayoutStatus (_id: string): Promise<ResponseWithStatus> {
     try {
       await this.payoutRepository.findOneAndUpdate({ _id }, { paid: true })
       const payout = await this.payoutRepository.findOneAndPopulate<any>({ _id }, ['vendor'])

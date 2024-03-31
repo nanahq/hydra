@@ -36,7 +36,7 @@ export interface PaymentServiceI {
 
 export interface VendorPayoutServiceI {
   createPayout: (data: Partial<VendorPayout>) => Promise<ResponseWithStatus>
-  updatePayoutStatus: (refId: number) => Promise<ResponseWithStatus>
+  updatePayoutStatus: (_id: string) => Promise<ResponseWithStatus>
   getAllPayout: () => Promise<VendorPayout[]>
   getVendorPayout: (vendor: string) => Promise<VendorPayout[]>
   payoutOverview: (vendor: string) => Promise<PayoutOverview>

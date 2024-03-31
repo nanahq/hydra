@@ -18,7 +18,7 @@ import {
   QUEUE_SERVICE,
   ResponseWithStatus,
   VendorPayout,
-  Payment
+  Payment, MultiPurposeServicePayload
 } from '@app/common'
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -45,13 +45,17 @@ export class PaymentController {
     )
   }
 
-  @Patch('vendors-payout/:id')
+  @Patch('vendors-payout/:payoutId')
   async updatePayoutStatus (
     @AdminClearance([AdminLevel.FINANCE]) admin: Admin,
-      @Param('id') _id: number):
+      @Param('payoutId') payoutId: string):
       Promise<{ status: number }> {
+    const payload: MultiPurposeServicePayload<undefined> = {
+      id: payoutId,
+      data: undefined
+    }
     return await lastValueFrom<ResponseWithStatus>(
-      this.paymentClient.send(QUEUE_MESSAGE.WALLET_UPDATE_PAYOUT, { _id }).pipe(
+      this.paymentClient.send(QUEUE_MESSAGE.WALLET_UPDATE_PAYOUT, payload).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

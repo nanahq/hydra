@@ -31,7 +31,7 @@ import { SubscriptionRepository } from './subscription.repository'
         RMQ_URI: Joi.string(),
         TWILIO_ACCOUNT_SID: Joi.string(),
         TWILIO_AUTH_TOKEN: Joi.string(),
-        TWILIO_SERVICE_NAME: Joi.string(),
+        TWILIO_SERVICE_NAME: Joi.string()
       }),
       envFilePath: '.../.env'
     }),
