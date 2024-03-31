@@ -23,7 +23,7 @@ import {
   UpdateUserDto,
   PaystackInstancePayload
 } from '@app/common/dto/UpdateUserDto'
-import { catchError, lastValueFrom } from 'rxjs'
+import { catchError, EMPTY, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
 import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 
@@ -79,6 +79,7 @@ export class UsersService {
           .pipe(
             catchError((error: IRpcException) => {
               this.logger.error(JSON.stringify(error))
+              return EMPTY
             })
           )
       )
@@ -94,14 +95,15 @@ export class UsersService {
         '[PIM] -> Account created. Emitting events for paystack instance creation'
       )
       await lastValueFrom(
-        this.paymentClient.emit(
+        this.paymentClient.send(
           QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED,
           paystackInstancePayload
         )
           .pipe(
-            catchError((error: IRpcException) => {
-              this.logger.error(JSON.stringify(error))
-            })
+              catchError((error: any) => {
+                this.logger.error(JSON.stringify(error));
+                return EMPTY;
+              })
           )
       )
 
