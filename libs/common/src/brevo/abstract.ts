@@ -61,7 +61,6 @@ export class BrevoClient {
       )
     } catch (error) {
       this.logger.error(error)
-      throw new Error(error)
     }
   }
 

@@ -16,14 +16,14 @@ import {
   TokenPayload,
   User,
   verifyPhoneRequest,
-  UserI
+  UserI, IRpcException
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import {
   UpdateUserDto,
   PaystackInstancePayload
 } from '@app/common/dto/UpdateUserDto'
-import { lastValueFrom } from 'rxjs'
+import { catchError, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
 import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 
@@ -69,12 +69,18 @@ export class UsersService {
     }
     try {
       const user = await this.usersRepository.create(payload)
+
       await lastValueFrom(
         this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
           email,
           phone,
           password
         })
+          .pipe(
+            catchError((error: IRpcException) => {
+              this.logger.error(JSON.stringify(error))
+            })
+          )
       )
 
       const paystackInstancePayload: Omit<registerUserRequest, 'password'> = {
@@ -92,6 +98,11 @@ export class UsersService {
           QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED,
           paystackInstancePayload
         )
+          .pipe(
+            catchError((error: IRpcException) => {
+              this.logger.error(JSON.stringify(error))
+            })
+          )
       )
 
       await this.brevoClient.createContactUser(brevoPayload, 7)
