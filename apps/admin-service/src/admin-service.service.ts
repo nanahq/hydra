@@ -132,9 +132,7 @@ export class AdminServiceService {
   }
 
   async getAllAdmins (): Promise<Admin[]> {
-    const getRequest = await this.adminRepository.find({
-      deletedAt: null
-    })
+    const getRequest = await this.adminRepository.find({})
 
     if (getRequest === null) {
       throw new FitRpcException(
