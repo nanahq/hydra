@@ -21,6 +21,7 @@ import {
   Admin,
   AdminLevel,
   IRpcException,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   RegisterAdminDTO,
@@ -119,5 +120,23 @@ export class AdminController {
   @Get('admin')
   async getUserProfile (@CurrentUser() admin: Admin): Promise<Admin> {
     return admin
+  }
+
+  @Put('password-reset')
+  async resetAdminPassword (
+    @CurrentUser() admin: Admin,
+      @Body() { password }: { password: string }
+  ): Promise<ResponseWithStatus> {
+    const payload: MultiPurposeServicePayload<string> = {
+      id: admin._id.toString(),
+      data: password
+    }
+    return await lastValueFrom<ResponseWithStatus>(
+      this.adminClient.send(QUEUE_MESSAGE.RESET_ADMIN_PASSWORD, payload).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 }

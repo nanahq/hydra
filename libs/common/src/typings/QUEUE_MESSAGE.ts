@@ -28,6 +28,7 @@ export enum QUEUE_MESSAGE {
   DELETE_ADMIN = 'delete_admin',
   CREATE_ADMIN = 'create_admin',
 
+  RESET_ADMIN_PASSWORD = 'RESET_ADMIN_PASSWORD',
   ADMIN_DASHBOARD_ORDER_METRICS = 'admin_dashboard_order_metrics',
 
   GET_VENDOR_HOMEPAGE = 'GET_VENDOR_HOMEPAGE',
