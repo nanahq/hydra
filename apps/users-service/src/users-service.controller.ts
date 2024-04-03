@@ -104,6 +104,17 @@ export class UsersServiceController {
     }
   }
 
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD_USER_METRICS)
+  async adminAggregates (@Ctx() context: RmqContext): Promise<any> {
+    try {
+      return await this.usersService.adminMetrics()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.UPDATE_USER_PROFILE)
   async updateUserProfile (
     @Payload() payload: ServicePayload<Partial<UpdateUserDto>>,

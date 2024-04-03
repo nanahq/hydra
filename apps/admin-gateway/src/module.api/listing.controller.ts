@@ -58,6 +58,19 @@ export class ListingController {
     )
   }
 
+  @Get('metrics')
+  async getMetrics (): Promise<any> {
+    return await lastValueFrom<any>(
+      this.listingsClient
+        .send(QUEUE_MESSAGE.ADMIN_DASHBOARD_LISTING_METRICS, {})
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
   @Get('approved')
   async approved (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(

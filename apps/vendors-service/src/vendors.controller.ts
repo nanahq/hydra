@@ -174,6 +174,17 @@ export class VendorsController {
     }
   }
 
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD_VENDOR_METRICS)
+  async adminAggregates (@Ctx() context: RmqContext): Promise<any> {
+    try {
+      return await this.vendorsService.adminMetrics()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_VENDORS_USERS)
   async getAllVendorsUser (@Ctx() context: RmqContext): Promise<VendorI[]> {
     try {

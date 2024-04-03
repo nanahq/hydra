@@ -300,3 +300,19 @@ export interface CouponRedeemResponse {
   status: 'OK' | 'ERROR'
   message: string
 }
+
+export interface OverviewStatI {
+  totalOrders: number
+  totalListings: number
+  totalUsers: number
+  totalVendors: number
+  totalPayouts: number
+  totalRevenue: number
+}
+
+export interface DashboardStatI {
+  overview: OverviewStatI
+  vendors: any
+  orders: any
+  listings: any
+}

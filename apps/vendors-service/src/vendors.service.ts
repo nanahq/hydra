@@ -208,6 +208,23 @@ export class VendorsService {
     return _vendor
   }
 
+  async adminMetrics (): Promise<any> {
+    const aggregateResult: Array<{ id: any, totalVendors: number }> = await this.vendorRepository.findRaw().aggregate([
+      {
+        $match: {
+          isDeleted: false
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalVendors: { $sum: 1 }
+        }
+      }
+    ])
+    return aggregateResult[0].totalVendors
+  }
+
   async updateVendorProfile ({
     data,
     userId

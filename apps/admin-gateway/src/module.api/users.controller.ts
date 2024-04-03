@@ -78,4 +78,15 @@ export class UsersController {
       )
     )
   }
+
+  @Get('metrics')
+  async getMetrics (): Promise<any> {
+    return await lastValueFrom(
+      this.usersClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_USER_METRICS, {}).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
 }

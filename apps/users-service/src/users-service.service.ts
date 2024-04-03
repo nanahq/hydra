@@ -254,6 +254,23 @@ export class UsersService {
     return getRequest
   }
 
+  async adminMetrics (): Promise<any> {
+    const aggregateResult: Array<{ id: any, totalUsers: number }> = await this.usersRepository.findRaw().aggregate([
+      {
+        $match: {
+          isDeleted: false
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalUsers: { $sum: 1 }
+        }
+      }
+    ])
+    return aggregateResult[0].totalUsers
+  }
+
   async deleteUserProfile (userId: string): Promise<ResponseWithStatus> {
     await this.usersRepository.findOneAndUpdate(
       { _id: userId },

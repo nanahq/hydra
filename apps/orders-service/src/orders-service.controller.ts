@@ -165,7 +165,7 @@ export class OrdersServiceController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD_ORDER_METRICS)
-  async adminAggregates (@Ctx() context: RmqContext): Promise<Order[] | null> {
+  async adminAggregates (@Ctx() context: RmqContext): Promise<any> {
     try {
       return await this.ordersServiceService.adminMetrics()
     } catch (error) {
