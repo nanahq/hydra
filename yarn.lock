@@ -4287,10 +4287,10 @@
     "@types/jsonwebtoken" "*"
     "@types/passport-strategy" "*"
 
-"@types/passport-local@^1.0.35":
-  version "1.0.35"
-  resolved "https://registry.yarnpkg.com/@types/passport-local/-/passport-local-1.0.35.tgz#233d370431b3f93bb43cf59154fb7519314156d9"
-  integrity sha512-K4eLTJ8R0yYW8TvCqkjB0pTKoqfUSdl5PfZdidTjV2ETV3604fQxtY6BHKjQWAx50WUS0lqzBvKv3LoI1ZBPeA==
+"@types/passport-local@^1.0.38":
+  version "1.0.38"
+  resolved "https://registry.yarnpkg.com/@types/passport-local/-/passport-local-1.0.38.tgz#8073758188645dde3515808999b1c218a6fe7141"
+  integrity sha512-nsrW4A963lYE7lNTv9cr5WmiUD1ibYJvWrpE13oxApFsRt77b0RdtZvKbCdNIY4v/QZ6TRQWaDDEwV1kCTmcXg==
   dependencies:
     "@types/express" "*"
     "@types/passport" "*"
