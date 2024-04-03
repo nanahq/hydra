@@ -49,17 +49,6 @@ export class VendorController {
     )
   }
 
-  @Get('metrics')
-  async getMetrics (): Promise<any> {
-    return await lastValueFrom<any>(
-      this.vendorsClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_VENDOR_METRICS, {}).pipe(
-        catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
-  }
-
   @Get('/:id')
   async getVendor (@Param('id') vendorId: string): Promise<Vendor> {
     const payload: ServicePayload<string> = {

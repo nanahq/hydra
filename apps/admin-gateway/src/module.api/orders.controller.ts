@@ -114,19 +114,6 @@ export class OrdersController {
     )
   }
 
-  @Get('metrics')
-  async getMetrics (): Promise<any> {
-    return await lastValueFrom<any>(
-      this.ordersClient
-        .send(QUEUE_MESSAGE.ADMIN_DASHBOARD_ORDER_METRICS, {})
-        .pipe(
-          catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
-    )
-  }
-
   @Put('status')
   async updateOrderStatus (
     @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
