@@ -24,10 +24,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838 # v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -37,7 +37,7 @@ jobs:
         run: aws ecr get-login-password --region af-south-1 | docker login --username AWS --password-stdin 814105780686.dkr.ecr.af-south-1.amazonaws.com
 
       - name: Deploy to Aptible
-        uses: aptible/aptible-deploy-action@v1
+        uses: aptible/aptible-deploy-action@386b3a22144b11c5a5797522eccfde7a7baad4c4 # v1
         with:
           username: ${{ secrets.APTIBLE_USERNAME }}
           password: ${{ secrets.APTIBLE_PASSWORD }}
