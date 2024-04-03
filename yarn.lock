@@ -4089,7 +4089,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/cron@^2.0.0":
+"@types/cron@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/cron/-/cron-2.4.0.tgz#884d7866187d26291df206c09805d06b147986e4"
   integrity sha512-5bBaAkqvSFBX8JMi/xCofNzG5E594TNsApMz68dLd/sQYz/HGQqgcxGHTRjOvD4G3Y+YF1Oo3S7QdCvKt1KAJQ==
