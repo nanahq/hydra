@@ -9,6 +9,7 @@ import {
 
 import {
   Admin,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   RegisterAdminDTO,
   RmqService,
@@ -84,6 +85,20 @@ export class AdminServiceController {
   ): Promise<{ status: number }> {
     try {
       return await this.adminServiceService.changeAdminAccess(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.RESET_ADMIN_PASSWORD)
+  async resetAdminPassword (
+    @Payload() payload: MultiPurposeServicePayload<string>,
+      @Ctx() context: RmqContext
+  ): Promise<{ status: number }> {
+    try {
+      return await this.adminServiceService.resetAdminPassword(payload)
     } catch (error) {
       throw new RpcException(error)
     } finally {

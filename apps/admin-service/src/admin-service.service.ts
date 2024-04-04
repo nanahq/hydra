@@ -4,6 +4,7 @@ import * as bcrypt from 'bcryptjs'
 import {
   Admin,
   FitRpcException,
+  MultiPurposeServicePayload,
   RegisterAdminDTO,
   ResponseWithStatus,
   UpdateAdminLevelRequestDto
@@ -119,10 +120,19 @@ export class AdminServiceService {
     return { status: 1 }
   }
 
+  public async resetAdminPassword ({ id, data }: MultiPurposeServicePayload<string>):
+  Promise<ResponseWithStatus> {
+    const newPassword: string = await bcrypt.hash(data, 10)
+    await this.adminRepository.findOneAndUpdate(
+      { _id: id },
+      { password: newPassword }
+    )
+
+    return { status: 1 }
+  }
+
   async getAllAdmins (): Promise<Admin[]> {
-    const getRequest = await this.adminRepository.find({
-      deletedAt: null
-    })
+    const getRequest = await this.adminRepository.find({})
 
     if (getRequest === null) {
       throw new FitRpcException(
