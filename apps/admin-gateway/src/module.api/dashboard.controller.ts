@@ -33,13 +33,17 @@ export class DashboardController {
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
     private readonly vendorsClient: ClientProxy,
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
-    private readonly listingsClient: ClientProxy
+    private readonly listingsClient: ClientProxy,
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy
   ) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('metrics')
   async dashboardMetrics (): Promise<DashboardStatI> {
-    const [totalVendors, totalUsers, totalOrders, totalListings] = await Promise.all([
+    this.logger.log('[PIM] -> fetching dashboard stats')
+
+    const [totalVendors, totalUsers, totalOrders, totalListings, paymentSummary] = await Promise.all([
       lastValueFrom<number>(
         this.vendorsClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_VENDOR_METRICS, {})
           .pipe(
@@ -74,6 +78,14 @@ export class DashboardController {
               throw new HttpException(error.message, error.status)
             })
           )
+      ),
+      lastValueFrom<{ sales: number, payouts: number }>(
+        this.paymentClient.send<{ sales: number, payouts: number }>(QUEUE_MESSAGE.ADMIN_DASHBOARD_PAYMENT_METRICS, {})
+          .pipe(
+            catchError<any, any>((error: IRpcException) => {
+              throw new HttpException(error.message, error.status)
+            })
+          )
       )
 
     ])
@@ -83,8 +95,8 @@ export class DashboardController {
         totalUsers,
         totalVendors,
         totalListings,
-        totalPayouts: 1, // To be replaced later
-        totalRevenue: 1 // To be replaced later
+        totalPayouts: paymentSummary.payouts,
+        totalRevenue: paymentSummary.sales
       }
     }
   }

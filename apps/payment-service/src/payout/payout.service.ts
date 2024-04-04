@@ -18,11 +18,13 @@ import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { FilterQuery } from 'mongoose'
 import * as moment from 'moment'
+import { PaymentRepository } from '../charge/charge.repository'
 
 @Injectable()
 export class VendorPayoutService implements VendorPayoutServiceI {
   constructor (
     private readonly payoutRepository: VendorPayoutRepository,
+    private readonly paymentRepository: PaymentRepository,
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly ordersClient: ClientProxy,
 
@@ -202,35 +204,44 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     await this.payoutRepository.insertMany(payoutsToMake)
   }
 
-  // @Cron(CronExpression.EVERY_DAY_AT_NOON, {
-  //   timeZone: 'Africa/Lagos'
-  // })
-  // async sendPayoutEmails (): Promise<void> {
-  //   const today = new Date()
-  //   const start = new Date(today)
-  //   start.setHours(0, 0, 0, 0)
-  //
-  //   const end = new Date(today)
-  //   end.setHours(23, 59, 59, 999)
-  //
-  //   const filter: FilterQuery<VendorPayout> = {
-  //     createdAt: {
-  //       $gte: start.toISOString(),
-  //       $lt: end.toISOString()
-  //     },
-  //     paid: true
-  //   }
-  //
-  //   // const transactionalEmailPayload = payoutMapper(todayPayouts)
-  //
-  //   // await lastValueFrom(
-  //   //   this.notificationClient
-  //   //     .emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS, transactionalEmailPayload)
-  //   //     .pipe(
-  //   //       catchError((error) => {
-  //   //         throw new RpcException(error)
-  //   //       })
-  //   //     )
-  //   // )
-  // }
+  public async getPaymentMetrics (): Promise<{ sales: number, payouts: number }> {
+    const aggregatePayoutsPromise: Promise<Array<{ id: any, payouts: number }>> = this.payoutRepository
+      .findRaw()
+      .aggregate([
+        {
+          $match: {
+            paid: true
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            payouts: { $sum: '$earnings' }
+          }
+        }
+      ])
+
+    const aggregateRevenuePromise: Promise<Array<{ id: any, sales: number }>> = this.paymentRepository
+      .findRaw()
+      .aggregate([
+        {
+          $match: {
+            status: 'SUCCESS'
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            sales: { $sum: '$chargedAmount' }
+          }
+        }
+      ])
+
+    const [aggregateRevenue, aggregatePayouts] = await Promise.all([aggregateRevenuePromise, aggregatePayoutsPromise])
+
+    return {
+      sales: aggregateRevenue[0].sales,
+      payouts: aggregatePayouts[0].payouts
+    }
+  }
 }
