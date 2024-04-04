@@ -313,3 +313,11 @@ export interface OverviewStatI {
 export interface DashboardStatI {
   overview: OverviewStatI
 }
+
+export interface VendorStatI {
+  aggregateResult: number
+  acceptedVendors: number
+  rejectedVendors: number
+  weeklySignup: number
+  monthlySignup: number
+}

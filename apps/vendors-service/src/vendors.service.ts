@@ -13,7 +13,8 @@ import {
   UpdateVendorStatus,
   VendorApprovalStatus,
   VendorI,
-  VendorServiceHomePageResult
+  VendorServiceHomePageResult,
+  VendorStatI
 } from '@app/common'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 
@@ -208,21 +209,81 @@ export class VendorsService {
     return _vendor
   }
 
-  async adminMetrics (): Promise<any> {
-    const aggregateResult: Array<{ id: any, totalVendors: number }> = await this.vendorRepository.findRaw().aggregate([
-      {
-        $match: {
-          isDeleted: false
+  async adminMetrics (): Promise<VendorStatI> {
+    const today = new Date()
+    const week = new Date(today.getTime() - 168 * 60 * 60 * 1000)
+    const month = new Date(today.getTime() - 1020 * 60 * 60 * 1000)
+
+    const weekStart = new Date(week)
+    weekStart.setHours(0, 0, 0, 0)
+    const monthStart = new Date(month)
+    monthStart.setHours(0, 0, 0, 0)
+
+    const [aggregateResult, acceptedVendors, rejectedVendors, weeklySignup, monthlySignup] = await Promise.all([
+      this.vendorRepository.findRaw().aggregate([
+        {
+          $match: {
+            isDeleted: false
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalVendors: { $sum: 1 }
+          }
         }
-      },
-      {
-        $group: {
-          _id: null,
-          totalVendors: { $sum: 1 }
+      ])[0],
+
+      this.vendorRepository.findRaw().aggregate([
+        {
+          $match: {
+            status: VendorApprovalStatus.APPROVED
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalApprovedVendors: { $sum: 1 }
+          }
         }
-      }
+      ])[0],
+
+      this.vendorRepository.findRaw().aggregate([
+        {
+          $match: {
+            status: VendorApprovalStatus.DISAPPROVED
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalRejectedVendors: { $sum: 1 }
+          }
+        }
+      ])[0],
+
+      this.vendorRepository.findRaw().countDocuments({
+        createdAt: {
+          $gte: weekStart.toISOString(),
+          $lt: today.toISOString()
+        }
+      }),
+
+      this.vendorRepository.findRaw().countDocuments({
+        createdAt: {
+          $gte: monthStart.toISOString(),
+          $lt: today.toISOString()
+        }
+      })
     ])
-    return aggregateResult[0].totalVendors
+
+    return {
+      aggregateResult,
+      acceptedVendors,
+      rejectedVendors,
+      weeklySignup,
+      monthlySignup
+    }
   }
 
   async updateVendorProfile ({
