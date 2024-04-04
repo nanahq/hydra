@@ -312,7 +312,4 @@ export interface OverviewStatI {
 
 export interface DashboardStatI {
   overview: OverviewStatI
-  vendors: any
-  orders: any
-  listings: any
 }

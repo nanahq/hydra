@@ -39,54 +39,53 @@ export class DashboardController {
   @UseGuards(JwtAuthGuard)
   @Get('metrics')
   async dashboardMetrics (): Promise<DashboardStatI> {
-    const vendorMetric = await lastValueFrom<number>(
-      this.vendorsClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_VENDOR_METRICS, {})
-        .pipe(
-          catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
-    )
+    const [totalVendors, totalUsers, totalOrders, totalListings] = await Promise.all([
+      lastValueFrom<number>(
+        this.vendorsClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_VENDOR_METRICS, {})
+          .pipe(
+            catchError<any, any>((error: IRpcException) => {
+              throw new HttpException(error.message, error.status)
+            })
+          )
+      ),
 
-    const userMetric = await lastValueFrom<number>(
-      this.usersClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_USER_METRICS, {})
-        .pipe(
-          catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
-    )
+      lastValueFrom<number>(
+        this.usersClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_USER_METRICS, {})
+          .pipe(
+            catchError<any, any>((error: IRpcException) => {
+              throw new HttpException(error.message, error.status)
+            })
+          )
+      ),
 
-    const orderMetric = await lastValueFrom<number>(
-      this.ordersClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_ORDER_METRICS, {})
-        .pipe(
-          catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
-    )
+      lastValueFrom<number>(
+        this.ordersClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_ORDER_METRICS, {})
+          .pipe(
+            catchError<any, any>((error: IRpcException) => {
+              throw new HttpException(error.message, error.status)
+            })
+          )
+      ),
 
-    const listingMetric = await lastValueFrom<number>(
-      this.listingsClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_LISTING_METRICS, {})
-        .pipe(
-          catchError<any, any>((error: IRpcException) => {
-            throw new HttpException(error.message, error.status)
-          })
-        )
-    )
+      lastValueFrom<number>(
+        this.listingsClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_LISTING_METRICS, {})
+          .pipe(
+            catchError<any, any>((error: IRpcException) => {
+              throw new HttpException(error.message, error.status)
+            })
+          )
+      )
 
+    ])
     return {
       overview: {
-        totalOrders: orderMetric,
-        totalUsers: userMetric,
-        totalVendors: vendorMetric,
-        totalListings: listingMetric,
+        totalOrders,
+        totalUsers,
+        totalVendors,
+        totalListings,
         totalPayouts: 1, // To be replaced later
         totalRevenue: 1 // To be replaced later
-      },
-      vendors: 1, // To be replaced later
-      orders: 1, // To be replaced later
-      listings: 1 // To be replaced later
+      }
     }
   }
 }
