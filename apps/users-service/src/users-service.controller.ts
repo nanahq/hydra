@@ -79,7 +79,7 @@ export class UsersServiceController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.GET_USER_JWT)
+  @MessagePattern(QUEUE_MESSAGE.GET_USER)
   async getUserById (
     @Payload() data: TokenPayload,
       @Ctx() context: RmqContext
