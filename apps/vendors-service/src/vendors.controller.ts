@@ -18,7 +18,8 @@ import {
   ServicePayload,
   UpdateVendorStatus,
   VendorI,
-  VendorServiceHomePageResult
+  VendorServiceHomePageResult,
+  VendorStatI
 } from '@app/common'
 import { VendorsService } from './vendors.service'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
@@ -175,7 +176,7 @@ export class VendorsController {
   }
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD_VENDOR_METRICS)
-  async adminAggregates (@Ctx() context: RmqContext): Promise<any> {
+  async adminAggregates (@Ctx() context: RmqContext): Promise<VendorStatI> {
     try {
       return await this.vendorsService.adminMetrics()
     } catch (error) {
