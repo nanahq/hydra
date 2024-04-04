@@ -89,6 +89,23 @@ export class ListingsService {
     }
   }
 
+  async adminMetrics (): Promise<any> {
+    const aggregateResult: Array<{ id: any, totalListings: number }> = await this.listingMenuRepository.findRaw().aggregate([
+      {
+        $match: {
+          isDeleted: false
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalListings: { $sum: 1 }
+        }
+      }
+    ])
+    return aggregateResult[0].totalListings
+  }
+
   async updateListingMenu ({
     data: { menuId, ...rest },
     userId

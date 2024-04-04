@@ -238,6 +238,17 @@ export class ListingsController {
     }
   }
 
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD_LISTING_METRICS)
+  async adminAggregates (@Ctx() context: RmqContext): Promise<any> {
+    try {
+      return await this.listingService.adminMetrics()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.GET_ALL_LISTING_CAT_USER)
   async getAllCategoriesUser (
     @Ctx() context: RmqContext

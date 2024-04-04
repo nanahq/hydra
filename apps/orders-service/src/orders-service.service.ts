@@ -24,7 +24,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
-import { Aggregate, FilterQuery } from 'mongoose'
+import { FilterQuery } from 'mongoose'
 import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
@@ -404,8 +404,21 @@ export class OrdersServiceService {
     }
   }
 
-  async adminMetrics (): Promise<Aggregate<any>> {
-    return await this.orderRepository.find({})
+  async adminMetrics (): Promise<any> {
+    const aggregateResult: Array<{ id: any, totalOrders: number }> = await this.orderRepository.findRaw().aggregate([
+      {
+        $match: {
+          isDeleted: false
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalOrders: { $sum: 1 }
+        }
+      }
+    ])
+    return aggregateResult[0].totalOrders
   }
 
   private async sendPushNotifications (

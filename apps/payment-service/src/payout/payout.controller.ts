@@ -94,4 +94,17 @@ export class VendorPayoutController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_DASHBOARD_PAYMENT_METRICS)
+  async getPaymentMetrics (
+    @Ctx() context: RmqContext
+  ): Promise<{ sales: number, payouts: number }> {
+    try {
+      return await this.payoutService.getPaymentMetrics()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }
