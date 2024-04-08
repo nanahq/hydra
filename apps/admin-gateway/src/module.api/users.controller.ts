@@ -1,12 +1,10 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
   HttpException,
   Inject,
   Param,
-  Post,
   UseGuards
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
@@ -63,9 +61,9 @@ export class UsersController {
     )
   }
 
-  @Post('get-user')
+  @Get('get-user/:userId')
   async getUser (
-    @Body() userId: string
+    @Param() userId: string
   ): Promise<User> {
     const payload: TokenPayload = {
       userId
