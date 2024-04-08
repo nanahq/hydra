@@ -16,7 +16,8 @@ import {
   DashboardStatI,
   IRpcException,
   QUEUE_MESSAGE,
-  QUEUE_SERVICE
+  QUEUE_SERVICE,
+  VendorStatI
 } from '@app/common'
 
 @Controller('dashboard')
@@ -43,8 +44,8 @@ export class DashboardController {
   async dashboardMetrics (): Promise<DashboardStatI> {
     this.logger.log('[PIM] -> fetching dashboard stats')
 
-    const [totalVendors, totalUsers, totalOrders, totalListings, paymentSummary] = await Promise.all([
-      lastValueFrom<number>(
+    const [vendorSummary, totalUsers, totalOrders, totalListings, paymentSummary] = await Promise.all([
+      lastValueFrom<VendorStatI>(
         this.vendorsClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_VENDOR_METRICS, {})
           .pipe(
             catchError<any, any>((error: IRpcException) => {
@@ -93,11 +94,12 @@ export class DashboardController {
       overview: {
         totalOrders,
         totalUsers,
-        totalVendors,
+        totalVendors: vendorSummary.aggregateResult,
         totalListings,
         totalPayouts: paymentSummary.payouts,
         totalRevenue: paymentSummary.sales
-      }
+      },
+      vendor: vendorSummary
     }
   }
 }

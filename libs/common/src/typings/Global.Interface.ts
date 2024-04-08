@@ -312,4 +312,13 @@ export interface OverviewStatI {
 
 export interface DashboardStatI {
   overview: OverviewStatI
+  vendor: VendorStatI
+}
+
+export interface VendorStatI {
+  aggregateResult: number
+  acceptedVendors: number
+  rejectedVendors: number
+  weeklySignup: number
+  monthlySignup: number
 }
