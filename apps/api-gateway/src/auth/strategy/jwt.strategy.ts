@@ -27,7 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate ({ userId }: TokenPayload): Promise<any> {
     return await lastValueFrom(
       this.usersClient
-        .send(QUEUE_MESSAGE.GET_USER_JWT, {
+        .send(QUEUE_MESSAGE.GET_USER, {
           userId
         })
         .pipe(
