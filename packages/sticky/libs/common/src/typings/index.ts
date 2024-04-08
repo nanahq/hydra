@@ -700,3 +700,25 @@ export interface CreateCouponDto {
   suffix?: string
   code?: string
 }
+
+export interface OverviewStatI {
+  totalOrders: number
+  totalListings: number
+  totalUsers: number
+  totalVendors: number
+  totalPayouts:number
+  totalRevenue: number
+}
+
+export interface DashboardStatI {
+  overview: OverviewStatI
+  vendor: VendorStatI
+}
+
+export interface VendorStatI {
+  aggregateResult: number
+  acceptedVendors: number
+  rejectedVendors: number
+  weeklySignup: number
+  monthlySignup: number
+}
