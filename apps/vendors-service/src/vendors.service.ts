@@ -219,70 +219,76 @@ export class VendorsService {
     const monthStart = new Date(month)
     monthStart.setHours(0, 0, 0, 0)
 
-    const [aggregateResult, acceptedVendors, rejectedVendors, weeklySignup, monthlySignup] = await Promise.all([
-      this.vendorRepository.findRaw().aggregate([
-        {
-          $match: {
-            isDeleted: false
+    try {
+      const [aggregateResult, acceptedVendors, rejectedVendors, weeklySignup, monthlySignup] = await Promise.all([
+        this.vendorRepository.findRaw().aggregate([
+          {
+            $match: {
+              isDeleted: false
+            }
+          },
+          {
+            $group: {
+              _id: null,
+              totalVendors: { $sum: 1 }
+            }
           }
-        },
-        {
-          $group: {
-            _id: null,
-            totalVendors: { $sum: 1 }
-          }
-        }
-      ])[0],
+        ])[0],
 
-      this.vendorRepository.findRaw().aggregate([
-        {
-          $match: {
-            status: VendorApprovalStatus.APPROVED
+        this.vendorRepository.findRaw().aggregate([
+          {
+            $match: {
+              status: VendorApprovalStatus.APPROVED
+            }
+          },
+          {
+            $group: {
+              _id: null,
+              totalApprovedVendors: { $sum: 1 }
+            }
           }
-        },
-        {
-          $group: {
-            _id: null,
-            totalApprovedVendors: { $sum: 1 }
+        ])[0],
+
+        this.vendorRepository.findRaw().aggregate([
+          {
+            $match: {
+              status: VendorApprovalStatus.DISAPPROVED
+            }
+          },
+          {
+            $group: {
+              _id: null,
+              totalRejectedVendors: { $sum: 1 }
+            }
           }
-        }
-      ])[0],
+        ])[0],
 
-      this.vendorRepository.findRaw().aggregate([
-        {
-          $match: {
-            status: VendorApprovalStatus.DISAPPROVED
+        this.vendorRepository.findRaw().countDocuments({
+          createdAt: {
+            $gte: weekStart.toISOString(),
+            $lt: today.toISOString()
           }
-        },
-        {
-          $group: {
-            _id: null,
-            totalRejectedVendors: { $sum: 1 }
+        }),
+
+        this.vendorRepository.findRaw().countDocuments({
+          createdAt: {
+            $gte: monthStart.toISOString(),
+            $lt: today.toISOString()
           }
-        }
-      ])[0],
+        })
+      ])
 
-      this.vendorRepository.findRaw().countDocuments({
-        createdAt: {
-          $gte: weekStart.toISOString(),
-          $lt: today.toISOString()
-        }
-      }),
-
-      this.vendorRepository.findRaw().countDocuments({
-        createdAt: {
-          $gte: monthStart.toISOString(),
-          $lt: today.toISOString()
-        }
-      })
-    ])
-
-    return {
-      aggregateResult,
-      acceptedVendors,
-      rejectedVendors,
-      weeklySignup,
-      monthlySignup
+      return {
+        aggregateResult,
+        acceptedVendors,
+        rejectedVendors,
+        weeklySignup,
+        monthlySignup
+      }
+    } catch (error) {
+      this.logger.log('[PIM] -> Failed to get vendor Metrics')
+      this.logger.error(JSON.stringify(error))
+      throw new FitRpcException('Failed to get vendor metrics', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
