@@ -31,7 +31,7 @@ export class EventsService {
           },
           { currentLocation: location }
         )
-      return delivery?._id
+      return delivery?._id?.toString()
     } catch (error) {
       this.logger.error(JSON.stringify(error))
       throw new FitRpcException(

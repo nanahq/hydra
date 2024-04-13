@@ -56,7 +56,7 @@ export class EventsGateway implements OnGatewayConnection {
         location
       )
 
-      if (deliveryId !== null) {
+      if (deliveryId !== null || deliveryId !== undefined) {
         this.server.emit(SOCKET_MESSAGE.DRIVER_LOCATION_UPDATED, {
           location,
           deliveryId,

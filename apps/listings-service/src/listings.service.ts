@@ -525,7 +525,7 @@ export class ListingsService {
     const menu =
       await this.listingMenuRepository.findOneAndPopulate<ListingMenu>(
         { _id: mid },
-        ['optionGroups']
+        ['optionGroups', 'vendor']
       )
 
     if (menu === null) {
