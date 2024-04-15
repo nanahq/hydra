@@ -233,6 +233,8 @@ export interface DriverI {
 
   phone: string
 
+  nin: number
+
   state: string
 
   status: 'ONLINE' | 'OFFLINE'
