@@ -25,6 +25,9 @@ export class Driver extends AbstractDocument {
   @Prop()
     phone: string
 
+  @Prop({ type: Number, unique: true })
+    nin: number
+
   @Prop({ default: false })
     isValidated: boolean
 

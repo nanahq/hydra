@@ -205,6 +205,8 @@ export interface RegisterDriverDto {
   state: string
 
   email: string
+
+  nin: number
 }
 
 export interface RegisterAdminDTO {

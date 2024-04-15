@@ -1,12 +1,15 @@
 import {
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsPhoneNumber,
   IsString,
+  Length,
   MaxLength,
   MinLength
 } from 'class-validator'
 import { DriverType } from '@app/common'
+import { Transform } from 'class-transformer'
 
 export class RegisterDriverDto {
   @IsNotEmpty()
@@ -34,6 +37,14 @@ export class RegisterDriverDto {
   @IsEmail()
   @IsNotEmpty()
     email: string
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Length(11, 11)
+  @Transform(({ value }) => {
+    return Number(value)
+  })
+    nin: number
 
   @IsString()
   @IsNotEmpty()
