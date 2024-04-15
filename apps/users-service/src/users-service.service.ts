@@ -26,6 +26,7 @@ import {
 import { catchError, EMPTY, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
 import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class UsersService {
@@ -34,6 +35,8 @@ export class UsersService {
     private readonly usersRepository: UserRepository,
 
     private readonly brevoClient: BrevoClient,
+
+    private readonly configService: ConfigService,
 
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
@@ -84,28 +87,30 @@ export class UsersService {
           )
       )
 
-      const paystackInstancePayload: Omit<registerUserRequest, 'password'> = {
-        email,
-        phone: formattedPhone,
-        firstName,
-        lastName
-      }
+      if (this.configService.get<string>('NODE_ENV') === 'production') {
+        const paystackInstancePayload: Omit<registerUserRequest, 'password'> = {
+          email,
+          phone: formattedPhone,
+          firstName,
+          lastName
+        }
 
-      this.logger.log(
-        '[PIM] -> Account created. Emitting events for paystack instance creation'
-      )
-      await lastValueFrom(
-        this.paymentClient.send(
-          QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED,
-          paystackInstancePayload
+        this.logger.log(
+          '[PIM] -> Account created. Emitting events for paystack instance creation'
         )
-          .pipe(
-            catchError((error: any) => {
-              this.logger.error(JSON.stringify(error))
-              return EMPTY
-            })
+        await lastValueFrom(
+          this.paymentClient.send(
+            QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED,
+            paystackInstancePayload
           )
-      )
+            .pipe(
+              catchError((error: any) => {
+                this.logger.error(JSON.stringify(error))
+                return EMPTY
+              })
+            )
+        )
+      }
 
       await this.brevoClient.createContactUser(brevoPayload, 7)
 
