@@ -9,6 +9,7 @@ import {
   ListingMenuI,
   ListingOptionGroup,
   ListingRejectPush,
+  ListingStatI,
   LocationCoordinates,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -40,6 +41,7 @@ import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
 import * as moment from 'moment'
+import { arrayParser } from '@app/common/utils/statsResultParser'
 @Injectable()
 export class ListingsService {
   protected readonly logger = new Logger(ListingsService.name)
@@ -89,21 +91,28 @@ export class ListingsService {
     }
   }
 
-  async adminMetrics (): Promise<any> {
-    const aggregateResult: Array<{ id: any, totalListings: number }> = await this.listingMenuRepository.findRaw().aggregate([
-      {
-        $match: {
-          isDeleted: false
+  async adminMetrics (): Promise<ListingStatI> {
+    const [aggregateListings, approvedListings] = await Promise.all([
+      this.listingMenuRepository.findRaw().countDocuments({}),
+
+      this.listingMenuRepository.findRaw().aggregate([
+        {
+          $match: {
+            status: ListingApprovalStatus.APPROVED
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalApprovedListings: { $sum: 1 }
+          }
         }
-      },
-      {
-        $group: {
-          _id: null,
-          totalListings: { $sum: 1 }
-        }
-      }
+      ])
     ])
-    return aggregateResult[0].totalListings
+    return {
+      aggregateListings,
+      approvedListings: arrayParser<number>(approvedListings, 'totalApprovedListings')
+    }
   }
 
   async updateListingMenu ({

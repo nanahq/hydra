@@ -67,6 +67,8 @@ export interface ListingMenuI {
   isLive: boolean
   isAvailable: boolean
   isDeleted: boolean
+  rejection_reason: string
+  reviews: string
   optionGroups: ListingOptionGroupI[]
   createdAt: string
   updatedAt: string

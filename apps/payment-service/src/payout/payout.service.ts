@@ -19,6 +19,7 @@ import { catchError, lastValueFrom } from 'rxjs'
 import { FilterQuery } from 'mongoose'
 import * as moment from 'moment'
 import { PaymentRepository } from '../charge/charge.repository'
+import { arrayParser } from '@app/common/utils/statsResultParser'
 
 @Injectable()
 export class VendorPayoutService implements VendorPayoutServiceI {
@@ -238,10 +239,9 @@ export class VendorPayoutService implements VendorPayoutServiceI {
       ])
 
     const [aggregateRevenue, aggregatePayouts] = await Promise.all([aggregateRevenuePromise, aggregatePayoutsPromise])
-
     return {
-      sales: aggregateRevenue[0].sales,
-      payouts: aggregatePayouts[0].payouts
+      sales: arrayParser<number>(aggregateRevenue, 'sales'),
+      payouts: arrayParser<number>(aggregatePayouts, 'payouts')
     }
   }
 }
