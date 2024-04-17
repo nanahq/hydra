@@ -6,6 +6,7 @@ import {
   Order,
   OrderI,
   OrderInitiateCharge,
+  OrderStatI,
   OrderStatus,
   OrderTypes,
   OrderUpdateStream,
@@ -404,21 +405,38 @@ export class OrdersServiceService {
     }
   }
 
-  async adminMetrics (): Promise<any> {
-    const aggregateResult: Array<{ id: any, totalOrders: number }> = await this.orderRepository.findRaw().aggregate([
-      {
-        $match: {
-          isDeleted: false
+  async adminMetrics (): Promise<OrderStatI> {
+    const today = new Date()
+    const week = new Date(today.getTime() - 168 * 60 * 60 * 1000)
+    const month = new Date(today.getTime() - 1020 * 60 * 60 * 1000)
+
+    const weekStart = new Date(week)
+    weekStart.setHours(0, 0, 0, 0)
+    const monthStart = new Date(month)
+    monthStart.setHours(0, 0, 0, 0)
+
+    const [aggregateOrders, weeklyOrders, monthlyOrders] = await Promise.all([
+      this.orderRepository.findRaw().countDocuments({}),
+
+      this.orderRepository.findRaw().countDocuments({
+        createdAt: {
+          $gte: weekStart.toISOString(),
+          $lt: today.toISOString()
         }
-      },
-      {
-        $group: {
-          _id: null,
-          totalOrders: { $sum: 1 }
+      }),
+
+      this.orderRepository.findRaw().countDocuments({
+        createdAt: {
+          $gte: monthStart.toISOString(),
+          $lt: today.toISOString()
         }
-      }
+      })
     ])
-    return aggregateResult[0].totalOrders
+    return {
+      aggregateOrders,
+      weeklyOrders,
+      monthlyOrders
+    }
   }
 
   private async sendPushNotifications (

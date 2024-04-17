@@ -313,6 +313,9 @@ export interface OverviewStatI {
 export interface DashboardStatI {
   overview: OverviewStatI
   vendor: VendorStatI
+  user: UserStatI
+  order: OrderStatI
+  listing: ListingStatI
 }
 
 export interface VendorStatI {
@@ -321,4 +324,22 @@ export interface VendorStatI {
   rejectedVendors: number
   weeklySignup: number
   monthlySignup: number
+}
+
+export interface UserStatI {
+  aggregateUsers: number
+  weeklySignup: number
+  monthlySignup: number
+  usersWithOrders: number
+}
+
+export interface OrderStatI {
+  aggregateOrders: number
+  weeklyOrders: number
+  monthlyOrders: number
+}
+
+export interface ListingStatI {
+  approvedListings: number
+  aggregateListings: number
 }

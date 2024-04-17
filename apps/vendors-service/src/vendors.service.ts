@@ -17,7 +17,7 @@ import {
   VendorStatI
 } from '@app/common'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
-
+import { arrayParser } from '@app/common/utils/statsResultParser'
 import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
@@ -232,12 +232,12 @@ export class VendorsService {
             totalVendors: { $sum: 1 }
           }
         }
-      ])[0],
+      ]),
 
       this.vendorRepository.findRaw().aggregate([
         {
           $match: {
-            status: VendorApprovalStatus.APPROVED
+            acc_status: VendorApprovalStatus.APPROVED
           }
         },
         {
@@ -246,12 +246,12 @@ export class VendorsService {
             totalApprovedVendors: { $sum: 1 }
           }
         }
-      ])[0],
+      ]),
 
       this.vendorRepository.findRaw().aggregate([
         {
           $match: {
-            status: VendorApprovalStatus.DISAPPROVED
+            acc_status: VendorApprovalStatus.DISAPPROVED
           }
         },
         {
@@ -260,7 +260,7 @@ export class VendorsService {
             totalRejectedVendors: { $sum: 1 }
           }
         }
-      ])[0],
+      ]),
 
       this.vendorRepository.findRaw().countDocuments({
         createdAt: {
@@ -276,11 +276,10 @@ export class VendorsService {
         }
       })
     ])
-
     return {
-      aggregateResult,
-      acceptedVendors,
-      rejectedVendors,
+      aggregateResult: arrayParser<number>(aggregateResult, 'totalVendors'),
+      acceptedVendors: arrayParser<number>(acceptedVendors, 'totalApprovedVendors'),
+      rejectedVendors: arrayParser<number>(rejectedVendors, 'totalRejectedVendors'),
       weeklySignup,
       monthlySignup
     }

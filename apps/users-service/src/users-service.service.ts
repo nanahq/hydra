@@ -16,7 +16,7 @@ import {
   TokenPayload,
   User,
   verifyPhoneRequest,
-  UserI, IRpcException
+  UserI, IRpcException, UserStatI
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import {
@@ -27,6 +27,7 @@ import { catchError, EMPTY, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
 import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 import { ConfigService } from '@nestjs/config'
+import { arrayParser } from '@app/common/utils/statsResultParser'
 
 @Injectable()
 export class UsersService {
@@ -259,21 +260,66 @@ export class UsersService {
     return getRequest
   }
 
-  async adminMetrics (): Promise<any> {
-    const aggregateResult: Array<{ id: any, totalUsers: number }> = await this.usersRepository.findRaw().aggregate([
-      {
-        $match: {
-          isDeleted: false
+  async adminMetrics (): Promise<UserStatI> {
+    const today = new Date()
+    const week = new Date(today.getTime() - 168 * 60 * 60 * 1000)
+    const month = new Date(today.getTime() - 1020 * 60 * 60 * 1000)
+
+    const weekStart = new Date(week)
+    weekStart.setHours(0, 0, 0, 0)
+    const monthStart = new Date(month)
+    monthStart.setHours(0, 0, 0, 0)
+    const [aggregateUsers, usersWithOrders, weeklySignup, monthlySignup] = await Promise.all([
+      this.usersRepository.findRaw().aggregate([
+        {
+          $match: {
+            isDeleted: false
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalUsers: { $sum: 1 }
+          }
         }
-      },
-      {
-        $group: {
-          _id: null,
-          totalUsers: { $sum: 1 }
+      ]),
+
+      this.usersRepository.findRaw().aggregate([
+        {
+          $match: {
+            orders: { $ne: [] }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalOrders: { $sum: 1 }
+          }
         }
-      }
+      ]),
+
+      this.usersRepository.findRaw().countDocuments({
+        createdAt: {
+          $gte: weekStart.toISOString(),
+          $lt: today.toISOString()
+        }
+      }),
+
+      this.usersRepository.findRaw().countDocuments({
+        createdAt: {
+          $gte: monthStart.toISOString(),
+          $lt: today.toISOString()
+        }
+      })
+
     ])
-    return aggregateResult[0].totalUsers
+
+    return {
+      aggregateUsers: arrayParser<number>(aggregateUsers, 'totalUsers'),
+      usersWithOrders: arrayParser<number>(usersWithOrders, 'totalOrders'),
+      weeklySignup,
+      monthlySignup
+    }
   }
 
   async deleteUserProfile (userId: string): Promise<ResponseWithStatus> {

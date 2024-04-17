@@ -15,8 +15,11 @@ import {
   Admin,
   DashboardStatI,
   IRpcException,
+  ListingStatI,
+  OrderStatI,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
+  UserStatI,
   VendorStatI
 } from '@app/common'
 
@@ -44,7 +47,7 @@ export class DashboardController {
   async dashboardMetrics (): Promise<DashboardStatI> {
     this.logger.log('[PIM] -> fetching dashboard stats')
 
-    const [vendorSummary, totalUsers, totalOrders, totalListings, paymentSummary] = await Promise.all([
+    const [vendorSummary, userSummary, orderSummary, listingSummary, paymentSummary] = await Promise.all([
       lastValueFrom<VendorStatI>(
         this.vendorsClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_VENDOR_METRICS, {})
           .pipe(
@@ -54,7 +57,7 @@ export class DashboardController {
           )
       ),
 
-      lastValueFrom<number>(
+      lastValueFrom<UserStatI>(
         this.usersClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_USER_METRICS, {})
           .pipe(
             catchError<any, any>((error: IRpcException) => {
@@ -63,7 +66,7 @@ export class DashboardController {
           )
       ),
 
-      lastValueFrom<number>(
+      lastValueFrom<OrderStatI>(
         this.ordersClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_ORDER_METRICS, {})
           .pipe(
             catchError<any, any>((error: IRpcException) => {
@@ -72,7 +75,7 @@ export class DashboardController {
           )
       ),
 
-      lastValueFrom<number>(
+      lastValueFrom<ListingStatI>(
         this.listingsClient.send(QUEUE_MESSAGE.ADMIN_DASHBOARD_LISTING_METRICS, {})
           .pipe(
             catchError<any, any>((error: IRpcException) => {
@@ -92,14 +95,17 @@ export class DashboardController {
     ])
     return {
       overview: {
-        totalOrders,
-        totalUsers,
+        totalOrders: orderSummary.aggregateOrders,
+        totalUsers: userSummary.aggregateUsers,
         totalVendors: vendorSummary.aggregateResult,
-        totalListings,
+        totalListings: listingSummary.aggregateListings,
         totalPayouts: paymentSummary.payouts,
         totalRevenue: paymentSummary.sales
       },
-      vendor: vendorSummary
+      vendor: vendorSummary,
+      user: userSummary,
+      order: orderSummary,
+      listing: listingSummary
     }
   }
 }
