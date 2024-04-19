@@ -769,7 +769,7 @@ export class ODSA {
       completed: true
     })
 
-    const dailyStats: DriverStats = todayCompletedDelivery.reduce(
+    const dailyStats: DriverStats = todayCompletedDelivery.filter(delivery => delivery?.travelMeta !== undefined).reduce(
       (acc, delivery) => {
         return {
           time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
@@ -780,7 +780,7 @@ export class ODSA {
       { distance: 0, time: 0, earnings: 0 }
     )
 
-    const previousDayStats: DriverStats = yesterdayCompletedDelivery.reduce(
+    const previousDayStats: DriverStats = yesterdayCompletedDelivery.filter(delivery => delivery?.travelMeta !== undefined).reduce(
       (acc, delivery) => {
         return {
           time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
@@ -791,7 +791,7 @@ export class ODSA {
       { distance: 0, time: 0, earnings: 0 }
     )
 
-    const weeklyStats: DriverStats = weekCompletedDelivery.reduce(
+    const weeklyStats: DriverStats = weekCompletedDelivery.filter(delivery => delivery?.travelMeta !== undefined).reduce(
       (acc, delivery) => {
         return {
           time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
@@ -802,7 +802,7 @@ export class ODSA {
       { distance: 0, time: 0, earnings: 0 }
     )
 
-    const monthlyStats: DriverStats = monthCompletedDelivery.reduce(
+    const monthlyStats: DriverStats = monthCompletedDelivery.filter(delivery => delivery?.travelMeta !== undefined).reduce(
       (acc, delivery) => {
         return {
           time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
