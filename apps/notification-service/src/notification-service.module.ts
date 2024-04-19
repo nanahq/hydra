@@ -33,7 +33,7 @@ import { SubscriptionRepository } from './subscription.repository'
         TWILIO_AUTH_TOKEN: Joi.string(),
         TWILIO_SERVICE_NAME: Joi.string()
       }),
-      envFilePath: '.../.env'
+      envFilePath: './apps/notification-service/.env'
     }),
     TwilioModule.forRootAsync({
       imports: [ConfigModule],
