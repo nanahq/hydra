@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { TwilioService } from 'nestjs-twilio'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom, lastValueFrom } from 'rxjs'
 
 import {
   OrderStatus,
@@ -20,6 +20,7 @@ import {
 } from '@app/common'
 
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
+import { HttpService } from '@nestjs/axios'
 
 @Injectable()
 export class NotificationServiceService {
@@ -30,8 +31,9 @@ export class NotificationServiceService {
     private readonly usersClient: ClientProxy,
     private readonly twilioService: TwilioService,
     private readonly configService: ConfigService,
+    private readonly pushClient: ExportPushNotificationClient,
 
-    private readonly pushClient: ExportPushNotificationClient
+    private readonly httpService: HttpService
   ) {
     this.fromPhone = 'Nana'
   }
@@ -186,6 +188,15 @@ export class NotificationServiceService {
         body: 'A warm welcome to Nana. Add listings to start selling'
       }
       return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {}
+  }
+
+  public async sendSlackMessage (message: string): Promise<void> {
+    try {
+      const url = this.configService.get<string>('SLACK_WEBHOOK_URL') as string
+      await firstValueFrom(this.httpService.post(url, {
+        text: message
+      }))
     } catch (error) {}
   }
 }

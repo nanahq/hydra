@@ -21,17 +21,19 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { SubscriptionController } from './subscription.controller'
 import { SubscriptionService } from './subscription.service'
 import { SubscriptionRepository } from './subscription.repository'
+import { HttpModule } from '@nestjs/axios'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-        RMQ_NOTIFICATION_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string(),
-        TWILIO_ACCOUNT_SID: Joi.string(),
-        TWILIO_AUTH_TOKEN: Joi.string(),
-        TWILIO_SERVICE_NAME: Joi.string()
+        RMQ_NOTIFICATION_QUEUE: Joi.string().required(),
+        RMQ_URI: Joi.string().required(),
+        TWILIO_ACCOUNT_SID: Joi.string().required(),
+        TWILIO_AUTH_TOKEN: Joi.string().required(),
+        TWILIO_SERVICE_NAME: Joi.string().required(),
+        SLACK_WEBHOOK_URL: Joi.string().required()
       }),
       envFilePath: './apps/notification-service/.env'
     }),
@@ -55,7 +57,8 @@ import { SubscriptionRepository } from './subscription.repository'
     RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
     DatabaseModule,
-    RmqModule
+    RmqModule,
+    HttpModule
   ],
   controllers: [NotificationServiceController, SubscriptionController],
   providers: [

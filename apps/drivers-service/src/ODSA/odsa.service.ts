@@ -34,10 +34,13 @@ import { CreditWallet } from '@app/common/dto/General.dto'
 @Injectable()
 export class ODSA {
   private readonly logger = new Logger(ODSA.name)
-  private readonly MAX_ORDER_EXPIRY = 2
+  private readonly MAX_ORDER_EXPIRY = 30 // minutes
   constructor (
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly orderClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
+    private readonly notificationClient: ClientProxy,
     @Inject(QUEUE_SERVICE.LOCATION_SERVICE)
     private readonly locationClient: ClientProxy,
 
@@ -232,6 +235,13 @@ export class ODSA {
         )
         updates.deliveredWithinTime = deliveredWithinTime
         updates.completed = true
+
+        if (!deliveredWithinTime) {
+          const slackMessage = `Order ${delivery.order._id.toString()} is not delivered within time`
+          await lastValueFrom(
+            this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
+          )
+        }
       }
 
       await this.odsaRepository.findOneAndUpdate(
@@ -352,12 +362,15 @@ export class ODSA {
       ) {
         const createdAt = moment(_order.createdAt)
         const currentTime = moment()
-        const timeDiff = currentTime.diff(createdAt, 'hours')
+        const timeDiff = currentTime.diff(createdAt, 'minutes')
 
-        // TODO(@siradji) update order status to 'UNDELIVERABLE' and send email to user.
         if (timeDiff > this.MAX_ORDER_EXPIRY) {
           await this.odsaRepository.delete(deliveryId as any)
           this.logger.log('[FORWARD_ADMIN]: Order has exceeded 2 hours')
+          const slackMessage = `[FORWARD ADMIN]: Unable to find driver for order ${_order._id.toString()}`
+          await lastValueFrom(
+            this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
+          )
           return
         }
       }

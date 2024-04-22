@@ -104,6 +104,7 @@ export class AppModule implements NestModule {
         RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
         RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
         RmqModule,
