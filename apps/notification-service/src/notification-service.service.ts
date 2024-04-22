@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { TwilioService } from 'nestjs-twilio'
-import { lastValueFrom } from 'rxjs'
+import { firstValueFrom, lastValueFrom } from 'rxjs'
 
 import {
   OrderStatus,
@@ -20,23 +20,22 @@ import {
 } from '@app/common'
 
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
-import { IncomingWebhook } from '@slack/webhook'
+import { HttpService } from '@nestjs/axios'
 
 @Injectable()
 export class NotificationServiceService {
   private readonly fromPhone: string
   private readonly logger = new Logger(NotificationServiceService.name)
-  private readonly slackWebhook: IncomingWebhook
   constructor (
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     private readonly twilioService: TwilioService,
     private readonly configService: ConfigService,
-    private readonly pushClient: ExportPushNotificationClient
+    private readonly pushClient: ExportPushNotificationClient,
+
+    private readonly httpService: HttpService
   ) {
     this.fromPhone = 'Nana'
-    const slackWebHookUrl = this.configService.get<string>('SLACK_WEBHOOK_URL') as string
-    this.slackWebhook = new IncomingWebhook(slackWebHookUrl)
   }
 
   async verifyPhone ({ code, phone }: PhoneVerificationPayload): Promise<any> {
@@ -192,11 +191,12 @@ export class NotificationServiceService {
     } catch (error) {}
   }
 
-  public async sendSlackMessage (message: string): Promise<any> {
+  public async sendSlackMessage (message: string): Promise<void> {
     try {
-      await this.slackWebhook.send({
+      const url = this.configService.get<string>('SLACK_WEBHOOK_URL') as string
+      await firstValueFrom(this.httpService.post(url, {
         text: message
-      })
+      }))
     } catch (error) {}
   }
 }
