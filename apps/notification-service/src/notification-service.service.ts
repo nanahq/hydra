@@ -20,20 +20,23 @@ import {
 } from '@app/common'
 
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
+import { IncomingWebhook } from '@slack/webhook'
 
 @Injectable()
 export class NotificationServiceService {
   private readonly fromPhone: string
   private readonly logger = new Logger(NotificationServiceService.name)
+  private readonly slackWebhook: IncomingWebhook
   constructor (
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
     private readonly usersClient: ClientProxy,
     private readonly twilioService: TwilioService,
     private readonly configService: ConfigService,
-
     private readonly pushClient: ExportPushNotificationClient
   ) {
     this.fromPhone = 'Nana'
+    const slackWebHookUrl = this.configService.get<string>('SLACK_WEBHOOK_URL') as string
+    this.slackWebhook = new IncomingWebhook(slackWebHookUrl)
   }
 
   async verifyPhone ({ code, phone }: PhoneVerificationPayload): Promise<any> {
@@ -186,6 +189,14 @@ export class NotificationServiceService {
         body: 'A warm welcome to Nana. Add listings to start selling'
       }
       return await this.pushClient.sendSingleNotification(data.token, message)
+    } catch (error) {}
+  }
+
+  public async sendSlackMessage (message: string): Promise<any> {
+    try {
+      await this.slackWebhook.send({
+        text: message
+      })
     } catch (error) {}
   }
 }

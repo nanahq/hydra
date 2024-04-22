@@ -176,4 +176,18 @@ export class NotificationServiceController {
       this.rmqService.ack(context)
     }
   }
+
+  @EventPattern(QUEUE_MESSAGE.SEND_SLACK_MESSAGE)
+  async sendSlackMessage (
+    @Payload() data: string,
+      @Ctx() context: RmqContext
+  ): Promise<any> {
+    try {
+      return await this.notificationServiceService.sendSlackMessage(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

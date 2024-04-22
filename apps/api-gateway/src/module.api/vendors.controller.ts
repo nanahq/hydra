@@ -171,4 +171,22 @@ export class VendorsController {
         )
     )
   }
+
+  @Post('slack')
+  async postSlackMessage (
+    @Body() message: string
+  ): Promise<any> {
+    const payload = {
+      text: message
+    }
+    return await lastValueFrom(
+      this.notificationClient
+        .emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, payload)
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
 }
