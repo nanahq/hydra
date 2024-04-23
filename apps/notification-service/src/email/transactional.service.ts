@@ -21,9 +21,9 @@ export class TransactionEmails {
           amount: data.payoutAmount,
           date: data.payoutDate
         }),
-        subject: 'Nana Payout',
-        sender: { email: 'payouts@trynanaapp.com', name: 'Nana Payouts' },
-        replyTo: { email: 'payouts@trynanaapp.com', name: 'Nana Payouts' }
+        subject: `${data.vendorName}, Your money is on its way!`,
+        sender: { email: 'vendors-payout@trynanaapp.com', name: 'Nana Payouts' },
+        replyTo: { email: 'vendors-payout@trynanaapp.com', name: 'Nana Payouts' }
       })
     } catch (error) {
       this.logger.error(JSON.stringify(error))

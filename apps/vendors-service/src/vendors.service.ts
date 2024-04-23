@@ -79,7 +79,7 @@ export class VendorsService {
     }
     try {
       await this.vendorRepository.create(payload)
-      await this.brevoClient.createContactVendor(brevoPayload, 5)
+      await this.brevoClient.createContactVendor(brevoPayload, 4)
       return { status: 1 }
     } catch (error) {
       this.logger.error(JSON.stringify(error))

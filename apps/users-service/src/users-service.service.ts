@@ -113,7 +113,7 @@ export class UsersService {
         )
       }
 
-      await this.brevoClient.createContactUser(brevoPayload, 7)
+      await this.brevoClient.createContactUser(brevoPayload, 6)
 
       return user
     } catch (error) {
