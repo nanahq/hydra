@@ -21,6 +21,7 @@ import {
   VendorSettingsRepository,
   VendorRepository
 } from './vendors.repository'
+import { HttpModule } from '@nestjs/axios'
 
 @Module({
   imports: [
@@ -39,7 +40,8 @@ import {
     ]),
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
     DatabaseModule,
-    RmqModule
+    RmqModule,
+    HttpModule
   ],
   controllers: [VendorsController],
   providers: [VendorsService, VendorRepository, VendorSettingsRepository, BrevoClient]
