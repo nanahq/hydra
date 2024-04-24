@@ -48,6 +48,7 @@ export class UserWalletService {
 
     let virtualAccountNumber: string | undefined
 
+    // TODO(@siradji) wrap createPaystackCustomerInstance in a try-catch
     const customerId = await this.createPaystackCustomerInstance(data)
 
     if (customerId !== undefined) {
