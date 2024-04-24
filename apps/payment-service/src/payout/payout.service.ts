@@ -166,7 +166,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
         $gte: start.toISOString(),
         $lt: end.toISOString()
       },
-      orderStatus: OrderStatus.COLLECTED
+      orderStatus: OrderStatus.FULFILLED
     }
     const orders = await lastValueFrom<OrderI[]>(
       this.ordersClient.send(QUEUE_MESSAGE.GET_ALL_ORDERS, filter).pipe(
