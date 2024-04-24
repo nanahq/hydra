@@ -91,7 +91,6 @@ describe('Vendors - E2E', () => {
       let response: ResponseWithStatus
       beforeEach(async () => {
         payload = {
-          businessEmail: 'sales@cpr.com',
           email: 'manager@cpr.com',
           businessAddress: 'Ummi plaza suite c22',
           businessName: 'CPR delights',
@@ -162,7 +161,6 @@ describe('Vendors - E2E', () => {
 
       beforeEach(async () => {
         vendor = await repository.create({
-          businessEmail: 'sales@cpr.com',
           email: 'manager@cpr.com',
           businessAddress: 'Ummi plaza suite c22',
           businessName: 'CPR delights',
@@ -243,7 +241,6 @@ describe('Vendors - E2E', () => {
     const password = '12345678'
     beforeEach(async () => {
       vendor = await repository.create({
-        businessEmail: 'sales@cpr.com',
         email: 'manager@cpr.com',
         businessAddress: 'Ummi plaza suite c22',
         businessName: 'CPR delights',
@@ -254,7 +251,6 @@ describe('Vendors - E2E', () => {
       })
 
       vendor2 = await repository.create({
-        businessEmail: 'marketing@cpr.com',
         email: 'email@cpr.com',
         businessAddress: 'Ummi plaza suite c22',
         businessName: 'Kelly delights',
@@ -297,7 +293,7 @@ describe('Vendors - E2E', () => {
         )
       )
 
-      expect(v.businessEmail).toStrictEqual(vendor.businessEmail)
+      expect(v.email).toStrictEqual(vendor.email)
       expect(v.phone).toStrictEqual(vendor.phone)
       expect(v.firstName).toStrictEqual(vendor.firstName)
     })
@@ -315,14 +311,14 @@ describe('Vendors - E2E', () => {
         )
       )
 
-      expect(v.businessEmail).toStrictEqual(vendor.businessEmail)
+      expect(v.email).toStrictEqual(vendor.email)
       expect(v.phone).toStrictEqual(vendor.phone)
       expect(v.firstName).toStrictEqual(vendor.firstName)
     })
 
     it('should get vendor by email [login with email and password]', async () => {
       const loginRequest: LoginVendorRequest = {
-        businessEmail: vendor.businessEmail,
+        email: vendor.email,
         password
       }
 
@@ -334,7 +330,7 @@ describe('Vendors - E2E', () => {
         )
       )
 
-      expect(v.businessEmail).toStrictEqual(vendor.businessEmail)
+      expect(v.email).toStrictEqual(vendor.email)
       expect(v.phone).toStrictEqual(vendor.phone)
       expect(v.firstName).toStrictEqual(vendor.firstName)
     })
@@ -431,7 +427,7 @@ describe('Vendors - E2E', () => {
       const FAKE_EMAIL = '63f7f2d0a0f1d5158f43cb7b'
 
       const loginRequest: LoginVendorRequest = {
-        businessEmail: FAKE_EMAIL,
+        email: FAKE_EMAIL,
         password
       }
 
@@ -450,7 +446,7 @@ describe('Vendors - E2E', () => {
 
     it('should throw an unauthorized exception when incorrect password is use ', async () => {
       const loginRequest: LoginVendorRequest = {
-        businessEmail: vendor.businessEmail,
+        email: vendor.email,
         password: 'FAKE'
       }
 
@@ -473,7 +469,6 @@ describe('Vendors - E2E', () => {
 
     beforeEach(async () => {
       vendor = await repository.create({
-        businessEmail: 'sales@cpr.com',
         email: 'manager@cpr.com',
         businessAddress: 'Ummi plaza suite c22',
         businessName: 'CPR delights',
@@ -726,7 +721,6 @@ describe('Vendors - E2E', () => {
     let vendor: Vendor
     beforeEach(async () => {
       vendor = await repository.create({
-        businessEmail: 'sales@cpr.com',
         email: 'manager@cpr.com',
         businessAddress: 'Ummi plaza suite c22',
         businessName: 'CPR delights',
@@ -771,7 +765,6 @@ describe('Vendors - E2E', () => {
 
     beforeEach(async () => {
       vendor1 = await repository.create({
-        businessEmail: 'sales@Siziling.com',
         email: 'manager@Siziling.com',
         businessAddress: 'Ummi plaza suite c22',
         businessName: 'Siziling Grills',
@@ -786,7 +779,6 @@ describe('Vendors - E2E', () => {
         }
       })
       vendor2 = await repository.create({
-        businessEmail: 'sales@Yahuza.com',
         email: 'manager@Yahuza.com',
         businessAddress: 'Ummi plaza suite c22',
         businessName: 'Yahuza',
@@ -801,7 +793,6 @@ describe('Vendors - E2E', () => {
         }
       })
       vendor3 = await repository.create({
-        businessEmail: 'sales@Shaban.com',
         email: 'manager@Shaban.com',
         businessAddress: 'Ummi plaza suite c22',
         businessName: 'Shaban',

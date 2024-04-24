@@ -9,6 +9,7 @@ import {
   TokenPayload,
   UpdateVendorStatus,
   Vendor,
+  VendorI,
   VendorSettings
 } from '@app/common'
 import {
@@ -54,7 +55,6 @@ describe('Vendors Service - Controller', () => {
           firstName: 'Suraj',
           lastName: 'Auwal',
           businessName: "Jay's Pizza",
-          businessEmail: 'suraj@gmail.com',
           businessAddress: 'Tsamiyar boka',
           phone: '+2348107641933',
           password: '12345678',
@@ -105,7 +105,7 @@ describe('Vendors Service - Controller', () => {
       beforeEach(async () => {
         loginData = {
           password: VendorStub().password as any,
-          businessEmail: VendorStub().businessEmail as any
+          email: VendorStub().email as any
         }
         response = await vendorsController.getVendorByEmail(loginData, context)
       })
@@ -223,7 +223,7 @@ describe('Vendors Service - Controller', () => {
 
   describe('getAllVendors', () => {
     describe('When getting all vendors', () => {
-      let response: Vendor[]
+      let response: VendorI[]
       let context: RmqContext
 
       beforeEach(async () => {
@@ -241,7 +241,7 @@ describe('Vendors Service - Controller', () => {
 
   describe('getAllVendors', () => {
     describe('When getting all vendors', () => {
-      let response: Vendor[]
+      let response: VendorI[]
       let context: RmqContext
 
       beforeEach(async () => {

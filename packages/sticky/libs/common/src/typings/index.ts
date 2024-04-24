@@ -312,7 +312,7 @@ export interface loginUserRequest {
 }
 
 export interface LoginVendorRequest {
-  businessEmail: string
+  email: string
 
   password: string
 }
@@ -347,8 +347,6 @@ export interface CreateVendorDto {
 
   lastName: string
 
-  businessEmail: string
-
   businessName: string
 
   businessAddress: string
@@ -366,8 +364,6 @@ export interface UpdateVendorProfileDto {
   firstName: string
 
   lastName: string
-
-  businessEmail: string
 
   businessName: string
 

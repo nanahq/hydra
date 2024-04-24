@@ -18,9 +18,6 @@ export class CreateVendorDto {
   public lastName: string
 
   @IsNotEmpty()
-  public businessEmail: string
-
-  @IsNotEmpty()
   public businessName: string
 
   @IsNotEmpty()
@@ -46,9 +43,6 @@ export class UpdateVendorProfileDto {
 
   @IsOptional()
   public lastName: string
-
-  @IsOptional()
-  public businessEmail: string
 
   @IsOptional()
   public businessName: string
