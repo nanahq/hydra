@@ -88,30 +88,30 @@ export class UsersService {
           )
       )
 
-      if (this.configService.get<string>('NODE_ENV') === 'production') {
-        const paystackInstancePayload: Omit<registerUserRequest, 'password'> = {
-          email,
-          phone: formattedPhone,
-          firstName,
-          lastName
-        }
+      // if (this.configService.get<string>('NODE_ENV') === 'production') {
+      //   const paystackInstancePayload: Omit<registerUserRequest, 'password'> = {
+      //     email,
+      //     phone: formattedPhone,
+      //     firstName,
+      //     lastName
+      //   }
 
-        this.logger.log(
-          '[PIM] -> Account created. Emitting events for paystack instance creation'
-        )
-        await lastValueFrom(
-          this.paymentClient.send(
-            QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED,
-            paystackInstancePayload
-          )
-            .pipe(
-              catchError((error: any) => {
-                this.logger.error(JSON.stringify(error))
-                return EMPTY
-              })
-            )
-        )
-      }
+      //   this.logger.log(
+      //     '[PIM] -> Account created. Emitting events for paystack instance creation'
+      //   )
+      //   await lastValueFrom(
+      //     this.paymentClient.send(
+      //       QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED,
+      //       paystackInstancePayload
+      //     )
+      //       .pipe(
+      //         catchError((error: any) => {
+      //           this.logger.error(JSON.stringify(error))
+      //           return EMPTY
+      //         })
+      //       )
+      //   )
+      // }
 
       await this.brevoClient.createContactUser(brevoPayload, 6)
 
