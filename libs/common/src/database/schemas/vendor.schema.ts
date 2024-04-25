@@ -23,12 +23,6 @@ export class Vendor extends AbstractDocument {
   })
     email: string
 
-  @Prop({
-    unique: true,
-    sparse: true
-  })
-    businessEmail: string
-
   @Prop()
     password: string
 

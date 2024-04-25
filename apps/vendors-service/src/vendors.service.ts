@@ -74,7 +74,7 @@ export class VendorsService {
       firstName: data.firstName,
       lastName: data.lastName,
       phone: data.phone,
-      email: data.businessEmail,
+      email: data.email,
       businessName: data.businessName
     }
     try {
@@ -95,12 +95,12 @@ export class VendorsService {
   }
 
   async validateVendor ({
-    businessEmail,
+    email,
     password
   }: LoginVendorRequest): Promise<Vendor> {
     const vendor = await this.vendorRepository.findOneAndPopulate<Vendor>(
       {
-        businessEmail,
+        email,
         isDeleted: false
       },
       ['settings']

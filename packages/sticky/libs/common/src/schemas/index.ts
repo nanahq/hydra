@@ -57,7 +57,6 @@ export interface VendorI {
   firstName: string
   lastName: string
   email: string
-  businessEmail: string
   phone: string
   isValidated: boolean
   status: 'ONLINE' | 'OFFLINE'

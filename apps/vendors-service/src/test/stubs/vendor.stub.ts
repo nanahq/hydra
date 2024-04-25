@@ -9,7 +9,6 @@ export function VendorStub (): Vendor {
     firstName: 'John',
     lastName: 'Doe',
     email: 'johndoe@example.com',
-    businessEmail: 'business@example.com',
     password: 'password123',
     phone: '+1234567890',
     isValidated: true,

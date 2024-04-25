@@ -88,7 +88,6 @@ export interface VendorI {
   firstName: string
   lastName: string
   email: string
-  businessEmail: string
   password: string
   phone: string
   isValidated: boolean

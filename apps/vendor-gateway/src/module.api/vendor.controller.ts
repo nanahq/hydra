@@ -52,12 +52,11 @@ export class VendorController {
 
   @Post('register')
   async registerNewVendor (@Body() request: CreateVendorDto): Promise<any> {
-    const { businessEmail, email, ...rest } = request
+    const { email, ...rest } = request
     this.logger.debug('Registering a new vendor')
     return await lastValueFrom<ResponseWithStatus>(
       this.vendorClient
         .send(QUEUE_MESSAGE.CREATE_VENDOR, {
-          businessEmail: businessEmail.toLowerCase(),
           email: email.toLowerCase(),
           ...rest
         })

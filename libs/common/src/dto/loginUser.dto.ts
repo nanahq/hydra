@@ -20,7 +20,7 @@ export class loginUserRequest {
 export class LoginVendorRequest {
   @IsNotEmpty()
   @IsEmail()
-    businessEmail: string
+    email: string
 
   @IsNotEmpty()
   @MinLength(8)
