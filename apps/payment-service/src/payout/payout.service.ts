@@ -91,19 +91,19 @@ export class VendorPayoutService implements VendorPayoutServiceI {
 
   async payoutOverview (vendor: string): Promise<PayoutOverview> {
     const today = new Date()
-    const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000)
+    const _today = new Date(today.getTime())
     const week = new Date(today.getTime() - 168 * 60 * 60 * 1000)
     const month = new Date(today.getTime() - 1020 * 60 * 60 * 1000)
 
-    const yesterdayStart = new Date(yesterday)
-    yesterdayStart.setHours(0, 0, 0, 0)
+    const todayStart = new Date(_today)
+    todayStart.setHours(0, 0, 0, 0)
 
-    const yesterdayEnd = new Date(yesterday)
-    yesterdayEnd.setHours(23, 59, 59, 999)
-    const yesterdayPayout = (await this.payoutRepository.find({
+    const todayEnd = new Date(_today)
+    todayEnd.setHours(23, 59, 59, 999)
+    const todaydayPayout = (await this.payoutRepository.find({
       createdAt: {
-        $gte: yesterdayStart.toISOString(),
-        $lt: yesterdayEnd.toISOString()
+        $gte: todayStart.toISOString(),
+        $lt: todayEnd.toISOString()
       },
       vendor
     })) as VendorPayout[]
@@ -137,12 +137,12 @@ export class VendorPayoutService implements VendorPayoutServiceI {
       return acc + obj.earnings
     }, 0)
 
-    const yesterdayEarning = yesterdayPayout.reduce((acc, obj) => {
+    const todayEarning = todaydayPayout.reduce((acc, obj) => {
       return acc + obj.earnings
     }, 0)
 
     return {
-      '24_hours': yesterdayEarning,
+      '24_hours': todayEarning,
       '7_days': weekEarning,
       '30_days': monthEarning
     }

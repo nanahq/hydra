@@ -379,10 +379,6 @@ export class PaymentService implements PaymentServiceI {
     }
   }
 
-  @Cron(CronExpression.EVERY_10_MINUTES, {
-    timeZone: 'Africa/Lagos'
-  })
-
   async getAllUsersPayments (): Promise<Payment[] | null> {
     try {
       return await this.paymentRepository.findAndPopulate(
@@ -399,6 +395,9 @@ export class PaymentService implements PaymentServiceI {
     }
   }
 
+  @Cron(CronExpression.EVERY_10_MINUTES, {
+    timeZone: 'Africa/Lagos'
+  })
   async deleteUnpaidPayments (): Promise<void> {
     try {
       const date = new Date()
