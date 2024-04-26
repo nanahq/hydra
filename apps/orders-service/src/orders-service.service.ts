@@ -487,20 +487,17 @@ export class OrdersServiceService {
     }
   }
 
-  @Cron(CronExpression.EVERY_2_HOURS, {
+  @Cron(CronExpression.EVERY_10_MINUTES, {
     timeZone: 'Africa/Lagos'
   })
   async deleteUnpaidPayments (): Promise<void> {
     try {
-      const now = new Date()
-
-      const twoHoursAgo = new Date(now)
-
-      twoHoursAgo.setHours(now.getHours() - 2)
+      const date = new Date()
+      const pastTenMinutes = new Date(date.getTime() - 10 * 60 * 1000)
 
       const filter: FilterQuery<Order> = {
         createdAt: {
-          $lte: twoHoursAgo.toISOString()
+          $lte: pastTenMinutes.toISOString()
         },
         orderStatus: OrderStatus.PAYMENT_PENDING
       }
