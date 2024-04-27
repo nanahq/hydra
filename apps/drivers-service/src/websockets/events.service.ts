@@ -3,8 +3,7 @@ import { OdsaRepository } from '../ODSA/odsa.repository'
 import {
   Delivery,
   FitRpcException,
-  LocationCoordinates,
-  OrderStatus
+  LocationCoordinates
 } from '@app/common'
 import { DriverRepository } from '../drivers-service.repository'
 
@@ -26,8 +25,7 @@ export class EventsService {
           {
             assignedToDriver: true,
             completed: false,
-            driver: driverId,
-            status: OrderStatus.IN_ROUTE
+            driver: driverId
           },
           { currentLocation: location }
         )
