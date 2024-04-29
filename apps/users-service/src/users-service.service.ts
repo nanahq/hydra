@@ -367,6 +367,14 @@ export class UsersService {
         firstName: undefined
       }
     }
+
+    if (user.isDeleted) {
+      await this.usersRepository.findAndUpdate(
+        { _id: user._id },
+        { isDeleted: false }
+      )
+    }
+
     return {
       hasAccount: true,
       firstName: user.firstName
