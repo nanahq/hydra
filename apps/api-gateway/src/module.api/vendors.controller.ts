@@ -42,7 +42,6 @@ export class VendorsController {
   ) {}
 
   @Get('vendors')
-  @UseGuards(JwtAuthGuard)
   async getVendors (): Promise<Vendor[]> {
     return await lastValueFrom<Vendor[]>(
       this.vendorsClient.send(QUEUE_MESSAGE.GET_ALL_VENDORS_USERS, {}).pipe(
@@ -54,7 +53,6 @@ export class VendorsController {
   }
 
   @Get('/:vendorId')
-  @UseGuards(JwtAuthGuard)
   async getVendor (
     @Param('vendorId') vendorId: string
   ): Promise<Vendor> {
@@ -76,7 +74,6 @@ export class VendorsController {
    * Get restaurants closest to the user
    */
   @Get('/home/nearest')
-  @UseGuards(JwtAuthGuard)
   async nearestToYou (@CurrentUser() user: User): Promise<Vendor[]> {
     const payload: ServicePayload<{ userLocation: LocationCoordinates }> = {
       userId: user._id as any,
@@ -94,7 +91,6 @@ export class VendorsController {
   }
 
   @Post('/travel-distance')
-  @UseGuards(JwtAuthGuard)
   async getTravelDistance (
     @Body() data: Omit<LocationCoordinates, 'type'>,
       @CurrentUser() user: User
