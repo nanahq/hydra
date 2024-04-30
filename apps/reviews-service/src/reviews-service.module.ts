@@ -38,6 +38,7 @@ import { ReviewRepository } from './review.repositoty'
     ]),
     MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
     DatabaseModule,
     RmqModule
   ],

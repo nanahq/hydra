@@ -112,6 +112,7 @@ export enum QUEUE_MESSAGE {
   GET_USER_ORDERS = 'get_users_order_by_id',
   GET_VENDORS_ORDERS = 'get_vendors_order_by_id',
   UPDATE_ORDER_STATUS = 'update_order_status',
+  UPDATE_ORDER_REVIEW = 'UPDATE_ORDER_REVIEW',
 
   UPDATE_ORDER_STATUS_PAID = 'UPDATE_ORDER_STATUS_PAID',
 
