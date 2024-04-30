@@ -5,13 +5,11 @@ import {
   HttpException,
   Inject,
   Param,
-  Post,
-  UseGuards
+  Post
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import {
   IRpcException,
   ListingCategory,
@@ -33,7 +31,6 @@ export class ListingsController {
   ) {}
 
   @Get('menus')
-  @UseGuards(JwtAuthGuard)
   async getMenus (): Promise<ListingMenu[]> {
     return await lastValueFrom<ListingMenu[]>(
       this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_MENU_USER, {}).pipe(
@@ -45,7 +42,6 @@ export class ListingsController {
   }
 
   @Get('categories/:vid')
-  @UseGuards(JwtAuthGuard)
   async getVendorCategories (
     @Param('vid') vendorId: string
   ): Promise<ListingCategory[]> {
@@ -61,7 +57,6 @@ export class ListingsController {
   }
 
   @Get('scheduled/:vid')
-  @UseGuards(JwtAuthGuard)
   async getVendorScheduledListings (
     @Param('vid') vendorId: string
   ): Promise<ScheduledListingI[]> {
@@ -81,7 +76,6 @@ export class ListingsController {
   }
 
   @Get('scheduled')
-  @UseGuards(JwtAuthGuard)
   async getAllScheduledListings (): Promise<ScheduledListingI[]> {
     return await lastValueFrom<ScheduledListingI[]>(
       this.listingClient
@@ -95,7 +89,6 @@ export class ListingsController {
   }
 
   @Get('categories')
-  @UseGuards(JwtAuthGuard)
   async getCategories (): Promise<ListingCategory[]> {
     return await lastValueFrom<ListingCategory[]>(
       this.listingClient.send(QUEUE_MESSAGE.GET_ALL_LISTING_CAT_USER, {}).pipe(
@@ -107,7 +100,6 @@ export class ListingsController {
   }
 
   @Get('menu/:mid')
-  @UseGuards(JwtAuthGuard)
   async getSingleMenu (@Param('mid') mid: string): Promise<ListingMenu | null> {
     return await lastValueFrom<ListingMenu | null>(
       this.listingClient
@@ -121,7 +113,6 @@ export class ListingsController {
   }
 
   @Get('/category/:catid')
-  @UseGuards(JwtAuthGuard)
   async getSingleCategory (
     @Param('catid') catid: string
   ): Promise<ListingMenu | null> {
@@ -137,7 +128,6 @@ export class ListingsController {
   }
 
   @Get('/vendor/:vid')
-  @UseGuards(JwtAuthGuard)
   async getVendorListings (
     @Param('vid') vendorId: string
   ): Promise<ListingCategoryI> {
@@ -153,7 +143,6 @@ export class ListingsController {
   }
 
   @Post('/homepage')
-  @UseGuards(JwtAuthGuard)
   async getHomepageListings (
     @Body() userLocation: LocationCoordinates
   ): Promise<UserHomePage> {
