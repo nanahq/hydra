@@ -479,12 +479,13 @@ export class VendorsService {
         { acc_status: VendorApprovalStatus.APPROVED },
         ['settings', 'reviews']
       )
+      this.logger.log({allVendors})
       return {
         nearest: [],
         allVendors
       }
     } catch (error) {
-      this.logger.log(error)
+      this.logger.log(JSON.stringify(error))
       throw new FitRpcException(
         'Something went wrong fetching vendors for homepage',
         HttpStatus.INTERNAL_SERVER_ERROR

@@ -291,7 +291,7 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE)
   async getHomepageData (
-      @Ctx() context: RmqContext
+    @Ctx() context: RmqContext
   ): Promise<VendorServiceHomePageResult> {
     try {
       return await this.vendorsService.getVendorsForHomepage()
