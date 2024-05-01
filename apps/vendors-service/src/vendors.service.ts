@@ -475,13 +475,14 @@ export class VendorsService {
 
   async getVendorsForHomepage (): Promise<VendorServiceHomePageResult> {
     try {
-      const allVendors: any = await this.vendorRepository.findAndPopulate(
+      const allVendors: any[] = (await this.vendorRepository.findAndPopulate(
         { acc_status: VendorApprovalStatus.APPROVED },
         ['settings', 'reviews']
-      )
+      ))
+      const filteredVendors = allVendors.filter((v: any) => v.review !== null)
       return {
         nearest: [],
-        allVendors
+        allVendors: filteredVendors
       }
     } catch (error) {
       this.logger.log(JSON.stringify(error))
