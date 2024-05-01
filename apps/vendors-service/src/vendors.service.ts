@@ -479,7 +479,6 @@ export class VendorsService {
         { acc_status: VendorApprovalStatus.APPROVED },
         ['settings', 'reviews']
       )
-      this.logger.log({allVendors})
       return {
         nearest: [],
         allVendors

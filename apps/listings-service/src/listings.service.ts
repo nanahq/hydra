@@ -14,7 +14,6 @@ import {
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
-  ReviewServiceGetMostReviewed,
   ScheduledListing,
   ScheduledListingDto,
   ScheduledListingI,
@@ -733,7 +732,7 @@ export class ListingsService {
     try {
       const [
         vendorServiceResult,
-        reviewServiceResult,
+        // reviewServiceResult,
         listingsCategories,
         scheduled
       ] = await Promise.all([
@@ -742,12 +741,12 @@ export class ListingsService {
             userLocation
           })
         ),
-        lastValueFrom<ReviewServiceGetMostReviewed>(
-          this.reviewsClient.send(
-            QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE,
-            {}
-          )
-        ),
+        // lastValueFrom<ReviewServiceGetMostReviewed>(
+        //   this.reviewsClient.send(
+        //     QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE,
+        //     {}
+        //   )
+        // ),
         this.listingCategoryRepository.findAndPopulate({}, [
           'vendor',
           'listingsMenu'
@@ -757,22 +756,23 @@ export class ListingsService {
         ])
       ])
 
-      const mostReviewedVendorsIds: Set<any> = new Set(
-        reviewServiceResult.vendors.map((v) => v._id)
-      )
+      this.logger.log('vendorServiceResult', vendorServiceResult?.allVendors?.length)
+      // const mostReviewedVendorsIds: Set<any> = new Set(
+      //   reviewServiceResult.vendors.map((v) => v._id)
+      // )
       const categoriesWithListingsMenuIds: Set<string> = new Set(
         listingsCategories
           .filter((cat: any) => cat.listingsMenu.length > 0)
           .map((cat: any) => cat.vendor._id.toString())
       )
-
+      //
       const filteredVendors = vendorServiceResult.allVendors.filter((vendor) =>
         categoriesWithListingsMenuIds.has(vendor?._id.toString())
       )
 
-      const topVendors = filteredVendors.filter((v) =>
-        mostReviewedVendorsIds.has(v._id.toString())
-      )
+      // const topVendors = filteredVendors.filter((v) =>
+      //   mostReviewedVendorsIds.has(v._id.toString())
+      // )
 
       const [homeMadeChefs, instantDelivery] = ['PRE_ORDER', 'ON_DEMAND'].map(
         (deliveryType) =>
@@ -782,7 +782,7 @@ export class ListingsService {
             )
             .slice(0, 20)
       )
-
+      //
       const tomorrowStart = moment().add(1, 'day').startOf('day')
 
       const availableTomorrow = scheduled
@@ -798,11 +798,11 @@ export class ListingsService {
         fastestDelivery: [],
         homeMadeChefs: getVendorsMapper(homeMadeChefs),
         instantDelivery: getVendorsMapper(instantDelivery),
-        mostPopularVendors: getVendorsMapper(topVendors),
+        mostPopularVendors: [],
         scheduledListingsTomorrow: availableTomorrow
       }
     } catch (error) {
-      this.logger.log({ error })
+      this.logger.log(JSON.stringify(error))
       throw new FitRpcException(
         'Something went wrong fetching Homepage',
         HttpStatus.INTERNAL_SERVER_ERROR
