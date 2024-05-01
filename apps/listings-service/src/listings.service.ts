@@ -798,7 +798,7 @@ export class ListingsService {
         fastestDelivery: [],
         homeMadeChefs: getVendorsMapper(homeMadeChefs),
         instantDelivery: getVendorsMapper(instantDelivery),
-        mostPopularVendors: topVendors,
+        mostPopularVendors: getVendorsMapper(topVendors),
         scheduledListingsTomorrow: availableTomorrow
       }
     } catch (error) {
