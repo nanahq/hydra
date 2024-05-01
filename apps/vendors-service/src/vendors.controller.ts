@@ -291,11 +291,10 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE)
   async getHomepageData (
-    @Payload() { userLocation }: { userLocation: LocationCoordinates },
       @Ctx() context: RmqContext
   ): Promise<VendorServiceHomePageResult> {
     try {
-      return await this.vendorsService.getVendorsForHomepage(userLocation)
+      return await this.vendorsService.getVendorsForHomepage()
     } catch (error) {
       throw new RpcException(error)
     } finally {
