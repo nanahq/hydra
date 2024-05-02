@@ -9,12 +9,12 @@ import {
   Param,
   Post,
   Put,
-  UseGuards
+  // UseGuards
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+// import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './decorators/current-user.decorator'
 
 import {
@@ -32,7 +32,7 @@ import {
 import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('admin')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class AdminController {
   private readonly logger = new Logger(Admin.name)
 
@@ -80,7 +80,7 @@ export class AdminController {
   @Put('')
   async updateAdminProfile (
     // @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
-      @Body() { level, adminId }: { level: string, adminId: string }
+    @Body() { level, adminId }: { level: string, adminId: string }
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateAdminLevelRequestDto> = {
       userId: adminId as any,
