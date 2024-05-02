@@ -61,7 +61,7 @@ export class AdminController {
   @Post('register')
   async registerNewUser (
     // @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
-      @Body() request: RegisterAdminDTO
+    @Body() request: RegisterAdminDTO
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<RegisterAdminDTO> = {
       userId: '',

@@ -100,7 +100,7 @@ export class UsersService {
           '[PIM] -> Account created. Emitting events for paystack instance creation'
         )
         await lastValueFrom(
-          this.paymentClient.send(
+          this.paymentClient.emit(
             QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED,
             paystackInstancePayload
           )
