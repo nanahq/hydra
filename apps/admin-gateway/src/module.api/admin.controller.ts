@@ -9,12 +9,12 @@ import {
   Param,
   Post,
   Put,
-  // UseGuards
+  UseGuards
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 
-// import { JwtAuthGuard } from '../auth/guards/jwt.guard'
+import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { CurrentUser } from './decorators/current-user.decorator'
 
 import {
@@ -32,7 +32,7 @@ import {
 import { AdminClearance } from './decorators/user-level.decorator'
 
 @Controller('admin')
-// @UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 export class AdminController {
   private readonly logger = new Logger(Admin.name)
 
@@ -48,10 +48,8 @@ export class AdminController {
     const payload: {} = {}
     this.logger.debug('Getting all admin')
     return await lastValueFrom<ResponseWithStatus>(
-      this.adminClient.send(QUEUE_MESSAGE.GET_ALL_ADMIN, payload).pipe(
+      this.adminClient.send<any>(QUEUE_MESSAGE.GET_ALL_ADMIN, payload).pipe(
         catchError((error: IRpcException) => {
-          console.error(error)
-          this.logger.error(`Failed to fetch admins. Reason: ${error.message}`)
           throw new HttpException(error.message, error.status)
         })
       )
@@ -60,7 +58,7 @@ export class AdminController {
 
   @Post('register')
   async registerNewUser (
-    // @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
     @Body() request: RegisterAdminDTO
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<RegisterAdminDTO> = {
@@ -79,7 +77,7 @@ export class AdminController {
 
   @Put('')
   async updateAdminProfile (
-    // @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
+    @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
     @Body() { level, adminId }: { level: string, adminId: string }
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateAdminLevelRequestDto> = {
