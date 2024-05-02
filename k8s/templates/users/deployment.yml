@@ -205,3 +205,9 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: BREVO_API_KEY
+
+            - name: NODE_ENV
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: NODE_ENV
