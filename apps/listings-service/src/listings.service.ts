@@ -726,6 +726,20 @@ export class ListingsService {
     }
   }
 
+  async getWebAppVendorListings (vendor: string): Promise<ListingMenu[]> {
+    try {
+      return await this.listingMenuRepository.find({ vendor, status: ListingApprovalStatus.APPROVED, isLive: true, isAvailable: true })
+    } catch (error) {
+      this.logger.error({
+        error
+      })
+      throw new FitRpcException(
+        'Can not fetch vendor listings at this time',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
   async getHomePageData (
     userLocation: LocationCoordinates
   ): Promise<UserHomePage> {
@@ -805,6 +819,89 @@ export class ListingsService {
       this.logger.log(JSON.stringify(error))
       throw new FitRpcException(
         'Something went wrong fetching Homepage',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async getWebAppPageData (): Promise<UserHomePage> {
+    const userLocation: LocationCoordinates = {
+      type: 'Point',
+      coordinates: [0, 0]
+    }
+    try {
+      const [
+        vendorServiceResult,
+        reviewServiceResult,
+        listingsCategories,
+        scheduled
+      ] = await Promise.all([
+        lastValueFrom<VendorServiceHomePageResult>(
+          this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, { userLocation })
+        ),
+        lastValueFrom<ReviewServiceGetMostReviewed>(
+          this.reviewsClient.send(
+            QUEUE_MESSAGE.REVIEW_GET_MOST_REVIEWED_HOMEPAGE,
+            {}
+          )
+        ),
+        this.listingCategoryRepository.findAndPopulate({}, [
+          'vendor',
+          'listingsMenu'
+        ]),
+        this.scheduledListingRepository.findAndPopulate<ScheduledListingI>({}, [
+          'listing'
+        ])
+      ])
+
+      const mostReviewedVendorsIds: Set<any> = new Set(
+        reviewServiceResult.vendors.map((v) => v._id)
+      )
+      const categoriesWithListingsMenuIds: Set<string> = new Set(
+        listingsCategories
+          .filter((cat: any) => cat.listingsMenu.length > 0)
+          .map((cat: any) => cat.vendor._id.toString())
+      )
+
+      const filteredVendors = vendorServiceResult.allVendors.filter((vendor) =>
+        categoriesWithListingsMenuIds.has(vendor?._id.toString())
+      )
+
+      const topVendors = filteredVendors.filter((v) =>
+        mostReviewedVendorsIds.has(v._id.toString())
+      )
+
+      const [homeMadeChefs, instantDelivery] = ['PRE_ORDER', 'ON_DEMAND'].map(
+        (deliveryType) =>
+          filteredVendors
+            .filter(
+              (v) => v.settings?.operations?.deliveryType === deliveryType
+            )
+            .slice(0, 20)
+      )
+
+      const tomorrowStart = moment().add(1, 'day').startOf('day')
+
+      const availableTomorrow = scheduled
+        .filter((sch) => {
+          const availableStart = moment(sch.availableDate).startOf('day')
+          return availableStart.isSame(tomorrowStart) && !sch.soldOut
+        })
+        .map((li) => li.listing)
+        .slice(0, 20)
+
+      return {
+        allVendors: getVendorsMapper(filteredVendors),
+        fastestDelivery: [],
+        homeMadeChefs: getVendorsMapper(homeMadeChefs),
+        instantDelivery: getVendorsMapper(instantDelivery),
+        mostPopularVendors: getVendorsMapper(topVendors),
+        scheduledListingsTomorrow: availableTomorrow
+      }
+    } catch (error) {
+      this.logger.log({ error })
+      throw new FitRpcException(
+        'Something went wrong fetching web page',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }

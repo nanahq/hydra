@@ -103,6 +103,10 @@ export interface VendorI {
   expoNotificationToken: string
 }
 
+export interface VendorWithListingsI extends VendorI {
+  listings: ListingMenuI[]
+}
+
 export interface VendorSettingsI {
   _id: string
   vendorId: string
