@@ -115,6 +115,11 @@ export class UsersService {
 
       await this.brevoClient.createContactUser(brevoPayload, 6)
 
+      const slackMessage = `User ${user.firstName} ${user.lastName} signed up with phone number: ${user.phone}`
+      await lastValueFrom(
+        this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
+      )
+
       return user
     } catch (error) {
       throw new FitRpcException(
