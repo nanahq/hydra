@@ -9,6 +9,7 @@ import {
   RpcException
 } from '@nestjs/microservices'
 import {
+  MultiPurposeServicePayload,
   Order,
   OrderI,
   PaystackChargeResponseData,
@@ -240,6 +241,20 @@ export class OrdersServiceController {
   ): Promise<void> {
     try {
       return await this.ordersServiceService.updateStatusPaid(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @EventPattern(QUEUE_MESSAGE.UPDATE_ORDER_REVIEW)
+  async addOrderReview (
+    @Payload() payload: MultiPurposeServicePayload<{ reviewId: string }>,
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.ordersServiceService.orderReview(payload)
     } catch (error) {
       throw new RpcException(error)
     } finally {

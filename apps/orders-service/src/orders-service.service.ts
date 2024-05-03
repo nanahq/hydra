@@ -3,6 +3,7 @@ import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import {
   ExportPushNotificationClient,
   FitRpcException,
+  MultiPurposeServicePayload,
   Order,
   OrderI,
   OrderInitiateCharge,
@@ -402,6 +403,16 @@ export class OrdersServiceService {
         'failed to fetched ODSA pre orders',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
+    }
+  }
+
+  async orderReview ({ data, id }: MultiPurposeServicePayload<{ reviewId: string }>): Promise<void> {
+    try {
+      await this.orderRepository.findOneAndUpdate(
+        { _id: id },
+        { review: data.reviewId })
+    } catch (error) {
+
     }
   }
 

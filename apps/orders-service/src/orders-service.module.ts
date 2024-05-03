@@ -15,7 +15,9 @@ import {
   UserSchema,
   Vendor,
   VendorSchema,
-  ExportPushNotificationClient
+  ExportPushNotificationClient,
+  ReviewSchema,
+  Review
 } from '@app/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { OrderRepository } from './order.repository'
@@ -37,7 +39,8 @@ import { ScheduleModule } from '@nestjs/schedule'
     MongooseModule.forFeature([
       { name: Vendor.name, schema: VendorSchema },
       { name: User.name, schema: UserSchema },
-      { name: ListingMenu.name, schema: ListingMenuSchema }
+      { name: ListingMenu.name, schema: ListingMenuSchema },
+      { name: Review.name, schema: ReviewSchema }
     ]),
     DatabaseModule,
     RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
@@ -45,6 +48,7 @@ import { ScheduleModule } from '@nestjs/schedule'
     RmqModule.register({ name: QUEUE_SERVICE.DRIVER_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.LISTINGS_SERVICE }),
     RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
+    RmqModule.register({ name: QUEUE_SERVICE.REVIEW_SERVICE }),
     RmqModule
   ],
   controllers: [OrdersServiceController],
