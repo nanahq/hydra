@@ -2,7 +2,7 @@ import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { VendorPayoutRepository } from './payout.repository'
 import {
   FitRpcException,
-  IRpcException,
+  IRpcException, MultiPurposeServicePayload,
   Order,
   OrderI, OrderStatus,
   PayoutOverview,
@@ -55,19 +55,20 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     try {
       await this.payoutRepository.findOneAndUpdate({ _id }, { paid: true })
       const payout = await this.payoutRepository.findOneAndPopulate<any>({ _id }, ['vendor'])
-      const payload: { data: SendPayoutEmail } = {
+      const payload: MultiPurposeServicePayload<SendPayoutEmail> = {
+        id: '',
         data: {
           vendorName: payout.vendor.businessName,
           payoutDate: moment(payout.updatedAt).format('MMMM Do YYYY'),
           vendorId: payout.vendor._id.toString(),
           vendorBankDetails: 'Default Bank Account',
-          vendorEmail: payout.vendor.businessEmail,
+          vendorEmail: payout.vendor.email,
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           payoutAmount: `${payout.earnings}} Naira`
         }
       }
       await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS, { payload })
+        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS,  payload )
       )
       return { status: 1 }
     } catch (error) {

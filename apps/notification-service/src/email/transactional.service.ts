@@ -1,4 +1,4 @@
-import { BrevoClient, FitRpcException, SendPayoutEmail } from '@app/common'
+import { BrevoClient, FitRpcException, MultiPurposeServicePayload, SendPayoutEmail } from '@app/common'
 import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { vendorpayoutTemplate } from '../templates/vendorpayout.template'
 
@@ -9,7 +9,7 @@ export class TransactionEmails {
     private readonly brevoClient: BrevoClient
   ) {}
 
-  async sendSinglePayoutEmail (data: SendPayoutEmail): Promise<void> {
+  async sendSinglePayoutEmail ({data}:  MultiPurposeServicePayload<SendPayoutEmail>): Promise<void> {
     try {
       await this.brevoClient.sendVendorPayoutEmail({
         to: [{
