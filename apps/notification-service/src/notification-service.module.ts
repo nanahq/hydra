@@ -34,7 +34,7 @@ import { HttpModule } from '@nestjs/axios'
         TWILIO_AUTH_TOKEN: Joi.string().required(),
         TWILIO_SERVICE_NAME: Joi.string().required(),
         SLACK_WEBHOOK_URL: Joi.string().required(),
-        BREVO_API_KEY: Joi.string().required(),
+        BREVO_API_KEY: Joi.string().required()
       }),
       envFilePath: './apps/notification-service/.env'
     }),
@@ -69,7 +69,7 @@ import { HttpModule } from '@nestjs/axios'
     ExportPushNotificationClient,
     SubscriptionRepository,
     BrevoClient,
-    TransactionEmails,
+    TransactionEmails
   ]
 })
 export class NotificationServiceModule {}

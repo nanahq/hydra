@@ -9,7 +9,7 @@ export class TransactionEmails {
     private readonly brevoClient: BrevoClient
   ) {}
 
-  async sendSinglePayoutEmail ({data}:  MultiPurposeServicePayload<SendPayoutEmail>): Promise<void> {
+  async sendSinglePayoutEmail ({ data }: MultiPurposeServicePayload<SendPayoutEmail>): Promise<void> {
     try {
       await this.brevoClient.sendVendorPayoutEmail({
         to: [{

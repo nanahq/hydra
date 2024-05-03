@@ -68,7 +68,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
         }
       }
       await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS,  payload )
+        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS, payload)
       )
       return { status: 1 }
     } catch (error) {
