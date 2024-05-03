@@ -194,6 +194,7 @@ export interface OrderI {
   txRefId?: string
 
   coupon?: string
+  review?: string
 }
 
 export interface ListingMenuReview {

@@ -128,6 +128,12 @@ export class Order extends AbstractDocument {
 
   @Prop({ type: String, nullable: true })
     coupon?: string
+
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'Review'
+  })
+    review?: string
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order)

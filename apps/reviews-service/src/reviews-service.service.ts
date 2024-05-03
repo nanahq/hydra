@@ -14,7 +14,8 @@ import {
   ListingMenu,
   Vendor,
   ReviewI,
-  ReviewServiceGetMostReviewed
+  ReviewServiceGetMostReviewed,
+  MultiPurposeServicePayload
 } from '@app/common'
 import { ReviewRepository } from './review.repositoty'
 import { ClientProxy } from '@nestjs/microservices'
@@ -28,7 +29,9 @@ export class ReviewsService implements ReviewsServiceI {
     private readonly reviewRepository: ReviewRepository,
     private readonly expoClient: ExportPushNotificationClient,
     @Inject(QUEUE_SERVICE.VENDORS_SERVICE)
-    private readonly vendorClient: ClientProxy
+    private readonly vendorClient: ClientProxy,
+    @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
+    private readonly orderClient: ClientProxy
   ) {}
 
   async getAllReviews (): Promise<Review[]> {
@@ -104,8 +107,14 @@ export class ReviewsService implements ReviewsServiceI {
 
       const updatePayload: UpdateVendorReviewDto = { vendor: data.vendor, reviewId: newReview._id.toString() }
 
+      const updateOrderPayload: MultiPurposeServicePayload<{ reviewId: string }> = { id: data.order, data: { reviewId: newReview._id.toString() } }
+
       await lastValueFrom(
         this.vendorClient.emit(QUEUE_MESSAGE.UPDATE_VENDOR_REVIEW, updatePayload)
+      )
+
+      await lastValueFrom(
+        this.orderClient.emit(QUEUE_MESSAGE.UPDATE_ORDER_REVIEW, updateOrderPayload)
       )
       // @todo(siradji) Move this push to notification service
 
