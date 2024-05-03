@@ -59,7 +59,7 @@ export class AdminController {
   @Post('register')
   async registerNewUser (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
-    @Body() request: RegisterAdminDTO
+      @Body() request: RegisterAdminDTO
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<RegisterAdminDTO> = {
       userId: '',
@@ -78,7 +78,7 @@ export class AdminController {
   @Put('')
   async updateAdminProfile (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
-    @Body() { level, adminId }: { level: string, adminId: string }
+      @Body() { level, adminId }: { level: string, adminId: string }
   ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<UpdateAdminLevelRequestDto> = {
       userId: adminId as any,

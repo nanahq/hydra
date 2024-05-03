@@ -19,7 +19,7 @@ import {
   VendorSoldOutPush,
   VendorApprovedPush,
   ListingApprovePush,
-  ListingRejectPush
+  ListingRejectPush, MultiPurposeServicePayload
 } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
 import { TransactionEmails } from './email/transactional.service'
@@ -105,11 +105,11 @@ export class NotificationServiceController {
 
   @EventPattern(QUEUE_MESSAGE.SEND_PAYOUT_EMAILS)
   async sendPayoutEmails (
-    @Payload() { data }: { data: SendPayoutEmail },
+    @Payload() payload: MultiPurposeServicePayload<SendPayoutEmail>,
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {
-      await this.transctionalEmail.sendSinglePayoutEmail(data)
+      await this.transctionalEmail.sendSinglePayoutEmail(payload)
     } catch (error) {
       throw new RpcException(error)
     } finally {
