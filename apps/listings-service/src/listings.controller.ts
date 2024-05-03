@@ -445,6 +445,20 @@ export class ListingsController {
     }
   }
 
+  @MessagePattern(QUEUE_MESSAGE.GET_WEBAPP_VENDOR_WITH_LISTING)
+  async getWalletVendorListings (
+    @Payload() { data: { vendorId } }: MultiPurposeServicePayload<{ vendorId: string }>,
+      @Ctx() context
+  ): Promise<ListingMenu[]> {
+    try {
+      return await this.listingService.getWebAppVendorListings(vendorId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @CacheKey(QUEUE_MESSAGE.GET_VENDOR_CAT_USER)
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(60)
@@ -472,6 +486,22 @@ export class ListingsController {
   ): Promise<UserHomePage> {
     try {
       return await this.listingService.getHomePageData(userLocation)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @CacheKey(QUEUE_MESSAGE.GET_WEBAPP_LISTINGS)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(1000)
+  @MessagePattern(QUEUE_MESSAGE.GET_WEBAPP_LISTINGS)
+  async webAppPage (
+    @Ctx() context: RmqContext
+  ): Promise<UserHomePage> {
+    try {
+      return await this.listingService.getWebAppPageData()
     } catch (error) {
       throw new RpcException(error)
     } finally {

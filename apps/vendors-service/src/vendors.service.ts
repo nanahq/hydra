@@ -3,8 +3,10 @@ import * as bcrypt from 'bcryptjs'
 import {
   BrevoClient,
   FitRpcException,
+  ListingMenuI,
   LocationCoordinates,
   LoginVendorRequest,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
@@ -14,7 +16,8 @@ import {
   VendorApprovalStatus,
   VendorI,
   VendorServiceHomePageResult,
-  VendorStatI
+  VendorStatI,
+  VendorWithListingsI
 } from '@app/common'
 import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 import { arrayParser } from '@app/common/utils/statsResultParser'
@@ -37,7 +40,10 @@ export class VendorsService {
 
     private readonly brevoClient: BrevoClient,
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
-    private readonly notificationClient: ClientProxy
+    private readonly notificationClient: ClientProxy,
+
+    @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
+    private readonly listingsClient: ClientProxy
   ) {}
 
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
@@ -488,6 +494,39 @@ export class VendorsService {
       this.logger.log(JSON.stringify(error))
       throw new FitRpcException(
         'Something went wrong fetching vendors for homepage',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async getVendorsListingsPage (vendorId: string): Promise<VendorWithListingsI> {
+    try {
+      const vendor: VendorI = await this.vendorRepository.findOneAndPopulate(
+        { _id: vendorId },
+        ['settings', 'reviews']
+      )
+      if (vendor === null) {
+        throw new FitRpcException(
+          'Vendor with that id does not exist',
+          HttpStatus.NOT_FOUND
+        )
+      }
+
+      const listingPayload: MultiPurposeServicePayload<{ vendorId: string }> = {
+        id: '',
+        data: { vendorId }
+      }
+      const vendorListing = await lastValueFrom<ListingMenuI[]>(
+        this.listingsClient.send(QUEUE_MESSAGE.GET_WEBAPP_VENDOR_WITH_LISTING, listingPayload)
+      )
+      return {
+        ...vendor,
+        listings: vendorListing
+      }
+    } catch (error) {
+      this.logger.log(error)
+      throw new FitRpcException(
+        'Something went wrong fetching vendors for web app',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }

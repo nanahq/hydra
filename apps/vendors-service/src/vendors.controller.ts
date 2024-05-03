@@ -19,7 +19,8 @@ import {
   UpdateVendorStatus,
   VendorI,
   VendorServiceHomePageResult,
-  VendorStatI
+  VendorStatI,
+  VendorWithListingsI
 } from '@app/common'
 import { VendorsService } from './vendors.service'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
@@ -309,6 +310,20 @@ export class VendorsController {
   ): Promise<void> {
     try {
       return await this.vendorsService.updateVendorReview(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_WEBPAGE_LISTING)
+  async getVendorsListingPage (
+    @Payload() vendorId: string,
+      @Ctx() context: RmqContext
+  ): Promise<VendorWithListingsI> {
+    try {
+      return await this.vendorsService.getVendorsListingsPage(vendorId)
     } catch (error) {
       throw new RpcException(error)
     } finally {
