@@ -128,6 +128,7 @@ export interface UserI {
 
   expoNotificationToken?: string
   coupons?: CouponI[]
+  favourites?: ListingMenuI[]
 }
 
 export interface ReviewI {
@@ -168,6 +169,7 @@ export interface OrderI {
   txRefId?: string
 
   coupon?: string
+  review?: ReviewI
 }
 
 export interface DeliveryI {
