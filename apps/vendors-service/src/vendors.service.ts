@@ -130,6 +130,11 @@ export class VendorsService {
       )
     }
 
+    const slackMessage = `Vendor ${vendor.firstName} ${vendor.lastName} signed up with phone number: ${vendor.phone}`
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
+    )
+
     vendor.password = ''
     return vendor
   }
