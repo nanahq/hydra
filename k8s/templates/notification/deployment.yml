@@ -203,3 +203,8 @@ spec:
                 secretKeyRef:
                   name: nana-hydra-secret
                   key: SLACK_WEBHOOK_URL
+            - name: BREVO_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nana-hydra-secret
+                  key: BREVO_API_KEY
