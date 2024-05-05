@@ -152,6 +152,7 @@ export interface UserI {
   paystack_customer_id?: string
 
   paystack_titan?: string
+  favourites?: ListingMenuI[]
 }
 
 export interface ReviewI {
@@ -194,7 +195,7 @@ export interface OrderI {
   txRefId?: string
 
   coupon?: string
-  review?: string
+  review?: ReviewI
 }
 
 export interface ListingMenuReview {
