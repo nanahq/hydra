@@ -27,6 +27,7 @@ export function VendorStub (): Vendor {
       coordinates: [0, 0]
     },
     settings: '63f7f2d0a0f1d5158f43cb7b',
-    expoNotificationToken: 'expo_token'
+    expoNotificationToken: 'expo_token',
+    friendlyId: 'friendly-id'
   }
 }

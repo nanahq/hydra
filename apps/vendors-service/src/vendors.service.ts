@@ -69,11 +69,14 @@ export class VendorsService {
       }
     }
 
+    const friendlyId = data.businessName.split(' ').join('-').toLowerCase()
+
     const payload: Partial<Vendor> = {
       ...data,
       password: await bcrypt.hash(data.password, 10),
       status: 'ONLINE',
-      acc_status: VendorApprovalStatus.PENDING
+      acc_status: VendorApprovalStatus.PENDING,
+      friendlyId
     }
 
     const brevoPayload: CreateBrevoContact = {
