@@ -99,8 +99,8 @@ export interface VendorI {
   location?: LocationCoordinates
   createdAt?: string
   updatedAt?: string
-
   expoNotificationToken: string
+  friendlyId: string
 }
 
 export interface VendorWithListingsI extends VendorI {
