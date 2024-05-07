@@ -39,6 +39,10 @@ export class CreateCouponDto {
   @IsOptional()
   @IsString()
     code?: string
+
+  @IsOptional()
+  @IsString()
+    listing?: string
 }
 
 export class UpdateCoupon {

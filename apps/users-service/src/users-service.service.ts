@@ -230,13 +230,15 @@ export class UsersService {
 
   async getUser ({ userId }: TokenPayload): Promise<User> {
     try {
-      const user = (await this.usersRepository.findOneAndPopulate(
-        {
-          _id: userId,
-          isDeleted: false
-        },
-        ['coupons']
-      )) as any
+      const user = await this.usersRepository.findRaw()
+        .find({ _id: userId, isDeleted: false })
+        .populate({
+          path: 'coupons',
+          populate: {
+            path: 'listing'
+          }
+        }) as any
+
       if (user === null) {
         throw new Error('Can not find user')
       }

@@ -458,4 +458,6 @@ export interface CouponI {
   createdAt: string
 
   updatedAt: string
+
+  listing?: ListingMenuI
 }
