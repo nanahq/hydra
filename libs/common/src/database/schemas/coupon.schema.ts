@@ -1,4 +1,4 @@
-import { SchemaTypes } from 'mongoose'
+import { SchemaTypes, Types } from 'mongoose'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { AbstractDocument, CouponType } from '@app/common'
 
@@ -36,6 +36,9 @@ export class Coupon extends AbstractDocument {
 
   @Prop(SchemaTypes.Date)
     updatedAt: string
+
+  @Prop({ type: Types.ObjectId, ref: 'ListingMenu' })
+    listing?: string
 }
 
 export const CouponSchema = SchemaFactory.createForClass(Coupon)

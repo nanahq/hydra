@@ -60,7 +60,6 @@ export class CouponService {
           this.MAX_COUPON_LENGTH
         )
       }
-
       await this.couponRepository.create({
         ...data,
         code: couponString
@@ -80,7 +79,10 @@ export class CouponService {
   }
 
   public async getAllCoupons (): Promise<Coupon[]> {
-    return await this.couponRepository.find({})
+    return await this.couponRepository.findAndPopulate(
+      {},
+      ['listing']
+    )
   }
 
   public async getCoupon ({ code }: GetCoupon): Promise<Coupon> {

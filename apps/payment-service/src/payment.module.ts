@@ -21,7 +21,9 @@ import {
   DatabaseModule,
   PaystackService,
   Coupon,
-  CouponSchema
+  CouponSchema,
+  ListingMenu,
+  ListingMenuSchema
 } from '@app/common'
 import { ScheduleModule } from '@nestjs/schedule'
 import { PaymentRepository } from './charge/charge.repository'
@@ -84,6 +86,12 @@ import { UserWalletService } from './wallet/user/wallet.service'
       {
         name: Order.name,
         schema: OrderSchema
+      }
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: ListingMenu.name,
+        schema: ListingMenuSchema
       }
     ]),
     MongooseModule.forFeature([
