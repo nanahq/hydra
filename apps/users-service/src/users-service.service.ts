@@ -177,14 +177,14 @@ export class UsersService {
       )
     }
 
-    // if (!validateUserRequest.isValidated) {
-    //   await lastValueFrom(
-    //     this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
-    //       phone: validateUserRequest.phone
-    //     })
-    //   )
-    //   throw new FitRpcException('Verify phone number', HttpStatus.FORBIDDEN)
-    // }
+    if (!validateUserRequest.isValidated) {
+      await lastValueFrom(
+        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+          phone: validateUserRequest.phone
+        })
+      )
+      throw new FitRpcException('Verify phone number', HttpStatus.FORBIDDEN)
+    }
 
     validateUserRequest.password = ''
     return {
