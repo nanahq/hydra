@@ -8,7 +8,7 @@ import {
   ValidateNested,
   IsOptional
 } from 'class-validator'
-import { OrderType } from '@app/common/typings/Global.Interface'
+import { OrderPaymentType, OrderType } from '@app/common/typings/Global.Interface'
 import { OrderOptions } from '@app/common/database/types/common'
 
 class PreciseLocationDto {
@@ -88,4 +88,7 @@ export class PlaceOrderDto {
 
   @IsOptional()
     coupon?: string
+
+  @IsString()
+    paymentType: OrderPaymentType
 }

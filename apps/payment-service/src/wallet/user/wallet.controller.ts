@@ -1,18 +1,22 @@
 import { Controller, UseFilters } from '@nestjs/common'
 import {
   ExceptionFilterRpc,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   registerUserRequest,
+  ResponseWithStatus,
   RmqService
 } from '@app/common'
 import { UserWalletService } from './wallet.service'
 import {
   Ctx,
   EventPattern,
+  MessagePattern,
   Payload,
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
+import { DebitUserWallet } from '@app/common/dto/General.dto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -24,11 +28,25 @@ export class UserWalletController {
 
   @EventPattern(QUEUE_MESSAGE.USER_WALLET_ACCOUNT_CREATED)
   public async createPaystackInstances (
-    @Payload() data: Omit<registerUserRequest, 'password'>,
+    @Payload() data: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>>,
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {
       return this.userWalletService.createPaystackInstances(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.USER_WALLET_DEDUCT_BALANCE)
+  public async debitBalance (
+    @Payload() { data }: MultiPurposeServicePayload<DebitUserWallet>,
+      @Ctx() context: RmqContext
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.userWalletService.debitUserWallet(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

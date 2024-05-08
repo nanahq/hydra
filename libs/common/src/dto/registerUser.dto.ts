@@ -31,3 +31,9 @@ export class registerUserRequest {
   @IsString()
     lastName: string
 }
+
+export class registerUserWallet extends registerUserRequest {
+  @IsNotEmpty()
+  @IsString()
+    user: string
+}

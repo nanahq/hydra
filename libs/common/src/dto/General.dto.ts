@@ -56,6 +56,16 @@ export class DebitWallet {
     status?: WalletTransactionStatus
 }
 
+export class DebitUserWallet {
+  @IsNotEmpty()
+  @IsString()
+    user: string
+
+  @IsNotEmpty()
+  @IsNumber()
+    amountToDebit: number
+}
+
 export class createTransaction {
   @IsNotEmpty()
   @IsNumber()

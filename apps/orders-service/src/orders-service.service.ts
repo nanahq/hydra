@@ -7,6 +7,7 @@ import {
   Order,
   OrderI,
   OrderInitiateCharge,
+  OrderPaymentType,
   OrderStatI,
   OrderStatus,
   OrderTypes,
@@ -28,6 +29,7 @@ import { lastValueFrom } from 'rxjs'
 import { OrderRepository } from './order.repository'
 import { FilterQuery } from 'mongoose'
 import { Cron, CronExpression } from '@nestjs/schedule'
+import { DebitUserWallet } from '@app/common/dto/General.dto'
 
 @Injectable()
 export class OrdersServiceService {
@@ -90,12 +92,38 @@ export class OrdersServiceService {
       userId: populatedOrder.user._id,
       amount: String(populatedOrder.orderValuePayable)
     }
-    const paymentMeta = await lastValueFrom<PaystackChargeResponseData>(
-      this.paymentClient.send(
-        QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK,
-        chargePayload
-      )
-    )
+
+    const deductBalancePayload: MultiPurposeServicePayload<DebitUserWallet> = {
+      id: '',
+      data: {
+        user: populatedOrder.user._id.toString(),
+        amountToDebit: populatedOrder.orderValuePayable
+      }
+    }
+    let paymentMeta
+    switch (data.paymentType) {
+      case OrderPaymentType.PAY_ONLINE :
+        paymentMeta = await lastValueFrom<PaystackChargeResponseData>(
+          this.paymentClient.send(
+            QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK,
+            chargePayload
+          )
+        )
+        break
+      case OrderPaymentType.PAY_BY_WALLET:
+        paymentMeta = await lastValueFrom(this.paymentClient.send(
+          QUEUE_MESSAGE.USER_WALLET_DEDUCT_BALANCE,
+          deductBalancePayload
+        ))
+        if (paymentMeta.status === 1) {
+          await this.updateStatusPaid({
+            orderId: populatedOrder._id.toString(),
+            status: OrderStatus.PROCESSED,
+            txRefId: RandomGen.genRandomString()
+          })
+        }
+        break
+    }
 
     if (data.coupon !== undefined) {
       const updateCouponUsage: UpdateCouponUsage = {
