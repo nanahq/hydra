@@ -16,7 +16,8 @@ import {
   TokenPayload,
   User,
   verifyPhoneRequest,
-  UserI, IRpcException, UserStatI
+  UserI, IRpcException, UserStatI,
+  MultiPurposeServicePayload
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import {
@@ -89,11 +90,14 @@ export class UsersService {
       )
 
       if (this.configService.get<string>('NODE_ENV') === 'production') {
-        const paystackInstancePayload: Omit<registerUserRequest, 'password'> = {
-          email,
-          phone: formattedPhone,
-          firstName,
-          lastName
+        const paystackInstancePayload: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>> = {
+          data: {
+            email,
+            phone: formattedPhone,
+            firstName,
+            lastName
+          },
+          id: user._id.toString()
         }
 
         this.logger.log(

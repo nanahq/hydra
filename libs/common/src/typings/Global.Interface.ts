@@ -35,6 +35,11 @@ export enum OrderTypes {
   INSTANT = 'ON_DEMAND',
 }
 
+export enum OrderPaymentType {
+  PAY_ONLINE = 'PAY_ONLINE',
+  PAY_BY_WALLET = 'PAY_BY_WALLET'
+}
+
 export interface SendPayoutEmail {
   vendorName: string
   vendorId: string

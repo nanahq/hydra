@@ -50,6 +50,8 @@ import { CouponRepository } from './coupons/coupon.repository'
 import { CouponController } from './coupons/coupon.controller'
 import { UserWalletController } from './wallet/user/wallet.controller'
 import { UserWalletService } from './wallet/user/wallet.service'
+import { UserWallet, UserWalletSchema } from '@app/common/database/schemas/user-wallet.schema'
+import { UserWalletRepository } from './wallet/user/wallet.repository'
 
 @Module({
   imports: [
@@ -110,6 +112,10 @@ import { UserWalletService } from './wallet/user/wallet.service'
       {
         name: Coupon.name,
         schema: CouponSchema
+      },
+      {
+        name: UserWallet.name,
+        schema: UserWalletSchema
       }
     ]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
@@ -142,7 +148,8 @@ import { UserWalletService } from './wallet/user/wallet.service'
     DriverWalletService,
     CouponService,
     CouponRepository,
-    UserWalletService
+    UserWalletService,
+    UserWalletRepository
   ]
 })
 export class PaymentServiceModule {}

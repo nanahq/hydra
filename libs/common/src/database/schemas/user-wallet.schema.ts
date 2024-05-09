@@ -16,4 +16,4 @@ export class UserWallet extends AbstractDocument {
     balance: number
 }
 
-export const VendorWalletSchema = SchemaFactory.createForClass(UserWallet)
+export const UserWalletSchema = SchemaFactory.createForClass(UserWallet)

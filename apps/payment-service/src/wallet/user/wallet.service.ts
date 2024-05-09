@@ -2,15 +2,20 @@ import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import {
   FitRpcException,
   internationalisePhoneNumber,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  registerUserRequest
+  registerUserRequest,
+  ResponseWithStatus
 } from '@app/common'
 import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
 import { firstValueFrom, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
 import { PaystackInstancePayload } from '@app/common/dto/UpdateUserDto'
+import { DebitUserWallet } from '@app/common/dto/General.dto'
+import { UserWalletRepository } from './wallet.repository'
+import { UserWallet } from '@app/common/database/schemas/user-wallet.schema'
 
 @Injectable()
 export class UserWalletService {
@@ -24,6 +29,8 @@ export class UserWalletService {
   private readonly HEADERS: { ContentType: string, Authorization: string }
 
   constructor (
+    private readonly userWalletRepository: UserWalletRepository,
+
     private readonly httpService: HttpService,
 
     private readonly configService: ConfigService,
@@ -42,14 +49,15 @@ export class UserWalletService {
   }
 
   public async createPaystackInstances (
-    data: Omit<registerUserRequest, 'password'>
+    payload: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>>
   ): Promise<void> {
-    this.logger.log(`[PIM] -> Creating customer on paystack for ${data.phone}`)
+    await this.userWalletRepository.create({ user: payload.id, balance: 0 })
+    this.logger.log(`[PIM] -> Creating customer on paystack for ${payload.id}`)
 
     let virtualAccountNumber: string | undefined
 
     // TODO(@siradji) wrap createPaystackCustomerInstance in a try-catch
-    const customerId = await this.createPaystackCustomerInstance(data)
+    const customerId = await this.createPaystackCustomerInstance(payload.data)
 
     if (customerId !== undefined) {
       virtualAccountNumber = await this.createVirtualAccount(customerId)
@@ -59,7 +67,7 @@ export class UserWalletService {
       this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_PAYSTACK_INFO, {
         customerId,
         virtualAccountNumber,
-        phone: internationalisePhoneNumber(data.phone)
+        phone: internationalisePhoneNumber(payload.data.phone)
       } satisfies PaystackInstancePayload)
     )
   }
@@ -134,5 +142,37 @@ export class UserWalletService {
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
+  }
+
+  public async debitUserWallet (payload: DebitUserWallet): Promise<ResponseWithStatus> {
+    try {
+      const wallet = await this.userWalletRepository.findOne({
+        user: payload.user
+      }) as UserWallet
+
+      console.log(wallet)
+      const sufficientFunds = this.balanceCheck(wallet.balance, payload.amountToDebit)
+
+      if (!sufficientFunds) {
+        return { status: 0 }
+      }
+
+      const newWalletBalance = Number(wallet.balance) - Number(payload.amountToDebit)
+      await this.userWalletRepository.findOneAndUpdate(
+        { user: payload.user },
+        { balance: newWalletBalance }
+      )
+
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException(error, HttpStatus.BAD_REQUEST)
+    }
+  }
+
+  private balanceCheck (
+    balance: number,
+    amount: number
+  ): boolean {
+    return balance >= amount
   }
 }
