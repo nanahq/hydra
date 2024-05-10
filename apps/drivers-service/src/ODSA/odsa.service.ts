@@ -227,7 +227,7 @@ export class ODSA {
 
       const delivered = data.status === OrderStatus.FULFILLED
 
-      let deliveredWithinTime: boolean = false
+      let deliveredWithinTime: boolean = true
 
       if (delivered) {
         deliveredWithinTime = moment().isSameOrBefore(
