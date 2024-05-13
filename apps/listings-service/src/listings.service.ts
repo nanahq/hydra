@@ -899,6 +899,7 @@ export class ListingsService {
         scheduledListingsTomorrow: availableTomorrow
       }
     } catch (error) {
+      console.log(error)
       this.logger.log({ error })
       throw new FitRpcException(
         'Something went wrong fetching web page',
@@ -958,12 +959,13 @@ function getVendorsMapper (vendors: VendorI[]): VendorUserI[] {
       status: vendor.status,
       location: vendor.location,
       businessImage: vendor.restaurantImage,
-      settings: vendor.settings.operations,
+      settings: vendor.settings,
       reviews: vendor.reviews,
       ratings: {
         rating: 0,
         totalReviews: 0
-      }
+      },
+      friendlyId: vendor.friendlyId
     }
   })
 }

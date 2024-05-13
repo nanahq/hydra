@@ -507,10 +507,10 @@ export class VendorsService {
     }
   }
 
-  async getVendorsListingsPage (vendorId: string): Promise<VendorWithListingsI> {
+  async getVendorsListingsPage (friendlyId: string): Promise<VendorWithListingsI> {
     try {
       const vendor: VendorI = await this.vendorRepository.findOneAndPopulate(
-        { _id: vendorId },
+        { friendlyId },
         ['settings', 'reviews']
       )
       if (vendor === null) {
@@ -522,7 +522,7 @@ export class VendorsService {
 
       const listingPayload: MultiPurposeServicePayload<{ vendorId: string }> = {
         id: '',
-        data: { vendorId }
+        data: { vendorId: vendor._id.toString() }
       }
       const vendorListing = await lastValueFrom<ListingMenuI[]>(
         this.listingsClient.send(QUEUE_MESSAGE.GET_WEBAPP_VENDOR_WITH_LISTING, listingPayload)

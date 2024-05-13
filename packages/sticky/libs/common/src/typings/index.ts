@@ -40,6 +40,11 @@ export enum OrderTypes {
   INSTANT = 'ON_DEMAND',
 }
 
+export enum OrderPaymentType {
+  PAY_ONLINE = 'PAY_ONLINE',
+  PAY_BY_WALLET = 'PAY_BY_WALLET'
+}
+
 export interface SendPayoutEmail {
   vendorName: string
   vendorId: string
@@ -193,6 +198,9 @@ export interface registerUserRequest {
   password: string
 }
 
+export interface registerUserWallet extends registerUserRequest {
+  user: string
+}
 export interface RegisterDriverDto {
   phone: string
 
