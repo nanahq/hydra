@@ -131,6 +131,7 @@ export interface VendorUserI {
     totalReviews: number
     rating: number
   }
+  friendlyId: string
 }
 
 export interface UserI {

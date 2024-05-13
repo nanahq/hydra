@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common'
 import {
   IRpcException,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   UserHomePage,
@@ -25,12 +26,18 @@ export class WebAppController {
     private readonly listingClient: ClientProxy
   ) {}
 
-  @Get('/vendor/:vendorId')
+  @Get('/vendor/:friendlyId')
   async getVendor (
-    @Param('vendorId') vendorId: string
+    @Param('friendlyId') friendlyId: string
   ): Promise<VendorWithListing> {
+    const payload: MultiPurposeServicePayload<{ friendlyId: string }> = {
+      id: '',
+      data: {
+        friendlyId
+      }
+    }
     return await lastValueFrom<VendorWithListing>(
-      this.vendorsClient.send(QUEUE_MESSAGE.GET_VENDOR_WEBPAGE_LISTING, vendorId).pipe(
+      this.vendorsClient.send(QUEUE_MESSAGE.GET_VENDOR_WEBPAGE_LISTING, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

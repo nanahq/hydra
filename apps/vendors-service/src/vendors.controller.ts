@@ -12,6 +12,7 @@ import {
   ExceptionFilterRpc,
   LocationCoordinates,
   LoginVendorRequest,
+  MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
@@ -319,11 +320,11 @@ export class VendorsController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_VENDOR_WEBPAGE_LISTING)
   async getVendorsListingPage (
-    @Payload() vendorId: string,
+    @Payload() payload: MultiPurposeServicePayload<{ friendlyId: string }>,
       @Ctx() context: RmqContext
   ): Promise<VendorWithListingsI> {
     try {
-      return await this.vendorsService.getVendorsListingsPage(vendorId)
+      return await this.vendorsService.getVendorsListingsPage(payload.data.friendlyId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

@@ -101,6 +101,7 @@ export interface VendorUserI {
   ratings: VendorRatings
 
   reviews: ReviewI[]
+  friendlyId: string
 }
 
 export interface VendorRatings {
