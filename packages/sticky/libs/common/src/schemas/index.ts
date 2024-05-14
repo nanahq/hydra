@@ -440,7 +440,7 @@ export type CouponType = 'CASH' | 'FREE_SHIPPING' | 'PERCENTAGE'
 export interface CouponI {
   _id: string
 
-  code: number
+  code: string
 
   useOnce: boolean
 

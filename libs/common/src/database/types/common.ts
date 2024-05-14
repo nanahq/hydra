@@ -280,7 +280,7 @@ export interface CouponI {
   expired: boolean
   _id: string
 
-  code: number
+  code: string
 
   useOnce: boolean
 
