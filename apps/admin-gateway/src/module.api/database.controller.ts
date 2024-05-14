@@ -28,15 +28,15 @@ export class DatabaseController {
     private readonly vendorsClient: ClientProxy
   ) {}
 
-  @Get('seed')
+  @Get('vendors')
   async seedDb (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin
   ): Promise<void> {
     return await lastValueFrom(
-      this.vendorsClient.send(QUEUE_MESSAGE.SEED_DATABASE, {}).pipe(
+      this.vendorsClient.send(QUEUE_MESSAGE.VENDORS_SEED_DATABASE, {}).pipe(
         catchError((error: IRpcException) => {
           this.logger.error(JSON.stringify(error))
-          this.logger.error('[PIM] -> Something went wrong while seeding the database')
+          this.logger.error('[PIM] -> Something went wrong while seeding the vendors database')
           throw new HttpException(error.message, error.status)
         })
       )

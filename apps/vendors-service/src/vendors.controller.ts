@@ -332,7 +332,7 @@ export class VendorsController {
     }
   }
 
-  @MessagePattern(QUEUE_MESSAGE.SEED_DATABASE)
+  @MessagePattern(QUEUE_MESSAGE.VENDORS_SEED_DATABASE)
   async seedDb (
     @Ctx() context: RmqContext
   ): Promise<void> {
