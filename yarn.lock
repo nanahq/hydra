@@ -7589,10 +7589,10 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.7.tgz#609f39207cb614b89d0765b477cb2d437fbf9787"
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
-flutterwave-node-v3@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/flutterwave-node-v3/-/flutterwave-node-v3-1.1.6.tgz#3738eda11378b3d24af2c3f2b4fbebe499583667"
-  integrity sha512-QWhccLvR9rdnPVwmDGv4E0KjbvaRbu/KVxbeXDjMjAsXNia1V3I/OK+GqyTdqLyxzJRS7d53qOsfWpJ/m9+FKQ==
+flutterwave-node-v3@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/flutterwave-node-v3/-/flutterwave-node-v3-1.1.9.tgz#411816b5697db9b395820d26d75bdfecae24b9b0"
+  integrity sha512-vnDhvlGlLlqmtiW8cjN0omIiGQ0v6w4aoQ+unjUHCOggNSKGaRz66JcJ6TVTeZNdkE3rN2dcl58O4OPXvk/FDg==
   dependencies:
     axios "^0.21.4"
     bluebird "^3.7.2"

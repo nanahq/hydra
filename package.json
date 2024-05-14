@@ -57,7 +57,7 @@
     "cookie-parser": "^1.4.6",
     "dockerode": "^4.0.0",
     "expo-server-sdk": "^3.7.0",
-    "flutterwave-node-v3": "^1.1.6",
+    "flutterwave-node-v3": "^1.1.9",
     "helmet": "^6.2.0",
     "joi": "^17.6.2",
     "moment": "^2.29.4",
