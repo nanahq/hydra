@@ -331,4 +331,17 @@ export class VendorsController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.VENDORS_SEED_DATABASE)
+  async seedDb (
+    @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.vendorsService.seedDatabase()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }
