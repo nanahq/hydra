@@ -33,7 +33,7 @@ export class DatabaseController {
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin
   ): Promise<void> {
     return await lastValueFrom(
-      this.vendorsClient.send(QUEUE_MESSAGE.VENDORS_SEED_DATABASE, {}).pipe(
+      this.vendorsClient.emit(QUEUE_MESSAGE.VENDORS_SEED_DATABASE, {}).pipe(
         catchError((error: IRpcException) => {
           this.logger.error(JSON.stringify(error))
           this.logger.error('[PIM] -> Something went wrong while seeding the vendors database')
