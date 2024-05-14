@@ -46,6 +46,15 @@ export class VendorsService {
     private readonly listingsClient: ClientProxy
   ) {}
 
+  async seedDatabase (): Promise<void> {
+    const vendorsWithoutFriendlyUrl: Vendor[] = await this.vendorRepository.find({ friendlyId: undefined })
+
+    for (const vendorsWithoutFriendlyUrlElement of vendorsWithoutFriendlyUrl) {
+      const friendlyId = vendorsWithoutFriendlyUrlElement.businessName.split(' ').join('-').toLowerCase()
+      await this.vendorRepository.findOneAndUpdate({ phone: vendorsWithoutFriendlyUrlElement.phone }, { friendlyId })
+    }
+  }
+
   async register (data: CreateVendorDto): Promise<ResponseWithStatus> {
     data.phone = internationalisePhoneNumber(data.phone)
     // Validation gate to check if vendor with the request phone is already exist
