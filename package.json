@@ -76,7 +76,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "@compodoc/compodoc": "^1.1.19",
+    "@compodoc/compodoc": "^1.1.24",
     "@nestjs/cli": "^10.1.11",
     "@nestjs/schematics": "^10.0.2",
     "@nestjs/testing": "^9.1.6",
