@@ -2978,10 +2978,10 @@
     iterare "1.2.1"
     tslib "2.6.1"
 
-"@nestjs/mongoose@^10.0.1":
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/mongoose/-/mongoose-10.0.1.tgz#f55f4bf79d08f4a93834fe7fe27d42b5f19fccf3"
-  integrity sha512-woUViG28WKf/kRiv6NFXu4Oc0DvAPeX4+fT4coDVt2OqndnfJZTXwkkys23uVsBpKSIflRyjPvmcVBHQvcunZw==
+"@nestjs/mongoose@^10.0.6":
+  version "10.0.6"
+  resolved "https://registry.yarnpkg.com/@nestjs/mongoose/-/mongoose-10.0.6.tgz#6081975eaa658a6097b63d139a82f58b2b35956c"
+  integrity sha512-J8jFgSvCDEKMXU57QAIdXIlWQsOFWK+x0PM1KI/0zHe3/4JrAtFGTFD08hRX3IHk+WJT9g/XQIpMSNM7/10Jlg==
 
 "@nestjs/passport@^10.0.0":
   version "10.0.0"
