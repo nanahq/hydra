@@ -10402,7 +10402,7 @@ nest-winston@^1.8.0:
   dependencies:
     fast-safe-stringify "^2.1.1"
 
-nestjs-twilio@^3.2.0:
+nestjs-twilio@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/nestjs-twilio/-/nestjs-twilio-3.2.1.tgz#b8d0923854815674a21d40b05512ad70251de158"
   integrity sha512-tXYXRaQN4lbP/WXMZbg49dD80m4d6mB5Pb9Ry8QXbKreCQz+CdlHB1pp8Xdcl8Kxo8jeLkj7TKJfMTs+sFgurg==

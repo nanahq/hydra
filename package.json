@@ -64,7 +64,7 @@
     "mongoose": "^7.4.1",
     "nanoid": "^4.0.0",
     "nest-winston": "^1.8.0",
-    "nestjs-twilio": "^3.2.0",
+    "nestjs-twilio": "^3.2.1",
     "npm": "^8.19.2",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
