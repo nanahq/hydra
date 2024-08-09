@@ -1,0 +1,80 @@
+env:
+  - name: DRIVERS_PORT
+    value:  "3003"
+  - name: RMQ_URI
+    value: ""
+  - name: ADMIN_JWT_EXPIRATION
+    value: "3600"
+  - name: USER_JWT_EXPIRATION
+    value: "7884009"
+  - name: DRIVER_JWT_EXPIRATION
+    value: "1209600"
+  - name: VENDOR_JWT_EXPIRATION
+    value: "1209600"
+  - name: JWT_SECRET
+    value: "64a5b5676eb9329c8978d3367fd7e1df5404ff886d16c0bc03edf7cc"
+  - name: RMQ_ADMIN_API_QUEUE
+    value: "ADMIN_API"
+  - name: RMQ_ADMIN_SERVICE_QUEUE
+    value: "ADMIN"
+  - name: RMQ_VENDORS_QUEUE
+    value: "VENDORS"
+  - name: RMQ_LISTINGS_QUEUE
+    value: "LISTINGS"
+  - name: RMQ_ORDERS_QUEUE
+    value: "ORDERS"
+  - name: RMQ_REVIEWS_QUEUE
+    value: "REVIEWS"
+  - name: RMQ_LOCATION_QUEUE
+    value: "LOCATION"
+  - name: RMQ_PAYMENT_QUEUE
+    value: "PAYMENT"
+  - name: RMQ_ADMINS_API_QUEUE
+    value: "ADMIN_API"
+  - name: RMQ_ADMINS_QUEUE
+    value: "ADMIN"
+  - name: RMQ_REVIEW_QUEUE
+    value: "REVIEW"
+  - name: VERSION
+    value: "v0.0"
+  - name: MONGODB_URI
+    value: "mongodb://root:password123@nana-mongodb-headless:27017/"
+  - name: RMQ_VENDORS_API_QUEUE
+    value: "VENDORS_API"
+  - name: RMQ_API_QUEUE
+    value: "API"
+  - name: RMQ_DRIVER_QUEUE
+    value: "DRIVER"
+  - name: RMQ_USERS_QUEUE
+    value: "USERS"
+  - name: RMQ_NOTIFICATION_QUEUE
+    value: "NOTIFICATION"
+  - name: AWS_ACCESS_KEY_ID
+    value: "AKIA33DD4MHHCKY4GZ5A"
+  - name: AWS_SECRET_ACCESS_KEY
+    value: "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"
+  - name: MAPBOX_TOKEN
+    value: "pk.eyJ1Ijoic3VyYWphdXdhbCIsImEiOiJjbGxiNHhpNW8wMHBpM2lxb215NnZmN3ZuIn0.a6zWnzIF0KcVZ2AUiDNBDA"
+  - name: ADMIN_PORT
+    value: "3002"
+  - name: USER_PORT
+    value: "3000"
+  - name: SLACK_WEBHOOK_URL
+    value: "https://hooks.slack.com/services/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"
+  - name: VENDOR_PORT
+    value: "3001"
+  - name: PAY_STACK_SECRET
+    value: "sk_test_7ea3cdc260ea80eb194a8fb13606683bad280467"
+  - name: NO_COLOR
+    value: "true"
+  - name: BREVO_API_KEY
+    value: "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"
+
+image:
+  repository: "7vzu7839.c1.de1.container-registry.ovh.net/nana-staging"
+  pullPolicy: Always
+  sha: ""
+  tag: "latest"
+  port: 3000
+
+

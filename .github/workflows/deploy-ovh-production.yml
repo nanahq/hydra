@@ -1,0 +1,47 @@
+#name: Build and Deploy Microservices to OVH Cloud [PRODUCTION]
+#on:
+#  push:
+#    branches:
+#      - main
+#jobs:
+#  build-and-push:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        service:
+#          - admin-gateway
+#          - admin-service
+#          - api-gateway
+#          - drivers-service
+#          - listings-service
+#          - location-service
+#          - notification-service
+#          - orders-service
+#          - payment-service
+#          - reviews-service
+#          - users-service
+#          - vendors-service
+#          - vendor-gateway
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v2
+#
+#      - name: Log in to OVH Cloud Container Registry
+#        env:
+#          OVH_REGISTRY: ${{ secrets.OVH_REGISTRY }}
+#          OVH_USERNAME: ${{ secrets.OVH_USERNAME }}
+#          OVH_PASSWORD: ${{ secrets.OVH_PASSWORD }}
+#        run: |
+#          echo "${OVH_PASSWORD}" | docker login $OVH_REGISTRY -u $OVH_USERNAME --password-stdin
+#
+#      - name: Build Docker image
+#        run: |
+#          docker build -t $OVH_REGISTRY/nana-production/${{ matrix.service }} -f ./apps/${{ matrix.service }}/Dockerfile .
+#
+#      - name: Push Docker image to OVH Cloud Container Registry
+#        run: |
+#          docker push $OVH_REGISTRY/nana-production/${{ matrix.service }}:latest

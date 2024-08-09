@@ -22,12 +22,3 @@ version: 1.10.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: '1.49.0'
-
-dependencies:
-  - name: rabbitmq
-    version: 10.1.8
-    repository: https://charts.bitnami.com/bitnami
-
-  - name: mongodb
-    version: 12.1.20
-    repository: https://charts.bitnami.com/bitnami
