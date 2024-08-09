@@ -62,7 +62,7 @@
     "joi": "^17.6.2",
     "moment": "^2.29.4",
     "mongoose": "^7.4.1",
-    "nanoid": "^4.0.0",
+    "nanoid": "^4.0.2",
     "nest-winston": "^1.8.0",
     "nestjs-twilio": "^3.2.0",
     "npm": "^8.19.2",
