@@ -12834,7 +12834,7 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcontainers@^8.15.0:
+testcontainers@^8.16.0:
   version "8.16.0"
   resolved "https://registry.yarnpkg.com/testcontainers/-/testcontainers-8.16.0.tgz#bf8a814179934d0e271aeaf8aec7a7dc3648baff"
   integrity sha512-4wVmnzj4mAVXSQ8kU4uyNiXPs5W8UHdwCRbUuyeOSSODcgmDGQ8Te/YOYuF12HnxyzABEm1nR2I0ZCsQw/GZ/Q==
