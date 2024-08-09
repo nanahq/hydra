@@ -5,10 +5,10 @@ import {
   HttpException,
   Inject,
   Param,
-  UseGuards
-} from '@nestjs/common'
-import { ClientProxy } from '@nestjs/microservices'
-import { catchError, lastValueFrom } from 'rxjs'
+  UseGuards,
+} from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { catchError, lastValueFrom } from 'rxjs';
 
 import {
   Admin,
@@ -20,60 +20,68 @@ import {
   ServicePayload,
   User,
   UserI,
-  TokenPayload
-} from '@app/common'
-import { JwtAuthGuard } from '../auth/guards/jwt.guard'
-import { AdminClearance } from './decorators/user-level.decorator'
+  TokenPayload,
+} from '@app/common';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { AdminClearance } from './decorators/user-level.decorator';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor (
+  constructor(
     @Inject(QUEUE_SERVICE.USERS_SERVICE)
-    private readonly usersClient: ClientProxy
+    private readonly usersClient: ClientProxy,
   ) {}
 
   @Get('list')
-  async getAllUsers (): Promise<UserI[]> {
+  async getAllUsers(
+    @AdminClearance([
+      AdminLevel.CUSTOMER_SERVICE,
+      AdminLevel.FINANCE,
+      AdminLevel.MARKERTING,
+      AdminLevel.OPERATIONS,
+    ])
+    admin: Admin,
+  ): Promise<UserI[]> {
     return await lastValueFrom<UserI[]>(
       this.usersClient.send(QUEUE_MESSAGE.GET_ALL_USERS, {}).pipe(
         catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 
   @Delete('/:id/delete')
-  async deleteUserProfile (
-    @AdminClearance([AdminLevel.CUSTOMER_SERVICE, AdminLevel.OPERATIONS]) admin: Admin,
-      @Param('id') userId: string): Promise<ResponseWithStatus> {
+  async deleteUserProfile(
+    @AdminClearance([AdminLevel.CUSTOMER_SERVICE, AdminLevel.OPERATIONS])
+    admin: Admin,
+    @Param('id') userId: string,
+  ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<string | undefined> = {
       userId,
-      data: ''
-    }
+      data: '',
+    };
     return await lastValueFrom<ResponseWithStatus>(
       this.usersClient.send(QUEUE_MESSAGE.DELETE_USER_PROFILE, payload).pipe(
         catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 
   @Get('get-user/:userId')
-  async getUser (
-    @Param() userId: string
-  ): Promise<User> {
+  async getUser(@Param() userId: string): Promise<User> {
     const payload: TokenPayload = {
-      userId
-    }
+      userId,
+    };
     return await lastValueFrom<User>(
       this.usersClient.send(QUEUE_MESSAGE.GET_USER, payload).pipe(
         catchError<any, any>((error: IRpcException) => {
-          throw new HttpException(error.message, error.status)
-        })
-      )
-    )
+          throw new HttpException(error.message, error.status);
+        }),
+      ),
+    );
   }
 }
