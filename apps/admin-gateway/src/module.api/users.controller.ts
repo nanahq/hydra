@@ -34,7 +34,15 @@ export class UsersController {
   ) {}
 
   @Get('list')
-  async getAllUsers (): Promise<UserI[]> {
+  async getAllUsers (
+    @AdminClearance([
+      AdminLevel.CUSTOMER_SERVICE,
+      AdminLevel.FINANCE,
+      AdminLevel.MARKERTING,
+      AdminLevel.OPERATIONS
+    ])
+      admin: Admin
+  ): Promise<UserI[]> {
     return await lastValueFrom<UserI[]>(
       this.usersClient.send(QUEUE_MESSAGE.GET_ALL_USERS, {}).pipe(
         catchError<any, any>((error: IRpcException) => {
@@ -46,8 +54,10 @@ export class UsersController {
 
   @Delete('/:id/delete')
   async deleteUserProfile (
-    @AdminClearance([AdminLevel.CUSTOMER_SERVICE, AdminLevel.OPERATIONS]) admin: Admin,
-      @Param('id') userId: string): Promise<ResponseWithStatus> {
+    @AdminClearance([AdminLevel.CUSTOMER_SERVICE, AdminLevel.OPERATIONS])
+      admin: Admin,
+      @Param('id') userId: string
+  ): Promise<ResponseWithStatus> {
     const payload: ServicePayload<string | undefined> = {
       userId,
       data: ''
@@ -62,9 +72,7 @@ export class UsersController {
   }
 
   @Get('get-user/:userId')
-  async getUser (
-    @Param() userId: string
-  ): Promise<User> {
+  async getUser (@Param() userId: string): Promise<User> {
     const payload: TokenPayload = {
       userId
     }
