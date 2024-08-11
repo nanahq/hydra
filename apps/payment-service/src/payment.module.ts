@@ -29,7 +29,6 @@ import { ScheduleModule } from '@nestjs/schedule'
 import { PaymentRepository } from './charge/charge.repository'
 import { PaymentService } from './charge/charge.service'
 import { HttpModule } from '@nestjs/axios'
-import { FlutterwaveService } from './providers/flutterwave'
 import { PaymentController } from './charge/charge.controller'
 import {
   DriverWallet,
@@ -141,7 +140,6 @@ import { UserWalletRepository } from './wallet/user/wallet.repository'
     ConfigService,
     PaymentRepository,
     PaymentService,
-    FlutterwaveService,
     PaystackService,
     DriverWalletRepository,
     DriverWalletTransactionRepository,

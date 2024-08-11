@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: drivers-service
+  namespace: {{ .Values.namespace.name }}
 spec:
   replicas: 1
   selector:
@@ -13,13 +14,12 @@ spec:
         app: drivers-service
         date: "{{ now | unixEpoch }}"
     spec:
-      - name: drivers-service
-        image: "{{ .Values.image.repository }}/drivers-service:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        ports:
-          - name: http
-            containerPort: 3003
-            protocol: TCP
-        env:
-          {{- toYaml .Values.env | nindent 12 }}
+      containers:
+        - name: drivers-service
+          image: "{{ .Values.image.repository }}/drivers-service:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecrets }}
 

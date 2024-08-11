@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: vendor-gateway
+  namespace: {{ .Values.namespace.name }}
 spec:
   replicas: 1
   selector:
@@ -13,13 +14,11 @@ spec:
         app: vendor-gateway
         date: "{{ now | unixEpoch }}"
     spec:
-      - name: vendor-gateway
-        image: "{{ .Values.image.repository }}/vendor-gateway:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        ports:
-          - name: http
-            containerPort: 3001
-            protocol: TCP
-        env:
-          {{- toYaml .Values.env | nindent 12 }}
-
+      containers:
+        - name: vendor-gateway
+          image: "{{ .Values.image.repository }}/vendor-gateway:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecrets }}
