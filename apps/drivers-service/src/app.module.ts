@@ -46,7 +46,10 @@ import { OdsaRepository } from './ODSA/odsa.repository'
 import { EventsGateway } from './websockets/events.gateway'
 import { EventsService } from './websockets/events.service'
 import * as Joi from 'joi'
+<<<<<<< HEAD
 import { SentryModule } from '@sentry/nestjs/setup'
+=======
+>>>>>>> 3fca7e6 (refactor: removed redundant flutterwave code)
 
 @Module({})
 export class AppModule implements NestModule {
