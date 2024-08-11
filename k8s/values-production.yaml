@@ -82,6 +82,7 @@ env:
 namespace:
   name: nana-production
 
+<<<<<<< HEAD
 image:
   repository: "7vzu7839.c1.de1.container-registry.ovh.net/nana-production"
   pullPolicy: Always
@@ -91,12 +92,18 @@ image:
   pullSecrets: "regcred"
 
 
+=======
+>>>>>>> ac57617 (chore: k8s manifest files + gh action ovh deployment)
 ingress:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/rewrite-target: /
+<<<<<<< HEAD
   host: "prod-api.trynanaapp.com"
   class: "nginx-prod"
 
 
+=======
+  hosts: "production-api.trynanaapp.com"
+>>>>>>> ac57617 (chore: k8s manifest files + gh action ovh deployment)

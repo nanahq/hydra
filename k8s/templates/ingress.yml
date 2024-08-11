@@ -3,7 +3,11 @@ kind: Ingress
 metadata:
   name: nana-hydra
 spec:
+<<<<<<< HEAD
   ingressClassName: {{ .Values.ingress.class }}
+=======
+  ingressClassName: nginx
+>>>>>>> ac57617 (chore: k8s manifest files + gh action ovh deployment)
   rules:
     - host: {{ .Values.ingress.host }}
       http:

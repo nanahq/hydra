@@ -3,7 +3,10 @@ env:
     value:  "3003"
   - name: RMQ_URI
     value: "amqps://hbpdnxpc:uyuoSRNwYHHwyGomHybmxfNOqBWT0uYj@rat.rmq2.cloudamqp.com/hbpdnxpc"
+<<<<<<< HEAD
     value: "amqps://hbpdnxpc:uyuoSRNwYHHwyGomHybmxfNOqBWT0uYj@rat.rmq2.cloudamqp.com/hbpdnxpc"
+=======
+>>>>>>> ac57617 (chore: k8s manifest files + gh action ovh deployment)
   - name: ADMIN_JWT_EXPIRATION
     value: "3600"
   - name: USER_JWT_EXPIRATION
@@ -40,7 +43,10 @@ env:
     value: "v0.0"
   - name: MONGODB_URI
     value: "mongodb+srv://staging:WXy9PfCg1KOJKWZQ@nana-staging.higby.mongodb.net/?retryWrites=true&w=majority&appName=nana-staging"
+<<<<<<< HEAD
     value: "mongodb+srv://staging:WXy9PfCg1KOJKWZQ@nana-staging.higby.mongodb.net/?retryWrites=true&w=majority&appName=nana-staging"
+=======
+>>>>>>> ac57617 (chore: k8s manifest files + gh action ovh deployment)
   - name: RMQ_VENDORS_API_QUEUE
     value: "VENDORS_API"
   - name: RMQ_API_QUEUE
@@ -61,8 +67,11 @@ env:
     value: "3002"
   - name: DRIVER_PORT
     value: "3003"
+<<<<<<< HEAD
   - name: DRIVER_PORT
     value: "3003"
+=======
+>>>>>>> ac57617 (chore: k8s manifest files + gh action ovh deployment)
   - name: USER_PORT
     value: "3000"
   - name: SLACK_WEBHOOK_URL
@@ -81,8 +90,11 @@ env:
     value: "884917470237ff36ea4a4d5d120d31b9"
   - name: TWILIO_SERVICE_NAME
     value: "VAf618726a04c1a651911a2280a8956429"
+<<<<<<< HEAD
   - name: NODE_ENV
     value: "staging"
+=======
+>>>>>>> ac57617 (chore: k8s manifest files + gh action ovh deployment)
 image:
   repository: "7vzu7839.c1.de1.container-registry.ovh.net/nana-staging"
   pullPolicy: Always
@@ -101,4 +113,7 @@ ingress:
         nginx.ingress.kubernetes.io/ssl-redirect: "false"
         nginx.ingress.kubernetes.io/rewrite-target: /
     host: "staging-api.trynanaapp.com"
+<<<<<<< HEAD
     class: "nginx"
+=======
+>>>>>>> ac57617 (chore: k8s manifest files + gh action ovh deployment)
