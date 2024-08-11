@@ -50,7 +50,8 @@ export class AppModule implements NestModule {
           isGlobal: true,
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
-            USER_JWT_EXPIRATION: Joi.string().required()
+            USER_JWT_EXPIRATION: Joi.string().required(),
+            USER_PORT: Joi.string().required()
           }),
           envFilePath: './apps/api-gateway/.env'
         }),

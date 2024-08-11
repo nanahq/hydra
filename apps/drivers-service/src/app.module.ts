@@ -45,6 +45,7 @@ import { ScheduleModule } from '@nestjs/schedule'
 import { OdsaRepository } from './ODSA/odsa.repository'
 import { EventsGateway } from './websockets/events.gateway'
 import { EventsService } from './websockets/events.service'
+import * as Joi from 'joi'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -61,6 +62,9 @@ export class AppModule implements NestModule {
         ScheduleModule.forRoot(),
         ConfigModule.forRoot({
           isGlobal: true,
+          validationSchema: Joi.object({
+            DRIVER_PORT: Joi.string().required()
+          }),
           envFilePath: './apps/drivers-service/.env'
         }),
         JwtModule.registerAsync({

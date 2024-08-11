@@ -6,7 +6,7 @@ import { AppModule } from './app.module'
 
 async function bootstrap (): Promise<void> {
   const app = await AppModule.create()
-  const port = app.get(ConfigService).get<string>('PORT', '3000')
+  const port = app.get(ConfigService).get<string>('USER_PORT', '3000')
   const rmqService = app.get<RmqService>(RmqService)
   app.connectMicroservice<RmqOptions>(
     rmqService.getOption(QUEUE_SERVICE.API_SERVICE, true)
