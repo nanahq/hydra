@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: notification-service
+  namespace: {{ .Values.namespace.name }}
 spec:
   replicas: 1
   selector:
@@ -13,9 +14,12 @@ spec:
         app: notification-service
         date: "{{ now | unixEpoch }}"
     spec:
-      - name: notification-service
-        image: "{{ .Values.image.repository }}/notification-service:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        env:
-          {{- toYaml .Values.env | nindent 12 }}
+      containers:
+        - name: notification-service
+          image: "{{ .Values.image.repository }}/notification-service:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecrets }}
 

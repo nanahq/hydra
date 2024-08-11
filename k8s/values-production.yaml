@@ -69,3 +69,20 @@ env:
     value: "true"
   - name: BREVO_API_KEY
     value: "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"
+  - name: TWILIO_ACCOUNT_SID
+    value: "AC92dcff521afa9159e2a3294c452e3874"
+  - name: TWILIO_AUTH_TOKEN
+    value: "884917470237ff36ea4a4d5d120d31b9"
+  - name: TWILIO_SERVICE_NAME
+    value: "VAf618726a04c1a651911a2280a8956429"
+  - name: DRIVER_PORT
+    value: "3003"
+namespace:
+  name: nana-production
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts: "production-api.trynanaapp.com"

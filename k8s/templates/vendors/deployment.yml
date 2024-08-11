@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vendor-service
+  name: vendors-service
+  namespace: {{ .Values.namespace.name }}
 spec:
   replicas: 1
   selector:
@@ -13,9 +14,11 @@ spec:
         app: vendors-service
         date: "{{ now | unixEpoch }}"
     spec:
-      - name: vendor-service
-        image: "{{ .Values.image.repository }}/vendors-service:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        env:
-          {{- toYaml .Values.env | nindent 12 }}
-
+      containers:
+        - name: vendors-service
+          image: "{{ .Values.image.repository }}/vendors-service:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecrets }}

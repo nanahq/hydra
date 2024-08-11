@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: admin
+  name: admin-gateway
+  namespace: {{ .Values.namespace.name }}
 spec:
   replicas: 1
   selector:
@@ -13,13 +14,11 @@ spec:
         app: admin-gateway
         date: "{{ now | unixEpoch }}"
     spec:
-      - name: admin-gateway
-        image: "{{ .Values.image.repository }}/admin-gateway:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        ports:
-          - name: http
-            containerPort: 3002
-            protocol: TCP
-        env:
-          {{- toYaml .Values.env | nindent 12 }}
-
+      containers:
+        - name: admin-gateway
+          image: "{{ .Values.image.repository }}/admin-gateway:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecrets }}
