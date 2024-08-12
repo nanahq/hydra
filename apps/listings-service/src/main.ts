@@ -3,7 +3,7 @@ import { RmqOptions } from '@nestjs/microservices'
 
 import { ListingsModule } from './listings.module'
 import { RmqService, QUEUE_SERVICE } from '@app/common'
-
+import '@app/common/sentry/instrument'
 async function bootstrap (): Promise<void> {
   const app = await NestFactory.create(ListingsModule)
   const rmq = app.get<RmqService>(RmqService)
