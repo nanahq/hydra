@@ -33,6 +33,7 @@ import { GeneralController } from './module.api/general.controller'
 import { DeliveriesController } from './module.api/deliveries.controller'
 import { CouponController } from './module.api/coupon.controller'
 import { WebAppController } from './module.api/webapp.controller'
+import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -46,11 +47,13 @@ export class AppModule implements NestModule {
     return {
       module: AppModule,
       imports: [
+        SentryModule.forRoot(),
         ConfigModule.forRoot({
           isGlobal: true,
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
-            USER_JWT_EXPIRATION: Joi.string().required()
+            USER_JWT_EXPIRATION: Joi.string().required(),
+            USER_PORT: Joi.string().required()
           }),
           envFilePath: './apps/api-gateway/.env'
         }),

@@ -34,6 +34,7 @@ import { CouponController } from './module.api/coupon.controller'
 import { PaymentController } from './module.api/payment.controller'
 import { UsersController } from './module.api/users.controller'
 import { DatabaseController } from './module.api/database.controller'
+import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -51,12 +52,13 @@ export class AppModule implements NestModule {
     return {
       module: AppModule,
       imports: [
+        SentryModule.forRoot(),
         ConfigModule.forRoot({
           isGlobal: true,
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
             ADMIN_JWT_EXPIRATION: Joi.string().required(),
-            PORT: Joi.string().required(),
+            ADMIN_PORT: Joi.string().required(),
             RMQ_ADMINS_QUEUE: Joi.string().required(),
             RMQ_ADMINS_API_QUEUE: Joi.string().required()
           }),

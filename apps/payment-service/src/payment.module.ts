@@ -29,7 +29,6 @@ import { ScheduleModule } from '@nestjs/schedule'
 import { PaymentRepository } from './charge/charge.repository'
 import { PaymentService } from './charge/charge.service'
 import { HttpModule } from '@nestjs/axios'
-import { FlutterwaveService } from './providers/flutterwave'
 import { PaymentController } from './charge/charge.controller'
 import {
   DriverWallet,
@@ -52,9 +51,11 @@ import { UserWalletController } from './wallet/user/wallet.controller'
 import { UserWalletService } from './wallet/user/wallet.service'
 import { UserWallet, UserWalletSchema } from '@app/common/database/schemas/user-wallet.schema'
 import { UserWalletRepository } from './wallet/user/wallet.repository'
+import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -141,7 +142,6 @@ import { UserWalletRepository } from './wallet/user/wallet.repository'
     ConfigService,
     PaymentRepository,
     PaymentService,
-    FlutterwaveService,
     PaystackService,
     DriverWalletRepository,
     DriverWalletTransactionRepository,

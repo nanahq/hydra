@@ -2,7 +2,7 @@ env:
   - name: DRIVERS_PORT
     value:  "3003"
   - name: RMQ_URI
-    value: ""
+    value: "amqps://hbpdnxpc:uyuoSRNwYHHwyGomHybmxfNOqBWT0uYj@rat.rmq2.cloudamqp.com/hbpdnxpc"
   - name: ADMIN_JWT_EXPIRATION
     value: "3600"
   - name: USER_JWT_EXPIRATION
@@ -38,7 +38,7 @@ env:
   - name: VERSION
     value: "v0.0"
   - name: MONGODB_URI
-    value: "mongodb://root:password123@nana-mongodb-headless:27017/"
+    value: "mongodb+srv://staging:WXy9PfCg1KOJKWZQ@nana-staging.higby.mongodb.net/?retryWrites=true&w=majority&appName=nana-staging"
   - name: RMQ_VENDORS_API_QUEUE
     value: "VENDORS_API"
   - name: RMQ_API_QUEUE
@@ -57,6 +57,8 @@ env:
     value: "pk.eyJ1Ijoic3VyYWphdXdhbCIsImEiOiJjbGxiNHhpNW8wMHBpM2lxb215NnZmN3ZuIn0.a6zWnzIF0KcVZ2AUiDNBDA"
   - name: ADMIN_PORT
     value: "3002"
+  - name: DRIVER_PORT
+    value: "3003"
   - name: USER_PORT
     value: "3000"
   - name: SLACK_WEBHOOK_URL
@@ -69,12 +71,30 @@ env:
     value: "true"
   - name: BREVO_API_KEY
     value: "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"
-
+  - name: TWILIO_ACCOUNT_SID
+    value: "AC92dcff521afa9159e2a3294c452e3874"
+  - name: TWILIO_AUTH_TOKEN
+    value: "884917470237ff36ea4a4d5d120d31b9"
+  - name: TWILIO_SERVICE_NAME
+    value: "VAf618726a04c1a651911a2280a8956429"
+  - name: NODE_ENV
+    value: "staging"
 image:
   repository: "7vzu7839.c1.de1.container-registry.ovh.net/nana-staging"
   pullPolicy: Always
   sha: ""
   tag: "latest"
   port: 3000
+  pullSecrets: "regcred"
 
 
+namespace:
+  name: nana-staging
+
+ingress:
+    annotations:
+        kubernetes.io/ingress.class: "nginx"
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+        nginx.ingress.kubernetes.io/rewrite-target: /
+    host: "staging-api.trynanaapp.com"
+    class: "nginx"

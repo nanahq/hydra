@@ -1,12 +1,9 @@
 import {
-  BankTransferAccountDetails,
-  BankTransferRequest,
   ExceptionFilterRpc,
   OrderInitiateCharge,
   PaystackChargeResponseData,
   QUEUE_MESSAGE,
   RmqService,
-  UssdRequest,
   Payment
 } from '@app/common'
 import { Controller, UseFilters } from '@nestjs/common'
@@ -28,20 +25,6 @@ export class PaymentController {
     private readonly rmqService: RmqService
   ) {}
 
-  @MessagePattern(QUEUE_MESSAGE.CHARGE_BANK_TRANSFER)
-  async chargeWithBankTransfer (
-    @Payload() payload: BankTransferRequest,
-      @Ctx() context: RmqContext
-  ): Promise<BankTransferAccountDetails> {
-    try {
-      return await this.paymentService.chargeWithBankTransfer(payload)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
-
   @MessagePattern(QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK)
   async initiatePaystackCharge (
     @Payload() payload: OrderInitiateCharge,
@@ -49,20 +32,6 @@ export class PaymentController {
   ): Promise<PaystackChargeResponseData> {
     try {
       return await this.paymentService.initiateChargePaystack(payload)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
-
-  @MessagePattern(QUEUE_MESSAGE.CHARGE_USSD)
-  async chargeWithUssd (
-    @Payload() payload: UssdRequest,
-      @Ctx() context: RmqContext
-  ): Promise<any> {
-    try {
-      return await this.paymentService.chargeWithUssd(payload)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -91,20 +60,6 @@ export class PaymentController {
   ): Promise<any> {
     try {
       return await this.paymentService.getAllPaymentInfo(payload)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
-
-  @EventPattern(QUEUE_MESSAGE.VERIFY_PAYMENT)
-  async verifyPayment (
-    @Payload() { txId, refId }: { txId: string, refId: string },
-      @Ctx() context: RmqContext
-  ): Promise<void> {
-    try {
-      await this.paymentService.verifyPayment(txId, refId)
     } catch (error) {
       throw new RpcException(error)
     } finally {

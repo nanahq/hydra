@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nana-hydra
+spec:
+  ingressClassName: {{ .Values.ingress.class }}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /api-gateway
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 3000
+          - path: /vendor-gateway
+            pathType: Prefix
+            backend:
+              service:
+                name: vendor-gateway
+                port:
+                  number: 3001
+          - path: /admin-gateway
+            pathType: Prefix
+            backend:
+              service:
+                name: admin-gateway
+                port:
+                  number: 3002
+          - path: /driver-gateway
+            pathType: Prefix
+            backend:
+              service:
+                name: driver-gateway
+                port:
+                  number: 3003
+          - path: /socket.io
+            pathType: Prefix
+            backend:
+              service:
+                name: driver-gateway
+                port:
+                  number: 3003

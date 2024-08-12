@@ -1,12 +1,12 @@
 import { ConfigService } from '@nestjs/config'
 import { RmqOptions } from '@nestjs/microservices'
-
+import '@app/common/sentry/instrument'
 import { RmqService, QUEUE_SERVICE } from '@app/common'
 import { AppModule } from './app.module'
 
 async function bootstrap (): Promise<void> {
   const app = await AppModule.create()
-  const port = app.get(ConfigService).get<string>('PORT', '3001')
+  const port = app.get(ConfigService).get<string>('VENDOR_PORT', '3001')
   const rmqService = app.get<RmqService>(RmqService)
   app.connectMicroservice<RmqOptions>(
     rmqService.getOption(QUEUE_SERVICE.VENDORS_API, true)
