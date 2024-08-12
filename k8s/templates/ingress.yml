@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: nana-hydra
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ .Values.ingress.class }}
   rules:
     - host: {{ .Values.ingress.host }}
       http:

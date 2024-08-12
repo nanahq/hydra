@@ -19,9 +19,11 @@ import { ReviewsServiceController } from './reviews-service.controller'
 import { ReviewsService } from './reviews-service.service'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ReviewRepository } from './review.repositoty'
+import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
