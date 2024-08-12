@@ -13,16 +13,7 @@ jobs:
         service:
           - admin-gateway
           - admin-service
-          - api-gateway
-          - drivers-service
-          - listings-service
-          - location-service
-          - notification-service
-          - orders-service
-          - payment-service
-          - reviews-service
-          - users-service
-          - vendors-service
+          # ... other services ...
           - vendor-gateway
 
     steps:

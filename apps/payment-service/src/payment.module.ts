@@ -51,9 +51,11 @@ import { UserWalletController } from './wallet/user/wallet.controller'
 import { UserWalletService } from './wallet/user/wallet.service'
 import { UserWallet, UserWalletSchema } from '@app/common/database/schemas/user-wallet.schema'
 import { UserWalletRepository } from './wallet/user/wallet.repository'
+import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,

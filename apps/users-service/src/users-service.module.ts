@@ -24,9 +24,11 @@ import { AddressBookServiceController } from './address-book-service.controller'
 import { AddressBookRepository } from './address.book.repository'
 import { AddressBookService } from './address-book-service.service'
 import { HttpModule } from '@nestjs/axios'
+import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
