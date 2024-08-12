@@ -81,7 +81,6 @@ env:
     value: "3003"
 namespace:
   name: nana-production
-
 image:
   repository: "7vzu7839.c1.de1.container-registry.ovh.net/nana-production"
   pullPolicy: Always
@@ -89,8 +88,6 @@ image:
   tag: "latest"
   port: 3000
   pullSecrets: "regcred"
-
-
 ingress:
   annotations:
     kubernetes.io/ingress.class: "nginx"
@@ -98,5 +95,3 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: /
   host: "prod-api.trynanaapp.com"
   class: "nginx-prod"
-
-
