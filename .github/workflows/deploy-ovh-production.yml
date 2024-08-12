@@ -3,7 +3,7 @@ name: Build and Deploy Microservices to OVH Cloud [PRODUCTION]
 on:
   push:
     branches:
-      - staging
+      - main
 
 jobs:
   build-and-push:
