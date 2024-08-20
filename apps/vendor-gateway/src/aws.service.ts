@@ -13,7 +13,8 @@ export class AwsService {
     this.AWS_S3_BUCKET = 'nana-vendors'
     this.s3 = new S3({
       credentials: fromEnv(),
-      endpoint
+      endpoint,
+      forcePathStyle: true
     })
   }
 
