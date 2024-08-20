@@ -52,9 +52,11 @@ env:
   - name: RMQ_NOTIFICATION_QUEUE
     value: "NOTIFICATION"
   - name: AWS_ACCESS_KEY_ID
-    value: "AKIA33DD4MHHCKY4GZ5A"
+    value: "854b592de41141c59aa9a28765ad1ec8"
+  - name: AWS_S3_ENDPOINT
+    value: "https://s3.uk.io.cloud.ovh.net"
   - name: AWS_SECRET_ACCESS_KEY
-    value: "CF5CKfruJpXBksURE15eQAkniqf3EplysIFtMOJ6"
+    value: "0d5a66d79f1741ecab06a6d3168358bc"
   - name: MAPBOX_TOKEN
     value: "pk.eyJ1Ijoic3VyYWphdXdhbCIsImEiOiJjbGxiNHhpNW8wMHBpM2lxb215NnZmN3ZuIn0.a6zWnzIF0KcVZ2AUiDNBDA"
   - name: ADMIN_PORT
