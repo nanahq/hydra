@@ -16,11 +16,15 @@ import {
   PushMessage,
   ListingApprovePush,
   ListingRejectPush,
-  VendorApprovedPush
+  VendorApprovedPush,
+  internationalisePhoneNumber
 } from '@app/common'
 
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
 import { HttpService } from '@nestjs/axios'
+import { TermiiService } from '@app/common/termii/termii'
+import { TermiiPayload } from '@app/common/typings/Termii'
+import { verifyTermiiToken } from '@app/common/dto/verifyTermiiToken.dto'
 
 @Injectable()
 export class NotificationServiceService {
@@ -33,7 +37,8 @@ export class NotificationServiceService {
     private readonly configService: ConfigService,
     private readonly pushClient: ExportPushNotificationClient,
 
-    private readonly httpService: HttpService
+    private readonly httpService: HttpService,
+    private readonly termiiService: TermiiService
   ) {
     this.fromPhone = 'Nana'
   }
@@ -55,6 +60,54 @@ export class NotificationServiceService {
       }
       return null
     } catch (error) {
+      throw new RpcException(error)
+    }
+  }
+
+  async verifyPhoneTermii ({ apiKey, pinId, pin }: verifyTermiiToken): Promise<any> {
+    try {
+      const res = await this.termiiService.verifySMSToken({
+        apiKey,
+        pinId,
+        pin
+      })
+
+      if (res.verified === '') {
+        return await lastValueFrom(
+          this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
+            phone: internationalisePhoneNumber(res.msisdn)
+          })
+        )
+      }
+      return null
+    } catch (error) {
+      throw new RpcException(error)
+    }
+  }
+
+  async sendVerificationTermii ({ phone }: verifyPhoneRequest): Promise<any> {
+    try {
+      this.logger.log(
+        `[PIM] - Initiating SMS token for ${phone}`
+      )
+
+      const payload: TermiiPayload = {
+        api_key: this.configService.get<string>('TERMII_API_KEY', ''),
+        message_type: 'NUMERIC',
+        to: phone,
+        from: this.configService.get<string>('TERMII_SERVICE_NAME', ''),
+        channel: 'dnd',
+        pin_attempts: 2,
+        pin_time_to_live: 1,
+        pin_length: 6,
+        pin_type: 'NUMERIC',
+        pin_placeholder: '< 1234 >',
+        message_text: 'Your pin is < 1234 >'
+      }
+
+      return await this.termiiService.sendSMSToken(payload)
+    } catch (error) {
+      console.log(JSON.stringify(error))
       throw new RpcException(error)
     }
   }
