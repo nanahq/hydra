@@ -39,3 +39,6 @@ k8s/secrets.yaml
 /k8s/values-staging.yaml
 /k8s/values-production.yaml
 /k8s/datadog-values.yaml
+
+# Sentry Config File
+.sentryclirc
