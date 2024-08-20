@@ -12,7 +12,7 @@
   "scripts": {
     "prepare": "husky install",
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "nest build && yarn sentry:sourcemaps",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -27,7 +27,8 @@
     "test:e2e": "jest --config ./apps/eatlater/test/jest-e2e.json",
     "all:build": "yarn build users-service && yarn build nofication-service && yarn build vendors-service && yarn build admin-service && yarn build listings-service && yarn build payment-service  && yarn build reviews-service && yarn build vendors-gateway && yarn build admin-gateway && yarn build api-gateway && yarn build orders-service && yarn build drivers-service && yarn build location-service",
     "all:version": "lerna version $1 --yes --no-push --no-git-tag-version --exact",
-    "doc": "npx compodoc -p tsconfig.json -n \"EatLater Docs\""
+    "doc": "npx compodoc -p tsconfig.json -n \"EatLater Docs\"",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org nana-hq --project nana-hydra ./dist && sentry-cli sourcemaps upload --org nana-hq --project nana-hydra ./dist"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.400.0",
@@ -47,6 +48,7 @@
     "@nestjs/schedule": "^2.2.0",
     "@nestjs/throttler": "^4.0.0",
     "@nestjs/websockets": "^10.1.3",
+    "@sentry/cli": "^2.33.1",
     "@sentry/nestjs": "^8.25.0",
     "@sentry/profiling-node": "^8.25.0",
     "amqp-connection-manager": "^4.1.10",

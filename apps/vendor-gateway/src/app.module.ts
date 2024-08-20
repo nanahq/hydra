@@ -51,6 +51,7 @@ export class AppModule implements NestModule {
           isGlobal: true,
           validationSchema: Joi.object({
             JWT_SECRET: Joi.string().required(),
+            AWS_S3_ENDPOINT: Joi.string().required(),
             VENDOR_JWT_EXPIRATION: Joi.string().required(),
             VENDOR_PORT: Joi.string().required()
           }),
