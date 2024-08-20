@@ -14,7 +14,8 @@ export class AwsService {
     this.s3 = new S3({
       credentials: fromEnv(),
       endpoint,
-      forcePathStyle: true
+      forcePathStyle: true,
+      region: 'uk'
     })
   }
 
