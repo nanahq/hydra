@@ -19,15 +19,9 @@ import {
   VendorStatI,
   VendorWithListingsI
 } from '@app/common'
-import {
-  CreateVendorDto,
-  UpdateVendorSettingsDto
-} from '@app/common/database/dto/vendor.dto'
+import { CreateVendorDto, UpdateVendorSettingsDto } from '@app/common/database/dto/vendor.dto'
 import { arrayParser } from '@app/common/utils/statsResultParser'
-import {
-  VendorRepository,
-  VendorSettingsRepository
-} from './vendors.repository'
+import { VendorRepository, VendorSettingsRepository } from './vendors.repository'
 import { Vendor } from '@app/common/database/schemas/vendor.schema'
 import { VendorSettings } from '@app/common/database/schemas/vendor-settings.schema'
 import { internationalisePhoneNumber } from '@app/common/utils/phone.number'
@@ -53,18 +47,11 @@ export class VendorsService {
   ) {}
 
   async seedDatabase (): Promise<void> {
-    const vendorsWithoutFriendlyUrl: Vendor[] =
-      await this.vendorRepository.find({ friendlyId: undefined })
+    const vendorsWithoutFriendlyUrl: Vendor[] = await this.vendorRepository.find({ friendlyId: undefined })
 
     for (const vendorsWithoutFriendlyUrlElement of vendorsWithoutFriendlyUrl) {
-      const friendlyId = vendorsWithoutFriendlyUrlElement.businessName
-        .split(' ')
-        .join('-')
-        .toLowerCase()
-      await this.vendorRepository.findOneAndUpdate(
-        { phone: vendorsWithoutFriendlyUrlElement.phone },
-        { friendlyId }
-      )
+      const friendlyId = vendorsWithoutFriendlyUrlElement.businessName.split(' ').join('-').toLowerCase()
+      await this.vendorRepository.findOneAndUpdate({ phone: vendorsWithoutFriendlyUrlElement.phone }, { friendlyId })
     }
   }
 
@@ -157,9 +144,7 @@ export class VendorsService {
 
     const slackMessage = `Vendor ${vendor.firstName} ${vendor.lastName} signed in with phone number: ${vendor.phone}`
     await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, {
-        text: slackMessage
-      })
+      this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
     )
 
     vendor.password = ''
@@ -257,13 +242,7 @@ export class VendorsService {
     const monthStart = new Date(month)
     monthStart.setHours(0, 0, 0, 0)
 
-    const [
-      aggregateResult,
-      acceptedVendors,
-      rejectedVendors,
-      weeklySignup,
-      monthlySignup
-    ] = await Promise.all([
+    const [aggregateResult, acceptedVendors, rejectedVendors, weeklySignup, monthlySignup] = await Promise.all([
       this.vendorRepository.findRaw().aggregate([
         {
           $match: {
@@ -322,14 +301,8 @@ export class VendorsService {
     ])
     return {
       aggregateResult: arrayParser<number>(aggregateResult, 'totalVendors'),
-      acceptedVendors: arrayParser<number>(
-        acceptedVendors,
-        'totalApprovedVendors'
-      ),
-      rejectedVendors: arrayParser<number>(
-        rejectedVendors,
-        'totalRejectedVendors'
-      ),
+      acceptedVendors: arrayParser<number>(acceptedVendors, 'totalApprovedVendors'),
+      rejectedVendors: arrayParser<number>(rejectedVendors, 'totalRejectedVendors'),
       weeklySignup,
       monthlySignup
     }
@@ -525,10 +498,10 @@ export class VendorsService {
 
   async getVendorsForHomepage (): Promise<VendorServiceHomePageResult> {
     try {
-      const allVendors: any[] = await this.vendorRepository.findAndPopulate(
+      const allVendors: any[] = (await this.vendorRepository.findAndPopulate(
         { acc_status: VendorApprovalStatus.APPROVED },
         ['settings', 'reviews']
-      )
+      ))
       const filteredVendors = allVendors.filter((v: any) => v.review !== null)
       return {
         nearest: [],
@@ -543,9 +516,7 @@ export class VendorsService {
     }
   }
 
-  async getVendorsListingsPage (
-    friendlyId: string
-  ): Promise<VendorWithListingsI> {
+  async getVendorsListingsPage (friendlyId: string): Promise<VendorWithListingsI> {
     try {
       const vendor: VendorI = await this.vendorRepository.findOneAndPopulate(
         { friendlyId },
@@ -563,10 +534,7 @@ export class VendorsService {
         data: { vendorId: vendor._id.toString() }
       }
       const vendorListing = await lastValueFrom<ListingMenuI[]>(
-        this.listingsClient.send(
-          QUEUE_MESSAGE.GET_WEBAPP_VENDOR_WITH_LISTING,
-          listingPayload
-        )
+        this.listingsClient.send(QUEUE_MESSAGE.GET_WEBAPP_VENDOR_WITH_LISTING, listingPayload)
       )
       return {
         ...vendor,
@@ -584,15 +552,9 @@ export class VendorsService {
   async updateVendorReview (data: UpdateVendorReviewDto): Promise<void> {
     try {
       const vendor = await this.vendorRepository.findOne({ _id: data.vendor })
-      await this.vendorRepository.findOneAndUpdate(
-        { _id: vendor._id },
-        { reviews: [...vendor.reviews, data.reviewId] }
-      )
+      await this.vendorRepository.findOneAndUpdate({ _id: vendor._id }, { reviews: [...vendor.reviews, data.reviewId] })
     } catch (error) {
-      throw new FitRpcException(
-        'Something went wrong updating vendor review',
-        HttpStatus.INTERNAL_SERVER_ERROR
-      )
+      throw new FitRpcException('Something went wrong updating vendor review', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 }
