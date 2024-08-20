@@ -22,9 +22,11 @@ import {
   VendorRepository
 } from './vendors.repository'
 import { HttpModule } from '@nestjs/axios'
+import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: './apps/vendors-service/.env'

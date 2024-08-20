@@ -77,6 +77,8 @@ env:
     value: "884917470237ff36ea4a4d5d120d31b9"
   - name: TWILIO_SERVICE_NAME
     value: "VAf618726a04c1a651911a2280a8956429"
+  - name: NODE_ENV
+    value: "staging"
 image:
   repository: "7vzu7839.c1.de1.container-registry.ovh.net/nana-staging"
   pullPolicy: Always
@@ -95,3 +97,4 @@ ingress:
         nginx.ingress.kubernetes.io/ssl-redirect: "false"
         nginx.ingress.kubernetes.io/rewrite-target: /
     host: "staging-api.trynanaapp.com"
+    class: "nginx"
