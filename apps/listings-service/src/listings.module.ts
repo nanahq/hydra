@@ -31,11 +31,9 @@ import {
 } from './listings.repository'
 import { ScheduleModule } from '@nestjs/schedule'
 import { CacheModule } from '@nestjs/cache-manager'
-import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
-    SentryModule.forRoot(),
     CacheModule.register(),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({

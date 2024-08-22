@@ -22,11 +22,9 @@ import { SubscriptionController } from './subscription.controller'
 import { SubscriptionService } from './subscription.service'
 import { SubscriptionRepository } from './subscription.repository'
 import { HttpModule } from '@nestjs/axios'
-import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
-    SentryModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
