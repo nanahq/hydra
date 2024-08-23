@@ -3,7 +3,6 @@ import { RmqOptions } from '@nestjs/microservices'
 
 import { AppModule } from './app.module'
 import { QUEUE_SERVICE, RmqService } from '@app/common'
-import '@app/common/sentry/instrument'
 
 async function bootstrap (): Promise<void> {
   const app = await AppModule.create()

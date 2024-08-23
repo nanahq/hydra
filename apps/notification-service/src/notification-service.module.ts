@@ -27,7 +27,6 @@ import { TermiiService } from '@app/common/termii/termii'
 
 @Module({
   imports: [
-    SentryModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({

@@ -1,6 +1,5 @@
 import { ConfigService } from '@nestjs/config'
 import { RmqOptions } from '@nestjs/microservices'
-import '@app/common/sentry/instrument'
 import { RmqService, QUEUE_SERVICE } from '@app/common'
 import { AppModule } from './app.module'
 
