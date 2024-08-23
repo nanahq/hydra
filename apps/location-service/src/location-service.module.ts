@@ -6,11 +6,9 @@ import { HttpModule } from '@nestjs/axios'
 import { LocationController } from './location-service.controller'
 import { LocationService } from './location-service.service'
 import { CacheModule } from '@nestjs/cache-manager'
-import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
-    SentryModule.forRoot(),
     CacheModule.register(),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({

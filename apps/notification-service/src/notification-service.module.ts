@@ -23,10 +23,10 @@ import { SubscriptionService } from './subscription.service'
 import { SubscriptionRepository } from './subscription.repository'
 import { HttpModule } from '@nestjs/axios'
 import { SentryModule } from '@sentry/nestjs/setup'
+import { TermiiService } from '@app/common/termii/termii'
 
 @Module({
   imports: [
-    SentryModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
@@ -71,7 +71,8 @@ import { SentryModule } from '@sentry/nestjs/setup'
     ExportPushNotificationClient,
     SubscriptionRepository,
     BrevoClient,
-    TransactionEmails
+    TransactionEmails,
+    TermiiService
   ]
 })
 export class NotificationServiceModule {}

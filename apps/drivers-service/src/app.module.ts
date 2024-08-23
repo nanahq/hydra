@@ -46,7 +46,6 @@ import { OdsaRepository } from './ODSA/odsa.repository'
 import { EventsGateway } from './websockets/events.gateway'
 import { EventsService } from './websockets/events.service'
 import * as Joi from 'joi'
-import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -60,7 +59,6 @@ export class AppModule implements NestModule {
     return {
       module: AppModule,
       imports: [
-        SentryModule.forRoot(),
         ScheduleModule.forRoot(),
         ConfigModule.forRoot({
           isGlobal: true,

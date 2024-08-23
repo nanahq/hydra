@@ -17,11 +17,9 @@ import { AdminRepository } from './admin.repository'
 import { AddressBookLabelService } from './address-book-label/address-book-label-service.service'
 import { AddressBookLabelRepository } from './address-book-label/address.book.label.repository'
 import { AddressBookLabelServiceController } from './address-book-label/address-book-label-service.controller'
-import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
-    SentryModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({

@@ -88,6 +88,11 @@ export class VendorsService {
       friendlyId
     }
 
+    const slackMessage = `Vendor ${data.firstName} ${data.lastName} signed up with phone number: ${data.phone}`
+    await lastValueFrom(
+      this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
+    )
+
     const brevoPayload: CreateBrevoContact = {
       firstName: data.firstName,
       lastName: data.lastName,
@@ -141,11 +146,6 @@ export class VendorsService {
         HttpStatus.UNAUTHORIZED
       )
     }
-
-    const slackMessage = `Vendor ${vendor.firstName} ${vendor.lastName} signed up with phone number: ${vendor.phone}`
-    await lastValueFrom(
-      this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
-    )
 
     vendor.password = ''
     return vendor
