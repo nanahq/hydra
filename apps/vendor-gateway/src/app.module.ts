@@ -28,7 +28,6 @@ import { ReviewController } from './module.api/review.controller'
 import { WalletController } from './module.api/wallet.controller'
 import { AwsService } from './aws.service'
 import { DriversController } from './module.api/drivers.controller'
-import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -46,7 +45,6 @@ export class AppModule implements NestModule {
     return {
       module: AppModule,
       imports: [
-        SentryModule.forRoot(),
         ConfigModule.forRoot({
           isGlobal: true,
           validationSchema: Joi.object({

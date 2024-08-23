@@ -22,11 +22,9 @@ import {
 import { MongooseModule } from '@nestjs/mongoose'
 import { OrderRepository } from './order.repository'
 import { ScheduleModule } from '@nestjs/schedule'
-import { SentryModule } from '@sentry/nestjs/setup'
 
 @Module({
   imports: [
-    SentryModule.forRoot(),
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
