@@ -167,6 +167,8 @@ export interface DriverI {
   type: DriverType
 
   updatedAt: string
+
+  internal: boolean
 }
 
 export interface CheckUserAccountI {
