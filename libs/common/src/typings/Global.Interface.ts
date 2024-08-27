@@ -145,6 +145,8 @@ export interface DriverI {
 
   firstName: string
 
+  internal: boolean
+
   isDeleted: false
 
   isValidated: boolean
@@ -167,8 +169,6 @@ export interface DriverI {
   type: DriverType
 
   updatedAt: string
-
-  internal: boolean
 }
 
 export interface CheckUserAccountI {
