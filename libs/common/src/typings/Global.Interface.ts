@@ -145,6 +145,8 @@ export interface DriverI {
 
   firstName: string
 
+  internal: boolean
+
   isDeleted: false
 
   isValidated: boolean
