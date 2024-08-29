@@ -10,7 +10,6 @@ import {
 
 import {
   RmqService,
-  PhoneVerificationPayload,
   verifyPhoneRequest,
   QUEUE_MESSAGE,
   SendPayoutEmail,
@@ -23,6 +22,7 @@ import {
 } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
 import { TransactionEmails } from './email/transactional.service'
+import { TermiiVerificationPayload } from '@app/common/typings/Termii'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -35,11 +35,11 @@ export class NotificationServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.VERIFY_PHONE)
   async verify (
-    @Payload() data: PhoneVerificationPayload,
+    @Payload() data: TermiiVerificationPayload,
       @Ctx() context: RmqContext
   ): Promise<any> {
     try {
-      return await this.notificationServiceService.verifyPhone(data)
+      return await this.notificationServiceService.verifyPhoneTermii(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {
@@ -53,7 +53,7 @@ export class NotificationServiceController {
       @Ctx() context: RmqContext
   ): Promise<any> {
     try {
-      return await this.notificationServiceService.sendVerification(data)
+      return await this.notificationServiceService.sendVerificationTermii(data)
     } catch (error) {
       throw new RpcException(error)
     } finally {

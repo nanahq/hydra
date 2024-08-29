@@ -22,9 +22,12 @@ export interface TermiiPayload {
 }
 
 export interface TermiiResponse {
-  pinId: string
-  to: string
   smsStatus: string
+  phone_number: string
+  pinId: string
+  pin_id: string
+  to: string
+  status: string
 }
 
 export interface TermiiVerificationPayload {

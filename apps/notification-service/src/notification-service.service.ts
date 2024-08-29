@@ -94,7 +94,7 @@ export class NotificationServiceService {
       const payload: TermiiPayload = {
         api_key: this.configService.get<string>('TERMII_API_KEY', ''),
         message_type: 'NUMERIC',
-        to: phone,
+        to: internationalisePhoneNumber(phone),
         from: this.configService.get<string>('TERMII_SERVICE_NAME', ''),
         channel: 'dnd',
         pin_attempts: 2,
@@ -102,7 +102,7 @@ export class NotificationServiceService {
         pin_length: 6,
         pin_type: 'NUMERIC',
         pin_placeholder: '< 1234 >',
-        message_text: 'Your pin is < 1234 >'
+        message_text: 'Your nana verification code is < 1234 >'
       }
 
       return await this.termiiService.sendSMSToken(payload)
