@@ -1,4 +1,4 @@
-name: Build and Deploy Microservices to OVH Cloud [STAGING]
+name: Build and Deploy Microservices to DO [STAGING]
 
 on:
   push:
@@ -43,5 +43,5 @@ jobs:
           docker buildx build \
             --platform linux/amd64 \
             --push \
-            -t "${{ secrets.DIGITAL_OCEAN_REGISTRY }}/nana-staging/${{ matrix.service }}" \
+            -t "${{ secrets.DIGITAL_OCEAN_REGISTRY }}/nana-staging-${{ matrix.service }}" \
             -f ./apps/${{ matrix.service }}/Dockerfile .

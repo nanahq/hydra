@@ -1,4 +1,4 @@
-name: Build and Deploy Microservices to OVH Cloud [PRODUCTION]
+name: Build and Deploy Microservices to DO [PRODUCTION]
 
 on:
   push:
@@ -42,5 +42,5 @@ jobs:
           docker buildx build \
             --platform linux/amd64 \
             --push \
-            -t "${{ secrets.DIGITAL_OCEAN_REGISTRY }}/nana-production/${{ matrix.service }}" \
+            -t "${{ secrets.DIGITAL_OCEAN_REGISTRY }}/nana-production-${{ matrix.service }}" \
             -f ./apps/${{ matrix.service }}/Dockerfile .
