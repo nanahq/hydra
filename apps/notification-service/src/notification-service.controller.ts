@@ -22,7 +22,7 @@ import {
 } from '@app/common'
 import { NotificationServiceService } from './notification-service.service'
 import { TransactionEmails } from './email/transactional.service'
-import { TermiiVerificationPayload } from '@app/common/typings/Termii'
+import { verifyTermiiToken } from '@app/common/dto/verifyTermiiToken.dto'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -35,7 +35,7 @@ export class NotificationServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.VERIFY_PHONE)
   async verify (
-    @Payload() data: TermiiVerificationPayload,
+    @Payload() data: verifyTermiiToken,
       @Ctx() context: RmqContext
   ): Promise<any> {
     try {

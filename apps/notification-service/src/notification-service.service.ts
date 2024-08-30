@@ -6,7 +6,6 @@ import { firstValueFrom, lastValueFrom } from 'rxjs'
 
 import {
   OrderStatus,
-  PhoneVerificationPayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   verifyPhoneRequest,
@@ -43,32 +42,34 @@ export class NotificationServiceService {
     this.fromPhone = 'Nana'
   }
 
-  async verifyPhone ({ code, phone }: PhoneVerificationPayload): Promise<any> {
-    try {
-      const res = await this.twilioService.client.verify.v2
-        .services(
-          this.configService.get<string>('TWILIO_SERVICE_NAME') as string
-        )
-        .verificationChecks.create({ to: phone, code })
+  // async verifyPhone ({ code, phone }: PhoneVerificationPayload): Promise<any> {
+  //   try {
+  //     const res = await this.twilioService.client.verify.v2
+  //       .services(
+  //         this.configService.get<string>('TWILIO_SERVICE_NAME') as string
+  //       )
+  //       .verificationChecks.create({ to: phone, code })
 
-      if (res.status === 'approved') {
-        return await lastValueFrom(
-          this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
-            phone
-          })
-        )
-      }
-      return null
-    } catch (error) {
-      throw new RpcException(error)
-    }
-  }
+  //     if (res.status === 'approved') {
+  //       return await lastValueFrom(
+  //         this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
+  //           phone
+  //         })
+  //       )
+  //     }
+  //     return null
+  //   } catch (error) {
+  //     throw new RpcException(error)
+  //   }
+  // }
 
-  async verifyPhoneTermii ({ apiKey, pinId, pin }: verifyTermiiToken): Promise<any> {
+  async verifyPhoneTermii ({ pinId, pin }: verifyTermiiToken): Promise<any> {
     try {
+      const apiKey = this.configService.get<string>('TERMII_API_KEY') as string
+
       const res = await this.termiiService.verifySMSToken({
-        apiKey,
-        pinId,
+        api_key: apiKey,
+        pin_id: pinId,
         pin
       })
 
@@ -112,18 +113,18 @@ export class NotificationServiceService {
     }
   }
 
-  async sendVerification ({ phone }: verifyPhoneRequest): Promise<any> {
-    try {
-      return await this.twilioService.client.verify.v2
-        .services(
-          this.configService.get<string>('TWILIO_SERVICE_NAME') as string
-        )
-        .verifications.create({ to: phone, channel: 'sms' })
-    } catch (error) {
-      console.log(JSON.stringify(error))
-      throw new RpcException(error)
-    }
-  }
+  // async sendVerification ({ phone }: verifyPhoneRequest): Promise<any> {
+  //   try {
+  //     return await this.twilioService.client.verify.v2
+  //       .services(
+  //         this.configService.get<string>('TWILIO_SERVICE_NAME') as string
+  //       )
+  //       .verifications.create({ to: phone, channel: 'sms' })
+  //   } catch (error) {
+  //     console.log(JSON.stringify(error))
+  //     throw new RpcException(error)
+  //   }
+  // }
 
   public async processPaidOrder ({
     phoneNumber,

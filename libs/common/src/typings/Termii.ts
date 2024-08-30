@@ -31,8 +31,8 @@ export interface TermiiResponse {
 }
 
 export interface TermiiVerificationPayload {
-  apiKey: string
-  pinId: string
+  api_key: string
+  pin_id: string
   pin: string
 }
 
