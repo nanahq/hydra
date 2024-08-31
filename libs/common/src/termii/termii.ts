@@ -14,13 +14,7 @@ export class TermiiService {
   constructor (
     private readonly configService: ConfigService,
     private readonly httpService: HttpService
-  ) {
-    const termiiKey = configService.get<string>('TERMII_API_KEY', '')
-    this.HEADERS = {
-      ContentType: 'application/json',
-      Authorization: `Bearer ${termiiKey}`
-    }
-  }
+  ) {}
 
   async sendSMSToken (
     payload: TermiiPayload
@@ -29,8 +23,7 @@ export class TermiiService {
       const { data } = await firstValueFrom(
         this.httpService.post<TermiiResponse>(
           `https://v3.api.termii.com/${TERMII_URLS.SEND_TOKEN}`,
-          payload,
-          { headers: this.HEADERS }
+          payload
         )
       )
 
@@ -51,8 +44,7 @@ export class TermiiService {
       const { data } = await firstValueFrom(
         this.httpService.post<TermiiVerificationResponse>(
           `https://v3.api.termii.com/${TERMII_URLS.VERIFY_TOKEN}`,
-          payload,
-          { headers: this.HEADERS }
+          payload
         )
       )
 

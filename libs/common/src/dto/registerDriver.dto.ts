@@ -8,7 +8,8 @@ import {
   MinLength,
   registerDecorator,
   ValidationOptions,
-  ValidationArguments
+  ValidationArguments,
+  IsBoolean
 } from 'class-validator'
 import { DriverType } from '@app/common'
 import { Transform } from 'class-transformer'
@@ -73,4 +74,7 @@ export class RegisterDriverDto {
   @IsString()
   @IsNotEmpty()
     type: DriverType
+
+  @IsBoolean()
+    internal: boolean = false
 }

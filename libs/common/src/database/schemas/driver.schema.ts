@@ -82,6 +82,9 @@ export class Driver extends AbstractDocument {
     nullable: true
   })
     payment: PaymentInfo
+
+  @Prop({ type: Boolean, default: false })
+    internal: boolean
 }
 
 export const DriverSchema = SchemaFactory.createForClass(Driver)
