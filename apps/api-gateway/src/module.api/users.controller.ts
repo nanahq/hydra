@@ -19,7 +19,6 @@ import {
   CurrentUser,
   internationalisePhoneNumber,
   IRpcException,
-  PhoneVerificationPayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   registerUserRequest,
@@ -30,6 +29,7 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { AuthService } from './auth.service'
 import { Response } from 'express'
+import { verifyTermiiToken } from '@app/common/dto/verifyTermiiToken.dto'
 
 @Controller('user')
 export class UsersController {
@@ -55,7 +55,7 @@ export class UsersController {
 
   @Post('verify')
   async verifyUser (
-    @Body() request: PhoneVerificationPayload,
+    @Body() request: verifyTermiiToken,
       @Res({ passthrough: true }) response: Response
   ): Promise<any> {
     const user = await lastValueFrom<any>(
