@@ -191,6 +191,7 @@ export class UsersService {
           phone: validateUserRequest.phone
         })
       )
+
       throw new FitRpcException(`Verify phone number-${verificationResponse.pin_id ?? verificationResponse.pinId}`, HttpStatus.FORBIDDEN)
     }
 

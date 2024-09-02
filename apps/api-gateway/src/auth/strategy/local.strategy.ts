@@ -1,4 +1,4 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-local'
@@ -28,7 +28,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         })
         .pipe(
           catchError((error) => {
-            throw new UnauthorizedException(error)
+            throw error
           })
         )
     )
