@@ -19,10 +19,9 @@ import {
   CurrentUser,
   internationalisePhoneNumber,
   IRpcException,
-  PhoneVerificationPayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  registerUserRequest,
+  registerUserRequest, RegisterUserResponse,
   ResponseWithStatus,
   ServicePayload,
   User
@@ -30,6 +29,7 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { AuthService } from './auth.service'
 import { Response } from 'express'
+import { verifyTermiiToken } from '@app/common/dto/verifyTermiiToken.dto'
 
 @Controller('user')
 export class UsersController {
@@ -43,9 +43,9 @@ export class UsersController {
   ) {}
 
   @Post('register')
-  async registerNewUser (@Body() request: registerUserRequest): Promise<User> {
-    return await lastValueFrom<User>(
-      this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
+  async registerNewUser (@Body() request: registerUserRequest): Promise<RegisterUserResponse> {
+    return await lastValueFrom<RegisterUserResponse>(
+      this.usersClient.send<RegisterUserResponse>(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
@@ -55,7 +55,7 @@ export class UsersController {
 
   @Post('verify')
   async verifyUser (
-    @Body() request: PhoneVerificationPayload,
+    @Body() request: verifyTermiiToken,
       @Res({ passthrough: true }) response: Response
   ): Promise<any> {
     const user = await lastValueFrom<any>(

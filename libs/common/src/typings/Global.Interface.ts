@@ -145,6 +145,8 @@ export interface DriverI {
 
   firstName: string
 
+  internal: boolean
+
   isDeleted: false
 
   isValidated: boolean
@@ -347,4 +349,10 @@ export interface OrderStatI {
 export interface ListingStatI {
   approvedListings: number
   aggregateListings: number
+}
+
+
+export interface RegisterUserResponse {
+  pindId: string
+  phoneNumber: string
 }

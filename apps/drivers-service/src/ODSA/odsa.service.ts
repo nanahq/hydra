@@ -603,7 +603,7 @@ export class ODSA {
     }
 
     const drivers = await this.driversRepository.find({
-      // isValidated: true,
+      internal: false,
       type: 'DELIVER_PRE_ORDER',
       acc_status: VendorApprovalStatus.APPROVED,
       available: true

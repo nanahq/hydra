@@ -13,7 +13,7 @@ import {
   ExceptionFilterRpc,
   loginUserRequest,
   QUEUE_MESSAGE,
-  registerUserRequest,
+  registerUserRequest, RegisterUserResponse,
   ResponseWithStatus,
   RmqService,
   ServicePayload,
@@ -40,7 +40,7 @@ export class UsersServiceController {
   async registerNewUser (
     @Payload() data: registerUserRequest,
       @Ctx() context: RmqContext
-  ): Promise<User> {
+  ): Promise<RegisterUserResponse> {
     try {
       return await this.usersService.register(data)
     } catch (error) {
