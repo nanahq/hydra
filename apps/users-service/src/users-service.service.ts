@@ -17,7 +17,7 @@ import {
   User,
   verifyPhoneRequest,
   UserI, IRpcException, UserStatI,
-  MultiPurposeServicePayload
+  MultiPurposeServicePayload, RegisterUserResponse
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import {
@@ -29,6 +29,7 @@ import { ClientProxy } from '@nestjs/microservices'
 import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 import { ConfigService } from '@nestjs/config'
 import { arrayParser } from '@app/common/utils/statsResultParser'
+import { TermiiResponse } from '@app/common/typings/Termii'
 
 @Injectable()
 export class UsersService {
@@ -53,7 +54,7 @@ export class UsersService {
     password,
     firstName,
     lastName
-  }: registerUserRequest): Promise<User> {
+  }: registerUserRequest): Promise<RegisterUserResponse> {
     const formattedPhone = internationalisePhoneNumber(phone)
     await this.checkExistingUser(formattedPhone, email) // Gate to check if phone has already been registered
 
@@ -75,7 +76,7 @@ export class UsersService {
     try {
       const user = await this.usersRepository.create(payload)
 
-      await lastValueFrom(
+      const verificationResults = await lastValueFrom<TermiiResponse>(
         this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
           email,
           phone,
@@ -89,7 +90,7 @@ export class UsersService {
           )
       )
 
-      if (this.configService.get<string>('NODE_ENV') === 'production') {
+      if (this.configService.get<string>('NODE_ENV') === 'FEAUTRE_YET_ENABLED') {
         const paystackInstancePayload: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>> = {
           data: {
             email,
@@ -124,7 +125,10 @@ export class UsersService {
         this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
       )
 
-      return user
+      return {
+        pindId: verificationResults.pinId ?? verificationResults.pin_id,
+        phoneNumber: formattedPhone
+      }
     } catch (error) {
       throw new FitRpcException(
         `can not process request. Try again later ${JSON.stringify(error)}`,

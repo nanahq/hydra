@@ -21,7 +21,7 @@ import {
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  registerUserRequest,
+  registerUserRequest, RegisterUserResponse,
   ResponseWithStatus,
   ServicePayload,
   User
@@ -43,9 +43,9 @@ export class UsersController {
   ) {}
 
   @Post('register')
-  async registerNewUser (@Body() request: registerUserRequest): Promise<User> {
-    return await lastValueFrom<User>(
-      this.usersClient.send(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
+  async registerNewUser (@Body() request: registerUserRequest): Promise<RegisterUserResponse> {
+    return await lastValueFrom<RegisterUserResponse>(
+      this.usersClient.send<RegisterUserResponse>(QUEUE_MESSAGE.CREATE_USER, { ...request }).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
