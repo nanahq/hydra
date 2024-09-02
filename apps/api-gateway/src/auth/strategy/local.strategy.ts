@@ -1,13 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { HttpException, Inject, Injectable } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-local'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE,
-  internationalisePhoneNumber
+    QUEUE_MESSAGE,
+    QUEUE_SERVICE,
+    internationalisePhoneNumber, IRpcException
 } from '@app/common'
 
 @Injectable()
@@ -27,8 +27,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
           password
         })
         .pipe(
-          catchError((error) => {
-            throw error
+          catchError((error: IRpcException) => {
+            throw HttpException(error.message, error.status)
           })
         )
     )
