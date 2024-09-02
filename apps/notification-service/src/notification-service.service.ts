@@ -22,7 +22,7 @@ import {
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
 import { HttpService } from '@nestjs/axios'
 import { TermiiService } from '@app/common/termii/termii'
-import { TermiiPayload } from '@app/common/typings/Termii'
+import { TermiiPayload, TermiiResponse } from '@app/common/typings/Termii'
 import { verifyTermiiToken } from '@app/common/dto/verifyTermiiToken.dto'
 
 @Injectable()
@@ -86,7 +86,7 @@ export class NotificationServiceService {
     }
   }
 
-  async sendVerificationTermii ({ phone }: verifyPhoneRequest): Promise<any> {
+  async sendVerificationTermii ({ phone }: verifyPhoneRequest): Promise<TermiiResponse> {
     try {
       this.logger.log(
         `[PIM] - Initiating SMS token for ${phone}`
