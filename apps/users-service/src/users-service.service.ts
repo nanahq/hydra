@@ -186,12 +186,12 @@ export class UsersService {
     }
 
     if (!validateUserRequest.isValidated) {
-      await lastValueFrom(
+      const verificationResponse = await lastValueFrom<TermiiResponse>(
         this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
           phone: validateUserRequest.phone
         })
       )
-      throw new FitRpcException('Verify phone number', HttpStatus.FORBIDDEN)
+      throw new FitRpcException(`Verify phone number-${verificationResponse.pin_id ?? verificationResponse.pinId}`, HttpStatus.FORBIDDEN)
     }
 
     validateUserRequest.password = ''
