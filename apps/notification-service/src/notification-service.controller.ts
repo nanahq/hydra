@@ -23,6 +23,7 @@ import {
 import { NotificationServiceService } from './notification-service.service'
 import { TransactionEmails } from './email/transactional.service'
 import { verifyTermiiToken } from '@app/common/dto/verifyTermiiToken.dto'
+import { TermiiResponse } from '@app/common/typings/Termii'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -47,11 +48,11 @@ export class NotificationServiceController {
     }
   }
 
-  @EventPattern(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION)
+  @MessagePattern(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION)
   async sendVerification (
     @Payload() data: verifyPhoneRequest,
       @Ctx() context: RmqContext
-  ): Promise<any> {
+  ): Promise<TermiiResponse> {
     try {
       return await this.notificationServiceService.sendVerificationTermii(data)
     } catch (error) {

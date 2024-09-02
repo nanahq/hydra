@@ -350,3 +350,9 @@ export interface ListingStatI {
   approvedListings: number
   aggregateListings: number
 }
+
+
+export interface RegisterUserResponse {
+  pindId: string
+  phoneNumber: string
+}
