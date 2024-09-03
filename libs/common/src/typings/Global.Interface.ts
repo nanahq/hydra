@@ -351,7 +351,6 @@ export interface ListingStatI {
   aggregateListings: number
 }
 
-
 export interface RegisterUserResponse {
   pindId: string
   phoneNumber: string

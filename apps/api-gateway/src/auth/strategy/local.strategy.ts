@@ -5,9 +5,9 @@ import { Strategy } from 'passport-local'
 import { catchError, lastValueFrom } from 'rxjs'
 
 import {
-    QUEUE_MESSAGE,
-    QUEUE_SERVICE,
-    internationalisePhoneNumber, IRpcException
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
+  internationalisePhoneNumber, IRpcException
 } from '@app/common'
 
 @Injectable()
@@ -28,7 +28,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         })
         .pipe(
           catchError((error: IRpcException) => {
-            throw HttpException(error.message, error.status)
+            throw new HttpException(error.message, error.status)
           })
         )
     )
