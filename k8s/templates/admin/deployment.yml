@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: admin-service
-          image: "{{ .Values.image.repository }}/admin-service:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}-admin-service:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- toYaml .Values.env | nindent 12 }}

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: vendors-service
-          image: "{{ .Values.image.repository }}/vendors-service:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}-vendors-service:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- toYaml .Values.env | nindent 12 }}

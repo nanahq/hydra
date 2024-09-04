@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: "{{ .Values.image.repository }}/payment-service:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}-payment-service:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- toYaml .Values.env | nindent 12 }}

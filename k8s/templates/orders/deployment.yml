@@ -16,10 +16,9 @@ spec:
     spec:
       containers:
         - name: orders-service
-          image: "{{ .Values.image.repository }}/orders-service:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}-orders-service:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- toYaml .Values.env | nindent 12 }}
-
       imagePullSecrets:
         - name: {{ .Values.image.pullSecrets }}
