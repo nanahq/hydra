@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: admin-gateway
-          image: "{{ .Values.image.repository }}/admin-gateway:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}-admin-gateway:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- toYaml .Values.env | nindent 12 }}
