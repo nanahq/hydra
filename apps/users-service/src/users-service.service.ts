@@ -187,7 +187,7 @@ export class UsersService {
 
     if (!validateUserRequest.isValidated) {
       const verificationResponse = await lastValueFrom<TermiiResponse>(
-        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+        this.notificationClient.send(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
           phone: validateUserRequest.phone
         })
       )
