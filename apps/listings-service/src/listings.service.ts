@@ -899,7 +899,6 @@ export class ListingsService {
         scheduledListingsTomorrow: availableTomorrow
       }
     } catch (error) {
-      console.log(error)
       this.logger.log({ error })
       throw new FitRpcException(
         'Something went wrong fetching web page',
