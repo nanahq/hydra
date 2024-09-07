@@ -81,8 +81,7 @@ export class NotificationServiceService {
           })
         )
       } else if (res.verified === false) {
-          throw new FitRpcException('Wrong OPT. Please recheck the sms sent to you', HttpStatus.BAD_REQUEST)
-
+        throw new FitRpcException('Wrong OPT. Please recheck the sms sent to you', HttpStatus.BAD_REQUEST)
       } else if (typeof res.verified === 'string' && res.verified.toLowerCase().includes('expired')) {
         throw new FitRpcException('Code has expired. Please request a new code', HttpStatus.BAD_REQUEST)
       }
