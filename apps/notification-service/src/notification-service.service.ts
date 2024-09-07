@@ -1,22 +1,23 @@
-import { Inject, Injectable, Logger } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { TwilioService } from 'nestjs-twilio'
 import { firstValueFrom, lastValueFrom } from 'rxjs'
 
 import {
-  OrderStatus,
-  QUEUE_MESSAGE,
-  QUEUE_SERVICE,
-  verifyPhoneRequest,
-  OrderStatusUpdateDto,
-  VendorSoldOutPush,
   ExportPushNotificationClient,
-  PushMessage,
+  FitRpcException,
+  internationalisePhoneNumber,
   ListingApprovePush,
   ListingRejectPush,
+  OrderStatus,
+  OrderStatusUpdateDto,
+  PushMessage,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
   VendorApprovedPush,
-  internationalisePhoneNumber
+  VendorSoldOutPush,
+  verifyPhoneRequest
 } from '@app/common'
 
 import { OrderStatusMessage } from './templates/OrderStatusMessage'
@@ -73,12 +74,17 @@ export class NotificationServiceService {
         pin
       })
 
-      if (res.verified === '') {
+      if (res.verified === true) {
         return await lastValueFrom(
           this.usersClient.send(QUEUE_MESSAGE.UPDATE_USER_STATUS, {
             phone: internationalisePhoneNumber(res.msisdn)
           })
         )
+      } else if (res.verified === false) {
+          throw new FitRpcException('Wrong OPT. Please recheck the sms sent to you', HttpStatus.BAD_REQUEST)
+
+      } else if (typeof res.verified === 'string' && res.verified.toLowerCase().includes('expired')) {
+        throw new FitRpcException('Code has expired. Please request a new code', HttpStatus.BAD_REQUEST)
       }
       return null
     } catch (error) {
