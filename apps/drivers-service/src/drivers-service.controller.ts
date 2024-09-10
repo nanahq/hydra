@@ -20,7 +20,7 @@ import {
   UpdateDeliveryStatusDto,
   DeliveryI,
   DriverStatGroup,
-  DriverWalletI,
+  DriverWalletI
 } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { ODSA } from './ODSA/odsa.service'
