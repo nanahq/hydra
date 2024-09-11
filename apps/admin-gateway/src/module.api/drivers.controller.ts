@@ -5,7 +5,8 @@ import {
   HttpException,
   Inject,
   Param,
-  Patch, UseGuards
+  Patch, Post, UseGuards,
+  Body
 } from '@nestjs/common'
 import {
   Admin,
@@ -133,6 +134,21 @@ export class DriversController {
     return await lastValueFrom<Delivery[]>(
       this.driversClient
         .send(QUEUE_MESSAGE.ADMIN_GET_DRIVER_FULFILLED_DELIVERIES, { driverId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @Post('deliveries/assign/internal')
+  async assignInternalDriver (
+    @Body() data: { deliveryId: string, driverId: string }
+  ): Promise<any> {
+    return await lastValueFrom<any>(
+      this.driversClient
+        .send(QUEUE_MESSAGE.ODSA_ASSIGN_INTERNAL_DRIVER, { data })
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

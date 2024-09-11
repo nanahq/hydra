@@ -126,6 +126,23 @@ export class OdsaController {
     }
   }
 
+  @EventPattern(QUEUE_MESSAGE.ODSA_ASSIGN_INTERNAL_DRIVER)
+  async assignInternalDriver (
+    @Ctx() context: RmqContext,
+      @Payload() { deliveryId, driverId }: {
+        deliveryId: string
+        driverId: string
+      }
+  ): Promise<any> {
+    try {
+      return await this.odsa.assignInternalDrivers(deliveryId, driverId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   /**
    * Processes Pre Order by creating delivery instance
    * @param orderId
