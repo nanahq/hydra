@@ -110,9 +110,11 @@ export class AddressBookLabelController {
   async delete (
     @AdminClearance([AdminLevel.OPERATIONS]) admin: Admin,
       @Param('id') id: string): Promise<ResponseWithStatus> {
+    console.log('hit')
+    console.log(id)
     return await lastValueFrom<ResponseWithStatus>(
       this.addressBookLabelClient
-        .send(QUEUE_MESSAGE.ADDRESS_BOOK_DELETE_BY_USER, { id })
+        .send(QUEUE_MESSAGE.ADDRESS_BOOK_LABEL_DELETE, { id })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
