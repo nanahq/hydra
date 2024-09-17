@@ -31,7 +31,7 @@ import {
   RmqContext,
   RpcException
 } from '@nestjs/microservices'
-import { createTransaction } from '@app/common/dto/General.dto'
+import { createTransaction, updateIsDriverInternalDto } from '@app/common/dto/General.dto'
 
 @Controller('driver')
 export class DriversServiceController {
@@ -286,6 +286,19 @@ export class DriversServiceController {
   async freeDrivers (@Ctx() context: RmqContext): Promise<Driver[]> {
     try {
       return this.driversServiceService.getAllFreeDrivers()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.ADMIN_UPDATE_DRIVER_IS_INTERNAL)
+  async updateDriverIsInternal (
+    @Payload() data: updateIsDriverInternalDto,
+      @Ctx() context: RmqContext): Promise<{ status: number }> {
+    try {
+      return this.driversServiceService.updateDriverIsInternal({ id: data.id, internal: data.internal })
     } catch (error) {
       throw new RpcException(error)
     } finally {

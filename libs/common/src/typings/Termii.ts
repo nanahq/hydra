@@ -38,6 +38,6 @@ export interface TermiiVerificationPayload {
 
 export interface TermiiVerificationResponse {
   pinId: string
-  verified: string
+  verified: string | Boolean
   msisdn: string
 }

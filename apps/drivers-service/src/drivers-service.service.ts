@@ -21,7 +21,7 @@ import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy } from '@nestjs/microservices'
-import { createTransaction } from '@app/common/dto/General.dto'
+import { createTransaction, updateIsDriverInternalDto } from '@app/common/dto/General.dto'
 import { catchError, lastValueFrom } from 'rxjs'
 
 @Injectable()
@@ -257,6 +257,21 @@ export class DriversServiceService {
           })
         )
     )
+  }
+
+  public async updateDriverIsInternal (data: updateIsDriverInternalDto): Promise<ResponseWithStatus> {
+    try {
+      await this.driverRepository.findOneAndUpdate(
+        { _id: data.id },
+        { internal: data.internal }
+      )
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException(
+        error.message,
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
   }
 
   /**

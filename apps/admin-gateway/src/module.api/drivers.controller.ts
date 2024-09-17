@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -16,7 +17,8 @@ import {
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus
+  ResponseWithStatus,
+  updateIsDriverInternalDto
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -142,13 +144,29 @@ export class DriversController {
     )
   }
 
-  @Post('deliveries/assign/internal')
+    @Post('deliveries/assign/internal')
   async assignInternalDriver (
-    @Body() data: { deliveryId: string, driverId: string }
+      @Body() data: { deliveryId: string, driverId: string }
   ): Promise<any> {
     return await lastValueFrom<any>(
-      this.driversClient
-        .send(QUEUE_MESSAGE.ODSA_ASSIGN_INTERNAL_DRIVER, { data })
+        this.driversClient
+            .send(QUEUE_MESSAGE.ODSA_ASSIGN_INTERNAL_DRIVER, { data })
+    )
+
+  }
+  
+  @Patch('internal/:id')
+  public async updateDriverIsInternal (
+    @AdminClearance([AdminLevel.SUPER_ADMIN, AdminLevel.OPERATIONS]) admin: Admin,
+      @Param('id') driverId: string,
+      @Body() data: { internal: boolean }
+  ): Promise<ResponseWithStatus> {
+    const payload: updateIsDriverInternalDto = {
+      id: driverId,
+      internal: data.internal
+    }
+    return await lastValueFrom<ResponseWithStatus>(
+      this.driversClient.send(QUEUE_MESSAGE.ADMIN_UPDATE_DRIVER_IS_INTERNAL, payload)
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
