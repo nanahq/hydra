@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -15,7 +16,8 @@ import {
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  ResponseWithStatus
+  ResponseWithStatus,
+  updateIsDriverInternalDto
 } from '@app/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -133,6 +135,26 @@ export class DriversController {
     return await lastValueFrom<Delivery[]>(
       this.driversClient
         .send(QUEUE_MESSAGE.ADMIN_GET_DRIVER_FULFILLED_DELIVERIES, { driverId })
+        .pipe(
+          catchError((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @Patch('internal/:id')
+  public async updateDriverIsInternal (
+    @AdminClearance([AdminLevel.SUPER_ADMIN, AdminLevel.OPERATIONS]) admin: Admin,
+      @Param('id') driverId: string,
+      @Body() data: { internal: boolean }
+  ): Promise<ResponseWithStatus> {
+    const payload: updateIsDriverInternalDto = {
+      id: driverId,
+      internal: data.internal
+    }
+    return await lastValueFrom<ResponseWithStatus>(
+      this.driversClient.send(QUEUE_MESSAGE.ADMIN_UPDATE_DRIVER_IS_INTERNAL, payload)
         .pipe(
           catchError((error: IRpcException) => {
             throw new HttpException(error.message, error.status)
