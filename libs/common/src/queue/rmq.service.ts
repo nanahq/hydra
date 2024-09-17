@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { RmqOptions, RmqContext, Transport } from '@nestjs/microservices'
+import { RmqOptions, RmqContext, Transport, ClientProxy } from '@nestjs/microservices'
 
 @Injectable()
 export class RmqService {
+  private readonly clients: Record<string, ClientProxy> = {}
+
   constructor (private readonly configService: ConfigService) {}
 
   getOption (queue: string, noAck = false, fallbackUri?: string): RmqOptions {
@@ -11,13 +13,12 @@ export class RmqService {
       transport: Transport.RMQ,
       options: {
         urls: [
-          fallbackUri !== undefined
-            ? fallbackUri
-            : (this.configService.get<string>('RMQ_URI') as string)
+          fallbackUri ?? (this.configService.get<string>('RMQ_URI') as string)
         ],
         queue: this.configService.get<string>(`RMQ_${queue}_QUEUE`),
         noAck,
-        persistent: true
+        persistent: true,
+        heartbeat: 30
       }
     }
   }

@@ -38,6 +38,7 @@
       }
     ],
     "import/no-default-export": "error",
+    "@typescript-eslint/no-misused-promises": "off",
     "no-else-return": "error",
     "prefer-template": "error"
   }

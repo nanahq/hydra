@@ -17,13 +17,13 @@ async function bootstrap (): Promise<void> {
 
   void app.enableShutdownHooks()
 
-  process.on('SIGTERM', async () => {
+  process.on('SIGTERM', async (): Promise<void> => {
     console.log('SIGTERM signal received: closing RabbitMQ connections gracefully.')
     await app.close()
     process.exit(0)
   })
 
-  process.on('SIGINT', async () => {
+  process.on('SIGINT', async (): Promise<void> => {
     console.log('SIGINT signal received: closing RabbitMQ connections gracefully.')
     await app.close()
     process.exit(0)
