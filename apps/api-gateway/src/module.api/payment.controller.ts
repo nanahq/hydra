@@ -165,4 +165,9 @@ export class PaymentController {
     }
     return res.status(HttpStatus.OK).end()
   }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'Payment Controller PONG'
+  }
 }

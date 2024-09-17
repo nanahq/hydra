@@ -55,4 +55,9 @@ export class DriversController {
         )
     )
   }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'Delivery Controller PONG'
+  }
 }

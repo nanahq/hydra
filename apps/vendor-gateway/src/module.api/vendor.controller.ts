@@ -246,4 +246,9 @@ export class VendorController {
         )
     )
   }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'Vendor Controller PONG'
+  }
 }

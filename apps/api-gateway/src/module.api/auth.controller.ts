@@ -22,4 +22,9 @@ export class AuthController {
   async logout (@Res({ passthrough: true }) response: Response): Promise<void> {
     return this.authService.logout(response)
   }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'Auth Controller PONG'
+  }
 }
