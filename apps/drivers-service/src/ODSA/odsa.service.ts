@@ -475,6 +475,40 @@ export class ODSA {
     }
   }
 
+  public async assignInternalDrivers (
+    driverId: string,
+    deliveryId: string
+  ): Promise<void> {
+    try {
+      const checkDriver = await this.driversRepository.findOne({
+        _id: driverId,
+        internal: true,
+        available: true
+      })
+
+      if (checkDriver !== null) {
+        await this.odsaRepository.findOneAndUpdate(
+          { _id: deliveryId, assignedToDriver: false },
+          { driver: driverId }
+        )
+      }
+      // update assigned driver status
+      await this.driversRepository.findOneAndUpdate(
+        { _id: driverId },
+        { available: false }
+      )
+    } catch (error) {
+      this.logger.error(
+        `Something went wrong processing order with deliveryId: ${deliveryId}`
+      )
+      this.logger.error(JSON.stringify(error))
+      throw new FitRpcException(
+        'Can not process order right now',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
   public async handleProcessPreOrder (_orderId: string): Promise<void> {
     try {
       const order = await lastValueFrom<OrderI>(
