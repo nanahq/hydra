@@ -45,6 +45,7 @@ export interface ListingCategoryI {
   listingsMenu: ListingMenuI[]
   createdAt: string
   updatedAt: string
+  nextDayDelivery: boolean
 }
 
 export interface ListingOptionGroupI {
