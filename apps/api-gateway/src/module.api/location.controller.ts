@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   Inject,
   Post,
@@ -56,5 +57,10 @@ export class LocationController {
           })
         )
     )
+  }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'Location Controller PONG'
   }
 }

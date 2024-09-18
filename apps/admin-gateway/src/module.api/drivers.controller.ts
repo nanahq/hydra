@@ -1,5 +1,4 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
@@ -144,17 +143,16 @@ export class DriversController {
     )
   }
 
-    @Post('deliveries/assign/internal')
+  @Post('deliveries/assign/internal')
   async assignInternalDriver (
-      @Body() data: { deliveryId: string, driverId: string }
+    @Body() data: { deliveryId: string, driverId: string }
   ): Promise<any> {
     return await lastValueFrom<any>(
-        this.driversClient
-            .send(QUEUE_MESSAGE.ODSA_ASSIGN_INTERNAL_DRIVER, { data })
+      this.driversClient
+        .send(QUEUE_MESSAGE.ODSA_ASSIGN_INTERNAL_DRIVER, { data })
     )
-
   }
-  
+
   @Patch('internal/:id')
   public async updateDriverIsInternal (
     @AdminClearance([AdminLevel.SUPER_ADMIN, AdminLevel.OPERATIONS]) admin: Admin,

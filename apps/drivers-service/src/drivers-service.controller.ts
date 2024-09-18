@@ -229,6 +229,11 @@ export class DriversServiceController {
     }
   }
 
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'Driver Controlller PONG'
+  }
+
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DRIVERS)
   async getDrivers (@Ctx() context: RmqContext): Promise<Driver[]> {
     try {
