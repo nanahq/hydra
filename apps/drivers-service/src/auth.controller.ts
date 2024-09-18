@@ -30,4 +30,9 @@ export class DriversAuthController {
   async getUserProfile (@CurrentUser() driver: Driver): Promise<Driver> {
     return driver
   }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'Auth Controller PONG'
+  }
 }

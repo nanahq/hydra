@@ -58,4 +58,9 @@ export class WebAppController {
         )
     )
   }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'WebApp Controller PONG'
+  }
 }
