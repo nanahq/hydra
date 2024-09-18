@@ -14,6 +14,16 @@ export class UpdateVendorReviewDto {
   @IsString()
     reviewId: string
 }
+export class updateIsDriverInternalDto {
+  @IsNotEmpty()
+  @IsString()
+    id: string
+
+  @IsNotEmpty()
+  @IsBoolean()
+    internal: boolean
+}
+
 export class CreditWallet {
   @IsNotEmpty()
   @IsNumber()

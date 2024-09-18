@@ -103,4 +103,9 @@ export class ReviewController {
         )
     )
   }
+
+  @Get('check/ping')
+  async ping (): Promise<string> {
+    return 'Review Controller PONG'
+  }
 }

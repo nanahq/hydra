@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   Inject,
   Post,
@@ -47,5 +48,10 @@ export class CouponController {
           })
         )
     )
+  }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'Coupon Controller PONG'
   }
 }

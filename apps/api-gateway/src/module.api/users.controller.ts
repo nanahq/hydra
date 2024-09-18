@@ -155,4 +155,9 @@ export class UsersController {
       })
     )
   }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return 'User Controller PONG'
+  }
 }
