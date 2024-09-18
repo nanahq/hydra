@@ -17,8 +17,7 @@ export class RmqService {
         ],
         queue: this.configService.get<string>(`RMQ_${queue}_QUEUE`),
         noAck,
-        persistent: true,
-        heartbeat: 30
+        persistent: true
       }
     }
   }
