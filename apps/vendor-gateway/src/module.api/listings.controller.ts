@@ -372,9 +372,4 @@ export class ListingsController {
         )
     )
   }
-
-  @Get('ping')
-  async ping (): Promise<string> {
-    return 'Listing Controller PONG'
-  }
 }

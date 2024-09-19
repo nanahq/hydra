@@ -137,4 +137,9 @@ export class AdminController {
       )
     )
   }
+
+  @Get('ping')
+  async ping (): Promise<string> {
+    return await lastValueFrom<any>(this.adminClient.send(QUEUE_MESSAGE.ADMIN_SERVICE_REQUEST_PING, {}))
+  }
 }

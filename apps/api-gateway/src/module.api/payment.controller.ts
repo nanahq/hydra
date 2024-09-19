@@ -168,6 +168,6 @@ export class PaymentController {
 
   @Get('ping')
   async ping (): Promise<string> {
-    return 'Payment Controller PONG'
+    return await lastValueFrom<any>(this.paymentClient.send(QUEUE_MESSAGE.PAYMENT_SERVICE_REQUEST_PING, {}))
   }
 }

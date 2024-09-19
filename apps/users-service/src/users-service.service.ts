@@ -484,4 +484,8 @@ export class UsersService {
       this.logger.log('Can not add coupon to user account')
     }
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }

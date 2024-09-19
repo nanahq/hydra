@@ -10,9 +10,4 @@ export class GeneralController {
       delivery: DELIVERY_PRICE_META
     }
   }
-
-  @Get('ping')
-  async ping (): Promise<string> {
-    return 'General Controller PONG'
-  }
 }

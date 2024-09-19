@@ -170,6 +170,6 @@ export class VendorsController {
 
   @Get('check/ping')
   async ping (): Promise<string> {
-    return 'Vendor Controller PONG'
+    return await lastValueFrom<any>(this.vendorsClient.send(QUEUE_MESSAGE.VENDOR_SERVICE_REQUEST_PING, {}))
   }
 }

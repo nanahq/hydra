@@ -104,8 +104,8 @@ export class ReviewController {
     )
   }
 
-  @Get('check/ping')
+  @Get('ping')
   async ping (): Promise<string> {
-    return 'Review Controller PONG'
+    return await lastValueFrom<any>(this.reviewClient.send(QUEUE_MESSAGE.REVIEW_SERVICE_REQUEST_PING, {}))
   }
 }

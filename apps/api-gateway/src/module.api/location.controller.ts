@@ -61,6 +61,6 @@ export class LocationController {
 
   @Get('ping')
   async ping (): Promise<string> {
-    return 'Location Controller PONG'
+    return await lastValueFrom<any>(this.locationClient.send(QUEUE_MESSAGE.LOCATION_SERVICE_REQUEST_PING, {}))
   }
 }

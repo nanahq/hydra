@@ -97,6 +97,6 @@ export class OrderController {
 
   @Get('ping')
   async ping (): Promise<string> {
-    return 'Order Controller PONG'
+    return await lastValueFrom<any>(this.orderClient.send(QUEUE_MESSAGE.ORDER_SERVICE_REQUEST_PING, {}))
   }
 }

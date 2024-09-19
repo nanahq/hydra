@@ -30,9 +30,4 @@ export class AuthController {
   async getUserProfile (@CurrentUser() vendor: Vendor): Promise<Vendor> {
     return vendor
   }
-
-  @Get('ping')
-  async ping (): Promise<string> {
-    return 'Auth Controller PONG'
-  }
 }

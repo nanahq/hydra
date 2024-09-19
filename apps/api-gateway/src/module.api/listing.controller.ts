@@ -159,6 +159,6 @@ export class ListingsController {
 
   @Get('ping')
   async ping (): Promise<string> {
-    return 'Listing Controller PONG'
+    return await lastValueFrom<any>(this.listingClient.send(QUEUE_MESSAGE.LISTING_SERVICE_REQUEST_PING, {}))
   }
 }
