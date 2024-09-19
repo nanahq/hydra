@@ -229,11 +229,6 @@ export class DriversServiceController {
     }
   }
 
-  @Get('ping')
-  async ping (): Promise<string> {
-    return 'Driver Controlller PONG'
-  }
-
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DRIVERS)
   async getDrivers (@Ctx() context: RmqContext): Promise<Driver[]> {
     try {
@@ -304,6 +299,19 @@ export class DriversServiceController {
       @Ctx() context: RmqContext): Promise<{ status: number }> {
     try {
       return this.driversServiceService.updateDriverIsInternal({ id: data.id, internal: data.internal })
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.DRIVER_SERVICE_REQUEST_PING)
+  async ping (
+    @Ctx() context: RmqContext
+  ): Promise<string | undefined> {
+    try {
+      return await this.driversServiceService.ping()
     } catch (error) {
       throw new RpcException(error)
     } finally {

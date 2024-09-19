@@ -318,4 +318,8 @@ export class DriversServiceService {
       )
     }
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }

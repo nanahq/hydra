@@ -84,9 +84,4 @@ export class OrdersController {
         )
     )
   }
-
-  @Get('check/ping')
-  async ping (): Promise<string> {
-    return 'Order Controlller PONG'
-  }
 }

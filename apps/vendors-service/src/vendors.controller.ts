@@ -344,4 +344,17 @@ export class VendorsController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.VENDOR_SERVICE_REQUEST_PING)
+  async ping (
+    @Ctx() context: RmqContext
+  ): Promise<string | undefined> {
+    try {
+      return await this.vendorsService.ping()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

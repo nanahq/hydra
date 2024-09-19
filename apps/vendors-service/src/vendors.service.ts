@@ -557,6 +557,10 @@ export class VendorsService {
       throw new FitRpcException('Something went wrong updating vendor review', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }
 
 // @TODO(siradji) fully implement the mapping feature

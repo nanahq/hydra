@@ -945,6 +945,10 @@ export class ListingsService {
       )
     }
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }
 
 function getVendorsMapper (vendors: VendorI[]): VendorUserI[] {

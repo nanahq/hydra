@@ -558,4 +558,8 @@ export class OrdersServiceService {
       console.error(error)
     }
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }

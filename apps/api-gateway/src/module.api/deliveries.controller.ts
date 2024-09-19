@@ -39,6 +39,6 @@ export class DeliveriesController {
 
   @Get('ping')
   async ping (): Promise<string> {
-    return 'Delivery Controller PONG'
+    return await lastValueFrom<any>(this.driversClient.send(QUEUE_MESSAGE.DRIVER_SERVICE_REQUEST_PING, {}))
   }
 }

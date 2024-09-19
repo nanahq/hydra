@@ -258,4 +258,8 @@ export class NotificationServiceService {
       }))
     } catch (error) {}
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }

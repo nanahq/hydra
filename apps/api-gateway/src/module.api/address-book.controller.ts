@@ -116,9 +116,4 @@ export class AddressBookController {
         )
     )
   }
-
-  @Get('check/ping')
-  async ping (): Promise<string> {
-    return 'Address Book PONG'
-  }
 }

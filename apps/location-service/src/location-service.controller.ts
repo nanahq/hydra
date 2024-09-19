@@ -87,4 +87,17 @@ export class LocationController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.LOCATION_SERVICE_REQUEST_PING)
+  async ping (
+    @Ctx() context: RmqContext
+  ): Promise<string | undefined> {
+    try {
+      return await this.locationService.ping()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }
