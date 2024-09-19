@@ -30,6 +30,9 @@ export class ListingCategory extends AbstractDocument {
 
   @Prop(SchemaTypes.Date)
     updatedAt: string
+
+  @Prop({ type: Boolean, default: false })
+    nextDayDelivery: boolean
 }
 
 export const ListingCategorySchema =

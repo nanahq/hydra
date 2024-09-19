@@ -33,6 +33,7 @@ export function ListingCategoryStub (): ListingCategory {
   const objectId = '63f93c9f248f6c43d0b76502' as unknown as Types.ObjectId
 
   return {
+    nextDayDelivery: false,
     _id: objectId,
     vendor: '63f7f2d0a0f1d5158f43cb7b',
     name: 'Japanese Food',

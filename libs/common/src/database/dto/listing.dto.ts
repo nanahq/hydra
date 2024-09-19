@@ -41,6 +41,10 @@ export class CreateListingCategoryDto {
 
   @IsOptional()
   public menu?: string
+
+  @IsBoolean()
+  @IsOptional()
+    nextDayDelivery: boolean
 }
 
 export class UpdateListingCategoryDto {
@@ -59,6 +63,10 @@ export class UpdateListingCategoryDto {
 
   @IsNotEmpty()
     catId?: string
+
+  @IsBoolean()
+  @IsOptional()
+    nextDayDelivery: boolean
 }
 
 export class CreateListingMenuDto {
