@@ -53,7 +53,7 @@ export interface CreateListingCategoryDto {
   tags: string[];
   isLive: boolean;
   type: ' PRE_ORDER' | 'ON_DEMAND';
-  menu: string;
+  menu?: string;
 }
 
 export interface UpdateListingCategoryDto {
