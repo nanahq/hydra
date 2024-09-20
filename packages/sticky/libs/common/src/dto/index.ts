@@ -383,3 +383,13 @@ export interface UpdateTransaction {
   driverId: string;
   status: WalletTransactionStatus;
 }
+
+export interface updateIsDriverInternalDto {
+  id: string
+  internal: boolean
+}
+
+export interface verifyTermiiToken {
+  pinId: string
+  pin: string
+}
