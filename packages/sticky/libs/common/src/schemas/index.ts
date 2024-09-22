@@ -18,6 +18,7 @@ export interface ListingCategoryI {
   updatedAt: string
   type: 'PRE_ORDER' | 'ON_DEMAND'
   isDeleted: boolean
+  nextDayDelivery: boolean
 }
 
 export interface ListingOptionGroupI {

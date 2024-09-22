@@ -53,7 +53,8 @@ export interface CreateListingCategoryDto {
   tags: string[];
   isLive: boolean;
   type: ' PRE_ORDER' | 'ON_DEMAND';
-  menu: string;
+  menu?: string;
+  nextDayDelivery: boolean
 }
 
 export interface UpdateListingCategoryDto {
@@ -62,6 +63,7 @@ export interface UpdateListingCategoryDto {
   isLive?: boolean;
   isDeleted?: boolean;
   catId?: string;
+  nextDayDelivery: boolean
 }
 
 export interface CreateListingMenuDto {
@@ -382,4 +384,14 @@ export interface UpdateTransaction {
   txId: string;
   driverId: string;
   status: WalletTransactionStatus;
+}
+
+export interface updateIsDriverInternalDto {
+  id: string
+  internal: boolean
+}
+
+export interface verifyTermiiToken {
+  pinId: string
+  pin: string
 }
