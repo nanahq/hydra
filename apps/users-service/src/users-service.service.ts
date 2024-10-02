@@ -90,7 +90,7 @@ export class UsersService {
           )
       )
 
-      if (this.configService.get<string>('NODE_ENV') === 'FEAUTRE_YET_ENABLED') {
+      if (this.configService.get<string>('NODE_ENV') === 'PRODUCTION') {
         const paystackInstancePayload: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>> = {
           data: {
             email,
