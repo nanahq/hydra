@@ -134,6 +134,9 @@ export class Order extends AbstractDocument {
     ref: 'Review'
   })
     review?: string
+
+  @Prop(Number)
+    pin_code: number
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order)
