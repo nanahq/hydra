@@ -65,6 +65,9 @@ export class UpdateVendorProfileDto {
 
   @IsOptional()
     location: LocationCoordinates
+
+  @IsOptional()
+  public category: string[]
 }
 
 export class UpdateVendorSettingsDto {

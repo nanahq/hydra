@@ -98,6 +98,9 @@ export class Vendor extends AbstractDocument {
 
   @Prop({ type: String })
     friendlyId: string
+
+  @Prop([String])
+    category: string[]
 }
 
 export const VendorSchema = SchemaFactory.createForClass(Vendor)
