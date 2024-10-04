@@ -11,6 +11,7 @@ export function OrderStub (): Order {
   return {
     _id: objectId,
     user: 'user_id_123',
+    pin_code: 1234,
     listing: ['listing_id_456'],
     vendor: 'vendor_id_789',
     totalOrderValue: 100.0,
