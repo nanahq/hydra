@@ -90,7 +90,9 @@ export class UsersService {
           )
       )
 
-      if (this.configService.get<string>('NODE_ENV') === 'PRODUCTION') {
+      const nodeEnv = this.configService.get<string>('NODE_ENV')
+
+      if (nodeEnv !== undefined && nodeEnv.toLowerCase() === 'production') {
         const paystackInstancePayload: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>> = {
           data: {
             email,
