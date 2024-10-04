@@ -28,6 +28,7 @@ export function VendorStub (): Vendor {
     },
     settings: '63f7f2d0a0f1d5158f43cb7b',
     expoNotificationToken: 'expo_token',
-    friendlyId: 'friendly-id'
+    friendlyId: 'friendly-id',
+    category: []
   }
 }
