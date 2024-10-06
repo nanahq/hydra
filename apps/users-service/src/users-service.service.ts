@@ -70,7 +70,7 @@ export class UsersService {
       const user = await this.usersRepository.create(payload)
 
       const verificationResults = await lastValueFrom<TermiiResponse>(
-        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+        this.notificationClient.send(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
           email,
           phone,
           password
@@ -83,6 +83,7 @@ export class UsersService {
           )
       )
 
+      console.log({verificationResults})
       const nodeEnv = this.configService.get<string>('NODE_ENV')
 
       if (nodeEnv !== undefined && nodeEnv.toLowerCase() === 'production') {
