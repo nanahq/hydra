@@ -26,7 +26,6 @@ import {
 } from '@app/common/dto/UpdateUserDto'
 import { catchError, EMPTY, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
-import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 import { ConfigService } from '@nestjs/config'
 import { arrayParser } from '@app/common/utils/statsResultParser'
 import { TermiiResponse } from '@app/common/typings/Termii'
@@ -67,12 +66,6 @@ export class UsersService {
       firstName
     }
 
-    const brevoPayload: CreateBrevoContact = {
-      firstName,
-      lastName,
-      email,
-      phone: formattedPhone
-    }
     try {
       const user = await this.usersRepository.create(payload)
 
@@ -119,8 +112,6 @@ export class UsersService {
             )
         )
       }
-
-      await this.brevoClient.createContactUser(brevoPayload, 6)
 
       const slackMessage = `User ${user.firstName} ${user.lastName} signed up with phone number: ${user.phone}`
       await lastValueFrom(

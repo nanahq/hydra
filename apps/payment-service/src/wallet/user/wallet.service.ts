@@ -51,25 +51,28 @@ export class UserWalletService {
   public async createPaystackInstances (
     payload: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>>
   ): Promise<void> {
-    await this.userWalletRepository.create({ user: payload.id, balance: 0 })
-    this.logger.log(`[PIM] -> Creating customer on paystack for ${payload.id}`)
+    try {
+      await this.userWalletRepository.create({ user: payload.id, balance: 0 })
+      this.logger.log(`[PIM] -> Creating customer on paystack for ${payload.id}`)
 
-    let virtualAccountNumber: string | undefined
+      let virtualAccountNumber: string | undefined
 
-    // TODO(@siradji) wrap createPaystackCustomerInstance in a try-catch
-    const customerId = await this.createPaystackCustomerInstance(payload.data)
+      // TODO(@siradji) wrap createPaystackCustomerInstance in a try-catch
+      const customerId = await this.createPaystackCustomerInstance(payload.data)
 
-    if (customerId !== undefined) {
-      virtualAccountNumber = await this.createVirtualAccount(customerId)
+      if (customerId !== undefined) {
+        virtualAccountNumber = await this.createVirtualAccount(customerId)
+        await lastValueFrom(
+          this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_PAYSTACK_INFO, {
+            customerId,
+            virtualAccountNumber,
+            phone: internationalisePhoneNumber(payload.data.phone)
+          } satisfies PaystackInstancePayload)
+        )
+      }
+    } catch (error) {
+      console.error(JSON.stringify(error))
     }
-
-    await lastValueFrom(
-      this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_PAYSTACK_INFO, {
-        customerId,
-        virtualAccountNumber,
-        phone: internationalisePhoneNumber(payload.data.phone)
-      } satisfies PaystackInstancePayload)
-    )
   }
 
   private async createPaystackCustomerInstance (
