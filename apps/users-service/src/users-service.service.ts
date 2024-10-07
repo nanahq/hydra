@@ -83,7 +83,6 @@ export class UsersService {
           )
       )
 
-      console.log({verificationResults})
       const nodeEnv = this.configService.get<string>('NODE_ENV')
 
       if (nodeEnv !== undefined && nodeEnv.toLowerCase() === 'production') {
@@ -120,7 +119,7 @@ export class UsersService {
       // )
 
       return {
-        pindId: verificationResults.pinId ?? verificationResults.pin_id,
+        pinId: verificationResults.pinId ?? verificationResults.pin_id,
         phoneNumber: formattedPhone
       }
     } catch (error) {
