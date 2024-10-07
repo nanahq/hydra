@@ -508,4 +508,17 @@ export class ListingsController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.LISTING_SERVICE_REQUEST_PING)
+  async ping (
+    @Ctx() context: RmqContext
+  ): Promise<string | undefined> {
+    try {
+      return await this.listingService.ping()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

@@ -67,7 +67,8 @@ export class OrdersServiceService {
       ...data,
       user: userId,
       refId: RandomGen.genRandomNum(),
-      orderStatus: OrderStatus.PAYMENT_PENDING
+      orderStatus: OrderStatus.PAYMENT_PENDING,
+      pin_code: RandomGen.genRandomNum(9, 4)
     }
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
@@ -557,5 +558,9 @@ export class OrdersServiceService {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  async ping (): Promise<string> {
+    return 'PONG'
   }
 }

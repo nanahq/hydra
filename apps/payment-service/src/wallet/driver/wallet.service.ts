@@ -259,4 +259,8 @@ export class DriverWalletService {
 
     return balance >= amount
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }

@@ -286,4 +286,8 @@ export class ReviewsService implements ReviewsServiceI {
       reviews: listingReview
     }
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }

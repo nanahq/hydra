@@ -142,4 +142,8 @@ export class AdminServiceService {
     }
     return getRequest
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }

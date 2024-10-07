@@ -158,6 +158,6 @@ export class UsersController {
 
   @Get('ping')
   async ping (): Promise<string> {
-    return 'User Controller PONG'
+    return await lastValueFrom<any>(this.usersClient.send(QUEUE_MESSAGE.USER_SERVICE_REQUEST_PING, {}))
   }
 }

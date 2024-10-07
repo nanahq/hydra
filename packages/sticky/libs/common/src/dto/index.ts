@@ -131,6 +131,7 @@ export interface UpdateVendorProfileDto {
   email?: string;
   password?: string;
   location?: LocationCoordinates;
+  category?: string[];
 }
 
 export interface UpdateVendorSettingsDto {

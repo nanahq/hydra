@@ -58,9 +58,4 @@ export class WalletController {
         )
     )
   }
-
-  @Get('ping')
-  async ping (): Promise<string> {
-    return 'Wallet Controller PONG'
-  }
 }

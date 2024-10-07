@@ -94,4 +94,8 @@ export class LocationService {
       )
     }
   }
+
+  async ping (): Promise<string> {
+    return 'PONG'
+  }
 }

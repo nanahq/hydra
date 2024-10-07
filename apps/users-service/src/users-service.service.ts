@@ -26,7 +26,6 @@ import {
 } from '@app/common/dto/UpdateUserDto'
 import { catchError, EMPTY, lastValueFrom } from 'rxjs'
 import { ClientProxy } from '@nestjs/microservices'
-import { CreateBrevoContact } from '@app/common/dto/brevo.dto'
 import { ConfigService } from '@nestjs/config'
 import { arrayParser } from '@app/common/utils/statsResultParser'
 import { TermiiResponse } from '@app/common/typings/Termii'
@@ -67,17 +66,11 @@ export class UsersService {
       firstName
     }
 
-    const brevoPayload: CreateBrevoContact = {
-      firstName,
-      lastName,
-      email,
-      phone: formattedPhone
-    }
     try {
       const user = await this.usersRepository.create(payload)
 
       const verificationResults = await lastValueFrom<TermiiResponse>(
-        this.notificationClient.emit(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
+        this.notificationClient.send(QUEUE_MESSAGE.SEND_PHONE_VERIFICATION, {
           email,
           phone,
           password
@@ -90,7 +83,9 @@ export class UsersService {
           )
       )
 
-      if (this.configService.get<string>('NODE_ENV') === 'FEAUTRE_YET_ENABLED') {
+      const nodeEnv = this.configService.get<string>('NODE_ENV')
+
+      if (nodeEnv !== undefined && nodeEnv.toLowerCase() === 'production') {
         const paystackInstancePayload: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>> = {
           data: {
             email,
@@ -118,15 +113,13 @@ export class UsersService {
         )
       }
 
-      await this.brevoClient.createContactUser(brevoPayload, 6)
-
-      const slackMessage = `User ${user.firstName} ${user.lastName} signed up with phone number: ${user.phone}`
-      await lastValueFrom(
-        this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
-      )
+      // const slackMessage = `User ${user.firstName} ${user.lastName} signed up with phone number: ${user.phone}`
+      // await lastValueFrom(
+      //   this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
+      // )
 
       return {
-        pindId: verificationResults.pinId ?? verificationResults.pin_id,
+        pinId: verificationResults.pinId ?? verificationResults.pin_id,
         phoneNumber: formattedPhone
       }
     } catch (error) {
@@ -483,5 +476,9 @@ export class UsersService {
       this.logger.log(error)
       this.logger.log('Can not add coupon to user account')
     }
+  }
+
+  async ping (): Promise<string> {
+    return 'PONG'
   }
 }

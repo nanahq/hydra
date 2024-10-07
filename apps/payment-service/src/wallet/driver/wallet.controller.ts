@@ -144,4 +144,17 @@ export class DriverWalletController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.PAYMENT_SERVICE_REQUEST_PING)
+  async ping (
+    @Ctx() context: RmqContext
+  ): Promise<string | undefined> {
+    try {
+      return await this.walletService.ping()
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }
