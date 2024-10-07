@@ -352,6 +352,6 @@ export interface ListingStatI {
 }
 
 export interface RegisterUserResponse {
-  pindId: string
+  pinId: string
   phoneNumber: string
 }
