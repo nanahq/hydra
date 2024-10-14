@@ -117,7 +117,6 @@ export class UsersService {
       await lastValueFrom(
         this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
       )
-
       return {
         pinId: verificationResults.pinId ?? verificationResults.pin_id,
         phoneNumber: formattedPhone
