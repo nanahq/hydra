@@ -113,10 +113,10 @@ export class UsersService {
         )
       }
 
-      // const slackMessage = `User ${user.firstName} ${user.lastName} signed up with phone number: ${user.phone}`
-      // await lastValueFrom(
-      //   this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
-      // )
+      const slackMessage = `User ${user.firstName} ${user.lastName} signed up with phone number: ${user.phone}`
+      await lastValueFrom(
+        this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
+      )
 
       return {
         pinId: verificationResults.pinId ?? verificationResults.pin_id,
