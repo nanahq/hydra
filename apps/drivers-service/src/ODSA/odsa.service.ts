@@ -20,8 +20,8 @@ import {
   ResponseWithStatus,
   SOCKET_MESSAGE,
   TravelDistanceResult,
-  VendorApprovalStatus,
-  WalletTransactionStatus
+  VendorApprovalStatus
+  // WalletTransactionStatus
 } from '@app/common'
 import { groupOrdersByDeliveryTime } from './algo/groupOrdersByDeliveryTime'
 import { DriverRepository } from '../drivers-service.repository'
@@ -29,7 +29,7 @@ import { OdsaRepository } from './odsa.repository'
 import * as moment from 'moment'
 import { FilterQuery } from 'mongoose'
 import { EventsGateway } from '../websockets/events.gateway'
-import { CreditWallet } from '@app/common/dto/General.dto'
+// import { CreditWallet } from '@app/common/dto/General.dto'
 
 @Injectable()
 export class ODSA {
@@ -249,33 +249,33 @@ export class ODSA {
         updates
       )
 
-      if (delivered) {
-        const driver = (await this.driversRepository.findOne({
-          _id: delivery.driver,
-          type: 'DELIVER_ON_DEMAND'
-        })) as Driver
+      // if (delivered) {
+      //   const driver = (await this.driversRepository.findOne({
+      //     _id: delivery.driver,
+      //     type: 'DELIVER_ON_DEMAND'
+      //   })) as Driver
 
-        const deliveries = [...driver.deliveries, delivery._id]
-        const totalTrips = driver.totalTrips + 1
+      //   const deliveries = [...driver.deliveries, delivery._id]
+      //   const totalTrips = driver.totalTrips + 1
 
-        await this.driversRepository.findOneAndUpdate(
-          { _id: driver._id },
-          { available: true, deliveries, totalTrips }
-        )
+      //   await this.driversRepository.findOneAndUpdate(
+      //     { _id: driver._id },
+      //     { available: true, deliveries, totalTrips }
+      //   )
 
-        const creditPayload: CreditWallet = {
-          status: WalletTransactionStatus.PROCESSED,
-          withTransaction: false,
-          driver: data.driverId,
-          amount: Math.floor((delivery?.travelMeta?.distance ?? 0) * 25)
-        }
-        await lastValueFrom(
-          this.paymentClient.send(
-            QUEUE_MESSAGE.DRIVER_WALLET_ADD_BALANCE,
-            creditPayload
-          )
-        )
-      }
+      //   const creditPayload: CreditWallet = {
+      //     status: WalletTransactionStatus.PROCESSED,
+      //     withTransaction: false,
+      //     driver: data.driverId,
+      //     amount: Math.floor((delivery?.travelMeta?.distance ?? 0) * 25)
+      //   }
+      //   await lastValueFrom(
+      //     this.paymentClient.send(
+      //       QUEUE_MESSAGE.DRIVER_WALLET_ADD_BALANCE,
+      //       creditPayload
+      //     )
+      //   )
+      // }
 
       this.logger.log('PIM -> Success: Updated delivery status')
 
@@ -716,6 +716,7 @@ export class ODSA {
       // isValidated: true,
       isDeleted: false,
       available: true,
+      internal: true,
       acc_status: VendorApprovalStatus.APPROVED
     })) as Driver[]
 

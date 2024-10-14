@@ -19,7 +19,7 @@ import {
 } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
 import * as bcrypt from 'bcryptjs'
-import { Cron, CronExpression } from '@nestjs/schedule'
+// import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy } from '@nestjs/microservices'
 import { createTransaction, updateIsDriverInternalDto } from '@app/common/dto/General.dto'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -279,7 +279,7 @@ export class DriversServiceService {
    *  The logic behind this is using updatedAt - drivers send location updates every 20 seconds via sockets
    *  if last updateAt  >  5 minute, driver should go offline
    */
-  @Cron(CronExpression.EVERY_30_MINUTES)
+  // @Cron(CronExpression.EVERY_30_MINUTES)
   async flagDriversOffline (): Promise<void> {
     this.logger.debug('PIM -> Flagging Drivers Offline')
     try {
