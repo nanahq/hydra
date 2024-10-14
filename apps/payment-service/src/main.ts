@@ -12,6 +12,8 @@ async function bootstrap (): Promise<void> {
 
   await app.startAllMicroservices()
 
+  await app.init()
+
   void app.enableShutdownHooks()
 
   process.on('SIGTERM', async () => {
