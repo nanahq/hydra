@@ -249,33 +249,19 @@ export class ODSA {
         updates
       )
 
-      // if (delivered) {
-      //   const driver = (await this.driversRepository.findOne({
-      //     _id: delivery.driver,
-      //     type: 'DELIVER_ON_DEMAND'
-      //   })) as Driver
+      if (delivered) {
+        const driver = (await this.driversRepository.findOne({
+          _id: delivery.driver
+        })) as Driver
 
-      //   const deliveries = [...driver.deliveries, delivery._id]
-      //   const totalTrips = driver.totalTrips + 1
+        const deliveries = [...driver.deliveries, delivery._id.toString()]
+        const totalTrips = driver.totalTrips + 1
 
-      //   await this.driversRepository.findOneAndUpdate(
-      //     { _id: driver._id },
-      //     { available: true, deliveries, totalTrips }
-      //   )
-
-      //   const creditPayload: CreditWallet = {
-      //     status: WalletTransactionStatus.PROCESSED,
-      //     withTransaction: false,
-      //     driver: data.driverId,
-      //     amount: Math.floor((delivery?.travelMeta?.distance ?? 0) * 25)
-      //   }
-      //   await lastValueFrom(
-      //     this.paymentClient.send(
-      //       QUEUE_MESSAGE.DRIVER_WALLET_ADD_BALANCE,
-      //       creditPayload
-      //     )
-      //   )
-      // }
+        await this.driversRepository.findOneAndUpdate(
+          { _id: driver._id.toString() },
+          { available: true, deliveries, totalTrips }
+        )
+      }
 
       this.logger.log('PIM -> Success: Updated delivery status')
 
