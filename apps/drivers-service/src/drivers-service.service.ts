@@ -275,11 +275,11 @@ export class DriversServiceService {
   }
 
   /**
-   *  Cron to run every 5 minutes to flag inactive driver offline.
+   *  Cron to run every 30 minutes to flag inactive driver offline.
    *  The logic behind this is using updatedAt - drivers send location updates every 20 seconds via sockets
    *  if last updateAt  >  5 minute, driver should go offline
    */
-  @Cron(CronExpression.EVERY_5_MINUTES)
+  @Cron(CronExpression.EVERY_30_MINUTES)
   async flagDriversOffline (): Promise<void> {
     this.logger.debug('PIM -> Flagging Drivers Offline')
     try {
