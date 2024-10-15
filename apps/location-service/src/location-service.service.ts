@@ -13,12 +13,12 @@ import { calculateDeliveryPrice } from '@app/common/utils/calculateDeliveryPrice
 @Injectable()
 export class LocationService {
   private readonly logger = new Logger(LocationService.name)
-  private readonly mapboxToken: string | undefined
+  private readonly googleMapsToken: string | undefined
   constructor (
     private readonly httpService: HttpService,
     private readonly configService: ConfigService
   ) {
-    this.mapboxToken = configService.get('MAPBOX_TOKEN')
+    this.googleMapsToken = configService.get('GMAPS_API_KEY')
   }
 
   public async getNearestCoordinate (
@@ -48,23 +48,23 @@ export class LocationService {
     origin: number[],
     destination: number[]
   ): Promise<TravelDistanceResult> {
-    const url = `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${
-      origin[0]
-    },${origin[1]};${destination[0]},${destination[1]}?access_token=${
-      this.mapboxToken as string
+    const baseUrl = 'https://maps.googleapis.com/maps/api/distancematrix/json'
+    const url = `${baseUrl}?origins=${origin[0]},${origin[1]}&destinations=${destination[0]},${destination[1]}&key=${
+      this.googleMapsToken as string
     }`
+
     try {
-      this.logger.log('PIM -> Getting travel distance via mapbox')
+      this.logger.log('PIM -> Getting travel distance via Google Maps')
       const { data } = await firstValueFrom(this.httpService.get(url))
       return {
-        distance: Math.ceil((data?.routes[0]?.distance ?? 0) / 1000), // kilometres
-        duration: Math.ceil((data?.routes[0]?.duration ?? 0) / 60) // minutes
+        distance: Math.ceil((data?.routes[0]?.distance ?? 0) / 1000), // Killometers
+        duration: Math.ceil((data?.routes[0]?.duration ?? 0) / 60) // Minutes
       }
     } catch (error) {
       this.logger.log(JSON.stringify(error))
-      this.logger.error('Can not get travel distance via mapbox')
+      this.logger.error('Can not get travel distance via Google Maps')
       throw new FitRpcException(
-        'Can not fetch travel distance at this time',
+        'Cannot fetch travel distance at this time',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
