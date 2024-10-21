@@ -149,7 +149,7 @@ export class DriversController {
   ): Promise<any> {
     return await lastValueFrom<any>(
       this.driversClient
-        .send(QUEUE_MESSAGE.ODSA_ASSIGN_INTERNAL_DRIVER, { data })
+        .emit(QUEUE_MESSAGE.ODSA_ASSIGN_INTERNAL_DRIVER, { data })
     )
   }
 
