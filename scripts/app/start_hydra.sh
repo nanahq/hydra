@@ -30,7 +30,7 @@ cd $ROOT_PATH
 #Gatewats
 pm2 start "yarn start:dev api-gateway" --name "ApiGateway"
 pm2 start "yarn start:dev vendor-gateway" --name "VendorGateway"
-pm2 start "yarn start:dev admin-gateway" --name "AdminGateway"
+#pm2 start "yarn start:dev admin-gateway" --name "AdminGateway"
 
 #Services
 
@@ -38,9 +38,8 @@ pm2 start "yarn start:dev users-service" --name "UsersService"
 pm2 start "yarn start:dev location-service" --name "LocationService"
 pm2 start "yarn start:dev drivers-service" --name "DriversService"
 pm2 start "yarn start:dev vendors-service" --name "VendorsService"
-pm2 start "yarn start:dev admin-service" --name "AdminService"
+#pm2 start "yarn start:dev admin-service" --name "AdminService"
 pm2 start "yarn start:dev payment-service" --name "PaymentService"
-pm2 start "yarn start:dev location-service" --name "LocationService"
 pm2 start "yarn start:dev reviews-service" --name "ReviewsService"
 pm2 start "yarn start:dev orders-service" --name "OrdersService"
 pm2 start "yarn start:dev notification-service" --name "NotificationService"

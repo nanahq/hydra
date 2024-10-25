@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common'
+import { Controller, UseFilters } from '@nestjs/common'
 import { OrdersServiceService } from './orders-service.service'
 import {
   Ctx,
@@ -9,6 +9,7 @@ import {
   RpcException
 } from '@nestjs/microservices'
 import {
+  ExceptionFilterRpc,
   MultiPurposeServicePayload,
   Order,
   OrderI,
@@ -24,7 +25,8 @@ import {
 } from '@app/common'
 import { FilterQuery } from 'mongoose'
 
-@Controller('order')
+@UseFilters(new ExceptionFilterRpc())
+@Controller()
 export class OrdersServiceController {
   constructor (
     private readonly ordersServiceService: OrdersServiceService,

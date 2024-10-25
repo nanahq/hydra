@@ -18,7 +18,7 @@ import {
 import { PaymentService } from './charge.service'
 
 @UseFilters(new ExceptionFilterRpc())
-@Controller('charge')
+@Controller()
 export class PaymentController {
   constructor (
     private readonly paymentService: PaymentService,
@@ -31,6 +31,7 @@ export class PaymentController {
       @Ctx() context: RmqContext
   ): Promise<PaystackChargeResponseData> {
     try {
+      console.log(payload)
       return await this.paymentService.initiateChargePaystack(payload)
     } catch (error) {
       throw new RpcException(error)

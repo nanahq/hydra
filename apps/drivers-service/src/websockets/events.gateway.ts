@@ -40,8 +40,8 @@ export class EventsGateway implements OnGatewayConnection {
     @MessageBody()
       {
         driverId,
-        location,
-        travelDistance
+        location
+
       }: {
         driverId: string
         location: LocationCoordinates
@@ -50,18 +50,15 @@ export class EventsGateway implements OnGatewayConnection {
   ): Promise<void> {
     try {
       await this.eventService.updateDriverLocation(driverId, location)
-
       const deliveryId = await this.eventService.updateDeliveryLocation(
         driverId,
         location
       )
-
-      if (deliveryId !== null || deliveryId !== undefined) {
+      if (deliveryId !== undefined) {
         this.server.emit(SOCKET_MESSAGE.DRIVER_LOCATION_UPDATED, {
           location,
-          deliveryId,
-          travelDistance
-        })
+          deliveryId
+        } as any)
       }
     } catch (error) {
       this.logger.error(JSON.stringify(error))

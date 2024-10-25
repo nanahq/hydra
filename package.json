@@ -75,6 +75,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "s2-geometry": "^1.2.10",
     "twilio": "^3.83.3",
     "winston": "^3.8.2"
   },

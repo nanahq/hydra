@@ -44,9 +44,10 @@ export class OrderController {
       }>
       > {
     const payload: ServicePayload<any> = {
-      userId: user._id as any,
+      userId: user._id.toString() as any,
       data
     }
+
     return await lastValueFrom<
     ResponseWithStatusAndData<{
       order: OrderI

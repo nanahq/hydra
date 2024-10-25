@@ -3,6 +3,7 @@ import { RmqOptions } from '@nestjs/microservices'
 import { AppModule } from './app.module'
 import { ConfigService } from '@nestjs/config'
 async function bootstrap (): Promise<void> {
+  console.log('Hello world')
   const app = await AppModule.create()
   const rmqService = app.get<RmqService>(RmqService)
   const port = app.get(ConfigService).get<string>('DRIVER_PORT', '3003')

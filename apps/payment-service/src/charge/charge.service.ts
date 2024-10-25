@@ -17,7 +17,6 @@ import {
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { PaymentRepository } from './charge.repository'
-import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class PaymentService {
@@ -181,39 +180,39 @@ export class PaymentService {
       )
     }
   }
-
-  @Cron(CronExpression.EVERY_10_MINUTES, {
-    timeZone: 'Africa/Lagos'
-  })
-  async deleteUnpaidPayments (): Promise<void> {
-    try {
-      const date = new Date()
-      const pastTenMinutes = new Date(date.getTime() - 10 * 60 * 1000)
-
-      const payments = (await this.paymentRepository.find({
-        createdAt: {
-          $lt: pastTenMinutes.toISOString()
-        },
-        status: 'PENDING'
-      })) as Payment[] | null
-
-      if (payments !== null && payments.length > 0) {
-        const paymentIds = payments.map(({ _id }) => _id)
-
-        await this.paymentRepository.deleteMany({
-          _id: {
-            $in: paymentIds
-          }
-        })
-
-        this.logger.log(`[PIM] - Deleted ${payments.length} unpaid payments.`)
-      }
-    } catch (error) {
-      this.logger.error('[PIM] - Failed to delete unpaid payments:', error)
-      throw new FitRpcException(
-        'Failed to delete unpaid payments. Please try again later.',
-        HttpStatus.INTERNAL_SERVER_ERROR
-      )
-    }
-  }
+//
+//   @Cron(CronExpression.EVERY_10_MINUTES, {
+//     timeZone: 'Africa/Lagos'
+//   })
+//   async deleteUnpaidPayments (): Promise<void> {
+//     try {
+//       const date = new Date()
+//       const pastTenMinutes = new Date(date.getTime() - 10 * 60 * 1000)
+//
+//       const payments = (await this.paymentRepository.find({
+//         createdAt: {
+//           $lt: pastTenMinutes.toISOString()
+//         },
+//         status: 'PENDING'
+//       })) as Payment[] | null
+//
+//       if (payments !== null && payments.length > 0) {
+//         const paymentIds = payments.map(({ _id }) => _id)
+//
+//         await this.paymentRepository.deleteMany({
+//           _id: {
+//             $in: paymentIds
+//           }
+//         })
+//
+//         this.logger.log(`[PIM] - Deleted ${payments.length} unpaid payments.`)
+//       }
+//     } catch (error) {
+//       this.logger.error('[PIM] - Failed to delete unpaid payments:', error)
+//       throw new FitRpcException(
+//         'Failed to delete unpaid payments. Please try again later.',
+//         HttpStatus.INTERNAL_SERVER_ERROR
+//       )
+//     }
+//   }
 }

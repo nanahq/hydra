@@ -142,23 +142,4 @@ export class OdsaController {
       this.rmqService.ack(context)
     }
   }
-
-  /**
-   * Processes Pre Order by creating delivery instance
-   * @param orderId
-   * @param context
-   */
-  @EventPattern(QUEUE_MESSAGE.ODSA_PROCESS_PRE_ORDER)
-  async processIncomingPreOrder (
-    @Payload() { orderId }: { orderId: string },
-      @Ctx() context: RmqContext
-  ): Promise<void> {
-    try {
-      return await this.odsa.handleProcessPreOrder(orderId)
-    } catch (error) {
-      throw new RpcException(error)
-    } finally {
-      this.rmqService.ack(context)
-    }
-  }
 }

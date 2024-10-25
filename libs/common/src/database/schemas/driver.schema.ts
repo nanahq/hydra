@@ -85,6 +85,9 @@ export class Driver extends AbstractDocument {
 
   @Prop({ type: Boolean, default: false })
     internal: boolean
+
+  @Prop(String)
+    s2CellId: string
 }
 
 export const DriverSchema = SchemaFactory.createForClass(Driver)
