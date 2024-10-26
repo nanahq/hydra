@@ -291,10 +291,13 @@ export class ODSA {
     driverId: string
   }): Promise<ResponseWithStatus> {
     try {
-      await this.odsaRepository.findOneAndUpdate(
-        { _id: opts.deliveryId, order: opts.orderId },
+      const updated = await this.odsaRepository.findOneAndUpdate(
+        { _id: opts.deliveryId, order: opts.orderId, assignedToDriver: false },
         { driver: opts.driverId, assignedToDriver: true }
       )
+      if(updated === null) {
+        return {status: 0}
+      }
       await this.driversRepository.findOneAndUpdate({ _id: opts.driverId }, { available: false })
       return { status: 1 }
     } catch (error) {
@@ -347,7 +350,7 @@ export class ODSA {
             catchError((error) => {
               this.logger.error(JSON.stringify(error))
               throw new RpcException(error)
-            })
+            }) as any
           )
       )
       const collectionLocation = order?.vendor?.location?.coordinates as [
