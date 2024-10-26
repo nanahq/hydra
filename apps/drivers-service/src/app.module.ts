@@ -16,6 +16,7 @@ import {
   Driver,
   DriverSchema,
   FitHttpException,
+
   ListingMenu,
   ListingMenuSchema,
   Order,
@@ -46,6 +47,7 @@ import { OdsaRepository } from './ODSA/odsa.repository'
 import { EventsGateway } from './websockets/events.gateway'
 import { EventsService } from './websockets/events.service'
 import * as Joi from 'joi'
+import { TacoService } from './ODSA/taco.service'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -72,7 +74,7 @@ export class AppModule implements NestModule {
             secret: configService.get<string>('JWT_SECRET'),
             signOptions: {
               expiresIn: `${
-                configService.get<string>('DRIVER_JWT_EXPIRATION') ?? ''
+                configService.get<string>('DRIVER_JWT_EXPIRATION', '100000') ?? ''
               }s`
             }
           }),
@@ -126,6 +128,7 @@ export class AppModule implements NestModule {
         LocalStrategy,
         AuthService,
         ODSA,
+        TacoService,
         OdsaRepository,
         EventsGateway,
         EventsService,

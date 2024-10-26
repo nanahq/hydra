@@ -22,7 +22,7 @@ export function calculateDeliveryPrice (
     ratePerKm = LONG_DISTANCE_RATE
   }
 
-  const gasConsumedLiters = distanceKm / 50
+  const gasConsumedLiters = distanceKm / 40
   const gasCost = GAS_PRICE * gasConsumedLiters
 
   const deliveryPrice = BASE_FEE + ratePerKm * distanceKm + gasCost

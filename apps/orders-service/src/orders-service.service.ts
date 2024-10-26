@@ -368,17 +368,9 @@ export class OrdersServiceService {
         )
       )
 
-      if (order.orderType === OrderTypes.INSTANT) {
-        await lastValueFrom<any>(
-          this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
-        )
-      } else {
-        await lastValueFrom<any>(
-          this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_PRE_ORDER, {
-            orderId
-          })
-        )
-      }
+      await lastValueFrom<any>(
+        this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })
+      )
     } catch (error) {
       this.logger.error(`[PIM] - Failed to process paid order ${orderId} `)
       throw new FitRpcException(

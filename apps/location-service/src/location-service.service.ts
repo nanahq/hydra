@@ -80,7 +80,6 @@ export class LocationService {
         travelDistance.distance ?? 0,
         DELIVERY_PRICE_META
       )
-
       return {
         ...travelDistance,
         fee
@@ -92,6 +91,32 @@ export class LocationService {
         'Can not fetch travel distance at this time',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
+    }
+  }
+
+  public async getDeliveryFeeDriver (
+    origin: number[],
+    destination: number[]
+  ): Promise<DeliveryFeeResult> {
+    try {
+      const travelDistance = await this.getTravelDistance(origin, destination)
+      const fee = calculateDeliveryPrice(
+        travelDistance.distance ?? 0,
+        DELIVERY_PRICE_META
+      )
+      return {
+        distance: travelDistance?.distance ?? 0,
+        duration: travelDistance?.duration ?? 0,
+        fee: (fee / 100) * 90 // subtract 10% from delivery fee calculation
+      }
+    } catch (error) {
+      this.logger.log(JSON.stringify(error))
+      this.logger.error('Can not get delivery fee via mapbox')
+      return {
+        distance: 0,
+        duration: 0,
+        fee: (850 / 100) * 90 // subtract 10% from delivery fee calculation
+      }
     }
   }
 
