@@ -295,8 +295,8 @@ export class ODSA {
         { _id: opts.deliveryId, order: opts.orderId, assignedToDriver: false },
         { driver: opts.driverId, assignedToDriver: true }
       )
-      if(updated === null) {
-        return {status: 0}
+      if (updated === null) {
+        return { status: 0 }
       }
       await this.driversRepository.findOneAndUpdate({ _id: opts.driverId }, { available: false })
       return { status: 1 }
@@ -310,7 +310,7 @@ export class ODSA {
   }
 
   public async driverFetchAvailableDeliveries (driverId: string): Promise<Delivery[]> {
-    return await this.odsaRepository.find({ assignedToDriver: false, pool: { $in: [driverId] } })
+    return await this.odsaRepository.findAndPopulate({ assignedToDriver: false, pool: { $in: [driverId] } }, ['order vendor listing'])
   }
 
   public async handleRejectDelivery (opts: {
