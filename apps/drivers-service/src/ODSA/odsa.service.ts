@@ -310,7 +310,21 @@ export class ODSA {
   }
 
   public async driverFetchAvailableDeliveries (driverId: string): Promise<Delivery[]> {
-    return await this.odsaRepository.findAndPopulate({ assignedToDriver: false, pool: { $in: [driverId] } }, ['order vendor listing'])
+    const deliveries = await this.odsaRepository.find({assignedToDriver: true, driver: driverId})
+    if(deliveries.length > 0) {
+      return deliveries
+    }
+    return await this.odsaRepository
+        .findRaw()
+        .find({ assignedToDriver: false, pool: { $in: [driverId] } })
+        .populate('vendor')
+        .populate({
+          path: 'order',
+          populate: {
+            path: 'listing'
+          }
+        })
+        .exec()
   }
 
   public async handleRejectDelivery (opts: {
