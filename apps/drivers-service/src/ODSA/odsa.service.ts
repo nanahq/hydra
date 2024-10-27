@@ -298,7 +298,7 @@ export class ODSA {
       if (updated === null) {
         return { status: 0 }
       }
-      await this.driversRepository.findOneAndUpdate({ _id: opts.driverId }, { available: false })
+      await this.driversRepository.findOneAndUpdate({ _id: opts.driverId, available: true }, { available: false })
       return { status: 1 }
     } catch (error) {
       this.logger.error(JSON.stringify(error))
@@ -310,13 +310,9 @@ export class ODSA {
   }
 
   public async driverFetchAvailableDeliveries (driverId: string): Promise<Delivery[]> {
-    const deliveries = await this.odsaRepository.find({assignedToDriver: true, driver: driverId})
-    if(deliveries.length > 0) {
-      return deliveries
-    }
-    return await this.odsaRepository
+    const deliveries = await this.odsaRepository
         .findRaw()
-        .find({ assignedToDriver: false, pool: { $in: [driverId] } })
+        .find({ assignedToDriver: true, driver: driverId })
         .populate('vendor')
         .populate({
           path: 'order',
@@ -325,6 +321,20 @@ export class ODSA {
           }
         })
         .exec()
+    if (deliveries.length > 0) {
+      return deliveries
+    }
+    return await this.odsaRepository
+      .findRaw()
+      .find({ assignedToDriver: false, pool: { $in: [driverId] } })
+      .populate('vendor')
+      .populate({
+        path: 'order',
+        populate: {
+          path: 'listing'
+        }
+      })
+      .exec()
   }
 
   public async handleRejectDelivery (opts: {
