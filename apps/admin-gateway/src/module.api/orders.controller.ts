@@ -123,8 +123,9 @@ export class OrdersController {
       ...data,
       streamUpdates: true
     }
+    console.log(payload)
     return await lastValueFrom<ResponseWithStatus>(
-      this.ordersClient.emit(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, payload).pipe(
+      this.ordersClient.send(QUEUE_MESSAGE.UPDATE_ORDER_STATUS, payload).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
