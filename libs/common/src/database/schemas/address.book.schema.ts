@@ -31,6 +31,9 @@ export class AddressBook extends AbstractDocument {
   @Prop()
     house_number?: number
 
+  @Prop()
+    street_address: string
+
   @Prop({
     type: {
       coordinates: [Number]
