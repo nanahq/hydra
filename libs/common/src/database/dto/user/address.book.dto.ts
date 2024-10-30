@@ -19,4 +19,7 @@ export class AddressBookDto {
 
   @IsOptional()
     coordinates: [string, string]
+
+  @IsString()
+    street_address: string
 }
