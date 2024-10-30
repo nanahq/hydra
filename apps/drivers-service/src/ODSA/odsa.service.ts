@@ -311,16 +311,18 @@ export class ODSA {
 
   public async driverFetchAvailableDeliveries (driverId: string): Promise<Delivery[]> {
     const deliveries = await this.odsaRepository
-        .findRaw()
-        .find({ assignedToDriver: true, driver: driverId })
-        .populate('vendor')
-        .populate({
-          path: 'order',
-          populate: {
-            path: 'listing'
-          }
-        })
-        .exec()
+      .findRaw()
+      .find({ assignedToDriver: true, driver: driverId })
+      .populate('vendor')
+      .populate('listing')
+      .populate('user')
+      .populate({
+        path: 'order',
+        populate: {
+          path: 'listing'
+        }
+      })
+      .exec()
     if (deliveries.length > 0) {
       return deliveries
     }
