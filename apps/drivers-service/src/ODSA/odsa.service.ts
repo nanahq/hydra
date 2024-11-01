@@ -312,7 +312,7 @@ export class ODSA {
   public async driverFetchAvailableDeliveries (driverId: string): Promise<Delivery[]> {
     const deliveries = await this.odsaRepository
       .findRaw()
-      .find({ assignedToDriver: true, driver: driverId, completed: false , status: {$ne: OrderStatus.FULFILLED}})
+      .find({ assignedToDriver: true, driver: driverId, completed: false, status: { $ne: OrderStatus.FULFILLED } })
       .populate('vendor')
       .populate('listing')
       .populate('user')
@@ -328,7 +328,7 @@ export class ODSA {
     }
     return await this.odsaRepository
       .findRaw()
-      .find({ assignedToDriver: false, completed: false, status: {$ne: OrderStatus.FULFILLED}, pool: { $in: [driverId] } })
+      .find({ assignedToDriver: false, completed: false, status: { $ne: OrderStatus.FULFILLED }, pool: { $in: [driverId] } })
       .populate('vendor')
       .populate({
         path: 'order',
