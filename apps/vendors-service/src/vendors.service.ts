@@ -503,7 +503,7 @@ export class VendorsService {
         ['settings', 'reviews']
       ))
 
-      const nearest: any = this.vendorRepository.findAndPopulate(
+      const nearest: any = await this.vendorRepository.findAndPopulate(
         {
           location: {
             $near: {
@@ -512,7 +512,7 @@ export class VendorsService {
                 coordinates
               },
               $minDistance: 200,
-              $maxDistance: 5000
+              $maxDistance: 6000
             }
           }
         },
