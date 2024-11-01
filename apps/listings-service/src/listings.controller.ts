@@ -26,7 +26,7 @@ import {
   UpdateOptionGroupDto,
   ScheduledListingDto,
   ListingCategoryI,
-  UserHomePage,
+  UserHomePage
 } from '@app/common'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
 import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager'
@@ -478,7 +478,7 @@ export class ListingsController {
   @CacheKey(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)
   @UseInterceptors(CacheInterceptor)
   @CacheTTL(1000)
-  @MessagePattern(QUEUE_MESSAGE.GET_HOMPAGE_USERS)
+  @MessagePattern(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)
   async userHomePage (
     @Payload() { coordinates }: { coordinates: [number, number] },
       @Ctx() context: RmqContext
