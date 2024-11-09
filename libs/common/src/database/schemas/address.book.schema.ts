@@ -25,11 +25,11 @@ export class AddressBook extends AbstractDocument {
   @Prop()
     address: string
 
-  @Prop()
-    plot_number?: number
+  @Prop(String)
+    plot_number?: string
 
-  @Prop()
-    house_number?: number
+  @Prop(String)
+    house_number?: string
 
   @Prop({
     type: {
