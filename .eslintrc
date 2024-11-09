@@ -28,6 +28,7 @@
     "new-cap": "off",
     "indent": "off",
     "@typescript-eslint/return-await": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
     "no-irregular-whitespace": "off",
     "@typescript-eslint/indent": [
       "error",
