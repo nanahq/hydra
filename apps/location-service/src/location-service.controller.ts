@@ -88,6 +88,28 @@ export class LocationController {
     }
   }
 
+  @UseInterceptors(CacheInterceptor)
+  @MessagePattern(QUEUE_MESSAGE.LOCATION_GET_DELIVERY_FEE_DRIVER)
+  async getDeliveryFeeDriver (
+    @Payload()
+      {
+        userCoords,
+        vendorCoords
+      }: { userCoords: number[], vendorCoords: number[] },
+      @Ctx() context: RmqContext
+  ): Promise<DeliveryFeeResult> {
+    try {
+      return await this.locationService.getDeliveryFeeDriver(
+        vendorCoords,
+        userCoords
+      )
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.LOCATION_SERVICE_REQUEST_PING)
   async ping (
     @Ctx() context: RmqContext

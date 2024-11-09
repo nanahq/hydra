@@ -10,9 +10,9 @@ export class AddressBookDto {
     labelId: string
 
   @IsOptional()
-    plot_number?: number
+    plot_number?: string
 
-  house_number?: number
+  house_number?: string
 
   @IsString()
     labelName: string

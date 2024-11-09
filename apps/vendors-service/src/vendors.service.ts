@@ -496,15 +496,31 @@ export class VendorsService {
     }
   }
 
-  async getVendorsForHomepage (): Promise<VendorServiceHomePageResult> {
+  async getVendorsForHomepage (coordinates: [number, number]): Promise<VendorServiceHomePageResult> {
     try {
       const allVendors: any[] = (await this.vendorRepository.findAndPopulate(
         { acc_status: VendorApprovalStatus.APPROVED },
         ['settings', 'reviews']
       ))
+
+      const nearest: any = await this.vendorRepository.findAndPopulate(
+        {
+          location: {
+            $near: {
+              $geometry: {
+                type: 'Point',
+                coordinates
+              },
+              $minDistance: 200,
+              $maxDistance: 6000
+            }
+          }
+        },
+        ['settings', 'reviews']
+      )
       const filteredVendors = allVendors.filter((v: any) => v.review !== null)
       return {
-        nearest: [],
+        nearest,
         allVendors: filteredVendors
       }
     } catch (error) {

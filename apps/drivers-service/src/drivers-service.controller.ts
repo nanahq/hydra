@@ -52,6 +52,12 @@ export class DriversServiceController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('available-deliveries')
+  async getAvailableDeliveries (@CurrentUser() driver: Driver): Promise<Delivery[]> {
+    return await this.odsaService.driverFetchAvailableDeliveries(driver._id.toString())
+  }
+
   @Get('profile')
   @UseGuards(JwtAuthGuard)
   async getProfile (@CurrentUser() driver: Driver): Promise<Driver> {

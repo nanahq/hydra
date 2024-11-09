@@ -52,7 +52,7 @@ export class Delivery extends AbstractDocument {
     },
     coordinates: {
       type: [Number],
-      default: [0, 0] // Default coordinates here
+      default: [0, 0]
     }
   })
     currentLocation: LocationCoordinates
@@ -64,7 +64,7 @@ export class Delivery extends AbstractDocument {
     },
     coordinates: {
       type: [Number],
-      default: [0, 0] // Default coordinates here
+      default: [0, 0]
     }
   })
     dropOffLocation: LocationCoordinates
@@ -97,6 +97,12 @@ export class Delivery extends AbstractDocument {
     distance: number
     travelTime: number
   }
+
+  @Prop({ type: [Types.ObjectId], ref: 'Driver' })
+    pool: string[]
+
+  @Prop({ type: Number })
+    deliveryFee: number
 }
 
 export const DeliverySchema = SchemaFactory.createForClass(Delivery)

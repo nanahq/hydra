@@ -12,6 +12,7 @@ async function bootstrap (): Promise<void> {
 
   await app.startAllMicroservices()
 
+  console.log('Hell owrld')
   await app.init()
 
   void app.enableShutdownHooks()

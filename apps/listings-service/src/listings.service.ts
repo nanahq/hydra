@@ -741,7 +741,7 @@ export class ListingsService {
   }
 
   async getHomePageData (
-    userLocation: LocationCoordinates
+    coordinates: [number, number]
   ): Promise<UserHomePage> {
     try {
       const [
@@ -752,7 +752,7 @@ export class ListingsService {
       ] = await Promise.all([
         lastValueFrom<VendorServiceHomePageResult>(
           this.vendorClient.send(QUEUE_MESSAGE.GET_VENDOR_HOMEPAGE, {
-            userLocation
+            coordinates
           })
         ),
         lastValueFrom<ReviewServiceGetMostReviewed>(
@@ -784,6 +784,9 @@ export class ListingsService {
         categoriesWithListingsMenuIds.has(vendor?._id.toString())
       )
 
+      const filteredFastestVendors = vendorServiceResult.nearest.filter((vendor) =>
+        categoriesWithListingsMenuIds.has(vendor?._id.toString())
+      )
       const topVendors = filteredVendors.filter((v) =>
         mostReviewedVendorsIds.has(v._id.toString())
       )
@@ -809,7 +812,7 @@ export class ListingsService {
 
       return {
         allVendors: getVendorsMapper(filteredVendors),
-        fastestDelivery: [],
+        fastestDelivery: getVendorsMapper(filteredFastestVendors),
         homeMadeChefs: getVendorsMapper(homeMadeChefs),
         instantDelivery: getVendorsMapper(instantDelivery),
         mostPopularVendors: getVendorsMapper(topVendors),

@@ -211,6 +211,8 @@ export interface DeliveryI {
     distance: number
     travelTime: number
   }
+  pool: DriverI[]
+  deliveryFee: number
 }
 
 export interface DriverI {
@@ -253,6 +255,8 @@ export interface DriverI {
   updatedAt: string
 
   payment?: PaymentInfo
+
+  s2CellId: string
 }
 
 export interface AdminI {

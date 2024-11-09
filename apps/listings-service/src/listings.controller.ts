@@ -26,8 +26,7 @@ import {
   UpdateOptionGroupDto,
   ScheduledListingDto,
   ListingCategoryI,
-  UserHomePage,
-  LocationCoordinates
+  UserHomePage
 } from '@app/common'
 import { ReasonDto } from '@app/common/database/dto/reason.dto'
 import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager'
@@ -481,11 +480,11 @@ export class ListingsController {
   @CacheTTL(1000)
   @MessagePattern(QUEUE_MESSAGE.GET_HOMEPAGE_USERS)
   async userHomePage (
-    @Payload() { userLocation }: { userLocation: LocationCoordinates },
+    @Payload() { coordinates }: { coordinates: [number, number] },
       @Ctx() context: RmqContext
   ): Promise<UserHomePage> {
     try {
-      return await this.listingService.getHomePageData(userLocation)
+      return await this.listingService.getHomePageData(coordinates)
     } catch (error) {
       throw new RpcException(error)
     } finally {

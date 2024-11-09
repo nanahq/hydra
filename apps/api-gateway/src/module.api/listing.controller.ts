@@ -5,7 +5,7 @@ import {
   HttpException,
   Inject,
   Param,
-  Post
+  Query
 } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
@@ -142,13 +142,15 @@ export class ListingsController {
     )
   }
 
-  @Post('/homepage')
+  @Get('/homepage')
   async getHomepageListings (
-    @Body() userLocation: LocationCoordinates
+    @Body() userLocation: LocationCoordinates,
+      @Query('lat') lat: string,
+      @Query('lng') lng: string
   ): Promise<UserHomePage> {
     return await lastValueFrom<UserHomePage>(
       this.listingClient
-        .send(QUEUE_MESSAGE.GET_HOMEPAGE_USERS, { userLocation })
+        .send(QUEUE_MESSAGE.GET_HOMEPAGE_USERS, { coordinates: [Number(lng), Number(lat)] })
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

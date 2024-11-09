@@ -1,24 +1,25 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { OdsaRepository } from '../ODSA/odsa.repository'
 import {
   Delivery,
-  FitRpcException,
   LocationCoordinates
 } from '@app/common'
 import { DriverRepository } from '../drivers-service.repository'
+import { TacoService } from '../ODSA/taco.service'
 
 @Injectable()
 export class EventsService {
   private readonly logger = new Logger()
   constructor (
     private readonly odsaRepository: OdsaRepository,
-    private readonly driverRepository: DriverRepository
+    private readonly driverRepository: DriverRepository,
+    private readonly tacoService: TacoService
   ) {}
 
   async updateDeliveryLocation (
     driverId: string,
     location: LocationCoordinates
-  ): Promise<any> {
+  ): Promise<string | undefined> {
     try {
       const delivery: Delivery | null =
         await this.odsaRepository.findOneAndUpdate(
@@ -29,13 +30,9 @@ export class EventsService {
           },
           { currentLocation: location }
         )
-      return delivery?._id?.toString()
+      return delivery?._id?.toString() ?? undefined
     } catch (error) {
       this.logger.error(JSON.stringify(error))
-      throw new FitRpcException(
-        'failed to update Delivery location. Something went wrong',
-        HttpStatus.INTERNAL_SERVER_ERROR
-      )
     }
   }
 
@@ -44,13 +41,9 @@ export class EventsService {
     location: LocationCoordinates
   ): Promise<void> {
     try {
-      await this.driverRepository.findOneAndUpdate({ _id }, { location })
+      await this.tacoService.updateDriverLocation(location.coordinates[0], location.coordinates[1], _id)
     } catch (error) {
       this.logger.error(JSON.stringify(error))
-      throw new FitRpcException(
-        'Failed to updated drivers location. Something went wrong',
-        HttpStatus.INTERNAL_SERVER_ERROR
-      )
     }
   }
 }
