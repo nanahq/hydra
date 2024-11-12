@@ -618,7 +618,7 @@ export class ODSA {
         return {
           time: acc.time + (delivery?.travelMeta?.travelTime ?? 0),
           distance: acc.distance + (delivery?.travelMeta?.distance ?? 0),
-          earnings: acc.earnings + 100,
+          earnings: acc.earnings + 100
         }
       },
       { distance: 0, time: 0, earnings: 0 }
@@ -629,7 +629,7 @@ export class ODSA {
         return {
           time: acc.time + (delivery?.travelMeta?.travelTime ?? 0),
           distance: acc.distance + (delivery?.travelMeta?.distance ?? 0),
-          earnings: acc.earnings + 100,
+          earnings: acc.earnings + 100
         }
       },
       { distance: 0, time: 0, earnings: 0 }
@@ -640,7 +640,7 @@ export class ODSA {
         return {
           time: acc.time + (delivery?.travelMeta?.travelTime ?? 0),
           distance: acc.distance + (delivery?.travelMeta?.distance ?? 0),
-          earnings: acc.earnings + 100,
+          earnings: acc.earnings + 100
         }
       },
       { distance: 0, time: 0, earnings: 0 }
@@ -651,7 +651,7 @@ export class ODSA {
         return {
           time: acc.time + (delivery?.travelMeta?.travelTime ?? 0),
           distance: acc.distance + (delivery?.travelMeta?.distance ?? 0),
-          earnings: acc.earnings + 100,
+          earnings: acc.earnings + 100
         }
       },
       { distance: 0, time: 0, earnings: 0 }
