@@ -356,9 +356,9 @@ export class DriversServiceService {
       })
 
       await this.fleetOrgRepository.findOneAndUpdate({
-        _id: createOrganization._id
+        _id: createOrganization._id.toString()
       }, {
-        $push: { members: newMember._id, owners: newMember._id }
+        $push: { members: newMember._id.toString(), owners: newMember._id.toString() }
       })
 
       this.logger.log(`New organization '${payload.organization}' created with member '${payload.email}'`)
@@ -405,9 +405,9 @@ export class DriversServiceService {
       })
 
       await this.fleetOrgRepository.findOneAndUpdate(
-        { _id: organization._id },
+        { _id: organization._id.toString() },
         {
-          $push: { members: createMember._id }
+          $push: { members: createMember._id.toString() }
         }
       )
 
