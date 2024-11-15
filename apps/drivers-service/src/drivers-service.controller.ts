@@ -20,7 +20,10 @@ import {
   UpdateDeliveryStatusDto,
   DeliveryI,
   DriverStatGroup,
-  DriverWalletI
+  DriverWalletI,
+  CreateAccountWithOrganizationDto,
+  AcceptFleetInviteDto,
+  FleetOrganization
 } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
 import { ODSA } from './ODSA/odsa.service'
@@ -230,6 +233,39 @@ export class DriversServiceController {
       return await this.driversServiceService.fetchTransactions(
         driver._id.toString()
       )
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @Post('fleet/create/organization')
+  async createFleetOrganization (
+    @Body() data: CreateAccountWithOrganizationDto
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.driversServiceService.createFleetOrganization(data)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @Post('fleet/invite/member')
+  async acceptFleetOrgInvite (
+    @Body() data: AcceptFleetInviteDto
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.driversServiceService.acceptFleetOrgInvite(data)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @Get('fleet/organization/:inviteLink')
+  async getOrganization (
+    @Param('inviteLink') inviteLink: string
+  ): Promise<FleetOrganization> {
+    try {
+      return await this.driversServiceService.getFleetOrganization(inviteLink)
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
