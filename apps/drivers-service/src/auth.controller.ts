@@ -2,9 +2,9 @@ import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common'
 import { MessagePattern } from '@nestjs/microservices'
 import { Response } from 'express'
 
-import { CurrentUser, Driver, QUEUE_MESSAGE } from '@app/common'
+import { CurrentUser, Driver, FleetMember, QUEUE_MESSAGE } from '@app/common'
 import { JwtAuthGuard } from './auth/guards/jwt.guard'
-import { LocalGuard } from './auth/guards/local.guard'
+import { FleetLocalGuard, LocalGuard } from './auth/guards/local.guard'
 import { AuthService } from './auth.service'
 
 @Controller('auth')
@@ -18,6 +18,15 @@ export class DriversAuthController {
       @Res({ passthrough: true }) response: Response
   ): Promise<any> {
     return await this.authService.login(driver, response)
+  }
+
+  @UseGuards(FleetLocalGuard)
+  @Post('fleet/login')
+  async loginFleet (
+    @CurrentUser() member: FleetMember,
+      @Res({ passthrough: true }) response: Response
+  ): Promise<any> {
+    return await this.authService.loginFleet(member, response)
   }
 
   @Get('logout')

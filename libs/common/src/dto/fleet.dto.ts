@@ -1,4 +1,13 @@
-import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString, MaxLength, MinLength } from 'class-validator'
+import {
+  IsBoolean,
+  IsEmail,
+  IsMongoId,
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+  MaxLength,
+  MinLength
+} from 'class-validator'
 
 export class AcceptFleetInviteDto {
   @IsNotEmpty()
@@ -49,4 +58,14 @@ export class CreateAccountWithOrganizationDto {
   @IsNotEmpty()
   @IsString()
     organization: string
+}
+
+export class UpdateFleetOwnershipStatusDto {
+  @IsNotEmpty()
+  @IsMongoId()
+    memberId: string
+
+  @IsNotEmpty()
+  @IsBoolean()
+    status: boolean
 }
