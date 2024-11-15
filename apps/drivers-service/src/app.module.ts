@@ -21,7 +21,6 @@ import {
   ListingMenuSchema,
   Order,
   OrderSchema,
-  QUEUE_SERVICE,
   RmqModule,
   User,
   UserSchema,
@@ -40,8 +39,8 @@ import { ThrottlerModule } from '@nestjs/throttler'
 import helmet from 'helmet'
 import { AppMetadata } from '../../../app.config'
 import { DriverRepository } from './drivers-service.repository'
-import { LocalStrategy } from './auth/strategy/local.strategy'
-import { JwtStrategy } from './auth/strategy/jwt.strategy'
+import { FleetLocalStrategy, LocalStrategy } from './auth/strategy/local.strategy'
+import { FleetJwtStrategy, JwtStrategy } from './auth/strategy/jwt.strategy'
 import { DriversAuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { ODSA } from './ODSA/odsa.service'
@@ -52,8 +51,12 @@ import { EventsGateway } from './websockets/events.gateway'
 import { EventsService } from './websockets/events.service'
 import * as Joi from 'joi'
 import { TacoService } from './ODSA/taco.service'
-import { FleetMemberRepository } from './fleets-member.repository'
-import { FleetOrgRepository } from './fleets-organization.repository'
+import { FleetMemberRepository } from './fleet/fleets-member.repository'
+import { FleetOrgRepository } from './fleet/fleets-organization.repository'
+import { FleetController } from './fleet/fleet.controller'
+import { FleetService } from './fleet/fleet.service'
+import { FleetLocalGuard } from './auth/guards/local.guard'
+import { FleetJwtAuthGuard } from './auth/guards/jwt.guard'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -121,19 +124,20 @@ export class AppModule implements NestModule {
           }
         ]),
         DatabaseModule,
-        RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
-        RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
+        // RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+        // RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
+        // RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
+        // RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+        // RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
+        // RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
         RmqModule,
         AppModule
       ],
       controllers: [
         DriversServiceController,
         DriversAuthController,
-        OdsaController
+        OdsaController,
+        FleetController
       ],
       providers: [
         DriversServiceService,
@@ -148,6 +152,11 @@ export class AppModule implements NestModule {
         OdsaRepository,
         EventsGateway,
         EventsService,
+        FleetService,
+        FleetLocalGuard,
+        FleetJwtAuthGuard,
+        FleetJwtStrategy,
+        FleetLocalStrategy,
         {
           provide: APP_FILTER,
           useClass: FitHttpException
