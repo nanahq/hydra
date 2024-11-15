@@ -18,6 +18,9 @@ export class FleetMember extends AbstractDocument {
   @Prop({ type: String, unique: true })
     email: string
 
+  @Prop({ type: Boolean, default: false })
+    isOwner: boolean
+
   @Prop(String)
     password: string
 

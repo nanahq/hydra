@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { Response } from 'express'
 
-import { Driver, TokenPayload } from '@app/common'
+import { Driver, FleetMember, TokenPayload } from '@app/common'
 
 @Injectable()
 export class AuthService {
@@ -15,6 +15,23 @@ export class AuthService {
   async login (driver: Driver, response: Response): Promise<void> {
     const payload: TokenPayload = {
       userId: driver._id as any
+    }
+
+    const expires = new Date()
+    expires.setSeconds(
+      expires.getSeconds() + Number(this.configService.get('DRIVER_JWT_EXPIRATION', 200000))
+    )
+    const token = this.jwtService.sign(payload)
+
+    response.cookie('Authentication', token, {
+      httpOnly: true,
+      expires
+    })
+  }
+
+  async loginFleet (member: FleetMember, response: Response): Promise<void> {
+    const payload: TokenPayload = {
+      userId: member._id.toString() as any
     }
 
     const expires = new Date()
