@@ -616,8 +616,8 @@ export class ODSA {
     const dailyStats: DriverStats = todayCompletedDelivery.filter(delivery => delivery?.travelMeta !== undefined).reduce(
       (acc, delivery) => {
         return {
-          time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
-          distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+          time: acc.time + (delivery?.travelMeta?.travelTime ?? 0),
+          distance: acc.distance + (delivery?.travelMeta?.distance ?? 0),
           earnings: acc.earnings + 100
         }
       },
@@ -627,8 +627,8 @@ export class ODSA {
     const previousDayStats: DriverStats = yesterdayCompletedDelivery.filter(delivery => delivery?.travelMeta !== undefined).reduce(
       (acc, delivery) => {
         return {
-          time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
-          distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+          time: acc.time + (delivery?.travelMeta?.travelTime ?? 0),
+          distance: acc.distance + (delivery?.travelMeta?.distance ?? 0),
           earnings: acc.earnings + 100
         }
       },
@@ -638,8 +638,8 @@ export class ODSA {
     const weeklyStats: DriverStats = weekCompletedDelivery.filter(delivery => delivery?.travelMeta !== undefined).reduce(
       (acc, delivery) => {
         return {
-          time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
-          distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+          time: acc.time + (delivery?.travelMeta?.travelTime ?? 0),
+          distance: acc.distance + (delivery?.travelMeta?.distance ?? 0),
           earnings: acc.earnings + 100
         }
       },
@@ -649,8 +649,8 @@ export class ODSA {
     const monthlyStats: DriverStats = monthCompletedDelivery.filter(delivery => delivery?.travelMeta !== undefined).reduce(
       (acc, delivery) => {
         return {
-          time: acc.time + delivery?.travelMeta?.travelTime ?? 0,
-          distance: acc.distance + delivery?.travelMeta?.distance ?? 0,
+          time: acc.time + (delivery?.travelMeta?.travelTime ?? 0),
+          distance: acc.distance + (delivery?.travelMeta?.distance ?? 0),
           earnings: acc.earnings + 100
         }
       },

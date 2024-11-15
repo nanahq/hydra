@@ -9,20 +9,25 @@ import {
   Driver,
   DriverWalletI,
   FitRpcException,
+  FleetOrganization,
   internationalisePhoneNumber,
   IRpcException,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
+  RandomGen,
   RegisterDriverDto,
   ResponseWithStatus,
   VendorApprovalStatus
 } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
+import { FleetOrgRepository } from './fleets-organization.repository'
+import { FleetMemberRepository } from './fleets-member.repository'
 import * as bcrypt from 'bcryptjs'
 // import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy } from '@nestjs/microservices'
 import { createTransaction, updateIsDriverInternalDto } from '@app/common/dto/General.dto'
 import { catchError, lastValueFrom } from 'rxjs'
+import { AcceptFleetInviteDto, CreateAccountWithOrganizationDto } from '@app/common/dto/fleet.dto'
 
 @Injectable()
 export class DriversServiceService {
@@ -30,6 +35,10 @@ export class DriversServiceService {
 
   constructor (
     private readonly driverRepository: DriverRepository,
+
+    private readonly fleetOrgRepository: FleetOrgRepository,
+
+    private readonly fleetMemberRepository: FleetMemberRepository,
 
     @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
     private readonly paymentClient: ClientProxy
@@ -316,6 +325,122 @@ export class DriversServiceService {
           error
         })
       )
+    }
+  }
+
+  async createFleetOrganization (payload: CreateAccountWithOrganizationDto): Promise<ResponseWithStatus> {
+    const existingOrganization = await this.fleetOrgRepository.findOne({
+      name: payload.organization.toLowerCase()
+    })
+
+    if (existingOrganization !== null) {
+      throw new FitRpcException(
+        'Organization name already already exists',
+        HttpStatus.CONFLICT
+      )
+    }
+
+    try {
+      const createOrganization = await this.fleetOrgRepository.create({
+        name: payload.organization,
+        inviteLink: RandomGen.genRandomString()
+      })
+
+      const newMember = await this.fleetMemberRepository.create({
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        phone: internationalisePhoneNumber(payload.phone),
+        email: payload.email,
+        password: await bcrypt.hash(payload.password, 10),
+        organization: createOrganization._id.toString()
+      })
+
+      await this.fleetOrgRepository.findOneAndUpdate({
+        _id: createOrganization._id.toString()
+      }, {
+        $push: { members: newMember._id.toString(), owners: newMember._id.toString() }
+      })
+
+      this.logger.log(`New organization '${payload.organization}' created with member '${payload.email}'`)
+
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error({
+        message: `Failed to register new organization ${payload.email} `,
+        error
+      })
+      throw new FitRpcException(
+        'Can not register a new organization at the moment. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async acceptFleetOrgInvite (payload: AcceptFleetInviteDto): Promise<ResponseWithStatus> {
+    const existingMember = await this.fleetMemberRepository.findOne({
+      phone: internationalisePhoneNumber(payload.phone)
+    })
+
+    if (existingMember !== null) {
+      throw new FitRpcException(
+        'Member already belongs to another organization',
+        HttpStatus.CONFLICT
+      )
+    }
+
+    try {
+      const organization: FleetOrganization = await this.fleetOrgRepository.findOne(
+        {
+          inviteLink: payload.inviteLink
+        }
+      )
+
+      const createMember = await this.fleetMemberRepository.create({
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        phone: internationalisePhoneNumber(payload.phone),
+        password: await bcrypt.hash(payload.password, 10),
+        email: payload.email,
+        organization: organization._id.toString()
+      })
+
+      await this.fleetOrgRepository.findOneAndUpdate(
+        { _id: organization._id.toString() },
+        {
+          $push: { members: createMember._id.toString() }
+        }
+      )
+
+      this.logger.log(`New member with email:'${payload.email}' created.`)
+
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error({
+        message: `Failed to register new member ${payload.email} `,
+        error
+      })
+      throw new FitRpcException(
+        'Can not register a new member at the moment. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async getFleetOrganization (inviteLink: string): Promise<FleetOrganization> {
+    try {
+      const organization = await this.fleetOrgRepository.findOne({ inviteLink })
+
+      if (organization === null) {
+        throw new Error('No organization with the given invite link')
+      }
+
+      return organization
+    } catch (error) {
+      this.logger.error({
+        message: `Failed to fetch organization with ${inviteLink} `,
+        error
+      })
+      throw new FitRpcException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 

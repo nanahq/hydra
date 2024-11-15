@@ -27,7 +27,11 @@ import {
   UserSchema,
   Vendor,
   VendorSchema,
-  DatabaseModule
+  DatabaseModule,
+  FleetOrganization,
+  FleetOrganizationSchema,
+  FleetMember,
+  FleetMemberSchema
 } from '@app/common'
 import * as cookieParser from 'cookie-parser'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
@@ -48,6 +52,8 @@ import { EventsGateway } from './websockets/events.gateway'
 import { EventsService } from './websockets/events.service'
 import * as Joi from 'joi'
 import { TacoService } from './ODSA/taco.service'
+import { FleetMemberRepository } from './fleets-member.repository'
+import { FleetOrgRepository } from './fleets-organization.repository'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -104,6 +110,14 @@ export class AppModule implements NestModule {
           {
             name: Delivery.name,
             schema: DeliverySchema
+          },
+          {
+            name: FleetOrganization.name,
+            schema: FleetOrganizationSchema
+          },
+          {
+            name: FleetMember.name,
+            schema: FleetMemberSchema
           }
         ]),
         DatabaseModule,
@@ -124,6 +138,8 @@ export class AppModule implements NestModule {
       providers: [
         DriversServiceService,
         DriverRepository,
+        FleetMemberRepository,
+        FleetOrgRepository,
         JwtStrategy,
         LocalStrategy,
         AuthService,
