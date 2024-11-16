@@ -5,11 +5,13 @@ import {
   FitRpcException, FleetMember, FleetOrganization,
   internationalisePhoneNumber,
   RandomGen,
-  ResponseWithStatus, UpdateFleetOwnershipStatusDto
+  ResponseWithStatus, SOCKET_MESSAGE, UpdateFleetOwnershipStatusDto
 } from '@app/common'
 import { FleetOrgRepository } from './fleets-organization.repository'
 import { FleetMemberRepository } from './fleets-member.repository'
 import * as bcrypt from 'bcryptjs'
+import { EventsGateway } from '../websockets/events.gateway'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class FleetService {
@@ -17,7 +19,8 @@ export class FleetService {
 
   constructor (
     private readonly organizationRepository: FleetOrgRepository,
-    private readonly memberRepository: FleetMemberRepository
+    private readonly memberRepository: FleetMemberRepository,
+    private readonly eventsGateway: EventsGateway
   ) {}
 
   public async getProfile (id: string): Promise<FleetMember> {
@@ -192,6 +195,43 @@ export class FleetService {
       } else {
         throw new FitRpcException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
       }
+    }
+  }
+
+  //   @Crons
+
+  /**
+   *
+   */
+
+  @Cron(CronExpression.EVERY_MINUTE)
+  async pushOutFleetDriversLocation (): Promise<void> {
+    try {
+      const organizations = await this.organizationRepository.findRaw()
+        .find({})
+        .select('_id name owners members drivers')
+        .populate({
+          path: 'owners',
+          select: 'firstName lastName'
+        })
+        .populate({
+          path: 'members',
+          select: 'firstName lastName'
+        })
+        .populate({
+          path: 'drivers',
+          select: '_id firstName lastName location phone status'
+        })
+        .exec() as any
+
+      for (const organization of organizations) {
+        this.eventsGateway.server.emit(SOCKET_MESSAGE.FLEET_PUSH_OUT_DRIVERS, {
+          organization: organization?._id,
+          data: organization
+        } as any)
+      }
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
     }
   }
 }

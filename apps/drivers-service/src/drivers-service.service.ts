@@ -18,8 +18,6 @@ import {
   VendorApprovalStatus
 } from '@app/common'
 import { DriverRepository } from './drivers-service.repository'
-import { FleetOrgRepository } from './fleet/fleets-organization.repository'
-import { FleetMemberRepository } from './fleet/fleets-member.repository'
 import * as bcrypt from 'bcryptjs'
 import { ClientProxy } from '@nestjs/microservices'
 import { createTransaction, updateIsDriverInternalDto } from '@app/common/dto/General.dto'
@@ -31,10 +29,6 @@ export class DriversServiceService {
 
   constructor (
     private readonly driverRepository: DriverRepository,
-
-    private readonly fleetOrgRepository: FleetOrgRepository,
-
-    private readonly fleetMemberRepository: FleetMemberRepository,
 
     @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
     private readonly paymentClient: ClientProxy
