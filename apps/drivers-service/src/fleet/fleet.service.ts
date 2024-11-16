@@ -48,7 +48,7 @@ export class FleetService {
     email: string,
     password: string
   ): Promise<FleetMember> {
-    const member = await this.memberRepository.findOneAndPopulate({
+    const member: FleetMember = await this.memberRepository.findOneAndPopulate({
       email: email.toLowerCase()
     }, ['organization'])
     if (member === null) {

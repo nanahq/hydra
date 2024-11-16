@@ -23,6 +23,7 @@ export class AcceptFleetInviteDto {
     phone: string
 
   @IsNotEmpty()
+  @IsEmail()
     email: string
 
   @MinLength(8)

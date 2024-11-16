@@ -199,6 +199,7 @@ export interface RegisterDriverDto {
   email: string;
   nin: number;
   type: DriverType;
+  organization?: string;
 }
 
 export interface UpdateUserDto {
@@ -383,4 +384,27 @@ export interface UpdateTransaction {
   txId: string;
   driverId: string;
   status: WalletTransactionStatus;
+}
+
+export interface AcceptFleetInviteDto {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  password: string;
+  inviteLink: string;
+}
+
+export interface CreateAccountWithOrganizationDto {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  password: string;
+  organization: string;
+}
+
+export class UpdateFleetOwnershipStatusDto {
+  memberId: string;
+  status: boolean;
 }

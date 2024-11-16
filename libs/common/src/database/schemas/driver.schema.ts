@@ -88,6 +88,9 @@ export class Driver extends AbstractDocument {
 
   @Prop(String)
     s2CellId: string
+
+  @Prop({ type: Types.ObjectId, ref: 'FleetOrganization' })
+    organization: string
 }
 
 export const DriverSchema = SchemaFactory.createForClass(Driver)

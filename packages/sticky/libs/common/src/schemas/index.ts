@@ -5,7 +5,8 @@ import {
   OrderType,
   PaymentInfo,
   VendorOperationSetting,
-  DriverType, AdminLevel, ListingApprovalStatus, OrderOptions, VendorApprovalStatusEnum
+  DriverType, AdminLevel, ListingApprovalStatus, OrderOptions,
+  VendorApprovalStatusEnum, 
 } from '../typings'
 export interface ListingCategoryI {
   _id: string
@@ -257,6 +258,8 @@ export interface DriverI {
   payment?: PaymentInfo
 
   s2CellId: string
+
+  organization?: string
 }
 
 export interface AdminI {
@@ -467,4 +470,47 @@ export interface CouponI {
   updatedAt: string
 
   listing?: ListingMenuI
+}
+
+export interface FleetOrganizationI {
+  _id: string
+
+  members: string[]
+
+  owners: string[]
+
+  name: string
+
+  image: string
+
+  password: string
+
+  email: string
+
+  accountApproved: boolean
+
+  inviteLink: string
+
+  drivers: string[]
+}
+
+
+export interface FleetMemberI {
+  _id: string
+
+  firstName: string
+
+
+  lastName: string
+
+  phone: string
+
+
+  email: string
+
+  isOwner: boolean
+
+  password: string
+
+  organization: string
 }
