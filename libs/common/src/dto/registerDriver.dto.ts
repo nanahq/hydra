@@ -9,7 +9,8 @@ import {
   registerDecorator,
   ValidationOptions,
   ValidationArguments,
-  IsBoolean
+  IsBoolean,
+  IsOptional
 } from 'class-validator'
 import { DriverType } from '@app/common'
 import { Transform } from 'class-transformer'
@@ -77,4 +78,8 @@ export class RegisterDriverDto {
 
   @IsBoolean()
     internal: boolean = false
+
+  @IsOptional()
+  @IsString()
+    organization?: string
 }
