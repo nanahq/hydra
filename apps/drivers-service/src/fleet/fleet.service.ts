@@ -2,16 +2,21 @@ import { HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/commo
 import {
   AcceptFleetInviteDto,
   CreateAccountWithOrganizationDto,
+  Driver,
   FitRpcException, FleetMember, FleetOrganization,
   internationalisePhoneNumber,
   RandomGen,
-  ResponseWithStatus, SOCKET_MESSAGE, UpdateFleetOwnershipStatusDto
+  RegisterDriverDto,
+  ResponseWithStatus, SOCKET_MESSAGE, UpdateFleetOwnershipStatusDto,
+  VendorApprovalStatus
 } from '@app/common'
 import { FleetOrgRepository } from './fleets-organization.repository'
 import { FleetMemberRepository } from './fleets-member.repository'
 import * as bcrypt from 'bcryptjs'
 import { EventsGateway } from '../websockets/events.gateway'
 import { Cron, CronExpression } from '@nestjs/schedule'
+import { DriversServiceService } from '../drivers-service.service'
+import { DriverRepository } from '../drivers-service.repository'
 
 @Injectable()
 export class FleetService {
@@ -20,6 +25,8 @@ export class FleetService {
   constructor (
     private readonly organizationRepository: FleetOrgRepository,
     private readonly memberRepository: FleetMemberRepository,
+    private readonly driverService: DriversServiceService,
+    private readonly driverRepository: DriverRepository,
     private readonly eventsGateway: EventsGateway
   ) {}
 
@@ -195,6 +202,64 @@ export class FleetService {
       } else {
         throw new FitRpcException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
       }
+    }
+  }
+
+  async ownerCreateDriver (
+    payload: RegisterDriverDto
+  ): Promise<ResponseWithStatus> {
+    try {
+      const organization: FleetOrganization = await this.organizationRepository.findOne(
+        {
+          _id: payload.organization
+        }
+      )
+
+      if (organization === null) {
+        throw new NotFoundException('Organization not found')
+      }
+
+      const existingMember = await this.memberRepository.findOne({
+        email: payload.email.toLowerCase()
+      })
+
+      if (existingMember) {
+        throw new FitRpcException(
+          'Email already registered',
+          HttpStatus.CONFLICT
+        )
+      }
+
+      const _driver: Partial<Driver> = {
+        ...payload,
+        password: await bcrypt.hash(payload.password, 10)
+      }
+      console.log(_driver)
+      this.logger.log(`Registering a new driver with email: ${payload.email}`)
+
+      const driver = await this.driverRepository.create(_driver)
+
+      await this.driverRepository.findOneAndUpdate({
+        _id: driver._id
+      },
+      { acc_status: VendorApprovalStatus.APPROVED })
+
+      await this.organizationRepository.findOneAndUpdate(
+        { _id: payload.organization },
+        {
+          $push: { drivers: driver._id.toString(), members: driver._id.toString() }
+        }
+      )
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error({
+        message: `Failed to register new organization ${payload.email} `,
+        error
+      })
+      throw new FitRpcException(
+        'Can not register a new organization at the moment. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
     }
   }
 

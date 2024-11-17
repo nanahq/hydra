@@ -4,6 +4,7 @@ import {
   AcceptFleetInviteDto,
   CreateAccountWithOrganizationDto, FleetMember,
   FleetOrganization,
+  RegisterDriverDto,
   ResponseWithStatus, UpdateFleetOwnershipStatusDto
 } from '@app/common'
 import { FleetOwner } from './decorators/ownership'
@@ -56,6 +57,19 @@ export class FleetController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.fleetService.updateOrgOwnership(data)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Post('owner/driver')
+  async ownerCreateDriver (
+    @FleetOwner() owner: FleetMember,
+      @Body() data: RegisterDriverDto
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.fleetService.ownerCreateDriver(data)
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
