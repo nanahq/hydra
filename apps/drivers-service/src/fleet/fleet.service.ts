@@ -253,11 +253,11 @@ export class FleetService {
       return { status: 1 }
     } catch (error) {
       this.logger.error({
-        message: `Failed to register new organization ${payload.email} `,
+        message: `Failed to register new driver ${payload.email} `,
         error
       })
       throw new FitRpcException(
-        'Can not register a new organization at the moment. Something went wrong.',
+        'Can not register a new driver at the moment. Something went wrong.',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
