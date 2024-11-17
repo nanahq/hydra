@@ -30,7 +30,8 @@ import {
   FleetOrganization,
   FleetOrganizationSchema,
   FleetMember,
-  FleetMemberSchema
+  FleetMemberSchema,
+  QUEUE_SERVICE
 } from '@app/common'
 import * as cookieParser from 'cookie-parser'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
@@ -124,12 +125,12 @@ export class AppModule implements NestModule {
           }
         ]),
         DatabaseModule,
-        // RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
         RmqModule,
         AppModule
       ],
