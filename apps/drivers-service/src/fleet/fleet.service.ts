@@ -262,6 +262,24 @@ export class FleetService {
     }
   }
 
+  async updateOgranization (
+    payload: Partial<FleetOrganization>,
+    organizationId: string
+  ): Promise<ResponseWithStatus> {
+    try {
+      await this.organizationRepository.findOneAndUpdate(
+        { _id: organizationId.toString() },
+        { ...payload }
+      )
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not update organization. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
   //   @Crons
 
   /**
