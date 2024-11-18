@@ -492,6 +492,8 @@ export interface FleetOrganizationI {
   inviteLink: string
 
   drivers: string[]
+
+  payment?: PaymentInfo
 }
 
 

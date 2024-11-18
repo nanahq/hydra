@@ -234,7 +234,6 @@ export class FleetService {
         ...payload,
         password: await bcrypt.hash(payload.password, 10)
       }
-      console.log(_driver)
       this.logger.log(`Registering a new driver with email: ${payload.email}`)
 
       const driver = await this.driverRepository.create(_driver)
