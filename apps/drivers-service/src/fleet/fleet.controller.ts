@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, Param, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, HttpException, Param, Post, Put, UseGuards } from '@nestjs/common'
 import { FleetService } from './fleet.service'
 import {
   AcceptFleetInviteDto,
@@ -70,6 +70,22 @@ export class FleetController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.fleetService.ownerCreateDriver(data)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Put('owner/update-organization')
+  async updateOrganization (
+    @FleetOwner() owner: FleetMember,
+      @Body() payload: Partial<FleetOrganization>
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.fleetService.updateOgranization(
+        payload,
+        owner.organization
+      )
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
