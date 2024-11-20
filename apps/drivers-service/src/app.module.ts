@@ -58,6 +58,7 @@ import { FleetController } from './fleet/fleet.controller'
 import { FleetService } from './fleet/fleet.service'
 import { FleetLocalGuard } from './auth/guards/local.guard'
 import { FleetJwtAuthGuard } from './auth/guards/jwt.guard'
+import { AwsService } from 'apps/vendor-gateway/src/aws.service'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -148,6 +149,7 @@ export class AppModule implements NestModule {
         JwtStrategy,
         LocalStrategy,
         AuthService,
+        AwsService,
         ODSA,
         TacoService,
         OdsaRepository,

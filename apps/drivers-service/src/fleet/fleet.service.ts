@@ -280,6 +280,20 @@ export class FleetService {
     }
   }
 
+  async uploadOrganizationLogo (data: any, _id: string): Promise<void> {
+    try {
+      await this.organizationRepository.findOneAndUpdate(
+        { _id },
+        { image: data }
+      )
+    } catch (e) {
+      throw new FitRpcException(
+        'Failed to upload logo',
+        HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
+
   //   @Crons
 
   /**
