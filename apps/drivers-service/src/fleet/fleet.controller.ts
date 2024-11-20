@@ -5,8 +5,7 @@ import {
   CreateAccountWithOrganizationDto, FleetMember,
   FleetOrganization,
   RegisterDriverDto,
-  ResponseWithStatus, UpdateFleetOwnershipStatusDto,
-  ServicePayload
+  ResponseWithStatus, UpdateFleetOwnershipStatusDto
 } from '@app/common'
 import { FleetOwner } from './decorators/ownership'
 import { FleetJwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -109,11 +108,7 @@ export class FleetController {
   ): Promise<string | undefined> {
     try {
       const photo = await this.awsService.upload(file)
-      const payload: ServicePayload<string | undefined> = {
-        userId: owner.organization,
-        data: photo
-      }
-      await this.fleetService.uploadOrganizationLogo(payload.data, payload.userId)
+      await this.fleetService.uploadOrganizationLogo(photo, owner.organization)
       return photo
     } catch (error) {
       throw new HttpException(error.message, error.status)
