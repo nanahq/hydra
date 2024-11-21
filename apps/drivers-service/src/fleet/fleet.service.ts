@@ -7,7 +7,7 @@ import {
   internationalisePhoneNumber,
   RandomGen,
   RegisterDriverDto,
-  ResponseWithStatus, SOCKET_MESSAGE, UpdateFleetOwnershipStatusDto,
+  ResponseWithStatus, SOCKET_MESSAGE, UpdateFleetMemberProfileDto, UpdateFleetOwnershipStatusDto,
   VendorApprovalStatus
 } from '@app/common'
 import { FleetOrgRepository } from './fleets-organization.repository'
@@ -290,6 +290,24 @@ export class FleetService {
       throw new FitRpcException(
         'Failed to upload logo',
         HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
+
+  async updateMemberProfile (
+    payload: UpdateFleetMemberProfileDto,
+    memberId: string
+  ): Promise<ResponseWithStatus> {
+    try {
+      await this.memberRepository.findOneAndUpdate(
+        { _id: memberId.toString() },
+        { ...payload }
+      )
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not update member. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
   }

@@ -408,3 +408,10 @@ export class UpdateFleetOwnershipStatusDto {
   memberId: string;
   status: boolean;
 }
+
+export class UpdateFleetMemberProfileDto {
+  firstName?: string
+  lastName?: string
+  email?: string
+  phone?: string
+}
