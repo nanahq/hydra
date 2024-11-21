@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, Param, Post, Put, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, HttpException, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common'
 import { FleetService } from './fleet.service'
 import {
   AcceptFleetInviteDto,
@@ -9,11 +9,15 @@ import {
 } from '@app/common'
 import { FleetOwner } from './decorators/ownership'
 import { FleetJwtAuthGuard } from '../auth/guards/jwt.guard'
+import { AwsService } from 'apps/vendor-gateway/src/aws.service'
+import { FileInterceptor } from '@nestjs/platform-express'
+import * as multer from 'multer'
 
 @Controller('fleet')
 export class FleetController {
   constructor (
-    private readonly fleetService: FleetService
+    private readonly fleetService: FleetService,
+    private readonly awsService: AwsService
   ) {}
 
   @Post('create/organization')
@@ -86,6 +90,26 @@ export class FleetController {
         payload,
         owner.organization
       )
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: multer.memoryStorage()
+    })
+  )
+  @Put('image/organization')
+  async uploadOrganizationLogo (
+    @FleetOwner() owner: FleetMember,
+      @UploadedFile() file: Express.Multer.File
+  ): Promise<string | undefined> {
+    try {
+      const photo = await this.awsService.upload(file)
+      await this.fleetService.uploadOrganizationLogo(photo, owner.organization)
+      return photo
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
