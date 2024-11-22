@@ -2,10 +2,10 @@ import { Body, Controller, Get, HttpException, Param, Post, Put, UploadedFile, U
 import { FleetService } from './fleet.service'
 import {
   AcceptFleetInviteDto,
-  CreateAccountWithOrganizationDto, FleetMember,
+  CreateAccountWithOrganizationDto, CurrentUser, FleetMember,
   FleetOrganization,
   RegisterDriverDto,
-  ResponseWithStatus, UpdateFleetOwnershipStatusDto
+  ResponseWithStatus, UpdateFleetMemberProfileDto, UpdateFleetOwnershipStatusDto
 } from '@app/common'
 import { FleetOwner } from './decorators/ownership'
 import { FleetJwtAuthGuard } from '../auth/guards/jwt.guard'
@@ -110,6 +110,19 @@ export class FleetController {
       const photo = await this.awsService.upload(file)
       await this.fleetService.uploadOrganizationLogo(photo, owner.organization)
       return photo
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Put('member/profile')
+  async updateMemberProfile (
+    @CurrentUser() member: FleetMember,
+      @Body() data: UpdateFleetMemberProfileDto
+  ): Promise<ResponseWithStatus> {
+    try {
+      return await this.fleetService.updateMemberProfile(data, member._id.toString())
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
