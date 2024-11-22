@@ -312,6 +312,34 @@ export class FleetService {
     }
   }
 
+  async getAllOrganizationMembers (organization: string): Promise<FleetMember[]> {
+    const getRequest = await this.memberRepository.find(
+      { organization }
+    )
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all organization members.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
+  async getAllOrganizationDrivers (organization: string): Promise<Driver[]> {
+    const getRequest = await this.driverRepository.find(
+      { organization }
+    )
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all organization drivers.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
   //   @Crons
 
   /**
