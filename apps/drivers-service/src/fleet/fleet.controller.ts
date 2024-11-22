@@ -2,7 +2,7 @@ import { Body, Controller, Get, HttpException, Param, Post, Put, UploadedFile, U
 import { FleetService } from './fleet.service'
 import {
   AcceptFleetInviteDto,
-  CreateAccountWithOrganizationDto, CurrentUser, FleetMember,
+  CreateAccountWithOrganizationDto, CurrentUser, Driver, FleetMember,
   FleetOrganization,
   RegisterDriverDto,
   ResponseWithStatus, UpdateFleetMemberProfileDto, UpdateFleetOwnershipStatusDto
@@ -123,6 +123,31 @@ export class FleetController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.fleetService.updateMemberProfile(data, member._id.toString())
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Get('member/all')
+  async getAllOrganizationMembers (
+    @CurrentUser() member: FleetMember
+  ): Promise<FleetMember[]> {
+    try {
+      return await this.fleetService.getAllOrganizationMembers(member.organization.toString())
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Get('member/drivers')
+  async getAllOrganizationDrivers (
+    @CurrentUser() member: FleetMember
+  ): Promise<Driver[]> {
+    console.log(member)
+    try {
+      return await this.fleetService.getAllOrganizationDrivers(member.organization.toString())
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }
