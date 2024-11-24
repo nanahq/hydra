@@ -2,9 +2,11 @@ import { HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/commo
 import {
   AcceptFleetInviteDto,
   CreateAccountWithOrganizationDto,
+  Delivery,
   Driver,
   FitRpcException, FleetMember, FleetOrganization,
   internationalisePhoneNumber,
+  OrderStatus,
   RandomGen,
   RegisterDriverDto,
   ResponseWithStatus, SOCKET_MESSAGE, UpdateFleetMemberProfileDto, UpdateFleetOwnershipStatusDto,
@@ -17,6 +19,7 @@ import { EventsGateway } from '../websockets/events.gateway'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { DriversServiceService } from '../drivers-service.service'
 import { DriverRepository } from '../drivers-service.repository'
+import { OdsaRepository } from '../ODSA/odsa.repository'
 
 @Injectable()
 export class FleetService {
@@ -27,7 +30,8 @@ export class FleetService {
     private readonly memberRepository: FleetMemberRepository,
     private readonly driverService: DriversServiceService,
     private readonly driverRepository: DriverRepository,
-    private readonly eventsGateway: EventsGateway
+    private readonly eventsGateway: EventsGateway,
+    private readonly odsaRepository: OdsaRepository
   ) {}
 
   public async getProfile (id: string): Promise<FleetMember> {
@@ -338,6 +342,51 @@ export class FleetService {
       )
     }
     return getRequest
+  }
+
+  async getPopulatedMember (_id: string): Promise<FleetMember> {
+    try {
+      const memeber = await this.memberRepository.findOneAndPopulate<FleetMember>(
+        { _id },
+        ['FleetOrganization']
+      )
+      if (memeber === null) {
+        throw new FitRpcException(
+          'Member with that id can not be found',
+          HttpStatus.NOT_FOUND
+        )
+      }
+
+      return memeber
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new FitRpcException('No member found with the given ID', HttpStatus.UNAUTHORIZED)
+      } else {
+        throw new FitRpcException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      }
+    }
+  }
+
+  async getOrganizationDeliveries (organization: string): Promise<Delivery[]> {
+    const drivers = await this.driverRepository.find(
+      { organization }
+    )
+
+    const driverIds = drivers.map((driver) =>
+      driver._id.toString()
+    )
+
+    return await this.odsaRepository
+      .findRaw()
+      .find({ completed: false, status: { $ne: OrderStatus.FULFILLED }, pool: { $in: driverIds } })
+      .populate('vendor')
+      .populate({
+        path: 'order',
+        populate: {
+          path: 'listing'
+        }
+      })
+      .exec()
   }
 
   //   @Crons
