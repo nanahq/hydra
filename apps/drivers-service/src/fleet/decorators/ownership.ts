@@ -3,7 +3,7 @@ import {
   ExecutionContext,
   ForbiddenException
 } from '@nestjs/common'
-import {  FleetMember } from '@app/common'
+import { FleetMember } from '@app/common'
 
 export function getCurrentUserByContext (
   context: ExecutionContext
@@ -14,7 +14,7 @@ export function getCurrentUserByContext (
   return context.switchToRpc().getData()?.user as FleetMember
 }
 export const FleetOwner = createParamDecorator(
-  (level: string = "", ctx: ExecutionContext) => {
+  (level: string = '', ctx: ExecutionContext) => {
     const member = getCurrentUserByContext(ctx) as FleetMember
 
     if (!member?.isOwner) {
