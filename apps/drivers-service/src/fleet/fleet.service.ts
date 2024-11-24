@@ -348,7 +348,7 @@ export class FleetService {
     try {
       const memeber = await this.memberRepository.findOneAndPopulate<FleetMember>(
         { _id },
-        ['FleetOrganization']
+        ['organization']
       )
       if (memeber === null) {
         throw new FitRpcException(
