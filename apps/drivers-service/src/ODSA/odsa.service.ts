@@ -287,12 +287,11 @@ export class ODSA {
 
   public async handleAcceptDelivery (opts: {
     deliveryId: string
-    orderId: string
     driverId: string
   }): Promise<ResponseWithStatus> {
     try {
       const updated = await this.odsaRepository.findOneAndUpdate(
-        { _id: opts.deliveryId, order: opts.orderId, assignedToDriver: false },
+        { _id: opts.deliveryId, assignedToDriver: false },
         { driver: opts.driverId, assignedToDriver: true }
       )
       if (updated === null) {

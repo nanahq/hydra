@@ -20,6 +20,7 @@ import { Cron, CronExpression } from '@nestjs/schedule'
 import { DriversServiceService } from '../drivers-service.service'
 import { DriverRepository } from '../drivers-service.repository'
 import { OdsaRepository } from '../ODSA/odsa.repository'
+import { ODSA } from '../ODSA/odsa.service'
 
 @Injectable()
 export class FleetService {
@@ -31,7 +32,8 @@ export class FleetService {
     private readonly driverService: DriversServiceService,
     private readonly driverRepository: DriverRepository,
     private readonly eventsGateway: EventsGateway,
-    private readonly odsaRepository: OdsaRepository
+    private readonly odsaRepository: OdsaRepository,
+    private readonly odsaService: ODSA
   ) {}
 
   public async getProfile (id: string): Promise<FleetMember> {
@@ -397,22 +399,19 @@ export class FleetService {
       const checkDriver = await this.driverRepository.find(
         {
           _id: driverId,
-          organization: { $ne: null }
+          status: 'ONLINE',
+          available: true
         }
       )
 
-      if (checkDriver !== null) {
-        await this.odsaRepository.findOneAndUpdate(
-          { _id: deliveryId.toString(), assignedToDriver: false },
-          { driver: driverId.toString(), assignedToDriver: true }
+      if (checkDriver === null) {
+        throw new FitRpcException(
+          'Something went wrong fetching the driver.',
+          HttpStatus.BAD_REQUEST
         )
       }
 
-      // update assigned driver status
-      await this.driverRepository.findOneAndUpdate(
-        { _id: driverId },
-        { available: false }
-      )
+      await this.odsaService.handleAcceptDelivery({ deliveryId, driverId })
     } catch (error) {
       this.logger.error(
         `Something went wrong processing order with deliveryId: ${deliveryId}`
