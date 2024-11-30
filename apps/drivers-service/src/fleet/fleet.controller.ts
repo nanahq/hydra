@@ -175,4 +175,17 @@ export class FleetController {
       throw new HttpException(error.message, error.status)
     }
   }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Post('driver/assign')
+  async assignFleetDriver (
+    @CurrentUser() member: FleetMember,
+      @Body() payload: { driverId: string, deliveryId: string }
+  ): Promise<void> {
+    try {
+      return await this.fleetService.assignFleetDrivers(payload.driverId, payload.deliveryId)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
 }

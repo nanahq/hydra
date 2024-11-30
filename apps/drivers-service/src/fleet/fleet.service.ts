@@ -389,6 +389,42 @@ export class FleetService {
       .exec()
   }
 
+  async assignFleetDrivers (
+    driverId: string,
+    deliveryId: string
+  ): Promise<void> {
+    try {
+      const checkDriver = await this.driverRepository.find(
+        {
+          _id: driverId,
+          organization: { $ne: null }
+        }
+      )
+
+      if (checkDriver !== null) {
+        await this.odsaRepository.findOneAndUpdate(
+          { _id: deliveryId.toString(), assignedToDriver: false },
+          { driver: driverId.toString(), assignedToDriver: true }
+        )
+      }
+
+      // update assigned driver status
+      await this.driverRepository.findOneAndUpdate(
+        { _id: driverId },
+        { available: false }
+      )
+    } catch (error) {
+      this.logger.error(
+        `Something went wrong processing order with deliveryId: ${deliveryId}`
+      )
+      this.logger.error(JSON.stringify(error))
+      throw new FitRpcException(
+        'Can not process order right now',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
   //   @Crons
 
   /**
