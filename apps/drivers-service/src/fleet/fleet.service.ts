@@ -81,6 +81,7 @@ export class FleetService {
   async createFleetOrganization (payload: CreateAccountWithOrganizationDto): Promise<ResponseWithStatus> {
     try {
       const createOrganization = await this.organizationRepository.create({
+        ...payload,
         name: payload.organization,
         inviteLink: RandomGen.genRandomString(100, 20)
       })
