@@ -2,7 +2,7 @@ import { Body, Controller, Get, HttpException, Param, Post, Put, UploadedFile, U
 import { FleetService } from './fleet.service'
 import {
   AcceptFleetInviteDto,
-  CreateAccountWithOrganizationDto, CurrentUser, Delivery, Driver, FleetMember,
+  CreateAccountWithOrganizationDto, CurrentUser, Delivery, Driver, DriverStatGroup, FleetMember,
   FleetOrganization,
   RegisterDriverDto,
   ResponseWithStatus, UpdateFleetMemberProfileDto, UpdateFleetOwnershipStatusDto
@@ -184,6 +184,19 @@ export class FleetController {
   ): Promise<void> {
     try {
       return await this.fleetService.assignFleetDrivers(payload.driverId, payload.deliveryId)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Get('driver-stats/:driverId')
+  async getFleetDriverStats (
+    @CurrentUser() member: FleetMember,
+      @Param('driverId') driverId: string
+  ): Promise<DriverStatGroup> {
+    try {
+      return await this.fleetService.getFleetDriverStats(driverId, member._id.toString())
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }

@@ -4,6 +4,7 @@ import {
   CreateAccountWithOrganizationDto,
   Delivery,
   Driver,
+  DriverStatGroup,
   FitRpcException, FleetMember, FleetOrganization,
   internationalisePhoneNumber,
   OrderStatus,
@@ -423,6 +424,28 @@ export class FleetService {
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
+  }
+
+  async getFleetDriverStats (driverId: string, memberId: string): Promise<DriverStatGroup> {
+    const [member, driver]: [FleetMember, Driver] = await Promise.all([
+      this.memberRepository.findOne({ _id: memberId }),
+      this.driverRepository.findOne({ _id: driverId })
+    ])
+
+    if (!driver) {
+      throw new FitRpcException(
+        'Driver not found',
+        HttpStatus.NOT_FOUND
+      )
+    }
+    if (member.organization.toString() !== driver.organization.toString()) {
+      throw new FitRpcException(
+        'Driver does not belong to your organization',
+        HttpStatus.FORBIDDEN
+      )
+    }
+
+    return await this.odsaService.getDriverStats(driverId)
   }
 
   //   @Crons
