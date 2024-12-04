@@ -201,12 +201,9 @@ export interface CartConstants {
 }
 
 export interface DeliveryPriceMeta {
-  GAS_PRICE: number
-  BASE_FEE: number
-  SHORT_DISTANCE_RATE: number
+  MIN_DELIVERY_PRICE: number
   MEDIUM_DISTANCE_RATE: number
   LONG_DISTANCE_RATE: number
-  MAX_DELIVERY_FEE_PAYABLE: number
 }
 
 export interface DriverCommissionMeta {

@@ -48,23 +48,28 @@ export class LocationService {
     origin: number[],
     destination: number[]
   ): Promise<TravelDistanceResult> {
-    const url = `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${
-      origin[0]
-    },${origin[1]};${destination[0]},${destination[1]}?access_token=${
-      this.mapboxToken as string
-    }`
+    const apiKey = this.configService.get('GOOGLE_MAPS_API_KEY') as string
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin[0]},${origin[1]}&destinations=${destination[0]},${destination[1]}&key=${apiKey}`
+
     try {
-      this.logger.log('PIM -> Getting travel distance via mapbox')
+      this.logger.log('PIM -> Getting travel distance via Google Maps API')
       const { data } = await firstValueFrom(this.httpService.get(url))
-      return {
-        distance: Math.ceil((data?.routes[0]?.distance ?? 0) / 1000), // kilometres
-        duration: Math.ceil((data?.routes[0]?.duration ?? 0) / 60) // minutes
+
+      if (data.status === 'OK' && data.rows[0].elements[0].status === 'OK') {
+        const distance = Math.ceil((data.rows[0].elements[0].distance?.value ?? 0) / 1000) // kilometers
+        const duration = Math.ceil((data.rows[0].elements[0].duration?.value ?? 0) / 60) // minutes
+
+        return { distance, duration }
       }
-    } catch (error) {
-      this.logger.log(JSON.stringify(error))
-      this.logger.error('Can not get travel distance via mapbox')
+      this.logger.error('Google Maps API returned an invalid response')
       throw new FitRpcException(
-        'Can not fetch travel distance at this time',
+        'Unable to fetch travel distance at this time',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    } catch (error) {
+      this.logger.error('Error fetching travel distance via Google Maps API', error)
+      throw new FitRpcException(
+        'Unable to fetch travel distance at this time',
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }

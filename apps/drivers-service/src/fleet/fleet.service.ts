@@ -349,18 +349,18 @@ export class FleetService {
 
   async getPopulatedMember (_id: string): Promise<FleetMember> {
     try {
-      const memeber = await this.memberRepository.findOneAndPopulate<FleetMember>(
+      const member = await this.memberRepository.findOneAndPopulate<FleetMember>(
         { _id },
         ['organization']
       )
-      if (memeber === null) {
+      if (member === null) {
         throw new FitRpcException(
           'Member with that id can not be found',
           HttpStatus.NOT_FOUND
         )
       }
 
-      return memeber
+      return member
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new FitRpcException('No member found with the given ID', HttpStatus.UNAUTHORIZED)
@@ -371,17 +371,17 @@ export class FleetService {
   }
 
   async getOrganizationDeliveries (organization: string): Promise<Delivery[]> {
-    const drivers = await this.driverRepository.find(
-      { organization }
-    )
+    const drivers = await this.driverRepository.find({ organization })
+    const driverIds = drivers.map((driver) => driver._id.toString())
 
-    const driverIds = drivers.map((driver) =>
-      driver._id.toString()
-    )
-
-    return await this.odsaRepository
+    const deliveries: Delivery[] = await this.odsaRepository
       .findRaw()
-      .find({ completed: false, status: { $ne: OrderStatus.FULFILLED }, pool: { $in: driverIds } })
+      .find({
+        completed: false,
+        assignedToDriver: false,
+        status: { $ne: OrderStatus.FULFILLED },
+        pool: { $in: driverIds }
+      })
       .populate('vendor')
       .populate({
         path: 'order',
@@ -390,6 +390,12 @@ export class FleetService {
         }
       })
       .exec()
+
+    const uniqueDeliveries = Array.from(
+      new Map(deliveries.map(delivery => ({ ...delivery, deliveryFee: (delivery.deliveryFee / 100) * 90 })).map((delivery) => [delivery._id.toString(), delivery])).values()
+    )
+
+    return uniqueDeliveries as any
   }
 
   async assignFleetDrivers (
