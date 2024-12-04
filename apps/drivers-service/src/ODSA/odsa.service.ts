@@ -429,6 +429,10 @@ export class ODSA {
           deliveryType: order.orderType,
           pool: driversSuitableForPickup.map(driver => driver._id.toString()),
           deliveryFee: deliveryMeta.fee,
+          parsedAddress: {
+            pickupAddress: deliveryMeta.origin_addresses,
+            dropoffAddress: deliveryMeta.destination_addresses
+          },
           travelMeta: {
             distance: deliveryMeta.distance ?? 0,
             travelTime: deliveryMeta.duration ?? 0
