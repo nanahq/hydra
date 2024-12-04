@@ -121,6 +121,8 @@ export class LocationService {
       this.logger.log(JSON.stringify(error))
       this.logger.error('Can not get delivery fee via mapbox')
       return {
+        destination_addresses: '',
+        origin_addresses: '',
         distance: 0,
         duration: 0,
         fee: (850 / 100) * 90 // subtract 10% from delivery fee calculation
