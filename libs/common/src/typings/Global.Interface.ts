@@ -78,6 +78,8 @@ export interface DriverWithLocation {
 export interface TravelDistanceResult {
   distance?: number // in meters
 
+  destination_addresses: string
+  origin_addresses: string
   duration?: number // in minutes
   eta?: string
 }

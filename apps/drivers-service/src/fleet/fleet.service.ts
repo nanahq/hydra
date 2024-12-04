@@ -392,7 +392,7 @@ export class FleetService {
       .exec()
 
     const uniqueDeliveries = Array.from(
-      new Map(deliveries.map(delivery => ({ ...delivery, deliveryFee: (delivery.deliveryFee / 100) * 90 })).map((delivery) => [delivery._id.toString(), delivery])).values()
+      new Map(deliveries.map((delivery) => [delivery._id.toString(), delivery])).values()
     )
 
     return uniqueDeliveries as any

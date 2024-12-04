@@ -59,7 +59,7 @@ export class LocationService {
         const distance = Math.ceil((data.rows[0].elements[0].distance?.value ?? 0) / 1000) // kilometers
         const duration = Math.ceil((data.rows[0].elements[0].duration?.value ?? 0) / 60) // minutes
 
-        return { distance, duration }
+        return { distance, duration, destination_addresses: data.destination_addresses[0], origin_addresses: data.origin_addresses[0] }
       }
       this.logger.error('Google Maps API returned an invalid response')
       throw new FitRpcException(
@@ -80,13 +80,14 @@ export class LocationService {
     destination: number[]
   ): Promise<DeliveryFeeResult> {
     try {
-      const travelDistance = await this.getTravelDistance(origin, destination)
+      const { distance, duration } = await this.getTravelDistance(origin, destination)
       const fee = calculateDeliveryPrice(
-        travelDistance.distance ?? 0,
+        distance ?? 0,
         DELIVERY_PRICE_META
       )
       return {
-        ...travelDistance,
+        duration,
+        distance,
         fee
       }
     } catch (error) {
@@ -102,7 +103,7 @@ export class LocationService {
   public async getDeliveryFeeDriver (
     origin: number[],
     destination: number[]
-  ): Promise<DeliveryFeeResult> {
+  ): Promise<TravelDistanceResult & { fee: number }> {
     try {
       const travelDistance = await this.getTravelDistance(origin, destination)
       const fee = calculateDeliveryPrice(
@@ -110,6 +111,8 @@ export class LocationService {
         DELIVERY_PRICE_META
       )
       return {
+        destination_addresses: travelDistance.destination_addresses,
+        origin_addresses: travelDistance.origin_addresses,
         distance: travelDistance?.distance ?? 0,
         duration: travelDistance?.duration ?? 0,
         fee: (fee / 100) * 90 // subtract 10% from delivery fee calculation
