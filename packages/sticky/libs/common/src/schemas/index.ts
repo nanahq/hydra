@@ -213,7 +213,7 @@ export interface DeliveryI {
     travelTime: number
   }
 
-  parsedAddress?: {
+  parsedAddress: {
     pickupAddress: string
     dropoffAddress: string
   }
