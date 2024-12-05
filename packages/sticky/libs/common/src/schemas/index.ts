@@ -212,6 +212,12 @@ export interface DeliveryI {
     distance: number
     travelTime: number
   }
+
+  parsedAddress?: {
+    pickupAddress: string
+    dropoffAddress: string
+  }
+
   pool: DriverI[]
   deliveryFee: number
 }
