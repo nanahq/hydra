@@ -63,6 +63,9 @@ export class User extends AbstractDocument {
 
   @Prop({ type: [Types.ObjectId], ref: 'ListingMenu' })
     favourites?: string[]
+
+  @Prop(Number)
+    addressPin: number
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
