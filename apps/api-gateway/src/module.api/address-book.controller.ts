@@ -124,9 +124,13 @@ export class AddressBookController {
     @Param('pin') pin: number,
       @CurrentUser() user: User
   ): Promise<PinAddressI> {
+    const payload = {
+      userId: user._id as any,
+      pin
+    }
     return await lastValueFrom<PinAddressI>(
       this.userClient
-        .send(QUEUE_MESSAGE.GET_USER_ADDRESS_BY_PIN, pin)
+        .send(QUEUE_MESSAGE.GET_USER_ADDRESS_BY_PIN, payload)
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

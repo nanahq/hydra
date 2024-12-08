@@ -114,9 +114,10 @@ export class AddressBookService {
     return { status: 1 }
   }
 
-  async getAddressByPin (pin: number): Promise<PinAddressI> {
+  async getAddressByPin (userId: string, pin: number): Promise<PinAddressI> {
     try {
       const getUser: UserI = await this.usersRepository.findOne({
+        _id: userId,
         addressPin: pin
       })
 
