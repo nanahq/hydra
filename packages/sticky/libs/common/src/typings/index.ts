@@ -1,4 +1,4 @@
-import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI, VendorUserI, CouponI, CouponType } from '../schemas'
+import { ListingCategoryI, ListingMenuI, OrderI, ReviewI, VendorI, VendorUserI, CouponI, CouponType, UserI, AddressBookI } from '../schemas'
 
 export interface TokenPayload {
   userId: string
@@ -727,4 +727,11 @@ export interface VendorStatI {
   rejectedVendors: number
   weeklySignup: number
   monthlySignup: number
+}
+
+export interface PinAddressI {
+  user: UserI
+  firstname: string
+  lastName: string
+  addresses: AddressBookI[]
 }

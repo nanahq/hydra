@@ -1,17 +1,23 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 
 import {
+  AddressBookI,
   FitRpcException,
+  PinAddressI,
   ResponseWithStatus,
-  ServicePayload
+  ServicePayload,
+  UserI
 } from '@app/common'
 import { AddressBookRepository } from './address.book.repository'
 import { AddressBookDto } from '@app/common/database/dto/user/address.book.dto'
 import { AddressBook } from '@app/common/database/schemas/address.book.schema'
+import { UserRepository } from './users.repository'
 
 @Injectable()
 export class AddressBookService {
-  constructor (private readonly repository: AddressBookRepository) {}
+  constructor (private readonly repository: AddressBookRepository,
+    private readonly usersRepository: UserRepository
+  ) {}
 
   async list (): Promise<AddressBook[]> {
     const getRequest: AddressBook[] = await this.repository.findAndPopulate(
@@ -106,5 +112,33 @@ export class AddressBookService {
     )
 
     return { status: 1 }
+  }
+
+  async getAddressByPin (pin: number): Promise<PinAddressI> {
+    try {
+      const getUser: UserI = await this.usersRepository.findOne({
+        addressPin: pin
+      })
+
+      const addresses: AddressBookI[] = await this.repository.findAndPopulate(
+        {
+          userId: getUser._id.toString(),
+          isDeleted: false
+        },
+        ['labelId']
+      )
+
+      return {
+        user: getUser,
+        firstname: getUser.firstName,
+        lastName: getUser.lastName,
+        addresses
+      }
+    } catch (error) {
+      throw new FitRpcException(
+        'Your address pin is incorrect.',
+        HttpStatus.NOT_FOUND
+      )
+    }
   }
 }

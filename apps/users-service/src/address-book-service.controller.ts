@@ -10,6 +10,7 @@ import { Controller, UseFilters } from '@nestjs/common'
 import {
   ExceptionFilterRpc,
   IdPayload,
+  PinAddressI,
   QUEUE_MESSAGE,
   ResponseWithStatus,
   RmqService,
@@ -116,6 +117,20 @@ export class AddressBookServiceController {
   ): Promise<ResponseWithStatus> {
     try {
       return await this.service.delete(userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_USER_ADDRESS_BY_PIN)
+  async getAddressByPin (
+    @Payload() pin: number,
+      @Ctx() context: RmqContext
+  ): Promise<PinAddressI> {
+    try {
+      return await this.service.getAddressByPin(pin)
     } catch (error) {
       throw new RpcException(error)
     } finally {

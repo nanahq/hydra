@@ -19,4 +19,7 @@ export class AddressBookDto {
 
   @IsOptional()
     coordinates: [string, string]
+
+  @IsOptional()
+    shareableName?: string
 }
