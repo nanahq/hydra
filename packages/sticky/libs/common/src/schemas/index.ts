@@ -299,6 +299,8 @@ export interface AddressBookI {
 
   plot_number?: number
 
+  street_address: string
+
   house_number?: number
 
   location: number[]
