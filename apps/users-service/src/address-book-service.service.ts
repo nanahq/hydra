@@ -115,30 +115,37 @@ export class AddressBookService {
   }
 
   async getAddressByPin (pin: number): Promise<PinAddressI> {
-    try {
-      const getUser: UserI = await this.usersRepository.findOne({
-        addressPin: pin
-      })
+    const getUser: UserI = await this.usersRepository.findOne({
+      addressPin: pin
+    })
 
-      const addresses: AddressBookI[] = await this.repository.findAndPopulate(
-        {
-          userId: getUser._id.toString(),
-          isDeleted: false,
-          shareable: true
-        },
-        ['labelId']
-      )
-
-      return {
-        firstname: getUser.firstName,
-        lastName: getUser.lastName,
-        addresses
-      }
-    } catch (error) {
+    if (getUser === null) {
       throw new FitRpcException(
-        'Your address pin is incorrect.',
+        'User with that address pin cannot be found',
         HttpStatus.NOT_FOUND
       )
+    }
+
+    const addresses: AddressBookI[] = await this.repository.findAndPopulate(
+      {
+        userId: getUser._id.toString(),
+        isDeleted: false,
+        shareable: true
+      },
+      ['labelId']
+    )
+
+    if (addresses === null) {
+      throw new FitRpcException(
+        'User address is not shareable',
+        HttpStatus.UNAUTHORIZED
+      )
+    }
+
+    return {
+      firstname: getUser.firstName,
+      lastName: getUser.lastName,
+      addresses
     }
   }
 }

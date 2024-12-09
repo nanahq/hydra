@@ -25,5 +25,5 @@ export class AddressBookDto {
 
   @IsNotEmpty()
   @IsBoolean()
-    useOnce: boolean
+    shareable: boolean
 }
