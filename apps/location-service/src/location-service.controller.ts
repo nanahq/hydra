@@ -97,7 +97,7 @@ export class LocationController {
         vendorCoords
       }: { userCoords: number[], vendorCoords: number[] },
       @Ctx() context: RmqContext
-  ): Promise<DeliveryFeeResult> {
+  ): Promise<TravelDistanceResult & { fee: number }> {
     try {
       return await this.locationService.getDeliveryFeeDriver(
         vendorCoords,

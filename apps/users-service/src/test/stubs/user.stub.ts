@@ -17,7 +17,8 @@ export function UserProfileStub (): User {
     email: 'email@gmail.com',
     isDeleted: false,
     location: { type: 'Point', coordinates: [0, 0] },
-    expoNotificationToken: ''
+    expoNotificationToken: '',
+    addressPin: 1234
   }
 }
 

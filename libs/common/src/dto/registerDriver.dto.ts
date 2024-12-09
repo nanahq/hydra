@@ -1,7 +1,6 @@
 import {
   IsEmail,
   IsNotEmpty,
-  IsNumber,
   IsPhoneNumber,
   IsString,
   MaxLength,
@@ -9,10 +8,10 @@ import {
   registerDecorator,
   ValidationOptions,
   ValidationArguments,
-  IsBoolean
+  IsBoolean,
+  IsOptional
 } from 'class-validator'
 import { DriverType } from '@app/common'
-import { Transform } from 'class-transformer'
 
 export function IsExactly11Digits (validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
@@ -63,18 +62,14 @@ export class RegisterDriverDto {
   @IsNotEmpty()
     email: string
 
-  @IsNotEmpty()
-  @IsNumber()
-  @IsExactly11Digits({ message: 'NIN must be exactly 11 digits' })
-  @Transform(({ value }) => {
-    return Number(value)
-  })
-    nin: number
-
   @IsString()
   @IsNotEmpty()
     type: DriverType
 
   @IsBoolean()
     internal: boolean = false
+
+  @IsOptional()
+  @IsString()
+    organization?: string
 }

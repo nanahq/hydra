@@ -1,7 +1,8 @@
 import { Types } from 'mongoose'
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import {
-  AbstractDocument
+  AbstractDocument,
+  PaymentInfo
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -32,5 +33,15 @@ export class FleetOrganization extends AbstractDocument {
 
   @Prop({ type: [Types.ObjectId], ref: 'Driver' })
     drivers: string[]
+
+  @Prop({
+    type: {
+      bankName: String,
+      bankAccountName: String,
+      bankAccountNumber: String
+    },
+    nullable: true
+  })
+    payment: PaymentInfo
 }
 export const FleetOrganizationSchema = SchemaFactory.createForClass(FleetOrganization)

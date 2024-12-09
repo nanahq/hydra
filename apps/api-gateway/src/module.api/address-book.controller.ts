@@ -16,6 +16,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import {
   CurrentUser,
   IRpcException,
+  PinAddressI,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
   ResponseWithStatus,
@@ -109,6 +110,26 @@ export class AddressBookController {
     return await lastValueFrom<ResponseWithStatus>(
       this.userClient
         .send(QUEUE_MESSAGE.ADDRESS_BOOK_DELETE_BY_USER, payload)
+        .pipe(
+          catchError<any, any>((error: IRpcException) => {
+            throw new HttpException(error.message, error.status)
+          })
+        )
+    )
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('address/:pin')
+  async getAddressByPin (
+    @Param('pin') pin: number,
+      @CurrentUser() user: User
+  ): Promise<PinAddressI> {
+    const payload = {
+      pin
+    }
+    return await lastValueFrom<PinAddressI>(
+      this.userClient
+        .send(QUEUE_MESSAGE.GET_USER_ADDRESS_BY_PIN, payload)
         .pipe(
           catchError<any, any>((error: IRpcException) => {
             throw new HttpException(error.message, error.status)

@@ -5,29 +5,33 @@ export function calculateDeliveryPrice (
   deliveryPriceMeta: DeliveryPriceMeta
 ): number {
   const {
-    MAX_DELIVERY_FEE_PAYABLE,
-    BASE_FEE,
-    SHORT_DISTANCE_RATE,
+    MIN_DELIVERY_PRICE,
     MEDIUM_DISTANCE_RATE,
-    LONG_DISTANCE_RATE,
-    GAS_PRICE
+    LONG_DISTANCE_RATE
   } = deliveryPriceMeta
 
-  let ratePerKm
-  if (distanceKm <= 3) {
-    ratePerKm = SHORT_DISTANCE_RATE
-  } else if (distanceKm <= 5) {
-    ratePerKm = MEDIUM_DISTANCE_RATE
-  } else {
-    ratePerKm = LONG_DISTANCE_RATE
+  let fee = MIN_DELIVERY_PRICE
+
+  if (distanceKm <= 1) {
+    return roundUp(MIN_DELIVERY_PRICE)
   }
 
-  const gasConsumedLiters = distanceKm / 40
-  const gasCost = GAS_PRICE * gasConsumedLiters
+  if (distanceKm <= 5.5) {
+    fee = (distanceKm - 1) * MEDIUM_DISTANCE_RATE + MIN_DELIVERY_PRICE
+  } else {
+    fee = (distanceKm - 1) * LONG_DISTANCE_RATE + MIN_DELIVERY_PRICE
+  }
 
-  const deliveryPrice = BASE_FEE + ratePerKm * distanceKm + gasCost
+  return roundUp(fee)
+}
 
-  const roundedPrice = Math.ceil(deliveryPrice / 10) * 10
+function roundUp (value: number): number {
+  if (value <= 49) {
+    return 50
+  } else if (value <= 99) {
+    return 100
+  }
 
-  return Math.min(roundedPrice, MAX_DELIVERY_FEE_PAYABLE)
+  const remainder = value % 100
+  return remainder <= 50 ? value - remainder + 50 : value - remainder + 100
 }

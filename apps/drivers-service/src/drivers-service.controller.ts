@@ -165,7 +165,7 @@ export class DriversServiceController {
       @CurrentUser() driver: Driver
   ): Promise<ResponseWithStatus> {
     try {
-      const payload = {
+      const payload: any = {
         ...data,
         driverId: driver._id.toString()
       }

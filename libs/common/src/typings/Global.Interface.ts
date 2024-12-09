@@ -78,6 +78,8 @@ export interface DriverWithLocation {
 export interface TravelDistanceResult {
   distance?: number // in meters
 
+  destination_addresses: string
+  origin_addresses: string
   duration?: number // in minutes
   eta?: string
 }
@@ -201,12 +203,9 @@ export interface CartConstants {
 }
 
 export interface DeliveryPriceMeta {
-  GAS_PRICE: number
-  BASE_FEE: number
-  SHORT_DISTANCE_RATE: number
+  MIN_DELIVERY_PRICE: number
   MEDIUM_DISTANCE_RATE: number
   LONG_DISTANCE_RATE: number
-  MAX_DELIVERY_FEE_PAYABLE: number
 }
 
 export interface DriverCommissionMeta {
@@ -354,4 +353,49 @@ export interface ListingStatI {
 export interface RegisterUserResponse {
   pinId: string
   phoneNumber: string
+}
+
+export interface PinAddressI {
+  firstname: string
+  lastName: string
+  addresses: AddressBookI[]
+}
+
+export interface AddressBookI {
+  _id: string
+  userId: UserI
+
+  labelId: AddressLabelI
+
+  labelName: string
+
+  address: string
+
+  plot_number?: number
+
+  house_number?: number
+
+  location: number[]
+
+  isDeleted: boolean
+
+  createdAt: string
+
+  updatedAt: string
+}
+
+export interface AddressLabelI {
+
+  _id: string
+  createdBy: UserI
+
+  name: string
+
+  desc?: string
+
+  isDeleted: boolean
+
+  createdAt: string
+
+  updatedAt: string
 }

@@ -2,14 +2,26 @@ import { HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/commo
 import {
   AcceptFleetInviteDto,
   CreateAccountWithOrganizationDto,
+  Delivery,
+  Driver,
+  DriverStatGroup,
   FitRpcException, FleetMember, FleetOrganization,
   internationalisePhoneNumber,
+  OrderStatus,
   RandomGen,
-  ResponseWithStatus, UpdateFleetOwnershipStatusDto
+  RegisterDriverDto,
+  ResponseWithStatus, SOCKET_MESSAGE, UpdateFleetMemberProfileDto, UpdateFleetOwnershipStatusDto,
+  VendorApprovalStatus
 } from '@app/common'
 import { FleetOrgRepository } from './fleets-organization.repository'
 import { FleetMemberRepository } from './fleets-member.repository'
 import * as bcrypt from 'bcryptjs'
+import { EventsGateway } from '../websockets/events.gateway'
+import { Cron, CronExpression } from '@nestjs/schedule'
+import { DriversServiceService } from '../drivers-service.service'
+import { DriverRepository } from '../drivers-service.repository'
+import { OdsaRepository } from '../ODSA/odsa.repository'
+import { ODSA } from '../ODSA/odsa.service'
 
 @Injectable()
 export class FleetService {
@@ -17,7 +29,12 @@ export class FleetService {
 
   constructor (
     private readonly organizationRepository: FleetOrgRepository,
-    private readonly memberRepository: FleetMemberRepository
+    private readonly memberRepository: FleetMemberRepository,
+    private readonly driverService: DriversServiceService,
+    private readonly driverRepository: DriverRepository,
+    private readonly eventsGateway: EventsGateway,
+    private readonly odsaRepository: OdsaRepository,
+    private readonly odsaService: ODSA
   ) {}
 
   public async getProfile (id: string): Promise<FleetMember> {
@@ -48,7 +65,7 @@ export class FleetService {
     email: string,
     password: string
   ): Promise<FleetMember> {
-    const member = await this.memberRepository.findOneAndPopulate({
+    const member: FleetMember = await this.memberRepository.findOneAndPopulate({
       email: email.toLowerCase()
     }, ['organization'])
     if (member === null) {
@@ -65,6 +82,7 @@ export class FleetService {
   async createFleetOrganization (payload: CreateAccountWithOrganizationDto): Promise<ResponseWithStatus> {
     try {
       const createOrganization = await this.organizationRepository.create({
+        ...payload,
         name: payload.organization,
         inviteLink: RandomGen.genRandomString(100, 20)
       })
@@ -192,6 +210,284 @@ export class FleetService {
       } else {
         throw new FitRpcException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
       }
+    }
+  }
+
+  async ownerCreateDriver (
+    payload: RegisterDriverDto
+  ): Promise<ResponseWithStatus> {
+    try {
+      const organization: FleetOrganization = await this.organizationRepository.findOne(
+        {
+          _id: payload.organization
+        }
+      )
+
+      if (organization === null) {
+        throw new NotFoundException('Organization not found')
+      }
+
+      const existingMember = await this.memberRepository.findOne({
+        email: payload.email.toLowerCase()
+      })
+
+      if (existingMember) {
+        throw new FitRpcException(
+          'Email already registered',
+          HttpStatus.CONFLICT
+        )
+      }
+
+      const _driver: Partial<Driver> = {
+        ...payload,
+        password: await bcrypt.hash(payload.password, 10)
+      }
+      this.logger.log(`Registering a new driver with email: ${payload.email}`)
+
+      const driver = await this.driverRepository.create(_driver)
+
+      await this.driverRepository.findOneAndUpdate({
+        _id: driver._id
+      },
+      { acc_status: VendorApprovalStatus.APPROVED })
+
+      await this.organizationRepository.findOneAndUpdate(
+        { _id: payload.organization },
+        {
+          $push: { drivers: driver._id.toString(), members: driver._id.toString() }
+        }
+      )
+      return { status: 1 }
+    } catch (error) {
+      this.logger.error({
+        message: `Failed to register new driver ${payload.email} `,
+        error
+      })
+      throw new FitRpcException(
+        'Can not register a new driver at the moment. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async updateOgranization (
+    payload: Partial<FleetOrganization>,
+    organizationId: string
+  ): Promise<ResponseWithStatus> {
+    try {
+      await this.organizationRepository.findOneAndUpdate(
+        { _id: organizationId.toString() },
+        { ...payload }
+      )
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not update organization. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async uploadOrganizationLogo (data: any, _id: string): Promise<void> {
+    try {
+      await this.organizationRepository.findOneAndUpdate(
+        { _id },
+        { image: data }
+      )
+    } catch (e) {
+      throw new FitRpcException(
+        'Failed to upload logo',
+        HttpStatus.BAD_GATEWAY
+      )
+    }
+  }
+
+  async updateMemberProfile (
+    payload: UpdateFleetMemberProfileDto,
+    memberId: string
+  ): Promise<ResponseWithStatus> {
+    try {
+      await this.memberRepository.findOneAndUpdate(
+        { _id: memberId.toString() },
+        { ...payload }
+      )
+      return { status: 1 }
+    } catch (error) {
+      throw new FitRpcException(
+        'Can not update member. Something went wrong.',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async getAllOrganizationMembers (organization: string): Promise<FleetMember[]> {
+    const getRequest = await this.memberRepository.find(
+      { organization }
+    )
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all organization members.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
+  async getAllOrganizationDrivers (organization: string): Promise<Driver[]> {
+    const getRequest = await this.driverRepository.find(
+      { organization }
+    )
+
+    if (getRequest === null) {
+      throw new FitRpcException(
+        'Something went wrong fetching all organization drivers.',
+        HttpStatus.BAD_REQUEST
+      )
+    }
+    return getRequest
+  }
+
+  async getPopulatedMember (_id: string): Promise<FleetMember> {
+    try {
+      const member = await this.memberRepository.findOneAndPopulate<FleetMember>(
+        { _id },
+        ['organization']
+      )
+      if (member === null) {
+        throw new FitRpcException(
+          'Member with that id can not be found',
+          HttpStatus.NOT_FOUND
+        )
+      }
+
+      return member
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new FitRpcException('No member found with the given ID', HttpStatus.UNAUTHORIZED)
+      } else {
+        throw new FitRpcException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      }
+    }
+  }
+
+  async getOrganizationDeliveries (organization: string): Promise<Delivery[]> {
+    const drivers = await this.driverRepository.find({ organization })
+    const driverIds = drivers.map((driver) => driver._id.toString())
+
+    const deliveries: Delivery[] = await this.odsaRepository
+      .findRaw()
+      .find({
+        completed: false,
+        assignedToDriver: false,
+        status: { $ne: OrderStatus.FULFILLED },
+        pool: { $in: driverIds }
+      })
+      .populate('vendor')
+      .populate({
+        path: 'order',
+        populate: {
+          path: 'listing'
+        }
+      })
+      .exec()
+
+    const uniqueDeliveries = Array.from(
+      new Map(deliveries.map((delivery) => [delivery._id.toString(), delivery])).values()
+    )
+
+    return uniqueDeliveries as any
+  }
+
+  async assignFleetDrivers (
+    driverId: string,
+    deliveryId: string
+  ): Promise<void> {
+    try {
+      const checkDriver = await this.driverRepository.find(
+        {
+          _id: driverId,
+          status: 'ONLINE',
+          available: true
+        }
+      )
+
+      if (checkDriver === null) {
+        throw new FitRpcException(
+          'Something went wrong fetching the driver.',
+          HttpStatus.BAD_REQUEST
+        )
+      }
+
+      await this.odsaService.handleAcceptDelivery({ deliveryId, driverId })
+    } catch (error) {
+      this.logger.error(
+        `Something went wrong processing order with deliveryId: ${deliveryId}`
+      )
+      this.logger.error(JSON.stringify(error))
+      throw new FitRpcException(
+        'Can not process order right now',
+        HttpStatus.INTERNAL_SERVER_ERROR
+      )
+    }
+  }
+
+  async getFleetDriverStats (driverId: string, memberId: string): Promise<DriverStatGroup> {
+    const [member, driver]: [FleetMember, Driver] = await Promise.all([
+      this.memberRepository.findOne({ _id: memberId }),
+      this.driverRepository.findOne({ _id: driverId })
+    ])
+
+    if (!driver) {
+      throw new FitRpcException(
+        'Driver not found',
+        HttpStatus.NOT_FOUND
+      )
+    }
+    if (member.organization.toString() !== driver.organization.toString()) {
+      throw new FitRpcException(
+        'Driver does not belong to your organization',
+        HttpStatus.FORBIDDEN
+      )
+    }
+
+    return await this.odsaService.getDriverStats(driverId)
+  }
+
+  //   @Crons
+
+  /**
+   *
+   */
+
+  @Cron(CronExpression.EVERY_MINUTE)
+  async pushOutFleetDriversLocation (): Promise<void> {
+    try {
+      const organizations = await this.organizationRepository.findRaw()
+        .find({})
+        .select('_id name owners members drivers')
+        .populate({
+          path: 'owners',
+          select: 'firstName lastName'
+        })
+        .populate({
+          path: 'members',
+          select: 'firstName lastName'
+        })
+        .populate({
+          path: 'drivers',
+          select: '_id firstName lastName location phone status'
+        })
+        .exec() as any
+
+      for (const organization of organizations) {
+        this.eventsGateway.server.emit(SOCKET_MESSAGE.FLEET_PUSH_OUT_DRIVERS, {
+          organization: organization?._id,
+          data: organization
+        } as any)
+      }
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
     }
   }
 }

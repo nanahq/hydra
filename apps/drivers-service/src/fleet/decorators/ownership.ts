@@ -3,18 +3,18 @@ import {
   ExecutionContext,
   ForbiddenException
 } from '@nestjs/common'
-import { Admin, FleetMember } from '@app/common'
+import { FleetMember } from '@app/common'
 
 export function getCurrentUserByContext (
   context: ExecutionContext
-): Admin | undefined {
+): FleetMember | undefined {
   if (context.getType() === 'http') {
-    return context.switchToHttp().getRequest()?.user as Admin
+    return context.switchToHttp().getRequest()?.user as FleetMember
   }
-  return context.switchToRpc().getData()?.user as Admin
+  return context.switchToRpc().getData()?.user as FleetMember
 }
 export const FleetOwner = createParamDecorator(
-  (level?: '', ctx: ExecutionContext) => {
+  (level: string = '', ctx: ExecutionContext) => {
     const member = getCurrentUserByContext(ctx) as FleetMember
 
     if (!member?.isOwner) {

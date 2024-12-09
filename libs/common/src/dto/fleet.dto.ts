@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsMongoId,
   IsNotEmpty,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   MaxLength,
@@ -23,6 +24,7 @@ export class AcceptFleetInviteDto {
     phone: string
 
   @IsNotEmpty()
+  @IsEmail()
     email: string
 
   @MinLength(8)
@@ -68,4 +70,22 @@ export class UpdateFleetOwnershipStatusDto {
   @IsNotEmpty()
   @IsBoolean()
     status: boolean
+}
+
+export class UpdateFleetMemberProfileDto {
+  @IsOptional()
+  @IsString()
+    firstName: string
+
+  @IsOptional()
+  @IsString()
+    lastName: string
+
+  @IsOptional()
+  @IsPhoneNumber('NG')
+    phone: string
+
+  @IsOptional()
+  @IsEmail()
+    email: string
 }

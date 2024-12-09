@@ -30,7 +30,8 @@ import {
   FleetOrganization,
   FleetOrganizationSchema,
   FleetMember,
-  FleetMemberSchema
+  FleetMemberSchema,
+  QUEUE_SERVICE
 } from '@app/common'
 import * as cookieParser from 'cookie-parser'
 import { APP_FILTER, APP_GUARD, NestFactory } from '@nestjs/core'
@@ -57,6 +58,7 @@ import { FleetController } from './fleet/fleet.controller'
 import { FleetService } from './fleet/fleet.service'
 import { FleetLocalGuard } from './auth/guards/local.guard'
 import { FleetJwtAuthGuard } from './auth/guards/jwt.guard'
+import { AwsService } from 'apps/vendor-gateway/src/aws.service'
 
 @Module({})
 export class AppModule implements NestModule {
@@ -124,12 +126,12 @@ export class AppModule implements NestModule {
           }
         ]),
         DatabaseModule,
-        // RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
-        // RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.USERS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.ORDERS_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.NOTIFICATION_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.LOCATION_SERVICE }),
+        RmqModule.register({ name: QUEUE_SERVICE.PAYMENT_SERVICE }),
         RmqModule,
         AppModule
       ],
@@ -147,6 +149,7 @@ export class AppModule implements NestModule {
         JwtStrategy,
         LocalStrategy,
         AuthService,
+        AwsService,
         ODSA,
         TacoService,
         OdsaRepository,

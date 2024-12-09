@@ -30,6 +30,17 @@ export class Delivery extends AbstractDocument {
   @Prop(SchemaTypes.Date)
     updatedAt: string
 
+  @Prop({
+    type: {
+      pickupAddress: String,
+      dropoffAddress: String
+    }
+  })
+    parsedAddress: {
+    pickupAddress: string
+    dropoffAddress: string
+  }
+
   @Prop({ type: String, default: OrderStatus.PAYMENT_PENDING })
     status: string
 

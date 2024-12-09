@@ -3,7 +3,7 @@ import { Cron, CronExpression } from '@nestjs/schedule'
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import {
-  Delivery, DeliveryFeeResult,
+  Delivery,
   DeliveryI,
   Driver,
   DriverStatGroup,
@@ -287,12 +287,11 @@ export class ODSA {
 
   public async handleAcceptDelivery (opts: {
     deliveryId: string
-    orderId: string
     driverId: string
   }): Promise<ResponseWithStatus> {
     try {
       const updated = await this.odsaRepository.findOneAndUpdate(
-        { _id: opts.deliveryId, order: opts.orderId, assignedToDriver: false },
+        { _id: opts.deliveryId, assignedToDriver: false },
         { driver: opts.driverId, assignedToDriver: true }
       )
       if (updated === null) {
@@ -373,18 +372,18 @@ export class ODSA {
             }
           })
           .pipe(
-            catchError((error) => {
+            catchError((error: any) => {
               this.logger.error(JSON.stringify(error))
               throw new RpcException(error)
             }) as any
-          )
+          ) as any
       )
       const collectionLocation = order?.vendor?.location?.coordinates as [
         number,
         number,
       ]
 
-      const deliveryMeta = await lastValueFrom<DeliveryFeeResult>(
+      const deliveryMeta = await lastValueFrom<TravelDistanceResult & { fee: number }>(
         this.locationClient
           .send(QUEUE_MESSAGE.LOCATION_GET_DELIVERY_FEE_DRIVER, {
             userCoords: order.preciseLocation.coordinates,
@@ -406,6 +405,10 @@ export class ODSA {
           deliveryTime: order.orderDeliveryScheduledTime,
           pool: [],
           deliveryFee: deliveryMeta.fee,
+          parsedAddress: {
+            pickupAddress: deliveryMeta.origin_addresses,
+            dropoffAddress: deliveryMeta.destination_addresses
+          },
           travelMeta: {
             distance: deliveryMeta.distance ?? 0,
             travelTime: deliveryMeta.duration ?? 0
@@ -426,6 +429,10 @@ export class ODSA {
           deliveryType: order.orderType,
           pool: driversSuitableForPickup.map(driver => driver._id.toString()),
           deliveryFee: deliveryMeta.fee,
+          parsedAddress: {
+            pickupAddress: deliveryMeta.origin_addresses,
+            dropoffAddress: deliveryMeta.destination_addresses
+          },
           travelMeta: {
             distance: deliveryMeta.distance ?? 0,
             travelTime: deliveryMeta.duration ?? 0
