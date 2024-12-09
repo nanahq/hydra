@@ -51,6 +51,15 @@ export class AddressBook extends AbstractDocument {
 
   @Prop(SchemaTypes.Date)
     updatedAt: string
+
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+    shareable: boolean
+
+  @Prop(String)
+    shareableName?: string
 }
 
 export const AddressBookSchema = SchemaFactory.createForClass(AddressBook)

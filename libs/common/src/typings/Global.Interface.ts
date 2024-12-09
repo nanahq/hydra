@@ -354,3 +354,48 @@ export interface RegisterUserResponse {
   pinId: string
   phoneNumber: string
 }
+
+export interface PinAddressI {
+  firstname: string
+  lastName: string
+  addresses: AddressBookI[]
+}
+
+export interface AddressBookI {
+  _id: string
+  userId: UserI
+
+  labelId: AddressLabelI
+
+  labelName: string
+
+  address: string
+
+  plot_number?: number
+
+  house_number?: number
+
+  location: number[]
+
+  isDeleted: boolean
+
+  createdAt: string
+
+  updatedAt: string
+}
+
+export interface AddressLabelI {
+
+  _id: string
+  createdBy: UserI
+
+  name: string
+
+  desc?: string
+
+  isDeleted: boolean
+
+  createdAt: string
+
+  updatedAt: string
+}

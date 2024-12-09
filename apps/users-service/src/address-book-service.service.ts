@@ -1,17 +1,23 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 
 import {
+  AddressBookI,
   FitRpcException,
+  PinAddressI,
   ResponseWithStatus,
-  ServicePayload
+  ServicePayload,
+  UserI
 } from '@app/common'
 import { AddressBookRepository } from './address.book.repository'
 import { AddressBookDto } from '@app/common/database/dto/user/address.book.dto'
 import { AddressBook } from '@app/common/database/schemas/address.book.schema'
+import { UserRepository } from './users.repository'
 
 @Injectable()
 export class AddressBookService {
-  constructor (private readonly repository: AddressBookRepository) {}
+  constructor (private readonly repository: AddressBookRepository,
+    private readonly usersRepository: UserRepository
+  ) {}
 
   async list (): Promise<AddressBook[]> {
     const getRequest: AddressBook[] = await this.repository.findAndPopulate(
@@ -106,5 +112,40 @@ export class AddressBookService {
     )
 
     return { status: 1 }
+  }
+
+  async getAddressByPin (pin: number): Promise<PinAddressI> {
+    const getUser: UserI = await this.usersRepository.findOne({
+      addressPin: pin
+    })
+
+    if (getUser === null) {
+      throw new FitRpcException(
+        'User with that address pin cannot be found',
+        HttpStatus.NOT_FOUND
+      )
+    }
+
+    const addresses: AddressBookI[] = await this.repository.findAndPopulate(
+      {
+        userId: getUser._id.toString(),
+        isDeleted: false,
+        shareable: true
+      },
+      ['labelId']
+    )
+
+    if (addresses === null) {
+      throw new FitRpcException(
+        'User address is not shareable',
+        HttpStatus.UNAUTHORIZED
+      )
+    }
+
+    return {
+      firstname: getUser.firstName,
+      lastName: getUser.lastName,
+      addresses
+    }
   }
 }
