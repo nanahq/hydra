@@ -1,4 +1,4 @@
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
+import { IsBoolean, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
 
 export class AddressBookDto {
   @MinLength(8)
@@ -22,4 +22,8 @@ export class AddressBookDto {
 
   @IsOptional()
     shareableName?: string
+
+  @IsNotEmpty()
+  @IsBoolean()
+    useOnce: boolean
 }

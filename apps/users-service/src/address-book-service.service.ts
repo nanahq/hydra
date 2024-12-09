@@ -114,23 +114,22 @@ export class AddressBookService {
     return { status: 1 }
   }
 
-  async getAddressByPin (userId: string, pin: number): Promise<PinAddressI> {
+  async getAddressByPin (pin: number): Promise<PinAddressI> {
     try {
       const getUser: UserI = await this.usersRepository.findOne({
-        _id: userId,
         addressPin: pin
       })
 
       const addresses: AddressBookI[] = await this.repository.findAndPopulate(
         {
           userId: getUser._id.toString(),
-          isDeleted: false
+          isDeleted: false,
+          shareable: true
         },
         ['labelId']
       )
 
       return {
-        user: getUser,
         firstname: getUser.firstName,
         lastName: getUser.lastName,
         addresses

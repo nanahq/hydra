@@ -126,11 +126,11 @@ export class AddressBookServiceController {
 
   @MessagePattern(QUEUE_MESSAGE.GET_USER_ADDRESS_BY_PIN)
   async getAddressByPin (
-    @Payload() data: { userId: string, pin: number },
+    @Payload() data: { pin: number },
       @Ctx() context: RmqContext
   ): Promise<PinAddressI> {
     try {
-      return await this.service.getAddressByPin(data.userId, data.pin)
+      return await this.service.getAddressByPin(data.pin)
     } catch (error) {
       throw new RpcException(error)
     } finally {
