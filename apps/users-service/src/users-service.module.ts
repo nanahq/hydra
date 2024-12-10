@@ -1,3 +1,4 @@
+import { ScheduleModule } from '@nestjs/schedule'
 import { ConfigModule } from '@nestjs/config'
 import { Module } from '@nestjs/common'
 
@@ -27,6 +28,7 @@ import { HttpModule } from '@nestjs/axios'
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({

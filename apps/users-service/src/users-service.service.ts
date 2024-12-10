@@ -29,6 +29,7 @@ import { ClientProxy } from '@nestjs/microservices'
 import { ConfigService } from '@nestjs/config'
 import { arrayParser } from '@app/common/utils/statsResultParser'
 import { TermiiResponse } from '@app/common/typings/Termii'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class UsersService {
@@ -485,6 +486,33 @@ export class UsersService {
 
   async ping (): Promise<string> {
     return 'PONG'
+  }
+
+  //   @Crons
+
+  /**
+   *
+   */
+  @Cron(CronExpression.EVERY_10_MINUTES)
+  async updateUsersWithAddressPin (): Promise<void> {
+    try {
+      const users = await this.usersRepository.find(
+        { addressPin: { $exists: false } }
+      )
+      for (const user of users) {
+        await this.usersRepository.findOneAndUpdate(
+          { _id: user._id },
+          {
+            addressPin: Number(
+              this.extractPhoneDigits(
+                internationalisePhoneNumber(user.phone)
+              ))
+          }
+        )
+      }
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
+    }
   }
 
   extractPhoneDigits (phoneNumber: string): number {

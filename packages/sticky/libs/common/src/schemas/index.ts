@@ -131,6 +131,7 @@ export interface UserI {
   expoNotificationToken?: string
   coupons?: CouponI[]
   favourites?: ListingMenuI[]
+  addressPin: number
 }
 
 export interface ReviewI {
