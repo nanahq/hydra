@@ -495,24 +495,20 @@ export class UsersService {
    */
   @Cron(CronExpression.EVERY_10_MINUTES)
   async updateUsersWithAddressPin (): Promise<void> {
-    console.log('hit')
     try {
-      const users = await this.usersRepository.findAndPopulate<UserI>(
-        {},
-        ['orders', 'coupons']
+      const users = await this.usersRepository.find(
+        { addressPin: { $exists: false } }
       )
       for (const user of users) {
-        if (!user.addressPin) {
-          await this.usersRepository.findOneAndUpdate(
-            { _id: user._id },
-            {
-              addressPin: Number(
-                this.extractPhoneDigits(
-                  internationalisePhoneNumber(user.phone)
-                ))
-            }
-          )
-        }
+        await this.usersRepository.findOneAndUpdate(
+          { _id: user._id },
+          {
+            addressPin: Number(
+              this.extractPhoneDigits(
+                internationalisePhoneNumber(user.phone)
+              ))
+          }
+        )
       }
     } catch (error) {
       this.logger.error(JSON.stringify(error))
