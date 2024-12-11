@@ -27,6 +27,7 @@ export interface AddressBookDto {
   labelName: string;
   coordinate: [string, string];
   shareableName?: string
+  shareable: boolean
 }
 
 export interface UserDto {
