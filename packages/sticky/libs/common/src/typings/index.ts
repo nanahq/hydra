@@ -732,7 +732,6 @@ export interface VendorStatI {
 }
 
 export interface PinAddressI {
-  user: UserI
   firstname: string
   lastName: string
   addresses: AddressBookI[]
