@@ -155,7 +155,6 @@ export interface UserI {
 
   paystack_titan?: string
   favourites?: ListingMenuI[]
-  addressPin: number
 }
 
 export interface ReviewI {

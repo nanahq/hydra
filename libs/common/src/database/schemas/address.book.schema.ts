@@ -60,6 +60,12 @@ export class AddressBook extends AbstractDocument {
 
   @Prop(String)
     shareableName?: string
+
+  @Prop({
+    type: Number,
+    index: true
+  })
+    pin: number
 }
 
 export const AddressBookSchema = SchemaFactory.createForClass(AddressBook)

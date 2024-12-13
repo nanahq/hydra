@@ -384,6 +384,8 @@ export interface AddressBookI {
   createdAt: string
 
   updatedAt: string
+
+  pin: number
 }
 
 export interface AddressLabelI {

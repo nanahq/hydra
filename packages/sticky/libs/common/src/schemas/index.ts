@@ -131,7 +131,6 @@ export interface UserI {
   expoNotificationToken?: string
   coupons?: CouponI[]
   favourites?: ListingMenuI[]
-  addressPin: number
 }
 
 export interface ReviewI {
@@ -309,6 +308,8 @@ export interface AddressBookI {
   createdAt: string
 
   updatedAt: string
+
+  pin: number
 }
 
 export interface AddressLabelI {
