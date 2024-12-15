@@ -152,6 +152,7 @@ export interface OrderI {
   totalOrderValue: number
   orderValuePayable: number
   deliveryAddress: string
+  pickupAddress: string
   primaryContact: string
   isThirdParty: boolean
   createdAt: string
@@ -172,6 +173,7 @@ export interface OrderI {
 
   coupon?: string
   review?: ReviewI
+  precisePickupLocation: LocationCoordinates
 }
 
 export interface DeliveryI {
