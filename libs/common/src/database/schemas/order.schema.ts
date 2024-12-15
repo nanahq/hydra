@@ -44,6 +44,11 @@ export class Order extends AbstractDocument {
   })
     deliveryAddress: string
 
+  @Prop({
+    type: String
+  })
+  pickupAddress: string
+
   @Prop({ type: String })
     primaryContact: string
 
@@ -86,6 +91,18 @@ export class Order extends AbstractDocument {
     }
   })
     preciseLocation: LocationCoordinates
+
+  @Prop({
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0]
+    }
+  })
+  precisePickupLocation: LocationCoordinates
 
   @Prop({
     type: [

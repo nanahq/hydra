@@ -4,7 +4,7 @@ import {
   AddressBookI,
   FitRpcException,
   ResponseWithStatus,
-  ServicePayload,
+  ServicePayload
 } from '@app/common'
 import { AddressBookRepository } from './address.book.repository'
 import { AddressBookDto } from '@app/common/database/dto/user/address.book.dto'
@@ -14,7 +14,7 @@ import { Cron, CronExpression } from '@nestjs/schedule'
 @Injectable()
 export class AddressBookService {
   private readonly logger = new Logger()
-  constructor (private readonly repository: AddressBookRepository,
+  constructor (private readonly repository: AddressBookRepository
   ) {}
 
   async list (): Promise<AddressBook[]> {
@@ -119,7 +119,7 @@ export class AddressBookService {
 
   async getAddressByPin (pin: number): Promise<any> {
     const getAddress: AddressBookI = await this.repository.findOne({
-      pin,
+      pin
     })
 
     return getAddress

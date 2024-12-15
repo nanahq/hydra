@@ -63,6 +63,11 @@ export class PlaceOrderDto {
   @IsString()
     deliveryAddress: string
 
+
+  @IsString()
+  pickupAddress: string
+
+
   @IsPhoneNumber('NG', { message: 'Invalid Nigerian phone number' })
     primaryContact: string
 
@@ -72,6 +77,10 @@ export class PlaceOrderDto {
   @ValidateNested()
   @IsObject()
     preciseLocation: PreciseLocationDto
+
+  @ValidateNested()
+  @IsObject()
+  precisePickupLocation: PreciseLocationDto
 
   @IsArray()
     options: OrderOptions[]
