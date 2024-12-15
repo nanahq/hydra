@@ -9,7 +9,7 @@ import { Types } from 'mongoose'
 export function OrderStub (): Order {
   const objectId = '63f93c9f248f6c43d0b76502' as unknown as Types.ObjectId
   return {
-    pickupAddress: "",
+    pickupAddress: '',
     precisePickupLocation: {
       type: 'Point',
       coordinates: [12.34, 56.78]
