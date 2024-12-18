@@ -6,7 +6,8 @@ import {
   PaymentInfo,
   VendorOperationSetting,
   DriverType, AdminLevel, ListingApprovalStatus, OrderOptions,
-  VendorApprovalStatusEnum, 
+  VendorApprovalStatusEnum,
+  FleetOrderType, 
 } from '../typings'
 export interface ListingCategoryI {
   _id: string
@@ -172,6 +173,7 @@ export interface OrderI {
 
   coupon?: string
   review?: ReviewI
+  fleetOrderType: FleetOrderType
 }
 
 export interface DeliveryI {

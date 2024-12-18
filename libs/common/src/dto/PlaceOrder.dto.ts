@@ -65,7 +65,7 @@ export class PlaceOrderDto {
 
   @IsString()
   @IsOptional()
-  specialNote: string
+    specialNote: string
 
   @IsString()
     pickupAddress: string

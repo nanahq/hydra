@@ -3,7 +3,8 @@ import {
   VendorOperationType,
   OrderStatus,
   DriverI,
-  CouponType
+  CouponType,
+  FleetOrderType
 } from '@app/common'
 
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
@@ -201,6 +202,7 @@ export interface OrderI {
 
   coupon?: string
   review?: ReviewI
+  fleetOrderType: FleetOrderType
 }
 
 export interface ListingMenuReview {
