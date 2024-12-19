@@ -22,12 +22,26 @@ export class FleetPayoutController {
   ) {}
 
   @MessagePattern(QUEUE_MESSAGE.FLEET_GET_PAYOUT_DRIVER)
-  async getVendorPayout (
+  async getDrivePayout (
     @Payload() { driverId }: { driverId: string },
       @Ctx() context: RmqContext
   ): Promise<FleetPayout[]> {
     try {
       return await this.fleetPayoutService.getDriverPayout(driverId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.FLEET_GET_ALL_PAYOUTS)
+  async getAllDriversPayout (
+    @Payload() { organization }: { organization: string },
+      @Ctx() context: RmqContext
+  ): Promise<FleetPayout[]> {
+    try {
+      return await this.fleetPayoutService.getAllDriversPayout(organization)
     } catch (error) {
       throw new RpcException(error)
     } finally {

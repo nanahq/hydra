@@ -215,4 +215,16 @@ export class FleetController {
       throw new HttpException(error.message, error.status)
     }
   }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Get('payout/all')
+  async getAllDriverPayout (
+    @CurrentUser() member: FleetMember
+  ): Promise<FleetPayout[]> {
+    try {
+      return await this.fleetService.getAllDriversPayout(member.organization)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
 }

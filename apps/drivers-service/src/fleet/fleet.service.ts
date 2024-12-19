@@ -485,6 +485,16 @@ export class FleetService {
     )
   }
 
+  async getAllDriversPayout (organization: string): Promise<FleetPayout[]> {
+    return await lastValueFrom<FleetPayout[]>(
+      this.paymentClient.send(QUEUE_MESSAGE.FLEET_GET_ALL_PAYOUTS, { organization }).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
   //   @Crons
 
   /**
