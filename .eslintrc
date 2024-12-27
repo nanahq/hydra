@@ -29,6 +29,8 @@
     "indent": "off",
     "@typescript-eslint/return-await": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
     "no-irregular-whitespace": "off",
     "@typescript-eslint/indent": [
       "error",

@@ -5,7 +5,7 @@ import {
   Delivery,
   Driver,
   DriverStatGroup,
-  FitRpcException, FleetMember, FleetOrganization,
+  FitRpcException, FleetMember, FleetOrganization, FleetOrgStat,
   FleetPayout,
   internationalisePhoneNumber,
   IRpcException,
@@ -493,6 +493,71 @@ export class FleetService {
         })
       )
     )
+  }
+
+  public async getOrganizationStats (organizationId: string, filterQuery: { gte: string, lte: string }): Promise<FleetOrgStat> {
+    const DEFAULT = {
+      totalDeliveries: 0,
+      totalDistance: 0,
+      totalEarnings: 0,
+      totalTimeSpent: 0,
+      averageDeliveryDistance: 0,
+      averageDeliveryTime: 0,
+      driversEarnings: {},
+      totalDrivers: 0,
+      averageDelivery: 0
+    }
+
+    const organizationDrivers: Driver[] = await this.driverRepository.find({ organization: organizationId })
+
+    if (!Array.isArray(organizationDrivers) && !organizationDrivers?.length) {
+      return DEFAULT
+    }
+    DEFAULT.totalDrivers = organizationDrivers.length
+
+    function mapDriverIdToName (driverId: string): string {
+      const driver = organizationDrivers.find(driver => driver._id.toString() === driverId)
+
+      if (!driver) {
+        return ''
+      }
+
+      return `${driver.firstName} ${driver.lastName}`
+    }
+
+    const driversId = organizationDrivers.map((driver) => driver._id.toString())
+
+    const organizationDeliveries: Delivery[] = await this.odsaRepository.find({
+      driver: { $in: driversId },
+      createdAt: {
+        $gte: filterQuery.gte,
+        $lte: filterQuery.lte
+      }
+    })
+
+    if (!organizationDeliveries?.length) {
+      return DEFAULT
+    }
+
+    for (const organizationDelivery of organizationDeliveries) {
+      const driverName = mapDriverIdToName(organizationDelivery.driver)
+      DEFAULT.totalDeliveries += 1
+      DEFAULT.totalEarnings += organizationDelivery.deliveryFee
+      DEFAULT.totalDistance += organizationDelivery?.travelMeta?.distance ?? 1
+      DEFAULT.totalTimeSpent += organizationDelivery?.travelMeta?.travelTime ?? 1
+
+      if (DEFAULT.driversEarnings[driverName] !== undefined) {
+        DEFAULT.driversEarnings[driverName] += organizationDelivery.deliveryFee as any
+      } else {
+        DEFAULT.driversEarnings[driverName] = organizationDelivery.deliveryFee as any
+      }
+    }
+
+    DEFAULT.averageDelivery = DEFAULT.totalEarnings / organizationDeliveries.length
+
+    DEFAULT.averageDeliveryDistance = DEFAULT.totalDistance / organizationDeliveries.length
+
+    return { ...DEFAULT, totalDrivers: organizationDrivers.length }
   }
 
   //   @Crons
