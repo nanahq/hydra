@@ -137,6 +137,8 @@ export interface DeliveryI {
     distance: number
     travelTime: number
   }
+
+  deliveryFee: number
 }
 
 export interface DriverI {

@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common'
+import { HttpException, HttpStatus, Inject, Injectable, Logger, NotFoundException } from '@nestjs/common'
 import {
   AcceptFleetInviteDto,
   CreateAccountWithOrganizationDto,
@@ -6,8 +6,12 @@ import {
   Driver,
   DriverStatGroup,
   FitRpcException, FleetMember, FleetOrganization,
+  FleetPayout,
   internationalisePhoneNumber,
+  IRpcException,
   OrderStatus,
+  QUEUE_MESSAGE,
+  QUEUE_SERVICE,
   RandomGen,
   RegisterDriverDto,
   ResponseWithStatus, SOCKET_MESSAGE, UpdateFleetMemberProfileDto, UpdateFleetOwnershipStatusDto,
@@ -22,6 +26,8 @@ import { DriversServiceService } from '../drivers-service.service'
 import { DriverRepository } from '../drivers-service.repository'
 import { OdsaRepository } from '../ODSA/odsa.repository'
 import { ODSA } from '../ODSA/odsa.service'
+import { ClientProxy } from '@nestjs/microservices'
+import { lastValueFrom, catchError } from 'rxjs'
 
 @Injectable()
 export class FleetService {
@@ -34,7 +40,10 @@ export class FleetService {
     private readonly driverRepository: DriverRepository,
     private readonly eventsGateway: EventsGateway,
     private readonly odsaRepository: OdsaRepository,
-    private readonly odsaService: ODSA
+    private readonly odsaService: ODSA,
+
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy
   ) {}
 
   public async getProfile (id: string): Promise<FleetMember> {
@@ -452,6 +461,38 @@ export class FleetService {
     }
 
     return await this.odsaService.getDriverStats(driverId)
+  }
+
+  async getDriverPayout (organization: string, driverId: string): Promise<FleetPayout[]> {
+    const checkDriver = await this.driverRepository.findOne({
+      _id: driverId,
+      organization
+    })
+
+    if (checkDriver === null) {
+      throw new FitRpcException(
+        'Driver not found',
+        HttpStatus.NOT_FOUND
+      )
+    }
+
+    return await lastValueFrom<FleetPayout[]>(
+      this.paymentClient.send(QUEUE_MESSAGE.FLEET_GET_PAYOUT_DRIVER, { driverId }).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  async getAllDriversPayout (organization: string): Promise<FleetPayout[]> {
+    return await lastValueFrom<FleetPayout[]>(
+      this.paymentClient.send(QUEUE_MESSAGE.FLEET_GET_ALL_PAYOUTS, { organization }).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
   //   @Crons
