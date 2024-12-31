@@ -405,3 +405,24 @@ export interface AddressLabelI {
 
   updatedAt: string
 }
+
+export interface FleetOrgStat {
+  totalEarnings: number
+
+  totalDeliveries: number
+
+  driversEarnings?: Record<string, number>
+
+  totalDistance: number
+
+  totalTimeSpent: number
+
+  averageDeliveryDistance: number
+
+  totalDrivers: number
+
+  averageDelivery: number
+
+  averageDeliveryTime: number
+
+}

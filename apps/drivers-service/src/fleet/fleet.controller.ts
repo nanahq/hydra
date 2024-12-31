@@ -3,7 +3,7 @@ import { FleetService } from './fleet.service'
 import {
   AcceptFleetInviteDto,
   CreateAccountWithOrganizationDto, CurrentUser, Delivery, Driver, DriverStatGroup, FleetMember,
-  FleetOrganization,
+  FleetOrganization, FleetOrgStat,
   FleetPayout,
   RegisterDriverDto,
   ResponseWithStatus, UpdateFleetMemberProfileDto, UpdateFleetOwnershipStatusDto
@@ -223,6 +223,19 @@ export class FleetController {
   ): Promise<FleetPayout[]> {
     try {
       return await this.fleetService.getAllDriversPayout(member.organization)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Post('stats')
+  async getOrganizationStats (
+    @FleetOwner() owner: FleetMember,
+      @Body() data: { gte: string, lte: string }
+  ): Promise<FleetOrgStat> {
+    try {
+      return await this.fleetService.getOrganizationStats(owner.organization, data)
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }

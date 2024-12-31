@@ -5,7 +5,7 @@ import {
   Delivery,
   Driver,
   DriverStatGroup,
-  FitRpcException, FleetMember, FleetOrganization,
+  FitRpcException, FleetMember, FleetOrganization, FleetOrgStat,
   FleetPayout,
   internationalisePhoneNumber,
   IRpcException,
@@ -89,42 +89,56 @@ export class FleetService {
   }
 
   async createFleetOrganization (payload: CreateAccountWithOrganizationDto): Promise<ResponseWithStatus> {
-    try {
-      const createOrganization = await this.organizationRepository.create({
-        ...payload,
-        name: payload.organization,
-        inviteLink: RandomGen.genRandomString(100, 20)
-      })
+    const existingMember = await this.memberRepository.findOne({
+      $or: [
+        { email: payload.email.toLowerCase() },
+        { phone: internationalisePhoneNumber(payload.phone) }
+      ]
+    })
 
-      const newMember = await this.memberRepository.create({
-        firstName: payload.firstName,
-        lastName: payload.lastName,
-        isOwner: true,
-        phone: internationalisePhoneNumber(payload.phone),
-        email: payload.email.toLowerCase(),
-        password: await bcrypt.hash(payload.password, 10),
-        organization: createOrganization._id.toString()
-      })
-
-      await this.organizationRepository.findOneAndUpdate({
-        _id: createOrganization._id.toString()
-      }, {
-        $push: { members: newMember._id.toString(), owners: newMember._id.toString() }
-      })
-
-      this.logger.log(`New organization '${payload.organization}' created with member '${payload.email}'`)
-
-      return { status: 1 }
-    } catch (error) {
-      this.logger.error({
-        message: `Failed to register new organization ${payload.email} `,
-        error
-      })
+    if (existingMember) {
       throw new FitRpcException(
-        'Can not register a new organization at the moment. Something went wrong.',
-        HttpStatus.INTERNAL_SERVER_ERROR
+        'You already belong to an organization.',
+        HttpStatus.CONFLICT
       )
     }
+
+    // Check if organization name already exists
+    const existingOrg = await this.organizationRepository.findOne({
+      email: payload.email.toLowerCase()
+    })
+
+    if (existingOrg) {
+      throw new FitRpcException(
+        'An organization with this email already exists.',
+        HttpStatus.CONFLICT
+      )
+    }
+    const createOrganization = await this.organizationRepository.create({
+      ...payload,
+      name: payload.organization,
+      inviteLink: RandomGen.genRandomString(100, 20)
+    })
+
+    const newMember = await this.memberRepository.create({
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      isOwner: true,
+      phone: internationalisePhoneNumber(payload.phone),
+      email: payload.email.toLowerCase(),
+      password: await bcrypt.hash(payload.password, 10),
+      organization: createOrganization._id.toString()
+    })
+
+    await this.organizationRepository.findOneAndUpdate({
+      _id: createOrganization._id.toString()
+    }, {
+      $push: { members: newMember._id.toString(), owners: newMember._id.toString() }
+    })
+
+    this.logger.log(`New organization '${payload.organization}' created with member '${payload.email}'`)
+
+    return { status: 1 }
   }
 
   async acceptFleetOrgInvite (payload: AcceptFleetInviteDto): Promise<ResponseWithStatus> {
@@ -493,6 +507,71 @@ export class FleetService {
         })
       )
     )
+  }
+
+  public async getOrganizationStats (organizationId: string, filterQuery: { gte: string, lte: string }): Promise<FleetOrgStat> {
+    const DEFAULT = {
+      totalDeliveries: 0,
+      totalDistance: 0,
+      totalEarnings: 0,
+      totalTimeSpent: 0,
+      averageDeliveryDistance: 0,
+      averageDeliveryTime: 0,
+      driversEarnings: {},
+      totalDrivers: 0,
+      averageDelivery: 0
+    }
+
+    const organizationDrivers: Driver[] = await this.driverRepository.find({ organization: organizationId })
+
+    if (!Array.isArray(organizationDrivers) || !organizationDrivers?.length) {
+      return DEFAULT
+    }
+    DEFAULT.totalDrivers = organizationDrivers.length
+
+    function mapDriverIdToName (driverId: string): string {
+      const driver = organizationDrivers.find(driver => driver._id.toString() === driverId)
+
+      if (!driver) {
+        return ''
+      }
+
+      return `${driver.firstName} ${driver.lastName}`
+    }
+
+    const driversId = organizationDrivers.map((driver) => driver._id.toString())
+
+    const organizationDeliveries: Delivery[] = await this.odsaRepository.find({
+      driver: { $in: driversId },
+      createdAt: {
+        $gte: filterQuery.gte,
+        $lte: filterQuery.lte
+      }
+    })
+
+    if (!organizationDeliveries?.length) {
+      return DEFAULT
+    }
+
+    for (const organizationDelivery of organizationDeliveries) {
+      const driverName = mapDriverIdToName(organizationDelivery.driver)
+      DEFAULT.totalDeliveries += 1
+      DEFAULT.totalEarnings += organizationDelivery.deliveryFee
+      DEFAULT.totalDistance += organizationDelivery?.travelMeta?.distance ?? 1
+      DEFAULT.totalTimeSpent += organizationDelivery?.travelMeta?.travelTime ?? 1
+
+      if (DEFAULT.driversEarnings[driverName] !== undefined) {
+        DEFAULT.driversEarnings[driverName] += organizationDelivery.deliveryFee as any
+      } else {
+        DEFAULT.driversEarnings[driverName] = organizationDelivery.deliveryFee as any
+      }
+    }
+
+    DEFAULT.averageDelivery = DEFAULT.totalEarnings / organizationDeliveries.length
+
+    DEFAULT.averageDeliveryDistance = DEFAULT.totalDistance / organizationDeliveries.length
+
+    return { ...DEFAULT, totalDrivers: organizationDrivers.length }
   }
 
   //   @Crons

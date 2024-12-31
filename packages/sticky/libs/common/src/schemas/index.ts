@@ -7,7 +7,7 @@ import {
   VendorOperationSetting,
   DriverType, AdminLevel, ListingApprovalStatus, OrderOptions,
   VendorApprovalStatusEnum,
-  FleetOrderType, 
+  FleetOrderType,
 } from '../typings'
 export interface ListingCategoryI {
   _id: string
@@ -519,4 +519,21 @@ export interface FleetMemberI {
   password: string
 
   organization: string
+}
+
+export interface FleetOrgStat {
+  totalEarnings: number
+
+  totalDeliveries: number
+
+  driversEarnings: Record<string, number>
+
+  totalDistance: number
+
+  totalTimeSpent: number
+
+  averageDeliveryDistance: number
+
+  averageDeliveryTime: number
+
 }

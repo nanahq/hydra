@@ -199,7 +199,7 @@ export interface RegisterDriverDto {
   lastName: string;
   state: string;
   email: string;
-  nin: number;
+  nin?: number;
   type: DriverType;
   organization?: string;
 }
