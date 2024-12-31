@@ -89,42 +89,56 @@ export class FleetService {
   }
 
   async createFleetOrganization (payload: CreateAccountWithOrganizationDto): Promise<ResponseWithStatus> {
-    try {
-      const createOrganization = await this.organizationRepository.create({
-        ...payload,
-        name: payload.organization,
-        inviteLink: RandomGen.genRandomString(100, 20)
-      })
+    const existingMember = await this.memberRepository.findOne({
+      $or: [
+        { email: payload.email.toLowerCase() },
+        { phone: internationalisePhoneNumber(payload.phone) }
+      ]
+    })
 
-      const newMember = await this.memberRepository.create({
-        firstName: payload.firstName,
-        lastName: payload.lastName,
-        isOwner: true,
-        phone: internationalisePhoneNumber(payload.phone),
-        email: payload.email.toLowerCase(),
-        password: await bcrypt.hash(payload.password, 10),
-        organization: createOrganization._id.toString()
-      })
-
-      await this.organizationRepository.findOneAndUpdate({
-        _id: createOrganization._id.toString()
-      }, {
-        $push: { members: newMember._id.toString(), owners: newMember._id.toString() }
-      })
-
-      this.logger.log(`New organization '${payload.organization}' created with member '${payload.email}'`)
-
-      return { status: 1 }
-    } catch (error) {
-      this.logger.error({
-        message: `Failed to register new organization ${payload.email} `,
-        error
-      })
+    if (existingMember) {
       throw new FitRpcException(
-        'Can not register a new organization at the moment. Something went wrong.',
-        HttpStatus.INTERNAL_SERVER_ERROR
+        'You already belong to an organization.',
+        HttpStatus.CONFLICT
       )
     }
+
+    // Check if organization name already exists
+    const existingOrg = await this.organizationRepository.findOne({
+      email: payload.email.toLowerCase()
+    })
+
+    if (existingOrg) {
+      throw new FitRpcException(
+        'An organization with this email already exists.',
+        HttpStatus.CONFLICT
+      )
+    }
+    const createOrganization = await this.organizationRepository.create({
+      ...payload,
+      name: payload.organization,
+      inviteLink: RandomGen.genRandomString(100, 20)
+    })
+
+    const newMember = await this.memberRepository.create({
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      isOwner: true,
+      phone: internationalisePhoneNumber(payload.phone),
+      email: payload.email.toLowerCase(),
+      password: await bcrypt.hash(payload.password, 10),
+      organization: createOrganization._id.toString()
+    })
+
+    await this.organizationRepository.findOneAndUpdate({
+      _id: createOrganization._id.toString()
+    }, {
+      $push: { members: newMember._id.toString(), owners: newMember._id.toString() }
+    })
+
+    this.logger.log(`New organization '${payload.organization}' created with member '${payload.email}'`)
+
+    return { status: 1 }
   }
 
   async acceptFleetOrgInvite (payload: AcceptFleetInviteDto): Promise<ResponseWithStatus> {
@@ -510,7 +524,7 @@ export class FleetService {
 
     const organizationDrivers: Driver[] = await this.driverRepository.find({ organization: organizationId })
 
-    if (!Array.isArray(organizationDrivers) && !organizationDrivers?.length) {
+    if (!Array.isArray(organizationDrivers) || !organizationDrivers?.length) {
       return DEFAULT
     }
     DEFAULT.totalDrivers = organizationDrivers.length

@@ -216,7 +216,7 @@ export interface RegisterDriverDto {
 
   email: string
 
-  nin: number
+  nin?: number
 }
 
 export interface RegisterAdminDTO {
