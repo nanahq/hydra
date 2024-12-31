@@ -303,7 +303,7 @@ export interface AddressBookI {
 
   house_number?: number
 
-  location: number[]
+  location: LocationCoordinates
 
   isDeleted: boolean
 
