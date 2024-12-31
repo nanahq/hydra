@@ -56,6 +56,7 @@ import { UserWalletRepository } from './wallet/user/wallet.repository'
 import { FleetPayoutService } from './fleets-payout/fleets-payout.service'
 import { FleetPayoutRepository } from './fleets-payout/fleets-payout.respository'
 import { FleetPayoutController } from './fleets-payout/fleets-payout.controller'
+import { DriverRepository } from '../../drivers-service/src/drivers-service.repository'
 
 @Module({
   imports: [
@@ -161,7 +162,8 @@ import { FleetPayoutController } from './fleets-payout/fleets-payout.controller'
     UserWalletService,
     UserWalletRepository,
     FleetPayoutService,
-    FleetPayoutRepository
+    FleetPayoutRepository,
+    DriverRepository
   ]
 })
 export class PaymentServiceModule {}
