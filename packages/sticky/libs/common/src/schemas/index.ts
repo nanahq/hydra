@@ -526,13 +526,17 @@ export interface FleetOrgStat {
 
   totalDeliveries: number
 
-  driversEarnings: Record<string, number>
+  driversEarnings?: Record<string, number>
 
   totalDistance: number
 
   totalTimeSpent: number
 
   averageDeliveryDistance: number
+
+  totalDrivers: number
+
+  averageDelivery: number
 
   averageDeliveryTime: number
 
