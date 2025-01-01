@@ -546,7 +546,8 @@ export class FleetService {
       createdAt: {
         $gte: filterQuery.gte,
         $lte: filterQuery.lte
-      }
+      },
+      deliveryFee: { $exists: true, $ne: null }
     })
 
     if (!organizationDeliveries?.length) {
