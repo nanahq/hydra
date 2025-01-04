@@ -25,7 +25,7 @@ export class Driver extends AbstractDocument {
   @Prop()
     phone: string
 
-  @Prop({ type: Number, unique: true })
+  @Prop({ type: Number, required: false })
     nin: number
 
   @Prop({ default: false })
