@@ -25,7 +25,9 @@ import {
   ListingMenu,
   ListingMenuSchema,
   FleetPayout,
-  FleetPayoutSchema
+  FleetPayoutSchema,
+  Driver,
+  DriverSchema
 } from '@app/common'
 import { ScheduleModule } from '@nestjs/schedule'
 import { PaymentRepository } from './charge/charge.repository'
@@ -127,6 +129,10 @@ import { DriverRepository } from '../../drivers-service/src/drivers-service.repo
       {
         name: UserWallet.name,
         schema: UserWalletSchema
+      },
+      {
+        name: Driver.name,
+        schema: DriverSchema
       }
     ]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
