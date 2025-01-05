@@ -276,4 +276,18 @@ export class OrdersServiceController {
       this.rmqService.ack(context)
     }
   }
+
+  @MessagePattern(QUEUE_MESSAGE.GET_LAST_ORDER_STATUS)
+  async getLastOrderStatus (
+    @Payload() { userId }: ServicePayload<null>,
+      @Ctx() context: RmqContext
+  ): Promise<any> {
+    try {
+      return await this.ordersServiceService.getUserLastOrderStatus(userId)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
 }

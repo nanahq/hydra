@@ -96,6 +96,23 @@ export class OrderController {
     )
   }
 
+  @Get('status')
+  @UseGuards(JwtAuthGuard)
+  async getLastOrderStatus (@CurrentUser() user: User): Promise<any> {
+    const payload: ServicePayload<null> = {
+      userId: user._id as any,
+      data: null
+    }
+
+    return await lastValueFrom<any>(
+      this.orderClient.send(QUEUE_MESSAGE.GET_LAST_ORDER_STATUS, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
   @Get('ping')
   async ping (): Promise<string> {
     return await lastValueFrom<any>(this.orderClient.send(QUEUE_MESSAGE.ORDER_SERVICE_REQUEST_PING, {}))

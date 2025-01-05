@@ -402,6 +402,20 @@ export class OrdersServiceService {
     }
   }
 
+  public async getUserLastOrderStatus (user: string): Promise<any> {
+    const lastOrder = await this.orderRepository
+      .findRaw()
+      .findOne({ user })
+      .sort({ createdAt: -1 })
+      .exec()
+
+    if (lastOrder?.orderStatus !== OrderStatus.PROCESSED) {
+      return { paid: false }
+    }
+
+    return { paid: true }
+  }
+
   public async odsaGetPreOrders (
     filterQuery: FilterQuery<Order>
   ): Promise<Order[] | null> {

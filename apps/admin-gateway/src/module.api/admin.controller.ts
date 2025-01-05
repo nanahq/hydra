@@ -96,6 +96,20 @@ export class AdminController {
     )
   }
 
+  @Post('verify-payment')
+  async manuallyVerifyPayment (
+    @AdminClearance([AdminLevel.FINANCE]) admin: Admin,
+      @Body() { reference }: { reference: string }
+  ): Promise<void> {
+    return await lastValueFrom(
+      this.adminClient.emit(QUEUE_MESSAGE.VERIFY_PAYMENT_PAYSTACK, reference).pipe(
+        catchError<any, any>((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
   @Delete('/:id')
   async deleteAdminProfile (
     @AdminClearance([AdminLevel.SUPER_ADMIN]) admin: Admin,
