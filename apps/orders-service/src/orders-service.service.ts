@@ -68,7 +68,8 @@ export class OrdersServiceService {
       user: userId,
       refId: RandomGen.genRandomNum(),
       orderStatus: OrderStatus.PAYMENT_PENDING,
-      pin_code: RandomGen.genRandomNum(9, 4)
+      pin_code: RandomGen.genRandomNum(9, 4),
+      ...(data.fleetOrderType === 'BOX' ? { itemDescription: data.itemDescription } : {})
     }
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)

@@ -7,6 +7,7 @@ import {
 import {
   CustomisationOptionTypeEnum,
   DriverType,
+  FleetOrderType,
   ListingOption,
   LocationCoordinates,
   OrderBreakDown,
@@ -322,6 +323,7 @@ export interface PlaceOrderDto {
   thirdPartyName?: string;
   coupon?: string;
   paymentType: OrderPaymentType;
+  fleetOrderType?: FleetOrderType
 }
 
 export interface UpdateDeliveryStatusDto {

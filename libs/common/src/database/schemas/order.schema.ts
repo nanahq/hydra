@@ -158,6 +158,9 @@ export class Order extends AbstractDocument {
 
   @Prop(String)
     fleetOrderType: FleetOrderType
+
+  @Prop(String)
+    itemDescription?: string
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order)
