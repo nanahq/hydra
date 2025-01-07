@@ -738,3 +738,7 @@ export interface PinAddressI {
   lastName: string
   addresses: AddressBookI[]
 }
+
+export interface LastOrderPaymentStatus {
+  paid: boolean
+}

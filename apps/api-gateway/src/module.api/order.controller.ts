@@ -11,6 +11,7 @@ import {
 import {
   CurrentUser,
   IRpcException,
+  LastOrderPaymentStatus,
   Order,
   OrderI,
   PaystackChargeResponseData,
@@ -98,7 +99,7 @@ export class OrderController {
 
   @Get('status')
   @UseGuards(JwtAuthGuard)
-  async getLastOrderStatus (@CurrentUser() user: User): Promise<any> {
+  async getLastOrderStatus (@CurrentUser() user: User): Promise<LastOrderPaymentStatus> {
     const payload: ServicePayload<null> = {
       userId: user._id as any,
       data: null

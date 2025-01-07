@@ -3,6 +3,7 @@ import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import {
   ExportPushNotificationClient,
   FitRpcException,
+  LastOrderPaymentStatus,
   MultiPurposeServicePayload,
   Order,
   OrderI,
@@ -403,14 +404,15 @@ export class OrdersServiceService {
     }
   }
 
-  public async getUserLastOrderStatus (user: string): Promise<any> {
-    const lastOrder = await this.orderRepository
-      .findRaw()
-      .findOne({ user })
-      .sort({ createdAt: -1 })
-      .exec()
+  public async getUserLastOrderStatus (user: string): Promise<LastOrderPaymentStatus> {
+    const lastOrder: Order[] = await this.orderRepository.find({
+      user,
+      sort: { createdAt: -1 }
+    })
 
-    if (lastOrder?.orderStatus !== OrderStatus.PROCESSED) {
+    const mostRecentOrder = lastOrder[0]
+
+    if (!mostRecentOrder || mostRecentOrder?.orderStatus !== OrderStatus.PROCESSED) {
       return { paid: false }
     }
 

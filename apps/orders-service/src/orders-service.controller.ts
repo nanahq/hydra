@@ -10,6 +10,7 @@ import {
 } from '@nestjs/microservices'
 import {
   ExceptionFilterRpc,
+  LastOrderPaymentStatus,
   MultiPurposeServicePayload,
   Order,
   OrderI,
@@ -281,7 +282,7 @@ export class OrdersServiceController {
   async getLastOrderStatus (
     @Payload() { userId }: ServicePayload<null>,
       @Ctx() context: RmqContext
-  ): Promise<any> {
+  ): Promise<LastOrderPaymentStatus> {
     try {
       return await this.ordersServiceService.getUserLastOrderStatus(userId)
     } catch (error) {

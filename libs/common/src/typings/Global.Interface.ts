@@ -426,3 +426,7 @@ export interface FleetOrgStat {
   averageDeliveryTime: number
 
 }
+
+export interface LastOrderPaymentStatus {
+  paid: boolean
+}
