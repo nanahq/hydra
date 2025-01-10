@@ -203,6 +203,7 @@ export interface OrderI {
   coupon?: string
   review?: ReviewI
   fleetOrderType: FleetOrderType
+  itemDescription?: string
 }
 
 export interface ListingMenuReview {
