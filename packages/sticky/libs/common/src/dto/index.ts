@@ -7,6 +7,7 @@ import {
 import {
   CustomisationOptionTypeEnum,
   DriverType,
+  FleetOrderType,
   ListingOption,
   LocationCoordinates,
   OrderBreakDown,
@@ -27,6 +28,7 @@ export interface AddressBookDto {
   labelName: string;
   coordinate: [string, string];
   shareableName?: string
+  shareable: boolean
 }
 
 export interface UserDto {
@@ -198,7 +200,7 @@ export interface RegisterDriverDto {
   lastName: string;
   state: string;
   email: string;
-  nin: number;
+  nin?: number;
   type: DriverType;
   organization?: string;
 }
@@ -321,6 +323,7 @@ export interface PlaceOrderDto {
   thirdPartyName?: string;
   coupon?: string;
   paymentType: OrderPaymentType;
+  fleetOrderType?: FleetOrderType
 }
 
 export interface UpdateDeliveryStatusDto {

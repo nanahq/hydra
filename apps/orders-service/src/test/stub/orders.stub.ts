@@ -9,6 +9,11 @@ import { Types } from 'mongoose'
 export function OrderStub (): Order {
   const objectId = '63f93c9f248f6c43d0b76502' as unknown as Types.ObjectId
   return {
+    pickupAddress: '',
+    precisePickupLocation: {
+      type: 'Point',
+      coordinates: [12.34, 56.78]
+    },
     _id: objectId,
     user: 'user_id_123',
     pin_code: 1234,
@@ -48,7 +53,8 @@ export function OrderStub (): Order {
       deliveryFee: 10.0,
       vat: 12.0
     },
-    txRefId: 'transaction_reference_123'
+    txRefId: 'transaction_reference_123',
+    fleetOrderType: 'GROCERIES'
   }
 }
 

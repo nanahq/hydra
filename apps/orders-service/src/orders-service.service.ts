@@ -3,6 +3,7 @@ import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import {
   ExportPushNotificationClient,
   FitRpcException,
+  LastOrderPaymentStatus,
   MultiPurposeServicePayload,
   Order,
   OrderI,
@@ -68,7 +69,8 @@ export class OrdersServiceService {
       user: userId,
       refId: RandomGen.genRandomNum(),
       orderStatus: OrderStatus.PAYMENT_PENDING,
-      pin_code: RandomGen.genRandomNum(9, 4)
+      pin_code: RandomGen.genRandomNum(9, 4),
+      ...(data.fleetOrderType === 'BOX' ? { itemDescription: data.itemDescription } : {})
     }
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
@@ -400,6 +402,21 @@ export class OrdersServiceService {
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
+  }
+
+  public async getUserLastOrderStatus (user: string): Promise<LastOrderPaymentStatus> {
+    const lastOrder: Order[] = await this.orderRepository.find({
+      user,
+      sort: { createdAt: -1 }
+    })
+
+    const mostRecentOrder = lastOrder[0]
+
+    if (!mostRecentOrder || mostRecentOrder?.orderStatus !== OrderStatus.PROCESSED) {
+      return { paid: false }
+    }
+
+    return { paid: true }
   }
 
   public async odsaGetPreOrders (

@@ -64,6 +64,8 @@ export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'
 
 export type DriverType = 'DELIVER_PRE_ORDER' | 'DELIVER_ON_DEMAND'
 
+export type FleetOrderType = 'FOOD' | 'GROCERIES' | 'BOX'
+
 export interface OrderGroup {
   groupId: number
   orders: OrderI[]
@@ -135,6 +137,8 @@ export interface DeliveryI {
     distance: number
     travelTime: number
   }
+
+  deliveryFee: number
 }
 
 export interface DriverI {
@@ -382,6 +386,8 @@ export interface AddressBookI {
   createdAt: string
 
   updatedAt: string
+
+  pin: number
 }
 
 export interface AddressLabelI {
@@ -398,4 +404,29 @@ export interface AddressLabelI {
   createdAt: string
 
   updatedAt: string
+}
+
+export interface FleetOrgStat {
+  totalEarnings: number
+
+  totalDeliveries: number
+
+  driversEarnings?: Record<string, number>
+
+  totalDistance: number
+
+  totalTimeSpent: number
+
+  averageDeliveryDistance: number
+
+  totalDrivers: number
+
+  averageDelivery: number
+
+  averageDeliveryTime: number
+
+}
+
+export interface LastOrderPaymentStatus {
+  paid: boolean
 }

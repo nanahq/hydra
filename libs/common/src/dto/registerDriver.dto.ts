@@ -9,7 +9,8 @@ import {
   ValidationOptions,
   ValidationArguments,
   IsBoolean,
-  IsOptional
+  IsOptional,
+  IsNumber
 } from 'class-validator'
 import { DriverType } from '@app/common'
 
@@ -72,4 +73,8 @@ export class RegisterDriverDto {
   @IsOptional()
   @IsString()
     organization?: string
+
+  @IsOptional()
+  @IsNumber()
+    nin?: number
 }

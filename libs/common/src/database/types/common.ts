@@ -3,7 +3,8 @@ import {
   VendorOperationType,
   OrderStatus,
   DriverI,
-  CouponType
+  CouponType,
+  FleetOrderType
 } from '@app/common'
 
 import { ListingApprovalStatus } from '@app/common/typings/ListingApprovalStatus.enum'
@@ -176,6 +177,7 @@ export interface OrderI {
   totalOrderValue: number
   orderValuePayable: number
   deliveryAddress: string
+  pickupAddress: string
   primaryContact: string
   isThirdParty: boolean
   createdAt: string
@@ -187,6 +189,8 @@ export interface OrderI {
   orderType: OrderType
   orderDeliveryScheduledTime: string
   preciseLocation: LocationCoordinates
+
+  precisePickupLocation: LocationCoordinates
   quantity: [
     {
       listing: string
@@ -198,6 +202,8 @@ export interface OrderI {
 
   coupon?: string
   review?: ReviewI
+  fleetOrderType: FleetOrderType
+  itemDescription?: string
 }
 
 export interface ListingMenuReview {

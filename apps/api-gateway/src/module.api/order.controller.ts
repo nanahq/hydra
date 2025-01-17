@@ -11,6 +11,7 @@ import {
 import {
   CurrentUser,
   IRpcException,
+  LastOrderPaymentStatus,
   Order,
   OrderI,
   PaystackChargeResponseData,
@@ -89,6 +90,23 @@ export class OrderController {
 
     return await lastValueFrom<Order>(
       this.orderClient.send(QUEUE_MESSAGE.GET_SINGLE_ORDER_BY_ID, payload).pipe(
+        catchError((error: IRpcException) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
+  }
+
+  @Get('status')
+  @UseGuards(JwtAuthGuard)
+  async getLastOrderStatus (@CurrentUser() user: User): Promise<LastOrderPaymentStatus> {
+    const payload: ServicePayload<null> = {
+      userId: user._id as any,
+      data: null
+    }
+
+    return await lastValueFrom<any>(
+      this.orderClient.send(QUEUE_MESSAGE.GET_LAST_ORDER_STATUS, payload).pipe(
         catchError((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })

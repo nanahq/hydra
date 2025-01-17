@@ -8,7 +8,7 @@ import {
   ValidateNested,
   IsOptional
 } from 'class-validator'
-import { OrderPaymentType, OrderType } from '@app/common/typings/Global.Interface'
+import { FleetOrderType, OrderPaymentType, OrderType } from '@app/common/typings/Global.Interface'
 import { OrderOptions } from '@app/common/database/types/common'
 
 class PreciseLocationDto {
@@ -63,6 +63,13 @@ export class PlaceOrderDto {
   @IsString()
     deliveryAddress: string
 
+  @IsString()
+  @IsOptional()
+    specialNote: string
+
+  @IsString()
+    pickupAddress: string
+
   @IsPhoneNumber('NG', { message: 'Invalid Nigerian phone number' })
     primaryContact: string
 
@@ -72,6 +79,10 @@ export class PlaceOrderDto {
   @ValidateNested()
   @IsObject()
     preciseLocation: PreciseLocationDto
+
+  @ValidateNested()
+  @IsObject()
+    precisePickupLocation: PreciseLocationDto
 
   @IsArray()
     options: OrderOptions[]
@@ -91,4 +102,11 @@ export class PlaceOrderDto {
 
   @IsString()
     paymentType: OrderPaymentType
+
+  @IsOptional()
+    fleetOrderType?: FleetOrderType
+
+  @IsString()
+  @IsOptional()
+    itemDescription?: string
 }

@@ -117,11 +117,6 @@ export class UsersService {
       await lastValueFrom(
         this.notificationClient.emit(QUEUE_MESSAGE.SEND_SLACK_MESSAGE, { text: slackMessage })
       )
-      const genAddressPin = this.extractPhoneDigits(internationalisePhoneNumber(formattedPhone))
-      await this.usersRepository.findOneAndUpdate(
-        { _id: user._id.toString() },
-        { addressPin: genAddressPin }
-      )
 
       return {
         pinId: verificationResults.pinId ?? verificationResults.pin_id,
@@ -485,12 +480,5 @@ export class UsersService {
 
   async ping (): Promise<string> {
     return 'PONG'
-  }
-
-  extractPhoneDigits (phoneNumber: string): number {
-    const cleanedNumber = phoneNumber.replace(/\D/g, '')
-    const middleDigits = cleanedNumber.slice(6, 8)
-    const lastDigits = cleanedNumber.slice(-2)
-    return Number(middleDigits + lastDigits)
   }
 }

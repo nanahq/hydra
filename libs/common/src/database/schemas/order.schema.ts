@@ -6,7 +6,8 @@ import {
   OrderBreakDown,
   OrderType,
   LocationCoordinates,
-  OrderOptions
+  OrderOptions,
+  FleetOrderType
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -43,6 +44,11 @@ export class Order extends AbstractDocument {
     type: String
   })
     deliveryAddress: string
+
+  @Prop({
+    type: String
+  })
+    pickupAddress: string
 
   @Prop({ type: String })
     primaryContact: string
@@ -86,6 +92,18 @@ export class Order extends AbstractDocument {
     }
   })
     preciseLocation: LocationCoordinates
+
+  @Prop({
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0, 0]
+    }
+  })
+    precisePickupLocation: LocationCoordinates
 
   @Prop({
     type: [
@@ -137,6 +155,12 @@ export class Order extends AbstractDocument {
 
   @Prop(Number)
     pin_code: number
+
+  @Prop(String)
+    fleetOrderType: FleetOrderType
+
+  @Prop(String)
+    itemDescription?: string
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order)

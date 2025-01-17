@@ -1,22 +1,20 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable, Logger } from '@nestjs/common'
 
 import {
   AddressBookI,
   FitRpcException,
-  PinAddressI,
   ResponseWithStatus,
-  ServicePayload,
-  UserI
+  ServicePayload
 } from '@app/common'
 import { AddressBookRepository } from './address.book.repository'
 import { AddressBookDto } from '@app/common/database/dto/user/address.book.dto'
 import { AddressBook } from '@app/common/database/schemas/address.book.schema'
-import { UserRepository } from './users.repository'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class AddressBookService {
-  constructor (private readonly repository: AddressBookRepository,
-    private readonly usersRepository: UserRepository
+  private readonly logger = new Logger()
+  constructor (private readonly repository: AddressBookRepository
   ) {}
 
   async list (): Promise<AddressBook[]> {
@@ -54,7 +52,12 @@ export class AddressBookService {
 
   async create (dto: Partial<AddressBookDto>): Promise<ResponseWithStatus> {
     try {
-      await this.repository.create(dto)
+      const pin = await this.generateUniquePIN()
+
+      await this.repository.create({
+        ...dto,
+        pin
+      })
       return { status: 1 }
     } catch (error) {
       throw new FitRpcException(
@@ -114,38 +117,54 @@ export class AddressBookService {
     return { status: 1 }
   }
 
-  async getAddressByPin (pin: number): Promise<PinAddressI> {
-    const getUser: UserI = await this.usersRepository.findOne({
-      addressPin: pin
+  async getAddressByPin (pin: number): Promise<any> {
+    const getAddress: AddressBookI = await this.repository.findOne({
+      pin
     })
 
-    if (getUser === null) {
-      throw new FitRpcException(
-        'User with that address pin cannot be found',
-        HttpStatus.NOT_FOUND
-      )
+    return getAddress
+  }
+
+  async generateUniquePIN (): Promise<number> {
+    function generatePin (): number {
+      const digits = new Set<number>()
+      while (digits.size < 5) {
+        const randomDigit = Math.floor(Math.random() * 10)
+        digits.add(randomDigit)
+      }
+      return Number(Array.from(digits).join(''))
     }
 
-    const addresses: AddressBookI[] = await this.repository.findAndPopulate(
-      {
-        userId: getUser._id.toString(),
-        isDeleted: false,
-        shareable: true
-      },
-      ['labelId']
-    )
-
-    if (addresses === null) {
-      throw new FitRpcException(
-        'User address is not shareable',
-        HttpStatus.UNAUTHORIZED
-      )
+    while (true) {
+      const pin = generatePin()
+      const existingAddress = await this.repository.findOne({ pin })
+      if (!existingAddress) {
+        return pin
+      }
     }
+  }
 
-    return {
-      firstname: getUser.firstName,
-      lastName: getUser.lastName,
-      addresses
+  //   @Crons
+
+  /**
+   *
+   */
+  @Cron(CronExpression.EVERY_30_SECONDS)
+  async updateUsersWithAddressPin (): Promise<void> {
+    try {
+      const addresses = await this.repository.find(
+        { pin: { $exists: false } }
+      )
+      for (const address of addresses) {
+        await this.repository.findOneAndUpdate(
+          { _id: address._id },
+          {
+            pin: await this.generateUniquePIN()
+          }
+        )
+      }
+    } catch (error) {
+      this.logger.error(JSON.stringify(error))
     }
   }
 }

@@ -3,7 +3,8 @@ import { FleetService } from './fleet.service'
 import {
   AcceptFleetInviteDto,
   CreateAccountWithOrganizationDto, CurrentUser, Delivery, Driver, DriverStatGroup, FleetMember,
-  FleetOrganization,
+  FleetOrganization, FleetOrgStat,
+  FleetPayout,
   RegisterDriverDto,
   ResponseWithStatus, UpdateFleetMemberProfileDto, UpdateFleetOwnershipStatusDto
 } from '@app/common'
@@ -197,6 +198,44 @@ export class FleetController {
   ): Promise<DriverStatGroup> {
     try {
       return await this.fleetService.getFleetDriverStats(driverId, member._id.toString())
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Get('payout/:driverId')
+  async getDriverPayout (
+    @CurrentUser() member: FleetMember,
+      @Param('driverId') driverId: string
+  ): Promise<FleetPayout[]> {
+    try {
+      return await this.fleetService.getDriverPayout(member.organization, driverId)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Get('payout/all')
+  async getAllDriverPayout (
+    @CurrentUser() member: FleetMember
+  ): Promise<FleetPayout[]> {
+    try {
+      return await this.fleetService.getAllDriversPayout(member.organization)
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
+  @Post('stats')
+  async getOrganizationStats (
+    @FleetOwner() owner: FleetMember,
+      @Body() data: { gte: string, lte: string }
+  ): Promise<FleetOrgStat> {
+    try {
+      return await this.fleetService.getOrganizationStats(owner.organization, data)
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }

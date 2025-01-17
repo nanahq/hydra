@@ -125,7 +125,7 @@ export class AddressBookController {
       @CurrentUser() user: User
   ): Promise<PinAddressI> {
     const payload = {
-      pin
+      pin: Number(pin)
     }
     return await lastValueFrom<PinAddressI>(
       this.userClient
