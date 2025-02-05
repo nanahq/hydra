@@ -345,7 +345,7 @@ export class OrdersServiceService {
 
       let finalStatus: OrderStatus = status
 
-      if(order?.vendor?._id?.toString() === this.configService.get('BOX_COURIER_VENDOR')) {
+      if (order?.vendor?._id?.toString() === this.configService.get('BOX_COURIER_VENDOR')) {
         finalStatus = OrderStatus.COURIER_PICKUP
       }
 
