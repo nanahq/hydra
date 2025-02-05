@@ -31,6 +31,7 @@ import { OrderRepository } from './order.repository'
 import { FilterQuery } from 'mongoose'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { DebitUserWallet } from '@app/common/dto/General.dto'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class OrdersServiceService {
@@ -52,7 +53,9 @@ export class OrdersServiceService {
     private readonly listingsClient: ClientProxy,
 
     @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
-    private readonly paymentClient: ClientProxy
+    private readonly paymentClient: ClientProxy,
+
+    private readonly configService: ConfigService
   ) {}
 
   public async placeOrder ({
@@ -340,11 +343,17 @@ export class OrdersServiceService {
         ['vendor', 'listing', 'user']
       )
 
+      let finalStatus: OrderStatus = status
+
+      if(order?.vendor?._id?.toString() === this.configService.get('BOX_COURIER_VENDOR')) {
+        finalStatus = OrderStatus.COURIER_PICKUP
+      }
+
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
         {
           txRefId,
-          orderStatus: status
+          orderStatus: finalStatus
         }
       )
 

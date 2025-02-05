@@ -31,7 +31,8 @@ import { ScheduleModule } from '@nestjs/schedule'
       validationSchema: Joi.object({
         RMQ_VENDORS_QUEUE: Joi.string(),
         RMQ_VENDORS_API_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string()
+        RMQ_URI: Joi.string(),
+        BOX_COURIER_VENDOR: Joi.string()
       }),
       envFilePath: './apps/orders-service/.env'
     }),
