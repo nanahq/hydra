@@ -527,9 +527,8 @@ export class OrdersServiceService {
       case OrderStatus.IN_ROUTE:
       case OrderStatus.COURIER_PICKUP:
       case OrderStatus.COLLECTED:
-        await this.customerIoClient.sendPushNotification(order.user._id.toString(), "order_status_update")
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update')
         break
-
     }
   }
 
