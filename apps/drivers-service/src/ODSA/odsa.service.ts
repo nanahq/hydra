@@ -10,7 +10,8 @@ import {
   DriverStats,
   FitRpcException,
   OrderI,
-  OrderStatus, OrderTypes,
+  OrderStatus,
+  OrderTypes,
   OrderUpdateStream,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -24,6 +25,7 @@ import * as moment from 'moment'
 import { FilterQuery } from 'mongoose'
 import { EventsGateway } from '../websockets/events.gateway'
 import { TacoService } from './taco.service'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class ODSA {
@@ -42,6 +44,7 @@ export class ODSA {
     private readonly paymentClient: ClientProxy,
     private readonly driversRepository: DriverRepository,
     private readonly odsaRepository: OdsaRepository,
+    private readonly configService: ConfigService,
 
     //   Websocket gateway injection for order status updates
     private readonly eventsGateway: EventsGateway,
@@ -378,7 +381,7 @@ export class ODSA {
             }) as any
           ) as any
       )
-      const collectionLocation = order?.vendor?.location?.coordinates as [
+      const collectionLocation = order?.precisePickupLocation?.coordinates as [
         number,
         number,
       ]
@@ -400,7 +403,7 @@ export class ODSA {
           dropOffLocation: order.preciseLocation,
           pickupLocation: order.precisePickupLocation,
           assignedToDriver: false,
-          status: OrderStatus.PROCESSED,
+          status: order.vendor._id === this.configService.get('BOX_COURIER_VENDOR') ? OrderStatus.COURIER_PICKUP : OrderStatus.PROCESSED,
           deliveryType: order.orderType,
           deliveryTime: order.orderDeliveryScheduledTime,
           pool: [],
@@ -425,7 +428,7 @@ export class ODSA {
           pickupLocation: order.precisePickupLocation,
           assignedToDriver: false,
           deliveryTime: order.orderDeliveryScheduledTime,
-          status: OrderStatus.PROCESSED,
+          status: order.vendor._id === this.configService.get('BOX_COURIER_VENDOR') ? OrderStatus.COURIER_PICKUP : OrderStatus.PROCESSED,
           deliveryType: order.orderType,
           pool: driversSuitableForPickup.map(driver => driver._id.toString()),
           deliveryFee: deliveryMeta.fee,
