@@ -6691,6 +6691,11 @@ cssesc@^3.0.0:
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
 
+customerio-node@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/customerio-node/-/customerio-node-4.1.1.tgz#6c6129ec3def9df41bd483a01f21a94db343c8a8"
+  integrity sha512-EaQZwN9QhzZMyYZdFxXk6GZPT/zX/S3Jcn4gaUm5v7MXWbA/txr87hgPHokAHcLGdUGiAB/RwN9aqTABMgbE5g==
+
 d@1, d@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/d/-/d-1.0.1.tgz#8698095372d58dbee346ffd0c7093f99f8f9eb5a"

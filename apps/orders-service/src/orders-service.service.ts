@@ -1,6 +1,7 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 
 import {
+  CustomerIoClient,
   ExportPushNotificationClient,
   FitRpcException,
   LastOrderPaymentStatus,
@@ -41,6 +42,7 @@ export class OrdersServiceService {
     private readonly orderRepository: OrderRepository,
 
     private readonly expoClient: ExportPushNotificationClient,
+    private readonly customerIoClient: CustomerIoClient,
 
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
@@ -523,25 +525,11 @@ export class OrdersServiceService {
         )
         break
       case OrderStatus.IN_ROUTE:
-        await this.expoClient.sendSingleNotification(
-          order?.user?.expoNotificationToken as string,
-          {
-            title: 'Your order is been delivered',
-            body: 'Our delivery person is on his way',
-            priority: 'high'
-          }
-        )
+      case OrderStatus.COURIER_PICKUP:
+      case OrderStatus.COLLECTED:
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), "order_status_update")
         break
 
-      case OrderStatus.COURIER_PICKUP:
-        await this.expoClient.sendSingleNotification(
-          order?.user?.expoNotificationToken as string,
-          {
-            title: 'Your order has been prepared',
-            body: `${order.vendor.businessName} has finished preparing your order`,
-            priority: 'high'
-          }
-        )
     }
   }
 
