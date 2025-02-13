@@ -498,7 +498,7 @@ export class OrdersServiceService {
       monthlyOrders
     }
   }
-
+  // order_stauts_update_collected, order_status_update_in_route,order_status_update_delivered,order_status_update_placed
   private async sendPushNotifications (
     status: OrderStatus,
     order: OrderI
@@ -515,19 +515,16 @@ export class OrdersServiceService {
             priority: 'high'
           }
         )
-        await this.expoClient.sendSingleNotification(
-          order?.user?.expoNotificationToken as string,
-          {
-            title: 'Your order has been processed',
-            body: 'Track the progress of your order on the mobile app',
-            priority: 'high'
-          }
-        )
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update_placed')
         break
       case OrderStatus.IN_ROUTE:
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update_in_route')
+        break;
       case OrderStatus.COURIER_PICKUP:
-      case OrderStatus.COLLECTED:
-        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update')
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_stauts_update_collected')
+        break;
+      case OrderStatus.FULFILLED:
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update_delivered')
         break
     }
   }
