@@ -498,6 +498,7 @@ export class OrdersServiceService {
       monthlyOrders
     }
   }
+
   // order_stauts_update_collected, order_status_update_in_route,order_status_update_delivered,order_status_update_placed
   private async sendPushNotifications (
     status: OrderStatus,
@@ -519,10 +520,10 @@ export class OrdersServiceService {
         break
       case OrderStatus.IN_ROUTE:
         await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update_in_route')
-        break;
+        break
       case OrderStatus.COURIER_PICKUP:
         await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_stauts_update_collected')
-        break;
+        break
       case OrderStatus.FULFILLED:
         await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update_delivered')
         break
