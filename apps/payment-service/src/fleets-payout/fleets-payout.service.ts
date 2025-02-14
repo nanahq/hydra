@@ -34,7 +34,7 @@ export class FleetPayoutService {
     )
   }
 
-  @Cron(CronExpression.EVERY_MINUTE, {
+  @Cron(CronExpression.EVERY_DAY_AT_10PM, {
     timeZone: 'Africa/Lagos'
   })
   async handlePayoutComputation (): Promise<void> {
