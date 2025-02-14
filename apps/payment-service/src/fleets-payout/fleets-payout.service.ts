@@ -34,7 +34,7 @@ export class FleetPayoutService {
     )
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_10PM, {
+  @Cron(CronExpression.EVERY_MINUTE, {
     timeZone: 'Africa/Lagos'
   })
   async handlePayoutComputation (): Promise<void> {
@@ -62,13 +62,15 @@ export class FleetPayoutService {
       )
     )
 
+    const validDeliveries = deliveries.filter(delivery => delivery.driver)
+
     const deliveryId = deliveries.map((delivery) => delivery._id)
 
     // Compute earnings for each driver
     const driverEarnings = new Map<string, number>()
 
-    deliveries.forEach((delivery) => {
-      const driverId = delivery.driver._id.toString()
+    validDeliveries.forEach((delivery) => {
+      const driverId = delivery.driver.toString()
       const earnings = driverEarnings.get(driverId) ?? 0
       driverEarnings.set(
         driverId,
