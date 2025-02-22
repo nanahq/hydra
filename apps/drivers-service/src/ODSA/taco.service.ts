@@ -17,7 +17,7 @@ export class TacoService {
               type: 'Point',
               coordinates: [lng, lat]
             },
-            $minDistance: 200,
+            $minDistance: 10,
             $maxDistance: 4000
           }
         }
