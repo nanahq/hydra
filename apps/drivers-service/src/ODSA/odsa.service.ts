@@ -6,6 +6,7 @@ import {
   Delivery,
   DeliveryI,
   Driver,
+  driverFeeCalculator,
   DriverStatGroup,
   DriverStats,
   FitRpcException,
@@ -17,7 +18,6 @@ import {
   QUEUE_SERVICE,
   ResponseWithStatus,
   SOCKET_MESSAGE,
-  subtractFivePercent,
   TravelDistanceResult
 } from '@app/common'
 import { DriverRepository } from '../drivers-service.repository'
@@ -408,7 +408,7 @@ export class ODSA {
         status: order.vendor._id === this.configService.get('BOX_COURIER_VENDOR') ? OrderStatus.COURIER_PICKUP : OrderStatus.PROCESSED,
         deliveryType: order.orderType,
         pool: driversSuitableForPickup.map(driver => driver._id.toString()),
-        deliveryFee: subtractFivePercent(order.orderBreakDown.deliveryFee),
+        deliveryFee: driverFeeCalculator(order.orderBreakDown.deliveryFee, 5),
         parsedAddress: {
           pickupAddress: deliveryMeta.origin_addresses,
           dropoffAddress: deliveryMeta.destination_addresses

@@ -1,5 +1,4 @@
-export function subtractFivePercent (amount: number): number {
-  const fivePercent = amount * 0.05
-  const result = amount - fivePercent
-  return Math.ceil(result / 10) * 10
+export function driverFeeCalculator (initialFee: number, percentage: number): number {
+  const deductedFee = initialFee - (initialFee / 100 * percentage)
+  return Math.round(deductedFee / 10) * 10
 };
