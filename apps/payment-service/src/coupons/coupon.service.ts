@@ -182,7 +182,7 @@ export class CouponService {
     const currentDate = new Date()
     await this.couponRepository.deleteMany(
       {
-        validTill: { $lt: currentDate }
+        validTill: { $lt: currentDate.toISOString() }
       }
     )
   }
