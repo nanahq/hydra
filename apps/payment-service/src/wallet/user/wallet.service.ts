@@ -148,10 +148,12 @@ export class UserWalletService {
 
   public async debitUserWallet (payload: DebitUserWallet): Promise<{ status: number, reminder: number }> {
     try {
+
       const wallet = await this.userWalletRepository.findOne({
         user: payload.user
       }) as UserWallet
-
+      console.log(payload)
+      console.log(wallet)
       const sufficientFunds = this.balanceCheck(wallet.balance, payload.amountToDebit)
 
       if (!sufficientFunds) {
