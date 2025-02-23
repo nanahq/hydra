@@ -16,6 +16,7 @@ import {
   RpcException
 } from '@nestjs/microservices'
 import { DebitUserWallet } from '@app/common/dto/General.dto'
+import { UserWallet } from '@app/common/database/schemas/user-wallet.schema'
 
 @UseFilters(new ExceptionFilterRpc())
 @Controller()
@@ -46,6 +47,20 @@ export class UserWalletController {
   ): Promise<{ status: number, reminder: number }> {
     try {
       return await this.userWalletService.debitUserWallet(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
+  @MessagePattern(QUEUE_MESSAGE.USER_WALLET_GET)
+  public async getUserWaller (
+      @Payload() { data }: MultiPurposeServicePayload<{user: string}>,
+      @Ctx() context: RmqContext
+  ): Promise<UserWallet> {
+    try {
+      return await this.userWalletService.getUserWallet(data.user)
     } catch (error) {
       throw new RpcException(error)
     } finally {
