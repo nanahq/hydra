@@ -19,6 +19,7 @@ import {
 import * as moment from 'moment'
 import { ClientProxy } from '@nestjs/microservices'
 import { lastValueFrom } from 'rxjs'
+import { Cron, CronExpression } from '@nestjs/schedule'
 @Injectable()
 export class CouponService {
   private readonly MAX_COUPON_LENGTH = 7
@@ -172,5 +173,17 @@ export class CouponService {
       status: 'OK',
       message: 'success!'
     }
+  }
+
+  @Cron(CronExpression.EVERY_12_HOURS, {
+    timeZone: 'Africa/Lagos'
+  })
+  async deleteExpiredCoupons (): Promise<void> {
+    const currentDate = new Date()
+    await this.couponRepository.deleteMany(
+      {
+        validTill: { $lt: currentDate }
+      }
+    )
   }
 }
