@@ -48,14 +48,15 @@ export class UserWalletService {
   }
 
   public async getUserWallet (userId: string): Promise<UserWallet> {
-    const wallet = await this.userWalletRepository.findOne({user: userId})
+    const wallet = await this.userWalletRepository.findOne({ user: userId })
 
-    if(wallet === null) {
+    if (wallet === null) {
       throw new FitRpcException('Not wallet for this user', 404)
     }
 
     return wallet
   }
+
   public async createPaystackInstances (
     payload: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>>
   ): Promise<void> {

@@ -56,7 +56,7 @@ export class UserWalletController {
 
   @MessagePattern(QUEUE_MESSAGE.USER_WALLET_GET)
   public async getUserWaller (
-      @Payload() { data }: MultiPurposeServicePayload<{user: string}>,
+    @Payload() { data }: MultiPurposeServicePayload<{ user: string }>,
       @Ctx() context: RmqContext
   ): Promise<UserWallet> {
     try {

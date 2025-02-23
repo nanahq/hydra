@@ -99,18 +99,18 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get('wallet')
   async getUserWallet (@CurrentUser() user: User): Promise<UserWallet> {
-    const payload: ServicePayload<{user: string}> = {
+    const payload: ServicePayload<{ user: string }> = {
       userId: user._id as any,
       data: {
         user: user._id.toString()
       }
     }
     return await lastValueFrom<UserWallet>(
-        this.usersClient.send(QUEUE_MESSAGE.USER_WALLET_GET, payload).pipe(
-            catchError((error: { status: number, message: string }) => {
-              throw new HttpException(error.message, error.status)
-            })
-        )
+      this.usersClient.send(QUEUE_MESSAGE.USER_WALLET_GET, payload).pipe(
+        catchError((error: { status: number, message: string }) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
     )
   }
 
