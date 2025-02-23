@@ -4,7 +4,6 @@ import {
   MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   registerUserRequest,
-  ResponseWithStatus,
   RmqService
 } from '@app/common'
 import { UserWalletService } from './wallet.service'
@@ -44,7 +43,7 @@ export class UserWalletController {
   public async debitBalance (
     @Payload() { data }: MultiPurposeServicePayload<DebitUserWallet>,
       @Ctx() context: RmqContext
-  ): Promise<ResponseWithStatus> {
+  ): Promise<{ status: number, reminder: number }> {
     try {
       return await this.userWalletService.debitUserWallet(data)
     } catch (error) {

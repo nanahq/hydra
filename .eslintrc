@@ -27,6 +27,7 @@
     ],
     "new-cap": "off",
     "indent": "off",
+    "no-case-declarations": "off",
     "@typescript-eslint/return-await": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/restrict-plus-operands": "off",

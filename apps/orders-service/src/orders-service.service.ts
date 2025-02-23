@@ -119,16 +119,29 @@ export class OrdersServiceService {
         )
         break
       case OrderPaymentType.PAY_BY_WALLET:
-        paymentMeta = await lastValueFrom(this.paymentClient.send(
+        const walletResponse: { status: number, reminder: number } = await lastValueFrom(this.paymentClient.send(
           QUEUE_MESSAGE.USER_WALLET_DEDUCT_BALANCE,
           deductBalancePayload
         ))
-        if (paymentMeta.status === 1) {
+        if (walletResponse.status === 1) {
           await this.updateStatusPaid({
             orderId: populatedOrder._id.toString(),
             status: OrderStatus.PROCESSED,
             txRefId: RandomGen.genRandomString()
           })
+          paymentMeta = { status: walletResponse.status }
+        } else {
+          paymentMeta = await lastValueFrom<PaystackChargeResponseData>(
+            this.paymentClient.send(
+              QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK,
+              {
+                orderId: populatedOrder._id,
+                email: populatedOrder.user.email,
+                userId: populatedOrder.user._id,
+                amount: String(walletResponse.reminder)
+              }
+            )
+          )
         }
         break
     }
