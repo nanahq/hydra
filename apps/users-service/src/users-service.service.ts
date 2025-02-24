@@ -29,12 +29,15 @@ import { ClientProxy } from '@nestjs/microservices'
 import { ConfigService } from '@nestjs/config'
 import { arrayParser } from '@app/common/utils/statsResultParser'
 import { TermiiResponse } from '@app/common/typings/Termii'
+import { UserWalletRepository } from 'apps/payment-service/src/wallet/user/wallet.repository'
 
 @Injectable()
 export class UsersService {
   private readonly logger = new Logger()
   constructor (
     private readonly usersRepository: UserRepository,
+
+    private readonly userWalletRepository: UserWalletRepository,
 
     private readonly brevoClient: BrevoClient,
 
@@ -112,6 +115,12 @@ export class UsersService {
             )
         )
       }
+
+      await this.userWalletRepository.findOneAndUpdate({
+        user: user._id.toString()
+      }, {
+        balance: 500
+      })
 
       const slackMessage = `User ${user.firstName} ${user.lastName} signed up with phone number: ${user.phone}`
       await lastValueFrom(
