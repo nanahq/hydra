@@ -132,7 +132,7 @@ export class PaymentService {
       if (payment.wallet) {
         const user = payment.user?.toString()
         const wallet = await this.walletRepository.findOne({ user }) as UserWallet
-        const newWalletBalance = Number(payment.chargedAmount) - (wallet?.balance ?? 0)
+        const newWalletBalance = (wallet?.balance ?? 0) - Number(payment.chargedAmount)
         await this.walletRepository.findOneAndUpdate({ user }, { balance: Math.max(newWalletBalance, 0) })
       }
       await this.paymentRepository.update({ refId }, { status: 'SUCCESS' })
