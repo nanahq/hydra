@@ -95,6 +95,7 @@ export class OrdersServiceService {
     }
 
     const chargePayload: OrderInitiateCharge = {
+      isWalletOrder: false,
       orderId: populatedOrder._id,
       email: populatedOrder.user.email,
       userId: populatedOrder.user._id,
@@ -135,6 +136,7 @@ export class OrdersServiceService {
             this.paymentClient.send(
               QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK,
               {
+                isWalletOrder: true,
                 orderId: populatedOrder._id,
                 email: populatedOrder.user.email,
                 userId: populatedOrder.user._id,
@@ -356,13 +358,14 @@ export class OrdersServiceService {
       const order = await this.orderRepository.findOneAndPopulate<OrderI>(
         { _id: orderId },
         ['vendor', 'listing', 'user']
-      )
+      ) as OrderI
 
       let finalStatus: OrderStatus = status
 
       if (order?.vendor?._id?.toString() === this.configService.get('BOX_COURIER_VENDOR')) {
         finalStatus = OrderStatus.COURIER_PICKUP
       }
+
 
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },

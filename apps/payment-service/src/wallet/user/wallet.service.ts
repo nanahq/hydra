@@ -167,13 +167,13 @@ export class UserWalletService {
       const wallet = await this.userWalletRepository.findOne({
         user: payload.user
       }) as UserWallet
-      console.log(payload)
-      console.log(wallet)
+
       const sufficientFunds = this.balanceCheck(wallet.balance, payload.amountToDebit)
 
       if (!sufficientFunds) {
         return { status: 0, reminder: payload.amountToDebit - wallet.balance }
       }
+
       const newWalletBalance = Number(wallet.balance) - Number(payload.amountToDebit)
       await this.userWalletRepository.findOneAndUpdate(
         { user: payload.user },

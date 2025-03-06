@@ -17,6 +17,8 @@ import {
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { PaymentRepository } from './charge.repository'
+import { UserWalletRepository } from '../wallet/user/wallet.repository'
+import { UserWallet } from '@app/common/database/schemas/user-wallet.schema'
 
 @Injectable()
 export class PaymentService {
@@ -24,6 +26,7 @@ export class PaymentService {
 
   constructor (
     private readonly paymentRepository: PaymentRepository,
+    private readonly walletRepository: UserWalletRepository,
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly ordersClient: ClientProxy,
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
@@ -61,7 +64,8 @@ export class PaymentService {
         user: req.userId,
         order: req.orderId,
         status: 'PENDING',
-        paymentMeta: JSON.stringify(chargeMeta.data)
+        paymentMeta: JSON.stringify(chargeMeta.data),
+        wallet: req?.isWalletOrder ?? false
       })
       return chargeMeta.data
     } catch (error) {
@@ -125,6 +129,12 @@ export class PaymentService {
           )
       )
 
+      if (payment.wallet) {
+        const user = payment.user?.toString()
+        const wallet = await this.walletRepository.findOne({ user }) as UserWallet
+        const newWalletBalance = payment.chargedAmount - (wallet?.balance ?? 0)
+        await this.walletRepository.findOneAndUpdate({ user }, { balance: Math.max(newWalletBalance, 0) })
+      }
       await this.paymentRepository.update({ refId }, { status: 'SUCCESS' })
     } catch (error) {
       this.logger.error('[PIM] - Failed pending payment verification', error)
