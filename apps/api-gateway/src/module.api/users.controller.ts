@@ -40,6 +40,8 @@ export class UsersController {
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
 
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy,
     private readonly authService: AuthService
   ) {}
 
@@ -108,7 +110,7 @@ export class UsersController {
 
     console.log(payload)
     return await lastValueFrom<UserWallet>(
-      this.usersClient.send(QUEUE_MESSAGE.USER_WALLET_GET, payload).pipe(
+      this.paymentClient.send(QUEUE_MESSAGE.USER_WALLET_GET, payload).pipe(
         catchError((error: { status: number, message: string }) => {
           throw new HttpException(error.message, error.status)
         })
