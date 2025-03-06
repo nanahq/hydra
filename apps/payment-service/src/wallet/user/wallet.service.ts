@@ -48,13 +48,19 @@ export class UserWalletService {
   }
 
   public async getUserWallet (userId: string): Promise<UserWallet> {
-    const wallet = await this.userWalletRepository.findOne({ user: userId })
+    try {
+      this.logger.log('Getting user wallet')
+      const wallet = await this.userWalletRepository.findOne({ user: userId })
 
-    if (wallet === null) {
-      throw new FitRpcException('Not wallet for this user', 404)
+      if (wallet === null) {
+        throw new FitRpcException('Not wallet for this user', 404)
+      }
+
+      return wallet
+    } catch (error) {
+      this.logger.log(error)
+      throw new FitRpcException('Something went wrong fetching wallet', HttpStatus.INTERNAL_SERVER_ERROR)
     }
-
-    return wallet
   }
 
   public async createPaystackInstances (

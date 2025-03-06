@@ -100,11 +100,13 @@ export class UsersController {
   @Get('wallet')
   async getUserWallet (@CurrentUser() user: User): Promise<UserWallet> {
     const payload: ServicePayload<{ user: string }> = {
-      userId: user._id as any,
+      userId: user?._id.toString() as any,
       data: {
-        user: user._id.toString()
+        user: user?._id?.toString() ?? ''
       }
     }
+
+    console.log(payload)
     return await lastValueFrom<UserWallet>(
       this.usersClient.send(QUEUE_MESSAGE.USER_WALLET_GET, payload).pipe(
         catchError((error: { status: number, message: string }) => {
