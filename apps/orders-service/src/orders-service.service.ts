@@ -358,14 +358,13 @@ export class OrdersServiceService {
       const order = await this.orderRepository.findOneAndPopulate<OrderI>(
         { _id: orderId },
         ['vendor', 'listing', 'user']
-      ) as OrderI
+      )
 
       let finalStatus: OrderStatus = status
 
       if (order?.vendor?._id?.toString() === this.configService.get('BOX_COURIER_VENDOR')) {
         finalStatus = OrderStatus.COURIER_PICKUP
       }
-
 
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
