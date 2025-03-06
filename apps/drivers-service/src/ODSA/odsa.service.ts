@@ -478,7 +478,7 @@ export class ODSA {
 
     try {
       for (const delivery of unassignedDeliveries) {
-        const collectionLocation = delivery?.vendor?.location?.coordinates as [
+        const collectionLocation = delivery?.pickupLocation?.coordinates as [
           number,
           number,
         ]
