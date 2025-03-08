@@ -394,6 +394,30 @@ export class FleetService {
     }
   }
 
+  async getMapDeliveries (): Promise<Delivery[]> {
+    const deliveries: Delivery[] = await this.odsaRepository
+      .findRaw()
+      .find({
+        completed: false,
+        assignedToDriver: false,
+        status: { $ne: OrderStatus.FULFILLED }
+      })
+      .populate('vendor')
+      .populate({
+        path: 'order',
+        populate: {
+          path: 'listing'
+        }
+      })
+      .exec()
+
+    const uniqueDeliveries = Array.from(
+      new Map(deliveries.map((delivery) => [delivery._id.toString(), delivery])).values()
+    )
+
+    return uniqueDeliveries as any
+  }
+
   async getOrganizationDeliveries (organization: string): Promise<Delivery[]> {
     const drivers = await this.driverRepository.find({ organization })
     const driverIds = drivers.map((driver) => driver._id.toString())

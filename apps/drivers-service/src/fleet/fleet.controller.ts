@@ -178,6 +178,17 @@ export class FleetController {
   }
 
   @UseGuards(FleetJwtAuthGuard)
+  @Get('map-deliveries')
+  async getMapDeliveries (
+  ): Promise<Delivery[]> {
+    try {
+      return await this.fleetService.getMapDeliveries()
+    } catch (error) {
+      throw new HttpException(error.message, error.status)
+    }
+  }
+
+  @UseGuards(FleetJwtAuthGuard)
   @Post('driver/assign')
   async assignFleetDriver (
     @CurrentUser() member: FleetMember,
