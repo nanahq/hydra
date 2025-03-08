@@ -82,9 +82,9 @@ export class PaymentService {
     this.logger.log(`[PIM] - Verifying paystack order payment ref: ${refId}`)
 
     try {
-      const payment = (await this.paymentRepository.findOne({
+      const payment = await this.paymentRepository.findOneAndPopulate({
         refId
-      })) as Payment
+      }, ['order']) as any
 
       if (payment.status !== 'PENDING') {
         return
@@ -110,13 +110,13 @@ export class PaymentService {
         userId: '',
         data: {
           status: OrderStatus.PROCESSED,
-          orderId: payment.order,
+          orderId: payment.order._id,
           txRefId: payment.refId
         }
       }
 
       this.logger.log(
-        `[PIM] - Updating order status after payment order_id: ${payment.order}`
+        `[PIM] - Updating order status after payment order_id`
       )
 
       await lastValueFrom<any>(
@@ -132,7 +132,7 @@ export class PaymentService {
       if (payment.wallet) {
         const user = payment.user?.toString()
         const wallet = await this.walletRepository.findOne({ user }) as UserWallet
-        const newWalletBalance = (wallet?.balance ?? 0) - Number(payment.chargedAmount)
+        const newWalletBalance = (wallet?.balance ?? 0) - Number(payment.order.orderValuePayable)
         await this.walletRepository.findOneAndUpdate({ user }, { balance: Math.max(newWalletBalance, 0) })
       }
       await this.paymentRepository.update({ refId }, { status: 'SUCCESS' })

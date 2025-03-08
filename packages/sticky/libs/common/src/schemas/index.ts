@@ -334,6 +334,8 @@ export interface PaymentI {
   _id: string
   user: UserI
 
+  wallet: boolean
+
   order: OrderI
 
   type: string
