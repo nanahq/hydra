@@ -4,25 +4,25 @@ import { Driver, VendorApprovalStatus } from '@app/common'
 @Injectable()
 export class TacoService {
   constructor (private readonly driverRepository: DriverRepository) {}
-    public async findNearestDriver (lat: number, lng: number, radius: number): Promise<Driver[]> {
-        return await this.driverRepository
-            .findRaw()
-            .find({
-                available: true,
-                status: 'ONLINE',
-                acc_status: VendorApprovalStatus.APPROVED,
-                location: {
-                    $near: {
-                        $geometry: {
-                            type: 'Point',
-                            coordinates: [lng, lat]
-                        },
-                        $maxDistance: radius || 5000
-                    }
-                }
-            })
-            .limit(20);
-    }
+  public async findNearestDriver (lat: number, lng: number, radius: number): Promise<Driver[]> {
+    return await this.driverRepository
+      .findRaw()
+      .find({
+        available: true,
+        status: 'ONLINE',
+        acc_status: VendorApprovalStatus.APPROVED,
+        location: {
+          $near: {
+            $geometry: {
+              type: 'Point',
+              coordinates: [lng, lat]
+            },
+            $maxDistance: radius || 5000
+          }
+        }
+      })
+      .limit(20)
+  }
 
   public async updateDriverLocation (lat: number, lng: number, driverId: string): Promise<void> {
     try {
