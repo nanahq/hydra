@@ -116,7 +116,7 @@ export class PaymentService {
       }
 
       this.logger.log(
-        `[PIM] - Updating order status after payment order_id`
+        '[PIM] - Updating order status after payment order_id'
       )
 
       await lastValueFrom<any>(
