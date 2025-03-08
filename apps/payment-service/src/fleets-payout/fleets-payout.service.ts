@@ -26,7 +26,7 @@ export class FleetPayoutService {
   async getAllDriversPayout (organization: string): Promise<FleetPayout[]> {
     const drivers: DriverI[] = await this.driverRepository.find({ organization })
 
-    const driverIds = drivers.map((driver) => driver._id)
+    const driverIds = drivers.map((driver) => driver?._id?.toString())
 
     return await this.fleetPayoutRepository.findAndPopulate(
       { driver: { $in: driverIds } },
