@@ -18,6 +18,9 @@ export class Payment extends AbstractDocument {
   @Prop(String)
     type: string
 
+  @Prop(Boolean)
+    wallet: boolean
+
   @Prop(String)
     status: string
 

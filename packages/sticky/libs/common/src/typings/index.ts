@@ -105,7 +105,7 @@ export type VendorOperationType = 'PRE_ORDER' | 'ON_DEMAND' | 'PRE_AND_INSTANT'
 
 export type DriverType = 'DELIVER_PRE_ORDER' | 'DELIVER_ON_DEMAND'
 
-export type FleetOrderType = 'FOOD' | 'GROCERIES' | 'PARCEL'
+export type FleetOrderType = 'FOOD' | 'GROCERIES' | 'BOX'
 
 export interface OrderGroup {
   groupId: number
@@ -216,7 +216,7 @@ export interface RegisterDriverDto {
 
   email: string
 
-  nin: number
+  nin?: number
 }
 
 export interface RegisterAdminDTO {
@@ -645,6 +645,8 @@ export interface PlaceOrderDto {
   orderBreakDown: OrderBreakDownDto
 
   thirdPartyName?: string
+
+  fleetOrderType?: FleetOrderType
 }
 
 export interface UserHomePage {
@@ -735,4 +737,8 @@ export interface PinAddressI {
   firstname: string
   lastName: string
   addresses: AddressBookI[]
+}
+
+export interface LastOrderPaymentStatus {
+  paid: boolean
 }

@@ -5,8 +5,7 @@ import {
   MultiPurposeServicePayload,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
-  registerUserRequest,
-  ResponseWithStatus
+  registerUserRequest
 } from '@app/common'
 import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
@@ -45,6 +44,22 @@ export class UserWalletService {
     this.HEADERS = {
       ContentType: 'application/json',
       Authorization: `Bearer ${paystackSecret}`
+    }
+  }
+
+  public async getUserWallet (userId: string): Promise<UserWallet> {
+    try {
+      this.logger.log('Getting user wallet')
+      const wallet = await this.userWalletRepository.findOne({ user: userId })
+
+      if (wallet === null) {
+        throw new FitRpcException('Not wallet for this user', 404)
+      }
+
+      return wallet
+    } catch (error) {
+      this.logger.log(error)
+      throw new FitRpcException('Something went wrong fetching wallet', HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
@@ -147,17 +162,16 @@ export class UserWalletService {
     }
   }
 
-  public async debitUserWallet (payload: DebitUserWallet): Promise<ResponseWithStatus> {
+  public async debitUserWallet (payload: DebitUserWallet): Promise<{ status: number, reminder: number }> {
     try {
       const wallet = await this.userWalletRepository.findOne({
         user: payload.user
       }) as UserWallet
 
-      console.log(wallet)
       const sufficientFunds = this.balanceCheck(wallet.balance, payload.amountToDebit)
 
       if (!sufficientFunds) {
-        return { status: 0 }
+        return { status: 0, reminder: payload.amountToDebit - wallet.balance }
       }
 
       const newWalletBalance = Number(wallet.balance) - Number(payload.amountToDebit)
@@ -166,7 +180,7 @@ export class UserWalletService {
         { balance: newWalletBalance }
       )
 
-      return { status: 1 }
+      return { status: 1, reminder: 0 }
     } catch (error) {
       throw new FitRpcException(error, HttpStatus.BAD_REQUEST)
     }

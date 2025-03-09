@@ -6,7 +6,8 @@ import {
   OrderBreakDown,
   OrderType,
   LocationCoordinates,
-  OrderOptions
+  OrderOptions,
+  FleetOrderType
 } from '@app/common'
 
 @Schema({ versionKey: false, timestamps: true })
@@ -154,6 +155,12 @@ export class Order extends AbstractDocument {
 
   @Prop(Number)
     pin_code: number
+
+  @Prop(String)
+    fleetOrderType: FleetOrderType
+
+  @Prop(String)
+    itemDescription?: string
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order)

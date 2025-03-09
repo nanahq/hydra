@@ -149,7 +149,7 @@ export class VendorPayoutService implements VendorPayoutServiceI {
     }
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_10PM, {
+  @Cron(CronExpression.EVERY_DAY_AT_6AM, {
     timeZone: 'Africa/Lagos'
   })
   async handlePayoutComputation (): Promise<void> {

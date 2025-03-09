@@ -1,8 +1,10 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 
 import {
+  CustomerIoClient,
   ExportPushNotificationClient,
   FitRpcException,
+  LastOrderPaymentStatus,
   MultiPurposeServicePayload,
   Order,
   OrderI,
@@ -30,6 +32,7 @@ import { OrderRepository } from './order.repository'
 import { FilterQuery } from 'mongoose'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { DebitUserWallet } from '@app/common/dto/General.dto'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class OrdersServiceService {
@@ -39,6 +42,7 @@ export class OrdersServiceService {
     private readonly orderRepository: OrderRepository,
 
     private readonly expoClient: ExportPushNotificationClient,
+    private readonly customerIoClient: CustomerIoClient,
 
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
@@ -51,7 +55,9 @@ export class OrdersServiceService {
     private readonly listingsClient: ClientProxy,
 
     @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
-    private readonly paymentClient: ClientProxy
+    private readonly paymentClient: ClientProxy,
+
+    private readonly configService: ConfigService
   ) {}
 
   public async placeOrder ({
@@ -68,7 +74,8 @@ export class OrdersServiceService {
       user: userId,
       refId: RandomGen.genRandomNum(),
       orderStatus: OrderStatus.PAYMENT_PENDING,
-      pin_code: RandomGen.genRandomNum(9, 4)
+      pin_code: RandomGen.genRandomNum(9, 4),
+      ...(data.fleetOrderType === 'BOX' ? { itemDescription: data.itemDescription } : {})
     }
 
     const _newOrder = await this.orderRepository.create(createOrderPayload)
@@ -88,6 +95,7 @@ export class OrdersServiceService {
     }
 
     const chargePayload: OrderInitiateCharge = {
+      isWalletOrder: false,
       orderId: populatedOrder._id,
       email: populatedOrder.user.email,
       userId: populatedOrder.user._id,
@@ -112,16 +120,30 @@ export class OrdersServiceService {
         )
         break
       case OrderPaymentType.PAY_BY_WALLET:
-        paymentMeta = await lastValueFrom(this.paymentClient.send(
+        const walletResponse: { status: number, reminder: number } = await lastValueFrom(this.paymentClient.send(
           QUEUE_MESSAGE.USER_WALLET_DEDUCT_BALANCE,
           deductBalancePayload
         ))
-        if (paymentMeta.status === 1) {
+        if (walletResponse.status === 1) {
           await this.updateStatusPaid({
             orderId: populatedOrder._id.toString(),
             status: OrderStatus.PROCESSED,
             txRefId: RandomGen.genRandomString()
           })
+          paymentMeta = { status: walletResponse.status }
+        } else {
+          paymentMeta = await lastValueFrom<PaystackChargeResponseData>(
+            this.paymentClient.send(
+              QUEUE_MESSAGE.INITIATE_CHARGE_PAYSTACK,
+              {
+                isWalletOrder: true,
+                orderId: populatedOrder._id,
+                email: populatedOrder.user.email,
+                userId: populatedOrder.user._id,
+                amount: String(walletResponse.reminder)
+              }
+            )
+          )
         }
         break
     }
@@ -338,11 +360,17 @@ export class OrdersServiceService {
         ['vendor', 'listing', 'user']
       )
 
+      let finalStatus: OrderStatus = status
+
+      if (order?.vendor?._id?.toString() === this.configService.get('BOX_COURIER_VENDOR')) {
+        finalStatus = OrderStatus.COURIER_PICKUP
+      }
+
       await this.orderRepository.findOneAndUpdate(
         { _id: orderId },
         {
           txRefId,
-          orderStatus: status
+          orderStatus: finalStatus
         }
       )
 
@@ -400,6 +428,21 @@ export class OrdersServiceService {
         HttpStatus.INTERNAL_SERVER_ERROR
       )
     }
+  }
+
+  public async getUserLastOrderStatus (user: string): Promise<LastOrderPaymentStatus> {
+    const lastOrder: Order[] = await this.orderRepository.find({
+      user,
+      sort: { createdAt: -1 }
+    })
+
+    const mostRecentOrder = lastOrder[0]
+
+    if (!mostRecentOrder || mostRecentOrder?.orderStatus !== OrderStatus.PROCESSED) {
+      return { paid: false }
+    }
+
+    return { paid: true }
   }
 
   public async odsaGetPreOrders (
@@ -471,6 +514,7 @@ export class OrdersServiceService {
     }
   }
 
+  // order_stauts_update_collected, order_status_update_in_route,order_status_update_delivered,order_status_update_placed
   private async sendPushNotifications (
     status: OrderStatus,
     order: OrderI
@@ -487,35 +531,17 @@ export class OrdersServiceService {
             priority: 'high'
           }
         )
-        await this.expoClient.sendSingleNotification(
-          order?.user?.expoNotificationToken as string,
-          {
-            title: 'Your order has been processed',
-            body: 'Track the progress of your order on the mobile app',
-            priority: 'high'
-          }
-        )
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update_placed')
         break
       case OrderStatus.IN_ROUTE:
-        await this.expoClient.sendSingleNotification(
-          order?.user?.expoNotificationToken as string,
-          {
-            title: 'Your order is been delivered',
-            body: 'Our delivery person is on his way',
-            priority: 'high'
-          }
-        )
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update_in_route')
         break
-
       case OrderStatus.COURIER_PICKUP:
-        await this.expoClient.sendSingleNotification(
-          order?.user?.expoNotificationToken as string,
-          {
-            title: 'Your order has been prepared',
-            body: `${order.vendor.businessName} has finished preparing your order`,
-            priority: 'high'
-          }
-        )
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_stauts_update_collected')
+        break
+      case OrderStatus.FULFILLED:
+        await this.customerIoClient.sendPushNotification(order.user._id.toString(), 'order_status_update_delivered')
+        break
     }
   }
 

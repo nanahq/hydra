@@ -30,6 +30,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard'
 import { AuthService } from './auth.service'
 import { Response } from 'express'
 import { verifyTermiiToken } from '@app/common/dto/verifyTermiiToken.dto'
+import { UserWallet } from '@app/common/database/schemas/user-wallet.schema'
 
 @Controller('user')
 export class UsersController {
@@ -39,6 +40,8 @@ export class UsersController {
     @Inject(QUEUE_SERVICE.NOTIFICATION_SERVICE)
     private readonly notificationClient: ClientProxy,
 
+    @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
+    private readonly paymentClient: ClientProxy,
     private readonly authService: AuthService
   ) {}
 
@@ -93,6 +96,26 @@ export class UsersController {
   @Get('profile')
   async getUserProfile (@CurrentUser() user: User): Promise<User> {
     return user
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('wallet')
+  async getUserWallet (@CurrentUser() user: User): Promise<UserWallet> {
+    const payload: ServicePayload<{ user: string }> = {
+      userId: user?._id.toString() as any,
+      data: {
+        user: user?._id?.toString() ?? ''
+      }
+    }
+
+    console.log(payload)
+    return await lastValueFrom<UserWallet>(
+      this.paymentClient.send(QUEUE_MESSAGE.USER_WALLET_GET, payload).pipe(
+        catchError((error: { status: number, message: string }) => {
+          throw new HttpException(error.message, error.status)
+        })
+      )
+    )
   }
 
   @UseGuards(JwtAuthGuard)

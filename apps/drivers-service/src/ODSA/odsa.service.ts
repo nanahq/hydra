@@ -6,11 +6,13 @@ import {
   Delivery,
   DeliveryI,
   Driver,
+  driverFeeCalculator,
   DriverStatGroup,
   DriverStats,
   FitRpcException,
   OrderI,
-  OrderStatus, OrderTypes,
+  OrderStatus,
+  OrderTypes,
   OrderUpdateStream,
   QUEUE_MESSAGE,
   QUEUE_SERVICE,
@@ -24,6 +26,7 @@ import * as moment from 'moment'
 import { FilterQuery } from 'mongoose'
 import { EventsGateway } from '../websockets/events.gateway'
 import { TacoService } from './taco.service'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class ODSA {
@@ -42,6 +45,7 @@ export class ODSA {
     private readonly paymentClient: ClientProxy,
     private readonly driversRepository: DriverRepository,
     private readonly odsaRepository: OdsaRepository,
+    private readonly configService: ConfigService,
 
     //   Websocket gateway injection for order status updates
     private readonly eventsGateway: EventsGateway,
@@ -139,9 +143,9 @@ export class ODSA {
     }
   }
 
-  public async queryAllDeliveries (): Promise<Delivery[] | undefined> {
+  public async queryAllDeliveries (query: FilterQuery<Delivery> | undefined): Promise<Delivery[] | undefined> {
     try {
-      return await this.odsaRepository.findAndPopulate({}, [
+      return await this.odsaRepository.findAndPopulate(query ?? {}, [
         'listing',
         'vendor',
         'user',
@@ -378,7 +382,7 @@ export class ODSA {
             }) as any
           ) as any
       )
-      const collectionLocation = order?.vendor?.location?.coordinates as [
+      const collectionLocation = order?.precisePickupLocation?.coordinates as [
         number,
         number,
       ]
@@ -391,54 +395,29 @@ export class ODSA {
           })
       )
 
-      if (order.orderType === OrderTypes.PRE) {
-        await this.odsaRepository.create({
-          listing: order.listing.map((li) => li._id),
-          order: order._id,
-          vendor: order.vendor?._id,
-          user: order.user._id,
-          dropOffLocation: order.preciseLocation,
-          pickupLocation: order.precisePickupLocation,
-          assignedToDriver: false,
-          status: OrderStatus.PROCESSED,
-          deliveryType: order.orderType,
-          deliveryTime: order.orderDeliveryScheduledTime,
-          pool: [],
-          deliveryFee: deliveryMeta.fee,
-          parsedAddress: {
-            pickupAddress: deliveryMeta.origin_addresses,
-            dropoffAddress: deliveryMeta.destination_addresses
-          },
-          travelMeta: {
-            distance: deliveryMeta.distance ?? 0,
-            travelTime: deliveryMeta.duration ?? 0
-          }
-        })
-      } else {
-        const driversSuitableForPickup = await this.tacoService.matchDriversToOrder({ lat: collectionLocation[0], lng: collectionLocation[1] })
-        await this.odsaRepository.create({
-          listing: order.listing.map((li) => li._id),
-          order: order._id,
-          vendor: order.vendor?._id,
-          user: order.user._id,
-          dropOffLocation: order.preciseLocation,
-          pickupLocation: order.precisePickupLocation,
-          assignedToDriver: false,
-          deliveryTime: order.orderDeliveryScheduledTime,
-          status: OrderStatus.PROCESSED,
-          deliveryType: order.orderType,
-          pool: driversSuitableForPickup.map(driver => driver._id.toString()),
-          deliveryFee: deliveryMeta.fee,
-          parsedAddress: {
-            pickupAddress: deliveryMeta.origin_addresses,
-            dropoffAddress: deliveryMeta.destination_addresses
-          },
-          travelMeta: {
-            distance: deliveryMeta.distance ?? 0,
-            travelTime: deliveryMeta.duration ?? 0
-          }
-        })
-      }
+      const driversSuitableForPickup = await this.tacoService.matchDriversToOrder({ lat: collectionLocation[0], lng: collectionLocation[1] })
+      await this.odsaRepository.create({
+        listing: order.listing.map((li) => li._id),
+        order: order._id,
+        vendor: order.vendor?._id,
+        user: order.user._id,
+        dropOffLocation: order.preciseLocation,
+        pickupLocation: order.precisePickupLocation,
+        assignedToDriver: false,
+        deliveryTime: order.orderDeliveryScheduledTime,
+        status: order.vendor._id === this.configService.get('BOX_COURIER_VENDOR') ? OrderStatus.COURIER_PICKUP : OrderStatus.PROCESSED,
+        deliveryType: order.orderType,
+        pool: driversSuitableForPickup.map(driver => driver._id.toString()),
+        deliveryFee: driverFeeCalculator(order.orderBreakDown.deliveryFee, 5),
+        parsedAddress: {
+          pickupAddress: deliveryMeta.origin_addresses,
+          dropoffAddress: deliveryMeta.destination_addresses
+        },
+        travelMeta: {
+          distance: deliveryMeta.distance ?? 0,
+          travelTime: deliveryMeta.duration ?? 0
+        }
+      })
     } catch (error) {
       this.logger.error(
         `Something went wrong processing order ${_order}`
@@ -499,7 +478,7 @@ export class ODSA {
 
     try {
       for (const delivery of unassignedDeliveries) {
-        const collectionLocation = delivery?.vendor?.location?.coordinates as [
+        const collectionLocation = delivery?.pickupLocation?.coordinates as [
           number,
           number,
         ]

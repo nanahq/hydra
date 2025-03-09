@@ -23,7 +23,11 @@ import {
   Coupon,
   CouponSchema,
   ListingMenu,
-  ListingMenuSchema
+  ListingMenuSchema,
+  FleetPayout,
+  FleetPayoutSchema,
+  Driver,
+  DriverSchema
 } from '@app/common'
 import { ScheduleModule } from '@nestjs/schedule'
 import { PaymentRepository } from './charge/charge.repository'
@@ -51,6 +55,10 @@ import { UserWalletController } from './wallet/user/wallet.controller'
 import { UserWalletService } from './wallet/user/wallet.service'
 import { UserWallet, UserWalletSchema } from '@app/common/database/schemas/user-wallet.schema'
 import { UserWalletRepository } from './wallet/user/wallet.repository'
+import { FleetPayoutService } from './fleets-payout/fleets-payout.service'
+import { FleetPayoutRepository } from './fleets-payout/fleets-payout.respository'
+import { FleetPayoutController } from './fleets-payout/fleets-payout.controller'
+import { DriverRepository } from '../../drivers-service/src/drivers-service.repository'
 
 @Module({
   imports: [
@@ -97,6 +105,12 @@ import { UserWalletRepository } from './wallet/user/wallet.repository'
     ]),
     MongooseModule.forFeature([
       {
+        name: FleetPayout.name,
+        schema: FleetPayoutSchema
+      }
+    ]),
+    MongooseModule.forFeature([
+      {
         name: Payment.name,
         schema: PaymentHistorySchema
       },
@@ -115,6 +129,10 @@ import { UserWalletRepository } from './wallet/user/wallet.repository'
       {
         name: UserWallet.name,
         schema: UserWalletSchema
+      },
+      {
+        name: Driver.name,
+        schema: DriverSchema
       }
     ]),
     RmqModule.register({ name: QUEUE_SERVICE.VENDORS_SERVICE }),
@@ -132,7 +150,8 @@ import { UserWalletRepository } from './wallet/user/wallet.repository'
     PaymentController,
     DriverWalletController,
     UserWalletController,
-    CouponController
+    CouponController,
+    FleetPayoutController
   ],
   providers: [
     VendorPayoutService,
@@ -147,7 +166,10 @@ import { UserWalletRepository } from './wallet/user/wallet.repository'
     CouponService,
     CouponRepository,
     UserWalletService,
-    UserWalletRepository
+    UserWalletRepository,
+    FleetPayoutService,
+    FleetPayoutRepository,
+    DriverRepository
   ]
 })
 export class PaymentServiceModule {}

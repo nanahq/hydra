@@ -17,7 +17,8 @@ import {
   VendorSchema,
   ExportPushNotificationClient,
   ReviewSchema,
-  Review
+  Review,
+  CustomerIoClient
 } from '@app/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { OrderRepository } from './order.repository'
@@ -31,7 +32,9 @@ import { ScheduleModule } from '@nestjs/schedule'
       validationSchema: Joi.object({
         RMQ_VENDORS_QUEUE: Joi.string(),
         RMQ_VENDORS_API_QUEUE: Joi.string(),
-        RMQ_URI: Joi.string()
+        RMQ_URI: Joi.string(),
+        BOX_COURIER_VENDOR: Joi.string(),
+        CUSTOMER_IO_KEY: Joi.string()
       }),
       envFilePath: './apps/orders-service/.env'
     }),
@@ -55,7 +58,8 @@ import { ScheduleModule } from '@nestjs/schedule'
   providers: [
     OrdersServiceService,
     OrderRepository,
-    ExportPushNotificationClient
+    ExportPushNotificationClient,
+    CustomerIoClient
   ]
 })
 export class OrdersServiceModule {}

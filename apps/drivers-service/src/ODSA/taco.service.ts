@@ -4,9 +4,9 @@ import { Driver, VendorApprovalStatus } from '@app/common'
 @Injectable()
 export class TacoService {
   constructor (private readonly driverRepository: DriverRepository) {}
-
   public async findNearestDriver (lat: number, lng: number, radius: number): Promise<Driver[]> {
-    const drivers = await this.driverRepository
+    return await this.driverRepository
+      .findRaw()
       .find({
         available: true,
         status: 'ONLINE',
@@ -17,12 +17,11 @@ export class TacoService {
               type: 'Point',
               coordinates: [lng, lat]
             },
-            $minDistance: 200,
-            $maxDistance: 4000
+            $maxDistance: radius || 5000
           }
         }
       })
-    return drivers
+      .limit(20)
   }
 
   public async updateDriverLocation (lat: number, lng: number, driverId: string): Promise<void> {

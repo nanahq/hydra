@@ -6,8 +6,10 @@ import {
   PaymentInfo,
   VendorOperationSetting,
   DriverType, AdminLevel, ListingApprovalStatus, OrderOptions,
-  VendorApprovalStatusEnum, 
+  VendorApprovalStatusEnum,
+  FleetOrderType,
 } from '../typings'
+
 export interface ListingCategoryI {
   _id: string
   vendor: VendorI
@@ -174,6 +176,7 @@ export interface OrderI {
   coupon?: string
   review?: ReviewI
   precisePickupLocation: LocationCoordinates
+  fleetOrderType: FleetOrderType
 }
 
 export interface DeliveryI {
@@ -334,6 +337,8 @@ export interface PaymentI {
   _id: string
   user: UserI
 
+  wallet: boolean
+
   order: OrderI
 
   type: string
@@ -369,6 +374,22 @@ export interface VendorPayoutI {
   orders: OrderI[]
   paid: boolean
 
+  updatedAt: string
+
+  createdAt: string
+
+  refId: number
+}
+
+export interface FleetPayoutI {
+  _id: string
+
+  organization: FleetOrganizationI
+
+  earnings: number
+
+  deliveries: DeliveryI[]
+  paid: boolean
   updatedAt: string
 
   createdAt: string
@@ -519,4 +540,25 @@ export interface FleetMemberI {
   password: string
 
   organization: string
+}
+
+export interface FleetOrgStat {
+  totalEarnings: number
+
+  totalDeliveries: number
+
+  driversEarnings?: Record<string, number>
+
+  totalDistance: number
+
+  totalTimeSpent: number
+
+  averageDeliveryDistance: number
+
+  totalDrivers: number
+
+  averageDelivery: number
+
+  averageDeliveryTime: number
+
 }

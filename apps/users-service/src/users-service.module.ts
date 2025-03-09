@@ -25,6 +25,8 @@ import { AddressBookServiceController } from './address-book-service.controller'
 import { AddressBookRepository } from './address.book.repository'
 import { AddressBookService } from './address-book-service.service'
 import { HttpModule } from '@nestjs/axios'
+import { UserWalletRepository } from 'apps/payment-service/src/wallet/user/wallet.repository'
+import { UserWallet, UserWalletSchema } from '@app/common/database/schemas/user-wallet.schema'
 
 @Module({
   imports: [
@@ -57,6 +59,10 @@ import { HttpModule } from '@nestjs/axios'
       {
         name: Order.name,
         schema: OrderSchema
+      },
+      {
+        name: UserWallet.name,
+        schema: UserWalletSchema
       }
     ]),
     DatabaseModule,
@@ -71,6 +77,7 @@ import { HttpModule } from '@nestjs/axios'
     UsersService,
     UserRepository,
     AddressBookRepository,
+    UserWalletRepository,
     AddressBookService,
     BrevoClient
   ]

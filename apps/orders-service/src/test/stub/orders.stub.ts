@@ -53,7 +53,8 @@ export function OrderStub (): Order {
       deliveryFee: 10.0,
       vat: 12.0
     },
-    txRefId: 'transaction_reference_123'
+    txRefId: 'transaction_reference_123',
+    fleetOrderType: 'GROCERIES'
   }
 }
 

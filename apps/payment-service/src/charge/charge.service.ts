@@ -17,6 +17,8 @@ import {
 import { ClientProxy, RpcException } from '@nestjs/microservices'
 import { catchError, lastValueFrom } from 'rxjs'
 import { PaymentRepository } from './charge.repository'
+import { UserWalletRepository } from '../wallet/user/wallet.repository'
+import { UserWallet } from '@app/common/database/schemas/user-wallet.schema'
 
 @Injectable()
 export class PaymentService {
@@ -24,6 +26,7 @@ export class PaymentService {
 
   constructor (
     private readonly paymentRepository: PaymentRepository,
+    private readonly walletRepository: UserWalletRepository,
     @Inject(QUEUE_SERVICE.ORDERS_SERVICE)
     private readonly ordersClient: ClientProxy,
     @Inject(QUEUE_SERVICE.LISTINGS_SERVICE)
@@ -61,7 +64,8 @@ export class PaymentService {
         user: req.userId,
         order: req.orderId,
         status: 'PENDING',
-        paymentMeta: JSON.stringify(chargeMeta.data)
+        paymentMeta: JSON.stringify(chargeMeta.data),
+        wallet: req?.isWalletOrder ?? false
       })
       return chargeMeta.data
     } catch (error) {
@@ -78,9 +82,9 @@ export class PaymentService {
     this.logger.log(`[PIM] - Verifying paystack order payment ref: ${refId}`)
 
     try {
-      const payment = (await this.paymentRepository.findOne({
+      const payment = await this.paymentRepository.findOneAndPopulate({
         refId
-      })) as Payment
+      }, ['order']) as any
 
       if (payment.status !== 'PENDING') {
         return
@@ -106,13 +110,13 @@ export class PaymentService {
         userId: '',
         data: {
           status: OrderStatus.PROCESSED,
-          orderId: payment.order,
+          orderId: payment.order._id,
           txRefId: payment.refId
         }
       }
 
       this.logger.log(
-        `[PIM] - Updating order status after payment order_id: ${payment.order}`
+        '[PIM] - Updating order status after payment order_id'
       )
 
       await lastValueFrom<any>(
@@ -125,6 +129,12 @@ export class PaymentService {
           )
       )
 
+      if (payment.wallet) {
+        const user = payment.user?.toString()
+        const wallet = await this.walletRepository.findOne({ user }) as UserWallet
+        const newWalletBalance = (wallet?.balance ?? 0) - Number(payment.order.orderValuePayable)
+        await this.walletRepository.findOneAndUpdate({ user }, { balance: Math.max(newWalletBalance, 0) })
+      }
       await this.paymentRepository.update({ refId }, { status: 'SUCCESS' })
     } catch (error) {
       this.logger.error('[PIM] - Failed pending payment verification', error)

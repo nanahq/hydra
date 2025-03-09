@@ -8,6 +8,7 @@ import { type Types } from 'mongoose'
 export function PaymentStub (): Payment {
   const objectId = '63f93c9f248f6c43d0b76502' as unknown as Types.ObjectId
   return {
+    wallet: false,
     _id: objectId,
     createdAt: '2023-03-05T04:26:02.148Z',
     updatedAt: '2023-03-05T04:34:34.002Z',

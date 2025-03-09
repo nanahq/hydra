@@ -49,6 +49,7 @@ export interface OrderInitiateCharge {
   orderId: string
   amount: string
   email: string
+  isWalletOrder?: boolean
 }
 export interface BankTransferRequest {
   userId: string

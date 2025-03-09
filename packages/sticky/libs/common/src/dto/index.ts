@@ -7,6 +7,7 @@ import {
 import {
   CustomisationOptionTypeEnum,
   DriverType,
+  FleetOrderType,
   ListingOption,
   LocationCoordinates,
   OrderBreakDown,
@@ -199,7 +200,7 @@ export interface RegisterDriverDto {
   lastName: string;
   state: string;
   email: string;
-  nin: number;
+  nin?: number;
   type: DriverType;
   organization?: string;
 }
@@ -324,7 +325,7 @@ export interface PlaceOrderDto {
   paymentType: OrderPaymentType;
   pickupAddress: string;
   precisePickupLocation: PreciseLocationDto
-  
+  fleetOrderType?: FleetOrderType
 }
 
 export interface UpdateDeliveryStatusDto {
