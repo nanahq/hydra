@@ -6,9 +6,9 @@ import { Types } from 'mongoose'
 export class FleetPayout extends AbstractDocument {
   @Prop({
     type: Types.ObjectId,
-    ref: 'Driver'
+    ref: 'FleetOrganization'
   })
-  public driver: string
+  public organization: string
 
   @Prop(Number)
     earnings: number

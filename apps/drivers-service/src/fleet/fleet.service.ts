@@ -431,6 +431,7 @@ export class FleetService {
         pool: { $in: driverIds }
       })
       .populate('vendor')
+      .populate('user')
       .populate({
         path: 'order',
         populate: {
@@ -438,11 +439,9 @@ export class FleetService {
         }
       })
       .exec()
-
     const uniqueDeliveries = Array.from(
       new Map(deliveries.map((delivery) => [delivery._id.toString(), delivery])).values()
     )
-
     return uniqueDeliveries as any
   }
 
