@@ -9,6 +9,7 @@ import {
   VendorApprovalStatusEnum,
   FleetOrderType,
 } from '../typings'
+
 export interface ListingCategoryI {
   _id: string
   vendor: VendorI
@@ -371,6 +372,22 @@ export interface VendorPayoutI {
   orders: OrderI[]
   paid: boolean
 
+  updatedAt: string
+
+  createdAt: string
+
+  refId: number
+}
+
+export interface FleetPayoutI {
+  _id: string
+
+  organization: FleetOrganizationI
+
+  earnings: number
+
+  deliveries: DeliveryI[]
+  paid: boolean
   updatedAt: string
 
   createdAt: string
