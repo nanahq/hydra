@@ -143,9 +143,9 @@ export class ODSA {
     }
   }
 
-  public async queryAllDeliveries (): Promise<Delivery[] | undefined> {
+  public async queryAllDeliveries (query: FilterQuery<Delivery> | undefined): Promise<Delivery[] | undefined> {
     try {
-      return await this.odsaRepository.findAndPopulate({}, [
+      return await this.odsaRepository.findAndPopulate(query ?? {}, [
         'listing',
         'vendor',
         'user',

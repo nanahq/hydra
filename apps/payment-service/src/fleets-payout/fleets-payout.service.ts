@@ -34,7 +34,7 @@ export class FleetPayoutService {
     )
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_10PM, {
+  @Cron(CronExpression.EVERY_DAY_AT_6AM, {
     timeZone: 'Africa/Lagos'
   })
   async handlePayoutComputation (): Promise<void> {
@@ -52,7 +52,10 @@ export class FleetPayoutService {
         $gte: start.toISOString(),
         $lt: end.toISOString()
       },
-      status: OrderStatus.FULFILLED
+      status: OrderStatus.FULFILLED,
+      organization: { $exists: true, $ne: null },
+      completed: true,
+      driver: { $exists: true, $ne: null }
     }
     const deliveries = await lastValueFrom<DeliveryI[]>(
       this.driverClient.send(QUEUE_MESSAGE.ADMIN_GET_DELIVERIES, filter).pipe(
@@ -62,31 +65,33 @@ export class FleetPayoutService {
       )
     )
 
-    const validDeliveries = deliveries.filter(delivery => delivery.driver)
-
-    const deliveryId = deliveries.map((delivery) => delivery._id)
+    function getOrganizationDeliveries (orgId: string): string[] {
+      return deliveries
+          ?.filter(delivery => delivery?.driver?.organization === orgId)
+          ?.map(delivery => delivery._id.toString()) as any
+    }
 
     // Compute earnings for each driver
-    const driverEarnings = new Map<string, number>()
+    const organizationEarnings = new Map<string, number>()
 
-    validDeliveries.forEach((delivery) => {
-      const driverId = delivery.driver.toString()
-      const earnings = driverEarnings.get(driverId) ?? 0
-      driverEarnings.set(
-        driverId,
+    deliveries.forEach((delivery) => {
+      const organizationId = delivery.driver?.organization?.toString()
+      const earnings = organizationEarnings.get(organizationId) ?? 0
+      organizationEarnings.set(
+        organizationId,
         earnings + Number(delivery.deliveryFee)
       )
     })
 
     const payoutsToMake: Array<Partial<FleetPayout>> = []
 
-    for (const [driverId, earnings] of driverEarnings) {
+    for (const [organization, earnings] of organizationEarnings) {
       payoutsToMake.push({
         refId: RandomGen.genRandomNum(10, 7),
-        driver: driverId,
+        organization,
         earnings,
         paid: false,
-        deliveries: deliveryId
+        deliveries: getOrganizationDeliveries(organization) ?? []
       })
     }
 

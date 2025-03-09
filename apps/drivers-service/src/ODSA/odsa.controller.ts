@@ -16,6 +16,7 @@ import {
   QUEUE_MESSAGE,
   RmqService
 } from '@app/common'
+import { FilterQuery } from 'mongoose'
 
 /**
  * Order Delivery Sorting and Assignation (ODSA) Service.
@@ -31,10 +32,12 @@ export class OdsaController {
 
   @MessagePattern(QUEUE_MESSAGE.ADMIN_GET_DELIVERIES)
   async getDeliveries (
-    @Ctx() context: RmqContext
+    @Ctx() context: RmqContext,
+      @Payload() filterQuery: FilterQuery<Delivery> | undefined
+
   ): Promise<Delivery[] | undefined> {
     try {
-      return await this.odsa.queryAllDeliveries()
+      return await this.odsa.queryAllDeliveries(filterQuery)
     } catch (error) {
       throw new RpcException(error)
     } finally {
