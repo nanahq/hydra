@@ -1,4 +1,4 @@
-import { OrderStatus, QUEUE_MESSAGE, IRpcException, FitRpcException, RandomGen, FleetPayout, QUEUE_SERVICE, DeliveryI, Delivery, DriverI } from '@app/common'
+import { OrderStatus, QUEUE_MESSAGE, IRpcException, FitRpcException, RandomGen, FleetPayout, QUEUE_SERVICE, DeliveryI, Delivery } from '@app/common'
 import { Inject, Injectable } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { FilterQuery } from 'mongoose'
@@ -24,12 +24,8 @@ export class FleetPayoutService {
   }
 
   async getAllDriversPayout (organization: string): Promise<FleetPayout[]> {
-    const drivers: DriverI[] = await this.driverRepository.find({ organization })
-
-    const driverIds = drivers.map((driver) => driver?._id?.toString())
-
     return await this.fleetPayoutRepository.findAndPopulate(
-      { driver: { $in: driverIds } },
+      { organization },
       ['deliveries']
     )
   }
@@ -67,8 +63,8 @@ export class FleetPayoutService {
 
     function getOrganizationDeliveries (orgId: string): string[] {
       return deliveries
-          ?.filter(delivery => delivery?.driver?.organization === orgId)
-          ?.map(delivery => delivery._id.toString()) as any
+        ?.filter(delivery => delivery?.driver?.organization === orgId)
+        ?.map(delivery => delivery._id.toString()) as any
     }
 
     // Compute earnings for each driver
