@@ -228,12 +228,12 @@ export class FleetController {
   }
 
   @UseGuards(FleetJwtAuthGuard)
-  @Get('payout/all')
+  @Get('payout-all')
   async getAllDriverPayout (
     @CurrentUser() member: FleetMember
   ): Promise<FleetPayout[]> {
     try {
-      return await this.fleetService.getAllDriversPayout(member.organization)
+      return await this.fleetService.getAllDriversPayout(member.organization.toString())
     } catch (error) {
       throw new HttpException(error.message, error.status)
     }

@@ -30,6 +30,12 @@ export class FleetPayoutService {
     )
   }
 
+  @Cron(CronExpression.EVERY_5_MINUTES, {
+    timeZone: 'Africa/Lagos'
+  })
+  async test (): Promise<void> {
+    console.log('test')
+  }
   @Cron(CronExpression.EVERY_DAY_AT_6AM, {
     timeZone: 'Africa/Lagos'
   })
