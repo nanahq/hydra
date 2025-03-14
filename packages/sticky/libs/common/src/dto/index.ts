@@ -323,6 +323,8 @@ export interface PlaceOrderDto {
   thirdPartyName?: string;
   coupon?: string;
   paymentType: OrderPaymentType;
+  pickupAddress: string;
+  precisePickupLocation: PreciseLocationDto
   fleetOrderType?: FleetOrderType
 }
 
