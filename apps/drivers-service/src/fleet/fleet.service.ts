@@ -426,7 +426,6 @@ export class FleetService {
       .findRaw()
       .find({
         completed: false,
-        assignedToDriver: false,
         status: { $ne: OrderStatus.FULFILLED },
         pool: { $in: driverIds }
       })
