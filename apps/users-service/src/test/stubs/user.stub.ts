@@ -18,7 +18,9 @@ export function UserProfileStub (): User {
     isDeleted: false,
     location: { type: 'Point', coordinates: [0, 0] },
     expoNotificationToken: '',
-    addressPin: 1234
+    addressPin: 1234,
+    refCode: "",
+    referedBy: ""
   }
 }
 
