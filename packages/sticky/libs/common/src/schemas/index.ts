@@ -260,7 +260,7 @@ export interface DriverI {
 
   s2CellId: string
 
-  organization?: string
+  organization?: FleetOrganizationI
 }
 
 export interface AdminI {
