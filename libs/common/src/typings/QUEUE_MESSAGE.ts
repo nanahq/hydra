@@ -18,7 +18,6 @@ export enum QUEUE_MESSAGE {
 
   ACCOUNT_DELETE_REQUEST = 'ACCOUNT_DELETE_REQUEST',
 
-
   CHECK_REFERAL = 'CHECK_REFERAL',
   // ADMIN
   GET_ADMIN_LOCAL = 'get_admin_with_username_password',

@@ -465,29 +465,29 @@ export class UsersService {
     }
   }
 
-  public async checkUserReferal (data: {refCode: string, userId: string}): Promise<void> {
+  public async checkUserReferal (data: { refCode: string, userId: string }): Promise<void> {
     try {
-      const referrer: User = await this.usersRepository.findOne({refCode: data.refCode})
-      
-      if(referrer !== null && !referrer.isDeleted) {
+      const referrer: User = await this.usersRepository.findOne({ refCode: data.refCode })
+
+      if (referrer !== null && !referrer.isDeleted) {
         const today = new Date()
         const month = new Date(today.getTime() + 1020 * 60 * 60 * 1000)
         const payload: CreateCouponDto = {
-            type: 'CASH',
-            useOnce: true,
-            code: RandomGen.generateAlphanumericString(6),
-            validFrom: today.toISOString(),
-            validTill: month.toISOString(),
-            value: 1000
+          type: 'CASH',
+          useOnce: true,
+          code: RandomGen.generateAlphanumericString(6),
+          validFrom: today.toISOString(),
+          validTill: month.toISOString(),
+          value: 1000
         }
 
         const coupon: ResponseWithStatusAndData<string> = await lastValueFrom(
           this.paymentClient.send(QUEUE_MESSAGE.CREATE_COUPON, payload)
         )
 
-        await this.usersRepository.findOneAndUpdate({id: referrer._id.toString()}, {$push: {coupons: coupon.data}})
-        await this.usersRepository.findOneAndUpdate({id: data.userId}, {$push: {coupons: coupon.data}})
-        
+        await this.usersRepository.findOneAndUpdate({ id: referrer._id.toString() }, { $push: { coupons: coupon.data } })
+        await this.usersRepository.findOneAndUpdate({ id: data.userId }, { $push: { coupons: coupon.data } })
+
         await this.customerIo.sendPushNotification(data.userId, 'referral_complete_referree')
         await this.customerIo.sendPushNotification(referrer._id.toString(), 'referral_complete_referrer')
       }
@@ -495,6 +495,7 @@ export class UsersService {
 
     }
   }
+
   public async removeUserCoupon ({
     data,
     userId
@@ -524,7 +525,6 @@ export class UsersService {
     }
   }
 
-
   @Cron(CronExpression.EVERY_5_MINUTES, {
     timeZone: 'Africa/Lagos'
   })
@@ -535,6 +535,7 @@ export class UsersService {
       refCode: RandomGen.generateAlphanumericString(6)
     })
   }
+
   async ping (): Promise<string> {
     return 'PONG'
   }

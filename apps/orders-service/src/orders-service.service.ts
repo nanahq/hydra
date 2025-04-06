@@ -171,9 +171,9 @@ export class OrdersServiceService {
       )
     }
 
-    if(populatedOrder.user.orders?.length < 1 && populatedOrder.user?.referedBy) {
+    if (populatedOrder.user.orders?.length < 1 && populatedOrder.user?.referedBy) {
       await lastValueFrom(
-        this.userClient.emit(QUEUE_MESSAGE.CHECK_REFERAL, {refCode: populatedOrder.user.referedBy, userId})
+        this.userClient.emit(QUEUE_MESSAGE.CHECK_REFERAL, { refCode: populatedOrder.user.referedBy, userId })
       )
     }
     return { status: 1, data: { order: populatedOrder, paymentMeta } }

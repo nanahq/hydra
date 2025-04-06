@@ -32,9 +32,9 @@ export class registerUserRequest {
   @IsString()
     lastName: string
 
-    @IsOptional()
-    @IsString()
-      referedBy: string
+  @IsOptional()
+  @IsString()
+    referedBy: string
 }
 
 export class registerUserWallet extends registerUserRequest {

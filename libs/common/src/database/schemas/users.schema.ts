@@ -68,10 +68,10 @@ export class User extends AbstractDocument {
     addressPin: number
 
   @Prop(String)
-  refCode: string
+    refCode: string
 
   @Prop(String)
-  referedBy: string
+    referedBy: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

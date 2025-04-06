@@ -257,7 +257,7 @@ export class UsersServiceController {
 
   @EventPattern(QUEUE_MESSAGE.CHECK_REFERAL)
   async checkUserReferal (
-    @Payload() data: {refCode: string, userId: string},
+    @Payload() data: { refCode: string, userId: string },
       @Ctx() context: RmqContext
   ): Promise<void> {
     try {
