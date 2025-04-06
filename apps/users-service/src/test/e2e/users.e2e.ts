@@ -99,7 +99,8 @@ describe('users service e2e', () => {
         email: 'suraj@gmail.com',
         phone: '+2348107641913',
         firstName: 'Suraj',
-        lastName: 'Auwal'
+        lastName: 'Auwal',
+        referedBy: "",
       }
     })
     it('should create a new user', async () => {
