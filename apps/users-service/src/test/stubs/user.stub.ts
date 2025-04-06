@@ -19,8 +19,8 @@ export function UserProfileStub (): User {
     location: { type: 'Point', coordinates: [0, 0] },
     expoNotificationToken: '',
     addressPin: 1234,
-    refCode: "",
-    referedBy: ""
+    refCode: '',
+    referedBy: ''
   }
 }
 

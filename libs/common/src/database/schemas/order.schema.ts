@@ -97,26 +97,16 @@ export class Order extends AbstractDocument {
 
   @Prop({
     type: {
-      name: {
-        type: String,
-        default: ''
-      },
-      phone: {
-        type: String,
-        default: ''
-      }
+      name: { type: String, default: '' },
+      phone: { type: String, default: '' }
     }
   })
     dropoffContact: { name: string, phone: string }
 
   @Prop({
-    name: {
-      type: String,
-      default: ''
-    },
-    phone: {
-      type: String,
-      default: ''
+    type: {
+      name: { type: String, default: '' },
+      phone: { type: String, default: '' }
     }
   })
     pickupContact: { name: string, phone: string }
