@@ -1,6 +1,7 @@
 import {
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   MaxLength,
@@ -30,6 +31,10 @@ export class registerUserRequest {
   @IsNotEmpty()
   @IsString()
     lastName: string
+
+    @IsOptional()
+    @IsString()
+      referedBy: string
 }
 
 export class registerUserWallet extends registerUserRequest {

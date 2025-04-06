@@ -15,7 +15,8 @@ import {
   AddressBookLabel,
   AddressBookLabelSchema,
   Coupon,
-  CouponSchema, BrevoClient, Order, OrderSchema
+  CouponSchema, BrevoClient, Order, OrderSchema,
+  CustomerIoClient
 } from '@app/common'
 import { UsersServiceController } from './users-service.controller'
 import { UsersService } from './users-service.service'
@@ -79,7 +80,8 @@ import { UserWallet, UserWalletSchema } from '@app/common/database/schemas/user-
     AddressBookRepository,
     UserWalletRepository,
     AddressBookService,
-    BrevoClient
+    BrevoClient,
+    CustomerIoClient
   ]
 })
 export class UsersServiceModule {}

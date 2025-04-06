@@ -34,7 +34,7 @@ export class CouponService {
     data: CreateCouponDto
   ): Promise<ResponseWithStatusAndData<string>> {
     let couponString: string
-
+    let coupon: Coupon
     const existingCode: Coupon = await this.couponRepository.findOne({ code: data.code })
     if (existingCode !== null) {
       throw new FitRpcException(
@@ -44,9 +44,9 @@ export class CouponService {
     }
     if (data.code !== undefined) {
       couponString = data.code
-      await this.couponRepository.create({
+      coupon = await this.couponRepository.create({
         ...data,
-        code: couponString
+        code: data.code
       })
     } else {
       const hasSuffix = data.suffix !== undefined
@@ -61,7 +61,7 @@ export class CouponService {
           this.MAX_COUPON_LENGTH
         )
       }
-      await this.couponRepository.create({
+      coupon = await this.couponRepository.create({
         ...data,
         code: couponString
       })
@@ -69,7 +69,7 @@ export class CouponService {
 
     return {
       status: 1,
-      data: couponString
+      data: coupon._id.toString()
     }
   }
 

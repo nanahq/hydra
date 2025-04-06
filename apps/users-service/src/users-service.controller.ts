@@ -255,6 +255,20 @@ export class UsersServiceController {
     }
   }
 
+  @EventPattern(QUEUE_MESSAGE.CHECK_REFERAL)
+  async checkUserReferal (
+    @Payload() data: {refCode: string, userId: string},
+      @Ctx() context: RmqContext
+  ): Promise<void> {
+    try {
+      return await this.usersService.checkUserReferal(data)
+    } catch (error) {
+      throw new RpcException(error)
+    } finally {
+      this.rmqService.ack(context)
+    }
+  }
+
   @MessagePattern(QUEUE_MESSAGE.USER_SERVICE_REQUEST_PING)
   async ping (
     @Ctx() context: RmqContext

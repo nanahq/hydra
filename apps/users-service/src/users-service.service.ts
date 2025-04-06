@@ -2,7 +2,6 @@ import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs'
 
 import {
-  BrevoClient,
   CheckUserAccountI,
   Coupon,
   FitRpcException,
@@ -17,7 +16,11 @@ import {
   User,
   verifyPhoneRequest,
   UserI, IRpcException, UserStatI,
-  MultiPurposeServicePayload, RegisterUserResponse
+  MultiPurposeServicePayload, RegisterUserResponse,
+  RandomGen,
+  CreateCouponDto,
+  ResponseWithStatusAndData,
+  CustomerIoClient
 } from '@app/common'
 import { UserRepository } from './users.repository'
 import {
@@ -30,6 +33,7 @@ import { ConfigService } from '@nestjs/config'
 import { arrayParser } from '@app/common/utils/statsResultParser'
 import { TermiiResponse } from '@app/common/typings/Termii'
 import { UserWalletRepository } from 'apps/payment-service/src/wallet/user/wallet.repository'
+import { Cron, CronExpression } from '@nestjs/schedule'
 
 @Injectable()
 export class UsersService {
@@ -39,7 +43,7 @@ export class UsersService {
 
     private readonly userWalletRepository: UserWalletRepository,
 
-    private readonly brevoClient: BrevoClient,
+    private readonly customerIo: CustomerIoClient,
 
     private readonly configService: ConfigService,
 
@@ -55,7 +59,8 @@ export class UsersService {
     phone,
     password,
     firstName,
-    lastName
+    lastName,
+    referedBy
   }: registerUserRequest): Promise<RegisterUserResponse> {
     const formattedPhone = internationalisePhoneNumber(phone)
     await this.checkExistingUser(formattedPhone, email) // Gate to check if phone has already been registered
@@ -66,7 +71,9 @@ export class UsersService {
       password: await bcrypt.hash(password, 10),
       isValidated: false,
       lastName,
-      firstName
+      firstName,
+      referedBy,
+      refCode: RandomGen.generateAlphanumericString(6)
     }
 
     try {
@@ -89,7 +96,7 @@ export class UsersService {
       const nodeEnv = this.configService.get<string>('NODE_ENV')
 
       if (nodeEnv !== undefined && nodeEnv.toLowerCase() === 'production') {
-        const paystackInstancePayload: MultiPurposeServicePayload<Omit<registerUserRequest, 'password'>> = {
+        const paystackInstancePayload: MultiPurposeServicePayload<any> = {
           data: {
             email,
             phone: formattedPhone,
@@ -119,7 +126,7 @@ export class UsersService {
       await this.userWalletRepository.findOneAndUpdate({
         user: user._id.toString()
       }, {
-        balance: 500
+        balance: 0
       })
 
       const slackMessage = `User ${user.firstName} ${user.lastName} signed up with phone number: ${user.phone}`
@@ -450,7 +457,7 @@ export class UsersService {
       const existingCoupons = user?.coupons ?? []
       return await this.usersRepository.findOneAndUpdate(
         { _id: user._id },
-        { coupons: [...existingCoupons, data.couponId] }
+        { coupons: Array.from(new Set([...existingCoupons, data.couponId])) }
       )
     } catch (error) {
       this.logger.log(error)
@@ -458,6 +465,36 @@ export class UsersService {
     }
   }
 
+  public async checkUserReferal (data: {refCode: string, userId: string}): Promise<void> {
+    try {
+      const referrer: User = await this.usersRepository.findOne({refCode: data.refCode})
+      
+      if(referrer !== null && !referrer.isDeleted) {
+        const today = new Date()
+        const month = new Date(today.getTime() + 1020 * 60 * 60 * 1000)
+        const payload: CreateCouponDto = {
+            type: 'CASH',
+            useOnce: true,
+            code: RandomGen.generateAlphanumericString(6),
+            validFrom: today.toISOString(),
+            validTill: month.toISOString(),
+            value: 1000
+        }
+
+        const coupon: ResponseWithStatusAndData<string> = await lastValueFrom(
+          this.paymentClient.send(QUEUE_MESSAGE.CREATE_COUPON, payload)
+        )
+
+        await this.usersRepository.findOneAndUpdate({id: referrer._id.toString()}, {$push: {coupons: coupon.data}})
+        await this.usersRepository.findOneAndUpdate({id: data.userId}, {$push: {coupons: coupon.data}})
+        
+        await this.customerIo.sendPushNotification(data.userId, 'referral_complete_referree')
+        await this.customerIo.sendPushNotification(referrer._id.toString(), 'referral_complete_referrer')
+      }
+    } catch (error) {
+
+    }
+  }
   public async removeUserCoupon ({
     data,
     userId
@@ -487,6 +524,17 @@ export class UsersService {
     }
   }
 
+
+  @Cron(CronExpression.EVERY_5_MINUTES, {
+    timeZone: 'Africa/Lagos'
+  })
+  async syncWithRefCode (): Promise<void> {
+    await this.usersRepository.findAndUpdate({
+      refCode: { $exists: false }
+    }, {
+      refCode: RandomGen.generateAlphanumericString(6)
+    })
+  }
   async ping (): Promise<string> {
     return 'PONG'
   }

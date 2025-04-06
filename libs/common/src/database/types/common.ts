@@ -153,7 +153,8 @@ export interface UserI {
   expoNotificationToken?: string
 
   paystack_customer_id?: string
-
+  refCode?: string,
+  referedBy?: string
   paystack_titan?: string
   favourites?: ListingMenuI[]
 }
