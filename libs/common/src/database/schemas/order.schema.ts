@@ -94,6 +94,30 @@ export class Order extends AbstractDocument {
     preciseLocation: LocationCoordinates
 
   @Prop({
+    name: {
+      type: String,
+      default: ''
+    },
+    phone: {
+      type: String,
+      default: ''
+    }
+  })
+    dropoffContact: { name: string, phone: string }
+
+  @Prop({
+    name: {
+      type: String,
+      default: ''
+    },
+    phone: {
+      type: String,
+      default: ''
+    }
+  })
+    pickupContact: { name: string, phone: string }
+
+  @Prop({
     type: {
       type: String,
       default: 'Point'

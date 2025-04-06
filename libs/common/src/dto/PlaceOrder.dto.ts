@@ -6,11 +6,21 @@ import {
   IsObject,
   IsPhoneNumber,
   ValidateNested,
-  IsOptional
+  IsOptional,
+  IsNotEmpty
 } from 'class-validator'
 import { FleetOrderType, OrderPaymentType, OrderType } from '@app/common/typings/Global.Interface'
 import { OrderOptions } from '@app/common/database/types/common'
 
+class OrderContact {
+  @IsString()
+  @IsNotEmpty()
+    name: string
+
+  @IsString()
+  @IsNotEmpty()
+    phone: string
+}
 class PreciseLocationDto {
   @IsArray()
   @IsNumber()
@@ -79,6 +89,14 @@ export class PlaceOrderDto {
   @ValidateNested()
   @IsObject()
     preciseLocation: PreciseLocationDto
+
+  @ValidateNested()
+  @IsObject()
+    pickupContact: OrderContact
+
+  @ValidateNested()
+  @IsObject()
+    dropoffContact: OrderContact
 
   @ValidateNested()
   @IsObject()
