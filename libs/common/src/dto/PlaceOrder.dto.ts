@@ -15,11 +15,11 @@ import { OrderOptions } from '@app/common/database/types/common'
 class OrderContact {
   @IsString()
   @IsNotEmpty()
-  name: string
+    name: string
 
   @IsString()
   @IsNotEmpty()
-  phone: string
+    phone: string
 }
 class PreciseLocationDto {
   @IsArray()
@@ -92,11 +92,11 @@ export class PlaceOrderDto {
 
   @ValidateNested()
   @IsObject()
-  pickupContact: OrderContact
+    pickupContact: OrderContact
 
   @ValidateNested()
   @IsObject()
-  dropoffContact: OrderContact
+    dropoffContact: OrderContact
 
   @ValidateNested()
   @IsObject()
@@ -123,7 +123,6 @@ export class PlaceOrderDto {
 
   @IsOptional()
     fleetOrderType?: FleetOrderType
-
 
   @IsString()
   @IsOptional()

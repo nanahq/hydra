@@ -153,9 +153,6 @@ export interface OrderI {
   vendor: VendorI
   totalOrderValue: number
   orderValuePayable: number
-  deliveryAddress: string
-  primaryContact: string
-  isThirdParty: boolean
   createdAt: string
   updatedAt: string
   refId: number
@@ -171,7 +168,8 @@ export interface OrderI {
   }>
   specialNote?: string
   txRefId?: string
-
+  pickupContact: {name: string, phone: string}
+  dropoffContact: {name: string, phone: string}
   coupon?: string
   review?: ReviewI
   fleetOrderType: FleetOrderType
