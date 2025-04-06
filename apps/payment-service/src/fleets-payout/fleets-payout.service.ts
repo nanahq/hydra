@@ -30,6 +30,7 @@ export class FleetPayoutService {
     )
   }
 
+
   @Cron(CronExpression.EVERY_DAY_AT_6AM, {
     timeZone: 'Africa/Lagos'
   })

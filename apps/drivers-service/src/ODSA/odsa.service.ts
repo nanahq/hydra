@@ -78,10 +78,20 @@ export class ODSA {
     orderId: string
   ): Promise<DeliveryI | undefined> {
     try {
-      return await this.odsaRepository.findOneAndPopulate<DeliveryI>(
-        { order: orderId },
-        ['order', 'driver', 'listing', 'vendor', 'user']
-      )
+      const orderDelivery = await this.odsaRepository.findRaw()
+        .findOne<DeliveryI>({ order: orderId })
+        .populate('order')
+        .populate('listing')
+        .populate('vendor')
+        .populate('user')
+        .populate({
+          path: 'driver',
+          populate: {
+            path: 'organization'
+          }
+        })
+        .exec()
+      return orderDelivery ?? undefined
     } catch (error) {
       this.logger.error({
         message: 'PIM -> Failed to query all deliveries',
