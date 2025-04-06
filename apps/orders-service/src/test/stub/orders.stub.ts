@@ -54,7 +54,16 @@ export function OrderStub (): Order {
       vat: 12.0
     },
     txRefId: 'transaction_reference_123',
-    fleetOrderType: 'GROCERIES'
+    fleetOrderType: 'GROCERIES',
+    itemDescription: 'Mock description',
+    pickupContact: {
+      name: 'John Doe',
+      phone: '+234123456789'
+    },
+    dropoffContact: {
+      name: 'John Doe',
+      phone: '+234123456789'
+    }
   }
 }
 
