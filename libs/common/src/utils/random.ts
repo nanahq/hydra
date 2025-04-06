@@ -16,7 +16,7 @@ export const RandomGen = {
   },
 
   generateAlphanumericString: (length: number): string => {
-    if (length <= 6) {
+    if (length <= 5) {
       throw new Error('Length should be greater than 6.')
     }
 
