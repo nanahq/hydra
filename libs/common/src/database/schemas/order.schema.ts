@@ -103,7 +103,7 @@ export class Order extends AbstractDocument {
       default: ''
     }
   })
-  dropoffContact: {name: string, phone: string}
+    dropoffContact: { name: string, phone: string }
 
   @Prop({
     name: {
@@ -115,7 +115,7 @@ export class Order extends AbstractDocument {
       default: ''
     }
   })
-   pickupContact: {name: string, phone: string}
+    pickupContact: { name: string, phone: string }
 
   @Prop({
     type: {
