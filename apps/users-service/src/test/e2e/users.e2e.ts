@@ -100,7 +100,7 @@ describe('users service e2e', () => {
         phone: '+2348107641913',
         firstName: 'Suraj',
         lastName: 'Auwal',
-        referedBy: "",
+        referedBy: ''
       }
     })
     it('should create a new user', async () => {
