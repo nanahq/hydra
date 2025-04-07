@@ -171,11 +171,7 @@ export class OrdersServiceService {
       )
     }
 
-    if (populatedOrder.user.orders?.length < 1 && populatedOrder.user?.referedBy) {
-      await lastValueFrom(
-        this.userClient.emit(QUEUE_MESSAGE.CHECK_REFERAL, { refCode: populatedOrder.user.referedBy, userId })
-      )
-    }
+   
     return { status: 1, data: { order: populatedOrder, paymentMeta } }
   }
 
@@ -382,7 +378,16 @@ export class OrdersServiceService {
       this.logger.log(
         `[PIM] - order status updated for paid order: ${orderId}`
       )
+      
+      if (order.user.orders?.length < 1 && typeof order.user?.referedBy === "string") {
+        this.logger.log(`[PIM]-> This user has referral and is thier first order`)
+        await lastValueFrom(
+          this.userClient.emit(QUEUE_MESSAGE.CHECK_REFERAL, { refCode: order?.user?.referedBy, userId: order.user._id.toString() })
+        )
+      }
+
       await this.sendPushNotifications(status, order)
+
 
       await lastValueFrom(
         this.userClient.emit(QUEUE_MESSAGE.UPDATE_USER_ORDER_COUNT, {
@@ -391,15 +396,6 @@ export class OrdersServiceService {
         })
       )
 
-      await lastValueFrom(
-        this.listingsClient.emit(
-          QUEUE_MESSAGE.UPDATE_SCHEDULED_LISTING_QUANTITY,
-          {
-            listingsId: order.listing.map((li) => li._id),
-            quantity: order.quantity
-          }
-        )
-      )
 
       await lastValueFrom<any>(
         this.driverClient.emit(QUEUE_MESSAGE.ODSA_PROCESS_ORDER, { orderId })

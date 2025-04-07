@@ -469,6 +469,8 @@ export class UsersService {
     try {
       const referrer: User = await this.usersRepository.findOne({ refCode: data.refCode })
 
+      this.logger.log(`[PIM] -> Redeeming referral for user ${referrer.firstName}`)
+
       if (referrer !== null && !referrer.isDeleted) {
         const today = new Date()
         const month = new Date(today.getTime() + 1020 * 60 * 60 * 1000)
@@ -483,7 +485,11 @@ export class UsersService {
 
         const coupon: ResponseWithStatusAndData<string> = await lastValueFrom(
           this.paymentClient.send(QUEUE_MESSAGE.CREATE_COUPON, payload)
+          .pipe(catchError((error: IRpcException) => {
+            console.error({error})
+          }))
         )
+        console.log({coupon})
 
         await this.usersRepository.findOneAndUpdate({ id: referrer._id.toString() }, { $push: { coupons: coupon.data } })
         await this.usersRepository.findOneAndUpdate({ id: data.userId }, { $push: { coupons: coupon.data } })

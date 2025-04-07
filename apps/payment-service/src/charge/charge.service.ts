@@ -110,7 +110,7 @@ export class PaymentService {
         userId: '',
         data: {
           status: OrderStatus.PROCESSED,
-          orderId: payment.order._id,
+          orderId: payment.order._id?.toString(),
           txRefId: payment.refId
         }
       }
