@@ -487,12 +487,11 @@ export class UsersService {
           this.paymentClient.send(QUEUE_MESSAGE.CREATE_COUPON, payload)
             .pipe(catchError((error: any): any => {
               console.error({ error })
-            } ) as any)
+            }) as any)
         )
-        console.log({ coupon })
 
-        await this.usersRepository.findOneAndUpdate({ id: referrer._id.toString() }, { $push: { coupons: coupon.data } })
-        await this.usersRepository.findOneAndUpdate({ id: data.userId }, { $push: { coupons: coupon.data } })
+        await this.usersRepository.findOneAndUpdate({ _id: referrer._id.toString() }, { $push: { coupons: coupon.data } })
+        await this.usersRepository.findOneAndUpdate({ _id: data.userId }, { $push: { coupons: coupon.data } })
 
         await this.customerIo.sendPushNotification(data.userId, 'referral_complete_referree')
         await this.customerIo.sendPushNotification(referrer._id.toString(), 'referral_complete_referrer')
