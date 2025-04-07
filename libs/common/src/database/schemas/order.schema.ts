@@ -5,7 +5,6 @@ import {
   OrderStatus,
   OrderBreakDown,
   OrderType,
-  LocationCoordinates,
   OrderOptions,
   FleetOrderType
 } from '@app/common'
@@ -81,42 +80,41 @@ export class Order extends AbstractDocument {
   @Prop(String)
     orderType: OrderType
 
-    @Prop({
-      type: {
-        type: String,
-        enum: ['Point'],
-        required: true,
-        default: 'Point'
-      },
-      coordinates: {
-        type: [Number],
-        required: true,
-        default: [0, 0]
-      }
-    })
+  @Prop({
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+      default: [0, 0]
+    }
+  })
     preciseLocation: {
-      type: 'Point'
-      coordinates: number[]
+    type: 'Point'
+    coordinates: number[]
+  }
+
+  @Prop({
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+      default: [0, 0]
     }
-    
-    @Prop({
-      type: {
-        type: String,
-        enum: ['Point'],
-        required: true,
-        default: 'Point'
-      },
-      coordinates: {
-        type: [Number],
-        required: true,
-        default: [0, 0]
-      }
-    })
+  })
     precisePickupLocation: {
-      type: 'Point'
-      coordinates: number[]
-    }
-    
+    type: 'Point'
+    coordinates: number[]
+  }
 
   @Prop({
     type: {
@@ -133,7 +131,6 @@ export class Order extends AbstractDocument {
     }
   })
     pickupContact: { name: string, phone: string }
-
 
   @Prop({
     type: [
