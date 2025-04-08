@@ -133,6 +133,9 @@ export interface UserI {
   expoNotificationToken?: string
   coupons?: CouponI[]
   favourites?: ListingMenuI[]
+  addressPin: number
+  refCode: string
+  referedBy: string
 }
 
 export interface ReviewI {
@@ -172,7 +175,9 @@ export interface OrderI {
   dropoffContact: {name: string, phone: string}
   coupon?: string
   review?: ReviewI
+  pin_code: number
   fleetOrderType: FleetOrderType
+  itemDescription?: string 
 }
 
 export interface DeliveryI {
