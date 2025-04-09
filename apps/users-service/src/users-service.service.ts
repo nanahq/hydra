@@ -53,7 +53,7 @@ export class UsersService {
     @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
     private readonly paymentClient: ClientProxy,
 
-    private readonly MAX_REFERRAL_COUNT = 10
+    private readonly MAX_REFERRAL_EARNING = 10000
   ) {}
 
   async register ({
@@ -492,8 +492,8 @@ export class UsersService {
             }) as any)
         )
 
-        if (referrer.referralCount < this.MAX_REFERRAL_COUNT) {
-          await this.usersRepository.findOneAndUpdate({ _id: referrer._id.toString() }, { $push: { coupons: coupon.data }, referralCount: referrer.referralCount + 1 })
+        if (referrer.referralEarning < this.MAX_REFERRAL_EARNING) {
+          await this.usersRepository.findOneAndUpdate({ _id: referrer._id.toString() }, { $push: { coupons: coupon.data }, referralCount: referrer.referralEarning + 1000 })
           await this.usersRepository.findOneAndUpdate({ _id: data.userId }, { $push: { coupons: coupon.data } })
         }
 

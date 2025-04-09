@@ -21,7 +21,7 @@ export function UserProfileStub (): User {
     addressPin: 1234,
     refCode: '',
     referedBy: '',
-    referralCount: 1
+    referralEarning: 1000
   }
 }
 

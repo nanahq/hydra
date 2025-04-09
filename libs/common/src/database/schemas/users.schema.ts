@@ -74,7 +74,7 @@ export class User extends AbstractDocument {
     referedBy: string
 
   @Prop(Number)
-    referralCount: number
+    referralEarning: number
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
