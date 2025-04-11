@@ -20,7 +20,8 @@ export function UserProfileStub (): User {
     expoNotificationToken: '',
     addressPin: 1234,
     refCode: '',
-    referedBy: ''
+    referedBy: '',
+    referralEarning: 1000
   }
 }
 

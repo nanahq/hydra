@@ -51,7 +51,9 @@ export class UsersService {
     private readonly notificationClient: ClientProxy,
 
     @Inject(QUEUE_SERVICE.PAYMENT_SERVICE)
-    private readonly paymentClient: ClientProxy
+    private readonly paymentClient: ClientProxy,
+
+    private readonly MAX_REFERRAL_EARNING = 10000
   ) {}
 
   async register ({
@@ -490,8 +492,10 @@ export class UsersService {
             }) as any)
         )
 
-        await this.usersRepository.findOneAndUpdate({ _id: referrer._id.toString() }, { $push: { coupons: coupon.data } })
-        await this.usersRepository.findOneAndUpdate({ _id: data.userId }, { $push: { coupons: coupon.data } })
+        if (referrer.referralEarning < this.MAX_REFERRAL_EARNING) {
+          await this.usersRepository.findOneAndUpdate({ _id: referrer._id.toString() }, { $push: { coupons: coupon.data }, referralCount: referrer.referralEarning + 1000 })
+          await this.usersRepository.findOneAndUpdate({ _id: data.userId }, { $push: { coupons: coupon.data } })
+        }
 
         await this.customerIo.sendPushNotification(data.userId, 'referral_complete_referree')
         await this.customerIo.sendPushNotification(referrer._id.toString(), 'referral_complete_referrer')

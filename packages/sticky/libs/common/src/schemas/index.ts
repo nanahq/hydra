@@ -136,6 +136,7 @@ export interface UserI {
   addressPin: number
   refCode: string
   referedBy: string
+  referralEarning: number
 }
 
 export interface ReviewI {
