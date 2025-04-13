@@ -541,10 +541,10 @@ export class UsersService {
     const usersWithoutCoupon = await this.usersRepository.find({
       refCode: { $exists: false }
     })
-    if(usersWithoutCoupon?.length > 0){
+    if (usersWithoutCoupon?.length > 0) {
       for (const user of usersWithoutCoupon) {
         await this.usersRepository.findOneAndUpdate({
-          _id: user?._id?.toString(),
+          _id: user?._id?.toString()
         }, {
           refCode: RandomGen.generateAlphanumericString(6)
         })
