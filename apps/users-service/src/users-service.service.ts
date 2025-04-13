@@ -534,15 +534,22 @@ export class UsersService {
     }
   }
 
-  @Cron(CronExpression.EVERY_5_MINUTES, {
+  @Cron(CronExpression.EVERY_HOUR, {
     timeZone: 'Africa/Lagos'
   })
   async syncWithRefCode (): Promise<void> {
-    await this.usersRepository.findAndUpdate({
+    const usersWithoutCoupon = await this.usersRepository.find({
       refCode: { $exists: false }
-    }, {
-      refCode: RandomGen.generateAlphanumericString(6)
     })
+    if(usersWithoutCoupon?.length > 0){
+      for (const user of usersWithoutCoupon) {
+        await this.usersRepository.findOneAndUpdate({
+          _id: user?._id?.toString(),
+        }, {
+          refCode: RandomGen.generateAlphanumericString(6)
+        })
+      }
+    }
   }
 
   async ping (): Promise<string> {
