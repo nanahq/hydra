@@ -1,4 +1,3 @@
-import { DeliveryPriceMeta } from '@app/common'
 
 export function calculateDeliveryPrice (
   distanceKm: number,
