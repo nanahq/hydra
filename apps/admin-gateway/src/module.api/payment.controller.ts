@@ -55,7 +55,7 @@ export class PaymentController {
       data: undefined
     }
     return await lastValueFrom<ResponseWithStatus>(
-      this.paymentClient.send(QUEUE_MESSAGE.WALLET_UPDATE_PAYOUT, payload).pipe(
+      this.paymentClient.emit(QUEUE_MESSAGE.WALLET_UPDATE_PAYOUT, payload).pipe(
         catchError<any, any>((error: IRpcException) => {
           throw new HttpException(error.message, error.status)
         })
